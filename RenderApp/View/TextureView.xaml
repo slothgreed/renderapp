@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="RenderApp.View.TextureView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:opentk="clr-namespace:OpenTK.Graphics.OpenGL;assembly=OpenTK"
+        xmlns:local="clr-namespace:RenderApp.Assets"
+        xmlns:vm="clr-namespace:RenderApp.ViewModel"
+        >
+
+    <Grid>
+        
+        <StackPanel>
+            <TextBlock Text="Texture Path"/>
+            <TextBlock Text="{Binding Model.FileName}"/>
+            <Image Source="{Binding Thumbnail}" Width="80" Height="80"/>
+
+            <TextBlock Text="Target"/>
+            <ComboBox ItemsSource="{Binding Path=TargetStr}"/>
+
+            <TextBlock Text="Filter" />
+            <ComboBox ItemsSource="{Binding Path=FilterStr}"/>
+
+            <TextBlock Text="WrapMode"/>
+            <ComboBox ItemsSource="{Binding Path=WrapModeStr}"/>
+        </StackPanel>
+
+    </Grid>
+</UserControl>

@@ -1,0 +1,433 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C3F6BAD0-F298-468B-A33B-220D78FD1048}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RenderApp</RootNamespace>
+    <AssemblyName>RenderApp</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Windows.Shell">
+      <HintPath>..\..\..\..\..\RenderApp\dll\Microsoft.Windows.Shell.dll</HintPath>
+    </Reference>
+    <Reference Include="MultiSelectTreeView">
+      <HintPath>..\packages\MultiSelectTreeView.1.0.7\lib\net40\MultiSelectTreeView.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dll\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK.GLControl, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dll\OpenTK.GLControl.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK.GLU, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dll\OpenTK.GLU.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Controls.Ribbon" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=2.8.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.8\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=2.8.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.8\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Expression">
+      <HintPath>..\packages\AvalonDock.2.0.2000\lib\net40\Xceed.Wpf.AvalonDock.Themes.Expression.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.8\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.8\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.8\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.8\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="GLUtil\Output.cs" />
+    <Compile Include="Assets\EnvironmentProbe.cs" />
+    <Compile Include="Assets\Geometry\File\GeometryLoader.cs" />
+    <Compile Include="Assets\Shader\ShaderProgramInfo.cs" />
+    <Compile Include="RenderApp\Enum.cs" />
+    <Compile Include="Utility\ActiveItems.cs" />
+    <Compile Include="ViewModel\AssetTreeViewModelT4.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AssetTreeViewModelT4.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\AvalonPaneSelector.cs" />
+    <Compile Include="Assets\Geometry\Geometry.cs" />
+    <Compile Include="Assets\Light\DirectionLight.cs" />
+    <Compile Include="Assets\Light\PointLight.cs" />
+    <Compile Include="Assets\Light\SpotLight.cs" />
+    <Compile Include="Assets\Asset.cs" />
+    <Compile Include="ViewModel\AvalonUpdateStrategy.cs" />
+    <Compile Include="ViewModel\AvalonWindowViewModel.cs" />
+    <Compile Include="ViewModel\ComboItemViewModel.cs" />
+    <Compile Include="ViewModel\DefaultViewModel.cs" />
+    <Compile Include="ViewModel\GeometryViewModel.cs" />
+    <Compile Include="ViewModel\MathViewModel.cs" />
+    <Compile Include="ViewModel\MaterialItemSelector.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MaterialItemSelector.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\MaterialViewModel.cs" />
+    <Compile Include="ViewModel\PropertyGridViewModel.cs" />
+    <Compile Include="ViewModel\ShaderViewModel.cs" />
+    <Compile Include="ViewModel\ImageViewModel.cs" />
+    <Compile Include="ViewModel\ViewportViewModel.cs" />
+    <Compile Include="View\AssetTreeView.xaml.cs">
+      <DependentUpon>AssetTreeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\AssetTreeViewModel.cs" />
+    <Compile Include="RenderApp\Global.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\MainWindowViewModelT4.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MainWindowViewModelT4.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Analyzer\BDB\BDB.cs" />
+    <Compile Include="Analyzer\IAnalyzer.cs" />
+    <Compile Include="Scene\Material\Material.cs" />
+    <Compile Include="ViewModel\ModelViewModel.cs" />
+    <Compile Include="Analyzer\Tree\Kdtree.cs" />
+    <Compile Include="Analyzer\Tree\Octree.cs" />
+    <Compile Include="Scene\Scene.cs" />
+    <Compile Include="RenderApp\Project.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\Shader\ShaderProgram.cs" />
+    <Compile Include="Scene\Shader\Bezier\Bezier.cs" />
+    <Compile Include="GLUtil\GBuffer.cs" />
+    <Compile Include="Assets\Geometry\Primitive\Space.cs" />
+    <Compile Include="Assets\Geometry\Primitive\Primitive.cs" />
+    <Compile Include="View\GeometryView.xaml.cs">
+      <DependentUpon>GeometryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PropertyGridView.xaml.cs">
+      <DependentUpon>PropertyGridView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ShaderProgramView.xaml.cs">
+      <DependentUpon>ShaderProgramView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\ShaderProgramViewModel.cs" />
+    <Compile Include="Assets\Texture.cs" />
+    <Compile Include="Assets\Shader\Shader.cs" />
+    <Compile Include="Scene\Shader\HeightMap\HeightMap.cs" />
+    <Compile Include="Scene\Shader\Line\CEffectLine.cs" />
+    <Compile Include="Scene\Shader\MRT\Fur\Fur.cs" />
+    <Compile Include="Scene\Shader\MRT\MRTManager.cs" />
+    <Compile Include="Scene\Shader\NURBS\NURBS.cs" />
+    <Compile Include="Scene\Shader\OffScreen\Bloom\CBloom.cs" />
+    <Compile Include="Scene\Shader\MRT\OutLine\OutLine.cs" />
+    <Compile Include="GLUtil\FrameBuffer.cs" />
+    <Compile Include="Scene\Shader\OffScreen\Result\CResult.cs" />
+    <Compile Include="Scene\Shader\MRT\General\ConstantShader.cs" />
+    <Compile Include="Scene\Shader\Diffuse\CDiffuse.cs" />
+    <Compile Include="Scene\Shader\DisplaceMent\DisplaceMentMap.cs" />
+    <Compile Include="Analyzer\HalfEdge\Edge.cs" />
+    <Compile Include="Analyzer\HalfEdge\HalfEdge.cs" />
+    <Compile Include="Analyzer\HalfEdge\Mesh.cs" />
+    <Compile Include="Scene\Shader\ColorRender\CColorShader.cs" />
+    <Compile Include="Assets\Geometry\Primitive\Sphere.cs" />
+    <Compile Include="Analyzer\Parameter.cs" />
+    <Compile Include="Analyzer\HalfEdge\Vertex.cs" />
+    <Compile Include="Assets\Geometry\Primitive\Axis.cs" />
+    <Compile Include="Assets\Camera.cs" />
+    <Compile Include="Assets\Geometry\Primitive\Cube.cs" />
+    <Compile Include="Assets\Geometry\Primitive\Plane.cs" />
+    <Compile Include="Assets\Geometry\Primitive\GridPlane.cs" />
+    <Compile Include="Assets\Light\Light.cs" />
+    <Compile Include="Scene\Shader\OffScreen\DOF\DOF.cs" />
+    <Compile Include="Scene\Shader\Luminous\Luminous.cs" />
+    <Compile Include="Scene\Shader\OffScreen\Sobel\CSobel.cs" />
+    <Compile Include="Scene\Shader\OffScreen\SSAO\SSAO.cs" />
+    <Compile Include="ViewModel\TextureViewModel.cs" />
+    <Compile Include="View\MaterialView.xaml.cs">
+      <DependentUpon>MaterialView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ShaderView.xaml.cs">
+      <DependentUpon>ShaderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TextureView.xaml.cs">
+      <DependentUpon>TextureView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\TreeItemViewModel.cs" />
+    <Compile Include="Utility\Mouse.cs" />
+    <Compile Include="Scene\Shader\OffScreen\Defferd\CDeffed.cs" />
+    <Compile Include="Scene\Shader\OffScreen\Shadow\CShadowMap.cs" />
+    <Compile Include="Utility\Calc.cs" />
+    <Compile Include="Utility\CFileIO.cs" />
+    <Compile Include="Assets\Geometry\File\ObjLoader.cs" />
+    <Compile Include="Utility\CTimer.cs" />
+    <Compile Include="Utility\Enum.cs" />
+    <Compile Include="Assets\Geometry\File\StlLoader.cs" />
+    <Compile Include="Utility\AppException.cs" />
+    <Compile Include="Utility\TrueTypeFont.cs" />
+    <Compile Include="Utility\Util.cs" />
+    <Compile Include="Utility\Write.cs" />
+    <Compile Include="Analyzer\Tree\Voxel.cs" />
+    <Compile Include="GLUtil\Viewport.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="View\ViewportView.xaml.cs">
+      <DependentUpon>ViewportView.xaml</DependentUpon>
+    </Compile>
+    <Resource Include="Themes\BureauBlue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Page Include="View\AssetTreeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="View\GeometryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PropertyGridView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ShaderProgramView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MaterialView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ShaderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TextureView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ViewportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="ViewModel\AssetTreeViewModelT4.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssetTreeViewModelT4.cs</LastGenOutput>
+    </None>
+    <None Include="ViewModel\MainWindowViewModelT4.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MainWindowViewModelT4.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Scene\Shader\Bezier\bezier.frag" />
+    <None Include="Scene\Shader\Bezier\bezier.tcs" />
+    <None Include="Scene\Shader\Bezier\bezier.tes" />
+    <None Include="Scene\Shader\Bezier\bezier.vert" />
+    <None Include="Scene\Shader\HeightMap\HeightMap.frag" />
+    <None Include="Scene\Shader\HeightMap\HeightMap.geom" />
+    <None Include="Scene\Shader\HeightMap\HeightMap.tcs" />
+    <None Include="Scene\Shader\HeightMap\HeightMap.tes" />
+    <None Include="Scene\Shader\HeightMap\HeightMap.vert" />
+    <None Include="Scene\Shader\Line\EffectLine.frag" />
+    <None Include="Scene\Shader\Line\EffectLine.geom" />
+    <None Include="Scene\Shader\Line\EffectLine.vert" />
+    <None Include="Scene\Shader\MRT\Fur\fur.frag" />
+    <None Include="Scene\Shader\MRT\Fur\fur.geom" />
+    <None Include="Scene\Shader\MRT\Fur\fur.vert" />
+    <None Include="Scene\Shader\MRT\OutLine\outline.frag" />
+    <None Include="Scene\Shader\MRT\OutLine\outline.geom" />
+    <None Include="Scene\Shader\MRT\OutLine\outline.vert" />
+    <None Include="Scene\Shader\NURBS\nurbs.frag" />
+    <None Include="Scene\Shader\NURBS\nurbs.geom" />
+    <None Include="Scene\Shader\NURBS\nurbs.tcs" />
+    <None Include="Scene\Shader\NURBS\nurbs.tes" />
+    <None Include="Scene\Shader\NURBS\nurbs.vert" />
+    <None Include="Scene\Shader\OffScreen\Bloom\bloom.frag" />
+    <None Include="Scene\Shader\OffScreen\Bloom\bloom.vert" />
+    <None Include="Scene\Shader\OffScreen\Result\result.frag" />
+    <None Include="Scene\Shader\OffScreen\Result\result.vert" />
+    <None Include="Scene\Shader\MRT\General\General.frag" />
+    <None Include="Scene\Shader\MRT\General\General.vert" />
+    <None Include="Scene\Shader\Diffuse\diffuse.frag" />
+    <None Include="Scene\Shader\Diffuse\diffuse.vert" />
+    <None Include="Scene\Shader\DisplaceMent\displacement.frag" />
+    <None Include="Scene\Shader\DisplaceMent\displacement.geom" />
+    <None Include="Scene\Shader\DisplaceMent\displacement.tcs" />
+    <None Include="Scene\Shader\DisplaceMent\displacement.tes" />
+    <None Include="Scene\Shader\DisplaceMent\displacement.vert" />
+    <None Include="Scene\Shader\ColorRender\line.frag" />
+    <None Include="Scene\Shader\ColorRender\line.vert" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <None Include="Scene\Shader\Luminous\Luminous.frag" />
+    <None Include="Scene\Shader\Luminous\Luminous.vert" />
+    <None Include="Scene\Shader\OffScreen\Defferd\defferd.frag" />
+    <None Include="Scene\Shader\OffScreen\Defferd\defferd.vert" />
+    <None Include="Scene\Shader\OffScreen\Shadow\shadow.frag" />
+    <None Include="Scene\Shader\OffScreen\Shadow\shadow.vert" />
+    <None Include="Scene\Shader\OffScreen\Sobel\sobel.frag" />
+    <None Include="Scene\Shader\OffScreen\Sobel\sobel.vert" />
+    <None Include="Scene\Shader\OffScreen\SSAO\ssao.frag" />
+    <None Include="Scene\Shader\OffScreen\SSAO\ssao.vert" />
+    <None Include="ViewModel\MaterialItemSelector.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MaterialItemSelector.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Thumbnail\noimage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Scene\Shader\ShaderType\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

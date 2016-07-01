@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
+namespace RenderApp.ViewModel
+{
+	public partial class AssetTreeViewModel
+	{
+			private ICommand _Delete;
+			public ICommand Delete
+			{
+				get
+				{
+					if(_Delete == null)
+					{
+						return _Delete = CreateCommand(DeleteCommand);						
+					}
+					return _Delete;
+				}
+			}
+
+	}
+
+}

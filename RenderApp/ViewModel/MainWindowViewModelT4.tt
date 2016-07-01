@@ -1,0 +1,54 @@
+﻿<#@ template language="C#" debug="true" hostspecific="true" #>
+<#@ output extension="cs"#>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
+<#
+	string[] _command =
+	{
+		"NewProject",
+		"OpenProject",
+		"SaveProject",
+		"SaveAsProject",
+		"Load3DModel",
+		"LoadTexture",
+		"CreateCube",
+		"CreateSphere",
+		"CreatePlane",
+		"LoadShader",
+		"WindowClose",
+		"SizeChanged"
+	};
+
+#>
+namespace RenderApp.ViewModel
+{
+	public partial class MainWindowViewModel
+	{
+<#
+		for(int i =0 ; i < _command.Length; i++)
+		{
+#>
+			private ICommand _<#=_command[i]#>;
+			public ICommand <#=_command[i]#>
+			{
+				get
+				{
+					if(_<#=_command[i]#> == null)
+					{
+						return _<#=_command[i]#> = CreateCommand(<#=_command[i]#>Command);						
+					}
+					return _<#=_command[i]#>;
+				}
+			}
+<#
+		}
+
+#>
+
+	}
+
+}

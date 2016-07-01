@@ -1,0 +1,55 @@
+﻿<#@ template language="C#" debug="true" hostspecific="true" #>
+<#@ output extension=".cs" #>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using OpenTK;
+using RenderApp.Scene;
+using RenderApp.GLUtil;
+namespace RenderApp.ViewModel
+{
+<#
+	var _variable = new String[]
+	{
+		"Image",
+		"ComboItem",
+		"Vector2",
+		"Vector3",
+		"Vector4",
+		"Matrix3",
+		"Matrix4",
+	};
+
+#>
+    class MaterialItemTemplateSelector : DataTemplateSelector
+    {
+
+<#
+	for(int i =0 ; i < _variable.Length; i++)
+	{
+#>
+		public DataTemplate <#=_variable[i]#>Template {get;set;}
+<#	
+	}
+#>
+		public DataTemplate DefaultTemplate {get;set;}
+		public override DataTemplate SelectTemplate(object item, DependencyObject container)
+        {
+
+<#
+		for(int i =0 ; i < _variable.Length; i++)
+		{
+#>
+			if(item is <#=_variable[i]#>ViewModel)
+				return <#=_variable[i]#>Template;
+<#	
+		}
+#>
+			return DefaultTemplate;
+		}
+	}
+}

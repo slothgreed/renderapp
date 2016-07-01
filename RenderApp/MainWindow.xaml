@@ -1,0 +1,132 @@
+﻿<Window
+        x:Class="RenderApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:avalon="http://schemas.xceed.com/wpf/xaml/avalondock"
+        xmlns:local="clr-namespace:RenderApp"
+        xmlns:vm="clr-namespace:RenderApp.ViewModel"
+        xmlns:v="clr-namespace:RenderApp.View"
+        xmlns:asset="clr-namespace:RenderApp.Assets"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        mc:Ignorable="d"
+        Title="RenderingApplication" MinHeight="600" MinWidth="800"
+        Height="600" Width="800"
+        xmlns:tree="clr-namespace:System.Windows.Controls;assembly=MultiSelectTreeView"
+        >
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <ei:CallMethodAction MethodName="LoadedCommand" TargetObject="{Binding}"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Closed">
+            <ei:CallMethodAction MethodName="ClosedCommand" TargetObject="{Binding}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+            
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+    <Grid x:Name="mainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="25" />
+        </Grid.RowDefinitions>
+        <avalon:DockingManager x:Name="dockingManager"  Grid.Row="1" 
+                               AnchorablesSource="{Binding Anchorables}"
+                               DocumentsSource="{Binding Documents}"
+                               ActiveContent="{Binding ActivePane,Mode=TwoWay}"
+                               >
+            <avalon:DockingManager.LayoutUpdateStrategy>
+                <vm:AvalonUpdateStrategy/>
+            </avalon:DockingManager.LayoutUpdateStrategy>
+            <avalon:DockingManager.LayoutItemTemplateSelector>
+                <vm:AvalonPaneTemplateSelector>
+                    <vm:AvalonPaneTemplateSelector.AssetTemplate>
+                        <DataTemplate DataType="{x:Type vm:AssetTreeViewModel}">
+                            <v:AssetTreeView/>
+                        </DataTemplate>   
+                    </vm:AvalonPaneTemplateSelector.AssetTemplate>
+                    <vm:AvalonPaneTemplateSelector.ShaderProgramTemplate>
+                        <DataTemplate  DataType="{x:Type vm:ShaderProgramViewModel}">
+                            <v:ShaderProgramView/>
+                        </DataTemplate>
+                    </vm:AvalonPaneTemplateSelector.ShaderProgramTemplate>
+                    <vm:AvalonPaneTemplateSelector.MaterialTemplate>
+                        <DataTemplate  DataType="{x:Type vm:MaterialViewModel}">
+                            <v:MaterialView/>
+                        </DataTemplate>
+                    </vm:AvalonPaneTemplateSelector.MaterialTemplate>
+                    <vm:AvalonPaneTemplateSelector.TexureTemplate>
+                        <DataTemplate  DataType="{x:Type vm:TextureViewModel}">
+                            <v:TextureView/>
+                        </DataTemplate>
+                    </vm:AvalonPaneTemplateSelector.TexureTemplate>
+                    <vm:AvalonPaneTemplateSelector.ViewportTemplate>
+                        <DataTemplate  DataType="{x:Type vm:ViewportViewModel}">
+                            <v:ViewportView/>
+                        </DataTemplate>
+                    </vm:AvalonPaneTemplateSelector.ViewportTemplate>
+                    <vm:AvalonPaneTemplateSelector.GeometryTemplate>
+                        <DataTemplate DataType="{x:Type vm:GeometryViewModel}">
+                            <v:GeometryView/>
+                        </DataTemplate>
+                    </vm:AvalonPaneTemplateSelector.GeometryTemplate>
+                    <vm:AvalonPaneTemplateSelector.ShaderTemplate>
+                        <DataTemplate DataType="{x:Type vm:ShaderViewModel}">
+                            <v:ShaderView/>
+                        </DataTemplate>
+                    </vm:AvalonPaneTemplateSelector.ShaderTemplate>
+                </vm:AvalonPaneTemplateSelector>
+                
+            </avalon:DockingManager.LayoutItemTemplateSelector>
+            
+            
+            <avalon:DockingManager.LayoutItemContainerStyleSelector>
+                <vm:AvalonPaneStyleSelector>
+                    <vm:AvalonPaneStyleSelector.AnchorableStyle>
+                        <Style TargetType="{x:Type avalon:LayoutItem}">
+                            <Setter Property="Title" Value="{Binding Model.Title}"/>
+                        </Style>
+                    </vm:AvalonPaneStyleSelector.AnchorableStyle>
+                    <vm:AvalonPaneStyleSelector.DocumentStyle>
+                        <Style TargetType="{x:Type avalon:LayoutItem}">
+                            <Setter Property="Title" Value="{Binding Model.Title}"/>
+                        </Style>
+                    </vm:AvalonPaneStyleSelector.DocumentStyle>
+                </vm:AvalonPaneStyleSelector>
+            </avalon:DockingManager.LayoutItemContainerStyleSelector>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SizeChanged">
+                    <i:InvokeCommandAction Command="{Binding SizeChanged}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <avalon:LayoutRoot/>
+        </avalon:DockingManager>
+
+        <Menu VerticalAlignment="Top">
+            <MenuItem Header="Project">
+                <MenuItem Header="New" Command="{Binding NewProject}"/>
+                <MenuItem Header="Open" Command="{Binding OpenProject}"/>
+                <MenuItem Header="Save" Command="{Binding SaveProject}"/>
+                <MenuItem Header="SaveAs" Command="{Binding SaveAsProject}"/>
+            </MenuItem>
+
+            <MenuItem Header="Asset">
+                <MenuItem Header="Model" Command="{Binding Load3DModel}"/>
+                <MenuItem Header="Texture" Command="{Binding LoadTexture}"/>
+                <MenuItem Header="Shader" Command="{Binding LoadShader}"/>
+            </MenuItem>
+
+            <MenuItem Header="Object">
+                <MenuItem Header="Cube" Command="{Binding CreateCube}"/>
+                <MenuItem Header="Sphere" Command="{Binding CreateSphere}"/>
+                <MenuItem Header="Plane" Command="{Binding CreatePlane}"/>
+            </MenuItem>
+            
+            
+        </Menu>
+    </Grid>
+</Window>

@@ -1,0 +1,221 @@
+﻿<UserControl x:Class="RenderApp.View.PropertyGridView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:RenderApp.ViewModel"
+             xmlns:v="clr-namespace:RenderApp.View"
+             xmlns:gl="clr-namespace:RenderApp.GLUtil"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:opentk="clr-namespace:OpenTK;assembly=OpenTK"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <xctk:PropertyGrid x:Name="propertyGrid"
+                           Margin="2" 
+                           AutoGenerateProperties="True" 
+                           SelectedObject="{Binding}"
+                           >
+            <xctk:PropertyGrid.Resources>
+                <Style TargetType="TextBox">
+                    <Setter Property="Width" Value="60"/>
+                    <Setter Property="TextAlignment" Value="Right"/>
+                    <Setter Property="Margin" Value="3,2,3,2"/>
+                </Style>
+
+                <Style TargetType="TextBlock" x:Key="XTemplate">
+                    <Setter Property="Width" Value="20"/>
+                    <Setter Property="Background" Value="Pink"/>
+                    <Setter Property="TextAlignment" Value="Right"/>
+                    <Setter Property="Padding" Value="2"/>
+                </Style>
+                <Style TargetType="TextBlock" x:Key="YTemplate">
+                    <Setter Property="Width" Value="20"/>
+                    <Setter Property="Background" Value="LightGreen"/>
+                    <Setter Property="TextAlignment" Value="Right"/>
+                    <Setter Property="Padding" Value="2"/>
+                </Style>
+                <Style TargetType="TextBlock" x:Key="ZTemplate">
+                    <Setter Property="Width" Value="20"/>
+                    <Setter Property="Background" Value="LightBlue"/>
+                    <Setter Property="TextAlignment" Value="Right"/>
+                    <Setter Property="Padding" Value="2"/>
+                </Style>
+
+                <Style TargetType="TextBlock" x:Key="WTemplate">
+                    <Setter Property="Width" Value="20"/>
+                    <Setter Property="Background" Value="White"/>
+                    <Setter Property="TextAlignment" Value="Right"/>
+                    <Setter Property="Padding" Value="2"/>
+                </Style>
+            </xctk:PropertyGrid.Resources>
+            <xctk:PropertyGrid.EditorDefinitions>
+                <xctk:EditorTemplateDefinition>
+                    <xctk:EditorTemplateDefinition.TargetProperties>
+                        <sys:String>Vector2</sys:String>
+                        <xctk:TargetPropertyType Type="{x:Type vm:Vector2ViewModel}"/>
+                    </xctk:EditorTemplateDefinition.TargetProperties>
+                    <xctk:EditorTemplateDefinition.EditingTemplate>
+                        <DataTemplate DataType="{x:Type vm:Vector2ViewModel}">
+                            <StackPanel>
+                                <WrapPanel>
+                                    <TextBlock Text="X" Style="{StaticResource XTemplate}"></TextBlock>
+                                    <TextBox Text="{Binding Value.X, StringFormat=N3}"></TextBox>
+                                    <TextBlock Text="Y" Style="{StaticResource YTemplate}"></TextBlock>
+                                    <TextBox Text="{Binding Value.Y, StringFormat=N3}"></TextBox>
+                                </WrapPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </xctk:EditorTemplateDefinition.EditingTemplate>
+                </xctk:EditorTemplateDefinition>
+
+                <xctk:EditorTemplateDefinition>
+                    <xctk:EditorTemplateDefinition.TargetProperties>
+                        <sys:String>Vector3</sys:String>
+                        <xctk:TargetPropertyType Type="{x:Type vm:Vector3ViewModel}"/>
+                    </xctk:EditorTemplateDefinition.TargetProperties>
+                    <xctk:EditorTemplateDefinition.EditingTemplate>
+                        <DataTemplate DataType="{x:Type vm:Vector3ViewModel}">
+                            <StackPanel >
+                                <WrapPanel>
+                                    <TextBlock Text="X" Style="{StaticResource XTemplate}"></TextBlock>
+                                    <TextBox Text="{Binding Value.X, StringFormat=N3}"></TextBox>
+                                    <TextBlock Text="Y" Style="{StaticResource YTemplate}"></TextBlock>
+                                    <TextBox Text="{Binding Value.Y, StringFormat=N3}" ></TextBox>
+                                    <TextBlock Text="Z"  Style="{StaticResource ZTemplate}"></TextBlock>
+                                    <TextBox Text="{Binding Value.Z, StringFormat=N3}" ></TextBox>
+                                </WrapPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </xctk:EditorTemplateDefinition.EditingTemplate>
+                </xctk:EditorTemplateDefinition>
+
+                <xctk:EditorTemplateDefinition>
+                    <xctk:EditorTemplateDefinition.TargetProperties>
+                        <sys:String>Vector4</sys:String>
+                        <xctk:TargetPropertyType Type="{x:Type vm:Vector4ViewModel}"/>
+                    </xctk:EditorTemplateDefinition.TargetProperties>
+
+                    <xctk:EditorTemplateDefinition.EditingTemplate>
+                        <DataTemplate DataType="{x:Type vm:Vector4ViewModel}">
+                            <StackPanel>
+                                <WrapPanel>
+                                    <TextBlock Text="X"  Style="{StaticResource XTemplate}"></TextBlock>
+                                    <TextBox Text="{Binding Value.X, StringFormat=N3}"></TextBox>
+                                    <TextBlock Text="Y"  Style="{StaticResource YTemplate}"></TextBlock>
+                                    <TextBox Text="{Binding Value.Y, StringFormat=N3}"></TextBox>
+                                    <TextBlock Text="Z"  Style="{StaticResource ZTemplate}"></TextBlock>
+                                    <TextBox Text="{Binding Value.Z, StringFormat=N3}"></TextBox>
+                                    <TextBlock Text="W"  Style="{StaticResource WTemplate}"></TextBlock>
+                                    <TextBox Text="{Binding Value.W, StringFormat=N3}"></TextBox>
+                                </WrapPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </xctk:EditorTemplateDefinition.EditingTemplate>
+                </xctk:EditorTemplateDefinition>
+
+
+                <xctk:EditorTemplateDefinition>
+                    <xctk:EditorTemplateDefinition.TargetProperties>
+                        <sys:String>Matrix3</sys:String>
+                        <xctk:TargetPropertyType Type="{x:Type vm:Matrix3ViewModel}"/>
+                    </xctk:EditorTemplateDefinition.TargetProperties>
+
+                    <xctk:EditorTemplateDefinition.EditingTemplate>
+                        <DataTemplate DataType="{x:Type vm:Matrix3ViewModel}">
+                            <StackPanel>
+                                <WrapPanel>
+                                    <TextBox Text="{Binding Value.M11, StringFormat=N3}"></TextBox>
+                                    <TextBox Text="{Binding Value.M12, StringFormat=N3}"></TextBox>
+                                    <TextBox Text="{Binding Value.M13, StringFormat=N3}"></TextBox>
+                                </WrapPanel>
+                                <WrapPanel>
+                                    <TextBox Text="{Binding Value.M21, StringFormat=N3}"></TextBox>
+                                    <TextBox Text="{Binding Value.M22, StringFormat=N3}"></TextBox>
+                                    <TextBox Text="{Binding Value.M23, StringFormat=N3}"></TextBox>
+                                </WrapPanel>
+                                <WrapPanel>
+                                    <TextBox Text="{Binding Value.M31, StringFormat=N3}"></TextBox>
+                                    <TextBox Text="{Binding Value.M32, StringFormat=N3}"></TextBox>
+                                    <TextBox Text="{Binding Value.M33, StringFormat=N3}"></TextBox>
+                                </WrapPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </xctk:EditorTemplateDefinition.EditingTemplate>
+                </xctk:EditorTemplateDefinition>
+
+
+                <xctk:EditorTemplateDefinition>
+                    <xctk:EditorTemplateDefinition.TargetProperties>
+                        <sys:String>Matrix4</sys:String>
+                        <xctk:TargetPropertyType Type="{x:Type vm:Matrix4ViewModel}"/>
+                    </xctk:EditorTemplateDefinition.TargetProperties>
+
+                    <xctk:EditorTemplateDefinition.EditingTemplate>
+                        <DataTemplate DataType="{x:Type vm:Matrix4ViewModel}">
+                            <StackPanel>
+                                <WrapPanel>
+                                    <TextBox Text="{Binding Value.M11, StringFormat=N3}"></TextBox>
+                                    <TextBox Text="{Binding Value.M12, StringFormat=N3}"></TextBox>
+                                    <TextBox Text="{Binding Value.M13, StringFormat=N3}"></TextBox>
+                                    <TextBox Text="{Binding Value.M14, StringFormat=N3}"></TextBox>
+                                </WrapPanel>
+                                <WrapPanel>
+                                    <TextBox Text="{Binding Value.M21, StringFormat=N3}"></TextBox>
+                                    <TextBox Text="{Binding Value.M22, StringFormat=N3}"></TextBox>
+                                    <TextBox Text="{Binding Value.M23, StringFormat=N3}"></TextBox>
+                                    <TextBox Text="{Binding Value.M24, StringFormat=N3}"></TextBox>
+                                </WrapPanel>
+                                <WrapPanel>
+                                    <TextBox Text="{Binding Value.M31, StringFormat=N3}"></TextBox>
+                                    <TextBox Text="{Binding Value.M32, StringFormat=N3}"></TextBox>
+                                    <TextBox Text="{Binding Value.M33, StringFormat=N3}"></TextBox>
+                                    <TextBox Text="{Binding Value.M23, StringFormat=N3}"></TextBox>
+                                </WrapPanel>
+                                <WrapPanel>
+                                    <TextBox Text="{Binding Value.M31, StringFormat=N3}"></TextBox>
+                                    <TextBox Text="{Binding Value.M32, StringFormat=N3}"></TextBox>
+                                    <TextBox Text="{Binding Value.M33, StringFormat=N3}"></TextBox>
+                                    <TextBox Text="{Binding Value.M34, StringFormat=N3}"></TextBox>
+                                </WrapPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </xctk:EditorTemplateDefinition.EditingTemplate>
+                </xctk:EditorTemplateDefinition>
+
+                <xctk:EditorTemplateDefinition>
+                    <xctk:EditorTemplateDefinition.TargetProperties>
+                        <sys:String>Image</sys:String>
+                        <xctk:TargetPropertyType Type="{x:Type vm:ImageViewModel}"/>
+                    </xctk:EditorTemplateDefinition.TargetProperties>
+
+                    <xctk:EditorTemplateDefinition.EditingTemplate>
+                        <DataTemplate DataType="{x:Type vm:ImageViewModel}">
+                            <StackPanel>
+                                <Image Source="{Binding Value.ImagePath}" Width="80" Height="80" ToolTip="{Binding Value.FileName}"/>
+                                <ComboBox ItemsSource="{Binding Value.Items}" SelectedIndex="{Binding Value.SelectIndex}" Margin="1"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </xctk:EditorTemplateDefinition.EditingTemplate>
+                </xctk:EditorTemplateDefinition>
+
+
+                <xctk:EditorTemplateDefinition>
+                    <xctk:EditorTemplateDefinition.TargetProperties>
+                        <sys:String>Default</sys:String>
+                        <xctk:TargetPropertyType Type="{x:Type vm:DefaultViewModel}"/>
+                    </xctk:EditorTemplateDefinition.TargetProperties>
+
+                    <xctk:EditorTemplateDefinition.EditingTemplate>
+                        <DataTemplate>
+                            <WrapPanel>
+                                <TextBlock Text="{Binding Value.Value, StringFormat=N3}"></TextBlock>
+                            </WrapPanel>
+                        </DataTemplate>
+                    </xctk:EditorTemplateDefinition.EditingTemplate>
+                </xctk:EditorTemplateDefinition>
+            </xctk:PropertyGrid.EditorDefinitions>
+        </xctk:PropertyGrid>
+    </Grid>
+</UserControl>

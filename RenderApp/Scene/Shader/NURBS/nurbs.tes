@@ -1,0 +1,80 @@
+#version 400
+layout(quads,equal_spacing,ccw) in;
+
+uniform mat4 MVP;
+out vec3 te_position;
+vec4 getNormal(float param)
+{
+	float u = param;
+	float t = 1.0 - param;
+
+	float b3 =  3.0 * u * u;
+	float b2 = -3.0 * u * u + 6.0 * u * t;
+
+	float b1 =  3.0 * t * t - 6.0 * u * t;
+	float b0 = -3.0 * t * t;
+
+	return vec4(b3,b2,b1,b0);
+}
+
+vec4 getPos(float param)
+{
+	float u = param;
+	float t = 1.0 - param;
+
+	float b3 = u * u * u;
+	float b2 = 3 * u * u * t;
+	float b1 = 3 * u * t * t;
+	float b0 = t * t * t;
+	
+	return vec4(b3,b2,b1,b0);
+}
+
+
+
+void main()
+{
+	vec4 p00 = gl_in[0].gl_Position;
+	vec4 p01 = gl_in[1].gl_Position;
+	vec4 p02 = gl_in[2].gl_Position;
+	vec4 p03 = gl_in[3].gl_Position;
+	vec4 p10 = gl_in[4].gl_Position;
+	vec4 p11 = gl_in[5].gl_Position;
+	vec4 p12 = gl_in[6].gl_Position;
+	vec4 p13 = gl_in[7].gl_Position;
+	vec4 p20 = gl_in[8].gl_Position;
+	vec4 p21 = gl_in[9].gl_Position;
+	vec4 p22 = gl_in[10].gl_Position;
+	vec4 p23 = gl_in[11].gl_Position;
+	vec4 p30 = gl_in[12].gl_Position;
+	vec4 p31 = gl_in[13].gl_Position;
+	vec4 p32 = gl_in[14].gl_Position;
+	vec4 p33 = gl_in[15].gl_Position;
+
+	vec4 uParam = getPos(gl_TessCoord.x);
+	vec4 vParam = getPos(gl_TessCoord.y);
+
+	vec4 du = getNormal(gl_TessCoord.x);
+	vec4 dv = getNormal(gl_TessCoord.y);
+
+	vec4 point = 
+	p00 * uParam.x * vParam.x + p01 * uParam.x * vParam.y +	p02 * uParam.x * vParam.z +	p03 * uParam.x * vParam.w +
+	p10 * uParam.y * vParam.x +	p11 * uParam.y * vParam.y +	p12 * uParam.y * vParam.z +	p13 * uParam.y * vParam.w +
+	p20 * uParam.z * vParam.x +	p21 * uParam.z * vParam.y +	p22 * uParam.z * vParam.z +	p23 * uParam.z * vParam.w +
+	p30 * uParam.w * vParam.x +	p31 * uParam.w * vParam.y +	p32 * uParam.w * vParam.z +	p33 * uParam.w * vParam.w;
+
+	vec4 Tangent = 
+	p00 * vParam.x * du.x + p10 * vParam.x * du.y + p20 * vParam.x * du.z + p30 * vParam.x * du.w +
+	p01 * vParam.y * du.x + p11 * vParam.y * du.y + p21 * vParam.y * du.z + p31 * vParam.y * du.w +
+	p02 * vParam.z * du.x + p12 * vParam.z * du.y + p22 * vParam.z * du.z + p32 * vParam.z * du.w +
+	p03 * vParam.w * du.x + p13 * vParam.w * du.y + p23 * vParam.w * du.z + p33 * vParam.w * du.w;
+	 
+	vec4 Bitangent = 
+	p00 * uParam.x * dv.x + p10 * uParam.x * dv.y + p20 * uParam.x * dv.z + p30 * uParam.x * dv.w +
+	p01 * uParam.y * dv.x + p11 * uParam.y * dv.y + p21 * uParam.y * dv.z + p31 * uParam.y * dv.w +
+	p02 * uParam.z * dv.x + p12 * uParam.z * dv.y + p22 * uParam.z * dv.z + p32 * uParam.z * dv.w +
+	p03 * uParam.w * dv.x + p13 * uParam.w * dv.y + p23 * uParam.w * dv.z + p33 * uParam.w * dv.w;
+
+	gl_Position = MVP * point;
+	te_position = point.xyz;
+}
