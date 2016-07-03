@@ -203,7 +203,7 @@
     </Compile>
     <Compile Include="Assets\Shader\ShaderProgram.cs" />
     <Compile Include="Scene\Shader\Bezier\Bezier.cs" />
-    <Compile Include="GLUtil\GBuffer.cs" />
+    <Compile Include="Assets\GBuffer.cs" />
     <Compile Include="Assets\Geometry\Primitive\Space.cs" />
     <Compile Include="Assets\Geometry\Primitive\Primitive.cs" />
     <Compile Include="View\GeometryView.xaml.cs">

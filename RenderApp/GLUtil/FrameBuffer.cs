@@ -49,11 +49,20 @@ namespace RenderApp.GLUtil
             Initialize(width, height, new string[] { textureName }, new FramebufferAttachment[] { FramebufferAttachment.ColorAttachment0 });
         }
 
-        public FrameBuffer(string FrameName,int width,int height,string[] textureName,FramebufferAttachment[] attachment)
+        public FrameBuffer(string FrameName,int width,int height,string[] textureName)
         {
             this.Name = FrameName;
+
+            FramebufferAttachment[] attachment = new FramebufferAttachment[textureName.Length];
+
+            for (int i = 0; i < textureName.Length; i++)
+            {
+                attachment[i] = FramebufferAttachment.ColorAttachment1 + i;
+            }
+
             Initialize(width, height, textureName, attachment);
         }
+
         private void Initialize(int width, int height, string[] textureName, FramebufferAttachment[] attachment)
         {
 
