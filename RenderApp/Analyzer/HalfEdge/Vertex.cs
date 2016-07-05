@@ -8,8 +8,12 @@ namespace RenderApp.Analyzer
 {
     public class Vertex
     {
-        List<Edge> m_Edge = new List<Edge>();
-        private Vector3 m_Vertex;
+        private List<Edge> m_AroundEdge = new List<Edge>();
+        public Vector3 Position
+        {
+            get;
+            private set;
+        }
         public int Number = -1;
         public float GaussCurvature;
         public float MeanCurvature;
@@ -17,14 +21,28 @@ namespace RenderApp.Analyzer
         public float MaxCurvature;
         public float VoronoiRagion;
         public bool calcFrag = false;
-        public Vector3 Normal { get; set; }
         public Vector3 MaxVector { get; set; }
         public Vector3 MinVector { get; set; }
-        
-        
+
+        #region [operator]
+        public static Vector3 operator +(Vertex v1, Vertex v2)
+        {
+            return new Vector3(v1.Position + v2.Position);
+        }
+        public static Vector3 operator -(Vertex v1,Vertex v2)
+        {
+            return new Vector3(v1.Position - v2.Position);
+        }
+        public static Vector3 operator *(Vertex v1,Vertex v2)
+        {
+            return new Vector3(v1.Position * v2.Position);
+        }
+        #endregion
+
+
         public Vertex(Vector3 pos,int number)
         {
-            m_Vertex = pos;
+            Position = pos;
             Number = number;
         }
         /// <summary>
@@ -33,30 +51,60 @@ namespace RenderApp.Analyzer
         /// <param name="edge"></param>
         public void AddEdge(Edge edge)
         {
-            for (int i = 0; i < m_Edge.Count; i++ )
+            for (int i = 0; i < m_AroundEdge.Count; i++)
             {
-                if(m_Edge[i] == edge)
+                if (m_AroundEdge[i] == edge)
                 {
                     return;
                 }
             }
-                m_Edge.Add(edge);
+            m_AroundEdge.Add(edge);
         }
         /// <summary>
         /// エッジ
         /// </summary>
         /// <returns></returns>
-        public List<Edge> GetEdge()
+        public List<Edge> GetAroundEdgeList()
         {
-            return m_Edge;
+            return m_AroundEdge;
+        }
+        public IEnumerable<Edge> GetAroundEdge()
+        {
+            foreach(var edge in m_AroundEdge)
+            {
+                yield return edge;
+            }
         }
         /// <summary>
         /// 頂点座標
         /// </summary>
         /// <returns></returns>
-        public Vector3 GetVertex()
+        public Vector3 GetPosition()
         {
-            return m_Vertex;
+            return Position;
+        }
+
+        private Vector3 _normal;
+        public Vector3 Normal
+        {
+            get
+            {
+                if (_normal == null)
+                {
+                    Vector3 sum = Vector3.Zero;
+                    int count = 0;
+                    foreach (var edge in GetAroundEdge())
+                    {
+                        sum += edge.Mesh.Normal;
+                    }
+                    sum.X /= count;
+                    sum.Y /= count;
+                    sum.Z /= count;
+                    _normal = sum.Normalized();
+                }
+                return _normal;
+
+            }
         }
     }
 }

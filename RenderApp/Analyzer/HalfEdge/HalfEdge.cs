@@ -10,9 +10,9 @@ namespace RenderApp.Analyzer
 {
     public class HalfEdge : IAnalyzer
     {
-        public List<Mesh> m_Mesh = new List<Mesh>();
-        public List<Edge> m_Edge = new List<Edge>();
-        public List<Vertex> m_Vertex = new List<Vertex>();
+        private List<Mesh> m_Mesh = new List<Mesh>();
+        private List<Edge> m_Edge = new List<Edge>();
+        private List<Vertex> m_Vertex = new List<Vertex>();
         public Parameter GaussCurvature = new Parameter();
         public Parameter MeanCurvature = new Parameter();
         public Parameter MaxCurvature = new Parameter();
@@ -31,21 +31,20 @@ namespace RenderApp.Analyzer
             SetOppositeEdge();
 
             SetMeshParameter();
-            SetEdgeParameter();
             SetVertexParameter();
 
             SetNormalizeParameter();
 
-            //if (CheckOppositeEdge())
-            //{
-            //    Console.WriteLine("OK!");
-            //}
-            //else
-            //{
-            //    Console.WriteLine("NG!");
-            //}
+            if (CheckOppositeEdge())
+            {
+                Console.WriteLine("OK!");
+            }
+            else
+            {
+                Console.WriteLine("NG!");
+            }
         }
-        #region [HalfEdge作成処理]
+        #region [make halfedge data structure]
         /// <summary>
         /// ハーフエッジ用のリストに頂点を格納
         /// </summary>
@@ -64,16 +63,13 @@ namespace RenderApp.Analyzer
         private void MakeEdgeList(List<int> poly_Index)
         {
             int poly_Num = poly_Index.Count / 3;
-            Vertex v1;
-            Vertex v2;
-            Vertex v3;
             for (int num = 0; num < poly_Num; num++)
             {
                 Mesh mesh = new Mesh();
 
-                v1 =  m_Vertex[poly_Index[3 * num]];
-                v2 =  m_Vertex[poly_Index[3 * num + 1]];
-                v3 =  m_Vertex[poly_Index[3 * num + 2]];
+                Vertex v1 = m_Vertex[poly_Index[3 * num]];
+                Vertex v2 = m_Vertex[poly_Index[3 * num + 1]];
+                Vertex v3 = m_Vertex[poly_Index[3 * num + 2]];
                 Edge edge1 = new Edge(mesh, v1, v2);
                 Edge edge2 = new Edge(mesh, v2, v3);
                 Edge edge3 = new Edge(mesh, v3, v1);
@@ -112,15 +108,11 @@ namespace RenderApp.Analyzer
         /// </summary>
         private void SetOppositeEdge()
         {
-            List<Edge> edge;
-
-            for(int i = 0; i < m_Vertex.Count; i++)
+            foreach(var vertex in m_Vertex)
             {
-                edge = m_Vertex[i].GetEdge();
-                //頂点のエッジループ
-                for(int j = 0; j < edge.Count; j++)
+                foreach(var edge in vertex.GetAroundEdge())
                 {
-                    SetOppositeEdge2(edge[j]);
+                    SetOppositeEdge2(edge);
                 }
             }
         }
@@ -142,13 +134,12 @@ namespace RenderApp.Analyzer
             Vertex start = edge.Start;
             Vertex end = edge.End;
             //反対の頂点のエッジループ
-            List<Edge> op_Edge = end.GetEdge();
-            for (int i = 0; i < op_Edge.Count; i++ )
+            foreach (var opposite in end.GetAroundEdge())
             {
-                if (op_Edge[i].Start == end && op_Edge[i].End == start)
+                if (opposite.Start == end && opposite.End == start)
                 {
-                    op_Edge[i].Opposite = edge;
-                    edge.Opposite = op_Edge[i];
+                    opposite.Opposite = edge;
+                    edge.Opposite = opposite;
                     break;
                 }
             }
@@ -161,15 +152,14 @@ namespace RenderApp.Analyzer
         {
             int ok_flag = 0;
             Edge opposite;
-            for (int i = 0; i < m_Edge.Count; i++)
+            foreach(var edge in m_Edge)
             {
-                opposite = m_Edge[i].Opposite;
-                if (m_Edge[i].Start == opposite.End
-                    && m_Edge[i].End == opposite.Start)
+                opposite = edge.Opposite;
+                if (edge.Start == opposite.End
+                    && edge.End == opposite.Start)
                 {
                     ok_flag++;
                 }
-
             }
             if (ok_flag == m_Edge.Count)
             {
@@ -179,10 +169,9 @@ namespace RenderApp.Analyzer
             {
                 return false;
             }
-            return true;
         }
         #endregion
-        #region [ゲッター関数]
+        #region [getter method]
 
 
         /// <summary>
@@ -208,21 +197,18 @@ namespace RenderApp.Analyzer
         /// </summary>
         public List<Edge> GetAroundEdge(int vertex_Index)
         {
-            List<Edge> edge_List = m_Vertex[vertex_Index].GetEdge();
+            List<Edge> edge_List = m_Vertex[vertex_Index].GetAroundEdgeList();
             return edge_List;
         }
         /// <summary>
         /// 1-ringの周辺頂点インデックス
         /// </summary>
-        public List<int> GetAroundVertex(int vertex_Index)
+        public IEnumerable<int> GetAroundVertexIndex(int vertex_Index)
         {
-            List<Edge> edge_List = m_Vertex[vertex_Index].GetEdge();
-            List<int> pos = new List<int>();
-            for (int i = 0; i < edge_List.Count; i++ )
+            foreach(var edge in m_Vertex[vertex_Index].GetAroundEdge())
             {
-               pos.Add(edge_List[i].End.Number);
+                yield return edge.End.Number;
             }
-            return pos;
         }
 
         /// <summary>
@@ -230,15 +216,12 @@ namespace RenderApp.Analyzer
         /// </summary>
         /// <param name="vert_Index"></param>
         /// <returns></returns>
-        public List<Mesh> GetAroundMesh(int vert_Index)
+        public IEnumerable<Mesh> GetAroundMesh(int vert_Index)
         {
-            List<Mesh> MeshList = new List<Mesh>();
-            List<Edge> edge = GetAroundEdge(vert_Index);
-            for(int i = 0; i <edge.Count; i++)
+            foreach(var edge in GetAroundEdge(vert_Index))
             {
-                MeshList.Add(edge[i].Mesh);
+                yield return edge.Mesh;
             }
-            return MeshList;
         }
         /// <summary>
         /// 一定距離内の頂点の取得
@@ -250,12 +233,12 @@ namespace RenderApp.Analyzer
             List<Vertex> vertex_list = new List<Vertex>();
             vertex.calcFrag = true;
             vertex_list.Add(vertex);
-            RecursiveAroundPosition(vertex_list, vertex,vertex, distance);
+            RecursiveAroundPosition(vertex_list, vertex, vertex, distance);
             for (int i = 0; i < vertex_list.Count; i++)
             {
                 vertex_list[i].calcFrag = false;
             }
-                return vertex_list;
+            return vertex_list;
         }
         
         /// <summary>
@@ -266,16 +249,15 @@ namespace RenderApp.Analyzer
         private void RecursiveAroundPosition(List<Vertex> vertex_list, Vertex vertex,Vertex startVertex,float distance)
         {
 
-            List<Edge> aroundEdge = vertex.GetEdge();
             float length;
-            for (int i = 0; i < aroundEdge.Count; i++)
+            foreach (var aroundEdge in vertex.GetAroundEdge())
             {
-                length = (startVertex.GetVertex() - aroundEdge[i].End.GetVertex()).Length; 
-                if ( length < distance && aroundEdge[i].End.calcFrag == false)
+                length = (startVertex - aroundEdge.End).Length; 
+                if ( length < distance && aroundEdge.End.calcFrag == false)
                 {
-                    aroundEdge[i].End.calcFrag = true;
-                    vertex_list.Add(aroundEdge[i].End);
-                    RecursiveAroundPosition(vertex_list,aroundEdge[i].End,startVertex, distance);
+                    aroundEdge.End.calcFrag = true;
+                    vertex_list.Add(aroundEdge.End);
+                    RecursiveAroundPosition(vertex_list,aroundEdge.End,startVertex, distance);
                 }
             }
         }
@@ -288,7 +270,6 @@ namespace RenderApp.Analyzer
         {
             for (int i = 0; i < m_Vertex.Count; i++)
             {
-                SetVertexNormal(i);
                 SetVoronoiRagion(i);
                 SetGaussianParameter(i);
                 SetMeanCurvature(i);
@@ -346,54 +327,25 @@ namespace RenderApp.Analyzer
             GaussCurvature.AddValue(m_Vertex[v_index].GaussCurvature);
         }
         /// <summary>
-        /// 頂点法線
-        /// </summary>
-        /// <param name="v_index"></param>
-        private void SetVertexNormal(int v_index)
-        {
-            Vector3 normal = new Vector3();
-            List<Mesh>  mesh_list = GetAroundMesh(v_index);
-            for (int j = 0; j < mesh_list.Count; j++)
-            {
-                normal += mesh_list[j].Normal;
-            }
-            normal.X /= mesh_list.Count;
-            normal.Y /= mesh_list.Count;
-            normal.Z /= mesh_list.Count;
-
-            m_Vertex[v_index].Normal = normal.Normalized();
-
-        }
-        /// <summary>
         /// 平均曲率
         /// </summary>
         /// <param name="v_index"></param>
         private void SetMeanCurvature(int v_index)
         {
             float angle;
-            List<Edge> edge_list;
-            Edge edge;
             Edge opposite;
             float alpha;
             float beta;
             float length;
-            Vertex start;
-            Vertex end;
             angle = 0;
-            edge_list = GetAroundEdge(v_index);
-            for (int j = 0; j < edge_list.Count; j++)
+            foreach(var edge in GetAroundEdge(v_index))
             {
-                edge = edge_list[j];
 
-                start = edge.Start;
-                end = edge.End;
-
-                length = (start.GetVertex() - end.GetVertex()).Length;
+                length = edge.Length;
                 opposite = edge.Opposite;
                 alpha = edge.Next.Next.Angle;
                 beta = opposite.Next.Next.Angle;
                 angle += (float)((1 / Math.Cos(alpha)) + (1 / Math.Cos(beta))) * length;
-                
             }
             m_Vertex[v_index].MeanCurvature =  angle / ( m_Vertex[v_index].VoronoiRagion * 2);
             MeanCurvature.AddValue(m_Vertex[v_index].MeanCurvature);
@@ -406,28 +358,19 @@ namespace RenderApp.Analyzer
         private void SetVoronoiRagion(int v_index)
         {
             float angle;
-            List<Edge> edge_list;
-            Edge edge;
             Edge opposite;
             float alpha;
             float beta;
             float length;
-            Vertex start;
-            Vertex end;
             angle = 0;
-            edge_list = GetAroundEdge(v_index);
-            for (int j = 0; j < edge_list.Count; j++)
+
+            foreach (var edge in GetAroundEdge(v_index))
             {
-                edge = edge_list[j];
-
-                start = edge.Start;
-                end = edge.End;
-
-                length = (start.GetVertex() - end.GetVertex()).Length;
+                length = edge.Length;
                 opposite = edge.Opposite;
                 alpha = edge.Next.Next.Angle;
                 beta = opposite.Next.Next.Angle;
-                angle += (float)((1 / Math.Cos(alpha)) + (1 / Math.Cos(beta))) * length * length;
+                angle += (float)((1 / Math.Cos(alpha)) + (1 / Math.Cos(beta))) * length;
 
             }
             m_Vertex[v_index].VoronoiRagion = angle/8;
@@ -467,40 +410,13 @@ namespace RenderApp.Analyzer
             for (int i = 0; i < m_Mesh.Count; i++)
             {
                 v_Index = m_Mesh[i].GetAroundVertex();
-                normal = CCalc.Normal(v_Index[1].GetVertex() - v_Index[0].GetVertex(), v_Index[2].GetVertex() - v_Index[0].GetVertex());
+                normal = CCalc.Normal(v_Index[1].GetPosition() - v_Index[0].GetPosition(), v_Index[2].GetPosition() - v_Index[0].GetPosition());
                 m_Mesh[i].Normal = normal.Normalized();
 
             }
         }
         #endregion
         #region [エッジパラメータ]
-        /// <summary>
-        /// エッジの角度の格納
-        /// </summary>
-        private void SetEdgeParameter()
-        {
-            Edge r_before;
-            Vector3 start;
-            Vector3 end;
-            Vector3 r_start;
-            Vector3 r_end;
-            Vector3 edge1, edge2;
-            for (int i = 0; i < m_Edge.Count; i++)
-            {
-                start = m_Edge[i].Start.GetVertex();
-                end = m_Edge[i].End.GetVertex();
-                r_before = m_Edge[i].Before;
-                r_start = r_before.Start.GetVertex();
-                r_end = r_before.End.GetVertex();
-                edge1 = end - start;
-                edge2 = r_start - r_end;
-
-                m_Edge[i].Angle = CCalc.Angle(edge1.Normalized(), edge2.Normalized());
-
-                
-
-            }
-        }
         /// <summary>
         /// 接平面に投影した時のベクトル
         /// </summary>
@@ -515,7 +431,7 @@ namespace RenderApp.Analyzer
             Vector2 TangentUV;
             Matrix3 ellipse = new Matrix3();
             Vector3 kapper = new Vector3();
-            edge = around[0].End.GetVertex() - around[0].Start.GetVertex();
+            edge = around[0].End.GetPosition() - around[0].Start.GetPosition();
             numer = edge - (Vector3.Dot(edge, m_Vertex[v_index].Normal) * m_Vertex[v_index].Normal);
             denom = new Vector3(numer.Length);
             float edge_Kapper;
@@ -533,7 +449,7 @@ namespace RenderApp.Analyzer
 
             for (int i = 0; i < around.Count; i++)
             {
-                edge = around[i].End.GetVertex() - around[i].Start.GetVertex();
+                edge = around[i].End.GetPosition() - around[i].Start.GetPosition();
                 numer = edge - (Vector3.Dot(edge, Normal) * Normal);
                 denom = new Vector3(numer.Length);
                 tangent = new Vector3(numer.X / denom.X, numer.Y / denom.Y, numer.Z / denom.Z);

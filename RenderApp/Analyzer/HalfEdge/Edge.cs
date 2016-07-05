@@ -36,8 +36,38 @@ namespace RenderApp.Analyzer
         /// <summary>
         /// 三角形を構成するエッジの角度thisと前のエッジの反対の角度
         /// </summary>
-        public float Angle { get; set; }
+        private float _angle = 0.0f;
+        public float Angle
+        {
+            get
+            {
+                if(_angle == 0.0f)
+                {
+                    if(Start == null || End == null || Before == null || Opposite == null)
+                    {
+                        GLUtil.Output.GLError("half edge angle error");
+                        return _angle = 0.0f;
+                    }
 
+                    _angle = Utility.CCalc.Angle((End - Start).Normalized(), (Before.Opposite.Start - Before.Opposite.End).Normalized());
+                }
+                return _angle;
+            }
+
+        }
+
+        public float Length
+        {
+            get
+            {
+                if(Start == null || End == null)
+                {
+                    GLUtil.Output.GLError("half edge Length error");
+                    return 0.0f;
+                }
+                return (Start - End).Length;
+            }
+        }
         public Edge(Mesh meshIndex, Vertex start, Vertex end)
         {
             Mesh = meshIndex;
