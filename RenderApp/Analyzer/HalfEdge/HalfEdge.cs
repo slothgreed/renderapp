@@ -192,14 +192,29 @@ namespace RenderApp.Analyzer
         {
             return m_Vertex[index].Normal;
         }
-        /// <summary>
-        /// 頂点周りのエッジ取得
-        /// </summary>
-        public List<Edge> GetAroundEdge(int vertex_Index)
+
+        public IEnumerable<Edge> GetAroundEdge(int vertex_Index)
         {
-            List<Edge> edge_List = m_Vertex[vertex_Index].GetAroundEdgeList();
-            return edge_List;
+            foreach(var edge in m_Vertex[vertex_Index].GetAroundEdge())
+            {
+                yield return edge;
+            }
         }
+
+        /// <summary>
+        /// 頂点周りのメッシュの取得
+        /// </summary>
+        /// <param name="vert_Index"></param>
+        /// <returns></returns>
+        public IEnumerable<Mesh> GetAroundMesh(int vertex_Index)
+        {
+            foreach(var mesh in m_Vertex[vertex_Index].GetAroundMesh())
+            {
+                yield return mesh;
+            }
+        }
+
+        
         /// <summary>
         /// 1-ringの周辺頂点インデックス
         /// </summary>
@@ -211,18 +226,6 @@ namespace RenderApp.Analyzer
             }
         }
 
-        /// <summary>
-        /// 頂点周りのメッシュの取得
-        /// </summary>
-        /// <param name="vert_Index"></param>
-        /// <returns></returns>
-        public IEnumerable<Mesh> GetAroundMesh(int vert_Index)
-        {
-            foreach(var edge in GetAroundEdge(vert_Index))
-            {
-                yield return edge.Mesh;
-            }
-        }
         /// <summary>
         /// 一定距離内の頂点の取得
         /// </summary>
@@ -248,7 +251,6 @@ namespace RenderApp.Analyzer
         /// <param name="distance"></param>
         private void RecursiveAroundPosition(List<Vertex> vertex_list, Vertex vertex,Vertex startVertex,float distance)
         {
-
             float length;
             foreach (var aroundEdge in vertex.GetAroundEdge())
             {
@@ -314,13 +316,12 @@ namespace RenderApp.Analyzer
         private void SetGaussianParameter(int v_index)
         {
             float angle;
-            List<Edge> edge_list;
 
             angle = 0;
-            edge_list = GetAroundEdge(v_index);
-            for (int j = 0; j < edge_list.Count; j++)
+
+            foreach(var edge in GetAroundEdge(v_index))
             {
-                angle += edge_list[j].Angle;
+                angle += edge.Angle;
             }
             
             m_Vertex[v_index].GaussCurvature = (2 * MathHelper.Pi - angle) / m_Vertex[v_index].VoronoiRagion;
@@ -423,63 +424,63 @@ namespace RenderApp.Analyzer
         /// <param name="v_index"></param>
         private void SetPrincipalCurvature(int v_index)
         {
-            List<Edge> around = GetAroundEdge(v_index);
-            Vector3 edge;
-            Vector3 numer;
-            Vector3 denom;
-            Vector3 tangent;
-            Vector2 TangentUV;
-            Matrix3 ellipse = new Matrix3();
-            Vector3 kapper = new Vector3();
-            edge = around[0].End.GetPosition() - around[0].Start.GetPosition();
-            numer = edge - (Vector3.Dot(edge, m_Vertex[v_index].Normal) * m_Vertex[v_index].Normal);
-            denom = new Vector3(numer.Length);
-            float edge_Kapper;
-            //基底Z方向ベクトル
-            Vector3 Normal = m_Vertex[v_index].Normal;
-            //基底U方向ベクトル
-            Vector3 baseU = new Vector3(numer.X / denom.X, numer.Y / denom.Y, numer.Z / denom.Z);
-            baseU.Normalize();
+            //List<Edge> around = GetAroundEdge(v_index);
+            //Vector3 edge;
+            //Vector3 numer;
+            //Vector3 denom;
+            //Vector3 tangent;
+            //Vector2 TangentUV;
+            //Matrix3 ellipse = new Matrix3();
+            //Vector3 kapper = new Vector3();
+            //edge = around[0].End.GetPosition() - around[0].Start.GetPosition();
+            //numer = edge - (Vector3.Dot(edge, m_Vertex[v_index].Normal) * m_Vertex[v_index].Normal);
+            //denom = new Vector3(numer.Length);
+            //float edge_Kapper;
+            ////基底Z方向ベクトル
+            //Vector3 Normal = m_Vertex[v_index].Normal;
+            ////基底U方向ベクトル
+            //Vector3 baseU = new Vector3(numer.X / denom.X, numer.Y / denom.Y, numer.Z / denom.Z);
+            //baseU.Normalize();
 
-            float inner = Vector3.Dot(baseU, Normal);
-            //基底V方向ベクトル
-            Vector3 baseV = Vector3.Cross(baseU, Normal);
-            baseV.Normalize();
+            //float inner = Vector3.Dot(baseU, Normal);
+            ////基底V方向ベクトル
+            //Vector3 baseV = Vector3.Cross(baseU, Normal);
+            //baseV.Normalize();
 
 
-            for (int i = 0; i < around.Count; i++)
-            {
-                edge = around[i].End.GetPosition() - around[i].Start.GetPosition();
-                numer = edge - (Vector3.Dot(edge, Normal) * Normal);
-                denom = new Vector3(numer.Length);
-                tangent = new Vector3(numer.X / denom.X, numer.Y / denom.Y, numer.Z / denom.Z);
-                TangentUV = new Vector2(Vector3.Dot(baseU, tangent), Vector3.Dot(baseV, tangent));
-                edge_Kapper = 2 * Vector3.Dot(-edge, Normal) / (edge).Length * (edge).Length;
+            //for (int i = 0; i < around.Count; i++)
+            //{
+            //    edge = around[i].End.GetPosition() - around[i].Start.GetPosition();
+            //    numer = edge - (Vector3.Dot(edge, Normal) * Normal);
+            //    denom = new Vector3(numer.Length);
+            //    tangent = new Vector3(numer.X / denom.X, numer.Y / denom.Y, numer.Z / denom.Z);
+            //    TangentUV = new Vector2(Vector3.Dot(baseU, tangent), Vector3.Dot(baseV, tangent));
+            //    edge_Kapper = 2 * Vector3.Dot(-edge, Normal) / (edge).Length * (edge).Length;
                
 
-                ellipse.M11 += (TangentUV.X * TangentUV.X * TangentUV.X * TangentUV.X);
-                ellipse.M12 += (TangentUV.X * TangentUV.X * TangentUV.X * TangentUV.Y);
-                ellipse.M13 += (TangentUV.X * TangentUV.X * TangentUV.Y * TangentUV.Y);
+            //    ellipse.M11 += (TangentUV.X * TangentUV.X * TangentUV.X * TangentUV.X);
+            //    ellipse.M12 += (TangentUV.X * TangentUV.X * TangentUV.X * TangentUV.Y);
+            //    ellipse.M13 += (TangentUV.X * TangentUV.X * TangentUV.Y * TangentUV.Y);
 
-                ellipse.M21 += (TangentUV.X * TangentUV.X * TangentUV.X * TangentUV.Y);
-                ellipse.M22 += (TangentUV.X * TangentUV.X * TangentUV.Y * TangentUV.Y);
-                ellipse.M23 += (TangentUV.X * TangentUV.Y * TangentUV.Y * TangentUV.Y);
+            //    ellipse.M21 += (TangentUV.X * TangentUV.X * TangentUV.X * TangentUV.Y);
+            //    ellipse.M22 += (TangentUV.X * TangentUV.X * TangentUV.Y * TangentUV.Y);
+            //    ellipse.M23 += (TangentUV.X * TangentUV.Y * TangentUV.Y * TangentUV.Y);
 
-                ellipse.M31 += (TangentUV.X * TangentUV.X * TangentUV.Y * TangentUV.Y);
-                ellipse.M32 += (TangentUV.X * TangentUV.Y * TangentUV.Y * TangentUV.Y);
-                ellipse.M33 += (TangentUV.Y * TangentUV.Y * TangentUV.Y * TangentUV.Y);
+            //    ellipse.M31 += (TangentUV.X * TangentUV.X * TangentUV.Y * TangentUV.Y);
+            //    ellipse.M32 += (TangentUV.X * TangentUV.Y * TangentUV.Y * TangentUV.Y);
+            //    ellipse.M33 += (TangentUV.Y * TangentUV.Y * TangentUV.Y * TangentUV.Y);
 
-                kapper.X += edge_Kapper * TangentUV.X * TangentUV.X;
-                kapper.Y += edge_Kapper * TangentUV.X * TangentUV.Y;
-                kapper.Z += edge_Kapper * TangentUV.Y * TangentUV.Y;
+            //    kapper.X += edge_Kapper * TangentUV.X * TangentUV.X;
+            //    kapper.Y += edge_Kapper * TangentUV.X * TangentUV.Y;
+            //    kapper.Z += edge_Kapper * TangentUV.Y * TangentUV.Y;
 
-            }
+            //}
 
-            ellipse.Invert();
-            Vector3 result = CCalc.Multiply(ellipse, kapper);
-            float a = result.X;
-            float b = result.Y / 2;
-            float c = result.Z;
+            //ellipse.Invert();
+            //Vector3 result = CCalc.Multiply(ellipse, kapper);
+            //float a = result.X;
+            //float b = result.Y / 2;
+            //float c = result.Z;
             //CvMat eigenVector;
             //CvMat eigenValue;
             //CvMat matEplise = Cv.CreateMat(2, 2, MatrixType.F32C1);

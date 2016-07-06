@@ -75,6 +75,13 @@ namespace RenderApp.Analyzer
                 yield return edge;
             }
         }
+        public IEnumerable<Mesh> GetAroundMesh()
+        {
+            foreach(var edge in GetAroundEdge())
+            {
+                yield return edge.Mesh;
+            }
+        }
         /// <summary>
         /// 頂点座標
         /// </summary>
