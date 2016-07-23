@@ -10,9 +10,9 @@ namespace RenderApp.Analyzer
 {
     public class HalfEdge : IAnalyzer
     {
-        private List<Mesh> m_Mesh = new List<Mesh>();
-        private List<Edge> m_Edge = new List<Edge>();
-        private List<Vertex> m_Vertex = new List<Vertex>();
+        public List<Mesh> m_Mesh = new List<Mesh>();
+        public List<Edge> m_Edge = new List<Edge>();
+        public List<Vertex> m_Vertex = new List<Vertex>();
         public Parameter GaussCurvature = new Parameter();
         public Parameter MeanCurvature = new Parameter();
         public Parameter MaxCurvature = new Parameter();
@@ -172,17 +172,6 @@ namespace RenderApp.Analyzer
         }
         #endregion
         #region [getter method]
-
-
-        /// <summary>
-        /// 隣接エッジの取得
-        /// </summary>
-        /// <param name="edge_Index"></param>
-        /// <returns></returns>
-        public Edge GetNeightEdge(Edge edge)
-        {
-            return edge.Opposite.Next;            
-        }
         /// <summary>
         /// 頂点のindex（頂点配列用の）
         /// </summary>
@@ -213,8 +202,6 @@ namespace RenderApp.Analyzer
                 yield return mesh;
             }
         }
-
-        
         /// <summary>
         /// 1-ringの周辺頂点インデックス
         /// </summary>
@@ -222,7 +209,7 @@ namespace RenderApp.Analyzer
         {
             foreach(var edge in m_Vertex[vertex_Index].GetAroundEdge())
             {
-                yield return edge.End.Number;
+                yield return edge.End.Index;
             }
         }
 

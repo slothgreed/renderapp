@@ -14,7 +14,7 @@ namespace RenderApp.Analyzer
             get;
             private set;
         }
-        public int Number = -1;
+        public int Index { get; private set; }
         public float GaussCurvature;
         public float MeanCurvature;
         public float MinCurvature;
@@ -43,7 +43,7 @@ namespace RenderApp.Analyzer
         public Vertex(Vector3 pos,int number)
         {
             Position = pos;
-            Number = number;
+            Index = number;
         }
         /// <summary>
         /// エッジのインデックスのセッタ
@@ -80,6 +80,13 @@ namespace RenderApp.Analyzer
             foreach(var edge in GetAroundEdge())
             {
                 yield return edge.Mesh;
+            }
+        }
+        public IEnumerable<Vertex> GetAroundVertex()
+        {
+            foreach(var edge in m_AroundEdge)
+            {
+                yield return edge.End;
             }
         }
         /// <summary>

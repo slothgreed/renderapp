@@ -144,6 +144,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Analyzer\HalfEdge\Dijkstra.cs" />
     <Compile Include="GLUtil\Output.cs" />
     <Compile Include="Assets\EnvironmentProbe.cs" />
     <Compile Include="Assets\Geometry\File\GeometryLoader.cs" />
@@ -188,7 +189,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MainWindowViewModelT4.tt</DependentUpon>
     </Compile>
-    <Compile Include="Analyzer\BDB\BDB.cs" />
+    <Compile Include="Analyzer\Tree\BDB.cs" />
     <Compile Include="Analyzer\IAnalyzer.cs" />
     <Compile Include="Scene\Material\Material.cs" />
     <Compile Include="ViewModel\ModelViewModel.cs" />
