@@ -33,28 +33,30 @@ namespace RenderApp.AssetModel.MaterialModel
             get;
             private set;
         }
+        private Shader _forward;
         public Shader Forward
         {
             get
             {
-                return _shader;
+                return _forward;
             }
             private set
             {
-                _shader = value;
-                _shader.AnalizeShaderProgram();
+                _forward = value;
+                _forward.AnalizeShaderProgram();
             }
         }
+        private Shader _deffered;
         public Shader Defferd
         {
             get
             {
-                return _shader;
+                return _deffered;
             }
             private set
             {
-                _shader = value;
-                _shader.AnalizeShaderProgram();
+                _deffered = value;
+                _deffered.AnalizeShaderProgram();
             }
         }
         public void SetShader(Shader shader)
@@ -112,8 +114,8 @@ namespace RenderApp.AssetModel.MaterialModel
         {
             if (shader == null)
             {
-                SetShader(Scene.DefaultForwardShader);
-                SetShader(Scene.DefaultDefferedShader);
+                SetShader(ShaderFactory.Instance.DefaultForwardShader);
+                SetShader(ShaderFactory.Instance.DefaultDefferedShader);
                 CurrentShader = Forward;
             }
 

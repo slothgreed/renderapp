@@ -97,38 +97,7 @@ namespace RenderApp
                 _sunLight = value;
             }
         }
-        private static Shader _defaultForwardShader;
-        public static Shader DefaultForwardShader
-        {
-            get
-            {
-                if (_defaultForwardShader == null)
-                {
-                    string path = Project.ShaderDirectory;
-                    ShaderProgram diffuseV = new ShaderProgram(path + @"\Diffuse.vert");
-                    ShaderProgram diffuseF = new ShaderProgram(path + @"\Diffuse.frag");
-                    Shader diffuse = new Shader(diffuseV, diffuseF);
-                    _defaultForwardShader = diffuse;
-                }
-                return _defaultForwardShader;
-            }
-        }
-        private static Shader _defaultDefferedShader;
-        public static Shader DefaultDefferedShader
-        {
-            get
-            {
-                if (_defaultDefferedShader == null)
-                {
-                    string path = Project.ShaderDirectory;
-                    ShaderProgram diffuseV = new ShaderProgram(path + @"\defferd.vert");
-                    ShaderProgram diffuseF = new ShaderProgram(path + @"\defferd.frag");
-                    Shader diffuse = new Shader(diffuseV, diffuseF);
-                    _defaultDefferedShader = diffuse;
-                }
-                return _defaultDefferedShader;
-            }
-        }
+
         #endregion
         #region [static member]
         /// <summary>

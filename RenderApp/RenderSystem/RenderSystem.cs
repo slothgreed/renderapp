@@ -37,7 +37,7 @@ namespace RenderApp
             PostProcessMode = false;
             DefferdStage.Add(RenderPassFactory.Instance.CreateGBuffer(Width,Height));
             FrameBuffer lithingFrame = RenderPassFactory.Instance.CreateDefaultLithingBuffer(Width, Height);
-            //LithingStage.AddPass(new PostProcess()));
+            //LithingStage.AddPass(new PostProcess(ShaderFactory.Instance.CreateDefaultLightShader(),lithingFrame));
         }
 
         public void SizeChanged(int width,int height)

@@ -54,7 +54,7 @@ namespace RenderApp.AssetModel.ShaderModel
             {
                 return _renderMode;
             }
-            private set
+            set
             {
                 _renderMode = value;
             }
