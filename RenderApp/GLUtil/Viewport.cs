@@ -6,7 +6,7 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using System.Diagnostics;
-using RenderApp.Assets;
+using RenderApp.AssetModel;
 using RenderApp.Utility;
 using System.IO;
 using System.Windows.Forms;

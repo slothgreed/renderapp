@@ -7,7 +7,7 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.Utility;
-namespace RenderApp.Assets
+namespace RenderApp.AssetModel
 {
     public class Plane :Geometry
     {

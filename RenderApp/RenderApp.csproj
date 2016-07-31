@@ -145,10 +145,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Analyzer\HalfEdge\Dijkstra.cs" />
+    <Compile Include="AssetModel\ShaderModel\ShaderFactory.cs" />
     <Compile Include="GLUtil\Output.cs" />
-    <Compile Include="Assets\EnvironmentProbe.cs" />
-    <Compile Include="Assets\Geometry\File\GeometryLoader.cs" />
-    <Compile Include="Assets\Shader\ShaderProgramInfo.cs" />
+    <Compile Include="AssetModel\EnvironmentProbe.cs" />
+    <Compile Include="AssetModel\Geometry\File\GeometryLoader.cs" />
+    <Compile Include="AssetModel\ShaderModel\ShaderProgramInfo.cs" />
     <Compile Include="RenderApp\Enum.cs" />
     <Compile Include="RenderSystem\PostProcess.cs" />
     <Compile Include="RenderSystem\RenderQueue.cs" />
@@ -160,11 +161,11 @@
       <DependentUpon>AssetTreeViewModelT4.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\AvalonPaneSelector.cs" />
-    <Compile Include="Assets\Geometry\Geometry.cs" />
-    <Compile Include="Assets\Light\DirectionLight.cs" />
-    <Compile Include="Assets\Light\PointLight.cs" />
-    <Compile Include="Assets\Light\SpotLight.cs" />
-    <Compile Include="Assets\Asset.cs" />
+    <Compile Include="AssetModel\Geometry\Geometry.cs" />
+    <Compile Include="AssetModel\LightModel\DirectionLight.cs" />
+    <Compile Include="AssetModel\LightModel\PointLight.cs" />
+    <Compile Include="AssetModel\LightModel\SpotLight.cs" />
+    <Compile Include="AssetModel\Asset.cs" />
     <Compile Include="ViewModel\AvalonUpdateStrategy.cs" />
     <Compile Include="ViewModel\AvalonWindowViewModel.cs" />
     <Compile Include="ViewModel\ComboItemViewModel.cs" />
@@ -205,11 +206,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Assets\Shader\ShaderProgram.cs" />
+    <Compile Include="AssetModel\ShaderModel\ShaderProgram.cs" />
     <Compile Include="Scene\Shader\Bezier\Bezier.cs" />
-    <Compile Include="Assets\RenderPassFactory.cs" />
-    <Compile Include="Assets\Geometry\Primitive\Space.cs" />
-    <Compile Include="Assets\Geometry\Primitive\Primitive.cs" />
+    <Compile Include="AssetModel\RenderPassFactory.cs" />
+    <Compile Include="AssetModel\Geometry\Primitive\Space.cs" />
+    <Compile Include="AssetModel\Geometry\Primitive\Primitive.cs" />
     <Compile Include="View\GeometryView.xaml.cs">
       <DependentUpon>GeometryView.xaml</DependentUpon>
     </Compile>
@@ -220,8 +221,8 @@
       <DependentUpon>ShaderProgramView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ShaderProgramViewModel.cs" />
-    <Compile Include="Assets\Texture.cs" />
-    <Compile Include="Assets\Shader\Shader.cs" />
+    <Compile Include="AssetModel\Texture.cs" />
+    <Compile Include="AssetModel\ShaderModel\Shader.cs" />
     <Compile Include="Scene\Shader\HeightMap\HeightMap.cs" />
     <Compile Include="Scene\Shader\Line\CEffectLine.cs" />
     <Compile Include="Scene\Shader\MRT\Fur\Fur.cs" />
@@ -237,15 +238,15 @@
     <Compile Include="Analyzer\HalfEdge\HalfEdge.cs" />
     <Compile Include="Analyzer\HalfEdge\Mesh.cs" />
     <Compile Include="Scene\Shader\ColorRender\CColorShader.cs" />
-    <Compile Include="Assets\Geometry\Primitive\Sphere.cs" />
+    <Compile Include="AssetModel\Geometry\Primitive\Sphere.cs" />
     <Compile Include="Analyzer\Parameter.cs" />
     <Compile Include="Analyzer\HalfEdge\Vertex.cs" />
-    <Compile Include="Assets\Geometry\Primitive\Axis.cs" />
-    <Compile Include="Assets\Camera.cs" />
-    <Compile Include="Assets\Geometry\Primitive\Cube.cs" />
-    <Compile Include="Assets\Geometry\Primitive\Plane.cs" />
-    <Compile Include="Assets\Geometry\Primitive\GridPlane.cs" />
-    <Compile Include="Assets\Light\Light.cs" />
+    <Compile Include="AssetModel\Geometry\Primitive\Axis.cs" />
+    <Compile Include="AssetModel\Camera.cs" />
+    <Compile Include="AssetModel\Geometry\Primitive\Cube.cs" />
+    <Compile Include="AssetModel\Geometry\Primitive\Plane.cs" />
+    <Compile Include="AssetModel\Geometry\Primitive\GridPlane.cs" />
+    <Compile Include="AssetModel\LightModel\Light.cs" />
     <Compile Include="Scene\Shader\OffScreen\DOF\DOF.cs" />
     <Compile Include="Scene\Shader\Luminous\Luminous.cs" />
     <Compile Include="Scene\Shader\OffScreen\Sobel\CSobel.cs" />
@@ -266,9 +267,9 @@
     <Compile Include="Scene\Shader\OffScreen\Shadow\CShadowMap.cs" />
     <Compile Include="Utility\Calc.cs" />
     <Compile Include="Utility\CFileIO.cs" />
-    <Compile Include="Assets\Geometry\File\ObjLoader.cs" />
+    <Compile Include="AssetModel\Geometry\File\ObjLoader.cs" />
     <Compile Include="Utility\CTimer.cs" />
-    <Compile Include="Assets\Geometry\File\StlLoader.cs" />
+    <Compile Include="AssetModel\Geometry\File\StlLoader.cs" />
     <Compile Include="Utility\AppException.cs" />
     <Compile Include="Utility\TrueTypeFont.cs" />
     <Compile Include="Utility\Util.cs" />

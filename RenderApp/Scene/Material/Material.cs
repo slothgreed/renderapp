@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RenderApp.Assets;
+using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.Analyzer;
-namespace RenderApp.Assets
+using RenderApp.AssetModel.ShaderModel;
+namespace RenderApp.AssetModel.MaterialModel
 {
     public class Material : Asset
     {

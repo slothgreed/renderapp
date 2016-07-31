@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
-namespace RenderApp.Assets
+namespace RenderApp.AssetModel.LightModel
 {
     class SpotLight : Light
     {

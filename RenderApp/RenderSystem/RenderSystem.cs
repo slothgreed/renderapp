@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RenderApp.Assets;
+using RenderApp.AssetModel;
+using RenderApp.GLUtil;
+using RenderApp.AssetModel.MaterialModel;
 namespace RenderApp
 {
-    class RenderSystem
+    public class RenderSystem
     {
         public bool PostProcessMode
         {
@@ -14,7 +16,7 @@ namespace RenderApp
             set;
         }
         private ERenderMode CurrentMode;
-        private RenderQueue DefferdStage;
+        private List<FrameBuffer> DefferdStage;
         private RenderQueue LithingStage;
         private RenderQueue PostStage;
         
@@ -24,7 +26,7 @@ namespace RenderApp
         {
             Width = width;
             Height = height;
-            DefferdStage = new RenderQueue();
+            DefferdStage = new List<FrameBuffer>();
             LithingStage = new RenderQueue();
             PostStage = new RenderQueue();
             Initialize();
@@ -33,13 +35,17 @@ namespace RenderApp
         private void Initialize()
         {
             PostProcessMode = false;
-            DefferdStage.AddPass(RenderPassFactory.Instance.CreateGBuffer(Width,Height));
-            LithingStage.AddPass(RenderPassFactory.Instance.CreateDefaultLithingBuffer(Width, Height));
+            DefferdStage.Add(RenderPassFactory.Instance.CreateGBuffer(Width,Height));
+            FrameBuffer lithingFrame = RenderPassFactory.Instance.CreateDefaultLithingBuffer(Width, Height);
+            //LithingStage.AddPass(new PostProcess()));
         }
 
         public void SizeChanged(int width,int height)
         {
-            DefferdStage.SizeChanged(width, height);
+            foreach(var loop in DefferdStage)
+            {
+                loop.SizeChanged(width, height);
+            }
             LithingStage.SizeChanged(width, height);
             PostStage.SizeChanged(width, height);
         }
@@ -59,7 +65,10 @@ namespace RenderApp
 
         public void Dispose()
         {
-            DefferdStage.Dispose();
+            foreach(var loop in DefferdStage)
+            {
+                loop.Dispose();
+            }
             LithingStage.Dispose();
             PostStage.Dispose();
         }
@@ -68,10 +77,15 @@ namespace RenderApp
             switch (CurrentMode)
             {
                 case ERenderMode.Deffered:
-                    foreach (var asset in Scene.ActiveScene.GetAssetList(EAssetType.Geometry))
+                    foreach(var deffered in DefferdStage)
                     {
-                        var geometry = asset as Geometry;
-                        geometry.Render();
+                        deffered.BindBuffer();
+                        foreach (var asset in Scene.ActiveScene.GetAssetList(EAssetType.Geometry))
+                        {
+                            var geometry = asset as Geometry;
+                            geometry.Render();
+                        }
+                        deffered.UnBindBuffer();
                     }
 
                     if (CurrentMode == ERenderMode.Deffered)

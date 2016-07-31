@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RenderApp;
 using System.Collections.ObjectModel;
-using RenderApp.Assets;
+using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 namespace RenderApp.ViewModel
 {

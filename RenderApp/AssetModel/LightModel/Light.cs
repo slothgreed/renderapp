@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using OpenTK;
 using RenderApp.Utility;
-using RenderApp.Assets;
-namespace RenderApp.Assets
+using RenderApp.AssetModel;
+namespace RenderApp.AssetModel.LightModel
 {
     /// <summary>
     /// 光源

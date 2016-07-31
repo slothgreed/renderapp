@@ -8,17 +8,17 @@ namespace RenderApp
 {
     public class RenderQueue
     {
-        List<FrameBuffer> list = new List<FrameBuffer>();
+        List<PostProcess> list = new List<PostProcess>();
 
         public RenderQueue()
         {
            
         }
-        public void AddPass(FrameBuffer pass)
+        public void AddPass(PostProcess pass)
         {
             list.Add(pass);
         }
-        public void RemovePass(FrameBuffer pass)
+        public void RemovePass(PostProcess pass)
         {
             list.Remove(pass);
         }
@@ -46,7 +46,7 @@ namespace RenderApp
             }
         }
 
-        public IEnumerable<FrameBuffer> Items()
+        public IEnumerable<PostProcess> Items()
         {
             foreach(var loop in list)
             {
@@ -58,9 +58,6 @@ namespace RenderApp
         {
             foreach(var loop in list)
             {
-                loop.BindBuffer();
-
-                loop.UnBindBuffer();
             }
         }
     }

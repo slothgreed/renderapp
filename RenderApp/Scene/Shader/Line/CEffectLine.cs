@@ -6,7 +6,7 @@
 //using OpenTK.Graphics.OpenGL;
 //using RenderApp.Scene;
 //using OpenTK;
-//namespace RenderApp.Assets
+//namespace RenderApp.AssetModel
 //{
 //    public class CEffectLine : Shader
 //    {

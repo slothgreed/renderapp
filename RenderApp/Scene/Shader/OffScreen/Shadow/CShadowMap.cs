@@ -7,7 +7,7 @@
 //using OpenTK;
 //using OpenTK.Graphics.OpenGL;
 //using RenderApp.Scene;
-//namespace RenderApp.Assets.OffScreen
+//namespace RenderApp.AssetModel.OffScreen
 //{
 //    public class CShadowMap : Shader
 //    {

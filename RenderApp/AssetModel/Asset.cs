@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace RenderApp.Assets
+namespace RenderApp.AssetModel
 {
 
     public abstract class Asset

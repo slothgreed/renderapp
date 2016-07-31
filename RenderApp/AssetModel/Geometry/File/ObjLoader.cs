@@ -9,8 +9,8 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using System.Windows.Forms;
 using RenderApp.Analyzer;
-
-namespace RenderApp.Assets
+using RenderApp.AssetModel.MaterialModel;
+namespace RenderApp.AssetModel
 {
     public class CObjFile : GeometryLoader
     {
@@ -49,7 +49,7 @@ namespace RenderApp.Assets
             TexCoord = m_texStream;
             Index = m_posIndex;
 
-            MaterialItem = new Assets.Material(FileName);
+            MaterialItem = new Material(FileName);
             if (Normal.Count == 0)
             {
                 HalfEdge half = new HalfEdge(m_posStream, m_posIndex);

@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using RenderApp.Assets;
+using RenderApp.AssetModel;
 using System.IO;
 using System.Collections.ObjectModel;
 using RenderApp.GLUtil;
 using RenderApp.Utility;
-using RenderApp.Assets;
+using RenderApp.AssetModel.ShaderModel;
+using RenderApp.AssetModel.MaterialModel;
+using RenderApp.AssetModel.LightModel;
 namespace RenderApp.ViewModel
 {
     public partial class MainWindowViewModel : ViewModelBase

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using RenderApp.Assets;
+using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 namespace RenderApp
 {
@@ -71,7 +71,7 @@ namespace RenderApp
             }
             
             //ToDo: models;
-            //List<Assets.Asset> models = new List<CModel>();
+            //List<AssetModel.Asset> models = new List<CModel>();
             //foreach(var loop in models)
             //{
             //    File.Copy(loop.FilePath, ProjectDirectory + loop.FileName);

@@ -5,8 +5,8 @@ using System.Text;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
-using RenderApp.Assets;
-namespace RenderApp.Assets
+using RenderApp.AssetModel;
+namespace RenderApp.AssetModel
 {
     /// <summary>
     /// カメラ

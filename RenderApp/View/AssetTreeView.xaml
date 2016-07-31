@@ -8,7 +8,7 @@
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d" 
-        xmlns:local="clr-namespace:RenderApp.Assets"
+        xmlns:local="clr-namespace:RenderApp.AssetModel"
         d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <multi:MultiSelectTreeView ItemsSource="{Binding Root.Children}">

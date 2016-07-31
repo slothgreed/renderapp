@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 using OpenTK;
-using RenderApp.Assets;
+using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using RenderApp.Utility;
-namespace RenderApp.Assets
+using RenderApp.AssetModel.MaterialModel;
+namespace RenderApp.AssetModel
 {
     public abstract class Geometry : Asset
     {

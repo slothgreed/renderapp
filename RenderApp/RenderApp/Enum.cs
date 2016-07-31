@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace RenderApp
 {
+    public enum EVariableType
+    {
+        None,
+        Uniform,
+        Attribute,
+    }
+
     public enum EAssetType
     {
         Unknown,

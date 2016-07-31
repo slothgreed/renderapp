@@ -9,10 +9,10 @@
 //using OpenTK.Graphics.OpenGL;
 //using RenderApp.Utility;
 //using RenderApp.Scene;
-//using RenderApp.Assets;
+//using RenderApp.AssetModel;
 
 
-//namespace RenderApp.Assets.OffScreen
+//namespace RenderApp.AssetModel.OffScreen
 //{
 //    /// <summary>
 //    /// MainShader

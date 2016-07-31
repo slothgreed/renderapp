@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RenderApp.Assets;
+using RenderApp.AssetModel;
 
-namespace RenderApp.Assets
+namespace RenderApp.AssetModel
 {
     public class EnvironmentProbe : Asset
     {

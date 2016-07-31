@@ -7,7 +7,7 @@
 //using OpenTK.Graphics.OpenGL;
 //using RenderApp.Utility;
 //using RenderApp.Scene;
-//namespace RenderApp.Assets
+//namespace RenderApp.AssetModel
 //{
 //    /// <summary>
 //    /// 原色レンダリング用

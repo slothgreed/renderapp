@@ -4,14 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RenderApp.Assets
+namespace RenderApp.AssetModel.ShaderModel
 {
-    public enum EVariableType
-    {
-        None,
-        Uniform,
-        Attribute,
-    }
+
     /// <summary>
     /// シェーダ情報
     /// </summary>

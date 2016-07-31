@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.Utility;
-namespace RenderApp.Assets
+namespace RenderApp.AssetModel
 {
     public class Space : Geometry
     {

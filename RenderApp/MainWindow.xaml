@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:RenderApp"
         xmlns:vm="clr-namespace:RenderApp.ViewModel"
         xmlns:v="clr-namespace:RenderApp.View"
-        xmlns:asset="clr-namespace:RenderApp.Assets"
+        xmlns:asset="clr-namespace:RenderApp.AssetModel"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"

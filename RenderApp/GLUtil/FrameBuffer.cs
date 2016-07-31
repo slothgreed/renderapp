@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 namespace RenderApp.GLUtil
 {
-    public class FrameBuffer : Assets.Asset
+    public class FrameBuffer : AssetModel.Asset
     {
         public string Name { get; private set; }
         /// <summary>

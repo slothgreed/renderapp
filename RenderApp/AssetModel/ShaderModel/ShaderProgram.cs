@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using OpenTK.Graphics.OpenGL;
-using RenderApp.Assets;
+using RenderApp.AssetModel;
 using OpenTK;
-namespace RenderApp.Assets
+namespace RenderApp.AssetModel.ShaderModel
 {
     public class ShaderProgram : Asset
     {

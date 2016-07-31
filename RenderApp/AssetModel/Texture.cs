@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using OpenTK.Graphics.OpenGL;
 using System.Drawing.Imaging;
-using RenderApp.Assets;
+using RenderApp.AssetModel;
 namespace RenderApp.GLUtil
 {
 

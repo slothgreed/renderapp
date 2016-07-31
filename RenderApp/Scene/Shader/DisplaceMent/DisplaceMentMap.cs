@@ -7,7 +7,7 @@
 //using OpenTK.Graphics.OpenGL;
 //using RenderApp.Scene;
 //using RenderApp.Utility;
-//namespace RenderApp.Assets
+//namespace RenderApp.AssetModel
 //{
 //    class CDisplaceMentMap : Shader
 //    {

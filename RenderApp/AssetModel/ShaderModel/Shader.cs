@@ -7,7 +7,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.Utility;
 using RenderApp.GLUtil;
-namespace RenderApp.Assets
+namespace RenderApp.AssetModel.ShaderModel
 {
     public class Shader : Asset
     {
@@ -45,10 +45,6 @@ namespace RenderApp.Assets
             }
         }
         /// <summary>
-        /// ディファードレンダリング用のバッファ
-        /// </summary>
-        public List<FrameBuffer> RenderBuffer { get; private set; }
-        /// <summary>
         /// Deffard or MultiBuffer;
         /// </summary>
         private ERenderMode _renderMode = ERenderMode.Forward;
@@ -62,17 +58,6 @@ namespace RenderApp.Assets
             {
                 _renderMode = value;
             }
-        }
-        private void CreateFrameBuffer()
-        {
-            if(RenderBuffer == null)
-            {
-                RenderBuffer = new List<FrameBuffer>();
-            }
-        }
-        private void SetFrameBuffer(FrameBuffer frame)
-        {
-            RenderBuffer.Add(frame);
         }
         
         /// <summary>
@@ -176,28 +161,9 @@ namespace RenderApp.Assets
 
         #region [bind buffer]
 
-        #region [bind render buffer]
-        private void BindRenderBuffer()
-        {
-            foreach (var loop in RenderBuffer)
-            {
-                loop.BindBuffer();
-            }
-        }
-        private void UnBindRenderBuffer()
-        {
-            foreach (var loop in RenderBuffer)
-            {
-                loop.UnBindBuffer();
-            }
-        }
-        #endregion
-        
         public void BindBuffer(Geometry geometry)
         {
             GL.UseProgram(Program);
-
-            BindRenderBuffer();
 
             int activeCount = 0;
             foreach (ShaderProgramInfo loop in _shaderVariable.Values)
@@ -218,8 +184,6 @@ namespace RenderApp.Assets
         }
         public void UnBindBuffer()
         {
-            UnBindRenderBuffer();
-
             foreach (ShaderProgramInfo loop in _shaderVariable.Values)
             {
                 if (loop.variableType == EVariableType.Uniform)
@@ -638,7 +602,6 @@ namespace RenderApp.Assets
             {
                 _activeShader.Add(_tes);
             }
-            RenderBuffer = new List<FrameBuffer>();
             Scene.ActiveScene.AddSceneObject(this.ToString(), this);
         }
         public override string ToString()

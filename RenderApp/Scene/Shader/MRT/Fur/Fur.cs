@@ -6,7 +6,7 @@
 //using OpenTK;
 //using OpenTK.Graphics.OpenGL;
 //using RenderApp.Scene;
-//namespace RenderApp.Assets.MRT
+//namespace RenderApp.AssetModel.MRT
 //{
 //    class Fur : Shader
 //    {

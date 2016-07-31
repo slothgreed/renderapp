@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
-using RenderApp.Assets;
+using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using RenderApp.ViewModel;
+using RenderApp.AssetModel.ShaderModel;
+using RenderApp.AssetModel.MaterialModel;
+using RenderApp.AssetModel.LightModel;
 namespace RenderApp
 {
     public class Scene
@@ -118,8 +121,8 @@ namespace RenderApp
                 if (_defaultDefferedShader == null)
                 {
                     string path = Project.ShaderDirectory;
-                    ShaderProgram diffuseV = new ShaderProgram(path + @"\Deffered.vert");
-                    ShaderProgram diffuseF = new ShaderProgram(path + @"\Deffered.frag");
+                    ShaderProgram diffuseV = new ShaderProgram(path + @"\defferd.vert");
+                    ShaderProgram diffuseF = new ShaderProgram(path + @"\defferd.frag");
                     Shader diffuse = new Shader(diffuseV, diffuseF);
                     _defaultDefferedShader = diffuse;
                 }

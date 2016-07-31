@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Controls;
-using RenderApp.Assets;
+using RenderApp.AssetModel;
 namespace RenderApp.ViewModel
 {
    

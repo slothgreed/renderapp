@@ -6,7 +6,7 @@
 //using OpenTK;
 //using OpenTK.Graphics.OpenGL;
 //using RenderApp.Scene;
-//namespace RenderApp.Assets
+//namespace RenderApp.AssetModel
 //{
 //    public class NURBS : Shader
 //    {

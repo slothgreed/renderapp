@@ -16,7 +16,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Windows.Forms.Integration;
 using RenderApp.Utility;
-using RenderApp.Assets;
+using RenderApp.AssetModel;
 using System.IO;
 using RenderApp.GLUtil;
 namespace RenderApp

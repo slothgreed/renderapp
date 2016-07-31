@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
-namespace RenderApp.Assets
+namespace RenderApp.AssetModel.LightModel
 {
-    class DirectionLight : Light
+    class PointLight : Light
     {
-        public DirectionLight(Vector3 lightPos, Vector3 lightDir)
-            : base(lightPos, lightDir)
+        public PointLight(Vector3 lightPos, Vector3 lightDir) : base(lightPos,lightDir)
         {
         }
+
     }
 }

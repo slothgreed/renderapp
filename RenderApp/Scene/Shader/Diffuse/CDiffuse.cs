@@ -7,7 +7,7 @@
 //using OpenTK.Graphics.OpenGL;
 //using RenderApp.Utility;
 //using RenderApp.Scene;
-//namespace RenderApp.Assets
+//namespace RenderApp.AssetModel
 //{
 //    class CDiffuse : Shader
 //    {
@@ -57,7 +57,7 @@
 //            RenderScene.ActiveScene.SunLight.SetUniformLightMatrix(uLightMatrix);
 //            RenderScene.ActiveScene.MainCamera.SetUniformProjMatrix(uProject);
 //            GL.ActiveTexture(TextureUnit.Texture0);
-//            GL.BindTexture(TextureTarget.Texture2D, CFrameBufferManager.GetTextureId(Assets.OffScreen.CShadowMap.Instance.ToString()));
+//            GL.BindTexture(TextureTarget.Texture2D, CFrameBufferManager.GetTextureId(AssetModel.OffScreen.CShadowMap.Instance.ToString()));
 //            GL.Uniform1(uShadowMap, 0);
 //            model.SetUniformMVP(uMVP, RenderScene.ActiveScene.MainCamera.GetProjMatrix(), RenderScene.ActiveScene.MainCamera.GetCameraMatrix());
 //            model.SetUniformModelMatrix(uModelMatrix, uNormalMatrix);

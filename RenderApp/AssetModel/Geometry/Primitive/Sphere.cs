@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-namespace RenderApp.Assets
+namespace RenderApp.AssetModel
 {
     public class Sphere : Geometry
     {

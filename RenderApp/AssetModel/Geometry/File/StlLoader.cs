@@ -6,7 +6,7 @@ using System.IO;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Windows.Forms;
-namespace RenderApp.Assets
+namespace RenderApp.AssetModel
 {
     /// <summary>
     /// STLのローダ現在テキストファイルのみ
