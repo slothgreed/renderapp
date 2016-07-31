@@ -48,7 +48,7 @@ namespace RenderApp.ViewModel
 
             _items = new Dictionary<string, object>();
 
-            model.ShaderItem.ActiveShader.ForEach(
+            model.CurrentShader.ActiveShader.ForEach(
                 loop => Items.Add(loop.shaderType.ToString(),loop.FileName)
                 );
             foreach (KeyValuePair<TextureKind,Texture> loop in model.TextureItem)

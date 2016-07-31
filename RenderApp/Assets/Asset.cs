@@ -7,19 +7,7 @@ using System.IO;
 
 namespace RenderApp.Assets
 {
-    public enum EAssetType
-    {
-        Unknown,
-        Geometry,
-        Light,
-        Camera, 
-        Textures,
-        EnvProbe,
-        Materials,
-        ShaderProgram,
-        Shader,
-        FrameBuffer
-    }
+
     public abstract class Asset
     {
         public Asset()

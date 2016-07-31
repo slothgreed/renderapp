@@ -51,7 +51,18 @@ namespace RenderApp.Assets
         /// <summary>
         /// Deffard or MultiBuffer;
         /// </summary>
-        private ERenderingStage _renderingStage = ERenderingStage.ForwardPass;
+        private ERenderMode _renderMode = ERenderMode.Forward;
+        public ERenderMode RenderMode
+        {
+            get
+            {
+                return _renderMode;
+            }
+            private set
+            {
+                _renderMode = value;
+            }
+        }
         private void CreateFrameBuffer()
         {
             if(RenderBuffer == null)

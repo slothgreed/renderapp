@@ -22,7 +22,7 @@ namespace RenderApp
             get
             {
                 //return _projectPath;
-                return @"C:\Users\ido\Desktop\RenderApp-clone\RenderApp\Resource";
+                return @"C:\Users\ido\Documents\GitHub\renderapp\RenderApp\Resource";
             }
             set
             {

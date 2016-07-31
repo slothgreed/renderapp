@@ -150,6 +150,9 @@
     <Compile Include="Assets\Geometry\File\GeometryLoader.cs" />
     <Compile Include="Assets\Shader\ShaderProgramInfo.cs" />
     <Compile Include="RenderApp\Enum.cs" />
+    <Compile Include="RenderSystem\PostProcess.cs" />
+    <Compile Include="RenderSystem\RenderQueue.cs" />
+    <Compile Include="RenderSystem\RenderSystem.cs" />
     <Compile Include="Utility\ActiveItems.cs" />
     <Compile Include="ViewModel\AssetTreeViewModelT4.cs">
       <AutoGen>True</AutoGen>
@@ -204,7 +207,7 @@
     </Compile>
     <Compile Include="Assets\Shader\ShaderProgram.cs" />
     <Compile Include="Scene\Shader\Bezier\Bezier.cs" />
-    <Compile Include="Assets\GBuffer.cs" />
+    <Compile Include="Assets\RenderPassFactory.cs" />
     <Compile Include="Assets\Geometry\Primitive\Space.cs" />
     <Compile Include="Assets\Geometry\Primitive\Primitive.cs" />
     <Compile Include="View\GeometryView.xaml.cs">

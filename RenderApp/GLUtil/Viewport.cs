@@ -30,8 +30,19 @@ namespace RenderApp.GLUtil
                 return m_Instance;
             }
         }
-
-        #region [メンバ変数]
+        private RenderSystem _renderSystem;
+        public RenderSystem RenderSystem
+        {
+            get
+            {
+                if (_renderSystem == null)
+                {
+                    _renderSystem = new RenderSystem(Width, Height);
+                }
+                return _renderSystem;
+            }
+        }
+        #region [member]
         /// <summary>
         /// タイマー変数
         /// </summary>
@@ -66,9 +77,22 @@ namespace RenderApp.GLUtil
         /// glControlのゲッタ
         /// </summary>
         public GLControl glControl { get { return m_glControl; } }
-
-       
         #endregion
+
+        public int Width
+        {
+            get
+            {
+               return glControl.Width;
+            }
+        }
+        public int Height
+        {
+            get
+            {
+                return glControl.Height;
+            }
+        }
         #region [initialize method]
         private Viewport()
         {
@@ -139,8 +163,6 @@ namespace RenderApp.GLUtil
                 Scene.ActiveScene.MainCamera.SetProjMatrix((float)m_glControl.Size.Width / m_glControl.Size.Height);
                 GL.Viewport(0, 0, m_glControl.Size.Width, m_glControl.Size.Height);
                 Output.GLError();
-                //RenderScene.Width = m_glControl.Size.Width;
-                //RenderScene.Height = m_glControl.Size.Height;
                 glControl_Paint(null, null);
             }
 
@@ -158,7 +180,7 @@ namespace RenderApp.GLUtil
                 return;
             }
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            Scene.ActiveScene.Render();
+            RenderSystem.Render();
             m_NowRender = true;
             m_glControl.SwapBuffers();
             m_NowRender = false;
@@ -228,8 +250,6 @@ namespace RenderApp.GLUtil
             }
         }
         #endregion
-        
-       
         #region [timer event]
         public void StartTimer()
         {
@@ -262,10 +282,6 @@ namespace RenderApp.GLUtil
             glControl_Paint(null, null);
         }
         #endregion
-        
-       
-
-
         #region [Main Window Event]
        
        

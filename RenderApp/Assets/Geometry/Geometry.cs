@@ -129,8 +129,6 @@ namespace RenderApp.Assets
 
         #endregion
 
-
-
         #region render
         public virtual void Render()
         {

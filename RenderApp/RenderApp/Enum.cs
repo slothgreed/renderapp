@@ -6,6 +6,19 @@ using System.Threading.Tasks;
 
 namespace RenderApp
 {
+    public enum EAssetType
+    {
+        Unknown,
+        Geometry,
+        Light,
+        Camera,
+        Textures,
+        EnvProbe,
+        Materials,
+        ShaderProgram,
+        Shader,
+        FrameBuffer
+    }
     /// <summary>
     /// Attribute(Shader用)
     /// </summary>
@@ -28,6 +41,12 @@ namespace RenderApp
         LightingPass,
         PostProcessPass,
         ForwardPass
+    }
+    public enum ERenderMode
+    {
+        None,
+        Deffered,
+        Forward
     }
     public enum TextureType
     {

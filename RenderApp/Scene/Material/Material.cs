@@ -15,8 +15,24 @@ namespace RenderApp.Assets
 
         #region [property method]
         public static string _name = "Material";
+        #endregion
+
+        #region [shader]
+        /// <summary>
+        /// rendermodeの固定
+        /// </summary>
+        public ERenderMode Only
+        {
+            get;
+            private set;
+        }
         private Shader _shader = null;
-        public Shader ShaderItem
+        public Shader CurrentShader
+        {
+            get;
+            private set;
+        }
+        public Shader Forward
         {
             get
             {
@@ -28,7 +44,90 @@ namespace RenderApp.Assets
                 _shader.AnalizeShaderProgram();
             }
         }
-        public Dictionary<TextureKind,Texture> TextureItem
+        public Shader Defferd
+        {
+            get
+            {
+                return _shader;
+            }
+            private set
+            {
+                _shader = value;
+                _shader.AnalizeShaderProgram();
+            }
+        }
+        public void SetShader(Shader shader)
+        {
+            if (shader.RenderMode == ERenderMode.Forward)
+            {
+                Forward = shader;
+            }
+            else if (shader.RenderMode == ERenderMode.Deffered)
+            {
+                Defferd = shader;
+            }
+        }
+        internal void ChangeRenderMode(ERenderMode mode)
+        {
+            if (mode == ERenderMode.Deffered)
+            {
+                CurrentShader = Defferd;
+            }
+            else if (mode == ERenderMode.Forward)
+            {
+                CurrentShader = Forward;
+            }
+        }
+        internal void InitializeState(Geometry geometry)
+        {
+            CurrentShader.InitializeState(geometry, TextureItem);
+        }
+        /// <summary>
+        /// シェーダにBinding
+        /// </summary>
+        /// <param name="geometry"></param>
+        /// <returns></returns>
+        public bool BindShader(Geometry geometry)
+        {
+            CurrentShader.BindBuffer(geometry);
+            return true;
+        }
+
+        public bool UnBindShader()
+        {
+            CurrentShader.UnBindBuffer();
+            return true;
+        }
+
+        #endregion
+
+        #region [constructor]
+        public Material(string name)
+            : base(name)
+        {
+            Initialize(name);
+        }
+        private void Initialize(string name = null, Shader shader = null)
+        {
+            if (shader == null)
+            {
+                SetShader(Scene.DefaultForwardShader);
+                SetShader(Scene.DefaultDefferedShader);
+                CurrentShader = Forward;
+            }
+
+            TextureItem = new Dictionary<TextureKind, Texture>();
+            AnalyzeItem = new List<IAnalyzer>();
+            if (name == null)
+            {
+                Key = _name;
+            }
+            Scene.ActiveScene.AddSceneObject(_name, this);
+        }
+        #endregion
+        #region [texture]
+
+        public Dictionary<TextureKind, Texture> TextureItem
         {
             get;
             set;
@@ -38,49 +137,6 @@ namespace RenderApp.Assets
             get;
             set;
         }
-        public List<IAnalyzer> AnalyzeItem
-        {
-            get;
-            set;
-        }
-        #endregion
-        #region [constructor]
-        private void Initialize(string name = null, Shader shader = null)
-        {
-            if (shader == null)
-            {
-                SetShader(Scene.DefaultShader);
-            }
-            else
-            {
-                SetShader(shader);
-            }
-            TextureItem = new Dictionary<TextureKind, Texture>();
-            AnalyzeItem = new List<IAnalyzer>();
-            if (name == null)
-            {
-                Key = _name;
-            }
-            Scene.ActiveScene.AddSceneObject(_name, this);
-
-        }
-        #endregion
-        #region [setter]
-        public void SetShader(Shader shader)
-        {
-            ShaderItem = shader;
-        }
-        public Material(string name)
-            : base(name)
-        {
-            Initialize(name);
-        }
-        public Material(Shader shader)
-        {
-            Initialize(null, shader);
-        }
-        #endregion
-        #region [texture bind]
         public void AddTexture(TextureKind kind,Texture texture)
         {
             TextureItem[kind] = texture;
@@ -128,7 +184,12 @@ namespace RenderApp.Assets
             }
         }
         #endregion
-        #region analyzer bind
+        #region [analyzer bind]
+        public List<IAnalyzer> AnalyzeItem
+        {
+            get;
+            set;
+        }
         public void AddAnalayzer(IAnalyzer analyze)
         {
             if(AnalyzeItem == null)
@@ -138,34 +199,18 @@ namespace RenderApp.Assets
             AnalyzeItem.Add(analyze);
         }
         #endregion
-        #region [bind shader]
-        /// <summary>
-        /// シェーダにBinding
-        /// </summary>
-        /// <param name="geometry"></param>
-        /// <returns></returns>
-        public bool BindShader(Geometry geometry)
-        {
-            ShaderItem.BindBuffer(geometry);
-            return true;
-        }
-
-        public bool UnBindShader()
-        {
-            ShaderItem.UnBindBuffer();
-            return true;
-        }
-        #endregion
 
         public override void Dispose()
         {
-            ShaderItem.Dispose();
-        }
-
-        public override string Key
-        {
-            get;
-            set;
+            CurrentShader = null;
+            if(Forward != null)
+            {
+                Forward.Dispose();
+            }
+            if (Defferd != null)
+            {
+                Defferd.Dispose();
+            }
         }
 
         public static Material _default;
@@ -181,9 +226,7 @@ namespace RenderApp.Assets
             }
         }
 
-        internal void InitializeState(Geometry geometry)
-        {
-            ShaderItem.InitializeState(geometry, TextureItem);
-        }
+
+
     }
 }

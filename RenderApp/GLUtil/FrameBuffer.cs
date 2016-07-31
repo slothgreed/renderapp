@@ -8,7 +8,7 @@ namespace RenderApp.GLUtil
 {
     public class FrameBuffer : Assets.Asset
     {
-        public string Name { get; set; }
+        public string Name { get; private set; }
         /// <summary>
         /// 幅
         /// </summary>
@@ -16,7 +16,7 @@ namespace RenderApp.GLUtil
         /// <summary>
         /// 高さ
         /// </summary>
-        public int Height ;
+        public int Height = 0;
         /// <summary>
         /// フレームバッファID
         /// </summary>
@@ -140,7 +140,7 @@ namespace RenderApp.GLUtil
                 TextureList[i].Dispose();
             }
         }
-        public void Resize(int width,int height)
+        public void SizeChanged(int width,int height)
         {
             this.Height = height;
             this.Width = width;
@@ -182,5 +182,6 @@ namespace RenderApp.GLUtil
         {
             return this.Name;
         }
+
     }
 }

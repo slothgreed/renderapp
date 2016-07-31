@@ -11,7 +11,12 @@ namespace RenderApp.Analyzer
         public bool done;
         public float cost;
         public Vertex vertex;
-        public Node(bool done, int initCost, Vertex v);
+        public Node(bool _done, int _Cost, Vertex _v)
+        {
+            done = _done;
+            cost = _Cost;
+            vertex = _v;
+        }
     }
     class Dijkstra
     {

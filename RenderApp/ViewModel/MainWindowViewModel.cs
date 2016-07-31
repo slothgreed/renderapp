@@ -227,8 +227,6 @@ namespace RenderApp.ViewModel
                     }
                 }
                 Shader sh = new Shader(vert, frag);
-                _anchorables.Remove(MaterialWindow);
-                _anchorables[0] = (new MaterialViewModel(new Material(sh)));
             }
         }
         private void CreateCubeCommand()
@@ -292,18 +290,18 @@ namespace RenderApp.ViewModel
                     }
                     else
                     {
-                        _anchorables.Add(new GeometryViewModel((Geometry)node.Model));
+                        AddWindow(new GeometryViewModel((Geometry)node.Model));
                     }
                     break;
                 case EAssetType.Materials:
-                    _anchorables.Add(new MaterialViewModel((Material)node.Model));
-                    _anchorables.Add(new ShaderViewModel((Material)node.Model));
+                    AddWindow(new MaterialViewModel((Material)node.Model));
+                    AddWindow(new ShaderViewModel((Material)node.Model));
                     break;
                 case EAssetType.ShaderProgram:
-                    _anchorables.Add(new ShaderProgramViewModel((ShaderProgram)node.Model));
+                    AddWindow(new ShaderProgramViewModel((ShaderProgram)node.Model));
                     break;
                 case EAssetType.Textures:
-                    _anchorables.Add(new TextureViewModel((Texture)node.Model));
+                    AddWindow(new TextureViewModel((Texture)node.Model));
                     break;
                 default:
                     break;
@@ -312,11 +310,12 @@ namespace RenderApp.ViewModel
         private void AddWindow(AvalonWindowViewModel newWindow)
         {
             var oldWindow = _anchorables.Where(x => x.WindowPosition == newWindow.WindowPosition).First();
-            if(oldWindow != null)
+            _anchorables.Add(newWindow);
+
+            if (oldWindow != null)
             {
                 _anchorables.Remove(oldWindow);
             }
-            _anchorables.Add(newWindow);
         }
         public override void UpdateProperty()
         {

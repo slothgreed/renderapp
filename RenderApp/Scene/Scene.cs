@@ -66,6 +66,7 @@ namespace RenderApp
 
         #endregion
         #region [default property]
+
         /// <summary>
         /// カメラ
         /// </summary>
@@ -93,22 +94,37 @@ namespace RenderApp
                 _sunLight = value;
             }
         }
-        private static Shader _defaultShader;
-        public static Shader DefaultShader
+        private static Shader _defaultForwardShader;
+        public static Shader DefaultForwardShader
         {
             get
             {
-                if (_defaultShader == null)
+                if (_defaultForwardShader == null)
                 {
                     string path = Project.ShaderDirectory;
                     ShaderProgram diffuseV = new ShaderProgram(path + @"\Diffuse.vert");
                     ShaderProgram diffuseF = new ShaderProgram(path + @"\Diffuse.frag");
                     Shader diffuse = new Shader(diffuseV, diffuseF);
-                    _defaultShader = diffuse;
+                    _defaultForwardShader = diffuse;
                 }
-                return _defaultShader;
+                return _defaultForwardShader;
             }
-
+        }
+        private static Shader _defaultDefferedShader;
+        public static Shader DefaultDefferedShader
+        {
+            get
+            {
+                if (_defaultDefferedShader == null)
+                {
+                    string path = Project.ShaderDirectory;
+                    ShaderProgram diffuseV = new ShaderProgram(path + @"\Deffered.vert");
+                    ShaderProgram diffuseF = new ShaderProgram(path + @"\Deffered.frag");
+                    Shader diffuse = new Shader(diffuseV, diffuseF);
+                    _defaultDefferedShader = diffuse;
+                }
+                return _defaultDefferedShader;
+            }
         }
         #endregion
         #region [static member]
@@ -136,7 +152,7 @@ namespace RenderApp
 
         #endregion
         #region [public scene method]
-        public IEnumerable<string> GetAssetList(EAssetType assetType)
+        public IEnumerable<string> GetAssetListStr(EAssetType assetType)
         {
             switch (assetType)
             {
@@ -196,6 +212,68 @@ namespace RenderApp
                     break;
             }
         }
+
+        public IEnumerable<Asset> GetAssetList(EAssetType assetType)
+        {
+            switch (assetType)
+            {
+                case EAssetType.Geometry:
+                    foreach (var loop in GeometryList)
+                    {
+                        yield return loop.Value;
+                    }
+                    break;
+                case EAssetType.Light:
+                    foreach (var loop in LightList)
+                    {
+                        yield return loop.Value;
+                    }
+                    break;
+                case EAssetType.Camera:
+                    foreach (var loop in CameraList)
+                    {
+                        yield return loop.Value;
+                    }
+                    break;
+                case EAssetType.Textures:
+                    foreach (var loop in TextureList)
+                    {
+                        yield return loop.Value;
+                    }
+                    break;
+                case EAssetType.ShaderProgram:
+                    foreach (var loop in ShaderProgramList)
+                    {
+                        yield return loop.Value;
+                    }
+                    break;
+                case EAssetType.Materials:
+                    foreach (var loop in MaterialList)
+                    {
+                        yield return loop.Value;
+                    }
+                    break;
+                case EAssetType.Shader:
+                    foreach (var loop in ShaderList)
+                    {
+                        yield return loop.Value;
+                    }
+                    break;
+                case EAssetType.EnvProbe:
+                    foreach (var loop in EnvProbeList)
+                    {
+                        yield return loop.Value;
+                    }
+                    break;
+                case EAssetType.FrameBuffer:
+                    foreach (var loop in FrameBufferList)
+                    {
+                        yield return loop.Value;
+                    }
+                    break;
+            }
+        }
+
         /// <summary>
         /// シーンのオブジェクトの取得
         /// </summary>
@@ -302,7 +380,7 @@ namespace RenderApp
             else if (value is EnvironmentProbe)
             {
                 AddAsset<EnvironmentProbe>(key, value, EAssetType.EnvProbe, EnvProbeList);
-            }else if(FrameBufferList is FrameBuffer)
+            }else if(value is FrameBuffer)
             {
                 AddAsset<FrameBuffer>(key, value, EAssetType.FrameBuffer, FrameBufferList);
             }
@@ -411,7 +489,9 @@ namespace RenderApp
         }
         #endregion
         #region [initialize]
-
+        /// <summary>
+        /// シーンの初期化
+        /// </summary>
         public void Initialize()
         {
             Camera camera = new Camera();
@@ -420,20 +500,9 @@ namespace RenderApp
             SunLight = light;
 
             Sphere sphere = new Sphere(WorldMax.X * 2, 20, 20, false, Vector3.UnitX);
-            sphere.MaterialItem = new Material(new Shader(new ShaderProgram(Global.SphereMapVertexShader), new ShaderProgram(Global.SphereMapFragmentShader)));
+            sphere.MaterialItem = new Material(null);
+            sphere.MaterialItem.SetShader(new Shader(new ShaderProgram(Global.SphereMapVertexShader), new ShaderProgram(Global.SphereMapFragmentShader)));
             sphere.MaterialItem.AddTexture(TextureKind.Albedo, new Texture(Global.SphereMapAlbedo));
-        }
-        #endregion
-        #region [render]
-        /// <summary>
-        /// レンダリング
-        /// </summary>
-        public void Render()
-        {
-            foreach (Geometry loop in GeometryList.Values)
-            {
-                loop.Render();
-            }
         }
         #endregion
         #region [dispose]
