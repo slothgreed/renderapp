@@ -15,7 +15,7 @@ namespace RenderApp
             get;
             set;
         }
-        private ERenderMode CurrentMode;
+        public ERenderMode CurrentMode { get; private set; }
         private List<FrameBuffer> DefferdStage;
         private RenderQueue LithingStage;
         private RenderQueue PostStage;
@@ -76,7 +76,7 @@ namespace RenderApp
         {
             switch (CurrentMode)
             {
-                case ERenderMode.Deffered:
+                case ERenderMode.Defferred:
                     foreach(var deffered in DefferdStage)
                     {
                         deffered.BindBuffer();
@@ -88,7 +88,7 @@ namespace RenderApp
                         deffered.UnBindBuffer();
                     }
 
-                    if (CurrentMode == ERenderMode.Deffered)
+                    if (CurrentMode == ERenderMode.Defferred)
                     {
                         LithingStage.Render();
                     }
@@ -107,6 +107,11 @@ namespace RenderApp
             {
                 PostStage.Render();
             }
+        }
+
+        internal void TogglePostProcess()
+        {
+            PostProcessMode = !PostProcessMode;
         }
     }
 }

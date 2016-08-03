@@ -20,7 +20,9 @@ using System.Windows.Input;
 		"CreatePlane",
 		"LoadShader",
 		"WindowClose",
-		"SizeChanged"
+		"SizeChanged",
+		"ChangeRenderMode",
+		"TogglePostProcess",
 	};
 
 #>

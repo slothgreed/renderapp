@@ -55,6 +55,7 @@ namespace RenderApp.ViewModel
         private class _DelegateCommand : ICommand
         {
             private Action _Command;
+            private Action<object> _CommandParam;
             private Func<bool> _CanExecute;
 
             public _DelegateCommand(Action command, Func<bool> canExecute)
@@ -74,6 +75,14 @@ namespace RenderApp.ViewModel
                 }
                 _Command = command;
             }
+            public _DelegateCommand(Action<object> command)
+            {
+                if(command == null)
+                {
+                    throw new ArgumentNullException();
+                }
+                _CommandParam = command;
+            }
             
             bool ICommand.CanExecute(object parameter)
             {
@@ -92,7 +101,14 @@ namespace RenderApp.ViewModel
 
             public void Execute(object parameter)
             {
-                _Command();
+                if(_Command != null)
+                {
+                    _Command();
+                }
+                if(_CommandParam != null)
+                {
+                    _CommandParam(parameter);
+                }
             }
         }
         protected ICommand CreateCommand(Action command,Func<bool> canExecute)
@@ -100,6 +116,10 @@ namespace RenderApp.ViewModel
             return new _DelegateCommand(command, canExecute);
         }
         protected ICommand CreateCommand(Action command)
+        {
+            return new _DelegateCommand(command);
+        }
+        protected ICommand CreateCommand(Action<object> command)
         {
             return new _DelegateCommand(command);
         }

@@ -152,6 +152,30 @@ namespace RenderApp.ViewModel
 					return _SizeChanged;
 				}
 			}
+			private ICommand _ChangeRenderMode;
+			public ICommand ChangeRenderMode
+			{
+				get
+				{
+					if(_ChangeRenderMode == null)
+					{
+						return _ChangeRenderMode = CreateCommand(ChangeRenderModeCommand);						
+					}
+					return _ChangeRenderMode;
+				}
+			}
+			private ICommand _TogglePostProcess;
+			public ICommand TogglePostProcess
+			{
+				get
+				{
+					if(_TogglePostProcess == null)
+					{
+						return _TogglePostProcess = CreateCommand(TogglePostProcessCommand);						
+					}
+					return _TogglePostProcess;
+				}
+			}
 
 	}
 

@@ -37,8 +37,7 @@
         <avalon:DockingManager x:Name="dockingManager"  Grid.Row="1" 
                                AnchorablesSource="{Binding Anchorables}"
                                DocumentsSource="{Binding Documents}"
-                               ActiveContent="{Binding ActivePane,Mode=TwoWay}"
-                               >
+                               ActiveContent="{Binding ActivePane,Mode=TwoWay}">
             <avalon:DockingManager.LayoutUpdateStrategy>
                 <vm:AvalonUpdateStrategy/>
             </avalon:DockingManager.LayoutUpdateStrategy>
@@ -124,6 +123,13 @@
                 <MenuItem Header="Cube" Command="{Binding CreateCube}"/>
                 <MenuItem Header="Sphere" Command="{Binding CreateSphere}"/>
                 <MenuItem Header="Plane" Command="{Binding CreatePlane}"/>
+            </MenuItem>
+            
+            <MenuItem Header="Rendering">
+                <MenuItem Header="Forward" Command="{Binding ChangeRenderMode}" CommandParameter="{x:Static local:ERenderMode.Forward}" IsChecked="{Binding ForwardMode,Mode=OneWay}"/>
+                <MenuItem Header="Defferd" Command="{Binding ChangeRenderMode}" CommandParameter="{x:Static local:ERenderMode.Defferred}" IsChecked="{Binding DefferredMode,Mode=OneWay}"/>
+                <Separator/>
+                <MenuItem Header="PostProcess" Command="{Binding TogglePostProcess}" IsChecked="{Binding PostProcessMode,Mode=OneWay}"/> 
             </MenuItem>
             
             

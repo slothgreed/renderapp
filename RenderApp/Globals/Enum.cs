@@ -52,7 +52,7 @@ namespace RenderApp
     public enum ERenderMode
     {
         None,
-        Deffered,
+        Defferred,
         Forward
     }
     public enum TextureType

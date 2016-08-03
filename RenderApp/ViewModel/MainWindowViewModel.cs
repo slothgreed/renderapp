@@ -16,14 +16,7 @@ namespace RenderApp.ViewModel
 {
     public partial class MainWindowViewModel : ViewModelBase
     {
-        private static MainWindowViewModel _instance;
-        public static MainWindowViewModel Instance
-        { 
-            get
-            {
-                return _instance;
-            }
-        }
+        #region [property method]
         private readonly ObservableCollection<AvalonWindowViewModel> _documents = new ObservableCollection<AvalonWindowViewModel>();
         ReadOnlyObservableCollection<AvalonWindowViewModel> _readDocument;
         public ReadOnlyObservableCollection<AvalonWindowViewModel> Documents
@@ -60,13 +53,68 @@ namespace RenderApp.ViewModel
             }
             set
             {
-                if(_activePane != value)
+                if (_activePane != value)
                 {
                     SetValue<AvalonWindowViewModel>(ref _activePane, value);
-                   
                 }
             }
         }
+        public bool ForwardMode
+        {
+            get
+            {
+                if(m_Viewport == null)
+                {
+                    return false;
+                }
+                if(m_Viewport.RenderSystem == null)
+                {
+                    return false;
+                }
+                return m_Viewport.RenderSystem.CurrentMode == ERenderMode.Forward;
+            }
+        }
+        public bool DefferredMode
+        {
+            get
+            {
+                if (m_Viewport == null)
+                {
+                    return false;
+                }
+                if (m_Viewport.RenderSystem == null)
+                {
+                    return false;
+                }
+                return m_Viewport.RenderSystem.CurrentMode == ERenderMode.Defferred;
+            }
+        }
+
+        public bool PostProcessMode
+        {
+            get
+            {
+                if(m_Viewport == null)
+                {
+                    return false;
+                }
+                if(m_Viewport.RenderSystem == null)
+                {
+                    return false;
+                }
+                return m_Viewport.RenderSystem.PostProcessMode;
+            }
+        }
+        #endregion
+        private static MainWindowViewModel _instance;
+        public static MainWindowViewModel Instance
+        { 
+            get
+            {
+                return _instance;
+            }
+        }
+        
 
         public AssetTreeViewModel AssetWindow;
         private ShaderProgramViewModel ShaderProgramWindow;
@@ -76,9 +124,8 @@ namespace RenderApp.ViewModel
 
         #region [Member変数]
 
-        private Viewport m_RenderSystem;
+        private Viewport m_Viewport;
 
-        private CTimer m_GUITimer = null;
         #endregion
 
         
@@ -261,22 +308,38 @@ namespace RenderApp.ViewModel
         }
         public void LoadedCommand()
         {
-            m_RenderSystem = Viewport.Instance;
+            m_Viewport = Viewport.Instance;
 
-            if (m_RenderSystem != null)
+            if (m_Viewport != null)
             {
-                m_RenderSystem.Initialize();
+                m_Viewport.Initialize();
             }
         }
         public void ClosedCommand()
         {
-            if (m_RenderSystem != null)
+            if (m_Viewport != null)
             {
-                m_RenderSystem.Closed();
+                m_Viewport.Closed();
             }
             GC.Collect();
         }
-
+        public void ChangeRenderModeCommand(object sender)
+        {
+            if(sender is ERenderMode)
+            {
+                ERenderMode? mode = (ERenderMode)sender;
+                if (mode == null)
+                    return;
+                m_Viewport.RenderSystem.ChangeRenderMode((ERenderMode)mode);
+                OnPropertyChanged("ForwardMode");
+                OnPropertyChanged("DefferredMode");
+            }
+        }
+        public void TogglePostProcessCommand()
+        {
+            m_Viewport.RenderSystem.TogglePostProcess();
+            OnPropertyChanged("PostProcessMode");
+        }
         public void UpdateMaterialView(TreeItemViewModel node)
         {
             switch(node.AssetType)

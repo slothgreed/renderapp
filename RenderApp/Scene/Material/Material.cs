@@ -65,14 +65,14 @@ namespace RenderApp.AssetModel.MaterialModel
             {
                 Forward = shader;
             }
-            else if (shader.RenderMode == ERenderMode.Deffered)
+            else if (shader.RenderMode == ERenderMode.Defferred)
             {
                 Defferd = shader;
             }
         }
         internal void ChangeRenderMode(ERenderMode mode)
         {
-            if (mode == ERenderMode.Deffered)
+            if (mode == ERenderMode.Defferred)
             {
                 CurrentShader = Defferd;
             }
@@ -115,7 +115,7 @@ namespace RenderApp.AssetModel.MaterialModel
             if (shader == null)
             {
                 SetShader(ShaderFactory.Instance.DefaultForwardShader);
-                SetShader(ShaderFactory.Instance.DefaultDefferedShader);
+                SetShader(ShaderFactory.Instance.DefaultDefferredShader);
                 CurrentShader = Forward;
             }
 

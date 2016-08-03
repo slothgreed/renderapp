@@ -40,21 +40,21 @@ namespace RenderApp.AssetModel
                 return _defaultForwardShader;
             }
         }
-        private Shader _defaultDefferedShader;
-        public Shader DefaultDefferedShader
+        private Shader _defaultDefferredShader;
+        public Shader DefaultDefferredShader
         {
             get
             {
-                if (_defaultDefferedShader == null)
+                if (_defaultDefferredShader == null)
                 {
                     string path = Project.ShaderDirectory;
                     ShaderProgram diffuseV = new ShaderProgram(path + @"\defferd.vert");
                     ShaderProgram diffuseF = new ShaderProgram(path + @"\defferd.frag");
                     Shader diffuse = new Shader(diffuseV, diffuseF);
-                    diffuse.RenderMode = ERenderMode.Deffered;
-                    _defaultDefferedShader = diffuse;
+                    diffuse.RenderMode = ERenderMode.Defferred;
+                    _defaultDefferredShader = diffuse;
                 }
-                return _defaultDefferedShader;
+                return _defaultDefferredShader;
             }
         }
 

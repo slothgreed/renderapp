@@ -150,7 +150,7 @@
     <Compile Include="AssetModel\EnvironmentProbe.cs" />
     <Compile Include="AssetModel\Geometry\File\GeometryLoader.cs" />
     <Compile Include="AssetModel\ShaderModel\ShaderProgramInfo.cs" />
-    <Compile Include="RenderApp\Enum.cs" />
+    <Compile Include="Globals\Enum.cs" />
     <Compile Include="RenderSystem\PostProcess.cs" />
     <Compile Include="RenderSystem\RenderQueue.cs" />
     <Compile Include="RenderSystem\RenderSystem.cs" />
@@ -186,7 +186,7 @@
       <DependentUpon>AssetTreeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\AssetTreeViewModel.cs" />
-    <Compile Include="RenderApp\Global.cs" />
+    <Compile Include="Globals\Global.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModelT4.cs">
       <AutoGen>True</AutoGen>
@@ -200,7 +200,7 @@
     <Compile Include="Analyzer\Tree\Kdtree.cs" />
     <Compile Include="Analyzer\Tree\Octree.cs" />
     <Compile Include="Scene\Scene.cs" />
-    <Compile Include="RenderApp\Project.cs" />
+    <Compile Include="Globals\Project.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
