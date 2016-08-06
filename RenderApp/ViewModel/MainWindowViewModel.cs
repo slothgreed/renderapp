@@ -9,8 +9,7 @@ using System.IO;
 using System.Collections.ObjectModel;
 using RenderApp.GLUtil;
 using RenderApp.Utility;
-using RenderApp.AssetModel.ShaderModel;
-using RenderApp.AssetModel.MaterialModel;
+using RenderApp.GLUtil.ShaderModel;
 using RenderApp.AssetModel.LightModel;
 namespace RenderApp.ViewModel
 {
@@ -280,7 +279,8 @@ namespace RenderApp.ViewModel
         }
         private void CreateCubeCommand()
         {
-            Cube cube = new Cube(Scene.WorldMin, Scene.WorldMax);
+
+            Cube cube = new Cube(Scene.ActiveScene.WorldMin, Scene.ActiveScene.WorldMax);
         }
         private void CreateSphereCommand()
         {

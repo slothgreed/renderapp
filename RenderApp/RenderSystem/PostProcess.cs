@@ -5,33 +5,47 @@ using System.Text;
 using System.Threading.Tasks;
 using RenderApp.AssetModel;
 using RenderApp.GLUtil;
-using RenderApp.AssetModel.ShaderModel;
+using RenderApp.GLUtil.ShaderModel;
 namespace RenderApp
 {
     public class PostProcess
     {
         private Geometry Plane;
-        FrameBuffer frameBuffer;
         public PostProcess(Shader shader,FrameBuffer frame)
         {
-            frameBuffer = frame;
+            FrameBufferItem = frame;
             Plane = new Plane();
             Plane.MaterialItem.SetShader(shader);
         }
-
-        public void SetFrameBuffer(FrameBuffer frame)
+        public PostProcess(Shader shader)
         {
-            frameBuffer = frame;
+            Plane = new Plane();
+            Plane.MaterialItem.SetShader(shader);
+        }
+        private FrameBuffer frameBuffer;
+        public FrameBuffer FrameBufferItem
+        {
+            get;
+            set;
+        }
+
+        public void SetPlaneTexture(TextureKind kind,Texture texture)
+        {
+            Plane.MaterialItem.AddTexture(kind, texture);
         }
         public void Render()
         {
-            frameBuffer.BindBuffer();
+            FrameBufferItem.BindBuffer();
             Plane.Render();
-            frameBuffer.UnBindBuffer();
+            FrameBufferItem.UnBindBuffer();
+        }
+        public void OutputRender()
+        {
+            Plane.Render();
         }
         public void SizeChanged(int width,int height)
         {
-            frameBuffer.SizeChanged(width, height);
+            FrameBufferItem.SizeChanged(width, height);
         }
         public void Dispose()
         {

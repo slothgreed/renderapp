@@ -7,7 +7,8 @@ using System.IO;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.AssetModel;
 using OpenTK;
-namespace RenderApp.AssetModel.ShaderModel
+using RenderApp.AssetModel;
+namespace RenderApp.GLUtil.ShaderModel
 {
     public class ShaderProgram : Asset
     {

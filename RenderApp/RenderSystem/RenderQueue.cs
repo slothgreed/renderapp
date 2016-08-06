@@ -37,7 +37,14 @@ namespace RenderApp
             }
             list.Clear();
         }
-
+        public PostProcess FindPostProcess(int index)
+        {
+            if(index < 0 || index > Num)
+            {
+                return null;
+            }
+            return list[index];
+        }
         internal void SizeChanged(int width, int height)
         {
             foreach (var loop in list)
@@ -58,6 +65,7 @@ namespace RenderApp
         {
             foreach(var loop in list)
             {
+                loop.Render();
             }
         }
     }

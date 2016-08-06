@@ -9,7 +9,6 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using System.Windows.Forms;
 using RenderApp.Analyzer;
-using RenderApp.AssetModel.MaterialModel;
 namespace RenderApp.AssetModel
 {
     public class CObjFile : GeometryLoader

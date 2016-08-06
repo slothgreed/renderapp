@@ -145,11 +145,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Analyzer\HalfEdge\Dijkstra.cs" />
-    <Compile Include="AssetModel\ShaderModel\ShaderFactory.cs" />
+    <Compile Include="AssetModel\AssetFactory.cs" />
+    <Compile Include="AssetModel\Geometry\GeometryFactory.cs" />
+    <Compile Include="GLUtil\ShaderModel\ShaderFactory.cs" />
     <Compile Include="GLUtil\Output.cs" />
     <Compile Include="AssetModel\EnvironmentProbe.cs" />
     <Compile Include="AssetModel\Geometry\File\GeometryLoader.cs" />
-    <Compile Include="AssetModel\ShaderModel\ShaderProgramInfo.cs" />
+    <Compile Include="GLUtil\ShaderModel\ShaderProgramInfo.cs" />
     <Compile Include="Globals\Enum.cs" />
     <Compile Include="RenderSystem\PostProcess.cs" />
     <Compile Include="RenderSystem\RenderQueue.cs" />
@@ -206,7 +208,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="AssetModel\ShaderModel\ShaderProgram.cs" />
+    <Compile Include="GLUtil\ShaderModel\ShaderProgram.cs" />
     <Compile Include="Scene\Shader\Bezier\Bezier.cs" />
     <Compile Include="AssetModel\RenderPassFactory.cs" />
     <Compile Include="AssetModel\Geometry\Primitive\Space.cs" />
@@ -221,8 +223,8 @@
       <DependentUpon>ShaderProgramView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ShaderProgramViewModel.cs" />
-    <Compile Include="AssetModel\Texture.cs" />
-    <Compile Include="AssetModel\ShaderModel\Shader.cs" />
+    <Compile Include="GLUtil\Texture.cs" />
+    <Compile Include="GLUtil\ShaderModel\Shader.cs" />
     <Compile Include="Scene\Shader\HeightMap\HeightMap.cs" />
     <Compile Include="Scene\Shader\Line\CEffectLine.cs" />
     <Compile Include="Scene\Shader\MRT\Fur\Fur.cs" />

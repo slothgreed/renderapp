@@ -7,8 +7,7 @@ using OpenTK;
 using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using RenderApp.ViewModel;
-using RenderApp.AssetModel.ShaderModel;
-using RenderApp.AssetModel.MaterialModel;
+using RenderApp.GLUtil.ShaderModel;
 using RenderApp.AssetModel.LightModel;
 namespace RenderApp
 {
@@ -18,11 +17,11 @@ namespace RenderApp
         /// <summary>
         /// 空間の最大値
         /// </summary>
-        public readonly static Vector3 WorldMax = new Vector3(50, 75, 50);
+        public readonly Vector3 WorldMax = new Vector3(50, 75, 50);
         /// <summary>
         /// 空間の最小値
         /// </summary>
-        public readonly static Vector3 WorldMin = new Vector3(-50, 0, -50);
+        public readonly Vector3 WorldMin = new Vector3(-50, 0, -50);
 
         #region [scene dictionary]
         private static Dictionary<string, Scene> SceneList = new Dictionary<string, Scene>();
@@ -108,20 +107,15 @@ namespace RenderApp
         {
             get
             {
-                if (_activeScene == null)
-                {
-
-                    if (SceneList.Count == 0)
-                    {
-                        SceneList.Add("MainScene", new Scene());
-                        _activeScene = SceneList["MainScene"];
-                    }
-                }
                 return _activeScene;
-
             }
         }
-
+        public static Scene Create(string name)
+        {
+            SceneList.Add(name, new Scene());
+            _activeScene = SceneList[name];
+            return _activeScene;
+        }
         #endregion
         #region [public scene method]
         public IEnumerable<string> GetAssetListStr(EAssetType assetType)
@@ -466,15 +460,12 @@ namespace RenderApp
         /// </summary>
         public void Initialize()
         {
-            Camera camera = new Camera();
+            _mainCamera = AssetFactory.Instance.CreateMainCamera();
             _mainCamera = CameraList["MainCamera"];
-            Light light = new PointLight(new Vector3(10), Vector3.Zero);
-            SunLight = light;
 
-            Sphere sphere = new Sphere(WorldMax.X * 2, 20, 20, false, Vector3.UnitX);
-            sphere.MaterialItem = new Material(null);
-            sphere.MaterialItem.SetShader(new Shader(new ShaderProgram(Global.SphereMapVertexShader), new ShaderProgram(Global.SphereMapFragmentShader)));
-            sphere.MaterialItem.AddTexture(TextureKind.Albedo, new Texture(Global.SphereMapAlbedo));
+            SunLight = AssetFactory.Instance.CreateSunLight();
+            AssetFactory.Instance.CreateEnvironmentMap();
+
         }
         #endregion
         #region [dispose]

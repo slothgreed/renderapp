@@ -8,7 +8,6 @@ using OpenTK;
 using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using RenderApp.Utility;
-using RenderApp.AssetModel.MaterialModel;
 namespace RenderApp.AssetModel
 {
     public abstract class Geometry : Asset

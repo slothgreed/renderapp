@@ -30,7 +30,7 @@ namespace RenderApp
         public FrameBuffer CreateDefaultLithingBuffer(int width,int height)
         {
             //todo:
-            return new FrameBuffer("todo",width,height,"todo");
+            return new FrameBuffer("LightBuffer",width,height,"LightBuffer");
         }
     }
 

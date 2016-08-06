@@ -149,6 +149,7 @@ namespace RenderApp.GLUtil
             GL.Viewport(0, 0, m_glControl.Size.Width, m_glControl.Size.Height);
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+            Scene.Create("MainScene");
             Scene.ActiveScene.Initialize();
             m_AppstartUp = true;
             Output.GLError();

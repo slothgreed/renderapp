@@ -10,7 +10,6 @@ using System.Windows.Controls;
 using System.Windows;
 using OpenTK;
 using RenderApp.GLUtil;
-using RenderApp.AssetModel.MaterialModel;
 namespace RenderApp.ViewModel
 {
     class MaterialViewModel : AvalonWindowViewModel

@@ -7,8 +7,7 @@ using RenderApp.AssetModel;
 using System.Collections.ObjectModel;
 using RenderApp.GLUtil;
 using OpenTK;
-using RenderApp.AssetModel.MaterialModel;
-using RenderApp.AssetModel.ShaderModel;
+using RenderApp.GLUtil.ShaderModel;
 namespace RenderApp.ViewModel
 {
     class ShaderViewModel : AvalonWindowViewModel

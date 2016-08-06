@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RenderApp.AssetModel;
 using RenderApp.GLUtil;
-using RenderApp.AssetModel.ShaderModel;
+using RenderApp.GLUtil.ShaderModel;
 namespace RenderApp.ViewModel
 {
     public class ShaderProgramViewModel : AvalonWindowViewModel

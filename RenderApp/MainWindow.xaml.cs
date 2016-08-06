@@ -26,42 +26,9 @@ namespace RenderApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        #region [Member変数]
-
-        private Viewport m_Viewport;
-
-        private CTimer m_GUITimer = null;
-        #endregion
-
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void btn_Load_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
-            dlg.InitialDirectory = @"C:\cgModel";
-            dlg.Filter = "objファイル(*.obj)|*.obj;|stlファイル(*.stl)|*.stl;|すべてのファイル(*.*)|*.*";
-            dlg.FilterIndex = 1;
-            dlg.Title = "開くファイルを選択してください。";
-
-
-            if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                CObjFile model = new CObjFile(dlg.FileName);
-            }
-            m_Viewport.glControl_Paint(null, null);
-
-        }
-
-        public void OnAnimationTimer(object source, EventArgs e)
-        {
-            int sec = m_Viewport.RenderingMillSec;
-            if(m_Viewport.RenderingMillSec == 0)
-            {
-                sec = 1;
-            }
         }
 
     }

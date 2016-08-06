@@ -8,8 +8,8 @@ using RenderApp.GLUtil;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.Analyzer;
-using RenderApp.AssetModel.ShaderModel;
-namespace RenderApp.AssetModel.MaterialModel
+using RenderApp.GLUtil.ShaderModel;
+namespace RenderApp.AssetModel
 {
     public class Material : Asset
     {
@@ -133,12 +133,12 @@ namespace RenderApp.AssetModel.MaterialModel
         public Dictionary<TextureKind, Texture> TextureItem
         {
             get;
-            set;
+            private set;
         }
         public Dictionary<string, Texture> FrameBufferItem
         {
             get;
-            set;
+            private set;
         }
         public void AddTexture(TextureKind kind,Texture texture)
         {

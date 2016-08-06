@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using RenderApp.AssetModel;
 using RenderApp.GLUtil;
-using RenderApp.AssetModel.MaterialModel;
 namespace RenderApp
 {
     public class RenderSystem
@@ -19,7 +18,7 @@ namespace RenderApp
         private List<FrameBuffer> DefferdStage;
         private RenderQueue LithingStage;
         private RenderQueue PostStage;
-        
+        private PostProcess OutputStage;
         int Width;
         int Height;
         public RenderSystem(int width,int height)
@@ -35,9 +34,13 @@ namespace RenderApp
         private void Initialize()
         {
             PostProcessMode = false;
+
             DefferdStage.Add(RenderPassFactory.Instance.CreateGBuffer(Width,Height));
             FrameBuffer lithingFrame = RenderPassFactory.Instance.CreateDefaultLithingBuffer(Width, Height);
-            //LithingStage.AddPass(new PostProcess(ShaderFactory.Instance.CreateDefaultLightShader(),lithingFrame));
+
+            LithingStage.AddPass(new PostProcess(ShaderFactory.Instance.DefaultLightShader,lithingFrame));
+
+            OutputStage = new PostProcess(ShaderFactory.Instance.OutputShader);
         }
 
         public void SizeChanged(int width,int height)
@@ -107,6 +110,8 @@ namespace RenderApp
             {
                 PostStage.Render();
             }
+            OutputStage.SetPlaneTexture(TextureKind.Albedo, DefferdStage.Last<FrameBuffer>().TextureList[0]);
+            OutputStage.OutputRender();
         }
 
         internal void TogglePostProcess()
