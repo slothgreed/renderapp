@@ -49,6 +49,42 @@ namespace RenderApp.ViewModel
             }
             
         }
+        private bool _hoverHighlighting = true;
+        public bool HoverHighlighting
+        {
+            get
+            {
+                return _hoverHighlighting;
+            }
+            set
+            {
+                SetValue<bool>(ref _hoverHighlighting,value);
+            }
+        }
+        private int _itemIndent = 0;
+        public int ItemIndent
+        {
+            get
+            {
+                return _itemIndent;
+            }
+            set
+            {
+                SetValue<int>(ref _itemIndent,value);
+            }
+        }
+        private bool _isKeyboardMode = true;
+        public bool IsKeyboardMode
+        {
+            get
+            {
+                return _isKeyboardMode;
+            }
+            set
+            {
+                SetValue<bool>(ref _isKeyboardMode,value);
+            }
+        }
         private string _displayName;
         public string DisplayName
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 namespace RenderApp.GLUtil
 {
-    public class FrameBuffer : AssetModel.Asset
+    public class FrameBuffer
     {
         public string Name { get; private set; }
         /// <summary>
@@ -131,7 +131,7 @@ namespace RenderApp.GLUtil
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
             Output.GLError();
         }
-        public override void Dispose()
+        public void Dispose()
         {
             GL.DeleteFramebuffer(FrameId);
             GL.DeleteRenderbuffer(RenderId);

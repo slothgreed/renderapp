@@ -38,9 +38,9 @@ namespace RenderApp
             DefferdStage.Add(RenderPassFactory.Instance.CreateGBuffer(Width,Height));
             FrameBuffer lithingFrame = RenderPassFactory.Instance.CreateDefaultLithingBuffer(Width, Height);
 
-            LithingStage.AddPass(new PostProcess(ShaderFactory.Instance.DefaultLightShader,lithingFrame));
+            LithingStage.AddPass(new PostProcess("DefaultLight",ShaderFactory.Instance.DefaultLightShader,lithingFrame));
 
-            OutputStage = new PostProcess(ShaderFactory.Instance.OutputShader);
+            OutputStage = new PostProcess("OutputShader",ShaderFactory.Instance.OutputShader);
         }
 
         public void SizeChanged(int width,int height)
@@ -51,6 +51,7 @@ namespace RenderApp
             }
             LithingStage.SizeChanged(width, height);
             PostStage.SizeChanged(width, height);
+            OutputStage.SizeChanged(width, height);
         }
         public void ChangeRenderMode(ERenderMode mode)
         {
@@ -82,6 +83,7 @@ namespace RenderApp
                 case ERenderMode.Defferred:
                     foreach(var deffered in DefferdStage)
                     {
+                        deffered.ClearBuffer();
                         deffered.BindBuffer();
                         foreach (var asset in Scene.ActiveScene.GetAssetList(EAssetType.Geometry))
                         {
@@ -93,6 +95,7 @@ namespace RenderApp
 
                     if (CurrentMode == ERenderMode.Defferred)
                     {
+                        LithingStage.ClearBuffer();
                         LithingStage.Render();
                     }
 
@@ -110,7 +113,7 @@ namespace RenderApp
             {
                 PostStage.Render();
             }
-            OutputStage.SetPlaneTexture(TextureKind.Albedo, DefferdStage.Last<FrameBuffer>().TextureList[0]);
+            OutputStage.SetPlaneTexture(TextureKind.Albedo, LithingStage.Items(0).FrameBufferItem.TextureList[0]);
             OutputStage.OutputRender();
         }
 

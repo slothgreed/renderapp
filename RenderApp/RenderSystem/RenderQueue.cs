@@ -60,7 +60,22 @@ namespace RenderApp
                 yield return loop;
             }
         }
+        public PostProcess Items(int index)
+        {
+            if(index < 0 || index > Num)
+            {
+                return null;
+            }
+            return list[index];
+        }
+        internal void ClearBuffer()
+        {
+            foreach(var loop in list)
+            {
+                loop.FrameBufferItem.ClearBuffer();
+            }
 
+        }
         internal void Render()
         {
             foreach(var loop in list)

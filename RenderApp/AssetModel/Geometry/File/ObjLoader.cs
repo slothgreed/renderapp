@@ -15,7 +15,8 @@ namespace RenderApp.AssetModel
     {
         
         
-        public CObjFile(string filePath)
+        public CObjFile(string name,string filePath)
+            :base(name)
         {
             try
             {

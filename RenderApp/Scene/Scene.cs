@@ -50,10 +50,6 @@ namespace RenderApp
         /// </summary>
         private Dictionary<string, ShaderProgram> ShaderProgramList = new Dictionary<string, ShaderProgram>();
         /// <summary>
-        /// シェーダオブジェクト
-        /// </summary>
-        private Dictionary<string, Shader> ShaderList = new Dictionary<string, Shader>();
-        /// <summary>
         /// マテリアルオブジェクト
         /// </summary>
         private Dictionary<string, Material> MaterialList = new Dictionary<string, Material>();
@@ -61,10 +57,6 @@ namespace RenderApp
         /// 環境プローブオブジェクト
         /// </summary>
         private Dictionary<string, EnvironmentProbe> EnvProbeList = new Dictionary<string, EnvironmentProbe>();
-        /// <summary>
-        /// フレームバッファオブジェクト
-        /// </summary>
-        private Dictionary<string, FrameBuffer> FrameBufferList = new Dictionary<string, FrameBuffer>();
 
         #endregion
         #region [default property]
@@ -158,20 +150,8 @@ namespace RenderApp
                         yield return loop.Key;
                     }
                     break;
-                case EAssetType.Shader:
-                    foreach (var loop in ShaderList)
-                    {
-                        yield return loop.Key;
-                    }
-                    break;
                 case EAssetType.EnvProbe:
                     foreach (var loop in EnvProbeList)
-                    {
-                        yield return loop.Key;
-                    }
-                    break;
-                case EAssetType.FrameBuffer:
-                    foreach(var loop in FrameBufferList)
                     {
                         yield return loop.Key;
                     }
@@ -219,20 +199,8 @@ namespace RenderApp
                         yield return loop.Value;
                     }
                     break;
-                case EAssetType.Shader:
-                    foreach (var loop in ShaderList)
-                    {
-                        yield return loop.Value;
-                    }
-                    break;
                 case EAssetType.EnvProbe:
                     foreach (var loop in EnvProbeList)
-                    {
-                        yield return loop.Value;
-                    }
-                    break;
-                case EAssetType.FrameBuffer:
-                    foreach (var loop in FrameBufferList)
                     {
                         yield return loop.Value;
                     }
@@ -286,22 +254,10 @@ namespace RenderApp
                         return MaterialList[key];
                     }
                     break;
-                case EAssetType.Shader:
-                    if (ShaderList.ContainsKey(key))
-                    {
-                        return ShaderList[key];
-                    }
-                    break;
                 case EAssetType.EnvProbe:
                     if (EnvProbeList.ContainsKey(key))
                     {
                         return EnvProbeList[key];
-                    }
-                    break;
-                case EAssetType.FrameBuffer:
-                    if(FrameBufferList.ContainsKey(key))
-                    {
-                        return FrameBufferList[key];
                     }
                     break;
             }
@@ -334,11 +290,6 @@ namespace RenderApp
             {
                 AddAsset<ShaderProgram>(key, value, EAssetType.ShaderProgram, ShaderProgramList);
             }
-            else if (value is Shader)
-            {
-                AddAsset<Shader>(key, value, EAssetType.Shader, ShaderList);
-
-            }
             else if (value is Material)
             {
                 AddAsset<Material>(key, value, EAssetType.Materials, MaterialList);
@@ -346,9 +297,6 @@ namespace RenderApp
             else if (value is EnvironmentProbe)
             {
                 AddAsset<EnvironmentProbe>(key, value, EAssetType.EnvProbe, EnvProbeList);
-            }else if(value is FrameBuffer)
-            {
-                AddAsset<FrameBuffer>(key, value, EAssetType.FrameBuffer, FrameBufferList);
             }
         }
 
@@ -430,25 +378,11 @@ namespace RenderApp
                         MaterialList.Remove(key);
                     }
                     break;
-                case EAssetType.Shader:
-                    if (ShaderList.ContainsKey(key))
-                    {
-                        ShaderList[key].Dispose();
-                        ShaderList.Remove(key);
-                    }
-                    break;
                 case EAssetType.EnvProbe:
                     if (EnvProbeList.ContainsKey(key))
                     {
                         EnvProbeList[key].Dispose();
                         EnvProbeList.Remove(key);
-                    }
-                    break;
-                case EAssetType.FrameBuffer:
-                    if (FrameBufferList.ContainsKey(key))
-                    {
-                        FrameBufferList[key].Dispose();
-                        FrameBufferList.Remove(key);
                     }
                     break;
             }
@@ -461,11 +395,13 @@ namespace RenderApp
         public void Initialize()
         {
             _mainCamera = AssetFactory.Instance.CreateMainCamera();
-            _mainCamera = CameraList["MainCamera"];
+            AddSceneObject(_mainCamera.Key, _mainCamera);
 
             SunLight = AssetFactory.Instance.CreateSunLight();
-            AssetFactory.Instance.CreateEnvironmentMap();
-
+            AddSceneObject(SunLight.Key, SunLight);
+            
+            Geometry map = AssetFactory.Instance.CreateEnvironmentMap();
+            AddSceneObject(map.Key, map);
         }
         #endregion
         #region [dispose]
@@ -491,19 +427,11 @@ namespace RenderApp
             {
                 loop.Dispose();
             }
-            foreach (var loop in ShaderList.Values)
-            {
-                loop.Dispose();
-            }
             foreach (var loop in MaterialList.Values)
             {
                 loop.Dispose();
             }
             foreach (var loop in EnvProbeList.Values)
-            {
-                loop.Dispose();
-            }
-            foreach(var loop in FrameBufferList.Values)
             {
                 loop.Dispose();
             }

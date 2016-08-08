@@ -10,14 +10,10 @@ using RenderApp.GLUtil;
 using RenderApp.AssetModel;
 namespace RenderApp.GLUtil.ShaderModel
 {
-    public class Shader : Asset
+    public class Shader
     {
        
         #region [member value]
-        public Shader()
-        {
-
-        }
         /// <summary>
         /// シェーダプログラム
         /// </summary>
@@ -127,7 +123,7 @@ namespace RenderApp.GLUtil.ShaderModel
             }
             Initialize();
         }
-        public Shader(ShaderProgram vert, ShaderProgram frag, ShaderProgram geom, ShaderProgram tcs, ShaderProgram tes)
+        public Shader( ShaderProgram vert, ShaderProgram frag, ShaderProgram geom, ShaderProgram tcs, ShaderProgram tes)
         {
             if (vert.shaderType == ShaderType.VertexShader &&
                 frag.shaderType == ShaderType.FragmentShader &&
@@ -329,6 +325,9 @@ namespace RenderApp.GLUtil.ShaderModel
                     case "uProjectMatrix":
                         variable.variable = Scene.ActiveScene.MainCamera.ProjMatrix;
                         break;
+                    case "uUnProjectMatrix":
+                        variable.variable = Scene.ActiveScene.MainCamera.UnProject;
+                        break;
                     case "uCameraPosition":
                         variable.variable = Scene.ActiveScene.MainCamera.Position;
                         break;
@@ -484,7 +483,7 @@ namespace RenderApp.GLUtil.ShaderModel
                 case "int":
                 case "sampler2D":
                 case "sampler3D":
-                    shaderVariable = new Texture();
+                    shaderVariable = new Texture(name);
                     break;
                 case "float":
                     shaderVariable = .0f;
@@ -582,7 +581,6 @@ namespace RenderApp.GLUtil.ShaderModel
         /// </summary>
         public void Initialize()
         {
-            FilePath = _vert.FilePath;
             if (_vert != null)
             {
                 _activeShader.Add(_vert);
@@ -603,7 +601,6 @@ namespace RenderApp.GLUtil.ShaderModel
             {
                 _activeShader.Add(_tes);
             }
-            Scene.ActiveScene.AddSceneObject(this.ToString(), this);
         }
         public override string ToString()
         {
@@ -656,7 +653,7 @@ namespace RenderApp.GLUtil.ShaderModel
         /// <summary>
         /// 解放
         /// </summary>
-        public override void Dispose()
+        public void Dispose()
         {
             GL.DeleteProgram(_program);
             Output.GLError();

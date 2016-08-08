@@ -21,7 +21,8 @@ namespace RenderApp.AssetModel.LightModel
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        protected Light(Vector3 lightPos,Vector3 lightDir,string name = null)
+        protected Light(string name,Vector3 lightPos,Vector3 lightDir)
+            :base(name)
         {
             Position = lightPos;
             Matrix = Matrix4.LookAt(Position, lightDir, Vector3.UnitY);
@@ -34,7 +35,6 @@ namespace RenderApp.AssetModel.LightModel
             {
                 Key = _objectName;
             }
-            Scene.ActiveScene.AddSceneObject(Key, this);
         }
         public override void Dispose()
         {

@@ -25,8 +25,10 @@ namespace RenderApp.GLUtil
                 if(_defaultLightShader == null)
                 {
                     string path = Project.ShaderDirectory;
-                    ShaderProgram vert = new ShaderProgram(path + @"\Defferd.vert");
-                    ShaderProgram frag = new ShaderProgram(path + @"\Defferd.frag");
+                    string vPath = @"\Defferd.vert";
+                    string fPath = @"\Defferd.frag";
+                    ShaderProgram vert = new ShaderProgram(vPath, path + vPath);
+                    ShaderProgram frag = new ShaderProgram(fPath, path + fPath);
                     Shader deffered = new Shader(vert, frag);
                     deffered.RenderMode = ERenderMode.Defferred;
                     _defaultLightShader = deffered;
@@ -43,9 +45,11 @@ namespace RenderApp.GLUtil
                 if (_defaultForwardShader == null)
                 {
                     string path = Project.ShaderDirectory;
-                    ShaderProgram diffuseV = new ShaderProgram(path + @"\Diffuse.vert");
-                    ShaderProgram diffuseF = new ShaderProgram(path + @"\Diffuse.frag");
-                    Shader diffuse = new Shader(diffuseV, diffuseF);
+                    string vPath = @"\Diffuse.vert";
+                    string fPath = @"\Diffuse.frag";
+                    ShaderProgram vert = new ShaderProgram(vPath, path + vPath);
+                    ShaderProgram frag = new ShaderProgram(fPath, path + fPath);
+                    Shader diffuse = new Shader(vert, frag);
                     diffuse.RenderMode = ERenderMode.Forward;
                     _defaultForwardShader = diffuse;
                 }
@@ -60,9 +64,12 @@ namespace RenderApp.GLUtil
                 if (_defaultDefferredShader == null)
                 {
                     string path = Project.ShaderDirectory;
-                    ShaderProgram diffuseV = new ShaderProgram(path + @"\ConstantGeometry.vert");
-                    ShaderProgram diffuseF = new ShaderProgram(path + @"\ConstantGeometry.frag");
-                    Shader diffuse = new Shader(diffuseV, diffuseF);
+                    string vPath = @"\ConstantGeometry.vert";
+                    string fPath = @"\ConstantGeometry.frag";
+                    ShaderProgram vert = new ShaderProgram(vPath, path + vPath);
+                    ShaderProgram frag = new ShaderProgram(fPath, path + fPath);
+                    Shader diffuse = new Shader(vert, frag);
+
                     diffuse.RenderMode = ERenderMode.Defferred;
                     _defaultDefferredShader = diffuse;
                 }
@@ -77,9 +84,11 @@ namespace RenderApp.GLUtil
                 if(_outputShader == null)
                 {
                     string path = Project.ShaderDirectory;
-                    ShaderProgram diffuseV = new ShaderProgram(path + @"\Output.vert");
-                    ShaderProgram diffuseF = new ShaderProgram(path + @"\Output.frag");
-                    Shader output = new Shader(diffuseV, diffuseF);
+                    string vPath = @"\Output.vert";
+                    string fPath = @"\Output.frag";
+                    ShaderProgram vert = new ShaderProgram(vPath, path + vPath);
+                    ShaderProgram frag = new ShaderProgram(fPath, path + fPath);
+                    Shader output = new Shader(vert, frag);
                     output.RenderMode = ERenderMode.Defferred;
                     _outputShader = output;
                 }

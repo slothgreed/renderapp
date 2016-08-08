@@ -163,6 +163,7 @@ namespace RenderApp.GLUtil
             {
                 Scene.ActiveScene.MainCamera.SetProjMatrix((float)m_glControl.Size.Width / m_glControl.Size.Height);
                 GL.Viewport(0, 0, m_glControl.Size.Width, m_glControl.Size.Height);
+                RenderSystem.SizeChanged(m_glControl.Size.Width, m_glControl.Size.Height);
                 Output.GLError();
                 glControl_Paint(null, null);
             }

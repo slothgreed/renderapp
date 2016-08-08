@@ -14,7 +14,8 @@ namespace RenderApp.AssetModel
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public Cube(Vector3 min,Vector3 max)
+        public Cube(string name,Vector3 min,Vector3 max)
+            : base(name)
         {
             Min = min;
             Max = max;

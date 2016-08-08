@@ -11,7 +11,8 @@ namespace RenderApp.AssetModel
     public class Space : Geometry
     {
         
-        public Space(Vector3 min, Vector3 max)
+        public Space(string name,Vector3 min, Vector3 max)
+            :base(name)
         {
             Min = min;
             Max = max;

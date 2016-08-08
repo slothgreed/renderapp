@@ -45,7 +45,7 @@ namespace RenderApp.Analyzer
 
             return 0;
         }
-        private void CalculateDijkstra(Node[] nodes,int start,int end)
+        private void CalcDijkstra(Node[] nodes,int start,int end)
         {
             //initialize
             Node current = nodes[start];

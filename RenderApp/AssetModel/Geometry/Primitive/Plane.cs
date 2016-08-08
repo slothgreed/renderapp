@@ -20,18 +20,13 @@ namespace RenderApp.AssetModel
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public Plane(Vector3 q0, Vector3 q1, Vector3 q2, Vector3 q3)
-            : base(PrimitiveType.Quads)
-        {
-            MakeInfinityPlane(q0, q1, q2, q3);
-        }
         public Plane(string name,Vector3 q0, Vector3 q1, Vector3 q2, Vector3 q3)
             : base(name,PrimitiveType.Quads)
         {
             MakeInfinityPlane(q0, q1, q2, q3);
         }
-        public Plane()
-            : base(PrimitiveType.Quads)
+        public Plane(string name)
+            : base(name,PrimitiveType.Quads)
         {
             MakeInfinityPlane(new Vector3(-1, -1, 0), new Vector3(1, -1, 0), new Vector3(1, 1, 0), new Vector3(-1, 1, 0));
         }

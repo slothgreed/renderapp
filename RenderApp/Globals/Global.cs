@@ -8,8 +8,5 @@ namespace RenderApp
 {
     public static class Global
     {
-        public static string SphereMapAlbedo = Project.TextureDirectory + @"\SphreMap.jpg";
-        public static string SphereMapVertexShader = Project.ShaderDirectory + @"\sphereMap.vert";
-        public static string SphereMapFragmentShader = Project.ShaderDirectory + @"\sphereMap.frag";
     }
 }

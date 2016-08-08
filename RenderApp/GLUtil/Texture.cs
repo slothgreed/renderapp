@@ -60,16 +60,19 @@ namespace RenderApp.GLUtil
         #region [constructor]
         private void Initialize()
         {
-            Scene.ActiveScene.AddSceneObject(FileName, this);
         }
-        public Texture()
+        public Texture(string name)
+            :base(name)
         {
+
         }
-        public Texture(string path, TextureType target = TextureType.Texture2D)
+        public Texture(string name,string path, TextureType target = TextureType.Texture2D)
+            :base(name)
         {
             LoadTexture(path, target);
         }
         public Texture(string name, int width, int height)
+            : base(name)
         {
             this.Key = name;
             CreateFrameBuffer2D(width,height);
@@ -101,7 +104,8 @@ namespace RenderApp.GLUtil
         /// <summary>
         /// TODO:cubemapは別クラスへ処理
         /// </summary>
-        public Texture(string px, string py, string pz, string nx, string ny, string nz)
+        public Texture(string name,string px, string py, string pz, string nx, string ny, string nz)
+            : base(name)
         {
             this.FilePath = px;
             this.ID = CreateCubeMapTexture(px, nx, py, ny, pz, nz);
@@ -112,6 +116,7 @@ namespace RenderApp.GLUtil
         /// TODO:cubemapは別クラスへ処理
         /// </summary>
         public Texture(string name, int id)
+            :base(name)
         {
             this.FilePath = name;
             this.ID = id;

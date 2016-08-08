@@ -107,15 +107,13 @@ namespace RenderApp.AssetModel
         }
 
 
-        public Geometry(string name = null, PrimitiveType renderType = PrimitiveType.Triangles)
+        public Geometry(string name, PrimitiveType renderType = PrimitiveType.Triangles)
+            : base(name)
         {
             Initialize(name, renderType);
         }
-        public Geometry(PrimitiveType prim)
-        {
-            Initialize(null, prim);
-        }
-        public Geometry()
+        public Geometry(string name)
+            : base(name)
         {
             Initialize(null, PrimitiveType.Triangles);
         }

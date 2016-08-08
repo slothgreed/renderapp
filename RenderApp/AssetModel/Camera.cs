@@ -180,11 +180,10 @@ namespace RenderApp.AssetModel
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public Camera()
+        public Camera(string name)
+            :base(name)
         {
             InitCamera();
-            Key = "MainCamera";
-            Scene.ActiveScene.AddSceneObject(Key, this);
             SetProjMatrix(1.0f);
         }
         public override void Dispose()

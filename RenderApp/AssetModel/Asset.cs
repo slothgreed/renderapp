@@ -10,13 +10,10 @@ namespace RenderApp.AssetModel
 
     public abstract class Asset
     {
-        public Asset()
-        {
-
-        }
         public Asset(string name)
         {
             Key = name;
+            System.Diagnostics.Debug.WriteLine("create asset " + name + ":");
         }
         private string _directoryPath;
         public string DirectoryPath
@@ -97,5 +94,17 @@ namespace RenderApp.AssetModel
 
         }
         public abstract void Dispose();
+
+        public static Dictionary<EAssetType, int> AssetNum = new Dictionary<EAssetType,int>();
+
+        public static string GetNameFromPath(string path)
+        {
+            return Path.GetFileName(path);
+        }
+        public static string GetNameFromType(EAssetType type)
+        {
+            AssetNum[type]++;
+            return type.ToString() + AssetNum[type];
+        }
     }
 }

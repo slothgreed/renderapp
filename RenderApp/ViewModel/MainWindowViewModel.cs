@@ -148,13 +148,6 @@ namespace RenderApp.ViewModel
             if(!Project.IsOpen)
             {
                 Project.IsOpen = true;
-                string path = Project.ProjectDirectory + @"\Shader";
-
-                Scene.ActiveScene.Initialize();
-                ShaderProgram finalRenderV = new ShaderProgram(path + @"\FinalRender.vert");
-                ShaderProgram finalRenderF = new ShaderProgram(path + @"\FinalRender.frag");
-                Shader finalRender = new Shader(finalRenderV, finalRenderF);
-
             }
         }
         private void OpenProjectCommand()
@@ -202,10 +195,10 @@ namespace RenderApp.ViewModel
                     switch(extension)
                     {
                         case ".obj":
-                            var geometry = new CObjFile(filename);
+                            var geometry = new CObjFile(Asset.GetNameFromPath(filename),filename);
                             break;
                         case ".stl":
-                            var getometry = new StlFile(filename);
+                            var getometry = new StlFile(Asset.GetNameFromPath(filename), filename);
                             break;
                     }
                 }
@@ -225,7 +218,7 @@ namespace RenderApp.ViewModel
                     string extension = Path.GetExtension(filename);
                     if (extension == ".bmp" || extension == ".png" || extension == ".jpg")
                     {
-                        Texture tex = new Texture(filename);
+                        Texture tex = new Texture(Asset.GetNameFromPath(filename),filename);
                     }
                 }
             }
@@ -253,23 +246,23 @@ namespace RenderApp.ViewModel
                     switch (extension)
                     {
                         case ".vert":
-                            vert = new ShaderProgram(filename);
+                            vert = new ShaderProgram(Asset.GetNameFromPath(filename),filename);
                             AssetWindow.AddAssetTree(new TreeItemViewModel(vert, EAssetType.ShaderProgram));
                             break;
                         case ".frag":
-                            frag = new ShaderProgram(filename);
+                            frag = new ShaderProgram(Asset.GetNameFromPath(filename),filename);
                             AssetWindow.AddAssetTree(new TreeItemViewModel(frag, EAssetType.ShaderProgram));
                             break;
                         case ".geom":
-                            geom = new ShaderProgram(filename);
+                            geom = new ShaderProgram(Asset.GetNameFromPath(filename),filename);
                             AssetWindow.AddAssetTree(new TreeItemViewModel(geom, EAssetType.ShaderProgram));
                             break;
                         case ".tcs":
-                            tcs = new ShaderProgram(filename);
+                            tcs = new ShaderProgram(Asset.GetNameFromPath(filename),filename);
                             AssetWindow.AddAssetTree(new TreeItemViewModel(tcs, EAssetType.ShaderProgram));
                             break;
                         case ".tes":
-                            tes = new ShaderProgram(filename);
+                            tes = new ShaderProgram(Asset.GetNameFromPath(filename),filename);
                             AssetWindow.AddAssetTree(new TreeItemViewModel(tes, EAssetType.ShaderProgram));
                             break;
                     }
@@ -279,16 +272,15 @@ namespace RenderApp.ViewModel
         }
         private void CreateCubeCommand()
         {
-
-            Cube cube = new Cube(Scene.ActiveScene.WorldMin, Scene.ActiveScene.WorldMax);
+            Cube cube = new Cube(Asset.GetNameFromType(EAssetType.Geometry), Scene.ActiveScene.WorldMin, Scene.ActiveScene.WorldMax);
         }
         private void CreateSphereCommand()
         {
-            Sphere sphere = new Sphere(5, 5, 5, true, OpenTK.Vector3.UnitY);
+            Sphere sphere = new Sphere(Asset.GetNameFromType(EAssetType.Geometry), 5, 5, 5, true, OpenTK.Vector3.UnitY);
         }
         private void CreatePlaneCommand()
         {
-            Plane plane = new Plane();
+            Plane plane = new Plane(Asset.GetNameFromType(EAssetType.Geometry));
         }
 
         private void WindowCloseCommand()

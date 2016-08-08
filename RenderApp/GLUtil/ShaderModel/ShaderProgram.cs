@@ -7,7 +7,6 @@ using System.IO;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.AssetModel;
 using OpenTK;
-using RenderApp.AssetModel;
 namespace RenderApp.GLUtil.ShaderModel
 {
     public class ShaderProgram : Asset
@@ -58,10 +57,10 @@ namespace RenderApp.GLUtil.ShaderModel
                 return _shaderCode;
             }
         }
-        public ShaderProgram(string filePath)
+        public ShaderProgram(string name,string filePath)
+            :base(name)
         {
             FilePath = filePath;
-            Scene.ActiveScene.AddSceneObject(FileName, this);
         }
         public override void Dispose()
         {

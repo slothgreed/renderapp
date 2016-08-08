@@ -8,6 +8,11 @@ namespace RenderApp.AssetModel
 {
     public class GeometryLoader : Geometry
     {
+        public GeometryLoader(string name)
+            :base(name)
+        {
+
+        }
         public struct CMaterial
         {
             public string name;

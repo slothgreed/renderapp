@@ -263,7 +263,7 @@
     <Compile Include="View\TextureView.xaml.cs">
       <DependentUpon>TextureView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\TreeItemViewModel.cs" />
+    <Compile Include="ViewModel\TreeItemViewModelItem.cs" />
     <Compile Include="Utility\Mouse.cs" />
     <Compile Include="Scene\Shader\OffScreen\Defferd\CDeffed.cs" />
     <Compile Include="Scene\Shader\OffScreen\Shadow\CShadowMap.cs" />

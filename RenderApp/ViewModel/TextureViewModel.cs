@@ -47,7 +47,6 @@ namespace RenderApp.ViewModel
             private set;
         }
         public TextureViewModel(Texture model)
-            :base()
         {
             WindowPosition = AvalonWindow.LeftDown;
             Model = model;

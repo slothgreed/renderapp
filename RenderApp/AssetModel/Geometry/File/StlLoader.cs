@@ -21,7 +21,8 @@ namespace RenderApp.AssetModel
         /// <param name="filePath"></param>
         /// <param name="position"></param>
         /// <param name="normal"></param>
-        public StlFile(string filePath)
+        public StlFile(string name,string filePath)
+            :base(name)    
         {
             try
             {

@@ -8,8 +8,8 @@ namespace RenderApp.AssetModel.LightModel
 {
     class DirectionLight : Light
     {
-        public DirectionLight(Vector3 lightPos, Vector3 lightDir)
-            : base(lightPos, lightDir)
+        public DirectionLight(string name,Vector3 lightPos, Vector3 lightDir)
+            : base(name,lightPos, lightDir)
         {
         }
     }

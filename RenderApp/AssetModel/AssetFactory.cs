@@ -24,22 +24,25 @@ namespace RenderApp.AssetModel
             string SphereMapAlbedo = Project.TextureDirectory + @"\SphreMap.jpg";
             string SphereMapVertexShader = Project.ShaderDirectory + @"\sphereMap.vert";
             string SphereMapFragmentShader = Project.ShaderDirectory + @"\sphereMap.frag";
-            Sphere sphere = new Sphere(Scene.ActiveScene.WorldMax.X * 2, 20, 20, false, Vector3.UnitX);
+            Sphere sphere = new Sphere("SphereMap",Scene.ActiveScene.WorldMax.X * 2, 20, 20, false, Vector3.UnitX);
             sphere.MaterialItem = new Material(null);
-            sphere.MaterialItem.SetShader(new Shader(new ShaderProgram(Global.SphereMapVertexShader), new ShaderProgram(Global.SphereMapFragmentShader)));
-            sphere.MaterialItem.AddTexture(TextureKind.Albedo, new Texture(Global.SphereMapAlbedo));
+            ShaderProgram vertex = new ShaderProgram(Asset.GetNameFromPath(SphereMapVertexShader),SphereMapVertexShader);
+            ShaderProgram frag = new ShaderProgram(Asset.GetNameFromPath(SphereMapFragmentShader), SphereMapFragmentShader);
+
+            sphere.MaterialItem.SetShader(new Shader(vertex,frag));
+            sphere.MaterialItem.AddTexture(TextureKind.Albedo, new Texture(Asset.GetNameFromPath(SphereMapAlbedo),SphereMapAlbedo));
 
             return sphere;
         }
 
         internal Camera CreateMainCamera()
         {
-            return new Camera();
+            return new Camera("MainCamera");
         }
 
         internal Light CreateSunLight()
         {
-            return new PointLight(new Vector3(10), Vector3.Zero);
+            return new PointLight("SunLight",new Vector3(10), Vector3.Zero);
         }
     }
 }

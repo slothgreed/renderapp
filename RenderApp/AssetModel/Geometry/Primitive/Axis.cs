@@ -10,7 +10,8 @@ namespace RenderApp.AssetModel
 {
     class Axis : Geometry
     {
-        public Axis(Vector3 min, Vector3 max)
+        public Axis(string name,Vector3 min, Vector3 max)
+            :base(name)
         {
             SetObjectData(min, max);
         }

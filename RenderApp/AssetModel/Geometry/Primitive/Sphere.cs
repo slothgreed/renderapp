@@ -13,7 +13,8 @@ namespace RenderApp.AssetModel
         /// <param name="hpartition">高さ分割数</param>
         /// <param name="wpartition">横分割数</param>
         /// <param name="orient">面の方向true=外向きfalse=内向き</param>
-        public Sphere(float radial, int hpartition, int wpartition,bool orient,Vector3 color)
+        public Sphere(string name,float radial, int hpartition, int wpartition,bool orient,Vector3 color)
+            : base(name)
         {
             SetObjectData(radial, hpartition, wpartition,orient,color);
         }

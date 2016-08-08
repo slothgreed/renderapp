@@ -24,12 +24,19 @@
                             TargetObject="{Binding}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
+            <!--<multi:MultiSelectTreeView>
+                <Style TargetType="{x:Type multi:MultiSelectTreeView}">
+                    <Setter Property="HoverHighlighting" Value="{Binding Model.HoverHighlighting,Mode=TwoWay}"/>
+                    <Setter Property="IsKeyboardMode" Value="{Binding Model.IsKeyboardMode,Mode=TwoWay}"/>
+                    <Setter Property="ItemIndent" Value="{Binding Model.ItemIndent,Mode=TwoWay}"/>
+                </Style>
+            </multi:MultiSelectTreeView>-->
             
             <multi:MultiSelectTreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type multi:MultiSelectTreeViewItem}">
                     <Setter Property="DisplayName" Value="{Binding DisplayName,Mode=TwoWay}"/>
                     <Setter Property="IsSelected" Value="{Binding IsSelected,Mode=TwoWay}"/>
-                </Style>    
+                </Style>
             </multi:MultiSelectTreeView.ItemContainerStyle>
             
             <multi:MultiSelectTreeView.Resources>

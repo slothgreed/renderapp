@@ -125,7 +125,6 @@ namespace RenderApp.AssetModel
             {
                 Key = _name;
             }
-            Scene.ActiveScene.AddSceneObject(_name, this);
         }
         #endregion
         #region [texture]

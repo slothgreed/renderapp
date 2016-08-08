@@ -22,7 +22,8 @@ namespace RenderApp.AssetModel
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public GridPlane(float Area,float Space)
+        public GridPlane(string name,float Area,float Space)
+            : base(name)
         {
             m_Area = Area;
             m_Space = Space;

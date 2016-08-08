@@ -11,15 +11,15 @@ namespace RenderApp
     public class PostProcess
     {
         private Geometry Plane;
-        public PostProcess(Shader shader,FrameBuffer frame)
+        public PostProcess(string name,Shader shader,FrameBuffer frame)
         {
             FrameBufferItem = frame;
-            Plane = new Plane();
+            Plane = new Plane(name);
             Plane.MaterialItem.SetShader(shader);
         }
-        public PostProcess(Shader shader)
+        public PostProcess(string name,Shader shader)
         {
-            Plane = new Plane();
+            Plane = new Plane(name);
             Plane.MaterialItem.SetShader(shader);
         }
         private FrameBuffer frameBuffer;
@@ -45,7 +45,10 @@ namespace RenderApp
         }
         public void SizeChanged(int width,int height)
         {
-            FrameBufferItem.SizeChanged(width, height);
+            if(FrameBufferItem != null)
+            {
+                FrameBufferItem.SizeChanged(width, height);
+            }
         }
         public void Dispose()
         {

@@ -9,6 +9,11 @@ namespace RenderApp.AssetModel
 {
     public class EnvironmentProbe : Asset
     {
+        public EnvironmentProbe(string name)
+            :base(name)
+        {
+
+        }
         public override void Dispose()
         {
             throw new NotImplementedException();

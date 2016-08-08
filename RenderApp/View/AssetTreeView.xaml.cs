@@ -19,13 +19,6 @@ namespace RenderApp.View
     /// </summary>
     public partial class AssetTreeView : UserControl
     {
-        public AssetTreeViewModel Model;
-
-        public static AssetTreeViewModel ActiveItem
-        {
-            get;
-            private set;
-        }
 
         public AssetTreeView()
         {

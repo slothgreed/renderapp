@@ -22,9 +22,7 @@ namespace RenderApp
         Textures,
         EnvProbe,
         Materials,
-        ShaderProgram,
-        Shader,
-        FrameBuffer
+        ShaderProgram
     }
     /// <summary>
     /// Attribute(Shader用)

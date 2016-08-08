@@ -8,7 +8,8 @@ namespace RenderApp.AssetModel.LightModel
 {
     class PointLight : Light
     {
-        public PointLight(Vector3 lightPos, Vector3 lightDir) : base(lightPos,lightDir)
+        public PointLight(string name,Vector3 lightPos, Vector3 lightDir) 
+            : base(name,lightPos,lightDir)
         {
         }
 
