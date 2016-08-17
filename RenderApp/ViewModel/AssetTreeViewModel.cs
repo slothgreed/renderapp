@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Controls;
 using RenderApp.AssetModel;
+using System.Diagnostics;
+using System.IO;
 namespace RenderApp.ViewModel
 {
    
@@ -156,6 +158,21 @@ namespace RenderApp.ViewModel
                 Scene.ActiveScene.DeleteAsset(ActiveNode.Model.Key, ActiveNode.AssetType);
             }
 
+        }
+        public void OpenExplolerCommand()
+        {
+            if(ActiveNode == null)
+            {
+                return;
+            }
+            if (ActiveNode.Model is Asset)
+            {
+                var asset = ActiveNode.Model as Asset;
+                if (File.Exists(asset.FilePath))
+                {
+                    Process.Start("EXPLORER.exe",@"/select," + asset.FilePath);
+                }
+            }
         }
         public override void UpdateProperty()
         {

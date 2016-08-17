@@ -10,6 +10,7 @@ using System.Windows.Input;
 	string[] _command =
 	{
 		"Delete",
+		"OpenExploler"
 	};
 
 #>

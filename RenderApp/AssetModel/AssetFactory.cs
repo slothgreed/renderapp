@@ -28,7 +28,6 @@ namespace RenderApp.AssetModel
             sphere.MaterialItem = new Material("SphereMaterial");
             Texture texture = new Texture(Asset.GetNameFromPath(SphereMapAlbedo), SphereMapAlbedo);
             sphere.MaterialItem.AddTexture(TextureKind.Albedo, texture);
-            sphere.MaterialItem.SetShader(ShaderFactory.Instance.DefaultDefferredShader);
             sphere.MaterialItem.AddTexture(TextureKind.Albedo, texture);
             Scene.ActiveScene.AddSceneObject(sphere.MaterialItem.Key, sphere.MaterialItem);
             Scene.ActiveScene.AddSceneObject(texture.Key, texture);
@@ -44,6 +43,24 @@ namespace RenderApp.AssetModel
         internal Light CreateSunLight()
         {
             return new PointLight("SunLight",new Vector3(10), Vector3.Zero);
+        }
+        internal Texture CreateTexture(string filePath)
+        {
+            var texture = new Texture(Asset.GetNameFromPath(filePath),filePath);
+            Scene.ActiveScene.AddSceneObject(texture.Key, texture);
+            return texture;
+        }
+        internal ShaderProgram CreateShaderProgram(string filePath)
+        {
+            var program = new ShaderProgram(Asset.GetNameFromPath(filePath),filePath);
+            Scene.ActiveScene.AddSceneObject(program.Key, program);
+            return program;
+        }
+        internal Geometry CreateGeometry(Geometry geometry)
+        {
+            geometry.MaterialItem = new Material(geometry.Key);
+            Scene.ActiveScene.AddSceneObject(geometry.Key,geometry);
+            return geometry;
         }
     }
 }

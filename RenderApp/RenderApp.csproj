@@ -146,7 +146,6 @@
     </ApplicationDefinition>
     <Compile Include="Analyzer\HalfEdge\Dijkstra.cs" />
     <Compile Include="AssetModel\AssetFactory.cs" />
-    <Compile Include="AssetModel\Geometry\GeometryFactory.cs" />
     <Compile Include="GLUtil\ShaderModel\ShaderFactory.cs" />
     <Compile Include="GLUtil\Output.cs" />
     <Compile Include="AssetModel\EnvironmentProbe.cs" />

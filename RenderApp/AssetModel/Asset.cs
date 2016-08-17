@@ -103,7 +103,14 @@ namespace RenderApp.AssetModel
         }
         public static string GetNameFromType(EAssetType type)
         {
-            AssetNum[type]++;
+            if(!AssetNum.ContainsKey(type))
+            {
+                AssetNum.Add(type, 0);
+            }
+            else
+            {
+                AssetNum[type]++;
+            }
             return type.ToString() + AssetNum[type];
         }
     }

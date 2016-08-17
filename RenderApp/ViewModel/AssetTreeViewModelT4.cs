@@ -20,6 +20,18 @@ namespace RenderApp.ViewModel
 					return _Delete;
 				}
 			}
+			private ICommand _OpenExploler;
+			public ICommand OpenExploler
+			{
+				get
+				{
+					if(_OpenExploler == null)
+					{
+						return _OpenExploler = CreateCommand(OpenExplolerCommand);						
+					}
+					return _OpenExploler;
+				}
+			}
 
 	}
 

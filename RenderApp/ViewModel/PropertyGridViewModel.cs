@@ -26,7 +26,9 @@ namespace RenderApp.ViewModel
                 else if (loop.Value is OpenTK.Vector3)
                 {
                     dynamicProperties.Add(loop.Key, new Vector3ViewModel(loop.Key, (OpenTK.Vector3)loop.Value));
-
+                    dynamicProperties.Add(loop.Key + "X", ((OpenTK.Vector3)loop.Value).X);
+                    dynamicProperties.Add(loop.Key + "Y", ((OpenTK.Vector3)loop.Value).Y);
+                    dynamicProperties.Add(loop.Key + "Z", ((OpenTK.Vector3)loop.Value).Z);
                 }
                 else if (loop.Value is OpenTK.Vector4)
                 {

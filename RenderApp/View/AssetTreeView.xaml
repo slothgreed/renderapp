@@ -14,8 +14,8 @@
         <multi:MultiSelectTreeView ItemsSource="{Binding Root.Children}">
             <multi:MultiSelectTreeView.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Delete" Command="{Binding Delete}">
-                    </MenuItem>
+                    <MenuItem Header="Delete" Command="{Binding Delete}"/>
+                    <MenuItem Header="OpenExplorer" Command="{Binding OpenExploler}"/>
                 </ContextMenu>
             </multi:MultiSelectTreeView.ContextMenu>
             <i:Interaction.Triggers>
