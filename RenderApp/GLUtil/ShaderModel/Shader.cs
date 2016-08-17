@@ -41,21 +41,6 @@ namespace RenderApp.GLUtil.ShaderModel
                 return _code;
             }
         }
-        /// <summary>
-        /// Deffard or MultiBuffer;
-        /// </summary>
-        private ERenderMode _renderMode = ERenderMode.Forward;
-        public ERenderMode RenderMode
-        {
-            get
-            {
-                return _renderMode;
-            }
-            set
-            {
-                _renderMode = value;
-            }
-        }
         
         /// <summary>
         /// 出力バッファ数

@@ -8,20 +8,29 @@ namespace RenderApp.ViewModel
 {
     class DefaultViewModel : ViewModelBase
     {
+
         public string Name
         {
             get;
             set;
         }
+        private object _value;
         public object Value
         {
-            get;
-            set;
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                SetValue<object>(ref _value, value);
+            }
         }
         public DefaultViewModel(string name,string value)
         {
             Name = name;
             Value = value;
+            
         }
         public override void UpdateProperty()
         {

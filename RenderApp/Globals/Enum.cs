@@ -47,12 +47,6 @@ namespace RenderApp
         PostProcessPass,
         ForwardPass
     }
-    public enum ERenderMode
-    {
-        None,
-        Defferred,
-        Forward
-    }
     public enum TextureType
     {
         Texture2D,

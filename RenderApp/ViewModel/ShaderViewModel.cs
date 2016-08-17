@@ -34,7 +34,7 @@ namespace RenderApp.ViewModel
             WindowPosition = AvalonWindow.RightDown;
 
             Items = new Dictionary<string,object>();
-            foreach (ShaderProgramInfo loop in material.Forward.GetShaderVariable())
+            foreach (ShaderProgramInfo loop in material.CurrentShader.GetShaderVariable())
             {
                 if (loop.variable is Vector2)
                 {

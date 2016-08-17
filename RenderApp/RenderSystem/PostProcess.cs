@@ -15,11 +15,15 @@ namespace RenderApp
         {
             FrameBufferItem = frame;
             Plane = new Plane(name);
+            Plane.MaterialItem = new Material(name);
+            Scene.ActiveScene.AddSceneObject(name,Plane.MaterialItem);
             Plane.MaterialItem.SetShader(shader);
         }
         public PostProcess(string name,Shader shader)
         {
             Plane = new Plane(name);
+            Plane.MaterialItem = new Material(name);
+            Scene.ActiveScene.AddSceneObject(name, Plane.MaterialItem); 
             Plane.MaterialItem.SetShader(shader);
         }
         private FrameBuffer frameBuffer;

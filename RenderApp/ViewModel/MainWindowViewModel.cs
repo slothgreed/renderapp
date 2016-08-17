@@ -58,36 +58,6 @@ namespace RenderApp.ViewModel
                 }
             }
         }
-        public bool ForwardMode
-        {
-            get
-            {
-                if(m_Viewport == null)
-                {
-                    return false;
-                }
-                if(m_Viewport.RenderSystem == null)
-                {
-                    return false;
-                }
-                return m_Viewport.RenderSystem.CurrentMode == ERenderMode.Forward;
-            }
-        }
-        public bool DefferredMode
-        {
-            get
-            {
-                if (m_Viewport == null)
-                {
-                    return false;
-                }
-                if (m_Viewport.RenderSystem == null)
-                {
-                    return false;
-                }
-                return m_Viewport.RenderSystem.CurrentMode == ERenderMode.Defferred;
-            }
-        }
 
         public bool PostProcessMode
         {
@@ -314,18 +284,6 @@ namespace RenderApp.ViewModel
                 m_Viewport.Closed();
             }
             GC.Collect();
-        }
-        public void ChangeRenderModeCommand(object sender)
-        {
-            if(sender is ERenderMode)
-            {
-                ERenderMode? mode = (ERenderMode)sender;
-                if (mode == null)
-                    return;
-                m_Viewport.RenderSystem.ChangeRenderMode((ERenderMode)mode);
-                OnPropertyChanged("ForwardMode");
-                OnPropertyChanged("DefferredMode");
-            }
         }
         public void TogglePostProcessCommand()
         {

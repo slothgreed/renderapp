@@ -31,7 +31,7 @@
                     <Setter Property="ItemIndent" Value="{Binding Model.ItemIndent,Mode=TwoWay}"/>
                 </Style>
             </multi:MultiSelectTreeView>-->
-            
+
             <multi:MultiSelectTreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type multi:MultiSelectTreeViewItem}">
                     <Setter Property="DisplayName" Value="{Binding DisplayName,Mode=TwoWay}"/>

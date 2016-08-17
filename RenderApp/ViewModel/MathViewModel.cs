@@ -55,8 +55,7 @@ namespace RenderApp.ViewModel
     public class Vector2ViewModel : MathViewModel
     {
         private Vector2 Model;
-        private string p;
-        private Vector2ViewModel vector2ViewModel;
+
         public Vector2ViewModel(string name, Vector2 value)
         {
             Name = name;

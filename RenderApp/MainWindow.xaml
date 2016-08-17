@@ -126,9 +126,6 @@
             </MenuItem>
             
             <MenuItem Header="Rendering">
-                <MenuItem Header="Forward" Command="{Binding ChangeRenderMode}" CommandParameter="{x:Static local:ERenderMode.Forward}" IsChecked="{Binding ForwardMode,Mode=OneWay}"/>
-                <MenuItem Header="Defferd" Command="{Binding ChangeRenderMode}" CommandParameter="{x:Static local:ERenderMode.Defferred}" IsChecked="{Binding DefferredMode,Mode=OneWay}"/>
-                <Separator/>
                 <MenuItem Header="PostProcess" Command="{Binding TogglePostProcess}" IsChecked="{Binding PostProcessMode,Mode=OneWay}"/> 
             </MenuItem>
             

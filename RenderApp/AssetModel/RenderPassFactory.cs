@@ -20,10 +20,10 @@ namespace RenderApp
         public FrameBuffer CreateGBuffer(int width,int height)
         {
             string[] textureName = new string[4];
-            textureName[0] = "Posit";
-            textureName[1] = "Normal";
-            textureName[2] = "Color";
-            textureName[3] = "Light";
+            textureName[0] = "GPosit";
+            textureName[1] = "GNormal";
+            textureName[2] = "GColor";
+            textureName[3] = "GLight";
 
            return new FrameBuffer("GBuffer", width, height, textureName);
         }
@@ -32,6 +32,7 @@ namespace RenderApp
             //todo:
             return new FrameBuffer("LightBuffer",width,height,"LightBuffer");
         }
+
     }
 
 }

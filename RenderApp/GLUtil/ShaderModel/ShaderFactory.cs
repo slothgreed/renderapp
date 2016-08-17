@@ -30,32 +30,12 @@ namespace RenderApp.GLUtil
                     ShaderProgram vert = new ShaderProgram(vPath, path + vPath);
                     ShaderProgram frag = new ShaderProgram(fPath, path + fPath);
                     Shader deffered = new Shader(vert, frag);
-                    deffered.RenderMode = ERenderMode.Defferred;
                     _defaultLightShader = deffered;
                 }
                 return _defaultLightShader;
             }
         }
 
-        private Shader _defaultForwardShader;
-        public Shader DefaultForwardShader
-        {
-            get
-            {
-                if (_defaultForwardShader == null)
-                {
-                    string path = Project.ShaderDirectory;
-                    string vPath = @"\Diffuse.vert";
-                    string fPath = @"\Diffuse.frag";
-                    ShaderProgram vert = new ShaderProgram(vPath, path + vPath);
-                    ShaderProgram frag = new ShaderProgram(fPath, path + fPath);
-                    Shader diffuse = new Shader(vert, frag);
-                    diffuse.RenderMode = ERenderMode.Forward;
-                    _defaultForwardShader = diffuse;
-                }
-                return _defaultForwardShader;
-            }
-        }
         private Shader _defaultDefferredShader;
         public Shader DefaultDefferredShader
         {
@@ -70,7 +50,6 @@ namespace RenderApp.GLUtil
                     ShaderProgram frag = new ShaderProgram(fPath, path + fPath);
                     Shader diffuse = new Shader(vert, frag);
 
-                    diffuse.RenderMode = ERenderMode.Defferred;
                     _defaultDefferredShader = diffuse;
                 }
                 return _defaultDefferredShader;
@@ -89,7 +68,6 @@ namespace RenderApp.GLUtil
                     ShaderProgram vert = new ShaderProgram(vPath, path + vPath);
                     ShaderProgram frag = new ShaderProgram(fPath, path + fPath);
                     Shader output = new Shader(vert, frag);
-                    output.RenderMode = ERenderMode.Defferred;
                     _outputShader = output;
                 }
                 return _outputShader;

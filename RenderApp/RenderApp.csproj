@@ -183,6 +183,7 @@
     <Compile Include="ViewModel\PropertyGridViewModel.cs" />
     <Compile Include="ViewModel\ShaderViewModel.cs" />
     <Compile Include="ViewModel\ImageViewModel.cs" />
+    <Compile Include="ViewModel\TreeItemViewModel.cs" />
     <Compile Include="ViewModel\ViewportViewModel.cs" />
     <Compile Include="View\AssetTreeView.xaml.cs">
       <DependentUpon>AssetTreeView.xaml</DependentUpon>
@@ -263,7 +264,6 @@
     <Compile Include="View\TextureView.xaml.cs">
       <DependentUpon>TextureView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\TreeItemViewModelItem.cs" />
     <Compile Include="Utility\Mouse.cs" />
     <Compile Include="Scene\Shader\OffScreen\Defferd\CDeffed.cs" />
     <Compile Include="Scene\Shader\OffScreen\Shadow\CShadowMap.cs" />

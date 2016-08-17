@@ -25,12 +25,13 @@ namespace RenderApp.AssetModel
             string SphereMapVertexShader = Project.ShaderDirectory + @"\sphereMap.vert";
             string SphereMapFragmentShader = Project.ShaderDirectory + @"\sphereMap.frag";
             Sphere sphere = new Sphere("SphereMap",Scene.ActiveScene.WorldMax.X * 2, 20, 20, false, Vector3.UnitX);
-            sphere.MaterialItem = new Material(null);
-            ShaderProgram vertex = new ShaderProgram(Asset.GetNameFromPath(SphereMapVertexShader),SphereMapVertexShader);
-            ShaderProgram frag = new ShaderProgram(Asset.GetNameFromPath(SphereMapFragmentShader), SphereMapFragmentShader);
-
-            sphere.MaterialItem.SetShader(new Shader(vertex,frag));
-            sphere.MaterialItem.AddTexture(TextureKind.Albedo, new Texture(Asset.GetNameFromPath(SphereMapAlbedo),SphereMapAlbedo));
+            sphere.MaterialItem = new Material("SphereMaterial");
+            Texture texture = new Texture(Asset.GetNameFromPath(SphereMapAlbedo), SphereMapAlbedo);
+            sphere.MaterialItem.AddTexture(TextureKind.Albedo, texture);
+            sphere.MaterialItem.SetShader(ShaderFactory.Instance.DefaultDefferredShader);
+            sphere.MaterialItem.AddTexture(TextureKind.Albedo, texture);
+            Scene.ActiveScene.AddSceneObject(sphere.MaterialItem.Key, sphere.MaterialItem);
+            Scene.ActiveScene.AddSceneObject(texture.Key, texture);
 
             return sphere;
         }

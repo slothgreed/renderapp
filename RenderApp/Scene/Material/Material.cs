@@ -19,67 +19,22 @@ namespace RenderApp.AssetModel
         #endregion
 
         #region [shader]
-        /// <summary>
-        /// rendermodeの固定
-        /// </summary>
-        public ERenderMode Only
-        {
-            get;
-            private set;
-        }
-        private Shader _shader = null;
+        private Shader _currentShader = null;
         public Shader CurrentShader
         {
-            get;
-            private set;
-        }
-        private Shader _forward;
-        public Shader Forward
-        {
             get
             {
-                return _forward;
+                return _currentShader;
             }
             private set
             {
-                _forward = value;
-                _forward.AnalizeShaderProgram();
-            }
-        }
-        private Shader _deffered;
-        public Shader Defferd
-        {
-            get
-            {
-                return _deffered;
-            }
-            private set
-            {
-                _deffered = value;
-                _deffered.AnalizeShaderProgram();
+                _currentShader = value;
+                _currentShader.AnalizeShaderProgram();
             }
         }
         public void SetShader(Shader shader)
         {
-            if (shader.RenderMode == ERenderMode.Forward)
-            {
-                Forward = shader;
-            }
-            else if (shader.RenderMode == ERenderMode.Defferred)
-            {
-                Defferd = shader;
-            }
-        }
-        internal void ChangeRenderMode(ERenderMode mode)
-        {
-            if (mode == ERenderMode.Defferred)
-            {
-                CurrentShader = Defferd;
-            }
-            else if (mode == ERenderMode.Forward)
-            {
-                CurrentShader = Forward;
-            }
+            CurrentShader = shader;
         }
         internal void InitializeState(Geometry geometry)
         {
@@ -114,9 +69,7 @@ namespace RenderApp.AssetModel
         {
             if (shader == null)
             {
-                SetShader(ShaderFactory.Instance.DefaultForwardShader);
                 SetShader(ShaderFactory.Instance.DefaultDefferredShader);
-                CurrentShader = Forward;
             }
 
             TextureItem = new Dictionary<TextureKind, Texture>();
@@ -204,15 +157,8 @@ namespace RenderApp.AssetModel
 
         public override void Dispose()
         {
+            CurrentShader.Dispose();
             CurrentShader = null;
-            if(Forward != null)
-            {
-                Forward.Dispose();
-            }
-            if (Defferd != null)
-            {
-                Defferd.Dispose();
-            }
         }
 
         public static Material _default;
@@ -222,7 +168,7 @@ namespace RenderApp.AssetModel
             {
                 if(_default == null)
                 {
-                    _default = new Material("Default");
+                    _default = new Material("NoMaterial");
                 }
                 return _default;
             }

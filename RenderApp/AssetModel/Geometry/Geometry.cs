@@ -79,7 +79,6 @@ namespace RenderApp.AssetModel
             get;
             set;
         }
-        private readonly string _objectName = "Object";
 
         #endregion
 
@@ -95,15 +94,7 @@ namespace RenderApp.AssetModel
             Timer = new List<int>();
             ModelMatrix = Matrix4.Identity;
             MaterialItem = Material.Default;
-            if (name != null)
-            {
-                Key = name;
-            }
-            else
-            {
-                Key = _objectName;
-            }
-            Scene.ActiveScene.AddSceneObject(Key, this);
+
         }
 
 
@@ -115,7 +106,7 @@ namespace RenderApp.AssetModel
         public Geometry(string name)
             : base(name)
         {
-            Initialize(null, PrimitiveType.Triangles);
+            Initialize(name, PrimitiveType.Triangles);
         }
         public override void Dispose()
         {
@@ -135,14 +126,13 @@ namespace RenderApp.AssetModel
             if (Index.Count == 0)
             {
                 GL.DrawArrays(RenderType, 0, Position.Count);
-                Output.GLError();
             }
             else
             {
                 GL.DrawElements(RenderType, Index.Count, DrawElementsType.UnsignedInt, 0);
-                Output.GLError();
             }
             MaterialItem.UnBindShader();
+            Output.GLError();
         }
 
         #endregion

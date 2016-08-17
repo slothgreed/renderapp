@@ -14,7 +14,6 @@ namespace RenderApp
             get;
             set;
         }
-        public ERenderMode CurrentMode { get; private set; }
         private List<FrameBuffer> DefferdStage;
         private RenderQueue LithingStage;
         private RenderQueue PostStage;
@@ -29,12 +28,10 @@ namespace RenderApp
             LithingStage = new RenderQueue();
             PostStage = new RenderQueue();
             Initialize();
-            CurrentMode = ERenderMode.Forward;
         }
         private void Initialize()
         {
             PostProcessMode = false;
-
             DefferdStage.Add(RenderPassFactory.Instance.CreateGBuffer(Width,Height));
             FrameBuffer lithingFrame = RenderPassFactory.Instance.CreateDefaultLithingBuffer(Width, Height);
 
@@ -53,19 +50,6 @@ namespace RenderApp
             PostStage.SizeChanged(width, height);
             OutputStage.SizeChanged(width, height);
         }
-        public void ChangeRenderMode(ERenderMode mode)
-        {
-            if(CurrentMode == mode)
-            {
-                return;
-            }
-            CurrentMode = mode;
-            foreach(var asset in Scene.ActiveScene.GetAssetList(EAssetType.Materials))
-            {
-                var material = asset as Material;
-                material.ChangeRenderMode(mode);
-            }
-        }
 
         public void Dispose()
         {
@@ -78,42 +62,28 @@ namespace RenderApp
         }
         public void Render()
         {
-            switch (CurrentMode)
+            foreach (var deffered in DefferdStage)
             {
-                case ERenderMode.Defferred:
-                    foreach(var deffered in DefferdStage)
-                    {
-                        deffered.ClearBuffer();
-                        deffered.BindBuffer();
-                        foreach (var asset in Scene.ActiveScene.GetAssetList(EAssetType.Geometry))
-                        {
-                            var geometry = asset as Geometry;
-                            geometry.Render();
-                        }
-                        deffered.UnBindBuffer();
-                    }
-
-                    if (CurrentMode == ERenderMode.Defferred)
-                    {
-                        LithingStage.ClearBuffer();
-                        LithingStage.Render();
-                    }
-
-                    break;
-                case ERenderMode.Forward:
-                    foreach (var asset in Scene.ActiveScene.GetAssetList(EAssetType.Geometry))
-                    {
-                        var geometry = asset as Geometry;
-                        geometry.Render();
-                    }
-                    break;
+                deffered.ClearBuffer();
+                deffered.BindBuffer();
+                foreach (var asset in Scene.ActiveScene.GetAssetList(EAssetType.Geometry))
+                {
+                    var geometry = asset as Geometry;
+                    geometry.Render();
+                }
+                deffered.UnBindBuffer();
             }
 
-            if(PostProcessMode)
+            LithingStage.ClearBuffer();
+            LithingStage.Render();
+
+
+            if (PostProcessMode)
             {
                 PostStage.Render();
             }
-            OutputStage.SetPlaneTexture(TextureKind.Albedo, LithingStage.Items(0).FrameBufferItem.TextureList[0]);
+
+            OutputStage.SetPlaneTexture(TextureKind.Albedo, DefferdStage[0].TextureList[1]);
             OutputStage.OutputRender();
         }
 

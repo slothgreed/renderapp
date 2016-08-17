@@ -61,6 +61,7 @@ namespace RenderApp.GLUtil.ShaderModel
             :base(name)
         {
             FilePath = filePath;
+            Scene.ActiveScene.AddSceneObject(Key, this);
         }
         public override void Dispose()
         {
