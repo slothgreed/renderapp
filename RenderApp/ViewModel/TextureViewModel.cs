@@ -48,7 +48,7 @@ namespace RenderApp.ViewModel
         }
         public TextureViewModel(Texture model)
         {
-            WindowPosition = AvalonWindow.LeftDown;
+            WindowPosition = AvalonWindow.RightUp;
             Model = model;
             Initialize();
         }

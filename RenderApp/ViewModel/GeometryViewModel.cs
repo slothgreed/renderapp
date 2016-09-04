@@ -42,7 +42,7 @@ namespace RenderApp.ViewModel
         }
         public GeometryViewModel(Geometry model)
         {
-            WindowPosition = AvalonWindow.LeftDown;
+            WindowPosition = AvalonWindow.RightUp;
             Model = model;
             Items = new Dictionary<string,object>();
             Items.Add("Translate",model.Translate);

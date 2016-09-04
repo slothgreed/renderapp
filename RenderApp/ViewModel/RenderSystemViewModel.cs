@@ -1,0 +1,52 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+namespace RenderApp.ViewModel
+{
+    public class RenderSystemViewModel : AvalonWindowViewModel
+    {
+        public RenderSystem Model
+        {
+            get;
+            set;
+        }
+        private int _textureIndex;
+        public int TextureIndex
+        {
+            get
+            {
+                return _textureIndex;
+            }
+            private set
+            {
+                SetValue<int>(ref _textureIndex, value);
+                Model.OutputTexture = Model.ProcessingTexture[value];
+            }
+        }
+        public RenderSystemViewModel(RenderSystem _model)
+        {
+            Model = _model;
+            WindowPosition = AvalonWindow.LeftDown;
+        }
+
+        public virtual string Title
+        {
+            get
+            {
+                return "RenderSystem";
+            }
+        }
+
+
+        public override void SizeChanged()
+        {
+        }
+
+        public override void UpdateProperty()
+        {
+        }
+    }
+}

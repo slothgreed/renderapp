@@ -9,35 +9,88 @@ namespace RenderApp
 {
     public class RenderSystem
     {
+        /// <summary>
+        /// ポストプロセスモード
+        /// </summary>
         public bool PostProcessMode
         {
             get;
             set;
         }
+        /// <summary>
+        /// レンダリング結果のテクスチャすべて
+        /// </summary>
+        public List<Texture> ProcessingTexture
+        {
+            get;
+            private set;
+        }
+        /// <summary>
+        /// defferdシェーディング用
+        /// </summary>
         private List<FrameBuffer> DefferdStage;
-        private RenderQueue LithingStage;
+        /// <summary>
+        /// ライティングステージ
+        /// </summary>
+        private RenderQueue LightingStage;
+        /// <summary>
+        /// ポストプロセス結果
+        /// </summary>
         private RenderQueue PostStage;
+        /// <summary>
+        /// 最終出力画像
+        /// </summary>
         private PostProcess OutputStage;
-        int Width;
-        int Height;
+        /// <summary>
+        /// FrameBufferの横
+        /// </summary>
+        private int Width;
+        /// <summary>
+        /// FrameBufferの縦
+        /// </summary>
+        private int Height;
+        public Texture OutputTexture
+        {
+            get;
+            set;
+        }
         public RenderSystem(int width,int height)
         {
             Width = width;
             Height = height;
             DefferdStage = new List<FrameBuffer>();
-            LithingStage = new RenderQueue();
+            LightingStage = new RenderQueue();
             PostStage = new RenderQueue();
+            ProcessingTexture = new List<Texture>();
             Initialize();
         }
         private void Initialize()
         {
             PostProcessMode = false;
-            DefferdStage.Add(RenderPassFactory.Instance.CreateGBuffer(Width,Height));
+            DefferdStage.Add(RenderPassFactory.Instance.CreateGBuffer(Width, Height));
+
+            foreach (var deffered in DefferdStage)
+            {
+                foreach (var textures in deffered.TextureList)
+                {
+                    ProcessingTexture.Add(textures);
+                }
+            }
+
+
             FrameBuffer lithingFrame = RenderPassFactory.Instance.CreateDefaultLithingBuffer(Width, Height);
+            LightingStage.AddPass(new PostProcess("DefaultLight", ShaderFactory.Instance.DefaultLightShader, lithingFrame));
 
-            LithingStage.AddPass(new PostProcess("DefaultLight",ShaderFactory.Instance.DefaultLightShader,lithingFrame));
+            foreach (var lighting in LightingStage.Items())
+            {
+                foreach (var textures in lighting.FrameBufferItem.TextureList)
+                {
+                    ProcessingTexture.Add(textures);
+                }
+            }
 
-            OutputStage = new PostProcess("OutputShader",ShaderFactory.Instance.OutputShader);
+            OutputStage = new PostProcess("OutputShader", ShaderFactory.Instance.OutputShader);
+            OutputTexture = DefferdStage[0].TextureList[0];
         }
 
         public void SizeChanged(int width,int height)
@@ -46,7 +99,7 @@ namespace RenderApp
             {
                 loop.SizeChanged(width, height);
             }
-            LithingStage.SizeChanged(width, height);
+            LightingStage.SizeChanged(width, height);
             PostStage.SizeChanged(width, height);
             OutputStage.SizeChanged(width, height);
         }
@@ -57,7 +110,7 @@ namespace RenderApp
             {
                 loop.Dispose();
             }
-            LithingStage.Dispose();
+            LightingStage.Dispose();
             PostStage.Dispose();
         }
         public void Render()
@@ -74,8 +127,8 @@ namespace RenderApp
                 deffered.UnBindBuffer();
             }
 
-            LithingStage.ClearBuffer();
-            LithingStage.Render();
+            LightingStage.ClearBuffer();
+            LightingStage.Render();
 
 
             if (PostProcessMode)
@@ -83,7 +136,7 @@ namespace RenderApp
                 PostStage.Render();
             }
 
-            OutputStage.SetPlaneTexture(TextureKind.Albedo, DefferdStage[0].TextureList[1]);
+            OutputStage.SetPlaneTexture(TextureKind.Albedo,OutputTexture);
             OutputStage.OutputRender();
         }
 

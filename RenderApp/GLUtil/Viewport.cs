@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using System.Timers;
 namespace RenderApp.GLUtil
 {
+    public delegate void CreateViewportHandler();
     /// <summary>
     /// 描画用のGlobal変数を保持するクラス
     /// </summary>
@@ -77,6 +78,8 @@ namespace RenderApp.GLUtil
         /// glControlのゲッタ
         /// </summary>
         public GLControl glControl { get { return m_glControl; } }
+
+        public event CreateViewportHandler OnCreateViewportEvent;
         #endregion
 
         public int Width
@@ -153,7 +156,7 @@ namespace RenderApp.GLUtil
             Scene.ActiveScene.Initialize();
             m_AppstartUp = true;
             Output.GLError();
- 
+            OnCreateViewportEvent();
         }
         //Loadより先に呼ばれる
         //glControlのサイズ変更時に実行される。

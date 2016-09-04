@@ -32,6 +32,7 @@ namespace RenderApp.ViewModel
         public DataTemplate ViewportTemplate { get; set; }
         public DataTemplate GeometryTemplate { get; set; }
         public DataTemplate ShaderTemplate { get; set; }
+        public DataTemplate RenderTemplate { get; set; }
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             if (item is MaterialViewModel)
@@ -61,6 +62,10 @@ namespace RenderApp.ViewModel
             if(item is GeometryViewModel)
             {
                 return GeometryTemplate;
+            }
+            if(item is RenderSystemViewModel)
+            {
+                return RenderTemplate;
             }
             return base.SelectTemplate(item, container);
 

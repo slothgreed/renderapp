@@ -85,32 +85,28 @@ namespace RenderApp.ViewModel
         }
         
 
-        public AssetTreeViewModel AssetWindow;
-        private ShaderProgramViewModel ShaderProgramWindow;
-        private ViewportViewModel ViewportWindow;
-        private MaterialViewModel MaterialWindow;
-        private GeometryViewModel GeometryWindow;
-
         #region [Member変数]
 
         private Viewport m_Viewport;
 
         #endregion
-
+        public AssetTreeViewModel AssetWindow;
         
         public MainWindowViewModel()
         {
             AssetWindow = new AssetTreeViewModel(null, "Asset");
-            ShaderProgramWindow = new ShaderProgramViewModel(null);
-            ViewportWindow = new ViewportViewModel();
-            MaterialWindow = new MaterialViewModel();
-            GeometryWindow = new GeometryViewModel();
             _anchorables.Add(AssetWindow);
-            _anchorables.Add(GeometryWindow);
-            _anchorables.Add(MaterialWindow);
-            _anchorables.Add(ShaderProgramWindow);
-            _documents.Add(ViewportWindow);
+            _anchorables.Add(new GeometryViewModel());
+            _anchorables.Add(new MaterialViewModel());
+            _anchorables.Add(new ShaderProgramViewModel(null));
+            _documents.Add(new ViewportViewModel());
+            Viewport.Instance.OnCreateViewportEvent += OnCreateViewportEvent;
             _instance = this;
+        }
+
+        void OnCreateViewportEvent()
+        {
+            _anchorables.Add(new RenderSystemViewModel(Viewport.Instance.RenderSystem));
         }
 
         private void NewProjectCommand()

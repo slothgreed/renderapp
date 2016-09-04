@@ -180,6 +180,7 @@
     </Compile>
     <Compile Include="ViewModel\MaterialViewModel.cs" />
     <Compile Include="ViewModel\PropertyGridViewModel.cs" />
+    <Compile Include="ViewModel\RenderSystemViewModel.cs" />
     <Compile Include="ViewModel\ShaderViewModel.cs" />
     <Compile Include="ViewModel\ImageViewModel.cs" />
     <Compile Include="ViewModel\TreeItemViewModel.cs" />
@@ -218,6 +219,9 @@
     </Compile>
     <Compile Include="View\PropertyGridView.xaml.cs">
       <DependentUpon>PropertyGridView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RenderSystemView.xaml.cs">
+      <DependentUpon>RenderSystemView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ShaderProgramView.xaml.cs">
       <DependentUpon>ShaderProgramView.xaml</DependentUpon>
@@ -306,6 +310,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PropertyGridView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RenderSystemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -425,6 +433,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Scene\Shader\ShaderType\" />
+    <Folder Include="ViewModel\Property\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
