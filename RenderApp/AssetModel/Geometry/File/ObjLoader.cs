@@ -43,24 +43,40 @@ namespace RenderApp.AssetModel
         #region [構造の変更]
         private void SetDrawArrayData()
         {
-            Position = m_posStream;
-            Normal = m_norStream;
-            Color = m_colStream;
-            TexCoord = m_texStream;
-            Index = m_posIndex;
+            //Position = m_posStream;
+            //Normal = m_norStream;
+            //Color = m_colStream;
+            //TexCoord = m_texStream;
+            //Index = m_posIndex;
+
 
             MaterialItem = new Material(FileName);
+            HalfEdge half = null;
             if (Normal.Count == 0)
             {
-                HalfEdge half = new HalfEdge(m_posStream, m_posIndex);
+                half = new HalfEdge(m_posStream, m_posIndex);
                 MaterialItem.AddAnalayzer(half);
-                for (int i = 0; i < m_posStream.Count; i++)
+
+                for (int i = 0; i < m_posIndex.Count / 3; i++)
                 {
-                    Normal.Add(half.GetNormal(i));
+                    Position.Add(m_posStream[m_posIndex[3 * i]]);
+                    Position.Add(m_posStream[m_posIndex[3 * i + 1]]);
+                    Position.Add(m_posStream[m_posIndex[3 * i + 2]]);
+
+                    Normal.Add(half.GetNormal(m_posIndex[3 * i]));
+                    Normal.Add(half.GetNormal(m_posIndex[3 * i + 1]));
+                    Normal.Add(half.GetNormal(m_posIndex[3 * i + 2]));
+
+                    TexCoord.Add(m_texStream[m_texIndex[3 * i]]);
+                    TexCoord.Add(m_texStream[m_texIndex[3 * i + 1]]);
+                    TexCoord.Add(m_texStream[m_texIndex[3 * i + 2]]);
                 }
             }
-            MaterialItem.AddTexture(TextureKind.Albedo, new GLUtil.Texture(DirectoryPath + @"\" + m_Materials[0].imageFile));
+            MaterialItem.AddTexture(TextureKind.Albedo, new GLUtil.Texture(m_Materials[0].imageFile,DirectoryPath + @"\" + m_Materials[0].imageFile));
+
+
         }
+
         #endregion
         #region [データのロード]
         /// <summary>

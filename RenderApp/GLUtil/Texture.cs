@@ -13,6 +13,13 @@ namespace RenderApp.GLUtil
     public class Texture : Asset
     {
         #region [member]
+        private string DummyTexturePath
+        {
+            get
+            {
+                return Project.TextureDirectory + @"\Dummy.png";
+            }
+        }
         
         /// <summary>
         /// テクスチャID
@@ -64,12 +71,16 @@ namespace RenderApp.GLUtil
         public Texture(string name)
             :base(name)
         {
-
+        }
+        public Texture(string name,string path)
+            :base(name)
+        {
+            LoadTexture(path);
         }
         public Texture(string name,string path, TextureType target = TextureType.Texture2D)
             :base(name)
         {
-            LoadTexture(path, target);
+            //LoadTexture(path, target);
         }
         public Texture(string name, int width, int height)
             : base(name)
@@ -145,6 +156,7 @@ namespace RenderApp.GLUtil
         public override void Dispose()
         {
             GL.DeleteTexture(this.ID);
+            this.ID = 0;
         }
         #region [テクスチャ周り]
         private void Load2DTexture()
@@ -153,7 +165,10 @@ namespace RenderApp.GLUtil
             {
                 Bitmap image = new Bitmap(this.FilePath);
                 GL.BindTexture(TextureTarget.Texture2D, this.ID);
-                //image.RotateFlip(RotateFlipType.RotateNoneFlipY);
+                if(System.IO.Path.GetExtension(FilePath) == ".bmp")
+                {
+                    image.RotateFlip(RotateFlipType.RotateNoneFlipY);
+                }
 
                 //データ読み込み
                 BitmapData bmp_data = image.LockBits(new Rectangle(0, 0, image.Width, image.Height),
@@ -176,6 +191,10 @@ namespace RenderApp.GLUtil
         /// <rereturns>バインドしたテクスチャID</rereturns>
         public void CreateTextureBuffer2D()
         {
+            if(this.ID != 0)
+            {
+                Dispose();
+            }
             this.ID = GL.GenTexture();
             GL.BindTexture(TextureTarget.Texture2D, this.ID);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, Convert.ToInt32(this.WrapMode));

@@ -98,18 +98,18 @@ namespace RenderApp.Analyzer
             return Position;
         }
 
-        private Vector3 _normal;
+        private Vector3 _normal = Vector3.Zero;
         public Vector3 Normal
         {
             get
             {
-                if (_normal == null)
+                if (_normal == Vector3.Zero)
                 {
                     Vector3 sum = Vector3.Zero;
-                    int count = 0;
-                    foreach (var edge in GetAroundEdge())
+                    int count = GetAroundMesh().Count();
+                    foreach (var mesh in GetAroundMesh())
                     {
-                        sum += edge.Mesh.Normal;
+                        sum += mesh.Normal;
                     }
                     sum.X /= count;
                     sum.Y /= count;
@@ -117,7 +117,6 @@ namespace RenderApp.Analyzer
                     _normal = sum.Normalized();
                 }
                 return _normal;
-
             }
         }
     }

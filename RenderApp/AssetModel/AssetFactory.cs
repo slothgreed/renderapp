@@ -58,7 +58,10 @@ namespace RenderApp.AssetModel
         }
         internal Geometry CreateGeometry(Geometry geometry)
         {
-            geometry.MaterialItem = new Material(geometry.Key);
+            if(geometry.MaterialItem != null)
+            {
+                Scene.ActiveScene.AddSceneObject(geometry.Key, geometry.MaterialItem);
+            }
             Scene.ActiveScene.AddSceneObject(geometry.Key,geometry);
             return geometry;
         }

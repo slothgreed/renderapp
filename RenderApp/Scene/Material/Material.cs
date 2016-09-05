@@ -101,7 +101,7 @@ namespace RenderApp.AssetModel
             Texture texture = Scene.ActiveScene.FindObject(filename, EAssetType.Textures) as Texture;
             if (texture == null)
             {
-                texture = new Texture(fullpath);
+                texture = new Texture(filename,fullpath);
             }
             if(TextureItem.ContainsKey(kind))
             {
