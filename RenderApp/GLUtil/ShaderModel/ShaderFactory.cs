@@ -35,7 +35,24 @@ namespace RenderApp.GLUtil
                 return _defaultLightShader;
             }
         }
-
+        private Shader _defaultAnalyzeShader;
+        public Shader DefaultAnalyzeShader
+        {
+            get
+            {
+                if (_defaultAnalyzeShader == null)
+                {
+                    string path = Project.ShaderDirectory;
+                    string vPath = @"\ConstantGeometry.vert";
+                    string fPath = @"\ConstantGeometry.frag";
+                    ShaderProgram vert = new ShaderProgram(vPath, path + vPath);
+                    ShaderProgram frag = new ShaderProgram(fPath, path + fPath);
+                    Shader deffered = new Shader(vert, frag);
+                    _defaultAnalyzeShader = deffered;
+                }
+                return _defaultAnalyzeShader;
+            }
+        }
         private Shader _defaultDefferredShader;
         public Shader DefaultDefferredShader
         {
@@ -44,8 +61,8 @@ namespace RenderApp.GLUtil
                 if (_defaultDefferredShader == null)
                 {
                     string path = Project.ShaderDirectory;
-                    string vPath = @"\ConstantGeometry.vert";
-                    string fPath = @"\ConstantGeometry.frag";
+                    string vPath = @"\MaterialGeometry.vert";
+                    string fPath = @"\MaterialGeometry.frag";
                     ShaderProgram vert = new ShaderProgram(vPath, path + vPath);
                     ShaderProgram frag = new ShaderProgram(fPath, path + fPath);
                     Shader diffuse = new Shader(vert, frag);

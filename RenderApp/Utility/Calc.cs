@@ -76,7 +76,21 @@ namespace RenderApp.Utility
             }
         }
         #endregion
+        /// <summary>
+        /// 法線の算出
+        /// </summary>
+        /// <param name="point"></param>
+        /// <param name="point2"></param>
+        /// <returns></returns>
+        public static Vector3 Normal(Vector3 vertex1, Vector3 vertex2, Vector3 vertex3)
+        {
+            Vector3 point = vertex2 - vertex1;
+            Vector3 point2 = vertex3 - vertex1;
+            Vector3 normal = new Vector3();
+            normal = Vector3.Cross(point, point2);
 
+            return normal.Normalized();
+        }
         /// <summary>
         /// 法線の算出
         /// </summary>
@@ -607,12 +621,22 @@ namespace RenderApp.Utility
         /// <summary>
         /// クリップNear面Far面の取得
         /// </summary>
-        public void GetClipPos(Matrix4 modelMatrix, Matrix4 projMatrix, int[] viewport, Vector2 mouse, out Vector3 near, out Vector3 far)
+        public static void GetClipPos(Matrix4 cameraMatrix, Matrix4 projMatrix, int[] viewport, Vector2 mouse, out Vector3 near, out Vector3 far)
         {
-            near = UnProject(new Vector3(mouse.X, mouse.Y, 0.0f), modelMatrix, projMatrix, viewport);
-            far = UnProject(new Vector3(mouse.X,mouse.Y,1.0f),modelMatrix,projMatrix,viewport);
+            near = UnProject(new Vector3(mouse.X, mouse.Y, 0.0f), cameraMatrix, projMatrix, viewport);
+            far = UnProject(new Vector3(mouse.X,mouse.Y,1.0f),cameraMatrix,projMatrix,viewport);
         }
         
+        public static Vector3 RandomColor()
+        {
+            Vector3 color = new Vector3();
+            Random rand = new Random();
+            color.X = rand.Next(255) / 255.0f;
+            color.Y = rand.Next(255) / 255.0f;
+            color.Z = rand.Next(255) / 255.0f;
+
+            return color;
+        }
  
         
     }

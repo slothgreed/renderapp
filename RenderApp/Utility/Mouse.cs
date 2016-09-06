@@ -18,19 +18,35 @@ namespace RenderApp.Utility
         /// <summary>
         /// クリック位置
         /// </summary>
-        private Vector2 click;
+        public Vector2 Click
+        {
+            get;
+            private set;
+        }
         /// <summary>
         /// 前回のクリック位置
         /// </summary>
-        private Vector2 clickbefore;
+        public Vector2 ClickBefore
+        {
+            get;
+            private set;
+        }
         /// <summary>
         /// 現在のマウス位置
         /// </summary>
-        private Vector2 current;
+        public Vector2 Current
+        {
+            get;
+            private set;
+        }
         /// <summary>
         /// 前回のマウス位置
         /// </summary>
-        private Vector2 before;
+        public Vector2 Before
+        {
+            get;
+            private set;
+        }
         #endregion
 
         /// <summary>
@@ -49,11 +65,11 @@ namespace RenderApp.Utility
         /// <param name="y"></param>
         public void Down(int x, int y)
         {
-            before = current;
-            current = new Vector2(x,y);
+            Before = Current;
+            Current = new Vector2(x, y);
 
-            clickbefore = click;
-            click = current;
+            ClickBefore = Click;
+            Click = Current;
 
 
         }
@@ -64,8 +80,8 @@ namespace RenderApp.Utility
         /// <param name="y"></param>
         public void Drag(int x, int y)
         {
-            before = current;
-            current = new Vector2(x, y);
+            Before = Current;
+            Current = new Vector2(x, y);
          }
 
 
@@ -78,55 +94,19 @@ namespace RenderApp.Utility
         {
             Vector2 move;
 
-            if (before.X == 0 && before.Y == 0)
+            if (Before.X == 0 && Before.Y == 0)
             {
                 move = new Vector2(0, 0);
             }
             else
             {
-                move = new Vector2(x - before.X, before.Y - y);
+                move = new Vector2(x - Before.X, Before.Y - y);
                 move.X /= 10.0f;
                 move.Y /= 10.0f;
             }
 
             return move;
         }
-        #region [getter]
-
-        /// <summary>
-        /// 前フレームの位置
-        /// </summary>
-        /// <returns></returns>
-        public Vector2 GetBefore()
-        {
-            return before;
-        }
-        /// <summary>
-        /// 前回クリックした位置
-        /// </summary>
-        /// <returns></returns>
-        public Vector2 GetClickBefore()
-        {
-            return clickbefore;
-        }
-        /// <summary>
-        /// クリックした位置
-        /// </summary>
-        /// <returns></returns>
-        public Vector2 GetClick()
-        {
-            return click;
-        }
-        /// <summary>
-        /// 現在の位置
-        /// </summary>
-        /// <returns></returns>
-        public Vector2 GetCurrent()
-        {
-            return current;
-        }
-
-        #endregion  
 
         
     }

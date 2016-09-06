@@ -8,7 +8,7 @@ using OpenTK.Graphics.OpenGL;
 namespace RenderApp.AssetModel
 {
     /// <summary>
-    /// 任意形状
+    /// 任意形状(triangle,quad,line,patchのみ対応)
     /// </summary>
     public class Primitive : Geometry
     {
@@ -111,6 +111,36 @@ namespace RenderApp.AssetModel
                     Normal.Add(normal);
                     Normal.Add(normal);
                 }
+            }
+        }
+        public void AddVertex(List<Vector3> addVertex, Vector3 _color)
+        {
+            switch(RenderType)
+            {
+                case PrimitiveType.Triangles:
+                    if(addVertex.Count % 3 != 0)
+                    {
+                        return;
+                    }
+                    break;
+                case PrimitiveType.Quads:
+                    if (addVertex.Count % 4 != 0)
+                    {
+                        return;
+                    }
+                    break;
+                case PrimitiveType.Lines:
+                    if (addVertex.Count % 2 != 0)
+                    {
+                        return;
+                    }
+                    break;
+            }
+            Position.AddRange(addVertex);
+            CalcNormal(addVertex,RenderType);
+            foreach(var position in addVertex)
+            {
+                Color.Add(_color);
             }
         }
         

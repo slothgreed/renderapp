@@ -207,6 +207,7 @@ namespace RenderApp.GLUtil
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 LeftMouse.Down(e.X, e.Y);
+                RenderApp.Scene.ActiveScene.Picking(LeftMouse.Click);
 
             }
             else if (e.Button == System.Windows.Forms.MouseButtons.Middle)

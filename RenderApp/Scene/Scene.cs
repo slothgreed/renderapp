@@ -9,6 +9,7 @@ using RenderApp.GLUtil;
 using RenderApp.ViewModel;
 using RenderApp.GLUtil.ShaderModel;
 using RenderApp.AssetModel.LightModel;
+using RenderApp.Utility;
 namespace RenderApp
 {
     public class Scene
@@ -445,7 +446,80 @@ namespace RenderApp
             }
         }
         #endregion
+        /// <summary>
+        /// ポリゴンごとに行うので、CPUベースで
+        /// </summary>
+        /// <param name="mouse"></param>
+        public void Picking(Vector2 mouse)
+        {
+            float minLength = float.MaxValue;
+            int[] a = new int[3];
+            List<Vector3> minTriangle = null;
+            Vector3 near = Vector3.Zero;
+            Vector3 far = Vector3.Zero;
+            int[] viewport = new int[4];
+            viewport[0] = 0;
+            viewport[1] = 0;
+            viewport[2] = Viewport.Instance.Width;
+            viewport[3] = Viewport.Instance.Height;
+            CCalc.GetClipPos(MainCamera.Matrix, MainCamera.ProjMatrix, viewport, mouse, out near, out far);
+            foreach (Geometry geometry in ActiveScene.GeometryList.Values)
+            {
+                //頂点配列の時
+                if (geometry.Index.Count != 0)
+                {
 
+                }
+                else
+                {
+                    for (int i = 0; i < geometry.Position.Count / 3; i++)
+                    {
+                        Vector3 vertex1 = CCalc.Multiply(geometry.ModelMatrix, geometry.Position[3 * i]);
+                        Vector3 vertex2 = CCalc.Multiply(geometry.ModelMatrix,geometry.Position[3 * i + 1]);
+                        Vector3 vertex3 = CCalc.Multiply(geometry.ModelMatrix,geometry.Position[3 * i + 2]);
+                        Vector3 result = Vector3.Zero;
+                        if (CCalc.CrossPlanetoLinePos(vertex1, vertex2, vertex3, near, far, ref minLength, out result))
+                        {
+
+                            
+                            if (minTriangle == null)
+                            {
+                                minTriangle = new List<Vector3>();
+                                minTriangle.Add(vertex1);
+                                minTriangle.Add(vertex2);
+                                minTriangle.Add(vertex3);
+                            }
+                            else
+                            {
+                                minTriangle[0] = vertex1;
+                                minTriangle[1] = vertex2;
+                                minTriangle[2] = vertex3;
+                            }
+                        }
+                    }
+                }
+            }
+            if(minTriangle != null)
+            {
+                Vector3 normal = CCalc.Normal(minTriangle[0], minTriangle[1], minTriangle[2]);
+                minTriangle[0] += normal * 0.01f;
+                minTriangle[1] += normal * 0.01f;
+                minTriangle[2] += normal * 0.01f;
+                var picking = ActiveScene.FindObject("Picking", EAssetType.Geometry) as Primitive;
+                if(picking == null)
+                {
+                    Primitive triangle = new Primitive("Picking", minTriangle, CCalc.RandomColor(), OpenTK.Graphics.OpenGL.PrimitiveType.Triangles);
+                    triangle.MaterialItem = new Material("Picking");
+                    triangle.MaterialItem.SetShader(ShaderFactory.Instance.DefaultAnalyzeShader);
+                    AssetFactory.Instance.CreateGeometry(triangle);
+
+                }
+                else
+                {
+                    picking.AddVertex(minTriangle, CCalc.RandomColor());
+                }
+            }
+        }
 
     }
 }
