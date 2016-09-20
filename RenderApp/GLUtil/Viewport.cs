@@ -11,6 +11,7 @@ using RenderApp.Utility;
 using System.IO;
 using System.Windows.Forms;
 using System.Timers;
+using RenderApp.Control;
 namespace RenderApp.GLUtil
 {
     public delegate void CreateViewportHandler();
@@ -56,12 +57,6 @@ namespace RenderApp.GLUtil
         /// レンダリング中か
         /// </summary>
         private bool m_NowRender;
-        /// <summary>
-        /// マウス
-        /// </summary>
-        private Mouse LeftMouse = new Mouse();
-        private Mouse MiddleMouse = new Mouse();
-        private Mouse RightMouse = new Mouse();
         /// <summary>
         /// 起動後か
         /// </summary>
@@ -197,28 +192,13 @@ namespace RenderApp.GLUtil
 
         private void glControl_MouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            Scene.ActiveScene.MainCamera.Zoom((int)e.Delta);
+            ControlManager.Instance.ProcessInput(e, ControlManager.MOUSE_STATE.WHEEL);
             glControl_Paint(null, null);
         }
 
         private void glControl_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-
-            if (e.Button == System.Windows.Forms.MouseButtons.Left)
-            {
-                LeftMouse.Down(e.X, e.Y);
-                RenderApp.Scene.ActiveScene.Picking(LeftMouse.Click);
-
-            }
-            else if (e.Button == System.Windows.Forms.MouseButtons.Middle)
-            {
-                MiddleMouse.Down(e.X, e.Y);
-            }
-            else
-            {
-                RightMouse.Down(e.X, e.Y);
-            }
-
+            ControlManager.Instance.ProcessInput(e, ControlManager.MOUSE_STATE.DOWN);
             glControl_Paint(null, null);
         }
 
@@ -228,28 +208,8 @@ namespace RenderApp.GLUtil
             {
                 return;
             }
-            System.Drawing.Point sp = System.Windows.Forms.Cursor.Position;
             m_glControl.Focus();
-            Vector2 move = new Vector2();
-
-            switch (e.Button)
-            {
-                case System.Windows.Forms.MouseButtons.Left:
-                    LeftMouse.Drag(e.X, e.Y);
-                    move = LeftMouse.Move(e.X, e.Y);
-                    break;
-
-                case System.Windows.Forms.MouseButtons.Middle:
-                    MiddleMouse.Drag(e.X, e.Y);
-                    move = MiddleMouse.Move(e.X, e.Y);
-                    Scene.ActiveScene.MainCamera.Translate(new Vector3(move.X, move.Y, 0));
-                    break;
-                case System.Windows.Forms.MouseButtons.Right:
-                    RightMouse.Drag(e.X, e.Y);
-                    move = RightMouse.Move(e.X, e.Y);
-                    Scene.ActiveScene.MainCamera.Rotate(new Vector3(move.X, move.Y, 0));
-                    break;
-            }
+            ControlManager.Instance.ProcessInput(e, ControlManager.MOUSE_STATE.MOVE);
             if (e.Button != MouseButtons.None)
             {
                 glControl_Paint(null, null);

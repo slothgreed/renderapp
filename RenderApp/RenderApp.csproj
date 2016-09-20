@@ -157,6 +157,10 @@
     <Compile Include="RenderSystem\PostProcess.cs" />
     <Compile Include="RenderSystem\RenderQueue.cs" />
     <Compile Include="RenderSystem\RenderSystem.cs" />
+    <Compile Include="Control\DijkstraControl.cs" />
+    <Compile Include="Control\IControl.cs" />
+    <Compile Include="Control\PickingControl.cs" />
+    <Compile Include="Control\ControlManager.cs" />
     <Compile Include="Utility\ActiveItems.cs" />
     <Compile Include="ViewModel\AssetTreeViewModelT4.cs">
       <AutoGen>True</AutoGen>

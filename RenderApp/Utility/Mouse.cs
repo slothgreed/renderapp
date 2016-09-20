@@ -47,6 +47,11 @@ namespace RenderApp.Utility
             get;
             private set;
         }
+        public Vector2 Delta
+        {
+            get;
+            private set;
+        }
         #endregion
 
         /// <summary>
@@ -78,10 +83,11 @@ namespace RenderApp.Utility
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public void Drag(int x, int y)
+        public void Move(int x, int y)
         {
             Before = Current;
             Current = new Vector2(x, y);
+            Drag(x, y);
          }
 
 
@@ -90,7 +96,7 @@ namespace RenderApp.Utility
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public Vector2 Move(int x,int y)
+        private Vector2 Drag(int x,int y)
         {
             Vector2 move;
 
@@ -104,7 +110,7 @@ namespace RenderApp.Utility
                 move.X /= 10.0f;
                 move.Y /= 10.0f;
             }
-
+            Delta = move;
             return move;
         }
 
