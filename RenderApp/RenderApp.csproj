@@ -152,6 +152,8 @@
     <Compile Include="AssetModel\Geometry\File\GeometryLoader.cs" />
     <Compile Include="GLUtil\ShaderModel\ShaderProgramInfo.cs" />
     <Compile Include="Globals\Enum.cs" />
+    <Compile Include="GLUtil\TextureFactory.cs" />
+    <Compile Include="RenderSystem\GBuffer.cs" />
     <Compile Include="RenderSystem\PostProcess.cs" />
     <Compile Include="RenderSystem\RenderQueue.cs" />
     <Compile Include="RenderSystem\RenderSystem.cs" />
@@ -171,6 +173,8 @@
     <Compile Include="ViewModel\AvalonWindowViewModel.cs" />
     <Compile Include="ViewModel\ComboItemViewModel.cs" />
     <Compile Include="ViewModel\DefaultViewModel.cs" />
+    <Compile Include="ViewModel\Dialog\DialogViewModelBase.cs" />
+    <Compile Include="ViewModel\Dialog\VoxelDialogViewModel.cs" />
     <Compile Include="ViewModel\GeometryViewModel.cs" />
     <Compile Include="ViewModel\MathViewModel.cs" />
     <Compile Include="ViewModel\MaterialItemSelector.cs">
@@ -211,9 +215,12 @@
     </Compile>
     <Compile Include="GLUtil\ShaderModel\ShaderProgram.cs" />
     <Compile Include="Scene\Shader\Bezier\Bezier.cs" />
-    <Compile Include="AssetModel\RenderPassFactory.cs" />
+    <Compile Include="RenderSystem\RenderPassFactory.cs" />
     <Compile Include="AssetModel\Geometry\Primitive\Space.cs" />
     <Compile Include="AssetModel\Geometry\Primitive\Primitive.cs" />
+    <Compile Include="View\Dialog\VoxelDialogView.xaml.cs">
+      <DependentUpon>VoxelDialogView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\GeometryView.xaml.cs">
       <DependentUpon>GeometryView.xaml</DependentUpon>
     </Compile>
@@ -305,6 +312,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\Dialog\VoxelDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\GeometryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

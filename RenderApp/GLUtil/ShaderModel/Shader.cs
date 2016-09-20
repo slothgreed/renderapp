@@ -334,6 +334,19 @@ namespace RenderApp.GLUtil.ShaderModel
                             variable.variable = TextureItem[TextureKind.Albedo];
                         }
                         break;
+                    case "uWorldWolMap":
+                        if (TextureItem.ContainsKey(TextureKind.World))
+                        {
+                            variable.variable = TextureItem[TextureKind.World];
+                        }
+                        break;
+                    case "uLightingMap":
+                        if (TextureItem.ContainsKey(TextureKind.Lighting))
+                        {
+                            variable.variable = TextureItem[TextureKind.Lighting];
+                        }
+                        break;
+
                     case "uNormalMap":
                         if (TextureItem.ContainsKey(TextureKind.Normal))
                         {
@@ -468,7 +481,7 @@ namespace RenderApp.GLUtil.ShaderModel
                 case "int":
                 case "sampler2D":
                 case "sampler3D":
-                    shaderVariable = new Texture(name);
+                    shaderVariable = TextureFactory.Instance.CreateTexture(name);
                     break;
                 case "float":
                     shaderVariable = .0f;
@@ -586,6 +599,7 @@ namespace RenderApp.GLUtil.ShaderModel
             {
                 _activeShader.Add(_tes);
             }
+            AnalizeShaderProgram();
         }
         public override string ToString()
         {

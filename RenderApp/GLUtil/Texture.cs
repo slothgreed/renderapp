@@ -64,14 +64,18 @@ namespace RenderApp.GLUtil
         }
         #endregion
 
+        public static readonly Texture Empty;
+        private string name;
         #region [constructor]
         private void Initialize()
         {
         }
         public Texture(string name)
-            :base(name)
+            : base(name)
         {
+            this.name = name;
         }
+
         public Texture(string name,string path)
             :base(name)
         {
@@ -80,7 +84,7 @@ namespace RenderApp.GLUtil
         public Texture(string name,string path, TextureType target = TextureType.Texture2D)
             :base(name)
         {
-            //LoadTexture(path, target);
+            LoadTexture(path, target);
         }
         public Texture(string name, int width, int height)
             : base(name)
@@ -122,15 +126,6 @@ namespace RenderApp.GLUtil
             this.ID = CreateCubeMapTexture(px, nx, py, ny, pz, nz);
             this.TexType = TextureType.CubeMap;
             Initialize();
-        }
-        /// <summary>
-        /// TODO:cubemapは別クラスへ処理
-        /// </summary>
-        public Texture(string name, int id)
-            :base(name)
-        {
-            this.FilePath = name;
-            this.ID = id;
         }
 
         #endregion
@@ -206,7 +201,6 @@ namespace RenderApp.GLUtil
         }
         #endregion
         #region [CubeMap]
-
         /// <summary>
         /// CubeMapTextureの作成
         /// </summary>

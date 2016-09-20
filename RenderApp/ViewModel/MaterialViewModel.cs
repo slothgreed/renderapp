@@ -55,9 +55,6 @@ namespace RenderApp.ViewModel
             {
                 Items.Add(loop.Key.ToString(), loop.Value);
             }
-            model.AnalyzeItem.ForEach(
-                loop=> Items.Add(loop.ToString(), loop)
-                );
             _property = new PropertyGridViewModel(Items);
         }
 

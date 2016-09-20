@@ -29,7 +29,6 @@ namespace RenderApp.AssetModel
             private set
             {
                 _currentShader = value;
-                _currentShader.AnalizeShaderProgram();
             }
         }
         public void SetShader(Shader shader)
@@ -73,7 +72,7 @@ namespace RenderApp.AssetModel
             }
 
             TextureItem = new Dictionary<TextureKind, Texture>();
-            AnalyzeItem = new List<IAnalyzer>();
+            AnalyzeItem = new Dictionary<string,IAnalyzer>();
             if (name == null)
             {
                 Key = _name;
@@ -98,10 +97,10 @@ namespace RenderApp.AssetModel
         }
         public void AddTexture(string fullpath, string filename, TextureKind kind)
         {
-            Texture texture = Scene.ActiveScene.FindObject(filename, EAssetType.Textures) as Texture;
+            Texture texture = TextureFactory.Instance.FindItem(filename);
             if (texture == null)
             {
-                texture = new Texture(filename,fullpath);
+                texture = TextureFactory.Instance.CreateTexture(filename,fullpath);
             }
             if(TextureItem.ContainsKey(kind))
             {
@@ -140,25 +139,32 @@ namespace RenderApp.AssetModel
         }
         #endregion
         #region [analyzer bind]
-        public List<IAnalyzer> AnalyzeItem
+        private Dictionary<string,IAnalyzer> AnalyzeItem
         {
             get;
             set;
         }
         public void AddAnalayzer(IAnalyzer analyze)
         {
-            if(AnalyzeItem == null)
+            if (AnalyzeItem == null)
             {
-                AnalyzeItem = new List<IAnalyzer>();
+                AnalyzeItem = new Dictionary<string,IAnalyzer>();
             }
-            AnalyzeItem.Add(analyze);
+            AnalyzeItem.Add(analyze.GetType().Name, analyze);
+        }
+        public IAnalyzer FindAnalyze(string typeName)
+        {
+            if(AnalyzeItem.ContainsKey(typeName))
+            {
+                return AnalyzeItem[typeName];
+            }
+            return null;
         }
         #endregion
 
         public override void Dispose()
         {
-            CurrentShader.Dispose();
-            CurrentShader = null;
+
         }
 
         public static Material _default;

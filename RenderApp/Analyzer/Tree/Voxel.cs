@@ -15,9 +15,9 @@ namespace RenderApp.Analyzer
         float m_Length;
         int m_Partition;
         bool[, ,] voxel_Index;
-        List<Vector3> voxelPosition = new List<Vector3>();
-        List<Vector3> voxelNormal = new List<Vector3>();
-        public Voxel(List<Vector3> position, List<int> posIndex,Matrix4 modelMatrix, int partition)
+        public List<Vector3> vPosition = new List<Vector3>();
+        public List<Vector3> vNormal = new List<Vector3>();
+        public Voxel(List<Vector3> position, List<int> posIndex, Matrix4 modelMatrix, int partition)
         {
 
             m_Partition = partition;
@@ -34,7 +34,21 @@ namespace RenderApp.Analyzer
                     }
                 }
             }
-            MakeVoxels(position, posIndex,modelMatrix);
+            if (posIndex.Count == 0)
+            {
+                MakeVoxels(position, modelMatrix);
+            }
+            else
+            {
+                List<Vector3> posStream = new List<Vector3>();
+                for (int i = 0; i < posIndex.Count / 3; i ++)
+                {
+                    posStream.Add(position[posIndex[3 * i]]);
+                    posStream.Add(position[posIndex[3 * i + 1]]);
+                    posStream.Add(position[posIndex[3 * i + 2]]);
+                }
+                MakeVoxels(posStream, modelMatrix);
+            }
             voxel_Index = null;
         }
       
@@ -44,15 +58,15 @@ namespace RenderApp.Analyzer
         /// </summary>
         /// <param name="m_position"></param>
         /// <param name="posIndex"></param>
-        private void MakeVoxels(List<Vector3> position, List<int> posIndex,Matrix4 modelMatrix)
+        private void MakeVoxels(List<Vector3> position,Matrix4 modelMatrix)
         {
             //ボクセルのインデックス番号
             Vector3 vIndex = new Vector3();
-            for (int i = 0; i < posIndex.Count; i+=3)
+            for (int i = 0; i < position.Count / 3; i++)
             {
-                Vector3 tri1 = CCalc.Multiply(modelMatrix,position[posIndex[i]]);
-                Vector3 tri2 = CCalc.Multiply(modelMatrix,position[posIndex[i + 1]]);
-                Vector3 tri3 = CCalc.Multiply(modelMatrix,position[posIndex[i + 2]]);
+                Vector3 tri1 = CCalc.Multiply(modelMatrix, position[3 * i]);
+                Vector3 tri2 = CCalc.Multiply(modelMatrix, position[3 * i + 1]);
+                Vector3 tri3 = CCalc.Multiply(modelMatrix, position[3 * i + 2]);
 
                 //triを包括する部分のボクセルの最小値と最大値のインデックス
                 Vector3 minIndex = MinVector(tri1, tri2);
@@ -60,12 +74,12 @@ namespace RenderApp.Analyzer
 
                 Vector3 maxIndex = MaxVector(tri1, tri2);
                 maxIndex = MaxVector(maxIndex, tri3);
-               
+
                 minIndex -= m_Min;
                 maxIndex -= m_Min;
                 minIndex /= m_Length;
                 maxIndex /= m_Length;
-                
+
                 for (vIndex.X = (int)minIndex.X; vIndex.X < maxIndex.X; vIndex.X++)
                 {
                     for (vIndex.Y = (int)minIndex.Y; vIndex.Y < maxIndex.Y; vIndex.Y++)
@@ -85,9 +99,8 @@ namespace RenderApp.Analyzer
                         }
                     }
                 }
-            
+
             }
-                        
         }
         
 
@@ -290,12 +303,12 @@ namespace RenderApp.Analyzer
         private void SetQuad(Vector3 q0, Vector3 q1, Vector3 q2, Vector3 q3)
         {
             Vector3 normal;
-            voxelPosition.Add(q0); voxelPosition.Add(q1); voxelPosition.Add(q2); voxelPosition.Add(q3);
+            vPosition.Add(q0); vPosition.Add(q1); vPosition.Add(q2); vPosition.Add(q3);
             normal = CCalc.Normal(q1 - q0, q2 - q0);
-            voxelNormal.Add(normal);
-            voxelNormal.Add(normal);
-            voxelNormal.Add(normal);
-            voxelNormal.Add(normal);
+            vNormal.Add(normal);
+            vNormal.Add(normal);
+            vNormal.Add(normal);
+            vNormal.Add(normal);
 
         }
         
@@ -303,8 +316,8 @@ namespace RenderApp.Analyzer
 
         public void GetVoxel(out List<Vector3> position,out List<Vector3> normal)
         {
-            position = voxelPosition;
-            normal = voxelNormal;
+            position = vPosition;
+            normal = vNormal;
         }
     }
 }

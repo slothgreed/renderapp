@@ -47,10 +47,6 @@ namespace RenderApp
         /// </summary>
         private Dictionary<string, Texture> TextureList = new Dictionary<string, Texture>();
         /// <summary>
-        /// シェーダプログラムオブジェクト
-        /// </summary>
-        private Dictionary<string, ShaderProgram> ShaderProgramList = new Dictionary<string, ShaderProgram>();
-        /// <summary>
         /// マテリアルオブジェクト
         /// </summary>
         private Dictionary<string, Material> MaterialList = new Dictionary<string, Material>();
@@ -58,6 +54,14 @@ namespace RenderApp
         /// 環境プローブオブジェクト
         /// </summary>
         private Dictionary<string, EnvironmentProbe> EnvProbeList = new Dictionary<string, EnvironmentProbe>();
+        /// <summary>
+        /// 選択中のアセット
+        /// </summary>
+        public Asset SelectAsset
+        {
+            get;
+            set;
+        }
 
         #endregion
         #region [default property]
@@ -139,12 +143,6 @@ namespace RenderApp
                         yield return loop.Key;
                     }
                     break;
-                case EAssetType.ShaderProgram:
-                    foreach (var loop in ShaderProgramList)
-                    {
-                        yield return loop.Key;
-                    }
-                    break;
                 case EAssetType.Materials:
                     foreach (var loop in MaterialList)
                     {
@@ -184,12 +182,6 @@ namespace RenderApp
                     break;
                 case EAssetType.Textures:
                     foreach (var loop in TextureList)
-                    {
-                        yield return loop.Value;
-                    }
-                    break;
-                case EAssetType.ShaderProgram:
-                    foreach (var loop in ShaderProgramList)
                     {
                         yield return loop.Value;
                     }
@@ -243,12 +235,6 @@ namespace RenderApp
                         return TextureList[key];
                     }
                     break;
-                case EAssetType.ShaderProgram:
-                    if (ShaderProgramList.ContainsKey(key))
-                    {
-                        return ShaderProgramList[key];
-                    }
-                    break;
                 case EAssetType.Materials:
                     if (MaterialList.ContainsKey(key))
                     {
@@ -286,10 +272,6 @@ namespace RenderApp
             {
                 AddAsset<Texture>(key, value, EAssetType.Textures, TextureList);
 
-            }
-            else if (value is ShaderProgram)
-            {
-                AddAsset<ShaderProgram>(key, value, EAssetType.ShaderProgram, ShaderProgramList);
             }
             else if (value is Material)
             {
@@ -340,49 +322,40 @@ namespace RenderApp
                 case EAssetType.Geometry:
                     if (GeometryList.ContainsKey(key))
                     {
-                        GeometryList[key].Dispose();
                         GeometryList.Remove(key);
+                        AssetFactory.Instance.RemoveItem(key);
                     }
                     break;
                 case EAssetType.Light:
                     if (LightList.ContainsKey(key))
                     {
-                        LightList[key].Dispose();
                         LightList.Remove(key);
+                        AssetFactory.Instance.RemoveItem(key);
                     }
                     break;
                 case EAssetType.Camera:
                     if (CameraList.ContainsKey(key))
                     {
-                        CameraList[key].Dispose();
                         CameraList.Remove(key);
+                        AssetFactory.Instance.RemoveItem(key);
                     }
                     break;
                 case EAssetType.Textures:
                     if (TextureList.ContainsKey(key))
                     {
-                        TextureList[key].Dispose();
                         TextureList.Remove(key);
-                    }
-                    break;
-                case EAssetType.ShaderProgram:
-                    if (ShaderProgramList.ContainsKey(key))
-                    {
-                        ShaderProgramList[key].Dispose();
-                        ShaderProgramList.Remove(key);
+                        TextureFactory.Instance.RemoveItem(key);
                     }
                     break;
                 case EAssetType.Materials:
                     if (MaterialList.ContainsKey(key))
                     {
-                        MaterialList[key].Dispose();
                         MaterialList.Remove(key);
                     }
                     break;
                 case EAssetType.EnvProbe:
                     if (EnvProbeList.ContainsKey(key))
                     {
-                        EnvProbeList[key].Dispose();
                         EnvProbeList.Remove(key);
                     }
                     break;
@@ -395,11 +368,8 @@ namespace RenderApp
         /// </summary>
         public void Initialize()
         {
-            _mainCamera = AssetFactory.Instance.CreateMainCamera();
-            AddSceneObject(_mainCamera.Key, _mainCamera);
-
+            MainCamera = AssetFactory.Instance.CreateMainCamera();
             SunLight = AssetFactory.Instance.CreateSunLight();
-            AddSceneObject(SunLight.Key, SunLight);
             
             Geometry map = AssetFactory.Instance.CreateEnvironmentMap();
             AddSceneObject(map.Key, map);
@@ -408,44 +378,29 @@ namespace RenderApp
         #region [dispose]
         public void Dispose()
         {
-            foreach (var loop in GeometryList.Values)
-            {
-                loop.Dispose();
-            }
-            foreach (var loop in LightList.Values)
-            {
-                loop.Dispose();
-            }
-            foreach (var loop in CameraList.Values)
-            {
-                loop.Dispose();
-            }
-            foreach (var loop in TextureList.Values)
-            {
-                loop.Dispose();
-            }
-            foreach (var loop in ShaderProgramList.Values)
-            {
-                loop.Dispose();
-            }
-            foreach (var loop in MaterialList.Values)
-            {
-                loop.Dispose();
-            }
-            foreach (var loop in EnvProbeList.Values)
-            {
-                loop.Dispose();
-            }
+            //foreach (var loop in ShaderProgramList.Values)
+            //{
+            //    loop.Dispose();
+            //}
+            //foreach (var loop in MaterialList.Values)
+            //{
+            //    loop.Dispose();
+            //}
+            //foreach (var loop in EnvProbeList.Values)
+            //{
+            //    loop.Dispose();
+            //}
         }
         public static void AllDispose()
         {
             foreach (var scene in SceneList.Values)
             {
                 scene.Dispose();
-
             }
         }
         #endregion
+
+        #region [process]
         /// <summary>
         /// ポリゴンごとに行うので、CPUベースで
         /// </summary>
@@ -475,13 +430,13 @@ namespace RenderApp
                     for (int i = 0; i < geometry.Position.Count / 3; i++)
                     {
                         Vector3 vertex1 = CCalc.Multiply(geometry.ModelMatrix, geometry.Position[3 * i]);
-                        Vector3 vertex2 = CCalc.Multiply(geometry.ModelMatrix,geometry.Position[3 * i + 1]);
-                        Vector3 vertex3 = CCalc.Multiply(geometry.ModelMatrix,geometry.Position[3 * i + 2]);
+                        Vector3 vertex2 = CCalc.Multiply(geometry.ModelMatrix, geometry.Position[3 * i + 1]);
+                        Vector3 vertex3 = CCalc.Multiply(geometry.ModelMatrix, geometry.Position[3 * i + 2]);
                         Vector3 result = Vector3.Zero;
                         if (CCalc.CrossPlanetoLinePos(vertex1, vertex2, vertex3, near, far, ref minLength, out result))
                         {
 
-                            
+
                             if (minTriangle == null)
                             {
                                 minTriangle = new List<Vector3>();
@@ -499,17 +454,17 @@ namespace RenderApp
                     }
                 }
             }
-            if(minTriangle != null)
+            if (minTriangle != null)
             {
                 Vector3 normal = CCalc.Normal(minTriangle[0], minTriangle[1], minTriangle[2]);
                 minTriangle[0] += normal * 0.01f;
                 minTriangle[1] += normal * 0.01f;
                 minTriangle[2] += normal * 0.01f;
                 var picking = ActiveScene.FindObject("Picking", EAssetType.Geometry) as Primitive;
-                if(picking == null)
+                if (picking == null)
                 {
                     Primitive triangle = new Primitive("Picking", minTriangle, CCalc.RandomColor(), OpenTK.Graphics.OpenGL.PrimitiveType.Triangles);
-                    triangle.MaterialItem = new Material("Picking");
+                    triangle.MaterialItem = new Material("Picking:Material");
                     triangle.MaterialItem.SetShader(ShaderFactory.Instance.DefaultAnalyzeShader);
                     AssetFactory.Instance.CreateGeometry(triangle);
 
@@ -521,5 +476,10 @@ namespace RenderApp
             }
         }
 
+       
+        #endregion
+
+
+        
     }
 }

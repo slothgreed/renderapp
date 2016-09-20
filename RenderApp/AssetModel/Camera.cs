@@ -79,7 +79,7 @@ namespace RenderApp.AssetModel
         /// <summary>
         /// 平行移動量の倍率設定
         /// </summary>
-        public float m_PanRatio = 0.25f;
+        public float m_PanRatio = 1.0f;
         /// <summary>
         /// projectionのnear
         /// </summary>

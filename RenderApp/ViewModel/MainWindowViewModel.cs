@@ -10,7 +10,10 @@ using System.Collections.ObjectModel;
 using RenderApp.GLUtil;
 using RenderApp.Utility;
 using RenderApp.GLUtil.ShaderModel;
+using System.Windows.Forms;
 using RenderApp.AssetModel.LightModel;
+using RenderApp.View.Dialog;
+using RenderApp.ViewModel.Dialog;
 namespace RenderApp.ViewModel
 {
     public partial class MainWindowViewModel : ViewModelBase
@@ -75,23 +78,25 @@ namespace RenderApp.ViewModel
             }
         }
         #endregion
+
+        #region [Member]
+
         private static MainWindowViewModel _instance;
         public static MainWindowViewModel Instance
-        { 
+        {
             get
             {
                 return _instance;
             }
         }
-        
-
-        #region [Member変数]
 
         private Viewport m_Viewport;
-
-        #endregion
         public AssetTreeViewModel AssetWindow;
-        
+        #endregion
+
+        #region [constructor]
+ 
+
         public MainWindowViewModel()
         {
             AssetWindow = new AssetTreeViewModel(null, "Asset");
@@ -108,10 +113,12 @@ namespace RenderApp.ViewModel
         {
             _anchorables.Add(new RenderSystemViewModel(Viewport.Instance.RenderSystem));
         }
+        #endregion
 
+        #region [Project Menu Command]
         private void NewProjectCommand()
         {
-            if(!Project.IsOpen)
+            if (!Project.IsOpen)
             {
                 Project.IsOpen = true;
             }
@@ -124,14 +131,14 @@ namespace RenderApp.ViewModel
             dlg.Filter = "projファイル(*.@proj)|*.proj;";
             dlg.FilterIndex = 1;
             dlg.Title = "開くファイルを選択してください。";
-            if(dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
 
             }
         }
         private void SaveProjectCommand()
         {
-            
+
         }
         private void SaveAsProjectCommand()
         {
@@ -145,30 +152,32 @@ namespace RenderApp.ViewModel
 
             }
         }
+        #endregion
 
+        #region [Asset Menu Command]
         private void Load3DModelCommand()
         {
             System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
             dlg.InitialDirectory = Project.ProjectDirectory;
             dlg.Filter = "objファイル(*.obj)|*.obj;|stlファイル(*.stl)|*.stl;|すべてのファイル(*.*)|*.*";
-            dlg.Multiselect = true; 
+            dlg.Multiselect = true;
             dlg.Title = "開くファイルを選択してください。";
             Geometry geometry = null;
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                foreach(var filename in dlg.FileNames)
+                foreach (var filename in dlg.FileNames)
                 {
                     string extension = Path.GetExtension(filename);
-                    switch(extension)
+                    switch (extension)
                     {
                         case ".obj":
-                            geometry = new CObjFile(Asset.GetNameFromPath(filename),filename);
+                            geometry = new CObjFile(Asset.GetNameFromPath(filename), filename);
                             break;
                         case ".stl":
                             geometry = new StlFile(Asset.GetNameFromPath(filename), filename);
                             break;
                     }
-                    if(geometry != null)
+                    if (geometry != null)
                     {
                         AssetFactory.Instance.CreateGeometry(geometry);
                     }
@@ -184,43 +193,46 @@ namespace RenderApp.ViewModel
             dlg.Multiselect = true;
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                foreach(var filename in dlg.FileNames)
+                foreach (var filename in dlg.FileNames)
                 {
                     string extension = Path.GetExtension(filename);
                     if (extension == ".bmp" || extension == ".png" || extension == ".jpg")
                     {
-                        AssetFactory.Instance.CreateTexture(filename);
+                        TextureFactory.Instance.CreateTexture(filename);
                     }
                 }
             }
         }
         private void LoadShaderCommand()
         {
-            System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
-            dlg.InitialDirectory = Project.ProjectDirectory;
-            dlg.Filter = "シェーダファイル(*.vert;*.frag;*.geom;*.tes;*.tcs)|*.vert;*.frag;*.geom;*.tes;*.tcs;";
-            dlg.Title = "開くファイルを選択してください。";
-            dlg.Multiselect = true;
+            //System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
+            //dlg.InitialDirectory = Project.ProjectDirectory;
+            //dlg.Filter = "シェーダファイル(*.vert;*.frag;*.geom;*.tes;*.tcs)|*.vert;*.frag;*.geom;*.tes;*.tcs;";
+            //dlg.Title = "開くファイルを選択してください。";
+            //dlg.Multiselect = true;
 
-            if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                foreach (var filename in dlg.FileNames)
-                {
-                    string extension = Path.GetExtension(filename);
+            //if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            //{
+            //    foreach (var filename in dlg.FileNames)
+            //    {
+            //        string extension = Path.GetExtension(filename);
 
-                    switch (extension)
-                    {
-                        case ".vert":
-                        case ".frag":
-                        case ".geom":
-                        case ".tcs":
-                        case ".tes":
-                            AssetFactory.Instance.CreateShaderProgram(filename);
-                            break;
-                    }
-                }
-            }
+            //        switch (extension)
+            //        {
+            //            case ".vert":
+            //            case ".frag":
+            //            case ".geom":
+            //            case ".tcs":
+            //            case ".tes":
+            //                AssetFactory.Instance.CreateShaderProgram(filename);
+            //                break;
+            //        }
+            //    }
+            //}
         }
+        #endregion
+        
+        #region [Model Menu Command]
         private void CreateCubeCommand()
         {
             Cube cube = new Cube(Asset.GetNameFromType(EAssetType.Geometry), Scene.ActiveScene.WorldMin, Scene.ActiveScene.WorldMax);
@@ -236,14 +248,34 @@ namespace RenderApp.ViewModel
             Plane plane = new Plane(Asset.GetNameFromType(EAssetType.Geometry));
             AssetFactory.Instance.CreateGeometry(plane);
         }
+        private void CreateWireFrameCommand()
+        {
+            if (!AssetFactory.Instance.CreateWireFrame(Scene.ActiveScene.SelectAsset))
+            {
+                MessageBox.Show("Trianglesのポリゴンモデルのみで作成できます。");
+            }
+        }
+        private void CreatePolygonCommand()
+        {
+            if (!AssetFactory.Instance.CreatePolygon(Scene.ActiveScene.SelectAsset))
+            {
+                MessageBox.Show("Trianglesのポリゴンモデルのみで作成できます。");
+            }
+        }
+        #endregion
 
+        #region [MainWindow Event Command]
         private void WindowCloseCommand()
         {
             Scene.AllDispose();
+            AssetFactory.Instance.Dispose();
+            ShaderFactory.Instance.Dispose();
+            TextureFactory.Instance.Dispose();
+            RenderPassFactory.Instance.Dispose();
         }
         private void SizeChangedCommand()
         {
-            foreach(var loop in Documents)
+            foreach (var loop in Documents)
             {
                 loop.SizeChanged();
             }
@@ -269,21 +301,74 @@ namespace RenderApp.ViewModel
             }
             GC.Collect();
         }
+        #endregion
+
+        #region [Rendering Menu Command]
         public void TogglePostProcessCommand()
         {
             m_Viewport.RenderSystem.TogglePostProcess();
             OnPropertyChanged("PostProcessMode");
         }
-        public void UpdateMaterialView(TreeItemViewModel node)
+        #endregion
+        
+        #region [Analyze Menu Command]
+        private void VoxelizeCommand()
         {
-            switch(node.AssetType)
+            
+            var dvm = new VoxelDialogViewModel();
+            var dlg = new VoxelDialogView(dvm);
+            dlg.ShowDialog();
+            if(!(bool)dlg.DialogResult)
+            {
+                return;
+            }
+            if(!AssetFactory.Instance.CreateVoxel(Scene.ActiveScene.SelectAsset,dvm.PartitionNum))
+            {
+                MessageBox.Show("Trianglesのポリゴンモデルのみで作成できます。");
+            }
+        }
+        private void OctreeCommand()
+        {
+            if (!AssetFactory.Instance.CreateOctree(Scene.ActiveScene.SelectAsset))
+            {
+                MessageBox.Show("Trianglesのポリゴンモデルのみで作成できます。");
+            }
+        }
+        #endregion
+
+        #region [AvalonWindow method]
+        private void AddWindow(AvalonWindowViewModel newWindow)
+        {
+            var oldWindow = _anchorables.Where(x => x.WindowPosition == newWindow.WindowPosition).First();
+            _anchorables.Add(newWindow);
+
+            if (oldWindow != null)
+            {
+                _anchorables.Remove(oldWindow);
+            }
+        }
+
+        #endregion
+
+        #region [Update Method]
+        public void UpdateSelectNode(TreeItemViewModel node)
+        {
+            if(node == null)
+            {
+                return;
+            }
+            if(node.Model is Asset)
+            {
+                Scene.ActiveScene.SelectAsset = node.Model;
+            }
+            switch (node.AssetType)
             {
                 case EAssetType.Geometry:
-                    if(node.Model is Camera)
+                    if (node.Model is Camera)
                     {
 
                     }
-                    else if(node.Model is Light)
+                    else if (node.Model is Light)
                     {
 
                     }
@@ -296,9 +381,6 @@ namespace RenderApp.ViewModel
                     AddWindow(new MaterialViewModel((Material)node.Model));
                     AddWindow(new ShaderViewModel((Material)node.Model));
                     break;
-                case EAssetType.ShaderProgram:
-                    AddWindow(new ShaderProgramViewModel((ShaderProgram)node.Model));
-                    break;
                 case EAssetType.Textures:
                     AddWindow(new TextureViewModel((Texture)node.Model));
                     break;
@@ -306,19 +388,13 @@ namespace RenderApp.ViewModel
                     break;
             }
         }
-        private void AddWindow(AvalonWindowViewModel newWindow)
-        {
-            var oldWindow = _anchorables.Where(x => x.WindowPosition == newWindow.WindowPosition).First();
-            _anchorables.Add(newWindow);
 
-            if (oldWindow != null)
-            {
-                _anchorables.Remove(oldWindow);
-            }
-        }
+
         public override void UpdateProperty()
         {
 
         }
+        #endregion
+        
     }
 }

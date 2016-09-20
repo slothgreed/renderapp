@@ -22,7 +22,6 @@ namespace RenderApp
         Textures,
         EnvProbe,
         Materials,
-        ShaderProgram
     }
     /// <summary>
     /// Attribute(Shader用)
@@ -59,6 +58,8 @@ namespace RenderApp
         Albedo,
         Normal,
         Height,
-        Emissive
+        Emissive,
+        World,
+        Lighting
     }
 }

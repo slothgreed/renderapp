@@ -42,36 +42,47 @@ namespace RenderApp.GLUtil
         /// </summary>
         public static DrawBufferMode DefaultOutBuffer = DrawBufferMode.Back;
         #region [constructor]
-        
+        public FrameBuffer(string FrameName)
+        {
+            this.Name = FrameName;
+        }
         public FrameBuffer(string FrameName,int width, int height,string textureName)
         {
             this.Name = FrameName;
-            Initialize(width, height, new string[] { textureName }, new FramebufferAttachment[] { FramebufferAttachment.ColorAttachment0 });
+            Initialize(width, height, new string[] { textureName });
         }
 
         public FrameBuffer(string FrameName,int width,int height,string[] textureName)
         {
             this.Name = FrameName;
 
-            FramebufferAttachment[] attachment = new FramebufferAttachment[textureName.Length];
 
-            for (int i = 0; i < textureName.Length; i++)
-            {
-                attachment[i] = FramebufferAttachment.ColorAttachment1 + i;
-            }
-
-            Initialize(width, height, textureName, attachment);
+            Initialize(width, height, textureName);
         }
 
-        private void Initialize(int width, int height, string[] textureName, FramebufferAttachment[] attachment)
+        protected void Initialize(int width, int height, string[] textureName)
         {
 
             Width = width;
             Height = height;
+            FramebufferAttachment[] attachment = new FramebufferAttachment[textureName.Length];
+            if(textureName.Length == 1)
+            {
+                attachment[0] = FramebufferAttachment.ColorAttachment0;
+            }
+            else
+            {
+                for (int i = 0; i < textureName.Length; i++)
+                {
+                    attachment[i] = FramebufferAttachment.ColorAttachment1 + i;
+                }
+
+            }
+
 
             for(int i = 0; i < textureName.Length; i++)
             {
-                TextureList.Add(new Texture(textureName[i],width,height));
+                TextureList.Add(TextureFactory.Instance.CreateTexture(textureName[i],width,height));
                 Attachment.Add(attachment[i]);
                 OutputBuffers.Add((DrawBuffersEnum)attachment[i]);
             }
@@ -135,10 +146,6 @@ namespace RenderApp.GLUtil
         {
             GL.DeleteFramebuffer(FrameId);
             GL.DeleteRenderbuffer(RenderId);
-            for(int i = 0; i < TextureList.Count; i++)
-            {
-                TextureList[i].Dispose();
-            }
         }
         public void SizeChanged(int width,int height)
         {

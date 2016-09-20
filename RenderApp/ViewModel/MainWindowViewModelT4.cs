@@ -116,6 +116,31 @@ namespace RenderApp.ViewModel
 					return _CreatePlane;
 				}
 			}
+			private ICommand _CreateWireFrame;
+			public ICommand CreateWireFrame
+			{
+				get
+				{
+					if(_CreateWireFrame == null)
+					{
+						return _CreateWireFrame = CreateCommand(CreateWireFrameCommand);						
+					}
+					return _CreateWireFrame;
+				}
+			}
+			private ICommand _CreatePolygon;
+			public ICommand CreatePolygon
+			{
+				get
+				{
+					if(_CreatePolygon == null)
+					{
+						return _CreatePolygon = CreateCommand(CreatePolygonCommand);						
+					}
+					return _CreatePolygon;
+				}
+			}
+
 			private ICommand _LoadShader;
 			public ICommand LoadShader
 			{
@@ -162,6 +187,30 @@ namespace RenderApp.ViewModel
 						return _TogglePostProcess = CreateCommand(TogglePostProcessCommand);						
 					}
 					return _TogglePostProcess;
+				}
+			}
+			private ICommand _Voxelize;
+			public ICommand Voxelize
+			{
+				get
+				{
+					if(_Voxelize == null)
+					{
+						return _Voxelize = CreateCommand(VoxelizeCommand);						
+					}
+					return _Voxelize;
+				}
+			}
+			private ICommand _Octree;
+			public ICommand Octree
+			{
+				get
+				{
+					if(_Octree == null)
+					{
+						return _Octree = CreateCommand(OctreeCommand);						
+					}
+					return _Octree;
 				}
 			}
 

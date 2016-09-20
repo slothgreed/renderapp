@@ -18,11 +18,14 @@ using System.Windows.Input;
 		"CreateCube",
 		"CreateSphere",
 		"CreatePlane",
+		"CreateWireFrame",
+		"CreatePolygon",
 		"LoadShader",
 		"WindowClose",
 		"SizeChanged",
-		"ChangeRenderMode",
 		"TogglePostProcess",
+		"Voxelize",
+		"Octree",
 	};
 
 #>

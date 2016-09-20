@@ -133,7 +133,13 @@
             <MenuItem Header="Rendering">
                 <MenuItem Header="PostProcess" Command="{Binding TogglePostProcess}" IsChecked="{Binding PostProcessMode,Mode=OneWay}"/> 
             </MenuItem>
-            
+            <MenuItem Header="Analyze">
+                <MenuItem Header="WireFrame" Command="{Binding CreateWireFrame}"/>
+                <MenuItem Header="Polygon" Command="{Binding CreatePolygon}"/>
+                <Separator/>
+                <MenuItem Header="Voxelize" Command="{Binding Voxelize}"/>
+                <MenuItem Header="Octree" Command="{Binding Octree}"/>
+            </MenuItem>
             
         </Menu>
     </Grid>

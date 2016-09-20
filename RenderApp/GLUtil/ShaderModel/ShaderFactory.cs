@@ -17,6 +17,7 @@ namespace RenderApp.GLUtil
                 return _instance;
             }
         }
+        public List<Shader> ShaderList = new List<Shader>();
         private Shader _defaultLightShader;
         public Shader DefaultLightShader
         {
@@ -31,6 +32,7 @@ namespace RenderApp.GLUtil
                     ShaderProgram frag = new ShaderProgram(fPath, path + fPath);
                     Shader deffered = new Shader(vert, frag);
                     _defaultLightShader = deffered;
+                    ShaderList.Add(_defaultLightShader);
                 }
                 return _defaultLightShader;
             }
@@ -49,6 +51,7 @@ namespace RenderApp.GLUtil
                     ShaderProgram frag = new ShaderProgram(fPath, path + fPath);
                     Shader deffered = new Shader(vert, frag);
                     _defaultAnalyzeShader = deffered;
+                    ShaderList.Add(_defaultAnalyzeShader);
                 }
                 return _defaultAnalyzeShader;
             }
@@ -66,8 +69,8 @@ namespace RenderApp.GLUtil
                     ShaderProgram vert = new ShaderProgram(vPath, path + vPath);
                     ShaderProgram frag = new ShaderProgram(fPath, path + fPath);
                     Shader diffuse = new Shader(vert, frag);
-
                     _defaultDefferredShader = diffuse;
+                    ShaderList.Add(_defaultDefferredShader);
                 }
                 return _defaultDefferredShader;
             }
@@ -86,8 +89,17 @@ namespace RenderApp.GLUtil
                     ShaderProgram frag = new ShaderProgram(fPath, path + fPath);
                     Shader output = new Shader(vert, frag);
                     _outputShader = output;
+                    ShaderList.Add(_outputShader);
                 }
                 return _outputShader;
+            }
+        }
+
+        public void Dispose()
+        {
+            foreach(var shadre in ShaderList)
+            {
+                shadre.Dispose();
             }
         }
 

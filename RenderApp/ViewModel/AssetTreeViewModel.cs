@@ -38,11 +38,6 @@ namespace RenderApp.ViewModel
             get;
             private set;
         }
-        public TreeItemViewModel ShaderPrograms
-        {
-            get;
-            private set;
-        }
         public TreeItemViewModel Materials
         {
             get;
@@ -82,6 +77,7 @@ namespace RenderApp.ViewModel
         }
         public void AddAssetTree(TreeItemViewModel value)
         {
+
             switch (value.AssetType)
             {
                 case EAssetType.Geometry:
@@ -95,9 +91,6 @@ namespace RenderApp.ViewModel
                     break;
                 case EAssetType.Materials:
                     Materials.Children.Add(value);
-                    break;
-                case EAssetType.ShaderProgram:
-                    ShaderPrograms.Children.Add(value);
                     break;
                 case EAssetType.Textures:
                     Textures.Children.Add(value);
@@ -113,7 +106,6 @@ namespace RenderApp.ViewModel
             Title = title;
             Geometry = new TreeItemViewModel("Models");
             Textures = new TreeItemViewModel("Textures");
-            ShaderPrograms = new TreeItemViewModel("ShaderPrograms");
             Materials = new TreeItemViewModel("Materials");
             Light = new TreeItemViewModel("Light");
             Camera = new TreeItemViewModel("Camera");
@@ -124,13 +116,13 @@ namespace RenderApp.ViewModel
             Root.Children.Add(Camera);
             Root.Children.Add(Light);
             Root.Children.Add(Textures);
-            Root.Children.Add(ShaderPrograms);
             Root.Children.Add(Materials);
             Root.Children.Add(EnvProbe);
         }
 
         public override void SizeChanged()
         {
+
         }
 
         public void SelectionChangedCommand(object sender, EventArgs e)
@@ -139,7 +131,7 @@ namespace RenderApp.ViewModel
             if(nodeList.SelectedItems.Count > 0)
             {
                 ActiveNode = nodeList.SelectedItems[0] as TreeItemViewModel;
-                MainWindowViewModel.Instance.UpdateMaterialView(ActiveNode);
+                MainWindowViewModel.Instance.UpdateSelectNode(ActiveNode);
             }
         }
         public void DeleteCommand()

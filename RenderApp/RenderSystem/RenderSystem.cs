@@ -28,11 +28,11 @@ namespace RenderApp
         /// <summary>
         /// defferdシェーディング用
         /// </summary>
-        private List<FrameBuffer> DefferdStage;
+        private GBuffer GBufferStage;
         /// <summary>
         /// ライティングステージ
         /// </summary>
-        private RenderQueue LightingStage;
+        private PostProcess LightingStage;
         /// <summary>
         /// ポストプロセス結果
         /// </summary>
@@ -58,8 +58,6 @@ namespace RenderApp
         {
             Width = width;
             Height = height;
-            DefferdStage = new List<FrameBuffer>();
-            LightingStage = new RenderQueue();
             PostStage = new RenderQueue();
             ProcessingTexture = new List<Texture>();
             Initialize();
@@ -67,38 +65,30 @@ namespace RenderApp
         private void Initialize()
         {
             PostProcessMode = false;
-            DefferdStage.Add(RenderPassFactory.Instance.CreateGBuffer(Width, Height));
+            GBufferStage = RenderPassFactory.Instance.CreateGBuffer(Width, Height);
 
-            foreach (var deffered in DefferdStage)
+            foreach (var textures in GBufferStage.TextureList)
             {
-                foreach (var textures in deffered.TextureList)
-                {
-                    ProcessingTexture.Add(textures);
-                }
+                ProcessingTexture.Add(textures);
             }
 
+            FrameBuffer lightingFrame = RenderPassFactory.Instance.CreateDefaultLithingBuffer(Width, Height);
+            LightingStage = new PostProcess("DefaultLight", ShaderFactory.Instance.DefaultLightShader, lightingFrame);
+            LightingStage.SetPlaneTexture(TextureKind.Albedo, GBufferStage.FindTexture(TextureKind.Albedo));
+            LightingStage.SetPlaneTexture(TextureKind.Normal, GBufferStage.FindTexture(TextureKind.Normal));
+            LightingStage.SetPlaneTexture(TextureKind.World, GBufferStage.FindTexture(TextureKind.World));
+            LightingStage.SetPlaneTexture(TextureKind.Lighting, GBufferStage.FindTexture(TextureKind.Lighting));
 
-            FrameBuffer lithingFrame = RenderPassFactory.Instance.CreateDefaultLithingBuffer(Width, Height);
-            LightingStage.AddPass(new PostProcess("DefaultLight", ShaderFactory.Instance.DefaultLightShader, lithingFrame));
-
-            foreach (var lighting in LightingStage.Items())
-            {
-                foreach (var textures in lighting.FrameBufferItem.TextureList)
-                {
-                    ProcessingTexture.Add(textures);
-                }
-            }
+            ProcessingTexture.Add(lightingFrame.TextureList[0]);
 
             OutputStage = new PostProcess("OutputShader", ShaderFactory.Instance.OutputShader);
-            OutputTexture = DefferdStage[0].TextureList[0];
+            OutputTexture = GBufferStage.TextureList[0];
+            OutputTexture = lightingFrame.TextureList[0];
         }
 
-        public void SizeChanged(int width,int height)
+        public void SizeChanged(int width, int height)
         {
-            foreach(var loop in DefferdStage)
-            {
-                loop.SizeChanged(width, height);
-            }
+            GBufferStage.SizeChanged(width, height);
             LightingStage.SizeChanged(width, height);
             PostStage.SizeChanged(width, height);
             OutputStage.SizeChanged(width, height);
@@ -106,26 +96,21 @@ namespace RenderApp
 
         public void Dispose()
         {
-            foreach(var loop in DefferdStage)
-            {
-                loop.Dispose();
-            }
+            GBufferStage.Dispose();
             LightingStage.Dispose();
             PostStage.Dispose();
         }
         public void Render()
         {
-            foreach (var deffered in DefferdStage)
+            GBufferStage.ClearBuffer();
+            GBufferStage.BindBuffer();
+            foreach (var asset in Scene.ActiveScene.GetAssetList(EAssetType.Geometry))
             {
-                deffered.ClearBuffer();
-                deffered.BindBuffer();
-                foreach (var asset in Scene.ActiveScene.GetAssetList(EAssetType.Geometry))
-                {
-                    var geometry = asset as Geometry;
-                    geometry.Render();
-                }
-                deffered.UnBindBuffer();
+                var geometry = asset as Geometry;
+                geometry.Render();
             }
+            GBufferStage.UnBindBuffer();
+
 
             LightingStage.ClearBuffer();
             LightingStage.Render();
@@ -136,7 +121,7 @@ namespace RenderApp
                 PostStage.Render();
             }
 
-            OutputStage.SetPlaneTexture(TextureKind.Albedo,OutputTexture);
+            OutputStage.SetPlaneTexture(TextureKind.Albedo, OutputTexture);
             OutputStage.OutputRender();
         }
 

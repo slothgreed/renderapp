@@ -32,7 +32,6 @@ namespace RenderApp
             get;
             set;
         }
-
         public void SetPlaneTexture(TextureKind kind,Texture texture)
         {
             Plane.MaterialItem.AddTexture(kind, texture);
@@ -42,6 +41,10 @@ namespace RenderApp
             FrameBufferItem.BindBuffer();
             Plane.Render();
             FrameBufferItem.UnBindBuffer();
+        }
+        public void ClearBuffer()
+        {
+            FrameBufferItem.ClearBuffer();
         }
         public void OutputRender()
         {
