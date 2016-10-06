@@ -25,7 +25,7 @@ namespace RenderApp.Control
                     MiddleMouse.Down(mouse.X, mouse.Y);
                     break;
                 case MouseButtons.Right:
-                    LeftMouse.Down(mouse.X, mouse.Y);
+                    RightMouse.Down(mouse.X, mouse.Y);
                     break;
             }
             return true;
@@ -66,18 +66,18 @@ namespace RenderApp.Control
         }
         public virtual bool Up(MouseEventArgs mouse)
         {
-            //switch (mouse.Button)
-            //{
-            //    case MouseButtons.Left:
-            //        LeftMouse.Up(mouse.X, mouse.Y);
-            //        break;
-            //    case MouseButtons.Middle:
-            //        MiddleMouse.Up(mouse.X, mouse.Y);
-            //        break;
-            //    case MouseButtons.Right:
-            //        LeftMouse.Up(mouse.X, mouse.Y);
-            //        break;
-            //}
+            switch (mouse.Button)
+            {
+                case MouseButtons.Left:
+                    LeftMouse.Up(mouse.X, mouse.Y);
+                    break;
+                case MouseButtons.Middle:
+                    MiddleMouse.Up(mouse.X, mouse.Y);
+                    break;
+                case MouseButtons.Right:
+                    LeftMouse.Up(mouse.X, mouse.Y);
+                    break;
+            }
             return true;
         }
         public virtual bool Wheel(MouseEventArgs mouse)

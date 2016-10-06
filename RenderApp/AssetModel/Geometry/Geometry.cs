@@ -12,7 +12,11 @@ namespace RenderApp.AssetModel
 {
     public abstract class Geometry : Asset
     {
+        #region [static property]
+        private static int GeometryIDCounter = 0;
+        #endregion
         #region Propety
+        public int ID { get; private set; }
         public PrimitiveType RenderType { get; set; }
         public List<Vector3> Position { get; protected set; }
         public List<Vector3> Normal { get; protected set; }
@@ -81,7 +85,6 @@ namespace RenderApp.AssetModel
         }
 
         #endregion
-
         #region Initializer disposer
         private void Initialize(string name = null, PrimitiveType renderType = PrimitiveType.Triangles)
         {
@@ -94,7 +97,12 @@ namespace RenderApp.AssetModel
             Timer = new List<int>();
             ModelMatrix = Matrix4.Identity;
             MaterialItem = Material.Default;
-
+            if(GeometryIDCounter > 255)
+            {
+                Output.Error("ToManyObject");
+            }
+            GeometryIDCounter++;
+            ID = GeometryIDCounter;
         }
 
 
@@ -113,7 +121,6 @@ namespace RenderApp.AssetModel
 
         }
         #endregion
-
         #region calculator
 
         #endregion
@@ -279,6 +286,7 @@ namespace RenderApp.AssetModel
         }
         #endregion
         #endregion
+
 
     }
 }

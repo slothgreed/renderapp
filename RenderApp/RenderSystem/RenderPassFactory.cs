@@ -40,6 +40,13 @@ namespace RenderApp
                 frame.Dispose();
             }
         }
+
+        internal FrameBuffer CreateSelectionBuffer(int width, int height)
+        {
+            FrameBuffer frame = new FrameBuffer("SelectionBuffer", width, height, "SelectionBuffer");
+            frameList.Add(frame);
+            return frame;
+        }
     }
 
 }

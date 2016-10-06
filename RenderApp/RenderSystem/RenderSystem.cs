@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RenderApp.AssetModel;
 using RenderApp.GLUtil;
+using OpenTK.Graphics.OpenGL;
 namespace RenderApp
 {
     public class RenderSystem
@@ -37,6 +38,10 @@ namespace RenderApp
         /// ポストプロセス結果
         /// </summary>
         private RenderQueue PostStage;
+        /// <summary>
+        /// 後処理のUtil（選択とか）
+        /// </summary>
+        private PostProcess SelectionStage;
         /// <summary>
         /// 最終出力画像
         /// </summary>
@@ -79,11 +84,20 @@ namespace RenderApp
             LightingStage.SetPlaneTexture(TextureKind.World, GBufferStage.FindTexture(TextureKind.World));
             LightingStage.SetPlaneTexture(TextureKind.Lighting, GBufferStage.FindTexture(TextureKind.Lighting));
 
+
             ProcessingTexture.Add(lightingFrame.TextureList[0]);
 
+            FrameBuffer selectionBuffer = RenderPassFactory.Instance.CreateSelectionBuffer(Width, Height);
+            SelectionStage = new PostProcess("Selection", ShaderFactory.Instance.DefaultSelectionShader, selectionBuffer);
+            SelectionStage.SetPlaneTexture(TextureKind.Albedo, GBufferStage.FindTexture(TextureKind.Normal));
+            ProcessingTexture.Add(selectionBuffer.TextureList[0]);
+            
             OutputStage = new PostProcess("OutputShader", ShaderFactory.Instance.OutputShader);
             OutputTexture = GBufferStage.TextureList[0];
             OutputTexture = lightingFrame.TextureList[0];
+
+            
+        
         }
 
         public void SizeChanged(int width, int height)
@@ -91,13 +105,33 @@ namespace RenderApp
             GBufferStage.SizeChanged(width, height);
             LightingStage.SizeChanged(width, height);
             PostStage.SizeChanged(width, height);
+            SelectionStage.SizeChanged(width, height);
             OutputStage.SizeChanged(width, height);
         }
-
+        public void Picking(int x, int y)
+        {
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, GBufferStage.FrameId);
+            GL.ReadBuffer(ReadBufferMode.ColorAttachment1);
+            IntPtr ptr = IntPtr.Zero;
+            float[] pixels = new float[4];
+            GL.ReadPixels(x, y, 1, 1, PixelFormat.Rgba, PixelType.Float, pixels);
+            GL.ReadBuffer(ReadBufferMode.None);
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+            int id = (int)(pixels[3] * 255);
+            foreach(var geometry in AssetFactory.Instance.assetList.Values.OfType<Geometry>())
+            {
+                if(geometry.ID == id)
+                {
+                    Scene.ActiveScene.SelectAsset = geometry;
+                    break;
+                }
+            }
+        }
         public void Dispose()
         {
             GBufferStage.Dispose();
             LightingStage.Dispose();
+            SelectionStage.Dispose();
             PostStage.Dispose();
         }
         public void Render()
@@ -115,12 +149,31 @@ namespace RenderApp
             LightingStage.ClearBuffer();
             LightingStage.Render();
 
+            if (Scene.ActiveScene.SelectAsset != null)
+            {
+                if (Scene.ActiveScene.SelectAsset is Geometry)
+                {
+                    var geometry = Scene.ActiveScene.SelectAsset as Geometry;
+                    SelectionStage.SetValue("uID", geometry.ID);
+                }
+                else
+                {
+                    SelectionStage.SetValue("uID", 0);
+                }
+            }
+            else
+            {
+                SelectionStage.SetValue("uID", 0);
+            }
 
+            SelectionStage.ClearBuffer();
+            SelectionStage.Render();
+            
             if (PostProcessMode)
             {
                 PostStage.Render();
             }
-
+            OutputStage.SetValue("uSelectMap", SelectionStage.FrameBufferItem.TextureList[0]);
             OutputStage.SetPlaneTexture(TextureKind.Albedo, OutputTexture);
             OutputStage.OutputRender();
         }

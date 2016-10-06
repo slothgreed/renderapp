@@ -90,7 +90,11 @@ namespace RenderApp.Utility
             Drag(x, y);
          }
 
-
+        internal void Up(int x, int y)
+        {
+            Before = Vector2.Zero;
+            Current = Vector2.Zero;
+        }
         /// <summary>
         /// 移動量を算出
         /// </summary>
@@ -114,6 +118,8 @@ namespace RenderApp.Utility
             return move;
         }
 
-        
+
+
+
     }
 }

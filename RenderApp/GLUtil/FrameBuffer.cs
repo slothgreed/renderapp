@@ -74,7 +74,7 @@ namespace RenderApp.GLUtil
             {
                 for (int i = 0; i < textureName.Length; i++)
                 {
-                    attachment[i] = FramebufferAttachment.ColorAttachment1 + i;
+                    attachment[i] = FramebufferAttachment.ColorAttachment0 + i;
                 }
 
             }
@@ -125,7 +125,7 @@ namespace RenderApp.GLUtil
             {
                 textureId[i] = GL.GenTexture();
                 GL.BindTexture(TextureTarget.Texture2D, textureId[i]);
-                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb32f, Width, Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgb, PixelType.Byte, IntPtr.Zero);
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba32f, Width, Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.Byte, IntPtr.Zero);
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
             }

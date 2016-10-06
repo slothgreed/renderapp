@@ -26,6 +26,10 @@ namespace RenderApp
             Scene.ActiveScene.AddSceneObject(name, Plane.MaterialItem); 
             Plane.MaterialItem.SetShader(shader);
         }
+        public void SetValue(string key,object value)
+        {
+            Plane.MaterialItem.CurrentShader.SetValue(key,value);
+        }
         private FrameBuffer frameBuffer;
         public FrameBuffer FrameBufferItem
         {
@@ -57,6 +61,7 @@ namespace RenderApp
                 FrameBufferItem.SizeChanged(width, height);
             }
         }
+
         public void Dispose()
         {
             Plane.Dispose();

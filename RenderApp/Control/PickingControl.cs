@@ -13,6 +13,7 @@ namespace RenderApp.Control
             if(mouse.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 RenderApp.Scene.ActiveScene.Picking(LeftMouse.Click);
+                GLUtil.Viewport.Instance.RenderSystem.Picking((int)LeftMouse.Click.X, (int)LeftMouse.Click.Y);
             }
             return true;
         }

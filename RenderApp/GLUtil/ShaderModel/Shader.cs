@@ -142,7 +142,6 @@ namespace RenderApp.GLUtil.ShaderModel
         #endregion
 
         #region [bind buffer]
-
         public void BindBuffer(Geometry geometry)
         {
             GL.UseProgram(Program);
@@ -181,6 +180,14 @@ namespace RenderApp.GLUtil.ShaderModel
             Output.GLError();
         }
 
+
+        internal void SetValue(string key, object value)
+        {
+            if (_shaderVariable.ContainsKey(key))
+            {
+                _shaderVariable[key].variable = value;
+            }
+        }
         /// <summary>
         /// Uniform変数のBinding
         /// </summary>
@@ -218,7 +225,14 @@ namespace RenderApp.GLUtil.ShaderModel
             }
             else
             {
-                GL.Uniform1(uniform.ID, (float)uniform.variable);
+                if (uniform.variable.GetType() == typeof(float))
+                {
+                    GL.Uniform1(uniform.ID, (float)uniform.variable);
+                }
+                else
+                {
+                    GL.Uniform1(uniform.ID, (int)uniform.variable);
+                }
             }
             Output.GLError();
         }
@@ -297,6 +311,15 @@ namespace RenderApp.GLUtil.ShaderModel
                     case "index":
                         variable.variable = geometry.Index;
                         break;
+                    case "uGeometryID":
+                        variable.variable = geometry.ID;
+                        break;
+                    case "uWidth":
+                        variable.variable = Viewport.Instance.Width;
+                        break;
+                    case "uHeight":
+                        variable.variable = Viewport.Instance.Height;
+                        break;
                     case "uMVP":
                         Matrix4 vp = Scene.ActiveScene.MainCamera.CameraProjMatrix;
                         variable.variable = geometry.ModelMatrix * vp;
@@ -334,7 +357,7 @@ namespace RenderApp.GLUtil.ShaderModel
                             variable.variable = TextureItem[TextureKind.Albedo];
                         }
                         break;
-                    case "uWorldWolMap":
+                    case "uWorldMap":
                         if (TextureItem.ContainsKey(TextureKind.World))
                         {
                             variable.variable = TextureItem[TextureKind.World];
@@ -346,7 +369,6 @@ namespace RenderApp.GLUtil.ShaderModel
                             variable.variable = TextureItem[TextureKind.Lighting];
                         }
                         break;
-
                     case "uNormalMap":
                         if (TextureItem.ContainsKey(TextureKind.Normal))
                         {
@@ -379,13 +401,13 @@ namespace RenderApp.GLUtil.ShaderModel
         }
 
         #region [analyze shader code]
-        public void AnalizeShaderProgram()
+        public void AnalyzeShaderProgram()
         {
             _shaderVariable.Clear();
             GL.UseProgram(_program);
             foreach(ShaderProgram loop in _activeShader)
             {
-                AnalizeShaderProgram(loop);
+                AnalyzeShaderProgram(loop);
             }
             SetShaderVariableID();
 
@@ -504,7 +526,7 @@ namespace RenderApp.GLUtil.ShaderModel
         /// <summary>
         /// UniformとAttributeの指定
         /// </summary>
-        private void AnalizeShaderProgram(ShaderProgram shader)
+        private void AnalyzeShaderProgram(ShaderProgram shader)
         {
             if (shader == null)
             {
@@ -599,7 +621,7 @@ namespace RenderApp.GLUtil.ShaderModel
             {
                 _activeShader.Add(_tes);
             }
-            AnalizeShaderProgram();
+            AnalyzeShaderProgram();
         }
         public override string ToString()
         {
@@ -645,7 +667,7 @@ namespace RenderApp.GLUtil.ShaderModel
             }
             Output.GLError();
         }
-        
+
         #endregion
         
         #region [fin process]
@@ -729,7 +751,26 @@ namespace RenderApp.GLUtil.ShaderModel
             GL.GetShader(shader, ShaderParameter.CompileStatus, out status_code);
             if (status_code != 1)
             {
-                Console.WriteLine(shaderType.ToString());
+                switch (shaderType)
+                {
+                    case ShaderType.FragmentShader:
+                        Console.WriteLine(FragShader.FileName);
+                        break;
+                    case ShaderType.GeometryShader:
+                        Console.WriteLine(GeomShader.FileName);
+                        break;
+                    case ShaderType.TessControlShader:
+                        Console.WriteLine(TesShader.FileName);
+                        break;
+                    case ShaderType.TessEvaluationShader:
+                        Console.WriteLine(TcsShader.FileName);
+                        break;
+                    case ShaderType.VertexShader:
+                        Console.WriteLine(VertexShader.FileName);
+                        break;
+                    default:
+                        break;
+                }
                 Console.WriteLine(info);
             }
             Output.GLError();
@@ -825,7 +866,7 @@ namespace RenderApp.GLUtil.ShaderModel
             return program;
         }
         #endregion
-        
+
 
     }
 }

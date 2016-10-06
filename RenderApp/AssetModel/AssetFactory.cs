@@ -21,7 +21,7 @@ namespace RenderApp.AssetModel
                 return _instance;
             }
         }
-        private Dictionary<string, Asset> assetList = new Dictionary<string, Asset>();
+        public Dictionary<string, Asset> assetList = new Dictionary<string, Asset>();
 
         private void AddItem(Asset asset)
         {

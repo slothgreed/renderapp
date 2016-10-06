@@ -118,11 +118,14 @@ namespace RenderApp.GLUtil
             m_glControl.Load += glControl_Load;
             m_glControl.MouseDown += glControl_MouseDown;
             m_glControl.MouseMove += glControl_MouseMove;
+            m_glControl.MouseUp += glControl_MouseUp;
             m_glControl.MouseWheel += glControl_MouseWheel;
             m_glControl.Paint += glControl_Paint;
             m_glControl.Resize += glControl_Resize;
 
         }
+
+
         public void Initialize()
         {
             //CFrameBufferManager.Initialize(m_glControl.Width, m_glControl.Height);
@@ -135,18 +138,20 @@ namespace RenderApp.GLUtil
         //glControlの起動時に実行される。
         private void glControl_Load(object sender, EventArgs e)
         {
-            GL.ClearColor(1,0,0,1);
+            GL.ClearColor(0,0,0,1);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.CullFace);
+            GL.Enable(EnableCap.AlphaTest);
+            //GL.Enable(EnableCap.Blend);
+            //GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+
             GL.FrontFace(FrontFaceDirection.Ccw);//反時計回り
             GL.Enable(EnableCap.PolygonOffsetFill);
             GL.Enable(EnableCap.Texture2D);
             GL.PolygonOffset(1.0f, 1.0f);
             GL.CullFace(CullFaceMode.Back);
             GL.Viewport(0, 0, m_glControl.Size.Width, m_glControl.Size.Height);
-            GL.Enable(EnableCap.Blend);
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
             Scene.Create("MainScene");
             Scene.ActiveScene.Initialize();
             m_AppstartUp = true;
@@ -201,7 +206,11 @@ namespace RenderApp.GLUtil
             ControlManager.Instance.ProcessInput(e, ControlManager.MOUSE_STATE.DOWN);
             glControl_Paint(null, null);
         }
-
+        private void glControl_MouseUp(object sender, MouseEventArgs e)
+        {
+            ControlManager.Instance.ProcessInput(e, ControlManager.MOUSE_STATE.UP);
+            glControl_Paint(null, null);
+        }
         private void glControl_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             if (!m_AppstartUp)

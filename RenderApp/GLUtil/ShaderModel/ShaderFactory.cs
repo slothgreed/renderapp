@@ -103,5 +103,24 @@ namespace RenderApp.GLUtil
             }
         }
 
+        private Shader _selectionShader;
+        public Shader DefaultSelectionShader
+        {
+            get
+            {
+                if (_selectionShader == null)
+                {
+                    string path = Project.ShaderDirectory;
+                    string vPath = @"\Selection.vert";
+                    string fPath = @"\Selection.frag";
+                    ShaderProgram vert = new ShaderProgram(vPath, path + vPath);
+                    ShaderProgram frag = new ShaderProgram(fPath, path + fPath);
+                    Shader output = new Shader(vert, frag);
+                    _selectionShader = output;
+                    ShaderList.Add(_selectionShader);
+                }
+                return _selectionShader;
+            }
+        }
     }
 }
