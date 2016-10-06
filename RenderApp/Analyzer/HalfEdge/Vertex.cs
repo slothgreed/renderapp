@@ -23,6 +23,10 @@ namespace RenderApp.Analyzer
         public bool calcFrag = false;
         public Vector3 MaxVector { get; set; }
         public Vector3 MinVector { get; set; }
+        /// <summary>
+        /// 削除フラグ。Updateが走ると必ず削除するべきもの
+        /// </summary>
+        public bool DeleteFlg { get; set; }
 
         #region [operator]
         public static Vector3 operator +(Vertex v1, Vertex v2)
@@ -46,27 +50,26 @@ namespace RenderApp.Analyzer
             Index = number;
         }
         /// <summary>
-        /// エッジのインデックスのセッタ
+        /// エッジのセッタ
         /// </summary>
         /// <param name="edge"></param>
         public void AddEdge(Edge edge)
         {
-            for (int i = 0; i < m_AroundEdge.Count; i++)
+            if(!m_AroundEdge.Contains(edge))
             {
-                if (m_AroundEdge[i] == edge)
-                {
-                    return;
-                }
+                m_AroundEdge.Add(edge);
             }
-            m_AroundEdge.Add(edge);
         }
         /// <summary>
-        /// エッジ
+        /// 頂点の持つエッジの削除
         /// </summary>
-        /// <returns></returns>
-        public List<Edge> GetAroundEdgeList()
+        /// <param name="edge"></param>
+        public void DeleteEdge(Edge edge)
         {
-            return m_AroundEdge;
+            if(m_AroundEdge.Contains(edge))
+            {
+                m_AroundEdge.Remove(edge);
+            }
         }
         public IEnumerable<Edge> GetAroundEdge()
         {
@@ -118,6 +121,12 @@ namespace RenderApp.Analyzer
                 }
                 return _normal;
             }
+        }
+        public void Dispose()
+        {
+            DeleteFlg = true;
+            m_AroundEdge.Clear();
+            m_AroundEdge = null;
         }
     }
 }

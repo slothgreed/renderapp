@@ -8,7 +8,6 @@ namespace RenderApp.Analyzer
 {
     public class Edge
     {
-
         /// <summary>
         /// 始点
         /// </summary>
@@ -33,6 +32,10 @@ namespace RenderApp.Analyzer
         /// 反対エッジ
         /// </summary>
         public Edge Opposite { get; set; }
+        /// <summary>
+        /// 削除フラグ。Updateが走ると必ず削除するべきもの
+        /// </summary>
+        public bool DeleteFlg { get; set; }
         /// <summary>
         /// 三角形を構成するエッジの角度thisと前のエッジの反対の角度
         /// </summary>
@@ -74,7 +77,15 @@ namespace RenderApp.Analyzer
             Start = start;
             End = end;
         }
-
+        public void Dispose()
+        {
+            DeleteFlg = true;
+            Start = null;
+            End = null;
+            Next = null;
+            Before = null;
+            Opposite = null;
+        }
 
 
     }

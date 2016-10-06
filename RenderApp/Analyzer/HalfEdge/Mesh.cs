@@ -9,15 +9,18 @@ namespace RenderApp.Analyzer
     public class Mesh
     {
         /// <summary>
-        /// エッジのインデックス
+        /// エッジ
         /// </summary>
         private List<Edge> m_Edge = new List<Edge>();
         /// <summary>
-        /// 頂点のインデックス
+        /// 頂点
         /// </summary>
         private List<Vertex> m_Vertex = new List<Vertex>();
+        /// <summary>
+        /// 削除フラグ。Updateが走ると必ず削除するべきもの
+        /// </summary>
+        public bool DeleteFlg { get; set; }
         
-
         public Vector3 Normal { get; set; }
 
         public Mesh()
@@ -43,6 +46,14 @@ namespace RenderApp.Analyzer
         public List<Vertex> GetAroundVertex()
         {
             return m_Vertex;
+        }
+        public void Dispose()
+        {
+            DeleteFlg = true;
+            m_Vertex.Clear();
+            m_Edge.Clear();
+            m_Vertex = null;
+            m_Edge = null;
         }
     }
 }

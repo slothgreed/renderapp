@@ -44,6 +44,106 @@ namespace RenderApp.Analyzer
                 Console.WriteLine("NG!");
             }
         }
+
+        #region [edit method]
+        /// <summary>
+        /// マージによる頂点削除削除後、頂点位置移動
+        /// TODO:Debug
+        /// </summary>
+        /// <param name="removeIndex">削除するほう</param>
+        /// <param name="remainIndex">残すほう</param>
+        private void VertexDecimation(Vertex delV,Vertex remV)
+        {
+            delV.DeleteFlg = true;
+            #region 必要な頂点、メッシュ、エッジの取得
+            //互いが持つ頂点の取得
+
+            var commonVertex = new List<Vertex>();
+            foreach (var delAroundVertex in delV.GetAroundVertex())
+            {
+                foreach (var remAroundVertex in remV.GetAroundVertex())
+                {
+                    if(delAroundVertex == remAroundVertex)
+                    {
+                        commonVertex.Add(delAroundVertex);
+                    }
+                }
+            }
+            if(commonVertex.Count != 2)
+            {
+                //共有点が2つでないと対象外
+                return;
+            }
+            //2点を端点とするエッジ
+            Edge commonEdge = GetEdge(delV, remV);
+            if(commonEdge == null)
+            {
+                return;
+            }
+            //削除するメッシュ
+            var deleteMesh = new List<Mesh>();
+            //削除するエッジ
+            var deleteEdge = new List<Edge>();
+            foreach(var delAroundEdge in delV.GetAroundEdge())
+            {
+                foreach(var remAroundEdge in remV.GetAroundEdge())
+                {
+                    if(delAroundEdge.End == remAroundEdge.End)
+                    {
+                        delAroundEdge.DeleteFlg = true;
+                        remAroundEdge.DeleteFlg = true;
+                        deleteEdge.Add(delAroundEdge);
+                        deleteEdge.Add(remAroundEdge);
+                    }
+                    if(delAroundEdge.End == remAroundEdge.Start)
+                    {
+                        delAroundEdge.DeleteFlg = true;
+                        remAroundEdge.DeleteFlg = true;
+                        delAroundEdge.Mesh.DeleteFlg = true;
+                        remAroundEdge.Mesh.DeleteFlg = true;
+                        deleteEdge.Add(delAroundEdge);
+                        deleteEdge.Add(remAroundEdge);
+                        deleteMesh.Add(delAroundEdge.Mesh);
+                        deleteMesh.Add(remAroundEdge.Mesh);
+                    }
+                }
+            }
+            #endregion
+
+
+
+
+            //頂点が削除対象なら、残す方に移動
+            foreach (var edge in delV.GetAroundEdge())
+            {
+                if (edge.End == delV)
+                {
+                    edge.End = remV;
+                    edge.Opposite.Start = remV;
+                }
+            }
+            //エッジ情報の切り替え
+            commonEdge.Next.Opposite = commonEdge.Before.Opposite;
+            commonEdge.Opposite.Next.Opposite = commonEdge.Opposite.Before.Opposite;
+
+            //メッシュ削除
+            foreach (var mesh in deleteMesh)
+            {
+                mesh.Dispose();
+                m_Mesh.Remove(mesh);
+            }
+            //エッジ削除
+            foreach(var edge in deleteEdge)
+            {
+                edge.Dispose();
+                m_Edge.Remove(edge);
+            }
+            delV.Dispose();
+            m_Vertex.Remove(delV);
+        }
+
+        #endregion
+
         #region [make halfedge data structure]
         /// <summary>
         /// ハーフエッジ用のリストに頂点を格納
@@ -172,6 +272,18 @@ namespace RenderApp.Analyzer
         }
         #endregion
         #region [getter method]
+        public Edge GetEdge(Vertex start, Vertex end)
+        {
+            foreach (var edge in start.GetAroundEdge())
+            {
+                if (edge.Start == start && edge.End == end)
+                {
+                    return edge;
+                }
+            }
+            return null;
+        }
+
         /// <summary>
         /// 頂点のindex（頂点配列用の）
         /// </summary>
@@ -503,13 +615,13 @@ namespace RenderApp.Analyzer
             
         }
         #endregion
-
         #endregion
-
+        #region [other method]
         public override string ToString()
         {
             return "HalfEdge";
         }
+        #endregion
 
     }
 }
