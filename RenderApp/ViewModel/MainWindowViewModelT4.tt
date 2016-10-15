@@ -13,14 +13,9 @@ using System.Windows.Input;
 		"OpenProject",
 		"SaveProject",
 		"SaveAsProject",
-		"Load3DModel",
-		"LoadTexture",
-		"CreateCube",
-		"CreateSphere",
-		"CreatePlane",
-		"CreateWireFrame",
-		"CreatePolygon",
-		"LoadShader",
+		"LoadAsset",
+		"CreateObject",
+		"Controller",
 		"WindowClose",
 		"SizeChanged",
 		"TogglePostProcess",
@@ -53,7 +48,6 @@ namespace RenderApp.ViewModel
 		}
 
 #>
-
 	}
 
 }

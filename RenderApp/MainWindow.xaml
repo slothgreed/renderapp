@@ -119,23 +119,28 @@
             </MenuItem>
 
             <MenuItem Header="Asset">
-                <MenuItem Header="Model" Command="{Binding Load3DModel}"/>
-                <MenuItem Header="Texture" Command="{Binding LoadTexture}"/>
-                <MenuItem Header="Shader" Command="{Binding LoadShader}"/>
+                <MenuItem Header="Model" Command="{Binding LoadAsset}" CommandParameter="{x:Static local:LoadAssetMenu.Model}"/>
+                <MenuItem Header="Texture" Command="{Binding LoadAsset}" CommandParameter="{x:Static local:LoadAssetMenu.Texture}"/>
+                <MenuItem Header="Shader" Command="{Binding LoadAsset}" CommandParameter="{x:Static local:LoadAssetMenu.Shader}"/>
+                <MenuItem Header="Object">
+                    <MenuItem Header="Cube" Command="{Binding CreateObject}" CommandParameter="{x:Static local:CreateObjectMenu.Cube}"/>
+                    <MenuItem Header="Sphere" Command="{Binding CreateObject}" CommandParameter="{x:Static local:CreateObjectMenu.Sphere}"/>
+                    <MenuItem Header="Plane" Command="{Binding CreateObject}" CommandParameter="{x:Static local:CreateObjectMenu.Plane}"/>
+                </MenuItem>
             </MenuItem>
-
-            <MenuItem Header="Object">
-                <MenuItem Header="Cube" Command="{Binding CreateCube}"/>
-                <MenuItem Header="Sphere" Command="{Binding CreateSphere}"/>
-                <MenuItem Header="Plane" Command="{Binding CreatePlane}"/>
+            
+            <MenuItem Header="Controller">
+                <MenuItem Header="Default" Command="{Binding Controller}" CommandParameter="{x:Static local:ControllerMenu.Default}"/>
+                <MenuItem Header="Dijkstra" Command="{Binding Controller}" CommandParameter="{x:Static local:ControllerMenu.Dijkstra}"/>
             </MenuItem>
+            
             
             <MenuItem Header="Rendering">
                 <MenuItem Header="PostProcess" Command="{Binding TogglePostProcess}" IsChecked="{Binding PostProcessMode,Mode=OneWay}"/> 
             </MenuItem>
             <MenuItem Header="Analyze">
-                <MenuItem Header="WireFrame" Command="{Binding CreateWireFrame}"/>
-                <MenuItem Header="Polygon" Command="{Binding CreatePolygon}"/>
+                <MenuItem Header="WireFrame" Command="{Binding CreateObject}" CommandParameter="{x:Static local:CreateObjectMenu.WireFrame}"/>
+                <MenuItem Header="Polygon" Command="{Binding CreateObject}" CommandParameter="{x:Static local:CreateObjectMenu.Polygon}"/>
                 <Separator/>
                 <MenuItem Header="Voxelize" Command="{Binding Voxelize}"/>
                 <MenuItem Header="Octree" Command="{Binding Octree}"/>

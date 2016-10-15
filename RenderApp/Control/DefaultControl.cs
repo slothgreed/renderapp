@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace RenderApp.Control
 {
-    class PickingControl : IControl
+    class DefaultControl : IControl
     {
         public override bool Down(System.Windows.Forms.MouseEventArgs mouse)
         {

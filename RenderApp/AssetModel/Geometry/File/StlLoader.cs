@@ -29,16 +29,16 @@ namespace RenderApp.AssetModel
             {
                 String[] parser = File.ReadAllLines(filePath, System.Text.Encoding.GetEncoding("Shift_JIS"));
                 ReadData(parser);
-                HalfEdge half = new HalfEdge(Position);
-                //position;
-                Position.Clear();
-                foreach(var mesh in half.m_Mesh)
-                {
-                    foreach(var vertex in mesh.GetAroundVertex())
-                    {
-                        Position.Add(vertex.Position);
-                    }
-                }
+                //HalfEdge half = new HalfEdge(Position);
+                ////position;
+                //Position.Clear();
+                //foreach(var mesh in half.m_Mesh)
+                //{
+                //    foreach(var vertex in mesh.GetAroundVertex())
+                //    {
+                //        Position.Add(vertex.Position);
+                //    }
+                //}
             }
             catch (Exception)
             {

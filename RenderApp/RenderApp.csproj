@@ -146,6 +146,7 @@
     </ApplicationDefinition>
     <Compile Include="Analyzer\HalfEdge\Dijkstra.cs" />
     <Compile Include="AssetModel\AssetFactory.cs" />
+    <Compile Include="Converter\EnumConverter.cs" />
     <Compile Include="GLUtil\ShaderModel\ShaderFactory.cs" />
     <Compile Include="GLUtil\Output.cs" />
     <Compile Include="AssetModel\EnvironmentProbe.cs" />
@@ -159,7 +160,7 @@
     <Compile Include="RenderSystem\RenderSystem.cs" />
     <Compile Include="Control\DijkstraControl.cs" />
     <Compile Include="Control\IControl.cs" />
-    <Compile Include="Control\PickingControl.cs" />
+    <Compile Include="Control\DefaultControl.cs" />
     <Compile Include="Control\ControlManager.cs" />
     <Compile Include="Utility\ActiveItems.cs" />
     <Compile Include="ViewModel\AssetTreeViewModelT4.cs">
@@ -187,6 +188,8 @@
       <DependentUpon>MaterialItemSelector.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\MaterialViewModel.cs" />
+    <Compile Include="ViewModel\PropertyControl.cs" />
+    <Compile Include="ViewModel\PropertyGridSelector.cs" />
     <Compile Include="ViewModel\PropertyGridViewModel.cs" />
     <Compile Include="ViewModel\RenderSystemViewModel.cs" />
     <Compile Include="ViewModel\ShaderViewModel.cs" />
@@ -447,6 +450,7 @@
     <EmbeddedResource Include="Thumbnail\noimage.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="RenderSystem\PostEffect\" />
     <Folder Include="Scene\Shader\ShaderType\" />
     <Folder Include="ViewModel\Property\" />
   </ItemGroup>

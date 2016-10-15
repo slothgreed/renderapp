@@ -7,7 +7,7 @@ using System.Dynamic;
 using System.ComponentModel;
 namespace RenderApp.ViewModel
 {
-    public class PropertyGridViewModel : DynamicObject, ICustomTypeDescriptor, INotifyPropertyChanged
+    public class PropertyGridViewModel : DynamicObject,INotifyPropertyChanged//, ICustomTypeDescriptor
     {
         private readonly Dictionary<string, object> dynamicProperties = new Dictionary<string, object>();
         public PropertyGridViewModel(Dictionary<string,object> model)
@@ -20,16 +20,21 @@ namespace RenderApp.ViewModel
                 }
                 else if (loop.Value is OpenTK.Vector2)
                 {
-                    dynamicProperties.Add(loop.Key, new Vector2ViewModel(loop.Key,(OpenTK.Vector2)loop.Value));
-
+                    dynamicProperties.Add(loop.Key + "X", ((OpenTK.Vector2)loop.Value).X);
+                    dynamicProperties.Add(loop.Key + "Y", ((OpenTK.Vector2)loop.Value).Y);
                 }
                 else if (loop.Value is OpenTK.Vector3)
                 {
-                    dynamicProperties.Add(loop.Key, new Vector3ViewModel(loop.Key, (OpenTK.Vector3)loop.Value));
+                    dynamicProperties.Add(loop.Key + "X", ((OpenTK.Vector3)loop.Value).X);
+                    dynamicProperties.Add(loop.Key + "Y", ((OpenTK.Vector3)loop.Value).Y);
+                    dynamicProperties.Add(loop.Key + "Z", ((OpenTK.Vector3)loop.Value).Z);
                 }
                 else if (loop.Value is OpenTK.Vector4)
                 {
-                    dynamicProperties.Add(loop.Key, new Vector4ViewModel(loop.Key, (OpenTK.Vector4)loop.Value));
+                    dynamicProperties.Add(loop.Key + "X", ((OpenTK.Vector4)loop.Value).X);
+                    dynamicProperties.Add(loop.Key + "Y", ((OpenTK.Vector4)loop.Value).Y);
+                    dynamicProperties.Add(loop.Key + "Z", ((OpenTK.Vector4)loop.Value).Z);
+                    dynamicProperties.Add(loop.Key + "W", ((OpenTK.Vector4)loop.Value).W);
 
                 }
                 else if (loop.Value is OpenTK.Matrix3)
@@ -45,7 +50,6 @@ namespace RenderApp.ViewModel
                 else if (loop.Value is NumericViewModel)
                 {
                     dynamicProperties.Add(loop.Key, new NumericViewModel(loop.Key, (float)loop.Value));
-
                 }
                 else
                 {
@@ -59,9 +63,8 @@ namespace RenderApp.ViewModel
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
             var memberName = binder.Name;
-            if (!dynamicProperties.ContainsKey(memberName))
+            if (dynamicProperties.ContainsKey(memberName))
             {
-
                 result = dynamicProperties[memberName];
                 return true;
             }
@@ -83,13 +86,13 @@ namespace RenderApp.ViewModel
             return true;
         }
 
-        public PropertyDescriptorCollection GetProperties()
-        {
-            var attributes = new Attribute[0];
-            var properties = dynamicProperties.Select(pair => new DynamicPropertyDescriptor(this,
-                pair.Key, pair.Value.GetType(), attributes));
-            return new PropertyDescriptorCollection(properties.ToArray());
-        }
+        //public PropertyDescriptorCollection GetProperties()
+        //{
+        //    var attributes = new Attribute[0];
+        //    var properties = dynamicProperties.Select(pair => new DynamicPropertyDescriptor(this,
+        //        pair.Key, pair.Value.GetType(), attributes));
+        //    return new PropertyDescriptorCollection(properties.ToArray());
+        //}
 
         public string GetClassName()
         {
@@ -119,105 +122,105 @@ namespace RenderApp.ViewModel
 
         #endregion
 
-        #region [DynamicPropertyDescriptor]
-        private class DynamicPropertyDescriptor : PropertyDescriptor
-        {
-            private readonly PropertyGridViewModel propertyObject;
-            private readonly Type propertyType;
+        //#region [DynamicPropertyDescriptor]
+        //private class DynamicPropertyDescriptor : PropertyDescriptor
+        //{
+        //    private readonly PropertyGridViewModel propertyObject;
+        //    private readonly Type propertyType;
 
-            public DynamicPropertyDescriptor(PropertyGridViewModel propertyObject, string propertyName, Type propertyType, Attribute[] propertyAttributes)
-                : base(propertyName, propertyAttributes)
-            {
-                this.propertyObject = propertyObject;
-                this.propertyType = propertyType;
-            }
+        //    public DynamicPropertyDescriptor(PropertyGridViewModel propertyObject, string propertyName, Type propertyType, Attribute[] propertyAttributes)
+        //        : base(propertyName, propertyAttributes)
+        //    {
+        //        this.propertyObject = propertyObject;
+        //        this.propertyType = propertyType;
+        //    }
 
-            public override bool CanResetValue(object component)
-            {
-                return true;
-            }
-            public override object GetValue(object component)
-            {
-                return propertyObject.dynamicProperties[Name];
-            }
-            public override void ResetValue(object component)
-            {
-            }
-            public override void SetValue(object component, object value)
-            {
-                propertyObject.dynamicProperties[Name] = value;
-            }
-            public override bool ShouldSerializeValue(object component)
-            {
-                return false;
-            }
-            public override Type ComponentType
-            {
-                get { return typeof(PropertyGridViewModel); }
-            }
-            public override bool IsReadOnly
-            {
-                get { return false; }
-            }
-            public override Type PropertyType
-            {
-                get { return propertyType; }
-            }
-        }
-        #endregion
+        //    public override bool CanResetValue(object component)
+        //    {
+        //        return true;
+        //    }
+        //    public override object GetValue(object component)
+        //    {
+        //        return propertyObject.dynamicProperties[Name];
+        //    }
+        //    public override void ResetValue(object component)
+        //    {
+        //    }
+        //    public override void SetValue(object component, object value)
+        //    {
+        //        propertyObject.dynamicProperties[Name] = value;
+        //    }
+        //    public override bool ShouldSerializeValue(object component)
+        //    {
+        //        return false;
+        //    }
+        //    public override Type ComponentType
+        //    {
+        //        get { return typeof(PropertyGridViewModel); }
+        //    }
+        //    public override bool IsReadOnly
+        //    {
+        //        get { return false; }
+        //    }
+        //    public override Type PropertyType
+        //    {
+        //        get { return propertyType; }
+        //    }
+        //}
+        //#endregion
 
-        #region [ICustomTypeDescriptor]
-        AttributeCollection ICustomTypeDescriptor.GetAttributes()
-        {
-            return new AttributeCollection(null);
-        }
-        string ICustomTypeDescriptor.GetClassName()
-        {
-            return null;
-        }
-        string ICustomTypeDescriptor.GetComponentName()
-        {
-            return null;
-        }
-        TypeConverter ICustomTypeDescriptor.GetConverter()
-        {
-            return null;
-        }
-        EventDescriptor ICustomTypeDescriptor.GetDefaultEvent()
-        {
-            return null;
-        }
-        PropertyDescriptor ICustomTypeDescriptor.GetDefaultProperty()
-        {
-            return null;
-        }
-        object ICustomTypeDescriptor.GetEditor(Type editorBaseType)
-        {
-            return null;
-        }
-        EventDescriptorCollection ICustomTypeDescriptor.GetEvents(Attribute[] attributes)
-        {
-            return new EventDescriptorCollection(null);
-        }
-        EventDescriptorCollection ICustomTypeDescriptor.GetEvents()
-        {
-            return new EventDescriptorCollection(null);
-        }
-        PropertyDescriptorCollection ICustomTypeDescriptor.GetProperties(Attribute[] attributes)
-        {
-            var properties = dynamicProperties.Select(pair => new DynamicPropertyDescriptor(this,
-                pair.Key, pair.Value.GetType(), attributes));
-            return new PropertyDescriptorCollection(properties.ToArray());
-        }
-        PropertyDescriptorCollection ICustomTypeDescriptor.GetProperties()
-        {
-            return ((ICustomTypeDescriptor)this).GetProperties(null);
-        }
-        object ICustomTypeDescriptor.GetPropertyOwner(PropertyDescriptor pd)
-        {
-            return this;
-        }
-        #endregion
+        //#region [ICustomTypeDescriptor]
+        //AttributeCollection ICustomTypeDescriptor.GetAttributes()
+        //{
+        //    return new AttributeCollection(null);
+        //}
+        //string ICustomTypeDescriptor.GetClassName()
+        //{
+        //    return null;
+        //}
+        //string ICustomTypeDescriptor.GetComponentName()
+        //{
+        //    return null;
+        //}
+        //TypeConverter ICustomTypeDescriptor.GetConverter()
+        //{
+        //    return null;
+        //}
+        //EventDescriptor ICustomTypeDescriptor.GetDefaultEvent()
+        //{
+        //    return null;
+        //}
+        //PropertyDescriptor ICustomTypeDescriptor.GetDefaultProperty()
+        //{
+        //    return null;
+        //}
+        //object ICustomTypeDescriptor.GetEditor(Type editorBaseType)
+        //{
+        //    return null;
+        //}
+        //EventDescriptorCollection ICustomTypeDescriptor.GetEvents(Attribute[] attributes)
+        //{
+        //    return new EventDescriptorCollection(null);
+        //}
+        //EventDescriptorCollection ICustomTypeDescriptor.GetEvents()
+        //{
+        //    return new EventDescriptorCollection(null);
+        //}
+        //PropertyDescriptorCollection ICustomTypeDescriptor.GetProperties(Attribute[] attributes)
+        //{
+        //    var properties = dynamicProperties.Select(pair => new DynamicPropertyDescriptor(this,
+        //        pair.Key, pair.Value.GetType(), attributes));
+        //    return new PropertyDescriptorCollection(properties.ToArray());
+        //}
+        //PropertyDescriptorCollection ICustomTypeDescriptor.GetProperties()
+        //{
+        //    return ((ICustomTypeDescriptor)this).GetProperties(null);
+        //}
+        //object ICustomTypeDescriptor.GetPropertyOwner(PropertyDescriptor pd)
+        //{
+        //    return this;
+        //}
+        //#endregion
 
 
 

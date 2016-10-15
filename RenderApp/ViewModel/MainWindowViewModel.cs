@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using RenderApp.AssetModel.LightModel;
 using RenderApp.View.Dialog;
 using RenderApp.ViewModel.Dialog;
+using RenderApp.Control;
 namespace RenderApp.ViewModel
 {
     public partial class MainWindowViewModel : ViewModelBase
@@ -155,6 +156,23 @@ namespace RenderApp.ViewModel
         #endregion
 
         #region [Asset Menu Command]
+        private void LoadAssetCommand(object loadAssetMenuParam)
+        {
+            LoadAssetMenu menuParam = (LoadAssetMenu)loadAssetMenuParam;
+
+            switch (menuParam)
+            {
+                case LoadAssetMenu.Model:
+                    Load3DModelCommand();
+                    break;
+                case LoadAssetMenu.Texture:
+                    LoadTextureCommand();
+                    break;
+                case LoadAssetMenu.Shader:
+                    LoadShaderCommand();
+                    break;
+            }
+        }
         private void Load3DModelCommand()
         {
             System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
@@ -233,6 +251,31 @@ namespace RenderApp.ViewModel
         #endregion
         
         #region [Model Menu Command]
+        private void CreateObjectCommand(object createObjectMenu)
+        {
+            CreateObjectMenu menuParam = (CreateObjectMenu)createObjectMenu;
+
+            switch (menuParam)
+            {
+                case CreateObjectMenu.Cube:
+                    CreateCubeCommand();
+                    break;
+                case CreateObjectMenu.Sphere:
+                    CreateSphereCommand();
+                    break;
+                case CreateObjectMenu.Plane:
+                    CreatePlaneCommand();
+                    break;
+                case CreateObjectMenu.WireFrame:
+                    CreateWireFrameCommand();
+                    break;
+                case CreateObjectMenu.Polygon:
+                    CreatePolygonCommand();
+                    break;
+                default:
+                    break;
+            }
+        }
         private void CreateCubeCommand()
         {
             Cube cube = new Cube(Asset.GetNameFromType(EAssetType.Geometry), Scene.ActiveScene.WorldMin, Scene.ActiveScene.WorldMax);
@@ -261,6 +304,40 @@ namespace RenderApp.ViewModel
             {
                 MessageBox.Show("Trianglesのポリゴンモデルのみで作成できます。");
             }
+        }
+        #endregion
+
+        #region [swintch controller command]
+        private ControlManager.CONTROL_MODE controlMode;
+        public ControlManager.CONTROL_MODE ControlMode
+        {
+            get
+            {
+                return ControlManager.Instance.Mode;
+            }
+        }
+        private void ControllerCommand(object controllerMenu)
+        {
+            ControllerMenu menuParam = (ControllerMenu)controllerMenu;
+            OnPropertyChanging("ControlMode");
+            switch(menuParam)
+            {
+                case ControllerMenu.Default:
+                    ControllerDeafult();
+                    break;
+                case ControllerMenu.Dijkstra:
+                    ControllerDijkstra();
+                    break;
+            }
+            OnPropertyChanged("ControlMode");
+        }
+        private void ControllerDeafult()
+        {
+            ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.Default;
+        }
+        private void ControllerDijkstra()
+        {
+            ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.Dijkstra;
         }
         #endregion
 

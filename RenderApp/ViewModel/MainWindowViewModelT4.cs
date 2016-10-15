@@ -56,101 +56,40 @@ namespace RenderApp.ViewModel
 					return _SaveAsProject;
 				}
 			}
-			private ICommand _Load3DModel;
-			public ICommand Load3DModel
+			private ICommand _LoadAsset;
+			public ICommand LoadAsset
 			{
 				get
 				{
-					if(_Load3DModel == null)
+					if(_LoadAsset == null)
 					{
-						return _Load3DModel = CreateCommand(Load3DModelCommand);						
+						return _LoadAsset = CreateCommand(LoadAssetCommand);						
 					}
-					return _Load3DModel;
+					return _LoadAsset;
 				}
 			}
-			private ICommand _LoadTexture;
-			public ICommand LoadTexture
+			private ICommand _CreateObject;
+			public ICommand CreateObject
 			{
 				get
 				{
-					if(_LoadTexture == null)
+					if(_CreateObject == null)
 					{
-						return _LoadTexture = CreateCommand(LoadTextureCommand);						
+						return _CreateObject = CreateCommand(CreateObjectCommand);						
 					}
-					return _LoadTexture;
+					return _CreateObject;
 				}
 			}
-			private ICommand _CreateCube;
-			public ICommand CreateCube
+			private ICommand _Controller;
+			public ICommand Controller
 			{
 				get
 				{
-					if(_CreateCube == null)
+					if(_Controller == null)
 					{
-						return _CreateCube = CreateCommand(CreateCubeCommand);						
+						return _Controller = CreateCommand(ControllerCommand);						
 					}
-					return _CreateCube;
-				}
-			}
-			private ICommand _CreateSphere;
-			public ICommand CreateSphere
-			{
-				get
-				{
-					if(_CreateSphere == null)
-					{
-						return _CreateSphere = CreateCommand(CreateSphereCommand);						
-					}
-					return _CreateSphere;
-				}
-			}
-			private ICommand _CreatePlane;
-			public ICommand CreatePlane
-			{
-				get
-				{
-					if(_CreatePlane == null)
-					{
-						return _CreatePlane = CreateCommand(CreatePlaneCommand);						
-					}
-					return _CreatePlane;
-				}
-			}
-			private ICommand _CreateWireFrame;
-			public ICommand CreateWireFrame
-			{
-				get
-				{
-					if(_CreateWireFrame == null)
-					{
-						return _CreateWireFrame = CreateCommand(CreateWireFrameCommand);						
-					}
-					return _CreateWireFrame;
-				}
-			}
-			private ICommand _CreatePolygon;
-			public ICommand CreatePolygon
-			{
-				get
-				{
-					if(_CreatePolygon == null)
-					{
-						return _CreatePolygon = CreateCommand(CreatePolygonCommand);						
-					}
-					return _CreatePolygon;
-				}
-			}
-
-			private ICommand _LoadShader;
-			public ICommand LoadShader
-			{
-				get
-				{
-					if(_LoadShader == null)
-					{
-						return _LoadShader = CreateCommand(LoadShaderCommand);						
-					}
-					return _LoadShader;
+					return _Controller;
 				}
 			}
 			private ICommand _WindowClose;
@@ -213,7 +152,6 @@ namespace RenderApp.ViewModel
 					return _Octree;
 				}
 			}
-
 	}
 
 }

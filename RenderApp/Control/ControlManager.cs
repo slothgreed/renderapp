@@ -8,11 +8,10 @@ namespace RenderApp.Control
 {
     public class ControlManager
     {
-        CONTROL_MODE Mode = CONTROL_MODE.Selection;
         private Dictionary<CONTROL_MODE,IControl> Controllers = new Dictionary<CONTROL_MODE, IControl>();
         public enum CONTROL_MODE
         {
-            Selection,
+            Default,
             Dijkstra
         }
         public enum MOUSE_STATE
@@ -23,6 +22,20 @@ namespace RenderApp.Control
             CLICK,
             WHEEL,
         }
+
+        CONTROL_MODE _mode = CONTROL_MODE.Default;
+        public CONTROL_MODE Mode
+        {
+            get
+            {
+                return _mode;
+            }
+            set
+            {
+                _mode = value;
+            }
+        }
+
         private static ControlManager _instance = new ControlManager();
         public static ControlManager Instance
         {
@@ -33,12 +46,8 @@ namespace RenderApp.Control
         }
         private ControlManager()
         {
-            Controllers.Add(CONTROL_MODE.Selection,new PickingControl());
+            Controllers.Add(CONTROL_MODE.Default,new DefaultControl());
             Controllers.Add(CONTROL_MODE.Dijkstra,new DijkstraControl());
-        }
-        public void SetMode(CONTROL_MODE mode)
-        {
-            Mode = mode;
         }
 
         public void ProcessInput(MouseEventArgs mouse, MOUSE_STATE state)
