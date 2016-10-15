@@ -286,7 +286,129 @@ namespace RenderApp.AssetModel
         }
         #endregion
         #endregion
+        protected void ConvertPerTriangle()
+        {
+            if (Index.Count == 0)
+                return;
+
+            if (Position.Count == 0)
+                return;
+
+            bool texArray = false;
+            bool colorArray = false;
+            bool normalArray = false;
+            if (TexCoord.Count == Position.Count)
+                texArray = true;
+
+            if (Normal.Count == Position.Count)
+                normalArray = true;
+
+            if (Color.Count == Position.Count)
+                colorArray = true;
+
+            var newPosition = new List<Vector3>();
+            var newTexcoord = new List<Vector2>();
+            var newColor = new List<Vector3>();
+            var newNormal = new List<Vector3>();
 
 
+            for(int i = 0; i < Index.Count; i+=3)
+            {
+                newPosition.Add(Position[Index[i]]);
+                newPosition.Add(Position[Index[i + 1]]);
+                newPosition.Add(Position[Index[i + 2]]);
+                if(texArray)
+                {
+                    newTexcoord.Add(TexCoord[Index[i]]);
+                    newTexcoord.Add(TexCoord[Index[i + 1]]);
+                    newTexcoord.Add(TexCoord[Index[i + 2]]);
+                }
+                if(colorArray)
+                {
+                    newColor.Add(Color[Index[i]]);
+                    newColor.Add(Color[Index[i + 1]]);
+                    newColor.Add(Color[Index[i + 2]]);
+                }
+
+                if (normalArray)
+                {
+                    newNormal.Add(Normal[Index[i]]);
+                    newNormal.Add(Normal[Index[i + 1]]);
+                    newNormal.Add(Normal[Index[i + 2]]);
+                }
+            }
+
+            Position = newPosition;
+            Normal = newNormal;
+            TexCoord = newTexcoord;
+            Color = newColor;
+            Index.Clear();
+        }
+        /// <summary>
+        /// 頂点配列に変換
+        /// </summary>
+        protected void ConvertVertexArray()
+        {
+            if (Index.Count != 0)
+                return;
+
+            if (Position.Count == 0)
+                return;
+
+            bool texArray = false;
+            bool colorArray = false;
+            bool normalArray = false;
+            if (TexCoord.Count == Position.Count)
+                texArray = true;
+
+            if (Normal.Count == Position.Count)
+                normalArray = true;
+
+            if (Color.Count == Position.Count)
+                colorArray = true;
+
+            var newPosition = new List<Vector3>();
+            var newTexcoord = new List<Vector2>();
+            var newColor = new List<Vector3>();
+            var newNormal = new List<Vector3>();
+             bool isExist = false;
+            for(int i = 0; i< Position.Count;i++)
+            {
+                isExist = false;
+                for (int j = 0; j < newPosition.Count; j++ )
+                {
+                    if (newPosition[j] == Position[i])
+                    {
+                        isExist = true;
+                        Index.Add(j);
+                        break;
+                    }
+                }
+                if (!isExist)
+                {
+                    newPosition.Add(Position[i]);
+                    Index.Add(newPosition.Count -1 );
+
+
+                    if(texArray)
+                    {
+                        newTexcoord.Add(TexCoord[i]);
+                    }
+                    if(colorArray)
+                    {
+                        newColor.Add(Color[i]);
+                    }
+                    if(normalArray)
+                    {
+                        newNormal.Add(Normal[i]);
+                    }
+                }
+            }
+            Position = newPosition;
+            TexCoord = newTexcoord;
+            Color = newColor;
+            Normal = newNormal;
+
+        }
     }
 }

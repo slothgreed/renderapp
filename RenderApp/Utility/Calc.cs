@@ -99,9 +99,8 @@ namespace RenderApp.Utility
         /// <returns></returns>
         public static Vector3 Normal(Vector3 point, Vector3 point2)
         {
-            Vector3 normal = new Vector3();
+            Vector3 normal;
             normal = Vector3.Cross(point, point2);
-
             return normal.Normalized();
         }
 

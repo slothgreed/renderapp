@@ -40,6 +40,28 @@ namespace RenderApp.Analyzer
         /// 三角形を構成するエッジの角度thisと前のエッジの反対の角度
         /// </summary>
         private float _angle = 0.0f;
+        /// <summary>
+        /// 初期のIndex
+        /// </summary>
+        public int Index { get; set; }
+        public static bool operator ==(Edge edge1, Edge edge2)
+        {
+            //参照が同じならTrue
+            if (object.ReferenceEquals(edge1, edge2))
+            {
+                return true;
+            }
+            if ((object)edge1 == null || (object)edge2 == null)
+            {
+                return false;
+            }
+            //共有EdgeでもTrue
+            return (edge1.Start == edge2.End && edge1.End == edge2.Start);
+        }
+        public static bool operator !=(Edge edge1,Edge edge2)
+        {
+            return !(edge1 == edge2);
+        }
         public float Angle
         {
             get
@@ -71,11 +93,12 @@ namespace RenderApp.Analyzer
                 return (Start - End).Length;
             }
         }
-        public Edge(Mesh meshIndex, Vertex start, Vertex end)
+        public Edge(Mesh mesh, Vertex start, Vertex end,int index)
         {
-            Mesh = meshIndex;
+            Mesh = mesh;
             Start = start;
             End = end;
+            Index = index;
         }
         public void Dispose()
         {
@@ -83,10 +106,14 @@ namespace RenderApp.Analyzer
             Start = null;
             End = null;
             Next = null;
+            Mesh = null;
             Before = null;
             Opposite = null;
         }
 
-
+        public bool ErrorEdge()
+        {
+            return DeleteFlg;
+        }
     }
 }

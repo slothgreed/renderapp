@@ -4,17 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
+using RenderApp.Utility;
 namespace RenderApp.Analyzer
 {
     public class Vertex
     {
+        //あとの管理がめんどくさくなるので、vertexは1つだけエッジを持つようにする。
+        public Edge m_Edge { get; set; }
+        /// <summary>
+        /// temporaryEdgeforopposite
+        /// </summary>
         private List<Edge> m_AroundEdge = new List<Edge>();
         public Vector3 Position
         {
             get;
             private set;
         }
-        public int Index { get; private set; }
+        /// <summary>
+        /// HalfEdgeでもつm_VertexのIndex番号
+        /// </summary>
+        public int Index { get; set; }
         public float GaussCurvature;
         public float MeanCurvature;
         public float MinCurvature;
@@ -41,6 +50,36 @@ namespace RenderApp.Analyzer
         {
             return new Vector3(v1.Position * v2.Position);
         }
+        public static bool operator ==(Vertex v1,Vertex v2)
+        {
+            if(object.ReferenceEquals(v1,v2))
+            {
+                return true;
+            }
+            if ((object)v1 == null || (object)v2 == null)
+            {
+                return false;
+            }
+
+            if(Math.Abs(v1.Position.X - v2.Position.X) > CCalc.THRESHOLD05)
+            {
+                return false;
+            }
+            if (Math.Abs(v1.Position.Y - v2.Position.Y) > CCalc.THRESHOLD05)
+            {
+                return false;
+            }
+            if (Math.Abs(v1.Position.Z - v2.Position.Z) > CCalc.THRESHOLD05)
+            {
+                return false;
+            }
+            return true;
+        }
+        public static bool operator !=(Vertex v1,Vertex v2)
+        {
+            return !(v1 == v2);
+        }
+        
         #endregion
 
 
@@ -55,6 +94,7 @@ namespace RenderApp.Analyzer
         /// <param name="edge"></param>
         public void AddEdge(Edge edge)
         {
+            m_Edge = edge;
             if(!m_AroundEdge.Contains(edge))
             {
                 m_AroundEdge.Add(edge);
@@ -64,18 +104,30 @@ namespace RenderApp.Analyzer
         /// 頂点の持つエッジの削除
         /// </summary>
         /// <param name="edge"></param>
-        public void DeleteEdge(Edge edge)
+        public void ClearEdge()
         {
-            if(m_AroundEdge.Contains(edge))
-            {
-                m_AroundEdge.Remove(edge);
-            }
+            m_AroundEdge.Clear();
+            m_AroundEdge = null;
         }
+
         public IEnumerable<Edge> GetAroundEdge()
         {
-            foreach(var edge in m_AroundEdge)
+            //opposite計算後は削除されている。
+            if(m_AroundEdge != null)
             {
-                yield return edge;
+                foreach (var edge in m_AroundEdge)
+                {
+                    yield return edge;
+                }
+            }else
+            {
+                yield return m_Edge;
+                Edge loop = m_Edge.Opposite.Next;
+                while (loop != m_Edge)
+                {
+                    yield return loop;
+                    loop = loop.Opposite.Next;
+                }
             }
         }
         public IEnumerable<Mesh> GetAroundMesh()
@@ -87,7 +139,7 @@ namespace RenderApp.Analyzer
         }
         public IEnumerable<Vertex> GetAroundVertex()
         {
-            foreach(var edge in m_AroundEdge)
+            foreach (var edge in GetAroundEdge())
             {
                 yield return edge.End;
             }
@@ -125,8 +177,11 @@ namespace RenderApp.Analyzer
         public void Dispose()
         {
             DeleteFlg = true;
-            m_AroundEdge.Clear();
-            m_AroundEdge = null;
+            m_Edge = null;
+        }
+        public bool ErrorVertex()
+        {
+            return DeleteFlg;
         }
     }
 }

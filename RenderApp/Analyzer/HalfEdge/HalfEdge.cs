@@ -12,6 +12,7 @@ namespace RenderApp.Analyzer
     {
         public List<Mesh> m_Mesh = new List<Mesh>();
         public List<Edge> m_Edge = new List<Edge>();
+        private int m_EdgeCount = 0;
         public List<Vertex> m_Vertex = new List<Vertex>();
         public Parameter GaussCurvature = new Parameter();
         public Parameter MeanCurvature = new Parameter();
@@ -24,16 +25,28 @@ namespace RenderApp.Analyzer
         /// </summary>
         /// <param name="position">頂点座標リスト</param>
         /// <param name="mesh">「三角形を構成する頂点番号を格納したVector3」のリスト</param>
-        public HalfEdge(List<Vector3> position, List<int> poly_Index)
+        public HalfEdge(List<Vector3> position, List<int> poly_Index = null)
         {
-            MakeVertexList(position);
-            MakeEdgeList(poly_Index);
+
+            if (poly_Index == null)
+            {
+                CreateHalfEdgeData(position);
+            }
+            else
+            {
+                MakeVertexListForVertexIndex(position);
+                MakeEdgeListForVertexIndex(poly_Index);
+            }
             SetOppositeEdge();
 
-            SetMeshParameter();
             SetVertexParameter();
 
             SetNormalizeParameter();
+
+            for (int i = 0; i < m_Vertex.Count; i++ )
+            {
+                VertexDecimation(m_Vertex[i].m_Edge.Start, m_Vertex[i].m_Edge.End);
+            }
 
             if (CheckOppositeEdge())
             {
@@ -44,34 +57,31 @@ namespace RenderApp.Analyzer
                 Console.WriteLine("NG!");
             }
         }
-
+        /// <summary>
+        /// ハーフエッジがエラーを持つかチェック
+        /// </summary>
+        /// <returns></returns>
+        public bool ErrorHalfEdge()
+        {
+            foreach(var vertex in m_Vertex)
+            {
+                if(vertex.ErrorVertex())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         #region [edit method]
         /// <summary>
         /// マージによる頂点削除削除後、頂点位置移動
-        /// TODO:Debug
         /// </summary>
         /// <param name="removeIndex">削除するほう</param>
         /// <param name="remainIndex">残すほう</param>
-        private void VertexDecimation(Vertex delV,Vertex remV)
+        public void VertexDecimation(Vertex delV,Vertex remV)
         {
-            delV.DeleteFlg = true;
-            #region 必要な頂点、メッシュ、エッジの取得
-            //互いが持つ頂点の取得
-
-            var commonVertex = new List<Vertex>();
-            foreach (var delAroundVertex in delV.GetAroundVertex())
+            if(delV == null || remV == null)
             {
-                foreach (var remAroundVertex in remV.GetAroundVertex())
-                {
-                    if(delAroundVertex == remAroundVertex)
-                    {
-                        commonVertex.Add(delAroundVertex);
-                    }
-                }
-            }
-            if(commonVertex.Count != 2)
-            {
-                //共有点が2つでないと対象外
                 return;
             }
             //2点を端点とするエッジ
@@ -80,126 +90,185 @@ namespace RenderApp.Analyzer
             {
                 return;
             }
+            
+            #region [create delete list]
             //削除するメッシュ
             var deleteMesh = new List<Mesh>();
             //削除するエッジ
             var deleteEdge = new List<Edge>();
-            foreach(var delAroundEdge in delV.GetAroundEdge())
-            {
-                foreach(var remAroundEdge in remV.GetAroundEdge())
-                {
-                    if(delAroundEdge.End == remAroundEdge.End)
-                    {
-                        delAroundEdge.DeleteFlg = true;
-                        remAroundEdge.DeleteFlg = true;
-                        deleteEdge.Add(delAroundEdge);
-                        deleteEdge.Add(remAroundEdge);
-                    }
-                    if(delAroundEdge.End == remAroundEdge.Start)
-                    {
-                        delAroundEdge.DeleteFlg = true;
-                        remAroundEdge.DeleteFlg = true;
-                        delAroundEdge.Mesh.DeleteFlg = true;
-                        remAroundEdge.Mesh.DeleteFlg = true;
-                        deleteEdge.Add(delAroundEdge);
-                        deleteEdge.Add(remAroundEdge);
-                        deleteMesh.Add(delAroundEdge.Mesh);
-                        deleteMesh.Add(remAroundEdge.Mesh);
-                    }
-                }
-            }
+            //削除する頂点
+            var deleteVertex = new List<Vertex>();
+            
+            deleteVertex.Add(delV);
+            
+
+            //頂点とエッジの格納
+            deleteEdge.Add(commonEdge);
+            deleteEdge.Add(commonEdge.Next);
+            deleteEdge.Add(commonEdge.Next.Next);
+            deleteMesh.Add(commonEdge.Mesh);
+            //頂点とエッジの格納
+            deleteEdge.Add(commonEdge.Opposite);
+            deleteEdge.Add(commonEdge.Opposite.Next);
+            deleteEdge.Add(commonEdge.Opposite.Next.Next);
+            deleteMesh.Add(commonEdge.Opposite.Mesh);
             #endregion
-
-
 
 
             //頂点が削除対象なら、残す方に移動
             foreach (var edge in delV.GetAroundEdge())
             {
-                if (edge.End == delV)
+                if (edge.Start == delV)
                 {
-                    edge.End = remV;
-                    edge.Opposite.Start = remV;
+                    edge.Start = remV;
+                    edge.Opposite.End = remV;
                 }
             }
-            //エッジ情報の切り替え
-            commonEdge.Next.Opposite = commonEdge.Before.Opposite;
-            commonEdge.Opposite.Next.Opposite = commonEdge.Opposite.Before.Opposite;
 
-            //メッシュ削除
+            //エッジ情報の切り替え
+            commonEdge.Next.Opposite.Opposite = commonEdge.Before.Opposite;
+            commonEdge.Before.Opposite.Opposite = commonEdge.Next.Opposite;
+
+            commonEdge.Opposite.Next.Opposite.Opposite = commonEdge.Opposite.Before.Opposite;
+            commonEdge.Opposite.Before.Opposite.Opposite = commonEdge.Opposite.Next.Opposite;
+
+            remV.m_Edge = commonEdge.Opposite.Before.Opposite;
+            DeleteMesh(deleteMesh);
+            DeleteEdge(deleteEdge);
+            DeleteVertex(deleteVertex);
+        }
+        #endregion
+        private void DeleteMesh(List<Mesh> deleteMesh)
+        {
             foreach (var mesh in deleteMesh)
             {
                 mesh.Dispose();
                 m_Mesh.Remove(mesh);
             }
-            //エッジ削除
+        }
+        private void DeleteEdge(List<Edge> deleteEdge)
+        {
             foreach(var edge in deleteEdge)
             {
                 edge.Dispose();
                 m_Edge.Remove(edge);
             }
-            delV.Dispose();
-            m_Vertex.Remove(delV);
         }
-
-        #endregion
-
+        private void DeleteVertex(List<Vertex> deleteVertex)
+        {
+            //エッジ削除
+            foreach (var vertex in deleteVertex)
+            {
+                vertex.Dispose();
+                m_Vertex.Remove(vertex);
+            }
+        }
         #region [make halfedge data structure]
         /// <summary>
         /// ハーフエッジ用のリストに頂点を格納
         /// </summary>
         /// <param name="vertex_List"></param>
-        private void MakeVertexList(List<Vector3> vertex_List)
+        /// <param name="checkOverlap">重複チェック</param>
+        private void MakeVertexListForVertexIndex(List<Vector3> vertex_List)
         {
-            for(int i = 0; i < vertex_List.Count; i++)
+            for (int i = 0; i < vertex_List.Count; i++)
             {
-                Vertex vertex = new Vertex(vertex_List[i],i);
+                Vertex vertex = new Vertex(vertex_List[i], i);
                 m_Vertex.Add(vertex);
             }
+        }
+        private void CreateHalfEdgeData(List<Vector3> vertex_List)
+        {
+            bool contain = false;
+            Vertex v1 = null,v2 = null,v3 = null;
+            //最終的にポリゴンに格納する頂点
+            Vertex polyVertex;
+            for (int i = 0; i < vertex_List.Count; i++)
+            {
+                polyVertex = null;
+                contain = false;
+                Vertex vertex = new Vertex(vertex_List[i], i);
+                foreach (var vList in m_Vertex)
+                {
+                    if (vList == vertex)
+                    {
+                        contain = true;
+                        polyVertex = vList;
+                        break;
+                    }
+                }
+                if (!contain)
+                {
+                    vertex.Index = m_Vertex.Count;
+                    m_Vertex.Add(vertex);
+                    polyVertex = vertex;
+                }
+
+                if(v1 == null)
+                {
+                    v1 = polyVertex;
+                }else if(v2 == null)
+                {
+                    v2 = polyVertex;
+                }
+                else
+                {
+                    v3 = polyVertex;
+                }
+
+                //すべての頂点ができたとき。
+                if(v3 != null)
+                {
+                    CreateMesh(v1,v2,v3);
+                    v1 = null;
+                    v2 = null;
+                    v3 = null;
+                }
+            }
+        }
+        private void CreateMesh(Vertex v1,Vertex v2,Vertex v3)
+        {
+            Mesh mesh = new Mesh();
+
+            Edge edge1 = new Edge(mesh, v1, v2, m_EdgeCount++);
+            Edge edge2 = new Edge(mesh, v2, v3, m_EdgeCount++);
+            Edge edge3 = new Edge(mesh, v3, v1, m_EdgeCount++);
+
+            //次のエッジの格納
+            edge1.Next = edge2;
+            edge2.Next = edge3;
+            edge3.Next = edge1;
+
+            
+            edge1.Before = edge3;
+            edge2.Before = edge1;
+            edge3.Before = edge2;
+            
+            //頂点にエッジを持たせる
+            v1.AddEdge(edge1);
+            v2.AddEdge(edge2);
+            v3.AddEdge(edge3);
+
+            //メッシュにエッジを格納
+            mesh.SetEdge(edge1, edge2, edge3);
+
+            m_Mesh.Add(mesh);
+            m_Edge.Add(edge1);
+            m_Edge.Add(edge2);
+            m_Edge.Add(edge3);
         }
         /// <summary>
         /// 頂点番号を持つエッジを生成
         /// </summary>
-        private void MakeEdgeList(List<int> poly_Index)
+        private void MakeEdgeListForVertexIndex(List<int> poly_Index)
         {
             int poly_Num = poly_Index.Count / 3;
             for (int num = 0; num < poly_Num; num++)
             {
-                Mesh mesh = new Mesh();
-
                 Vertex v1 = m_Vertex[poly_Index[3 * num]];
                 Vertex v2 = m_Vertex[poly_Index[3 * num + 1]];
                 Vertex v3 = m_Vertex[poly_Index[3 * num + 2]];
-                Edge edge1 = new Edge(mesh, v1, v2);
-                Edge edge2 = new Edge(mesh, v2, v3);
-                Edge edge3 = new Edge(mesh, v3, v1);
-                
-                //次のエッジの格納
-                edge1.Next = edge2;
-                edge2.Next = edge3;
-                edge3.Next = edge1;
-
-                //前のエッジの格納
-                edge1.Before = edge3;
-                edge2.Before = edge1;
-                edge3.Before = edge2;
-
-                //頂点にエッジを持たせる
-                v1.AddEdge(edge1);
-                v2.AddEdge(edge2);
-                v3.AddEdge(edge3);
-
-                //エッジをリストに格納
-                m_Edge.Add(edge1);
-                m_Edge.Add(edge2);
-                m_Edge.Add(edge3);
-
-                //メッシュにエッジを格納
-                mesh.SetEdge(edge1, edge2, edge3);
-                //メッシュに頂点を格納
-                mesh.SetVertex(v1, v2, v3);
-                //メッシュをリストに格納
-                m_Mesh.Add(mesh);
+                CreateMesh(v1, v2, v3);
                 
             }
         }
@@ -252,23 +321,19 @@ namespace RenderApp.Analyzer
         {
             int ok_flag = 0;
             Edge opposite;
-            foreach(var edge in m_Edge)
+            foreach (var edge in m_Edge)
             {
                 opposite = edge.Opposite;
-                if (edge.Start == opposite.End
-                    && edge.End == opposite.Start)
+                if (edge == opposite)
                 {
                     ok_flag++;
                 }
+                else
+                {
+                    return false;
+                }
             }
-            if (ok_flag == m_Edge.Count)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return true;
         }
         #endregion
         #region [getter method]
@@ -499,23 +564,7 @@ namespace RenderApp.Analyzer
 
         }
         #endregion
-        #region[メッシュパラメータ]
-        /// <summary>
-        /// 法線の格納
-        /// </summary>
-        private void SetMeshParameter()
-        {
-            Vector3 normal = new Vector3();
-            List<Vertex> v_Index;
-            for (int i = 0; i < m_Mesh.Count; i++)
-            {
-                v_Index = m_Mesh[i].GetAroundVertex();
-                normal = CCalc.Normal(v_Index[1].GetPosition() - v_Index[0].GetPosition(), v_Index[2].GetPosition() - v_Index[0].GetPosition());
-                m_Mesh[i].Normal = normal.Normalized();
 
-            }
-        }
-        #endregion
         #region [エッジパラメータ]
         /// <summary>
         /// 接平面に投影した時のベクトル

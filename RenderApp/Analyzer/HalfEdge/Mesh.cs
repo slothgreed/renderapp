@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
+using RenderApp.Utility;
 namespace RenderApp.Analyzer
 {
     public class Mesh
@@ -13,15 +14,20 @@ namespace RenderApp.Analyzer
         /// </summary>
         private List<Edge> m_Edge = new List<Edge>();
         /// <summary>
-        /// 頂点
-        /// </summary>
-        private List<Vertex> m_Vertex = new List<Vertex>();
-        /// <summary>
         /// 削除フラグ。Updateが走ると必ず削除するべきもの
         /// </summary>
         public bool DeleteFlg { get; set; }
-        
-        public Vector3 Normal { get; set; }
+
+        public Vector3 Normal
+        {
+            get
+            {
+                return CCalc.Normal(
+                    m_Edge[1].Start.GetPosition() - m_Edge[0].Start.GetPosition(),
+                    m_Edge[2].Start.GetPosition() - m_Edge[0].Start.GetPosition()
+                    );
+            }
+        }
 
         public Mesh()
         {
@@ -33,27 +39,26 @@ namespace RenderApp.Analyzer
             m_Edge.Add(edge2);
             m_Edge.Add(edge3);
         }
-        public List<Edge> GetAroundEdge()
+        public IEnumerable<Edge> GetAroundEdge()
         {
             return m_Edge;
         }
-        public void SetVertex(Vertex ver1, Vertex ver2, Vertex ver3)
+        public IEnumerable<Vertex> GetAroundVertex()
         {
-            m_Vertex.Add(ver1);
-            m_Vertex.Add(ver2);
-            m_Vertex.Add(ver3);
-        }
-        public List<Vertex> GetAroundVertex()
-        {
-            return m_Vertex;
+            foreach(var edge in m_Edge)
+            {
+                yield return edge.Start;
+            }
         }
         public void Dispose()
         {
             DeleteFlg = true;
-            m_Vertex.Clear();
             m_Edge.Clear();
-            m_Vertex = null;
             m_Edge = null;
+        }
+        public bool ErrorMesh()
+        {
+            return DeleteFlg;
         }
     }
 }

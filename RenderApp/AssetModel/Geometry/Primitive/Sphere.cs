@@ -165,7 +165,7 @@ namespace RenderApp.AssetModel
                 if (min.Y < TexCoord[i].Y) { min.Y = TexCoord[i].Y; }
             }
             //TODO: きちんと実装
-            RetouchTexcoord(TexCoord);
+            //RetouchTexcoord(TexCoord);
 
             if (!orient)
             {
@@ -188,6 +188,8 @@ namespace RenderApp.AssetModel
                 }
             }
 
+            ConvertVertexArray();
+            
             //for (int i = 0; i < Position.Count; i += 3)
             //{
             //    Console.WriteLine("Postion\r\n" + Position[i].ToString() + "\r\n" + Position[i + 1].ToString() + "\r\n" + Position[i + 2].ToString());
