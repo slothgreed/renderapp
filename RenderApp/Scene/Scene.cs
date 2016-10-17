@@ -405,11 +405,10 @@ namespace RenderApp
         /// ポリゴンごとに行うので、CPUベースで
         /// </summary>
         /// <param name="mouse"></param>
-        public void Picking(Vector2 mouse)
+        public void Picking(Vector2 mouse, ref Vector3 tri1, ref Vector3 tri2, ref Vector3 tri3)
         {
             float minLength = float.MaxValue;
             int[] a = new int[3];
-            List<Vector3> minTriangle = null;
             Vector3 near = Vector3.Zero;
             Vector3 far = Vector3.Zero;
             int[] viewport = new int[4];
@@ -435,45 +434,14 @@ namespace RenderApp
                         Vector3 result = Vector3.Zero;
                         if (CCalc.CrossPlanetoLinePos(vertex1, vertex2, vertex3, near, far, ref minLength, out result))
                         {
-
-
-                            if (minTriangle == null)
-                            {
-                                minTriangle = new List<Vector3>();
-                                minTriangle.Add(vertex1);
-                                minTriangle.Add(vertex2);
-                                minTriangle.Add(vertex3);
-                            }
-                            else
-                            {
-                                minTriangle[0] = vertex1;
-                                minTriangle[1] = vertex2;
-                                minTriangle[2] = vertex3;
-                            }
+                            tri1 = vertex1;
+                            tri2 = vertex2;
+                            tri3 = vertex3;
                         }
                     }
                 }
             }
-            if (minTriangle != null)
-            {
-                Vector3 normal = CCalc.Normal(minTriangle[0], minTriangle[1], minTriangle[2]);
-                minTriangle[0] += normal * 0.01f;
-                minTriangle[1] += normal * 0.01f;
-                minTriangle[2] += normal * 0.01f;
-                var picking = ActiveScene.FindObject("Picking", EAssetType.Geometry) as Primitive;
-                if (picking == null)
-                {
-                    Primitive triangle = new Primitive("Picking", minTriangle, CCalc.RandomColor(), OpenTK.Graphics.OpenGL.PrimitiveType.Triangles);
-                    triangle.MaterialItem = new Material("Picking:Material");
-                    triangle.MaterialItem.SetShader(ShaderFactory.Instance.DefaultAnalyzeShader);
-                    AssetFactory.Instance.CreateGeometry(triangle);
 
-                }
-                else
-                {
-                    picking.AddVertex(minTriangle, CCalc.RandomColor());
-                }
-            }
         }
 
        

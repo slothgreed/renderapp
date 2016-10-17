@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RenderApp.GLUtil;
 namespace RenderApp.Control
 {
     class DefaultControl : IControl
@@ -12,8 +13,7 @@ namespace RenderApp.Control
             base.Down(mouse);
             if(mouse.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                RenderApp.Scene.ActiveScene.Picking(LeftMouse.Click);
-                GLUtil.Viewport.Instance.RenderSystem.Picking((int)LeftMouse.Click.X, (int)LeftMouse.Click.Y);
+                Viewport.Instance.RenderSystem.Picking((int)LeftMouse.Click.X, (int)LeftMouse.Click.Y);
             }
             return true;
         }

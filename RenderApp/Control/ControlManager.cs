@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace RenderApp.Control
 {
-    public class ControlManager
+    public class ControlManager : IControl
     {
         private Dictionary<CONTROL_MODE,IControl> Controllers = new Dictionary<CONTROL_MODE, IControl>();
         public enum CONTROL_MODE
@@ -32,7 +32,9 @@ namespace RenderApp.Control
             }
             set
             {
+                Controllers[_mode].UnBinding();
                 _mode = value;
+                Controllers[_mode].Binding();
             }
         }
 

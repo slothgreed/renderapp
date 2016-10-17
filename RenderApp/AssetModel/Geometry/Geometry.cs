@@ -83,7 +83,19 @@ namespace RenderApp.AssetModel
             get;
             set;
         }
-
+        public int TriangleNum { 
+            get
+            {
+                if(Index.Count == 0)
+                {
+                    return Position.Count / 3;
+                }
+                else
+                {
+                    return Index.Count / 3;
+                }
+            }
+        }
         #endregion
         #region Initializer disposer
         private void Initialize(string name = null, PrimitiveType renderType = PrimitiveType.Triangles)
@@ -118,7 +130,16 @@ namespace RenderApp.AssetModel
         }
         public override void Dispose()
         {
-
+            Position.Clear();
+            Color.Clear();
+            Normal.Clear();
+            TexCoord.Clear();
+            Index.Clear();
+            Timer.Clear();
+            ModelMatrix = Matrix4.Identity;
+            Translate = Vector3.Zero;
+            Scale = Vector3.One;
+            Rotate = Vector3.Zero;
         }
         #endregion
         #region calculator
@@ -410,5 +431,6 @@ namespace RenderApp.AssetModel
             Normal = newNormal;
 
         }
+
     }
 }

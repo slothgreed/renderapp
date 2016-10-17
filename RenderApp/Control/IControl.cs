@@ -90,5 +90,21 @@ namespace RenderApp.Control
             }
             return true;
         }
+        /// <summary>
+        /// コントローラ終了処理
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool UnBinding()
+        {
+            return true;
+        }
+        /// <summary>
+        /// コントローラ開始処理
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool Binding()
+        {
+            return true;
+        }
     }
 }

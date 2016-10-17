@@ -8,9 +8,7 @@
     <StackPanel>
         <WrapPanel>
             <TextBlock Text="Output"  HorizontalAlignment="Stretch"/>
-            <ComboBox ItemsSource="{Binding Model.ProcessingTexture}" SelectedIndex="{Binding TextureIndex}" HorizontalAlignment="Stretch">
-                
-            </ComboBox>
+            <ComboBox ItemsSource="{Binding Model.ProcessingTexture}" SelectedIndex="{Binding TextureIndex}" HorizontalAlignment="Stretch"/>
         </WrapPanel>
         <StackPanel/>
     </StackPanel>
