@@ -95,22 +95,6 @@ namespace RenderApp.AssetModel
         {
             TextureItem[kind] = texture;
         }
-        public void AddTexture(string fullpath, string filename, TextureKind kind)
-        {
-            Texture texture = TextureFactory.Instance.FindItem(filename);
-            if (texture == null)
-            {
-                texture = TextureFactory.Instance.CreateTexture(filename,fullpath);
-            }
-            if(TextureItem.ContainsKey(kind))
-            {
-                TextureItem[kind] = texture;
-            }
-            else
-            {
-                TextureItem.Add(kind, texture);
-            }
-        }
         public int TextureNum()
         {
             if(TextureItem == null)

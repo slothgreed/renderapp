@@ -8,7 +8,7 @@ using System.IO;
 namespace RenderApp.AssetModel
 {
 
-    public abstract class Asset
+    public abstract class Asset : MyObject
     {
         public Asset(string name)
         {
@@ -68,18 +68,7 @@ namespace RenderApp.AssetModel
                 }
             }
         }
-        private string _key = null;
-        public virtual string Key
-        {
-            get
-            {
-                return _key;
-            }
-            set
-            {
-                _key = value;
-            }
-        }
+
         public override string ToString()
         {
             if(Key != null)

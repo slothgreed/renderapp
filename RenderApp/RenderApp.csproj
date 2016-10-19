@@ -146,7 +146,10 @@
     </ApplicationDefinition>
     <Compile Include="Analyzer\HalfEdge\Dijkstra.cs" />
     <Compile Include="AssetModel\AssetFactory.cs" />
+    <Compile Include="AssetModel\Node.cs" />
+    <Compile Include="Control\CameraControl.cs" />
     <Compile Include="Converter\EnumConverter.cs" />
+    <Compile Include="Globals\Project.cs" />
     <Compile Include="GLUtil\ShaderModel\ShaderFactory.cs" />
     <Compile Include="GLUtil\Output.cs" />
     <Compile Include="AssetModel\EnvironmentProbe.cs" />
@@ -154,6 +157,7 @@
     <Compile Include="GLUtil\ShaderModel\ShaderProgramInfo.cs" />
     <Compile Include="Globals\Enum.cs" />
     <Compile Include="GLUtil\TextureFactory.cs" />
+    <Compile Include="MyObject.cs" />
     <Compile Include="RenderSystem\GBuffer.cs" />
     <Compile Include="RenderSystem\PostProcess.cs" />
     <Compile Include="RenderSystem\RenderQueue.cs" />
@@ -163,10 +167,10 @@
     <Compile Include="Control\DefaultControl.cs" />
     <Compile Include="Control\ControlManager.cs" />
     <Compile Include="Utility\ActiveItems.cs" />
-    <Compile Include="ViewModel\AssetTreeViewModelT4.cs">
+    <Compile Include="ViewModel\RootNodeViewModelT4.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>AssetTreeViewModelT4.tt</DependentUpon>
+      <DependentUpon>RootNodeViewModelT4.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\AvalonPaneSelector.cs" />
     <Compile Include="AssetModel\Geometry\Geometry.cs" />
@@ -194,12 +198,12 @@
     <Compile Include="ViewModel\RenderSystemViewModel.cs" />
     <Compile Include="ViewModel\ShaderViewModel.cs" />
     <Compile Include="ViewModel\ImageViewModel.cs" />
-    <Compile Include="ViewModel\TreeItemViewModel.cs" />
+    <Compile Include="ViewModel\NodeItemViewModel.cs" />
     <Compile Include="ViewModel\ViewportViewModel.cs" />
-    <Compile Include="View\AssetTreeView.xaml.cs">
-      <DependentUpon>AssetTreeView.xaml</DependentUpon>
+    <Compile Include="View\RootNodeView.xaml.cs">
+      <DependentUpon>RootNodeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\AssetTreeViewModel.cs" />
+    <Compile Include="ViewModel\RootNodeViewModel.cs" />
     <Compile Include="Globals\Global.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModelT4.cs">
@@ -214,7 +218,7 @@
     <Compile Include="Analyzer\Tree\Kdtree.cs" />
     <Compile Include="Analyzer\Tree\Octree.cs" />
     <Compile Include="Scene\Scene.cs" />
-    <Compile Include="Globals\Project.cs" />
+    <Compile Include="Globals\ProjectInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -225,6 +229,7 @@
     <Compile Include="RenderSystem\RenderPassFactory.cs" />
     <Compile Include="AssetModel\Geometry\Primitive\Space.cs" />
     <Compile Include="AssetModel\Geometry\Primitive\Primitive.cs" />
+    <Compile Include="View\PropertyGrid.cs" />
     <Compile Include="View\Dialog\VoxelDialogView.xaml.cs">
       <DependentUpon>VoxelDialogView.xaml</DependentUpon>
     </Compile>
@@ -299,11 +304,7 @@
     <Compile Include="View\ViewportView.xaml.cs">
       <DependentUpon>ViewportView.xaml</DependentUpon>
     </Compile>
-    <Resource Include="Themes\BureauBlue.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Resource>
-    <Page Include="View\AssetTreeView.xaml">
+    <Page Include="View\RootNodeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -370,9 +371,9 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="ViewModel\AssetTreeViewModelT4.tt">
+    <None Include="ViewModel\RootNodeViewModelT4.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AssetTreeViewModelT4.cs</LastGenOutput>
+      <LastGenOutput>RootNodeViewModelT4.cs</LastGenOutput>
     </None>
     <None Include="ViewModel\MainWindowViewModelT4.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -450,8 +451,10 @@
     <EmbeddedResource Include="Thumbnail\noimage.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="AssetModel\Node\" />
     <Folder Include="RenderSystem\PostEffect\" />
     <Folder Include="Scene\Shader\ShaderType\" />
+    <Folder Include="Themes\" />
     <Folder Include="ViewModel\Property\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -274,6 +274,10 @@ namespace RenderApp.AssetModel
             UpdateCamera();
         }
 
+        public void Translate(float x,float y,float z)
+        {
+            Translate(new Vector3(x, y, z));
+        }
         /// <summary>
         /// Viewの平行移動
         /// </summary>
@@ -296,7 +300,10 @@ namespace RenderApp.AssetModel
         }
         #endregion
         #region [カメラの回転]
-
+        public void Rotate(float x, float y, float z)
+        {
+            Rotate(new Vector3(x, y, z));
+        }
         /// <summary>
         /// Viewの回転
         /// </summary>

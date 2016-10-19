@@ -10,7 +10,6 @@ namespace RenderApp.Control
     {
         public override bool Down(System.Windows.Forms.MouseEventArgs mouse)
         {
-            base.Down(mouse);
             if(mouse.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 Viewport.Instance.RenderSystem.Picking((int)LeftMouse.Click.X, (int)LeftMouse.Click.Y);

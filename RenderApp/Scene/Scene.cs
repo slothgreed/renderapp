@@ -27,33 +27,29 @@ namespace RenderApp
         #region [scene dictionary]
         private static Dictionary<string, Scene> SceneList = new Dictionary<string, Scene>();
         /// <summary>
-        /// アセットリスト TODO実装
+        /// ルートノード
         /// </summary>
-        private List<Dictionary<string, Asset>> AssetList = new List<Dictionary<string, Asset>>();
-        /// <summary>
-        /// モデルリスト
-        /// </summary>
-        private Dictionary<string, Geometry> GeometryList = new Dictionary<string, Geometry>();
-        /// <summary>
-        /// 光源オブジェクト
-        /// </summary>
-        private Dictionary<string, Light> LightList = new Dictionary<string, Light>();
-        /// <summary>
-        /// カメラオブジェクト
-        /// </summary>
-        private Dictionary<string, Camera> CameraList = new Dictionary<string, Camera>();
-        /// <summary>
-        /// Textureオブジェクト
-        /// </summary>
-        private Dictionary<string, Texture> TextureList = new Dictionary<string, Texture>();
-        /// <summary>
-        /// マテリアルオブジェクト
-        /// </summary>
-        private Dictionary<string, Material> MaterialList = new Dictionary<string, Material>();
-        /// <summary>
-        /// 環境プローブオブジェクト
-        /// </summary>
-        private Dictionary<string, EnvironmentProbe> EnvProbeList = new Dictionary<string, EnvironmentProbe>();
+        public Node RootNode;
+        ///// <summary>
+        ///// アセットリスト TODO実装
+        ///// </summary>
+        //private List<Dictionary<string, Asset>> AssetList = new List<Dictionary<string, Asset>>();
+        ///// <summary>
+        ///// モデルリスト
+        ///// </summary>
+        //private Dictionary<string, Geometry> GeometryList = new Dictionary<string, Geometry>();
+        ///// <summary>
+        ///// 光源オブジェクト
+        ///// </summary>
+        //private Dictionary<string, Light> LightList = new Dictionary<string, Light>();
+        ///// <summary>
+        ///// カメラオブジェクト
+        ///// </summary>
+        //private Dictionary<string, Camera> CameraList = new Dictionary<string, Camera>();
+        ///// <summary>
+        ///// 環境プローブオブジェクト
+        ///// </summary>
+        //private Dictionary<string, EnvironmentProbe> EnvProbeList = new Dictionary<string, EnvironmentProbe>();
         /// <summary>
         /// 選択中のアセット
         /// </summary>
@@ -115,91 +111,67 @@ namespace RenderApp
         }
         #endregion
         #region [public scene method]
-        public IEnumerable<string> GetAssetListStr(EAssetType assetType)
-        {
-            switch (assetType)
-            {
-                case EAssetType.Geometry:
-                    foreach (var loop in GeometryList)
-                    {
-                        yield return loop.Key;
-                    }
-                    break;
-                case EAssetType.Light:
-                    foreach (var loop in LightList)
-                    {
-                        yield return loop.Key;
-                    }
-                    break;
-                case EAssetType.Camera:
-                    foreach (var loop in CameraList)
-                    {
-                        yield return loop.Key;
-                    }
-                    break;
-                case EAssetType.Textures:
-                    foreach (var loop in TextureList)
-                    {
-                        yield return loop.Key;
-                    }
-                    break;
-                case EAssetType.Materials:
-                    foreach (var loop in MaterialList)
-                    {
-                        yield return loop.Key;
-                    }
-                    break;
-                case EAssetType.EnvProbe:
-                    foreach (var loop in EnvProbeList)
-                    {
-                        yield return loop.Key;
-                    }
-                    break;
-            }
-        }
+        //public IEnumerable<string> GetAssetListStr(EAssetType assetType)
+        //{
+        //    switch (assetType)
+        //    {
+        //        case EAssetType.Geometry:
+        //            foreach (var loop in GeometryList)
+        //            {
+        //                yield return loop.Key;
+        //            }
+        //            break;
+        //        case EAssetType.Light:
+        //            foreach (var loop in LightList)
+        //            {
+        //                yield return loop.Key;
+        //            }
+        //            break;
+        //        case EAssetType.Camera:
+        //            foreach (var loop in CameraList)
+        //            {
+        //                yield return loop.Key;
+        //            }
+        //            break;
+        //        case EAssetType.EnvProbe:
+        //            foreach (var loop in EnvProbeList)
+        //            {
+        //                yield return loop.Key;
+        //            }
+        //            break;
+        //    }
+        //}
 
-        public IEnumerable<Asset> GetAssetList(EAssetType assetType)
-        {
-            switch (assetType)
-            {
-                case EAssetType.Geometry:
-                    foreach (var loop in GeometryList)
-                    {
-                        yield return loop.Value;
-                    }
-                    break;
-                case EAssetType.Light:
-                    foreach (var loop in LightList)
-                    {
-                        yield return loop.Value;
-                    }
-                    break;
-                case EAssetType.Camera:
-                    foreach (var loop in CameraList)
-                    {
-                        yield return loop.Value;
-                    }
-                    break;
-                case EAssetType.Textures:
-                    foreach (var loop in TextureList)
-                    {
-                        yield return loop.Value;
-                    }
-                    break;
-                case EAssetType.Materials:
-                    foreach (var loop in MaterialList)
-                    {
-                        yield return loop.Value;
-                    }
-                    break;
-                case EAssetType.EnvProbe:
-                    foreach (var loop in EnvProbeList)
-                    {
-                        yield return loop.Value;
-                    }
-                    break;
-            }
-        }
+        //public IEnumerable<Asset> GetAssetList(EAssetType assetType)
+        //{
+        //    switch (assetType)
+        //    {
+        //        case EAssetType.Geometry:
+        //            foreach (var loop in GeometryList)
+        //            {
+        //                yield return loop.Value;
+        //            }
+        //            break;
+        //        case EAssetType.Light:
+        //            foreach (var loop in LightList)
+        //            {
+        //                yield return loop.Value;
+        //            }
+        //            break;
+        //        case EAssetType.Camera:
+        //            foreach (var loop in CameraList)
+        //            {
+        //                yield return loop.Value;
+        //            }
+        //            break;
+        //        case EAssetType.EnvProbe:
+        //            foreach (var loop in EnvProbeList)
+        //            {
+        //                yield return loop.Value;
+        //            }
+        //            break;
+        //    }
+        //}
 
         /// <summary>
         /// シーンのオブジェクトの取得
@@ -207,98 +179,22 @@ namespace RenderApp
         /// <param name="key"></param>
         /// <param name="assetType"></param>
         /// <returns></returns>
-        public object FindObject(string key, EAssetType assetType)
+        public object FindObject(string key)
         {
-            switch (assetType)
-            {
-                case EAssetType.Geometry:
-                    if (GeometryList.ContainsKey(key))
-                    {
-                        return GeometryList[key];
-                    }
-                    break;
-                case EAssetType.Light:
-                    if (LightList.ContainsKey(key))
-                    {
-                        return LightList[key];
-                    }
-                    break;
-                case EAssetType.Camera:
-                    if (CameraList.ContainsKey(key))
-                    {
-                        return CameraList[key];
-                    }
-                    break;
-                case EAssetType.Textures:
-                    if (TextureList.ContainsKey(key))
-                    {
-                        return TextureList[key];
-                    }
-                    break;
-                case EAssetType.Materials:
-                    if (MaterialList.ContainsKey(key))
-                    {
-                        return MaterialList[key];
-                    }
-                    break;
-                case EAssetType.EnvProbe:
-                    if (EnvProbeList.ContainsKey(key))
-                    {
-                        return EnvProbeList[key];
-                    }
-                    break;
-            }
-
-            return null;
+            return RootNode.FindChild(key);
         }
       
-
-        public void AddSceneObject(string key, object value)
+        public void AddSceneObject(Asset value)
         {
-            if (value is Geometry)
-            {
-                AddAsset<Geometry>(key, value, EAssetType.Geometry, GeometryList);
-            }
-            else if (value is Light)
-            {
-                AddAsset<Light>(key, value, EAssetType.Light, LightList);
-            }
-            else if (value is Camera)
-            {
-                AddAsset<Camera>(key, value, EAssetType.Camera, CameraList);
-
-            }
-            else if (value is Texture)
-            {
-                AddAsset<Texture>(key, value, EAssetType.Textures, TextureList);
-
-            }
-            else if (value is Material)
-            {
-                AddAsset<Material>(key, value, EAssetType.Materials, MaterialList);
-            }
-            else if (value is EnvironmentProbe)
-            {
-                AddAsset<EnvironmentProbe>(key, value, EAssetType.EnvProbe, EnvProbeList);
-            }
+            RootNode.AddChild(value);
         }
 
-        private bool AddAsset<T>(string key, object value, EAssetType assetType, Dictionary<string, T> AssetList) where T : Asset
+        public void AddSceneObject(Node parent,Asset value)
         {
-            if (!AssetList.ContainsKey(key))
-            {
-                AssetList.Add(key, (T)value);
-                MainWindowViewModel.Instance.AssetWindow.AddAssetTree(new TreeItemViewModel((T)value, assetType));
-            }
-            else
-            {
-                key = GetNewKey<T>(key, AssetList);
-                AssetList.Add(key, (T)value);
-                ((T)value).Key = key;
-                MainWindowViewModel.Instance.AssetWindow.AddAssetTree(new TreeItemViewModel((T)value, assetType));
-            }
-            return true;
+            parent.AddChild(value);
+
         }
+
         private string GetNewKey<T>(string key, Dictionary<string, T> AssetList) where T : Asset
         {
             string newKey = key;
@@ -315,51 +211,9 @@ namespace RenderApp
                 }
             }
         }
-        internal void DeleteAsset(string key, EAssetType assetType)
+        internal void DeleteNode(string key)
         {
-            switch (assetType)
-            {
-                case EAssetType.Geometry:
-                    if (GeometryList.ContainsKey(key))
-                    {
-                        GeometryList.Remove(key);
-                        AssetFactory.Instance.RemoveItem(key);
-                    }
-                    break;
-                case EAssetType.Light:
-                    if (LightList.ContainsKey(key))
-                    {
-                        LightList.Remove(key);
-                        AssetFactory.Instance.RemoveItem(key);
-                    }
-                    break;
-                case EAssetType.Camera:
-                    if (CameraList.ContainsKey(key))
-                    {
-                        CameraList.Remove(key);
-                        AssetFactory.Instance.RemoveItem(key);
-                    }
-                    break;
-                case EAssetType.Textures:
-                    if (TextureList.ContainsKey(key))
-                    {
-                        TextureList.Remove(key);
-                        TextureFactory.Instance.RemoveItem(key);
-                    }
-                    break;
-                case EAssetType.Materials:
-                    if (MaterialList.ContainsKey(key))
-                    {
-                        MaterialList.Remove(key);
-                    }
-                    break;
-                case EAssetType.EnvProbe:
-                    if (EnvProbeList.ContainsKey(key))
-                    {
-                        EnvProbeList.Remove(key);
-                    }
-                    break;
-            }
+            RootNode.RemoveRecursiveChild(key);
         }
         #endregion
         #region [initialize]
@@ -368,11 +222,12 @@ namespace RenderApp
         /// </summary>
         public void Initialize()
         {
+            RootNode = new Node("ROOT");
             MainCamera = AssetFactory.Instance.CreateMainCamera();
             SunLight = AssetFactory.Instance.CreateSunLight();
             
             Geometry map = AssetFactory.Instance.CreateEnvironmentMap();
-            AddSceneObject(map.Key, map);
+            AddSceneObject(map);
         }
         #endregion
         #region [dispose]
@@ -417,8 +272,18 @@ namespace RenderApp
             viewport[2] = Viewport.Instance.Width;
             viewport[3] = Viewport.Instance.Height;
             CCalc.GetClipPos(MainCamera.Matrix, MainCamera.ProjMatrix, viewport, mouse, out near, out far);
-            foreach (Geometry geometry in ActiveScene.GeometryList.Values)
+            foreach (Node geometryNode in RootNode.AllChildren())
             {
+                Geometry geometry = null;
+                if(geometryNode.MyObject is Geometry)
+                {
+                    geometry = geometryNode.MyObject as Geometry;
+                }
+                else
+                {
+                    continue;
+                }
+                
                 //頂点配列の時
                 if (geometry.Index.Count != 0)
                 {

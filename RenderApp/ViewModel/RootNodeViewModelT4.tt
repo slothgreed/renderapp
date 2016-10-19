@@ -16,7 +16,7 @@ using System.Windows.Input;
 #>
 namespace RenderApp.ViewModel
 {
-	public partial class AssetTreeViewModel
+	public partial class RootNodeViewModel
 	{
 <#
 		for(int i =0 ; i < _command.Length; i++)

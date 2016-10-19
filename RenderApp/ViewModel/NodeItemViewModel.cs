@@ -9,7 +9,7 @@ using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 namespace RenderApp.ViewModel
 {
-    public class TreeItemViewModel : ViewModelBase
+    public class NodeItemViewModel : ViewModelBase
     {
         public EAssetType AssetType
         {
@@ -21,13 +21,13 @@ namespace RenderApp.ViewModel
             get;
             private set;
         }
-        public static TreeItemViewModel ActiveItem
+        public static NodeItemViewModel ActiveItem
         {
             get;
             set;
         }
-        private ObservableCollection<TreeItemViewModel> _children;
-        public ObservableCollection<TreeItemViewModel> Children
+        private ObservableCollection<NodeItemViewModel> _children;
+        public ObservableCollection<NodeItemViewModel> Children
         {
             get
             {
@@ -120,18 +120,18 @@ namespace RenderApp.ViewModel
                 }
             }
         }
-        public TreeItemViewModel()
+        public NodeItemViewModel()
         {
-            _children = new ObservableCollection<TreeItemViewModel>();
+            _children = new ObservableCollection<NodeItemViewModel>();
         }
-        public TreeItemViewModel(string displayName)
+        public NodeItemViewModel(string displayName)
             : this()
         {
             DisplayName = displayName;
             AssetType = EAssetType.Unknown;
 
         }
-        public TreeItemViewModel(Asset asset,EAssetType type)
+        public NodeItemViewModel(Asset asset,EAssetType type)
             : this()
         {
             DisplayName = asset.ToString();

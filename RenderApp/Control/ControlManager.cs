@@ -9,6 +9,8 @@ namespace RenderApp.Control
     public class ControlManager : IControl
     {
         private Dictionary<CONTROL_MODE,IControl> Controllers = new Dictionary<CONTROL_MODE, IControl>();
+
+        private IControl CameraController = new CameraControl();
         public enum CONTROL_MODE
         {
             Default,
@@ -50,25 +52,33 @@ namespace RenderApp.Control
         {
             Controllers.Add(CONTROL_MODE.Default,new DefaultControl());
             Controllers.Add(CONTROL_MODE.Dijkstra,new DijkstraControl());
+            CameraController = new CameraControl();
         }
 
         public void ProcessInput(MouseEventArgs mouse, MOUSE_STATE state)
         {
+            
+
             switch(state)
             {
                 case MOUSE_STATE.DOWN:
+                    CameraController.Down(mouse);
                     Controllers[Mode].Down(mouse);
                     break;
                 case MOUSE_STATE.CLICK:
+                    CameraController.Click(mouse);
                     Controllers[Mode].Click(mouse);
                     break;
                 case MOUSE_STATE.MOVE:
+                    CameraController.Move(mouse);
                     Controllers[Mode].Move(mouse);
                     break;
                 case MOUSE_STATE.UP:
+                    CameraController.Up(mouse);
                     Controllers[Mode].Up(mouse);
                     break;
                 case MOUSE_STATE.WHEEL:
+                    CameraController.Wheel(mouse);
                     Controllers[Mode].Wheel(mouse);
                     break;
 

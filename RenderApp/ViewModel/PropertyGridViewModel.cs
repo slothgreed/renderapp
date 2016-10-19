@@ -9,51 +9,51 @@ namespace RenderApp.ViewModel
 {
     public class PropertyGridViewModel : DynamicObject,INotifyPropertyChanged//, ICustomTypeDescriptor
     {
-        private readonly Dictionary<string, object> dynamicProperties = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> PropertyItems = new Dictionary<string, object>();
         public PropertyGridViewModel(Dictionary<string,object> model)
         {
             foreach (KeyValuePair<string, object> loop in model)
             {
                 if (loop.Value is GLUtil.Texture)
                 {
-                    dynamicProperties.Add(loop.Key, new ImageViewModel(loop.Key,(GLUtil.Texture)loop.Value));
+                    PropertyItems.Add(loop.Key, new ImageViewModel(loop.Key,(GLUtil.Texture)loop.Value));
                 }
                 else if (loop.Value is OpenTK.Vector2)
                 {
-                    dynamicProperties.Add(loop.Key + "X", ((OpenTK.Vector2)loop.Value).X);
-                    dynamicProperties.Add(loop.Key + "Y", ((OpenTK.Vector2)loop.Value).Y);
+                    PropertyItems.Add(loop.Key + "X", ((OpenTK.Vector2)loop.Value).X);
+                    PropertyItems.Add(loop.Key + "Y", ((OpenTK.Vector2)loop.Value).Y);
                 }
                 else if (loop.Value is OpenTK.Vector3)
                 {
-                    dynamicProperties.Add(loop.Key + "X", ((OpenTK.Vector3)loop.Value).X);
-                    dynamicProperties.Add(loop.Key + "Y", ((OpenTK.Vector3)loop.Value).Y);
-                    dynamicProperties.Add(loop.Key + "Z", ((OpenTK.Vector3)loop.Value).Z);
+                    PropertyItems.Add(loop.Key + "X", ((OpenTK.Vector3)loop.Value).X);
+                    PropertyItems.Add(loop.Key + "Y", ((OpenTK.Vector3)loop.Value).Y);
+                    PropertyItems.Add(loop.Key + "Z", ((OpenTK.Vector3)loop.Value).Z);
                 }
                 else if (loop.Value is OpenTK.Vector4)
                 {
-                    dynamicProperties.Add(loop.Key + "X", ((OpenTK.Vector4)loop.Value).X);
-                    dynamicProperties.Add(loop.Key + "Y", ((OpenTK.Vector4)loop.Value).Y);
-                    dynamicProperties.Add(loop.Key + "Z", ((OpenTK.Vector4)loop.Value).Z);
-                    dynamicProperties.Add(loop.Key + "W", ((OpenTK.Vector4)loop.Value).W);
+                    PropertyItems.Add(loop.Key + "X", ((OpenTK.Vector4)loop.Value).X);
+                    PropertyItems.Add(loop.Key + "Y", ((OpenTK.Vector4)loop.Value).Y);
+                    PropertyItems.Add(loop.Key + "Z", ((OpenTK.Vector4)loop.Value).Z);
+                    PropertyItems.Add(loop.Key + "W", ((OpenTK.Vector4)loop.Value).W);
 
                 }
                 else if (loop.Value is OpenTK.Matrix3)
                 {
-                    dynamicProperties.Add(loop.Key, new Matrix3ViewModel(loop.Key, (OpenTK.Matrix3)loop.Value));
+                    PropertyItems.Add(loop.Key, new Matrix3ViewModel(loop.Key, (OpenTK.Matrix3)loop.Value));
 
                 }
                 else if (loop.Value is OpenTK.Matrix4)
                 {
-                    dynamicProperties.Add(loop.Key, new Matrix4ViewModel(loop.Key, (OpenTK.Matrix4)loop.Value));
+                    PropertyItems.Add(loop.Key, new Matrix4ViewModel(loop.Key, (OpenTK.Matrix4)loop.Value));
 
                 }
                 else if (loop.Value is NumericViewModel)
                 {
-                    dynamicProperties.Add(loop.Key, new NumericViewModel(loop.Key, (float)loop.Value));
+                    PropertyItems.Add(loop.Key, new NumericViewModel(loop.Key, (float)loop.Value));
                 }
                 else
                 {
-                    dynamicProperties.Add(loop.Key, new DefaultViewModel(loop.Key,loop.Value.ToString()));
+                    PropertyItems.Add(loop.Key, new DefaultViewModel(loop.Key,loop.Value.ToString()));
                 }
             }
         }
@@ -63,9 +63,9 @@ namespace RenderApp.ViewModel
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
             var memberName = binder.Name;
-            if (dynamicProperties.ContainsKey(memberName))
+            if (PropertyItems.ContainsKey(memberName))
             {
-                result = dynamicProperties[memberName];
+                result = PropertyItems[memberName];
                 return true;
             }
             result = null;
@@ -75,13 +75,13 @@ namespace RenderApp.ViewModel
         public override bool TrySetMember(SetMemberBinder binder, object value)
         {
             var memberName = binder.Name;
-            if (!dynamicProperties.ContainsKey(memberName))
+            if (!PropertyItems.ContainsKey(memberName))
             {
-                dynamicProperties.Add(memberName, value);
+                PropertyItems.Add(memberName, value);
             }
             else
             {
-                dynamicProperties[memberName] = value;
+                PropertyItems[memberName] = value;
             }
             return true;
         }

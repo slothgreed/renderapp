@@ -15,7 +15,7 @@ namespace RenderApp.ViewModel
 
         public override Style SelectStyle(object item, DependencyObject container)
         {
-            if(item is AssetTreeViewModel)
+            if(item is RootNodeViewModel)
             {
                 return AnchorableStyle;
             }
@@ -39,7 +39,7 @@ namespace RenderApp.ViewModel
             {
                 return MaterialTemplate;
             }
-            if (item is AssetTreeViewModel)
+            if (item is RootNodeViewModel)
             {
                 return AssetTemplate;
             }

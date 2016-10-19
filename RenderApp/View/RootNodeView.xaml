@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="RenderApp.View.AssetTreeView"
+﻿<UserControl x:Class="RenderApp.View.TreeNodeView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=MultiSelectTreeView"
@@ -11,7 +11,7 @@
         xmlns:local="clr-namespace:RenderApp.AssetModel"
         d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Controls:MultiSelectTreeView ItemsSource="{Binding Root.Children}">
+        <Controls:MultiSelectTreeView ItemsSource="{Binding RootNode.Children}">
             <Controls:MultiSelectTreeView.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Delete" Command="{Binding Delete}"/>
@@ -34,7 +34,7 @@
             </Controls:MultiSelectTreeView.ItemContainerStyle>
 
             <Controls:MultiSelectTreeView.Resources>
-                <HierarchicalDataTemplate DataType="{x:Type vm:TreeItemViewModel}"  ItemsSource="{Binding Children}">
+                <HierarchicalDataTemplate DataType="{x:Type vm:NodeItemViewModel}"  ItemsSource="{Binding Children}">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock
 								Text="{Binding DisplayName}"

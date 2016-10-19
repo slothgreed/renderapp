@@ -14,17 +14,11 @@ namespace RenderApp
         public PostProcess(string name,Shader shader,FrameBuffer frame)
         {
             FrameBufferItem = frame;
-            Plane = new Plane(name);
-            Plane.MaterialItem = new Material(name);
-            Scene.ActiveScene.AddSceneObject(name,Plane.MaterialItem);
-            Plane.MaterialItem.SetShader(shader);
+            Plane = AssetFactory.Instance.CreatePlane(name, shader);
         }
         public PostProcess(string name,Shader shader)
         {
-            Plane = new Plane(name);
-            Plane.MaterialItem = new Material(name);
-            Scene.ActiveScene.AddSceneObject(name, Plane.MaterialItem); 
-            Plane.MaterialItem.SetShader(shader);
+            Plane = AssetFactory.Instance.CreatePlane(name, shader);
         }
         public void SetValue(string key,object value)
         {

@@ -15,6 +15,7 @@ using RenderApp.AssetModel.LightModel;
 using RenderApp.View.Dialog;
 using RenderApp.ViewModel.Dialog;
 using RenderApp.Control;
+using RenderApp.Globals;
 namespace RenderApp.ViewModel
 {
     public partial class MainWindowViewModel : ViewModelBase
@@ -92,7 +93,7 @@ namespace RenderApp.ViewModel
         }
 
         private Viewport m_Viewport;
-        public AssetTreeViewModel AssetWindow;
+        public RootNodeViewModel AssetWindow;
         #endregion
 
         #region [constructor]
@@ -100,7 +101,7 @@ namespace RenderApp.ViewModel
 
         public MainWindowViewModel()
         {
-            AssetWindow = new AssetTreeViewModel(null, "Asset");
+            AssetWindow = new RootNodeViewModel(null, "Asset");
             _anchorables.Add(AssetWindow);
             _anchorables.Add(new GeometryViewModel());
             _anchorables.Add(new MaterialViewModel());
@@ -113,22 +114,27 @@ namespace RenderApp.ViewModel
         void OnCreateViewportEvent()
         {
             _anchorables.Add(new RenderSystemViewModel(Viewport.Instance.RenderSystem));
+
+            AssetWindow = new RootNodeViewModel(Project.ActiveProject.RootNode, "Asset");
+            _anchorables.Add(AssetWindow);
+            
+            
         }
         #endregion
 
         #region [Project Menu Command]
         private void NewProjectCommand()
         {
-            if (!Project.IsOpen)
+            if (!ProjectInfo.IsOpen)
             {
-                Project.IsOpen = true;
+                ProjectInfo.IsOpen = true;
             }
         }
         private void OpenProjectCommand()
         {
-            Project.IsOpen = true;
+            ProjectInfo.IsOpen = true;
             System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
-            dlg.InitialDirectory = Project.ProjectDirectory;
+            dlg.InitialDirectory = ProjectInfo.ProjectDirectory;
             dlg.Filter = "projファイル(*.@proj)|*.proj;";
             dlg.FilterIndex = 1;
             dlg.Title = "開くファイルを選択してください。";
@@ -144,7 +150,7 @@ namespace RenderApp.ViewModel
         private void SaveAsProjectCommand()
         {
             System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
-            dlg.InitialDirectory = Project.ProjectDirectory;
+            dlg.InitialDirectory = ProjectInfo.ProjectDirectory;
             dlg.Filter = "projファイル(*.@proj)|*.proj;";
             dlg.FilterIndex = 1;
             dlg.Title = "開くファイルを選択してください。";
@@ -176,7 +182,7 @@ namespace RenderApp.ViewModel
         private void Load3DModelCommand()
         {
             System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
-            dlg.InitialDirectory = Project.ProjectDirectory;
+            dlg.InitialDirectory = ProjectInfo.ProjectDirectory;
             dlg.Filter = "objファイル(*.obj)|*.obj;|stlファイル(*.stl)|*.stl;|すべてのファイル(*.*)|*.*";
             dlg.Multiselect = true;
             dlg.Title = "開くファイルを選択してください。";
@@ -205,7 +211,7 @@ namespace RenderApp.ViewModel
         private void LoadTextureCommand()
         {
             System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
-            dlg.InitialDirectory = Project.ProjectDirectory;
+            dlg.InitialDirectory = ProjectInfo.ProjectDirectory;
             dlg.Filter = "画像ファイル(*.bmp;*.jpg;*png)|*.bmp;*.jpg;*.png;";
             dlg.Title = "開くファイルを選択してください。";
             dlg.Multiselect = true;
@@ -345,9 +351,8 @@ namespace RenderApp.ViewModel
         private void WindowCloseCommand()
         {
             Scene.AllDispose();
-            AssetFactory.Instance.Dispose();
+            Project.ActiveProject.Dispose();
             ShaderFactory.Instance.Dispose();
-            TextureFactory.Instance.Dispose();
             RenderPassFactory.Instance.Dispose();
         }
         private void SizeChangedCommand()
@@ -428,7 +433,7 @@ namespace RenderApp.ViewModel
         #endregion
 
         #region [Update Method]
-        public void UpdateSelectNode(TreeItemViewModel node)
+        public void UpdateSelectNode(NodeItemViewModel node)
         {
             if(node == null)
             {

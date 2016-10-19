@@ -118,8 +118,17 @@ namespace RenderApp
             GL.ReadBuffer(ReadBufferMode.None);
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
             int id = (int)(pixels[3] * 255);
-            foreach(var geometry in AssetFactory.Instance.assetList.Values.OfType<Geometry>())
+            foreach(var geometryNode in Scene.ActiveScene.RootNode.AllChildren())
             {
+                Geometry geometry = null;
+                if(geometryNode.MyObject is Geometry)
+                {
+                    geometry = geometryNode.MyObject as Geometry;
+                }
+                else
+                {
+                    continue;
+                }
                 if(geometry.ID == id)
                 {
                     Scene.ActiveScene.SelectAsset = geometry;
@@ -138,10 +147,13 @@ namespace RenderApp
         {
             GBufferStage.ClearBuffer();
             GBufferStage.BindBuffer();
-            foreach (var asset in Scene.ActiveScene.GetAssetList(EAssetType.Geometry))
+            foreach (var asset in Scene.ActiveScene.RootNode.AllChildren())
             {
-                var geometry = asset as Geometry;
-                geometry.Render();
+                if(asset.MyObject is Geometry)
+                {
+                    var geometry = asset.MyObject as Geometry;
+                    geometry.Render();
+                }
             }
             GBufferStage.UnBindBuffer();
 

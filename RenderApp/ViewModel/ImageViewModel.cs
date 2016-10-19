@@ -72,7 +72,7 @@ namespace RenderApp.ViewModel
         {
             Model = model;
             Name = name;
-            _items = new List<string>(RenderApp.Scene.ActiveScene.GetAssetListStr(EAssetType.Textures));
+            //_items = new List<string>(RenderApp.Scene.ActiveScene.GetAssetListStr(EAssetType.Textures));
             SelectIndex = _items.IndexOf(model.FileName);
         }
 

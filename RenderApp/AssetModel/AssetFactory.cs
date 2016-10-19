@@ -9,6 +9,7 @@ using RenderApp.AssetModel.LightModel;
 using OpenTK;
 using RenderApp.Utility;
 using OpenTK.Graphics.OpenGL;
+using RenderApp.Globals;
 namespace RenderApp.AssetModel
 {
     class AssetFactory
@@ -21,53 +22,19 @@ namespace RenderApp.AssetModel
                 return _instance;
             }
         }
-        public Dictionary<string, Asset> assetList = new Dictionary<string, Asset>();
-
-        private void AddItem(Asset asset)
-        {
-            assetList.Add(asset.Key, asset);
-        }
-        public Asset FindItem(string key)
-        {
-            if (assetList.ContainsKey(key))
-            {
-                return assetList[key];
-            }
-            else
-            {
-                return null;
-            }
-        }
-        public void RemoveItem(string key)
-        {
-            if (assetList.ContainsKey(key))
-            {
-                assetList[key].Dispose();
-                assetList.Remove(key);
-            }
-        }
-        public void Dispose()
-        {
-            foreach (var loop in assetList.Values)
-            {
-                loop.Dispose();
-            }
-            assetList.Clear();
-        }
 
         public Geometry CreateEnvironmentMap()
         {
-            string SphereMapAlbedo = Project.TextureDirectory + @"\SphreMap.jpg";
-            string SphereMapVertexShader = Project.ShaderDirectory + @"\sphereMap.vert";
-            string SphereMapFragmentShader = Project.ShaderDirectory + @"\sphereMap.frag";
+            string SphereMapAlbedo = ProjectInfo.TextureDirectory + @"\SphreMap.jpg";
+            string SphereMapVertexShader = ProjectInfo.ShaderDirectory + @"\sphereMap.vert";
+            string SphereMapFragmentShader = ProjectInfo.ShaderDirectory + @"\sphereMap.frag";
             Sphere sphere = new Sphere("SphereMap",Scene.ActiveScene.WorldMax.X * 2, 20, 20, false, Vector3.UnitX);
             sphere.MaterialItem = new Material("SphereMaterial");
             Texture texture = TextureFactory.Instance.CreateTexture(Asset.GetNameFromPath(SphereMapAlbedo), SphereMapAlbedo);
             sphere.MaterialItem.AddTexture(TextureKind.Albedo, texture);
             sphere.MaterialItem.AddTexture(TextureKind.Albedo, texture);
-            Scene.ActiveScene.AddSceneObject(sphere.MaterialItem.Key, sphere.MaterialItem);
-            Scene.ActiveScene.AddSceneObject(texture.Key, texture);
-            AddItem(sphere);
+            Project.ActiveProject.AddChild(sphere.MaterialItem);
+            Project.ActiveProject.AddChild(texture);
             return sphere;
         }
 
@@ -78,25 +45,23 @@ namespace RenderApp.AssetModel
         internal Camera CreateMainCamera()
         {
             Camera camera = new Camera("MainCamera");
-            Scene.ActiveScene.AddSceneObject(camera.Key, camera);
-            AddItem(camera);
+            Scene.ActiveScene.AddSceneObject(camera);
             return camera;
         }
 
         internal Light CreateSunLight()
         {
             Light light =  new PointLight("SunLight",new Vector3(10), Vector3.Zero);
-            Scene.ActiveScene.AddSceneObject(light.Key, light);
-            AddItem(light);
+            Scene.ActiveScene.AddSceneObject(light);
             return light;
         }
         internal Geometry CreateGeometry(Geometry geometry)
         {
             if(geometry.MaterialItem != null)
             {
-                Scene.ActiveScene.AddSceneObject(geometry.Key, geometry.MaterialItem);
+                Scene.ActiveScene.AddSceneObject(geometry.MaterialItem);
             }
-            Scene.ActiveScene.AddSceneObject(geometry.Key,geometry);
+            Scene.ActiveScene.AddSceneObject(geometry);
             return geometry;
         }
 
@@ -184,5 +149,15 @@ namespace RenderApp.AssetModel
             return true;
         }
         #endregion
+
+        internal Plane CreatePlane(string name, Shader shader)
+        {
+            Plane plane;
+            plane = new Plane(name);
+            plane.MaterialItem = new Material(name);
+            Project.ActiveProject.AddChild(plane.MaterialItem);
+            plane.MaterialItem.SetShader(shader);
+            return plane;
+        }
     }
 }

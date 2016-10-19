@@ -44,8 +44,8 @@
             <avalon:DockingManager.LayoutItemTemplateSelector>
                 <vm:AvalonPaneTemplateSelector>
                     <vm:AvalonPaneTemplateSelector.AssetTemplate>
-                        <DataTemplate DataType="{x:Type vm:AssetTreeViewModel}">
-                            <v:AssetTreeView/>
+                        <DataTemplate DataType="{x:Type vm:RootNodeViewModel}">
+                            <v:TreeNodeView/>
                         </DataTemplate>   
                     </vm:AvalonPaneTemplateSelector.AssetTemplate>
                     <vm:AvalonPaneTemplateSelector.ShaderProgramTemplate>

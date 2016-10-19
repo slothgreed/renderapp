@@ -17,7 +17,7 @@ namespace RenderApp.GLUtil
         {
             get
             {
-                return Project.TextureDirectory + @"\Dummy.png";
+                return ProjectInfo.TextureDirectory + @"\Dummy.png";
             }
         }
         

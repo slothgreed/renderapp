@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 namespace RenderApp.ViewModel
 {
-	public partial class AssetTreeViewModel
+	public partial class RootNodeViewModel
 	{
 			private ICommand _Delete;
 			public ICommand Delete

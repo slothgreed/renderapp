@@ -3,92 +3,58 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
-using RenderApp.AssetModel;
 using RenderApp.GLUtil;
-namespace RenderApp
+using RenderApp.AssetModel;
+namespace RenderApp.Globals
 {
-    
-    class Project
+    public class Project
     {
-        public static bool IsOpen
-        {
-            get;
-            set;
-        }
-        private static string _projectDirectory;
-        public static string ProjectDirectory
-        {
-            get
-            {
-                //return _projectPath;
-                return @"C:\Users\ido\Documents\GitHub\renderapp\RenderApp\Resource";
-            }
-            set
-            {
-                _projectDirectory = value;
-            }
-        }
-        public static string ShaderDirectory
-        {
-            get
-            {
-                return ProjectDirectory + @"\Shader";
-            }
-        }
-        public static string TextureDirectory
-        {
-            get
-            {
-                return ProjectDirectory + @"\Texture";
-            }
-        }
-        public static string ModelDirectory
-        {
-            get
-            {
-                return ProjectDirectory + @"\Model";
-            }
-        }
-        public Project()
-        {
-        }
-        public bool Open(string filePath)
-        {
-            if(Path.GetExtension(filePath) != "proj")
-            {
-                throw new FileFormatException("extention error");
-            }
+        public Node RootNode;
+        private Node GeometryRoot;
+        /// <summary>
+        /// Textureオブジェクト
+        /// </summary>
+        private Node TextureRoot;
+        /// <summary>
+        /// マテリアルオブジェクト
+        /// </summary>
+        private Node MaterialRoot;
 
-            _projectDirectory = filePath;
-            return true;
-        }
-        public bool Save()
+        public static Project ActiveProject = new Project();
+
+        private Project()
         {
-            if (!Directory.Exists(ProjectDirectory))
-            {
-                Directory.CreateDirectory(ProjectDirectory);
-            }
-            
-            //ToDo: models;
-            //List<AssetModel.Asset> models = new List<CModel>();
-            //foreach(var loop in models)
-            //{
-            //    File.Copy(loop.FilePath, ProjectDirectory + loop.FileName);
-            //}
-            //List<Texture> textures = new List<Texture>();
-            //foreach(var loop in textures)
-            //{
-            //    File.Copy(loop.FilePath, ProjectDirectory + loop.FileName);
-            //}
-            
-            return true;
-        }
-        public bool SaveAs(string filePath)
-        {
-            _projectDirectory = filePath;
-            return Save();
-        }
+            RootNode = new Node("ROOT");
+            GeometryRoot = new Node("Geometry");
+            TextureRoot = new Node("Texture");
+            MaterialRoot = new Node("Material");
+            RootNode.AddChild(GeometryRoot);
+            RootNode.AddChild(TextureRoot);
+            RootNode.AddChild(MaterialRoot);
         
+        }
+
+        internal void AddChild(MyObject value)
+        {
+            if (value is Geometry)
+            {
+                GeometryRoot.AddChild(value);
+            }
+            if (value is Texture)
+            {
+                TextureRoot.AddChild(value);
+            }
+            if (value is Material)
+            {
+                MaterialRoot.AddChild(value);
+            }
+        }
+
+        internal void Dispose()
+        {
+            GeometryRoot.Dispose();
+            TextureRoot.Dispose();
+            MaterialRoot.Dispose();
+        }
     }
 }

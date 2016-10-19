@@ -8,13 +8,13 @@ using RenderApp;
 using RenderApp.Utility;
 using RenderApp.AssetModel;
 using RenderApp.GLUtil;
+using RenderApp.Globals;
 namespace RenderApp.Control
 {
     class DijkstraControl : IControl
     {
         public override bool Down(System.Windows.Forms.MouseEventArgs mouse)
         {
-            base.Down(mouse);
             Vector3 tri1 = Vector3.Zero;
             Vector3 tri2 = Vector3.Zero;
             Vector3 tri3 = Vector3.Zero;
@@ -27,7 +27,7 @@ namespace RenderApp.Control
                     tri1 += normal * 0.01f;
                     tri2 += normal * 0.01f;
                     tri3 += normal * 0.01f;
-                    var picking = Scene.ActiveScene.FindObject("Picking", EAssetType.Geometry) as Primitive;
+                    var picking = Scene.ActiveScene.FindObject("Picking") as Primitive;
                     if (picking == null)
                     {
                         Primitive triangle = new Primitive("Picking", new List<Vector3>() { tri1, tri2, tri3 }, CCalc.RandomColor(), OpenTK.Graphics.OpenGL.PrimitiveType.Triangles);
@@ -55,12 +55,7 @@ namespace RenderApp.Control
         /// <returns></returns>
         public override bool UnBinding()
         {
-            if (AssetFactory.Instance.assetList.ContainsKey("Picking"))
-            {
-                var pick = AssetFactory.Instance.assetList["Picking"] as AssetModel.Geometry;
-                pick.Dispose();
-                AssetFactory.Instance.assetList.Remove("Picking");
-            }
+            Scene.ActiveScene.DeleteNode("Picking");
             return true;
         }
     }
