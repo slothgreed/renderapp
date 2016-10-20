@@ -146,7 +146,7 @@
     </ApplicationDefinition>
     <Compile Include="Analyzer\HalfEdge\Dijkstra.cs" />
     <Compile Include="AssetModel\AssetFactory.cs" />
-    <Compile Include="AssetModel\Node.cs" />
+    <Compile Include="Utility\Node.cs" />
     <Compile Include="Control\CameraControl.cs" />
     <Compile Include="Converter\EnumConverter.cs" />
     <Compile Include="Globals\Project.cs" />
@@ -167,6 +167,11 @@
     <Compile Include="Control\DefaultControl.cs" />
     <Compile Include="Control\ControlManager.cs" />
     <Compile Include="Utility\ActiveItems.cs" />
+    <Compile Include="Utility\NotifyNodeChangedEventArgs.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotifyNodeChangedEventArgs.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\RootNodeViewModelT4.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -456,6 +461,12 @@
     <Folder Include="Scene\Shader\ShaderType\" />
     <Folder Include="Themes\" />
     <Folder Include="ViewModel\Property\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Utility\NotifyNodeChangedEventArgs.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>NotifyNodeChangedEventArgs.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

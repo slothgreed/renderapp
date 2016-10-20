@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RenderApp;
-namespace RenderApp.AssetModel
+namespace RenderApp.Utility
 {
+
     public class Node 
     {
+        public delegate void AddNodeEventHandler(object sender, EventArgs e);
+
         private List<Node> Children;
         private string emptyName;
         public string Name

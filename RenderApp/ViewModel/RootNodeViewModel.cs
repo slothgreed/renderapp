@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using RenderApp.AssetModel;
 using System.Diagnostics;
 using System.IO;
+using RenderApp.Utility;
 namespace RenderApp.ViewModel
 {
    

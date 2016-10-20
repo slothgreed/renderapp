@@ -1,0 +1,82 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+
+<#
+	string _action = "NotifyNodeChangedAction";
+	string[] _actionValue = 
+	{
+		"Add",
+		"Remove",
+		"Replace",
+		"Clear"
+	};
+	
+	string _eventArgs = "NotifyNodeChangedEventArgs";
+	string[,] _eventArgsValue = new string[,]
+	{
+		{"NotifyNodeChangedAction","NodeAction"},
+		{"Node","NewItems"},
+		{"int","NewIndex"},
+		{"Node","OldItems"},
+		{"int","OldIndex"}
+	};
+
+	int[][] _eventMethod = new int[][]
+	{
+		new int[]{0}, //action
+		new int[]{0,1}, // action,new
+		new int[]{0,1,2},//action new newindex
+		new int[]{0,1,3},//action new old
+		new int[]{0,1,2,3,4}//action new newindex old oldindex
+	};
+#>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
+namespace RenderApp.Utility
+{
+	public enum <#=_action#>
+	{
+<#
+			for(int i = 0; i < _actionValue.Length; i++)
+			{
+#>
+		<#=_actionValue[i]#>,
+<#
+	}
+#>
+	}
+
+	public class <#=_eventArgs#>
+	{
+<#
+			for(int i = 0; i < _eventArgsValue.GetLength(0); i++)
+			{
+#>
+		<#=_eventArgsValue[i,0]#> <#=_eventArgsValue[i,1]#>;
+<#
+			}
+#>
+
+<#
+		for(int i = 0; i < _eventMethod.GetLength(0); i++)
+		{
+#>
+		public <#=_eventArgs#>(<#for(int j = 0; j < _eventMethod[i].Length; j++){#><#=_eventArgsValue[_eventMethod[i][j],0]#> _<#=_eventArgsValue[_eventMethod[i][j],1]#><#if(j != _eventMethod[i].Length - 1){#>,<#}#><#}#>)
+		{
+<#
+				for(int j = 0; j < _eventMethod[i].Length; j++){
+#>			<#=_eventArgsValue[_eventMethod[i][j],1]#> = _<#=_eventArgsValue[_eventMethod[i][j],1]#>;
+<#
+}
+#>
+		}
+<#
+		}
+#>
+	}
+}

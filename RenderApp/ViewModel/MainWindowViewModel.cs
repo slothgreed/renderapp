@@ -16,6 +16,7 @@ using RenderApp.View.Dialog;
 using RenderApp.ViewModel.Dialog;
 using RenderApp.Control;
 using RenderApp.Globals;
+using RenderApp.Utility;
 namespace RenderApp.ViewModel
 {
     public partial class MainWindowViewModel : ViewModelBase
