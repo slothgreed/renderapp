@@ -29,11 +29,5 @@ namespace RenderApp.GLUtil
             return text;
         }
 
-        internal Texture CreateTexture(string name)
-        {
-            Texture text = new Texture(name);
-            Project.ActiveProject.AddChild(text);
-            return text;
-        }
     }
 }

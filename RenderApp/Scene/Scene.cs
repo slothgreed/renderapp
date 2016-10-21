@@ -224,8 +224,11 @@ namespace RenderApp
         {
             RootNode = new Node("ROOT");
             MainCamera = AssetFactory.Instance.CreateMainCamera();
+            Scene.ActiveScene.AddSceneObject(MainCamera);
+
             SunLight = AssetFactory.Instance.CreateSunLight();
-            
+            Scene.ActiveScene.AddSceneObject(SunLight);
+
             Geometry map = AssetFactory.Instance.CreateEnvironmentMap();
             AddSceneObject(map);
         }

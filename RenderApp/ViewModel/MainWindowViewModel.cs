@@ -104,6 +104,7 @@ namespace RenderApp.ViewModel
         {
             AssetWindow = new RootNodeViewModel(null, "Asset");
             _anchorables.Add(AssetWindow);
+            
             _anchorables.Add(new GeometryViewModel());
             _anchorables.Add(new MaterialViewModel());
             _anchorables.Add(new ShaderProgramViewModel(null));
@@ -116,9 +117,6 @@ namespace RenderApp.ViewModel
         {
             _anchorables.Add(new RenderSystemViewModel(Viewport.Instance.RenderSystem));
 
-            AssetWindow = new RootNodeViewModel(Project.ActiveProject.RootNode, "Asset");
-            _anchorables.Add(AssetWindow);
-            
             
         }
         #endregion
@@ -126,6 +124,9 @@ namespace RenderApp.ViewModel
         #region [Project Menu Command]
         private void NewProjectCommand()
         {
+            AssetWindow = new RootNodeViewModel(Project.ActiveProject.RootNode, "Asset");
+            AddWindow(AssetWindow);
+
             if (!ProjectInfo.IsOpen)
             {
                 ProjectInfo.IsOpen = true;
@@ -223,7 +224,7 @@ namespace RenderApp.ViewModel
                     string extension = Path.GetExtension(filename);
                     if (extension == ".bmp" || extension == ".png" || extension == ".jpg")
                     {
-                        TextureFactory.Instance.CreateTexture(filename);
+                        TextureFactory.Instance.CreateTexture(Path.GetFileName(filename), filename);
                     }
                 }
             }

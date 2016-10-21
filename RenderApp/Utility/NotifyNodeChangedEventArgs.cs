@@ -17,11 +17,11 @@ namespace RenderApp.Utility
 
 	public class NotifyNodeChangedEventArgs
 	{
-		NotifyNodeChangedAction NodeAction;
-		Node NewItems;
-		int NewIndex;
-		Node OldItems;
-		int OldIndex;
+		public NotifyNodeChangedAction NodeAction;
+		public Node NewItems;
+		public int NewIndex;
+		public Node OldItems;
+		public int OldIndex;
 
 		public NotifyNodeChangedEventArgs(NotifyNodeChangedAction _NodeAction)
 		{

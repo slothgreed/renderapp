@@ -17,18 +17,6 @@ namespace RenderApp.ViewModel
     public partial class RootNodeViewModel : AvalonWindowViewModel
     {
         
-        private string _title;
-        public string Title
-        {
-            get
-            {
-                return _title;
-            }
-            set
-            {
-                SetValue<string>(ref _title, value);
-            }
-        }
         public NodeItemViewModel RootNode
         {
             get;
@@ -47,16 +35,28 @@ namespace RenderApp.ViewModel
             }
         }
 
-        public RootNodeViewModel(Node rootNode,string title)
+        public RootNodeViewModel(Node rootNode, string title)
         {
             WindowPosition = AvalonWindow.LeftUp;
             Title = title;
-            if(rootNode != null)
+            if (rootNode != null)
             {
-                RootNode = new NodeItemViewModel(rootNode.Name);
+                RootNode = new NodeItemViewModel(rootNode, null);
+                InitAddNode(rootNode,RootNode);
             }
         }
-
+        /// <summary>
+        /// 再帰関数
+        /// </summary>
+        /// <param name="node"></param>
+        private void InitAddNode(Node parent,NodeItemViewModel parentVM)
+        {
+            foreach (var node in parent.Children)
+            {
+                var nodeVM = new NodeItemViewModel(node, parentVM);
+                InitAddNode(node, nodeVM);
+            }
+        }
         public override void SizeChanged()
         {
 

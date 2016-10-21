@@ -20,11 +20,19 @@ namespace RenderApp.ViewModel
             get;
             set;
         }
+        private string _title;
         public virtual string Title
         {
-            get;
-            set;
+            get
+            {
+                return _title;
+            }
+            set
+            {
+                SetValue<string>(ref _title, value);
+            }
         }
+
 
         public abstract void SizeChanged();
     }

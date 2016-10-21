@@ -70,11 +70,6 @@ namespace RenderApp.GLUtil
         private void Initialize()
         {
         }
-        public Texture(string name)
-            : base(name)
-        {
-            this.name = name;
-        }
 
         public Texture(string name,string path)
             :base(name)

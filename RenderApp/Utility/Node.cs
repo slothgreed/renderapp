@@ -9,9 +9,22 @@ namespace RenderApp.Utility
 
     public class Node 
     {
-        public delegate void AddNodeEventHandler(object sender, EventArgs e);
+        public delegate void InsertNodeEventHandler(object sender, NotifyNodeChangedEventArgs e);
+        public InsertNodeEventHandler InsertNodeEvent;
 
-        private List<Node> Children;
+        public delegate void RemoveNodeEventHandler(object sender, NotifyNodeChangedEventArgs e);
+        public RemoveNodeEventHandler RemoveNodeEvent;
+
+        public bool IsVisible
+        {
+            get;
+            set;
+        }
+        public List<Node> Children
+        {
+            get;
+            private set;
+        }
         private string emptyName;
         public string Name
         {
@@ -44,16 +57,23 @@ namespace RenderApp.Utility
             {
                 node.Parent = this;
                 Children.Add(node);
+                if(InsertNodeEvent != null)
+                {
+                    InsertNodeEvent(node, new NotifyNodeChangedEventArgs(NotifyNodeChangedAction.Add, node, Children.Count));
+                }
             }
         }
         public void AddChild(MyObject child)
         {
-
             if (FindChild(child.Key) == null)
             {
                 Node node = new Node(child);
                 node.Parent = this;
                 Children.Add(node);
+                if (InsertNodeEvent != null)
+                {
+                    InsertNodeEvent(node, new NotifyNodeChangedEventArgs(NotifyNodeChangedAction.Add, node, Children.Count));
+                }
             }
         }
         public void AddChild(string name)
@@ -63,13 +83,28 @@ namespace RenderApp.Utility
                 Node node = new Node(name);
                 node.Parent = this;
                 Children.Add(node);
+                if (InsertNodeEvent != null)
+                {
+                    InsertNodeEvent(node, new NotifyNodeChangedEventArgs(NotifyNodeChangedAction.Add, node, Children.Count));
+                }
+
             }
         }
         public void Insert(int index, string name)
         {
+            if (Children.Count < index)
+            {
+                AddChild(name);
+                return;
+            }
             if (FindChild(name) == null)
             {
-                Children.Add(new Node(name));
+                var node = new Node(name);
+                Children.Insert(index, node);
+                if(InsertNodeEvent != null)
+                {
+                    InsertNodeEvent(node, new NotifyNodeChangedEventArgs(NotifyNodeChangedAction.Add, node, index));
+                }
             }
         }
         public void Insert(int index, MyObject child)
@@ -81,7 +116,13 @@ namespace RenderApp.Utility
             }
             if (FindChild(child.Key) == null)
             {
-                Children.Insert(index, new Node(child));
+                var node = new Node(child.Key);
+                Children.Insert(index, node);
+                if (InsertNodeEvent != null)
+                {
+                    InsertNodeEvent(node, new NotifyNodeChangedEventArgs(NotifyNodeChangedAction.Add, node, index));
+                }
+
             }
         }
         #endregion
@@ -91,6 +132,10 @@ namespace RenderApp.Utility
             if(Children.Contains(child))
             {
                 Children.Remove(child);
+                if(RemoveNodeEvent != null)
+                {
+                    RemoveNodeEvent(child, new NotifyNodeChangedEventArgs(NotifyNodeChangedAction.Remove, child));
+                }
             }
         }
         public void RemoveChild(MyObject child)

@@ -7,6 +7,7 @@ using RenderApp;
 using System.Collections.ObjectModel;
 using RenderApp.AssetModel;
 using RenderApp.GLUtil;
+using RenderApp.Utility;
 namespace RenderApp.ViewModel
 {
     public class NodeItemViewModel : ViewModelBase
@@ -47,8 +48,13 @@ namespace RenderApp.ViewModel
                 }
                 return true;
             }
-            
         }
+        private NodeItemViewModel Parent
+        {
+            get;
+            set;
+        }
+
         private bool _hoverHighlighting = true;
         public bool HoverHighlighting
         {
@@ -124,20 +130,50 @@ namespace RenderApp.ViewModel
         {
             _children = new ObservableCollection<NodeItemViewModel>();
         }
-        public NodeItemViewModel(string displayName)
-            : this()
-        {
-            DisplayName = displayName;
-            AssetType = EAssetType.Unknown;
 
-        }
-        public NodeItemViewModel(Asset asset,EAssetType type)
+        public NodeItemViewModel(Node node,NodeItemViewModel parent)
             : this()
         {
-            DisplayName = asset.ToString();
-            AssetType = type;
-            Model = asset;
+            if (parent != null)
+            {
+                Parent = parent;
+                Parent.Children.Add(this);
+            }
+            node.InsertNodeEvent += InsertNodeEvent;
+            node.RemoveNodeEvent += RemoveNodeEvent;
+            DisplayName = node.Name;
+            
         }
+        private void InsertNodeEvent(object sender, NotifyNodeChangedEventArgs e)
+        {
+            if (sender is Node)
+            {
+                Node node = sender as Node;
+                if(Children.Count < e.NewIndex)
+                {
+                    Children.Insert(e.NewIndex, new NodeItemViewModel(node, this));
+                }
+                else
+                {
+                    Children.Add(new NodeItemViewModel(node, this));
+                }
+            }
+        }
+        private void RemoveNodeEvent(object sender, NotifyNodeChangedEventArgs e)
+        {
+            if (sender is Node)
+            {
+                Node node = sender as Node;
+                node.InsertNodeEvent -= InsertNodeEvent;
+                node.RemoveNodeEvent -= RemoveNodeEvent;
+                if(Parent != null)
+                {
+                    Parent.Children.Remove(this);
+                }
+            }
+        }
+
+
         public override void UpdateProperty()
         {
 

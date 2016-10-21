@@ -17,10 +17,10 @@ namespace RenderApp.View
     /// <summary>
     /// AssetView.xaml の相互作用ロジック
     /// </summary>
-    public partial class TreeNodeView : UserControl
+    public partial class RootNodeView : UserControl
     {
 
-        public TreeNodeView()
+        public RootNodeView()
         {
             InitializeComponent();
         }

@@ -57,7 +57,7 @@ namespace RenderApp.Utility
 			for(int i = 0; i < _eventArgsValue.GetLength(0); i++)
 			{
 #>
-		<#=_eventArgsValue[i,0]#> <#=_eventArgsValue[i,1]#>;
+		public <#=_eventArgsValue[i,0]#> <#=_eventArgsValue[i,1]#>;
 <#
 			}
 #>

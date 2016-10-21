@@ -38,22 +38,18 @@ namespace RenderApp.AssetModel
             return sphere;
         }
 
-       
+
 
 
 
         internal Camera CreateMainCamera()
         {
-            Camera camera = new Camera("MainCamera");
-            Scene.ActiveScene.AddSceneObject(camera);
-            return camera;
+            return new Camera("MainCamera");
         }
 
         internal Light CreateSunLight()
         {
-            Light light =  new PointLight("SunLight",new Vector3(10), Vector3.Zero);
-            Scene.ActiveScene.AddSceneObject(light);
-            return light;
+            return new PointLight("SunLight", new Vector3(10), Vector3.Zero);
         }
         internal Geometry CreateGeometry(Geometry geometry)
         {

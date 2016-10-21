@@ -45,7 +45,7 @@
                 <vm:AvalonPaneTemplateSelector>
                     <vm:AvalonPaneTemplateSelector.AssetTemplate>
                         <DataTemplate DataType="{x:Type vm:RootNodeViewModel}">
-                            <v:TreeNodeView/>
+                            <v:RootNodeView/>
                         </DataTemplate>   
                     </vm:AvalonPaneTemplateSelector.AssetTemplate>
                     <vm:AvalonPaneTemplateSelector.ShaderProgramTemplate>

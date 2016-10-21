@@ -153,11 +153,11 @@ namespace RenderApp.GLUtil.ShaderModel
                 {
                     continue;
                 }
-                if (loop.variableType == EVariableType.Uniform)
+                if (loop.shaderVariableType == EShaderVariableType.Uniform)
                 {
                     BindUniformState(loop, ref activeCount);
                 }
-                if (loop.variableType == EVariableType.Attribute)
+                if (loop.shaderVariableType == EShaderVariableType.Attribute)
                 {
                     BindAttributeState(geometry, loop);
                 }
@@ -167,7 +167,7 @@ namespace RenderApp.GLUtil.ShaderModel
         {
             foreach (ShaderProgramInfo loop in _shaderVariable.Values)
             {
-                if (loop.variableType == EVariableType.Uniform)
+                if (loop.shaderVariableType == EShaderVariableType.Uniform)
                 {
                     if (loop.ID != -1)
                     {
@@ -198,25 +198,25 @@ namespace RenderApp.GLUtil.ShaderModel
             {
                 return;
             }
-            if (uniform.variable.GetType() == typeof(Vector2))
+            if (uniform.variableType == EVariableType.Vec2)
             {
                 GL.Uniform2(uniform.ID, (Vector2)uniform.variable);
             }
-            else if (uniform.variable.GetType() == typeof(Vector3))
+            else if (uniform.variableType == EVariableType.Vec3)
             {
                 GL.Uniform3(uniform.ID, (Vector3)uniform.variable);
             }
-            else if (uniform.variable.GetType() == typeof(Matrix3))
+            else if (uniform.variableType == EVariableType.Mat3)
             {
                 Matrix3 tmp = (Matrix3)uniform.variable;
                 GL.UniformMatrix3(uniform.ID, false, ref tmp);
             }
-            else if (uniform.variable.GetType() == typeof(Matrix4))
+            else if (uniform.variableType == EVariableType.Mat4)
             {
                 Matrix4 tmp = (Matrix4)uniform.variable;
                 GL.UniformMatrix4(uniform.ID, false, ref tmp);
             }
-            else if (uniform.variable.GetType() == typeof(Texture))
+            else if (uniform.variableType == EVariableType.Int)
             {
                 GL.ActiveTexture(TextureUnit.Texture0 + activeCount);
                 GL.BindTexture(TextureTarget.Texture2D, ((Texture)uniform.variable).ID);
@@ -225,7 +225,7 @@ namespace RenderApp.GLUtil.ShaderModel
             }
             else
             {
-                if (uniform.variable.GetType() == typeof(float))
+                if (uniform.variableType == EVariableType.Float)
                 {
                     GL.Uniform1(uniform.ID, (float)uniform.variable);
                 }
@@ -257,25 +257,25 @@ namespace RenderApp.GLUtil.ShaderModel
             {
                 GL.EnableVertexAttribArray(attribute.ID);
                 GL.BindBuffer(BufferTarget.ArrayBuffer, attribute.VertexBufferId);
-                if (attribute.variable is List<Vector2>)
+                if (attribute.variableType == EVariableType.Vec2Array)
                 {
                     List<Vector2> tmp = (List<Vector2>)attribute.variable;
                     GL.BufferData<Vector2>(BufferTarget.ArrayBuffer, new IntPtr(tmp.Count * Vector2.SizeInBytes), tmp.ToArray(), BufferUsageHint.StaticDraw);
                     GL.VertexAttribPointer(attribute.ID, 2, VertexAttribPointerType.Float, false, Vector2.SizeInBytes, 0);
                 }
-                if (attribute.variable is List<Vector3>)
+                if (attribute.variableType == EVariableType.Vec3Array)
                 {
                     List<Vector3> tmp = (List<Vector3>)attribute.variable;
                     GL.BufferData<Vector3>(BufferTarget.ArrayBuffer, new IntPtr(tmp.Count * Vector3.SizeInBytes), tmp.ToArray(), BufferUsageHint.StaticDraw);
                     GL.VertexAttribPointer(attribute.ID, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
                 }
-                if (attribute.variable is List<Vector4>)
+                if (attribute.variableType == EVariableType.Vec4Array)
                 {
                     List<Vector4> tmp = (List<Vector4>)attribute.variable;
                     GL.BufferData<Vector4>(BufferTarget.ArrayBuffer, new IntPtr(tmp.Count * Vector4.SizeInBytes), tmp.ToArray(), BufferUsageHint.StaticDraw);
                     GL.VertexAttribPointer(attribute.ID, 4, VertexAttribPointerType.Float, false, Vector4.SizeInBytes, 0);
                 }
-                if (attribute.variable is List<int>)
+                if (attribute.variableType == EVariableType.IntArray)
                 {
                     List<int> tmp = (List<int>)attribute.variable;
                     GL.BufferData(BufferTarget.ElementArrayBuffer, (IntPtr)(tmp.Count * sizeof(int)), tmp.ToArray(), BufferUsageHint.StaticDraw);
@@ -292,99 +292,99 @@ namespace RenderApp.GLUtil.ShaderModel
         /// </summary>
         public void InitializeState(Geometry geometry,Dictionary<TextureKind,Texture> TextureItem)
         {
-            foreach (ShaderProgramInfo variable in _shaderVariable.Values)
+            foreach (ShaderProgramInfo info in _shaderVariable.Values)
             {
-                switch (variable.Name)
+                switch (info.Name)
                 {
                     case "position":
-                        variable.variable = geometry.Position;
+                        info.variable = geometry.Position;
                         break;
                     case "normal":
-                        variable.variable = geometry.Normal;
+                        info.variable = geometry.Normal;
                         break;
                     case "color":
-                        variable.variable = geometry.Color;
+                        info.variable = geometry.Color;
                         break;
                     case "texcoord":
-                        variable.variable = geometry.TexCoord;
+                        info.variable = geometry.TexCoord;
                         break;
                     case "index":
-                        variable.variable = geometry.Index;
+                        info.variable = geometry.Index;
                         break;
                     case "uGeometryID":
-                        variable.variable = geometry.ID;
+                        info.variable = geometry.ID;
                         break;
                     case "uWidth":
-                        variable.variable = Viewport.Instance.Width;
+                        info.variable = Viewport.Instance.Width;
                         break;
                     case "uHeight":
-                        variable.variable = Viewport.Instance.Height;
+                        info.variable = Viewport.Instance.Height;
                         break;
                     case "uMVP":
                         Matrix4 vp = Scene.ActiveScene.MainCamera.CameraProjMatrix;
-                        variable.variable = geometry.ModelMatrix * vp;
+                        info.variable = geometry.ModelMatrix * vp;
                         break;
                     case "uModelMatrix":
-                        variable.variable = geometry.ModelMatrix;
+                        info.variable = geometry.ModelMatrix;
                         break;
                     case "uNormalMatrix":
-                        variable.variable = geometry.NormalMatrix;
+                        info.variable = geometry.NormalMatrix;
                         break;
                     case "uProjectMatrix":
-                        variable.variable = Scene.ActiveScene.MainCamera.ProjMatrix;
+                        info.variable = Scene.ActiveScene.MainCamera.ProjMatrix;
                         break;
                     case "uUnProjectMatrix":
-                        variable.variable = Scene.ActiveScene.MainCamera.UnProject;
+                        info.variable = Scene.ActiveScene.MainCamera.UnProject;
                         break;
                     case "uCameraPosition":
-                        variable.variable = Scene.ActiveScene.MainCamera.Position;
+                        info.variable = Scene.ActiveScene.MainCamera.Position;
                         break;
                     case "uCameraMatrix":
-                        variable.variable = Scene.ActiveScene.MainCamera.Matrix;
+                        info.variable = Scene.ActiveScene.MainCamera.Matrix;
                         break;
                     case "uLightPosition":
-                        variable.variable = Scene.ActiveScene.SunLight.Position;
+                        info.variable = Scene.ActiveScene.SunLight.Position;
                         break;
                     case "uLightDirection":
-                        variable.variable = Scene.ActiveScene.SunLight.Direction;
+                        info.variable = Scene.ActiveScene.SunLight.Direction;
                         break;
                     case "uLightMatrix":
-                        variable.variable = Scene.ActiveScene.SunLight.Matrix;
+                        info.variable = Scene.ActiveScene.SunLight.Matrix;
                         break;
                     case "uAlbedoMap":
                         if (TextureItem.ContainsKey(TextureKind.Albedo))
                         {
-                            variable.variable = TextureItem[TextureKind.Albedo];
+                            info.variable = TextureItem[TextureKind.Albedo];
                         }
                         break;
                     case "uWorldMap":
                         if (TextureItem.ContainsKey(TextureKind.World))
                         {
-                            variable.variable = TextureItem[TextureKind.World];
+                            info.variable = TextureItem[TextureKind.World];
                         }
                         break;
                     case "uLightingMap":
                         if (TextureItem.ContainsKey(TextureKind.Lighting))
                         {
-                            variable.variable = TextureItem[TextureKind.Lighting];
+                            info.variable = TextureItem[TextureKind.Lighting];
                         }
                         break;
                     case "uNormalMap":
                         if (TextureItem.ContainsKey(TextureKind.Normal))
                         {
-                            variable.variable = TextureItem[TextureKind.Normal];
+                            info.variable = TextureItem[TextureKind.Normal];
                         }
                         break;
                     case "uHeightMap":
                         if (TextureItem.ContainsKey(TextureKind.Height))
                         {
-                            variable.variable = TextureItem[TextureKind.Height];
+                            info.variable = TextureItem[TextureKind.Height];
                         }
                         break;
                     case "uEmissiveMap":
                         if (TextureItem.ContainsKey(TextureKind.Emissive))
                         {
-                            variable.variable = TextureItem[TextureKind.Emissive];
+                            info.variable = TextureItem[TextureKind.Emissive];
                         }
                         break;
                 }
@@ -415,7 +415,7 @@ namespace RenderApp.GLUtil.ShaderModel
             ShaderProgramInfo info = new ShaderProgramInfo();
             info.Name = "index";
             info.variable = new List<int>();
-            info.variableType = EVariableType.Attribute;
+            info.shaderVariableType = EShaderVariableType.Attribute;
             info.VertexBufferId = GL.GenBuffer();
             _shaderVariable.Add(info.Name, info);
 
@@ -424,7 +424,7 @@ namespace RenderApp.GLUtil.ShaderModel
         /// attributeをDictionaryに追加
         /// </summary>
         /// <param name="code"></param>
-        private object AttributeParameter(string[] code)
+        private void AttributeParameter(ShaderProgramInfo info, string[] code)
         {
             if (code[0] == "attribute" || code[0] == "in")
             {
@@ -432,53 +432,52 @@ namespace RenderApp.GLUtil.ShaderModel
             }
             else
             {
-                return null;
+                return;
             }
-            return GetAttributeVariableCode(code[1], code[2]);
+            GetAttributeVariableCode(info, code[1], code[2]);
         }
         /// <summary>
         /// uniformをDictionaryに追加
         /// </summary>
         /// <param name="code"></param>
-        private object UniformParameter(string[] code)
+        private void UniformParameter(ShaderProgramInfo info, string[] code)
         {
             if (code[0] != "uniform")
             {
-                return null;
+                return;
             }
-            return GetUniformVariableCode(code[1], code[2]);
+            GetUniformVariableCode(info, code[1], code[2]);
         }
         /// <summary>
         /// シェーダ解析
         /// </summary>
         /// <param name="variable"></param>
         /// <param name="name"></param>
-        private object GetAttributeVariableCode(string variable, string name)
+        private void GetAttributeVariableCode(ShaderProgramInfo info,string variable, string name)
         {
-            object shaderVariable = null;
             switch (variable)
             {
                 case "vec2":
-                    shaderVariable = new List<Vector2>();
+                    info.variableType = EVariableType.Vec2Array;
                     break;
                 case "vec3":
-                    shaderVariable = new List<Vector3>();
+                    info.variableType = EVariableType.Vec3Array;
                     break;
                 case "vec4":
-                    shaderVariable = new List<Vector4>();
+                    info.variableType = EVariableType.Vec4Array;
                     break;
                 case "int":
-                    shaderVariable = new List<int>();
+                    info.variableType = EVariableType.IntArray;
                     break;
                 case "float":
                 case "double":
-                    shaderVariable = new List<float>();
+                    info.variableType = EVariableType.FloatArray;
                     break;
                 default:
                     Console.WriteLine("Shader ReadError" + name);
                     break;
             }
-            return shaderVariable;
+            return;
         }
 
         /// <summary>
@@ -486,42 +485,41 @@ namespace RenderApp.GLUtil.ShaderModel
         /// </summary>
         /// <param name="variable"></param>
         /// <param name="name"></param>
-        private object GetUniformVariableCode(string variable, string name)
+        private void GetUniformVariableCode(ShaderProgramInfo info,string variable, string name)
         {
-            object shaderVariable = null;
             switch (variable)
             {
                 case "vec2":
-                    shaderVariable = new Vector2();
+                    info.variableType = EVariableType.Vec2;
                     break;
                 case "vec3":
-                    shaderVariable = new Vector3();
+                    info.variableType = EVariableType.Vec3;
                     break;
                 case "vec4":
-                    shaderVariable = new Vector4();
+                    info.variableType = EVariableType.Vec4;
                     break;
                 case "int":
                 case "sampler2D":
                 case "sampler3D":
-                    shaderVariable = TextureFactory.Instance.CreateTexture(name);
+                    info.variableType = EVariableType.Int;
                     break;
                 case "float":
-                    shaderVariable = .0f;
+                    info.variableType = EVariableType.Float;
                     break;
                 case "double":
-                    shaderVariable = 0.0;
+                    info.variableType = EVariableType.Double;
                     break;
                 case "mat3":
-                    shaderVariable = new Matrix3();
+                    info.variableType = EVariableType.Mat3;
                     break;
                 case "mat4":
-                    shaderVariable = new Matrix4();
+                    info.variableType = EVariableType.Mat4;
                     break;
                 default:
                     Console.WriteLine("Shader ReadError" + name);
                     break;
             }
-            return shaderVariable;
+            return;
         }
         /// <summary>
         /// UniformとAttributeの指定
@@ -561,30 +559,26 @@ namespace RenderApp.GLUtil.ShaderModel
                 }
                 //後半3つが信頼性高いため
                 string[] code = { derim[derim.Length - 3], derim[derim.Length - 2], derim[derim.Length - 1] };
-                object variable = null;
+                ShaderProgramInfo info = new ShaderProgramInfo();
                 switch (code[0])
                 {
                     case "attribute":
                     case "in":
-                        variable = AttributeParameter(code);
-                        if (variable != null && !_shaderVariable.ContainsKey(code[2]))
+                        AttributeParameter(info, code);
+                        if (info.variable != null && !_shaderVariable.ContainsKey(code[2]))
                         {
-                            ShaderProgramInfo info = new ShaderProgramInfo();
                             info.Name = code[2];
-                            info.variable = variable;
-                            info.variableType = EVariableType.Attribute;
+                            info.shaderVariableType = EShaderVariableType.Attribute;
                             info.VertexBufferId = GL.GenBuffer();
                             _shaderVariable.Add(info.Name, info);
                         }
                         break;
                     case "uniform":
-                        variable = UniformParameter(code);
-                        if (variable != null && !_shaderVariable.ContainsKey(code[2]))
+                        UniformParameter(info,code);
+                        if (info.variable != null && !_shaderVariable.ContainsKey(code[2]))
                         {
-                            ShaderProgramInfo info = new ShaderProgramInfo();
                             info.Name = code[2];
-                            info.variable = variable;
-                            info.variableType = EVariableType.Uniform;
+                            info.shaderVariableType = EShaderVariableType.Uniform;
                             _shaderVariable.Add(info.Name, info);
                         }
                         break;
@@ -655,12 +649,12 @@ namespace RenderApp.GLUtil.ShaderModel
             GL.UseProgram(_program);
             foreach (ShaderProgramInfo loop in _shaderVariable.Values)
             {
-                switch(loop.variableType)
+                switch(loop.shaderVariableType)
                 {
-                    case EVariableType.Attribute:
+                    case EShaderVariableType.Attribute:
                         loop.ID = GL.GetAttribLocation(_program, loop.Name);
                         break;
-                    case EVariableType.Uniform:
+                    case EShaderVariableType.Uniform:
                         loop.ID = GL.GetUniformLocation(_program, loop.Name);
                         break;
                 }
