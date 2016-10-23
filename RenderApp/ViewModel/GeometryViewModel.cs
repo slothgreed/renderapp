@@ -9,7 +9,7 @@ using RenderApp.GLUtil;
 using OpenTK;
 namespace RenderApp.ViewModel
 {
-    class GeometryViewModel : AvalonWindowViewModel
+    public class GeometryViewModel : DockWindowViewModel
     {
         public override string Title
         {
@@ -42,7 +42,6 @@ namespace RenderApp.ViewModel
         }
         public GeometryViewModel(Geometry model)
         {
-            WindowPosition = AvalonWindow.RightUp;
             Model = model;
             Items = new Dictionary<string,object>();
             Items.Add("Translate",model.Translate);
@@ -54,14 +53,11 @@ namespace RenderApp.ViewModel
 
         public GeometryViewModel()
         {
-            WindowPosition = AvalonWindow.LeftDown;
         }
-        public override void SizeChanged()
-        {
-        }
+
         public override void UpdateProperty()
         {
-
+            throw new NotImplementedException();
         }
     }
 }

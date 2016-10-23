@@ -16,41 +16,58 @@ using RenderApp.View.Dialog;
 using RenderApp.ViewModel.Dialog;
 using RenderApp.Control;
 using RenderApp.Globals;
-using RenderApp.Utility;
 namespace RenderApp.ViewModel
 {
     public partial class MainWindowViewModel : ViewModelBase
     {
         #region [property method]
-        private readonly ObservableCollection<AvalonWindowViewModel> _documents = new ObservableCollection<AvalonWindowViewModel>();
-        ReadOnlyObservableCollection<AvalonWindowViewModel> _readDocument;
-        public ReadOnlyObservableCollection<AvalonWindowViewModel> Documents
+        private readonly ObservableCollection<DockWindowViewModel> _centerItemsSource = new ObservableCollection<DockWindowViewModel>();
+        public ObservableCollection<DockWindowViewModel> CenterItemsSource
         {
             get
             {
-                if (_readDocument == null)
-                {
-                    _readDocument = new ReadOnlyObservableCollection<AvalonWindowViewModel>(_documents);
-                }
-                return _readDocument;
+                return _centerItemsSource;
             }
         }
 
-        private readonly ObservableCollection<AvalonWindowViewModel> _anchorables = new ObservableCollection<AvalonWindowViewModel>();
-        private ReadOnlyObservableCollection<AvalonWindowViewModel> _readAnchorable;
-        public ReadOnlyObservableCollection<AvalonWindowViewModel> Anchorables
+        private readonly ObservableCollection<DockWindowViewModel> _leftUpItemsSource = new ObservableCollection<DockWindowViewModel>();
+        public ObservableCollection<DockWindowViewModel> LeftUpItemsSource
         {
             get
             {
-                if (_readAnchorable == null)
-                {
-                    _readAnchorable = new ReadOnlyObservableCollection<AvalonWindowViewModel>(_anchorables);
-                }
-                return _readAnchorable;
+                return _leftUpItemsSource;
             }
         }
-        private AvalonWindowViewModel _activePane = null;
-        public AvalonWindowViewModel ActivePane
+        private readonly ObservableCollection<DockWindowViewModel> _leftDownItemsSource = new ObservableCollection<DockWindowViewModel>();
+        public ObservableCollection<DockWindowViewModel> LeftDownItemsSource
+        {
+            get
+            {
+                return _leftDownItemsSource;
+            }
+        }
+
+        private readonly ObservableCollection<DockWindowViewModel> _rightUpItemsSource = new ObservableCollection<DockWindowViewModel>();
+        public ObservableCollection<DockWindowViewModel> RightUpItemsSource
+        {
+            get
+            {
+                return _rightUpItemsSource;
+            }
+        }
+        private readonly ObservableCollection<DockWindowViewModel> _rightDownItemsSource = new ObservableCollection<DockWindowViewModel>();
+        public ObservableCollection<DockWindowViewModel> RightDownItemsSource
+        {
+            get
+            {
+                return _rightDownItemsSource;
+            }
+        }
+
+
+
+        private DockWindowViewModel _activePane = null;
+        public DockWindowViewModel ActivePane
         {
             get
             {
@@ -60,9 +77,14 @@ namespace RenderApp.ViewModel
             {
                 if (_activePane != value)
                 {
-                    SetValue<AvalonWindowViewModel>(ref _activePane, value);
+                    SetValue<DockWindowViewModel>(ref _activePane, value);
                 }
             }
+        }
+        public DockWindowViewModel ActiveWindow
+        {
+            get;
+            set;
         }
 
         public bool PostProcessMode
@@ -94,7 +116,36 @@ namespace RenderApp.ViewModel
         }
 
         private Viewport m_Viewport;
-        public RootNodeViewModel AssetWindow;
+        public RootNodeViewModel ProjectWindow
+        {
+            get;
+            set;
+        }
+        public RootNodeViewModel SceneWindow
+        {
+            get;
+            set;
+        }
+        public GeometryViewModel GeometryWindow
+        {
+            get;
+            set;
+        }
+        public ViewportViewModel ViewportWindow
+        {
+            get;
+            set;
+        }
+        public MaterialViewModel MaterialWindow
+        {
+            get;
+            set;
+        }
+        public RenderSystemViewModel RenderSystemWindow
+        {
+            get;
+            set;
+        }
         #endregion
 
         #region [constructor]
@@ -102,31 +153,32 @@ namespace RenderApp.ViewModel
 
         public MainWindowViewModel()
         {
-            AssetWindow = new RootNodeViewModel(null, "Asset");
-            _anchorables.Add(AssetWindow);
-            
-            _anchorables.Add(new GeometryViewModel());
-            _anchorables.Add(new MaterialViewModel());
-            _anchorables.Add(new ShaderProgramViewModel(null));
-            _documents.Add(new ViewportViewModel());
+            ProjectWindow = new RootNodeViewModel(Project.ActiveProject.RootNode, "Project");
+            ViewportWindow = new ViewportViewModel();
+            MaterialWindow = new MaterialViewModel();
+
+            _leftUpItemsSource.Add(ProjectWindow);
+            _rightDownItemsSource.Add(MaterialWindow);
+            _rightUpItemsSource.Add(new ShaderProgramViewModel(null));
+
+            _centerItemsSource.Add(ViewportWindow);
+
             Viewport.Instance.OnCreateViewportEvent += OnCreateViewportEvent;
             _instance = this;
         }
 
         void OnCreateViewportEvent()
         {
-            _anchorables.Add(new RenderSystemViewModel(Viewport.Instance.RenderSystem));
-
-            
+            SceneWindow = new RootNodeViewModel(Scene.ActiveScene.RootNode, "Scene");
+            _leftUpItemsSource.Add(SceneWindow);
+            RenderSystemWindow = new RenderSystemViewModel(Viewport.Instance.RenderSystem);
+            _leftDownItemsSource.Add(RenderSystemWindow);
         }
         #endregion
 
         #region [Project Menu Command]
         private void NewProjectCommand()
         {
-            AssetWindow = new RootNodeViewModel(Project.ActiveProject.RootNode, "Asset");
-            AddWindow(AssetWindow);
-
             if (!ProjectInfo.IsOpen)
             {
                 ProjectInfo.IsOpen = true;
@@ -166,17 +218,17 @@ namespace RenderApp.ViewModel
         #region [Asset Menu Command]
         private void LoadAssetCommand(object loadAssetMenuParam)
         {
-            LoadAssetMenu menuParam = (LoadAssetMenu)loadAssetMenuParam;
+            RAAsset menuParam = (RAAsset)loadAssetMenuParam;
 
             switch (menuParam)
             {
-                case LoadAssetMenu.Model:
+                case RAAsset.Model:
                     Load3DModelCommand();
                     break;
-                case LoadAssetMenu.Texture:
+                case RAAsset.Texture:
                     LoadTextureCommand();
                     break;
-                case LoadAssetMenu.Shader:
+                case RAAsset.Shader:
                     LoadShaderCommand();
                     break;
             }
@@ -188,24 +240,14 @@ namespace RenderApp.ViewModel
             dlg.Filter = "objファイル(*.obj)|*.obj;|stlファイル(*.stl)|*.stl;|すべてのファイル(*.*)|*.*";
             dlg.Multiselect = true;
             dlg.Title = "開くファイルを選択してください。";
-            Geometry geometry = null;
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 foreach (var filename in dlg.FileNames)
                 {
-                    string extension = Path.GetExtension(filename);
-                    switch (extension)
-                    {
-                        case ".obj":
-                            geometry = new CObjFile(Asset.GetNameFromPath(filename), filename);
-                            break;
-                        case ".stl":
-                            geometry = new StlFile(Asset.GetNameFromPath(filename), filename);
-                            break;
-                    }
+                    Geometry geometry = AssetFactory.Instance.CreateLoad3DModel(filename);
                     if (geometry != null)
                     {
-                        AssetFactory.Instance.CreateGeometry(geometry);
+                        Project.ActiveProject.AddChild(AssetFactory.Instance.CreateGeometry(geometry));
                     }
                 }
             }
@@ -261,23 +303,23 @@ namespace RenderApp.ViewModel
         #region [Model Menu Command]
         private void CreateObjectCommand(object createObjectMenu)
         {
-            CreateObjectMenu menuParam = (CreateObjectMenu)createObjectMenu;
+            RAGeometry menuParam = (RAGeometry)createObjectMenu;
 
             switch (menuParam)
             {
-                case CreateObjectMenu.Cube:
+                case RAGeometry.Cube:
                     CreateCubeCommand();
                     break;
-                case CreateObjectMenu.Sphere:
+                case RAGeometry.Sphere:
                     CreateSphereCommand();
                     break;
-                case CreateObjectMenu.Plane:
+                case RAGeometry.Plane:
                     CreatePlaneCommand();
                     break;
-                case CreateObjectMenu.WireFrame:
+                case RAGeometry.WireFrame:
                     CreateWireFrameCommand();
                     break;
-                case CreateObjectMenu.Polygon:
+                case RAGeometry.Polygon:
                     CreatePolygonCommand();
                     break;
                 default:
@@ -316,7 +358,6 @@ namespace RenderApp.ViewModel
         #endregion
 
         #region [swintch controller command]
-        private ControlManager.CONTROL_MODE controlMode;
         public ControlManager.CONTROL_MODE ControlMode
         {
             get
@@ -326,26 +367,18 @@ namespace RenderApp.ViewModel
         }
         private void ControllerCommand(object controllerMenu)
         {
-            ControllerMenu menuParam = (ControllerMenu)controllerMenu;
+            RAController menuParam = (RAController)controllerMenu;
             OnPropertyChanging("ControlMode");
             switch(menuParam)
             {
-                case ControllerMenu.Default:
-                    ControllerDeafult();
+                case RAController.Default:
+                    ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.Default;
                     break;
-                case ControllerMenu.Dijkstra:
-                    ControllerDijkstra();
+                case RAController.Dijkstra:
+                    ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.Dijkstra;
                     break;
             }
             OnPropertyChanged("ControlMode");
-        }
-        private void ControllerDeafult()
-        {
-            ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.Default;
-        }
-        private void ControllerDijkstra()
-        {
-            ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.Dijkstra;
         }
         #endregion
 
@@ -359,14 +392,7 @@ namespace RenderApp.ViewModel
         }
         private void SizeChangedCommand()
         {
-            foreach (var loop in Documents)
-            {
-                loop.SizeChanged();
-            }
-            foreach (var loop in Anchorables)
-            {
-                loop.SizeChanged();
-            }
+
         }
         public void LoadedCommand()
         {
@@ -420,63 +446,48 @@ namespace RenderApp.ViewModel
         }
         #endregion
 
-        #region [AvalonWindow method]
-        private void AddWindow(AvalonWindowViewModel newWindow)
-        {
-            var oldWindow = _anchorables.Where(x => x.WindowPosition == newWindow.WindowPosition).First();
-            _anchorables.Add(newWindow);
-
-            if (oldWindow != null)
-            {
-                _anchorables.Remove(oldWindow);
-            }
-        }
-
-        #endregion
-
         #region [Update Method]
         public void UpdateSelectNode(NodeItemViewModel node)
         {
-            if(node == null)
-            {
-                return;
-            }
-            if(node.Model is Asset)
-            {
-                Scene.ActiveScene.SelectAsset = node.Model;
-            }
-            switch (node.AssetType)
-            {
-                case EAssetType.Geometry:
-                    if (node.Model is Camera)
-                    {
+            //if(node == null)
+            //{
+            //    return;
+            //}
+            //if(node.Model is Asset)
+            //{
+            //    Scene.ActiveScene.SelectAsset = node.Model;
+            //}
+            //switch (node.AssetType)
+            //{
+            //    case EAssetType.Geometry:
+            //        if (node.Model is Camera)
+            //        {
 
-                    }
-                    else if (node.Model is Light)
-                    {
+            //        }
+            //        else if (node.Model is Light)
+            //        {
 
-                    }
-                    else
-                    {
-                        AddWindow(new GeometryViewModel((Geometry)node.Model));
-                    }
-                    break;
-                case EAssetType.Materials:
-                    AddWindow(new MaterialViewModel((Material)node.Model));
-                    AddWindow(new ShaderViewModel((Material)node.Model));
-                    break;
-                case EAssetType.Textures:
-                    AddWindow(new TextureViewModel((Texture)node.Model));
-                    break;
-                default:
-                    break;
-            }
+            //        }
+            //        else
+            //        {
+            //            AddWindow(new GeometryViewModel((Geometry)node.Model));
+            //        }
+            //        break;
+            //    case EAssetType.Materials:
+            //        AddWindow(new MaterialViewModel((Material)node.Model));
+            //        break;
+            //    case EAssetType.Textures:
+            //        AddWindow(new TextureViewModel((Texture)node.Model));
+            //        break;
+            //    default:
+            //        break;
+            //}
         }
 
 
         public override void UpdateProperty()
         {
-
+            Viewport.Instance.glControl_Paint(null, null);
         }
         #endregion
         

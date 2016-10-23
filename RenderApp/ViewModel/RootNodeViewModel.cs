@@ -14,10 +14,10 @@ using RenderApp.Utility;
 namespace RenderApp.ViewModel
 {
    
-    public partial class RootNodeViewModel : AvalonWindowViewModel
+    public partial class RootNodeViewModel : DockWindowViewModel
     {
-        
-        public NodeItemViewModel RootNode
+
+        public ObservableCollection<NodeItemViewModel> RootNode
         {
             get;
             private set;
@@ -35,31 +35,44 @@ namespace RenderApp.ViewModel
             }
         }
 
-        public RootNodeViewModel(Node rootNode, string title)
+        public RootNodeViewModel(RANode rootNode, string title)
         {
-            WindowPosition = AvalonWindow.LeftUp;
             Title = title;
-            if (rootNode != null)
+            Initialize(new List<RANode>() { rootNode });
+            
+        }
+        public RootNodeViewModel(List<RANode> rootNodes,string title)
+        {
+            Title = title;
+            Initialize(rootNodes);
+            
+        }
+        public void Initialize(List<RANode> rootNodes)
+        {
+            if (rootNodes != null)
             {
-                RootNode = new NodeItemViewModel(rootNode, null);
-                InitAddNode(rootNode,RootNode);
+                RootNode = new ObservableCollection<NodeItemViewModel>();
+                foreach (var root in rootNodes)
+                {
+                    var rootVM = new NodeItemViewModel(root, null);
+                    RootNode.Add(rootVM);
+                    InitAddNode(root, rootVM);
+                }
             }
         }
+
         /// <summary>
         /// 再帰関数
         /// </summary>
         /// <param name="node"></param>
-        private void InitAddNode(Node parent,NodeItemViewModel parentVM)
+        private void InitAddNode(RANode parent,NodeItemViewModel parentVM)
         {
             foreach (var node in parent.Children)
             {
                 var nodeVM = new NodeItemViewModel(node, parentVM);
+                parentVM.Children.Add(nodeVM);
                 InitAddNode(node, nodeVM);
             }
-        }
-        public override void SizeChanged()
-        {
-
         }
 
         public void SelectionChangedCommand(object sender, EventArgs e)
@@ -74,17 +87,22 @@ namespace RenderApp.ViewModel
         public void DeleteCommand()
         {
             bool exist = false;
-            foreach(var folder in RootNode.Children)
+            foreach(var root in RootNode)
             {
-                if(folder.Children.Contains(ActiveNode))
+                foreach (var folder in root.Children)
                 {
-                    folder.Children.Remove(ActiveNode);
-                    exist = true;
+                    if (folder.Children.Contains(ActiveNode))
+                    {
+                        folder.Children.Remove(ActiveNode);
+                        exist = true;
+                    }
                 }
-            }
-            if(exist)
-            {
-                Scene.ActiveScene.RootNode.RemoveRecursiveChild(ActiveNode.Model.Key);
+                if (exist)
+                {
+                    Scene.ActiveScene.RootNode.RemoveRecursiveChild(ActiveNode.Model.Key);
+                    break;
+                }
+
             }
 
         }

@@ -21,25 +21,6 @@ using System.IO;
 using RenderApp.GLUtil;
 namespace RenderApp
 {
-    public enum LoadAssetMenu
-    {
-        Model,
-        Texture,
-        Shader
-    }
-    public enum CreateObjectMenu
-    {
-        Cube,
-        Sphere,
-        Plane,
-        WireFrame,
-        Polygon
-    }
-    public enum ControllerMenu
-    {
-        Default,
-        Dijkstra
-    }
 
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック

@@ -131,13 +131,12 @@ namespace RenderApp.ViewModel
             _children = new ObservableCollection<NodeItemViewModel>();
         }
 
-        public NodeItemViewModel(Node node,NodeItemViewModel parent)
+        public NodeItemViewModel(RANode node,NodeItemViewModel parent)
             : this()
         {
             if (parent != null)
             {
                 Parent = parent;
-                Parent.Children.Add(this);
             }
             node.InsertNodeEvent += InsertNodeEvent;
             node.RemoveNodeEvent += RemoveNodeEvent;
@@ -146,10 +145,10 @@ namespace RenderApp.ViewModel
         }
         private void InsertNodeEvent(object sender, NotifyNodeChangedEventArgs e)
         {
-            if (sender is Node)
+            if (sender is RANode)
             {
-                Node node = sender as Node;
-                if(Children.Count < e.NewIndex)
+                RANode node = sender as RANode;
+                if(Children.Count > e.NewIndex)
                 {
                     Children.Insert(e.NewIndex, new NodeItemViewModel(node, this));
                 }
@@ -161,9 +160,9 @@ namespace RenderApp.ViewModel
         }
         private void RemoveNodeEvent(object sender, NotifyNodeChangedEventArgs e)
         {
-            if (sender is Node)
+            if (sender is RANode)
             {
-                Node node = sender as Node;
+                RANode node = sender as RANode;
                 node.InsertNodeEvent -= InsertNodeEvent;
                 node.RemoveNodeEvent -= RemoveNodeEvent;
                 if(Parent != null)

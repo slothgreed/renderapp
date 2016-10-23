@@ -7,7 +7,7 @@ using RenderApp;
 namespace RenderApp.Utility
 {
 
-    public class Node 
+    public class RANode 
     {
         public delegate void InsertNodeEventHandler(object sender, NotifyNodeChangedEventArgs e);
         public InsertNodeEventHandler InsertNodeEvent;
@@ -20,7 +20,7 @@ namespace RenderApp.Utility
             get;
             set;
         }
-        public List<Node> Children
+        public List<RANode> Children
         {
             get;
             private set;
@@ -37,21 +37,21 @@ namespace RenderApp.Utility
                 return MyObject.Key;
             }
         }
-        public MyObject MyObject;
-        private Node Parent;
+        public RAObject MyObject;
+        private RANode Parent;
 
-        public Node(MyObject _MyObject)
+        public RANode(RAObject _MyObject)
         {
             MyObject = _MyObject;
-            Children = new List<Node>();
+            Children = new List<RANode>();
         }
-        public Node(string name)
+        public RANode(string name)
         {
             emptyName = name;
-            Children = new List<Node>();
+            Children = new List<RANode>();
         }
         #region [add child]
-        internal void AddChild(Node node)
+        internal void AddChild(RANode node)
         {
             if (FindChild(node.Name) == null)
             {
@@ -63,11 +63,11 @@ namespace RenderApp.Utility
                 }
             }
         }
-        public void AddChild(MyObject child)
+        public void AddChild(RAObject child)
         {
             if (FindChild(child.Key) == null)
             {
-                Node node = new Node(child);
+                RANode node = new RANode(child);
                 node.Parent = this;
                 Children.Add(node);
                 if (InsertNodeEvent != null)
@@ -80,7 +80,7 @@ namespace RenderApp.Utility
         {
             if (FindChild(name) == null)
             {
-                Node node = new Node(name);
+                RANode node = new RANode(name);
                 node.Parent = this;
                 Children.Add(node);
                 if (InsertNodeEvent != null)
@@ -99,7 +99,7 @@ namespace RenderApp.Utility
             }
             if (FindChild(name) == null)
             {
-                var node = new Node(name);
+                var node = new RANode(name);
                 Children.Insert(index, node);
                 if(InsertNodeEvent != null)
                 {
@@ -107,7 +107,7 @@ namespace RenderApp.Utility
                 }
             }
         }
-        public void Insert(int index, MyObject child)
+        public void Insert(int index, RAObject child)
         {
             if (Children.Count < index)
             {
@@ -116,7 +116,7 @@ namespace RenderApp.Utility
             }
             if (FindChild(child.Key) == null)
             {
-                var node = new Node(child.Key);
+                var node = new RANode(child.Key);
                 Children.Insert(index, node);
                 if (InsertNodeEvent != null)
                 {
@@ -127,7 +127,7 @@ namespace RenderApp.Utility
         }
         #endregion
         #region [remove method]
-        private void RemoveChild(Node child)
+        private void RemoveChild(RANode child)
         {
             if(Children.Contains(child))
             {
@@ -138,7 +138,7 @@ namespace RenderApp.Utility
                 }
             }
         }
-        public void RemoveChild(MyObject child)
+        public void RemoveChild(RAObject child)
         {
             var remove = FindChild(child.Key);
             if(remove != null)
@@ -172,7 +172,7 @@ namespace RenderApp.Utility
         }
         #endregion
         #region [check child]
-        public bool ExistChild(MyObject child)
+        public bool ExistChild(RAObject child)
         {
             if (FindChild(child.Key) != null)
             {
@@ -180,11 +180,11 @@ namespace RenderApp.Utility
             }
             return false;
         }
-        public Node FindChild(string key)
+        public RANode FindChild(string key)
         {
            return Children.Where(p => p.Name == key).FirstOrDefault();
         }
-        public Node FindRecursiveChild(string key)
+        public RANode FindRecursiveChild(string key)
         {
             foreach(var child in Children)
             {
@@ -218,10 +218,12 @@ namespace RenderApp.Utility
             }
         }
 
-        internal IEnumerable<Node> AllChildren()
+        internal IEnumerable<RANode> AllChildren()
         {
             foreach(var child in Children)
             {
+                yield return child;
+
                 foreach(var grand in child.Children )
                 {
                     yield return grand;

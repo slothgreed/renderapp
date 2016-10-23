@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 namespace RenderApp.ViewModel
 {
-    public class RenderSystemViewModel : AvalonWindowViewModel
+    public class RenderSystemViewModel : DockWindowViewModel
     {
         public RenderSystem Model
         {
@@ -29,7 +29,6 @@ namespace RenderApp.ViewModel
         public RenderSystemViewModel(RenderSystem _model)
         {
             Model = _model;
-            WindowPosition = AvalonWindow.LeftDown;
         }
 
         public virtual string Title
@@ -41,9 +40,6 @@ namespace RenderApp.ViewModel
         }
 
 
-        public override void SizeChanged()
-        {
-        }
 
         public override void UpdateProperty()
         {

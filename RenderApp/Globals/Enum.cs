@@ -14,6 +14,7 @@ namespace RenderApp
     }
     public enum EVariableType
     {
+        None,
         Vec2,
         Vec3,
         Vec4,
@@ -27,7 +28,9 @@ namespace RenderApp
         Vec4Array,
         IntArray,
         FloatArray,
-        DoubleArra
+        DoubleArra,
+        Texture2D,
+        Texture3D
     }
 
     public enum EAssetType
@@ -69,6 +72,23 @@ namespace RenderApp
         FrameBuffer,
         CubeMap
     }
+    public enum RAGeometry
+    {
+        Cube,
+        Sphere,
+        Plane,
+        WireFrame,
+        Polygon,
+        STL,
+        OBJ,
+        File
+    }
+    public enum RAAsset
+    {
+        Model,
+        Texture,
+        Shader
+    }
     public enum TextureKind
     {
         None = -1,
@@ -79,4 +99,10 @@ namespace RenderApp
         World,
         Lighting
     }
+    public enum RAController
+    {
+        Default,
+        Dijkstra
+    }
+
 }

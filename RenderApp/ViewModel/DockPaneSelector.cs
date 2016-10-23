@@ -8,7 +8,7 @@ using System.Windows;
 namespace RenderApp.ViewModel
 {
 
-    class AvalonPaneStyleSelector : StyleSelector
+    class DockPaneStyleSelector : StyleSelector
     {
         public Style AnchorableStyle { get; set; }
         public Style DocumentStyle { get; set; }
@@ -22,7 +22,7 @@ namespace RenderApp.ViewModel
             return AnchorableStyle;
         }
     }
-    class AvalonPaneTemplateSelector: DataTemplateSelector
+    class DockPaneTemplateSelector: DataTemplateSelector
     {
         public DataTemplate MaterialTemplate{get;set;}
         public DataTemplate AssetTemplate { get; set; }

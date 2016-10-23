@@ -8,7 +8,7 @@ using System.IO;
 namespace RenderApp.AssetModel
 {
 
-    public abstract class Asset : MyObject
+    public abstract class Asset : RAObject
     {
         public Asset(string name)
         {

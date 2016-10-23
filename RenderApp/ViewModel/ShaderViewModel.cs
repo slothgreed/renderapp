@@ -10,7 +10,7 @@ using OpenTK;
 using RenderApp.GLUtil.ShaderModel;
 namespace RenderApp.ViewModel
 {
-    class ShaderViewModel : AvalonWindowViewModel
+    class ShaderViewModel : DockWindowViewModel
     {
         public override string Title
         {
@@ -31,8 +31,6 @@ namespace RenderApp.ViewModel
         }
         public ShaderViewModel(Material material)
         {
-            WindowPosition = AvalonWindow.RightDown;
-
             Items = new Dictionary<string,object>();
             foreach (ShaderProgramInfo loop in material.CurrentShader.GetShaderVariable())
             {
@@ -62,10 +60,6 @@ namespace RenderApp.ViewModel
                 }
             }
             Property = new PropertyGridViewModel(Items);
-        }
-        public override void SizeChanged()
-        {
-
         }
         public override void UpdateProperty()
         {

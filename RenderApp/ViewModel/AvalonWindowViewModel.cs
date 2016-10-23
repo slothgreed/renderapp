@@ -6,20 +6,8 @@ using System.Threading.Tasks;
 using RenderApp;
 namespace RenderApp.ViewModel
 {
-    public abstract class AvalonWindowViewModel : ViewModelBase
+    public abstract class DockWindowViewModel : ViewModelBase
     {
-        public enum AvalonWindow
-        {
-            LeftUp = 0,
-            LeftDown,
-            RightUp,
-            RightDown,
-        }
-        public virtual AvalonWindow WindowPosition
-        {
-            get;
-            set;
-        }
         private string _title;
         public virtual string Title
         {
@@ -33,7 +21,5 @@ namespace RenderApp.ViewModel
             }
         }
 
-
-        public abstract void SizeChanged();
     }
 }

@@ -12,8 +12,8 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         mc:Ignorable="d"
-        Title="RenderingApplication" MinHeight="600" MinWidth="800"
-        Height="600" Width="800"
+        Title="RenderingApplication" MinHeight="600" MinWidth="1200"
+        Height="600" Width="1200"
         xmlns:tree="clr-namespace:System.Windows.Controls;assembly=MultiSelectTreeView"
         >
     <i:Interaction.Triggers>
@@ -28,13 +28,114 @@
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
-    <Grid x:Name="mainGrid">
+    <Window.Resources>
+        <vm:DockPaneTemplateSelector x:Key="TabItemTemplateSelector">
+            <vm:DockPaneTemplateSelector.AssetTemplate>
+                <DataTemplate DataType="{x:Type vm:RootNodeViewModel}">
+                    <v:RootNodeView/>
+                </DataTemplate>
+            </vm:DockPaneTemplateSelector.AssetTemplate>
+            <vm:DockPaneTemplateSelector.ShaderProgramTemplate>
+                <DataTemplate  DataType="{x:Type vm:ShaderProgramViewModel}">
+                    <v:ShaderProgramView/>
+                </DataTemplate>
+            </vm:DockPaneTemplateSelector.ShaderProgramTemplate>
+            <vm:DockPaneTemplateSelector.MaterialTemplate>
+                <DataTemplate  DataType="{x:Type vm:MaterialViewModel}">
+                    <v:MaterialView/>
+                </DataTemplate>
+            </vm:DockPaneTemplateSelector.MaterialTemplate>
+            <vm:DockPaneTemplateSelector.TexureTemplate>
+                <DataTemplate  DataType="{x:Type vm:TextureViewModel}">
+                    <v:TextureView/>
+                </DataTemplate>
+            </vm:DockPaneTemplateSelector.TexureTemplate>
+            <vm:DockPaneTemplateSelector.ViewportTemplate>
+                <DataTemplate  DataType="{x:Type vm:ViewportViewModel}">
+                    <v:ViewportView/>
+                </DataTemplate>
+            </vm:DockPaneTemplateSelector.ViewportTemplate>
+            <vm:DockPaneTemplateSelector.GeometryTemplate>
+                <DataTemplate DataType="{x:Type vm:GeometryViewModel}">
+                    <v:GeometryView/>
+                </DataTemplate>
+            </vm:DockPaneTemplateSelector.GeometryTemplate>
+            <vm:DockPaneTemplateSelector.ShaderTemplate>
+                <DataTemplate DataType="{x:Type vm:ShaderViewModel}">
+                    <v:ShaderView/>
+                </DataTemplate>
+            </vm:DockPaneTemplateSelector.ShaderTemplate>
+            <vm:DockPaneTemplateSelector.RenderTemplate>
+                <DataTemplate DataType="{x:Type vm:RenderSystemViewModel}">
+                    <v:RenderSystemView/>
+                </DataTemplate>
+            </vm:DockPaneTemplateSelector.RenderTemplate>
+        </vm:DockPaneTemplateSelector>
+        
+        <DataTemplate x:Key="TabItemHeaderTempalte">
+            <TextBlock Text="{Binding Title}"/>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
-            <RowDefinition Height="25" />
         </Grid.RowDefinitions>
-        <avalon:DockingManager x:Name="dockingManager"  Grid.Row="1" 
+        <Menu VerticalAlignment="Top" Grid.Row="0" Height="25">
+            <MenuItem Header="Project">
+                <MenuItem Header="New" Command="{Binding NewProject}"/>
+                <MenuItem Header="Open" Command="{Binding OpenProject}"/>
+                <MenuItem Header="Save" Command="{Binding SaveProject}"/>
+                <MenuItem Header="SaveAs" Command="{Binding SaveAsProject}"/>
+            </MenuItem>
+
+            <MenuItem Header="Asset">
+                <MenuItem Header="Model" Command="{Binding LoadAsset}" CommandParameter="{x:Static local:RAAsset.Model}"/>
+                <MenuItem Header="Texture" Command="{Binding LoadAsset}" CommandParameter="{x:Static local:RAAsset.Texture}"/>
+                <MenuItem Header="Shader" Command="{Binding LoadAsset}" CommandParameter="{x:Static local:RAAsset.Shader}"/>
+                <MenuItem Header="Object">
+                    <MenuItem Header="Cube" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.Cube}"/>
+                    <MenuItem Header="Sphere" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.Sphere}"/>
+                    <MenuItem Header="Plane" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.Plane}"/>
+                </MenuItem>
+            </MenuItem>
+
+            <MenuItem Header="Controller">
+                <MenuItem Header="Default" Command="{Binding Controller}" CommandParameter="{x:Static local:RAController.Default}"/>
+                <MenuItem Header="Dijkstra" Command="{Binding Controller}" CommandParameter="{x:Static local:RAController.Dijkstra}"/>
+            </MenuItem>
+
+
+            <MenuItem Header="Rendering">
+                <MenuItem Header="PostProcess" Command="{Binding TogglePostProcess}" IsChecked="{Binding PostProcessMode,Mode=OneWay}"/>
+            </MenuItem>
+            <MenuItem Header="Analyze">
+                <MenuItem Header="WireFrame" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.WireFrame}"/>
+                <MenuItem Header="Polygon" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.Polygon}"/>
+                <Separator/>
+                <MenuItem Header="Voxelize" Command="{Binding Voxelize}"/>
+                <MenuItem Header="Octree" Command="{Binding Octree}"/>
+            </MenuItem>
+        </Menu>
+
+        <Grid x:Name="mainGrid" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TabControl Grid.Column ="0" Grid.Row ="0" ItemsSource="{Binding LeftUpItemsSource}" ContentTemplateSelector="{StaticResource TabItemTemplateSelector}" ItemTemplate="{StaticResource TabItemHeaderTempalte}"/>
+            <TabControl Grid.Column ="0" Grid.Row ="1" ItemsSource="{Binding LeftDownItemsSource}" ContentTemplateSelector="{StaticResource TabItemTemplateSelector}" ItemTemplate="{StaticResource TabItemHeaderTempalte}"/>
+            <TabControl Grid.Column ="2" Grid.Row ="0" ItemsSource="{Binding RightUpItemsSource}" ContentTemplateSelector="{StaticResource TabItemTemplateSelector}" ItemTemplate="{StaticResource TabItemHeaderTempalte}"/>
+            <TabControl Grid.Column ="2" Grid.Row ="1" ItemsSource="{Binding RightDownItemsSource}" ContentTemplateSelector="{StaticResource TabItemTemplateSelector}" ItemTemplate="{StaticResource TabItemHeaderTempalte}"/>
+            <TabControl Grid.Column ="1" Grid.Row ="0" Grid.RowSpan="2" ItemsSource="{Binding CenterItemsSource}" ContentTemplateSelector="{StaticResource TabItemTemplateSelector}" ItemTemplate="{StaticResource TabItemHeaderTempalte}"/>
+
+
+            <!--<avalon:DockingManager x:Name="dockingManager"  Grid.Row="1" 
                                AnchorablesSource="{Binding Anchorables}"
                                DocumentsSource="{Binding Documents}"
                                ActiveContent="{Binding ActivePane,Mode=TwoWay}">
@@ -108,44 +209,10 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
             <avalon:LayoutRoot/>
-        </avalon:DockingManager>
+        </avalon:DockingManager>-->
 
-        <Menu VerticalAlignment="Top">
-            <MenuItem Header="Project">
-                <MenuItem Header="New" Command="{Binding NewProject}"/>
-                <MenuItem Header="Open" Command="{Binding OpenProject}"/>
-                <MenuItem Header="Save" Command="{Binding SaveProject}"/>
-                <MenuItem Header="SaveAs" Command="{Binding SaveAsProject}"/>
-            </MenuItem>
 
-            <MenuItem Header="Asset">
-                <MenuItem Header="Model" Command="{Binding LoadAsset}" CommandParameter="{x:Static local:LoadAssetMenu.Model}"/>
-                <MenuItem Header="Texture" Command="{Binding LoadAsset}" CommandParameter="{x:Static local:LoadAssetMenu.Texture}"/>
-                <MenuItem Header="Shader" Command="{Binding LoadAsset}" CommandParameter="{x:Static local:LoadAssetMenu.Shader}"/>
-                <MenuItem Header="Object">
-                    <MenuItem Header="Cube" Command="{Binding CreateObject}" CommandParameter="{x:Static local:CreateObjectMenu.Cube}"/>
-                    <MenuItem Header="Sphere" Command="{Binding CreateObject}" CommandParameter="{x:Static local:CreateObjectMenu.Sphere}"/>
-                    <MenuItem Header="Plane" Command="{Binding CreateObject}" CommandParameter="{x:Static local:CreateObjectMenu.Plane}"/>
-                </MenuItem>
-            </MenuItem>
-            
-            <MenuItem Header="Controller">
-                <MenuItem Header="Default" Command="{Binding Controller}" CommandParameter="{x:Static local:ControllerMenu.Default}"/>
-                <MenuItem Header="Dijkstra" Command="{Binding Controller}" CommandParameter="{x:Static local:ControllerMenu.Dijkstra}"/>
-            </MenuItem>
-            
-            
-            <MenuItem Header="Rendering">
-                <MenuItem Header="PostProcess" Command="{Binding TogglePostProcess}" IsChecked="{Binding PostProcessMode,Mode=OneWay}"/> 
-            </MenuItem>
-            <MenuItem Header="Analyze">
-                <MenuItem Header="WireFrame" Command="{Binding CreateObject}" CommandParameter="{x:Static local:CreateObjectMenu.WireFrame}"/>
-                <MenuItem Header="Polygon" Command="{Binding CreateObject}" CommandParameter="{x:Static local:CreateObjectMenu.Polygon}"/>
-                <Separator/>
-                <MenuItem Header="Voxelize" Command="{Binding Voxelize}"/>
-                <MenuItem Header="Octree" Command="{Binding Octree}"/>
-            </MenuItem>
-            
-        </Menu>
+        </Grid>
     </Grid>
+    
 </Window>

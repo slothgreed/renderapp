@@ -12,7 +12,7 @@ using OpenTK;
 using RenderApp.GLUtil;
 namespace RenderApp.ViewModel
 {
-    class MaterialViewModel : AvalonWindowViewModel
+    public class MaterialViewModel : DockWindowViewModel
     {
 
         private Dictionary<string,object> _items;
@@ -39,13 +39,9 @@ namespace RenderApp.ViewModel
         }
         public MaterialViewModel()
         {
-            WindowPosition = AvalonWindow.RightUp;
         }
         public MaterialViewModel(Material model)
         {
-            WindowPosition = AvalonWindow.RightUp;
-
-
             _items = new Dictionary<string, object>();
 
             model.CurrentShader.ActiveShader.ForEach(
@@ -62,12 +58,10 @@ namespace RenderApp.ViewModel
         {
             get { return "Material"; }
         }
-        public override void SizeChanged()
-        {
-        }
+
         public override void UpdateProperty()
         {
-
+            throw new NotImplementedException();
         }
     }
 }

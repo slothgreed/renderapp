@@ -6,20 +6,16 @@ using System.Threading.Tasks;
 
 namespace RenderApp.ViewModel
 {
-    public class ModelViewModel : AvalonWindowViewModel
+    public class ModelViewModel : DockWindowViewModel
     {
         public ModelViewModel()
         {
             Title = "Material";
         }
 
-
-        public override void SizeChanged()
-        {
-        }
         public override void UpdateProperty()
         {
-
+            throw new NotImplementedException();
         }
     }
 }

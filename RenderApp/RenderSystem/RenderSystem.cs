@@ -185,7 +185,7 @@ namespace RenderApp
             {
                 PostStage.Render();
             }
-            OutputStage.SetValue("uSelectMap", SelectionStage.FrameBufferItem.TextureList[0]);
+            OutputStage.SetValue("uSelectMap", SelectionStage.FrameBufferItem.TextureList[0].ID);
             OutputStage.SetPlaneTexture(TextureKind.Albedo, OutputTexture);
             OutputStage.OutputRender();
         }

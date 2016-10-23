@@ -38,10 +38,6 @@ namespace RenderApp.AssetModel
             return sphere;
         }
 
-
-
-
-
         internal Camera CreateMainCamera()
         {
             return new Camera("MainCamera");
@@ -55,9 +51,8 @@ namespace RenderApp.AssetModel
         {
             if(geometry.MaterialItem != null)
             {
-                Scene.ActiveScene.AddSceneObject(geometry.MaterialItem);
+                Scene.ActiveScene.AddRootSceneObject(geometry.MaterialItem);
             }
-            Scene.ActiveScene.AddSceneObject(geometry);
             return geometry;
         }
 
@@ -154,6 +149,19 @@ namespace RenderApp.AssetModel
             Project.ActiveProject.AddChild(plane.MaterialItem);
             plane.MaterialItem.SetShader(shader);
             return plane;
+        }
+
+        internal Geometry CreateLoad3DModel(string filename)
+        {
+            string extension = System.IO.Path.GetExtension(filename);
+            switch (extension)
+            {
+                case ".obj":
+                    return new CObjFile(Asset.GetNameFromPath(filename), filename);
+                case ".stl":
+                    return new StlFile(Asset.GetNameFromPath(filename), filename);
+            }
+            return null;
         }
     }
 }

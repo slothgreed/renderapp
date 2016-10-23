@@ -8,7 +8,7 @@ using RenderApp.GLUtil;
 using RenderApp.GLUtil.ShaderModel;
 namespace RenderApp.ViewModel
 {
-    public class ShaderProgramViewModel : AvalonWindowViewModel
+    public class ShaderProgramViewModel : DockWindowViewModel
     {
         public override  string Title
         {
@@ -35,17 +35,14 @@ namespace RenderApp.ViewModel
 
         public ShaderProgramViewModel(ShaderProgram model)
         {
-            WindowPosition = AvalonWindow.RightDown;
             Model = model;
         }
 
 
-        public override void SizeChanged()
-        {
-        }
+
         public override void UpdateProperty()
         {
-
+            throw new NotImplementedException();
         }
     }
 }

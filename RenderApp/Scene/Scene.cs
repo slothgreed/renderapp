@@ -29,7 +29,7 @@ namespace RenderApp
         /// <summary>
         /// ルートノード
         /// </summary>
-        public Node RootNode;
+        public RANode RootNode;
         ///// <summary>
         ///// アセットリスト TODO実装
         ///// </summary>
@@ -184,15 +184,14 @@ namespace RenderApp
             return RootNode.FindChild(key);
         }
       
-        public void AddSceneObject(Asset value)
+        public void AddRootSceneObject(RAObject value)
         {
-            RootNode.AddChild(value);
+            AddSceneObject(RootNode,value);
         }
 
-        public void AddSceneObject(Node parent,Asset value)
+        public void AddSceneObject(RANode parent, RAObject value)
         {
             parent.AddChild(value);
-
         }
 
         private string GetNewKey<T>(string key, Dictionary<string, T> AssetList) where T : Asset
@@ -222,32 +221,21 @@ namespace RenderApp
         /// </summary>
         public void Initialize()
         {
-            RootNode = new Node("ROOT");
+            RootNode = new RANode("ROOT");
             MainCamera = AssetFactory.Instance.CreateMainCamera();
-            Scene.ActiveScene.AddSceneObject(MainCamera);
+            Scene.ActiveScene.AddRootSceneObject(MainCamera);
 
             SunLight = AssetFactory.Instance.CreateSunLight();
-            Scene.ActiveScene.AddSceneObject(SunLight);
+            Scene.ActiveScene.AddRootSceneObject(SunLight);
 
             Geometry map = AssetFactory.Instance.CreateEnvironmentMap();
-            AddSceneObject(map);
+            AddRootSceneObject(map);
         }
         #endregion
         #region [dispose]
         public void Dispose()
         {
-            //foreach (var loop in ShaderProgramList.Values)
-            //{
-            //    loop.Dispose();
-            //}
-            //foreach (var loop in MaterialList.Values)
-            //{
-            //    loop.Dispose();
-            //}
-            //foreach (var loop in EnvProbeList.Values)
-            //{
-            //    loop.Dispose();
-            //}
+            RootNode.Dispose();
         }
         public static void AllDispose()
         {
@@ -275,7 +263,7 @@ namespace RenderApp
             viewport[2] = Viewport.Instance.Width;
             viewport[3] = Viewport.Instance.Height;
             CCalc.GetClipPos(MainCamera.Matrix, MainCamera.ProjMatrix, viewport, mouse, out near, out far);
-            foreach (Node geometryNode in RootNode.AllChildren())
+            foreach (RANode geometryNode in RootNode.AllChildren())
             {
                 Geometry geometry = null;
                 if(geometryNode.MyObject is Geometry)

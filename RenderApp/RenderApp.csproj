@@ -75,9 +75,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Windows.Shell">
-      <HintPath>..\..\..\..\..\RenderApp\dll\Microsoft.Windows.Shell.dll</HintPath>
-    </Reference>
     <Reference Include="MultiSelectTreeView">
       <HintPath>..\packages\MultiSelectTreeView.1.0.7\lib\net40\MultiSelectTreeView.dll</HintPath>
     </Reference>
@@ -157,7 +154,7 @@
     <Compile Include="GLUtil\ShaderModel\ShaderProgramInfo.cs" />
     <Compile Include="Globals\Enum.cs" />
     <Compile Include="GLUtil\TextureFactory.cs" />
-    <Compile Include="MyObject.cs" />
+    <Compile Include="RAObject.cs" />
     <Compile Include="RenderSystem\GBuffer.cs" />
     <Compile Include="RenderSystem\PostProcess.cs" />
     <Compile Include="RenderSystem\RenderQueue.cs" />
@@ -177,13 +174,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RootNodeViewModelT4.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\AvalonPaneSelector.cs" />
+    <Compile Include="ViewModel\DockPaneSelector.cs" />
     <Compile Include="AssetModel\Geometry\Geometry.cs" />
     <Compile Include="AssetModel\LightModel\DirectionLight.cs" />
     <Compile Include="AssetModel\LightModel\PointLight.cs" />
     <Compile Include="AssetModel\LightModel\SpotLight.cs" />
     <Compile Include="AssetModel\Asset.cs" />
-    <Compile Include="ViewModel\AvalonUpdateStrategy.cs" />
     <Compile Include="ViewModel\AvalonWindowViewModel.cs" />
     <Compile Include="ViewModel\ComboItemViewModel.cs" />
     <Compile Include="ViewModel\DefaultViewModel.cs" />

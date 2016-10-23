@@ -43,10 +43,10 @@ namespace RenderApp.Analyzer
 
             SetNormalizeParameter();
 
-            for (int i = 0; i < m_Vertex.Count; i++ )
-            {
-                VertexDecimation(m_Vertex[i].m_Edge.Start, m_Vertex[i].m_Edge.End);
-            }
+            //for (int i = 0; i < m_Vertex.Count; i++ )
+            //{
+            //    VertexDecimation(m_Vertex[i].m_Edge.Start, m_Vertex[i].m_Edge.End);
+            //}
 
             if (CheckOppositeEdge())
             {

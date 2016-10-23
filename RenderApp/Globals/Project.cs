@@ -10,36 +10,37 @@ namespace RenderApp.Globals
 {
     public class Project
     {
-        public Node RootNode;
-        private Node GeometryRoot;
+        public RANode RootNode;
+        private RANode GeometryRoot;
         /// <summary>
         /// Textureオブジェクト
         /// </summary>
-        private Node TextureRoot;
+        private RANode TextureRoot;
         /// <summary>
         /// マテリアルオブジェクト
         /// </summary>
-        private Node MaterialRoot;
+        private RANode MaterialRoot;
 
         public static Project ActiveProject = new Project();
 
         private Project()
         {
-            RootNode = new Node("ROOT");
-            GeometryRoot = new Node("Geometry");
-            TextureRoot = new Node("Texture");
-            MaterialRoot = new Node("Material");
+            RootNode = new RANode("ROOT");
+            GeometryRoot = new RANode("Geometry");
+            TextureRoot = new RANode("Texture");
+            MaterialRoot = new RANode("Material");
             RootNode.AddChild(GeometryRoot);
             RootNode.AddChild(TextureRoot);
             RootNode.AddChild(MaterialRoot);
         
         }
 
-        internal void AddChild(MyObject value)
+        internal void AddChild(RAObject value)
         {
             if (value is Geometry)
             {
                 GeometryRoot.AddChild(value);
+                Scene.ActiveScene.AddRootSceneObject(value);
             }
             if (value is Texture)
             {

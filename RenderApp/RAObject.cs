@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace RenderApp
 {
-    public abstract class MyObject
+    public abstract class RAObject
     {
         private static int objectCounter = 0;
-        public MyObject()
+        public RAObject()
         {
         }
         private string _key = null;

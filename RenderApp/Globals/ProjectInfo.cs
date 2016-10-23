@@ -55,6 +55,7 @@ namespace RenderApp
         }
         public bool Open(string filePath)
         {
+
             if(Path.GetExtension(filePath) != "proj")
             {
                 throw new FileFormatException("extention error");

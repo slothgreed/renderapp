@@ -194,6 +194,11 @@ namespace RenderApp.GLUtil.ShaderModel
         /// <param name="uniform"></param>
         private void BindUniformState(ShaderProgramInfo uniform, ref int activeCount)
         {
+            if(uniform.variable == null)
+            {
+                //Output.Error("Shader Binding Error" + uniform.Name);
+                return;
+            }
             if (uniform.ID == -1)
             {
                 return;
@@ -218,8 +223,12 @@ namespace RenderApp.GLUtil.ShaderModel
             }
             else if (uniform.variableType == EVariableType.Int)
             {
+                GL.Uniform1(uniform.ID, (int)uniform.variable);
+            }
+            else if (uniform.variableType == EVariableType.Texture2D)
+            {
                 GL.ActiveTexture(TextureUnit.Texture0 + activeCount);
-                GL.BindTexture(TextureTarget.Texture2D, ((Texture)uniform.variable).ID);
+                GL.BindTexture(TextureTarget.Texture2D, (int)uniform.variable);
                 GL.Uniform1(uniform.ID, activeCount);
                 activeCount++;
             }
@@ -354,37 +363,37 @@ namespace RenderApp.GLUtil.ShaderModel
                     case "uAlbedoMap":
                         if (TextureItem.ContainsKey(TextureKind.Albedo))
                         {
-                            info.variable = TextureItem[TextureKind.Albedo];
+                            info.variable = TextureItem[TextureKind.Albedo].ID;
                         }
                         break;
                     case "uWorldMap":
                         if (TextureItem.ContainsKey(TextureKind.World))
                         {
-                            info.variable = TextureItem[TextureKind.World];
+                            info.variable = TextureItem[TextureKind.World].ID;
                         }
                         break;
                     case "uLightingMap":
                         if (TextureItem.ContainsKey(TextureKind.Lighting))
                         {
-                            info.variable = TextureItem[TextureKind.Lighting];
+                            info.variable = TextureItem[TextureKind.Lighting].ID;
                         }
                         break;
                     case "uNormalMap":
                         if (TextureItem.ContainsKey(TextureKind.Normal))
                         {
-                            info.variable = TextureItem[TextureKind.Normal];
+                            info.variable = TextureItem[TextureKind.Normal].ID;
                         }
                         break;
                     case "uHeightMap":
                         if (TextureItem.ContainsKey(TextureKind.Height))
                         {
-                            info.variable = TextureItem[TextureKind.Height];
+                            info.variable = TextureItem[TextureKind.Height].ID;
                         }
                         break;
                     case "uEmissiveMap":
                         if (TextureItem.ContainsKey(TextureKind.Emissive))
                         {
-                            info.variable = TextureItem[TextureKind.Emissive];
+                            info.variable = TextureItem[TextureKind.Emissive].ID;
                         }
                         break;
                 }
@@ -499,9 +508,13 @@ namespace RenderApp.GLUtil.ShaderModel
                     info.variableType = EVariableType.Vec4;
                     break;
                 case "int":
-                case "sampler2D":
-                case "sampler3D":
                     info.variableType = EVariableType.Int;
+                    break;
+                case "sampler2D":
+                    info.variableType = EVariableType.Texture2D;
+                    break;
+                case "sampler3D":
+                    info.variableType = EVariableType.Texture3D;
                     break;
                 case "float":
                     info.variableType = EVariableType.Float;
@@ -565,7 +578,7 @@ namespace RenderApp.GLUtil.ShaderModel
                     case "attribute":
                     case "in":
                         AttributeParameter(info, code);
-                        if (info.variable != null && !_shaderVariable.ContainsKey(code[2]))
+                        if (info.variableType != EVariableType.None && !_shaderVariable.ContainsKey(code[2]))
                         {
                             info.Name = code[2];
                             info.shaderVariableType = EShaderVariableType.Attribute;
@@ -575,7 +588,7 @@ namespace RenderApp.GLUtil.ShaderModel
                         break;
                     case "uniform":
                         UniformParameter(info,code);
-                        if (info.variable != null && !_shaderVariable.ContainsKey(code[2]))
+                        if (info.variableType != EVariableType.None && !_shaderVariable.ContainsKey(code[2]))
                         {
                             info.Name = code[2];
                             info.shaderVariableType = EShaderVariableType.Uniform;

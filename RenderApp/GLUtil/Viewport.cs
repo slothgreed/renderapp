@@ -143,9 +143,7 @@ namespace RenderApp.GLUtil
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.CullFace);
             GL.Enable(EnableCap.AlphaTest);
-            //GL.Enable(EnableCap.Blend);
-            //GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-
+            
             GL.FrontFace(FrontFaceDirection.Ccw);//反時計回り
             GL.Enable(EnableCap.PolygonOffsetFill);
             GL.Enable(EnableCap.Texture2D);
@@ -258,8 +256,6 @@ namespace RenderApp.GLUtil
         }
         #endregion
         #region [Main Window Event]
-       
-       
         public void Closed()
         {
             if(m_AnimationTimer != null)
@@ -268,10 +264,6 @@ namespace RenderApp.GLUtil
 
             }
         }
-        
-     
-       
-
         #endregion
 
     }

@@ -10,7 +10,7 @@ using RenderApp;
 using RenderApp.GLUtil;
 namespace RenderApp.ViewModel
 {
-    public class TextureViewModel : AvalonWindowViewModel
+    public class TextureViewModel : DockWindowViewModel
     {
         public static string[] TargetStr
         {
@@ -46,9 +46,8 @@ namespace RenderApp.ViewModel
             get;
             private set;
         }
-        public TextureViewModel(Texture model)
+        public TextureViewModel(Texture model = null)
         {
-            WindowPosition = AvalonWindow.RightUp;
             Model = model;
             Initialize();
         }
@@ -70,15 +69,9 @@ namespace RenderApp.ViewModel
             }
         }
 
-
-
-
-        public override void SizeChanged()
-        {
-        }
         public override void UpdateProperty()
         {
-
+            throw new NotImplementedException();
         }
     }
 }

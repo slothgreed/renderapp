@@ -18,33 +18,33 @@ namespace RenderApp.Utility
 	public class NotifyNodeChangedEventArgs
 	{
 		public NotifyNodeChangedAction NodeAction;
-		public Node NewItems;
+		public RANode NewItems;
 		public int NewIndex;
-		public Node OldItems;
+		public RANode OldItems;
 		public int OldIndex;
 
 		public NotifyNodeChangedEventArgs(NotifyNodeChangedAction _NodeAction)
 		{
 			NodeAction = _NodeAction;
 		}
-		public NotifyNodeChangedEventArgs(NotifyNodeChangedAction _NodeAction,Node _NewItems)
+		public NotifyNodeChangedEventArgs(NotifyNodeChangedAction _NodeAction,RANode _NewItems)
 		{
 			NodeAction = _NodeAction;
 			NewItems = _NewItems;
 		}
-		public NotifyNodeChangedEventArgs(NotifyNodeChangedAction _NodeAction,Node _NewItems,int _NewIndex)
+		public NotifyNodeChangedEventArgs(NotifyNodeChangedAction _NodeAction,RANode _NewItems,int _NewIndex)
 		{
 			NodeAction = _NodeAction;
 			NewItems = _NewItems;
 			NewIndex = _NewIndex;
 		}
-		public NotifyNodeChangedEventArgs(NotifyNodeChangedAction _NodeAction,Node _NewItems,Node _OldItems)
+		public NotifyNodeChangedEventArgs(NotifyNodeChangedAction _NodeAction,RANode _NewItems,RANode _OldItems)
 		{
 			NodeAction = _NodeAction;
 			NewItems = _NewItems;
 			OldItems = _OldItems;
 		}
-		public NotifyNodeChangedEventArgs(NotifyNodeChangedAction _NodeAction,Node _NewItems,int _NewIndex,Node _OldItems,int _OldIndex)
+		public NotifyNodeChangedEventArgs(NotifyNodeChangedAction _NodeAction,RANode _NewItems,int _NewIndex,RANode _OldItems,int _OldIndex)
 		{
 			NodeAction = _NodeAction;
 			NewItems = _NewItems;

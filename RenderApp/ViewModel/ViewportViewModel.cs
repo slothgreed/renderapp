@@ -7,7 +7,7 @@ using System.Windows.Forms.Integration;
 using RenderApp.GLUtil;
 namespace RenderApp.ViewModel
 {
-    class ViewportViewModel : AvalonWindowViewModel
+    public class ViewportViewModel : DockWindowViewModel
     {
         public override string Title
         {
@@ -35,10 +35,6 @@ namespace RenderApp.ViewModel
         {
         }
 
-        public override void SizeChanged()
-        {
-
-        }
         public override void UpdateProperty()
         {
 

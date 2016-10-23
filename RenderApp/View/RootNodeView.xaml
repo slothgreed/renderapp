@@ -11,7 +11,7 @@
         xmlns:local="clr-namespace:RenderApp.AssetModel"
         d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Controls:MultiSelectTreeView ItemsSource="{Binding RootNode.Children}">
+        <Controls:MultiSelectTreeView ItemsSource="{Binding RootNode}">
             <Controls:MultiSelectTreeView.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Delete" Command="{Binding Delete}"/>
