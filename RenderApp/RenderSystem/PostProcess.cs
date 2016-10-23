@@ -24,7 +24,6 @@ namespace RenderApp
         {
             Plane.MaterialItem.CurrentShader.SetValue(key,value);
         }
-        private FrameBuffer frameBuffer;
         public FrameBuffer FrameBufferItem
         {
             get;

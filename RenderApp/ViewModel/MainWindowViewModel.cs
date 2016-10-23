@@ -21,50 +21,6 @@ namespace RenderApp.ViewModel
     public partial class MainWindowViewModel : ViewModelBase
     {
         #region [property method]
-        private readonly ObservableCollection<DockWindowViewModel> _centerItemsSource = new ObservableCollection<DockWindowViewModel>();
-        public ObservableCollection<DockWindowViewModel> CenterItemsSource
-        {
-            get
-            {
-                return _centerItemsSource;
-            }
-        }
-
-        private readonly ObservableCollection<DockWindowViewModel> _leftUpItemsSource = new ObservableCollection<DockWindowViewModel>();
-        public ObservableCollection<DockWindowViewModel> LeftUpItemsSource
-        {
-            get
-            {
-                return _leftUpItemsSource;
-            }
-        }
-        private readonly ObservableCollection<DockWindowViewModel> _leftDownItemsSource = new ObservableCollection<DockWindowViewModel>();
-        public ObservableCollection<DockWindowViewModel> LeftDownItemsSource
-        {
-            get
-            {
-                return _leftDownItemsSource;
-            }
-        }
-
-        private readonly ObservableCollection<DockWindowViewModel> _rightUpItemsSource = new ObservableCollection<DockWindowViewModel>();
-        public ObservableCollection<DockWindowViewModel> RightUpItemsSource
-        {
-            get
-            {
-                return _rightUpItemsSource;
-            }
-        }
-        private readonly ObservableCollection<DockWindowViewModel> _rightDownItemsSource = new ObservableCollection<DockWindowViewModel>();
-        public ObservableCollection<DockWindowViewModel> RightDownItemsSource
-        {
-            get
-            {
-                return _rightDownItemsSource;
-            }
-        }
-
-
 
         private DockWindowViewModel _activePane = null;
         public DockWindowViewModel ActivePane
@@ -116,35 +72,17 @@ namespace RenderApp.ViewModel
         }
 
         private Viewport m_Viewport;
-        public RootNodeViewModel ProjectWindow
+        private DockWindowViewModel _LUSelectItem;
+        public DockWindowViewModel LUSelectItem
         {
-            get;
-            set;
-        }
-        public RootNodeViewModel SceneWindow
-        {
-            get;
-            set;
-        }
-        public GeometryViewModel GeometryWindow
-        {
-            get;
-            set;
-        }
-        public ViewportViewModel ViewportWindow
-        {
-            get;
-            set;
-        }
-        public MaterialViewModel MaterialWindow
-        {
-            get;
-            set;
-        }
-        public RenderSystemViewModel RenderSystemWindow
-        {
-            get;
-            set;
+            get
+            {
+                return _LUSelectItem;
+            }
+            set
+            {
+                SetValue(ref _LUSelectItem, value);
+            }
         }
         #endregion
 
@@ -153,15 +91,11 @@ namespace RenderApp.ViewModel
 
         public MainWindowViewModel()
         {
-            ProjectWindow = new RootNodeViewModel(Project.ActiveProject.RootNode, "Project");
-            ViewportWindow = new ViewportViewModel();
-            MaterialWindow = new MaterialViewModel();
 
-            _leftUpItemsSource.Add(ProjectWindow);
-            _rightDownItemsSource.Add(MaterialWindow);
-            _rightUpItemsSource.Add(new ShaderProgramViewModel(null));
-
-            _centerItemsSource.Add(ViewportWindow);
+            _LeftUpItemsSource.Add( new RootNodeViewModel(Project.ActiveProject.RootNode, "Project"));
+            _RightUpItemsSource.Add( new MaterialViewModel());
+            _RightDownItemsSource.Add(new ShaderProgramViewModel(null));
+            _CenterItemsSource.Add( new ViewportViewModel());
 
             Viewport.Instance.OnCreateViewportEvent += OnCreateViewportEvent;
             _instance = this;
@@ -169,10 +103,8 @@ namespace RenderApp.ViewModel
 
         void OnCreateViewportEvent()
         {
-            SceneWindow = new RootNodeViewModel(Scene.ActiveScene.RootNode, "Scene");
-            _leftUpItemsSource.Add(SceneWindow);
-            RenderSystemWindow = new RenderSystemViewModel(Viewport.Instance.RenderSystem);
-            _leftDownItemsSource.Add(RenderSystemWindow);
+            _LeftUpItemsSource.Add(new RootNodeViewModel(Scene.ActiveScene.RootNode, "Scene"));
+            _LeftDownItemsSource.Add(new RenderSystemViewModel(Viewport.Instance.RenderSystem));
         }
         #endregion
 
@@ -447,41 +379,24 @@ namespace RenderApp.ViewModel
         #endregion
 
         #region [Update Method]
-        public void UpdateSelectNode(NodeItemViewModel node)
+        public void UpdateSelectNode(RANode node)
         {
-            //if(node == null)
-            //{
-            //    return;
-            //}
-            //if(node.Model is Asset)
-            //{
-            //    Scene.ActiveScene.SelectAsset = node.Model;
-            //}
-            //switch (node.AssetType)
-            //{
-            //    case EAssetType.Geometry:
-            //        if (node.Model is Camera)
-            //        {
-
-            //        }
-            //        else if (node.Model is Light)
-            //        {
-
-            //        }
-            //        else
-            //        {
-            //            AddWindow(new GeometryViewModel((Geometry)node.Model));
-            //        }
-            //        break;
-            //    case EAssetType.Materials:
-            //        AddWindow(new MaterialViewModel((Material)node.Model));
-            //        break;
-            //    case EAssetType.Textures:
-            //        AddWindow(new TextureViewModel((Texture)node.Model));
-            //        break;
-            //    default:
-            //        break;
-            //}
+            if(node.RAObject == null)
+            {
+                return;
+            }
+            if(node.RAObject is Geometry)
+            {
+                _LeftDownItemsSource.Add(new GeometryViewModel((Geometry)node.RAObject));
+            }
+            else if(node.RAObject is Material)
+            {
+                _RightUpItemsSource.Add(new MaterialViewModel((Material)node.RAObject));
+            }
+            else if (node.RAObject is ShaderProgram)
+            {
+                _RightDownItemsSource.Add(new ShaderProgramViewModel((ShaderProgram)node.RAObject));
+            }
         }
 
 
@@ -490,6 +405,30 @@ namespace RenderApp.ViewModel
             Viewport.Instance.glControl_Paint(null, null);
         }
         #endregion
-        
+
+
+        internal void CloseTabWindow(DockWindowViewModel dockVM)
+        {
+            if(LeftDownItemsSource.Contains(dockVM))
+            {
+                LeftDownItemsSource.Remove(dockVM);
+            }
+            if (LeftUpItemsSource.Contains(dockVM))
+            {
+                LeftUpItemsSource.Remove(dockVM);
+            }
+            if (RightUpItemsSource.Contains(dockVM))
+            {
+                RightUpItemsSource.Remove(dockVM);
+            }
+            if (RightDownItemsSource.Contains(dockVM))
+            {
+                RightDownItemsSource.Remove(dockVM);
+            }
+            if (CenterItemsSource.Contains(dockVM))
+            {
+                CenterItemsSource.Remove(dockVM);
+            }
+        }
     }
 }

@@ -796,8 +796,7 @@ namespace RenderApp.GLUtil.ShaderModel
             int tcsshader = CompailShader(ShaderType.TessControlShader, tcsShaderCode);
 
             int outVertexNum = -1;
-            int inType = 3;
-            int outType = 3;
+
 
             if (outVertexNum < 0)
             {
@@ -809,7 +808,8 @@ namespace RenderApp.GLUtil.ShaderModel
             GL.AttachShader(program, gshader);
             GL.AttachShader(program, tesshader);
             GL.AttachShader(program, tcsshader);
-
+            //int inType = 3;
+            //int outType = 3;
             //GL.ProgramParameter(program, AssemblyProgramParameterArb.GeometryInputType, inType);
             //GL.ProgramParameter(program, AssemblyProgramParameterArb.GeometryOutputType, outType);
             //GL.ProgramParameter(program, AssemblyProgramParameterArb.GeometryVerticesOut, outVertexNum);

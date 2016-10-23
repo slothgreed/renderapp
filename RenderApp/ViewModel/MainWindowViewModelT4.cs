@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+
+
 namespace RenderApp.ViewModel
 {
 	public partial class MainWindowViewModel
@@ -152,6 +155,111 @@ namespace RenderApp.ViewModel
 					return _Octree;
 				}
 			}
+
+			private ObservableCollection<DockWindowViewModel> _CenterItemsSource = new ObservableCollection<DockWindowViewModel>();
+			public ObservableCollection<DockWindowViewModel> CenterItemsSource
+			{
+				get
+				{
+					return _CenterItemsSource;
+				}
+			}
+			private ObservableCollection<DockWindowViewModel> _LeftUpItemsSource = new ObservableCollection<DockWindowViewModel>();
+			public ObservableCollection<DockWindowViewModel> LeftUpItemsSource
+			{
+				get
+				{
+					return _LeftUpItemsSource;
+				}
+			}
+			private ObservableCollection<DockWindowViewModel> _LeftDownItemsSource = new ObservableCollection<DockWindowViewModel>();
+			public ObservableCollection<DockWindowViewModel> LeftDownItemsSource
+			{
+				get
+				{
+					return _LeftDownItemsSource;
+				}
+			}
+			private ObservableCollection<DockWindowViewModel> _RightUpItemsSource = new ObservableCollection<DockWindowViewModel>();
+			public ObservableCollection<DockWindowViewModel> RightUpItemsSource
+			{
+				get
+				{
+					return _RightUpItemsSource;
+				}
+			}
+			private ObservableCollection<DockWindowViewModel> _RightDownItemsSource = new ObservableCollection<DockWindowViewModel>();
+			public ObservableCollection<DockWindowViewModel> RightDownItemsSource
+			{
+				get
+				{
+					return _RightDownItemsSource;
+				}
+			}
+
+			private DockWindowViewModel _CenterSelectItem;
+			public DockWindowViewModel CenterSelectItem
+			{
+				get
+				{
+					return _CenterSelectItem;
+				}
+				set
+				{
+					SetValue(ref _CenterSelectItem,value);
+				}
+			}
+			private DockWindowViewModel _LeftUpSelectItem;
+			public DockWindowViewModel LeftUpSelectItem
+			{
+				get
+				{
+					return _LeftUpSelectItem;
+				}
+				set
+				{
+					SetValue(ref _LeftUpSelectItem,value);
+				}
+			}
+			private DockWindowViewModel _LeftDownSelectItem;
+			public DockWindowViewModel LeftDownSelectItem
+			{
+				get
+				{
+					return _LeftDownSelectItem;
+				}
+				set
+				{
+					SetValue(ref _LeftDownSelectItem,value);
+				}
+			}
+			private DockWindowViewModel _RightUpSelectItem;
+			public DockWindowViewModel RightUpSelectItem
+			{
+				get
+				{
+					return _RightUpSelectItem;
+				}
+				set
+				{
+					SetValue(ref _RightUpSelectItem,value);
+				}
+			}
+			private DockWindowViewModel _RightDownSelectItem;
+			public DockWindowViewModel RightDownSelectItem
+			{
+				get
+				{
+					return _RightDownSelectItem;
+				}
+				set
+				{
+					SetValue(ref _RightDownSelectItem,value);
+				}
+			}
+
+
+
 	}
 
 }

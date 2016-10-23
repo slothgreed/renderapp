@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using RenderApp.GLUtil;
 using RenderApp.AssetModel;
 using RenderApp.Utility;
+using RenderApp.GLUtil.ShaderModel;
 namespace RenderApp.Globals
 {
     public class Project
@@ -20,7 +21,10 @@ namespace RenderApp.Globals
         /// マテリアルオブジェクト
         /// </summary>
         private RANode MaterialRoot;
-
+        /// <summary>
+        /// シェーダオブジェクト
+        /// </summary>
+        private RANode ShaderProgramRoot;
         public static Project ActiveProject = new Project();
 
         private Project()
@@ -29,9 +33,11 @@ namespace RenderApp.Globals
             GeometryRoot = new RANode("Geometry");
             TextureRoot = new RANode("Texture");
             MaterialRoot = new RANode("Material");
+            ShaderProgramRoot = new RANode("ShaderProgram");
             RootNode.AddChild(GeometryRoot);
             RootNode.AddChild(TextureRoot);
             RootNode.AddChild(MaterialRoot);
+            RootNode.AddChild(ShaderProgramRoot);
         
         }
 
@@ -49,6 +55,10 @@ namespace RenderApp.Globals
             if (value is Material)
             {
                 MaterialRoot.AddChild(value);
+            }
+            if(value is ShaderProgram)
+            {
+                ShaderProgramRoot.AddChild(value);
             }
         }
 

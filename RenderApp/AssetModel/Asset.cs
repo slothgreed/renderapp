@@ -82,8 +82,6 @@ namespace RenderApp.AssetModel
             return "Unknown";
 
         }
-        public abstract void Dispose();
-
         public static Dictionary<EAssetType, int> AssetNum = new Dictionary<EAssetType,int>();
 
         public static string GetNameFromPath(string path)

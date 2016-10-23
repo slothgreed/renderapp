@@ -10,11 +10,23 @@ namespace RenderApp.ViewModel
 {
     public class ShaderProgramViewModel : DockWindowViewModel
     {
+
         public override  string Title
         {
             get
             {
-                return "Program";
+                if(_title == null)
+                {
+                    return "ShaderProgram";
+                }
+                else
+                {
+                    return _title;
+                }
+            }
+            set
+            {
+                SetValue(ref _title,value);
             }
         }
                 
@@ -35,6 +47,10 @@ namespace RenderApp.ViewModel
 
         public ShaderProgramViewModel(ShaderProgram model)
         {
+            if(model != null)
+            {
+                Title = model.FileName; 
+            }
             Model = model;
         }
 

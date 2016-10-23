@@ -48,19 +48,20 @@ namespace RenderApp.GLUtil.ShaderModel
         {
             get
             {
-                if(_shaderCode == null)
-                {
-                    StreamReader reader = new StreamReader(FilePath);
-                    _shaderCode = reader.ReadToEnd();
-                    reader.Close();
-                }
                 return _shaderCode;
+            }
+            set
+            {
+                _shaderCode = value;
             }
         }
         public ShaderProgram(string name,string filePath)
             :base(name)
         {
             FilePath = filePath;
+            StreamReader reader = new StreamReader(FilePath);
+            _shaderCode = reader.ReadToEnd();
+            reader.Close();
         }
         public override void Dispose()
         {

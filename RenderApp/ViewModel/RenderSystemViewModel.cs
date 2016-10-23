@@ -31,7 +31,7 @@ namespace RenderApp.ViewModel
             Model = _model;
         }
 
-        public virtual string Title
+        public override string Title
         {
             get
             {

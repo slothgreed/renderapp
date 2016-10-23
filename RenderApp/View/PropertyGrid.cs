@@ -11,7 +11,6 @@ namespace RenderApp.View
     {
         public PropertyGrid()
         {
-            int a = 0;
         }
         public override void OnApplyTemplate()
         {

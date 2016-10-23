@@ -30,19 +30,19 @@ namespace RenderApp.Utility
         {
             get
             {
-                if (MyObject == null)
+                if (RAObject == null)
                 {
                     return emptyName;
                 }
-                return MyObject.Key;
+                return RAObject.Key;
             }
         }
-        public RAObject MyObject;
+        public RAObject RAObject;
         private RANode Parent;
 
         public RANode(RAObject _MyObject)
         {
-            MyObject = _MyObject;
+            RAObject = _MyObject;
             Children = new List<RANode>();
         }
         public RANode(string name)
@@ -204,14 +204,14 @@ namespace RenderApp.Utility
         #endregion
         public override string ToString()
         {
-            if (MyObject != null)
-                return MyObject.Key;
+            if (RAObject != null)
+                return RAObject.Key;
             return emptyName;
         }
 
         internal void Dispose()
         {
-            MyObject.Dispose();
+            RAObject.Dispose();
             foreach(var child in Children)
             {
                 child.Dispose();

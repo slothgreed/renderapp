@@ -180,7 +180,7 @@
     <Compile Include="AssetModel\LightModel\PointLight.cs" />
     <Compile Include="AssetModel\LightModel\SpotLight.cs" />
     <Compile Include="AssetModel\Asset.cs" />
-    <Compile Include="ViewModel\AvalonWindowViewModel.cs" />
+    <Compile Include="ViewModel\DockWindowViewModel.cs" />
     <Compile Include="ViewModel\ComboItemViewModel.cs" />
     <Compile Include="ViewModel\DefaultViewModel.cs" />
     <Compile Include="ViewModel\Dialog\DialogViewModelBase.cs" />

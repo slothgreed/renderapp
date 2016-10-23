@@ -25,7 +25,7 @@ namespace RenderApp
             }
         }
 
-        internal virtual void Dispose()
+        public virtual void Dispose()
         {
             
         }

@@ -81,7 +81,7 @@ namespace RenderApp.ViewModel
             if(nodeList.SelectedItems.Count > 0)
             {
                 ActiveNode = nodeList.SelectedItems[0] as NodeItemViewModel;
-                MainWindowViewModel.Instance.UpdateSelectNode(ActiveNode);
+                MainWindowViewModel.Instance.UpdateSelectNode(ActiveNode.Model);
             }
         }
         public void DeleteCommand()
@@ -99,7 +99,7 @@ namespace RenderApp.ViewModel
                 }
                 if (exist)
                 {
-                    Scene.ActiveScene.RootNode.RemoveRecursiveChild(ActiveNode.Model.Key);
+                    Scene.ActiveScene.RootNode.RemoveRecursiveChild(ActiveNode.Model.RAObject.Key);
                     break;
                 }
 
@@ -112,13 +112,13 @@ namespace RenderApp.ViewModel
             {
                 return;
             }
-            if (ActiveNode.Model is Asset)
+            if (ActiveNode.Model is RANode)
             {
-                var asset = ActiveNode.Model as Asset;
-                if (File.Exists(asset.FilePath))
-                {
-                    Process.Start("EXPLORER.exe",@"/select," + asset.FilePath);
-                }
+                var asset = ActiveNode.Model as RANode;
+                //if (File.Exists(asset.FilePath))
+                //{
+                //    Process.Start("EXPLORER.exe",@"/select," + asset.FilePath);
+                //}
             }
         }
         public override void UpdateProperty()

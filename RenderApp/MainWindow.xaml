@@ -73,7 +73,10 @@
         </vm:DockPaneTemplateSelector>
         
         <DataTemplate x:Key="TabItemHeaderTempalte">
-            <TextBlock Text="{Binding Title}"/>
+            <DockPanel>
+                <TextBlock Text="{Binding Title}" DockPanel.Dock="Left"/>
+                <Button Content=" x " Command="{Binding CloseTabItem}" DockPanel.Dock="Right"/>
+            </DockPanel>
         </DataTemplate>
     </Window.Resources>
     <Grid>
@@ -128,7 +131,7 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <TabControl Grid.Column ="0" Grid.Row ="0" ItemsSource="{Binding LeftUpItemsSource}" ContentTemplateSelector="{StaticResource TabItemTemplateSelector}" ItemTemplate="{StaticResource TabItemHeaderTempalte}"/>
+            <TabControl Grid.Column ="0" Grid.Row ="0" ItemsSource="{Binding LeftUpItemsSource}" ContentTemplateSelector="{StaticResource TabItemTemplateSelector}" ItemTemplate="{StaticResource TabItemHeaderTempalte}" SelectedItem="{Binding LUSelectItem}"/>
             <TabControl Grid.Column ="0" Grid.Row ="1" ItemsSource="{Binding LeftDownItemsSource}" ContentTemplateSelector="{StaticResource TabItemTemplateSelector}" ItemTemplate="{StaticResource TabItemHeaderTempalte}"/>
             <TabControl Grid.Column ="2" Grid.Row ="0" ItemsSource="{Binding RightUpItemsSource}" ContentTemplateSelector="{StaticResource TabItemTemplateSelector}" ItemTemplate="{StaticResource TabItemHeaderTempalte}"/>
             <TabControl Grid.Column ="2" Grid.Row ="1" ItemsSource="{Binding RightDownItemsSource}" ContentTemplateSelector="{StaticResource TabItemTemplateSelector}" ItemTemplate="{StaticResource TabItemHeaderTempalte}"/>

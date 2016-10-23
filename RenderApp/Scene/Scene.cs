@@ -266,9 +266,9 @@ namespace RenderApp
             foreach (RANode geometryNode in RootNode.AllChildren())
             {
                 Geometry geometry = null;
-                if(geometryNode.MyObject is Geometry)
+                if(geometryNode.RAObject is Geometry)
                 {
-                    geometry = geometryNode.MyObject as Geometry;
+                    geometry = geometryNode.RAObject as Geometry;
                 }
                 else
                 {

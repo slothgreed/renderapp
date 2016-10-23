@@ -65,7 +65,6 @@ namespace RenderApp.GLUtil
         #endregion
 
         public static readonly Texture Empty;
-        private string name;
         #region [constructor]
         private void Initialize()
         {

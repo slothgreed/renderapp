@@ -17,7 +17,7 @@ namespace RenderApp.ViewModel
             get;
             private set;
         }
-        public Asset Model
+        public RANode Model
         {
             get;
             private set;
@@ -103,7 +103,7 @@ namespace RenderApp.ViewModel
                 SetValue<string>(ref _displayName, value);
                 if(Model != null)
                 {
-                    Model.Key = _displayName;
+                    Model.RAObject.Key = _displayName;
                 }
             }
         }
@@ -141,6 +141,7 @@ namespace RenderApp.ViewModel
             node.InsertNodeEvent += InsertNodeEvent;
             node.RemoveNodeEvent += RemoveNodeEvent;
             DisplayName = node.Name;
+            Model = node;
             
         }
         private void InsertNodeEvent(object sender, NotifyNodeChangedEventArgs e)

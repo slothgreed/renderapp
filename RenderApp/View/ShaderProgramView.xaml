@@ -5,21 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <ScrollViewer>
-        <StackPanel>
-            <Border
-            BorderThickness="2"
-            BorderBrush="Red"
-            Margin="5">
-                <TextBlock Text="{Binding Model.FileName}"/>
-            </Border>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto">
+        <Grid>
             <Border
             Margin="5"
             BorderThickness="2"
             BorderBrush="White">
-                <TextBlock Text="{Binding Model.ShaderCode}"/>
+                <TextBox Text="{Binding Model.ShaderCode}"/>
             </Border>
-        </StackPanel>
-
+        </Grid>
     </ScrollViewer>
 </UserControl>

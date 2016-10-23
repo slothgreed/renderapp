@@ -121,9 +121,9 @@ namespace RenderApp
             foreach(var geometryNode in Scene.ActiveScene.RootNode.AllChildren())
             {
                 Geometry geometry = null;
-                if(geometryNode.MyObject is Geometry)
+                if(geometryNode.RAObject is Geometry)
                 {
-                    geometry = geometryNode.MyObject as Geometry;
+                    geometry = geometryNode.RAObject as Geometry;
                 }
                 else
                 {
@@ -149,9 +149,9 @@ namespace RenderApp
             GBufferStage.BindBuffer();
             foreach (var asset in Scene.ActiveScene.RootNode.AllChildren())
             {
-                if(asset.MyObject is Geometry)
+                if(asset.RAObject is Geometry)
                 {
-                    var geometry = asset.MyObject as Geometry;
+                    var geometry = asset.RAObject as Geometry;
                     geometry.Render();
                 }
             }
