@@ -12,7 +12,10 @@ namespace RenderApp.AssetModel
     /// </summary>
     public class Primitive : Geometry
     {
-
+        private void Initialize()
+        {
+            MaterialItem = Material.Constant;
+        }
         public string m_Name = "";
         /// <summary>
         /// コンストラクタ
@@ -23,6 +26,7 @@ namespace RenderApp.AssetModel
             Position = new List<Vector3>(position);
             Normal = new List<Vector3>(normal);
             Color = new List<Vector3>(color);
+            Initialize();
         }
         /// <summary>
         /// コンストラクタ
@@ -32,6 +36,7 @@ namespace RenderApp.AssetModel
         {
             Position = new List<Vector3>(position);
             CalcNormal(Position, prim);
+            Initialize();
         }
         /// <summary>
         /// コンストラクタ
@@ -45,6 +50,7 @@ namespace RenderApp.AssetModel
             {
                 Color.Add(Vector3.UnitY);
             }
+            Initialize();
         }
         /// <summary>
         /// コンストラクタ
@@ -58,6 +64,7 @@ namespace RenderApp.AssetModel
             {
                 Color.Add(color);
             }
+            Initialize();
         }
         /// <summary>
         /// コンストラクタ
@@ -71,6 +78,7 @@ namespace RenderApp.AssetModel
             {
                 Color.Add(color);
             }
+            Initialize();
         }
         public Primitive(string name,List<Vector3> position, List<Vector3> normal,List<Vector2> texcoord,PrimitiveType prim = PrimitiveType.Triangles)
             :base(name,prim)
@@ -78,6 +86,7 @@ namespace RenderApp.AssetModel
             Position = position;
             Normal = normal;
             TexCoord = texcoord;
+            Initialize();
         }
         public Primitive(string name, List<Vector3> position, List<Vector2> texcoord, PrimitiveType prim)
             : base(name, prim)
@@ -90,6 +99,7 @@ namespace RenderApp.AssetModel
             {
                 Color.Add(Vector3.UnitY);
             }
+            Initialize();
         }
         private void CalcNormal(List<Vector3> position,PrimitiveType prim)
         {

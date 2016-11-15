@@ -78,10 +78,17 @@ namespace RenderApp.AssetModel
                 return new Matrix3(norm);
             }
         }
+        private Material _materialItem = Material.Default;
         public Material MaterialItem
         {
-            get;
-            set;
+            get
+            {
+                return _materialItem;
+            }
+            set
+            {
+                _materialItem = value;
+            }
         }
         public int TriangleNum { 
             get

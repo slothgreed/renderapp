@@ -7,7 +7,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
-namespace RenderApp.GLUtil
+namespace RenderApp.Utility
 {
     class Output
     {

@@ -51,7 +51,7 @@ namespace RenderApp.AssetModel
         {
             if(geometry.MaterialItem != null)
             {
-                Scene.ActiveScene.AddRootSceneObject(geometry.MaterialItem);
+                Scene.ActiveScene.AddRootSceneObject(geometry);
             }
             return geometry;
         }
@@ -92,8 +92,6 @@ namespace RenderApp.AssetModel
 
             }
             Geometry wireframe = new Primitive("WireFrame :" + geometry.Key, position, CCalc.RandomColor(), PrimitiveType.Lines);
-            wireframe.MaterialItem = new Material("Picking");
-            wireframe.MaterialItem.SetShader(ShaderFactory.Instance.DefaultAnalyzeShader);
             CreateGeometry(wireframe);
 
             return true;
@@ -108,8 +106,6 @@ namespace RenderApp.AssetModel
             List<Vector3> position = new List<Vector3>(geometry.Position);
             List<Vector3> normal = new List<Vector3>(geometry.Normal);
             Geometry polygon = new Primitive("Polygon :" + geometry.Key, position, normal, new Vector3(0.7f, 0.7f, 0.7f), PrimitiveType.Triangles);
-            polygon.MaterialItem = new Material("Polygon");
-            polygon.MaterialItem.SetShader(ShaderFactory.Instance.DefaultAnalyzeShader);
             CreateGeometry(polygon);
 
             return true;
@@ -123,8 +119,6 @@ namespace RenderApp.AssetModel
             Geometry geometry = asset as Geometry;
             Analyzer.Voxel voxel = new Analyzer.Voxel(geometry.Position, geometry.Index, geometry.ModelMatrix, partition);
             Geometry wireframe = new Primitive("Voxel :" + geometry.Key, voxel.vPosition, voxel.vNormal, CCalc.RandomColor(), PrimitiveType.Quads);
-            wireframe.MaterialItem = new Material("Voxel");
-            wireframe.MaterialItem.SetShader(ShaderFactory.Instance.DefaultAnalyzeShader);
             CreateGeometry(wireframe);
 
             return true;

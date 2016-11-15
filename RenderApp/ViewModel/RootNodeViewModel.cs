@@ -86,24 +86,9 @@ namespace RenderApp.ViewModel
         }
         public void DeleteCommand()
         {
-            bool exist = false;
-            foreach(var root in RootNode)
-            {
-                foreach (var folder in root.Children)
-                {
-                    if (folder.Children.Contains(ActiveNode))
-                    {
-                        folder.Children.Remove(ActiveNode);
-                        exist = true;
-                    }
-                }
-                if (exist)
-                {
-                    Scene.ActiveScene.RootNode.RemoveRecursiveChild(ActiveNode.Model.RAObject.Key);
-                    break;
-                }
-
-            }
+            var parent = ActiveNode.Parent;
+            parent.Model.RemoveChild(ActiveNode.Model);
+            parent.Children.Remove(ActiveNode);
 
         }
         public void OpenExplolerCommand()
@@ -114,11 +99,15 @@ namespace RenderApp.ViewModel
             }
             if (ActiveNode.Model is RANode)
             {
-                var asset = ActiveNode.Model as RANode;
-                //if (File.Exists(asset.FilePath))
-                //{
-                //    Process.Start("EXPLORER.exe",@"/select," + asset.FilePath);
-                //}
+                var node = ActiveNode.Model as RANode;
+                if (node.RAObject is Asset)
+                {
+                    var asset = node.RAObject as Asset;
+                    if (File.Exists(asset.FilePath))
+                    {
+                        Process.Start("EXPLORER.exe", @"/select," + asset.FilePath);
+                    }
+                }
             }
         }
         public override void UpdateProperty()

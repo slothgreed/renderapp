@@ -14,7 +14,7 @@ using System.Windows.Forms;
 using RenderApp.AssetModel.LightModel;
 using RenderApp.View.Dialog;
 using RenderApp.ViewModel.Dialog;
-using RenderApp.Control;
+using RenderApp.RAControl;
 using RenderApp.Globals;
 namespace RenderApp.ViewModel
 {
@@ -385,20 +385,54 @@ namespace RenderApp.ViewModel
             {
                 return;
             }
+            DockWindowViewModel vm = null;
             if(node.RAObject is Geometry)
             {
-                _LeftDownItemsSource.Add(new GeometryViewModel((Geometry)node.RAObject));
+                vm = new GeometryViewModel((Geometry)node.RAObject);
+                Scene.ActiveScene.SelectAsset = (Geometry)node.RAObject;
             }
             else if(node.RAObject is Material)
             {
-                _RightUpItemsSource.Add(new MaterialViewModel((Material)node.RAObject));
+                vm = new MaterialViewModel((Material)node.RAObject);
             }
             else if (node.RAObject is ShaderProgram)
             {
-                _RightDownItemsSource.Add(new ShaderProgramViewModel((ShaderProgram)node.RAObject));
+                vm = new ShaderProgramViewModel((ShaderProgram)node.RAObject);
+            }
+            ReplaceTabWindow(vm);
+        }
+        public void ReplaceTabWindow(DockWindowViewModel window)
+        {
+            if(window is GeometryViewModel)
+            {
+                var vm = _LeftDownItemsSource.Where(p => p is GeometryViewModel).FirstOrDefault();
+                ReplaceTabItem(_LeftDownItemsSource,vm, window);
+            }
+            if(window is MaterialViewModel)
+            {
+                var vm = _RightUpItemsSource.Where(p => p is MaterialViewModel).FirstOrDefault();
+                ReplaceTabItem(_RightUpItemsSource, vm, window);
+            }
+            if (window is ShaderProgramViewModel)
+            {
+                var vm = _RightDownItemsSource.Where(p => p is ShaderProgramViewModel).FirstOrDefault();
+                ReplaceTabItem(_RightDownItemsSource, vm, window);
             }
         }
-
+        private void ReplaceTabItem(ObservableCollection<DockWindowViewModel> tabControl, DockWindowViewModel oldItem, DockWindowViewModel newItem)
+        {
+            if (tabControl.Contains(oldItem))
+            {
+                int index = tabControl.IndexOf(oldItem);
+                tabControl.Remove(oldItem);
+                if (tabControl.Count > index)
+                {
+                    tabControl.Insert(index, newItem);
+                    return;
+                }
+            }
+            tabControl.Add(newItem);
+        }
 
         public override void UpdateProperty()
         {

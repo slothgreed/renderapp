@@ -150,7 +150,9 @@ namespace RenderApp.AssetModel
         {
 
         }
-
+        /// <summary>
+        /// Tempテクスチャを設定するマテリアル
+        /// </summary>
         public static Material _default;
         public static Material Default
         {
@@ -158,12 +160,28 @@ namespace RenderApp.AssetModel
             {
                 if(_default == null)
                 {
-                    _default = new Material("NoMaterial");
+                    _default = new Material("Default");
+                    _default.SetShader(ShaderFactory.Instance.DefaultDefferredShader);
                 }
                 return _default;
             }
         }
-
+        /// <summary>
+        /// テクスチャなしマテリアル
+        /// </summary>
+        private static Material _constant;
+        public static Material Constant
+        {
+            get
+            {
+                if(_constant == null)
+                {
+                    _constant = new Material("Analyze");
+                    _constant.SetShader(ShaderFactory.Instance.DefaultAnalyzeShader);
+                }
+                return _constant;
+            }
+        }
 
 
     }

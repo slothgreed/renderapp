@@ -20,6 +20,7 @@ namespace RenderApp.Analyzer
         public Parameter MinCurvature = new Parameter();
         public Parameter Voronoi = new Parameter();
         public Parameter Saliency = new Parameter();
+        private AssetModel.Geometry geometry;
         /// <summary>
         /// メッシュのインデックスと、頂点を受け取る
         /// </summary>
@@ -27,8 +28,16 @@ namespace RenderApp.Analyzer
         /// <param name="mesh">「三角形を構成する頂点番号を格納したVector3」のリスト</param>
         public HalfEdge(List<Vector3> position, List<int> poly_Index = null)
         {
+            Initialize(position, poly_Index);
+        }
 
-            if (poly_Index == null)
+        public HalfEdge(AssetModel.Geometry geometry)
+        {
+            Initialize(geometry.Position, geometry.Index);
+        }
+        private void Initialize(List<Vector3> position, List<int> poly_Index = null)
+        {
+            if (poly_Index == null || poly_Index.Count == 0)
             {
                 CreateHalfEdgeData(position);
             }
@@ -666,7 +675,7 @@ namespace RenderApp.Analyzer
         #endregion
         #endregion
         #region [other method]
-        public override string ToString()
+        public static string ToString()
         {
             return "HalfEdge";
         }

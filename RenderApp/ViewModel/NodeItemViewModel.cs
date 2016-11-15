@@ -49,7 +49,7 @@ namespace RenderApp.ViewModel
                 return true;
             }
         }
-        private NodeItemViewModel Parent
+        public NodeItemViewModel Parent
         {
             get;
             set;
@@ -139,7 +139,6 @@ namespace RenderApp.ViewModel
                 Parent = parent;
             }
             node.InsertNodeEvent += InsertNodeEvent;
-            node.RemoveNodeEvent += RemoveNodeEvent;
             DisplayName = node.Name;
             Model = node;
             
@@ -159,20 +158,6 @@ namespace RenderApp.ViewModel
                 }
             }
         }
-        private void RemoveNodeEvent(object sender, NotifyNodeChangedEventArgs e)
-        {
-            if (sender is RANode)
-            {
-                RANode node = sender as RANode;
-                node.InsertNodeEvent -= InsertNodeEvent;
-                node.RemoveNodeEvent -= RemoveNodeEvent;
-                if(Parent != null)
-                {
-                    Parent.Children.Remove(this);
-                }
-            }
-        }
-
 
         public override void UpdateProperty()
         {

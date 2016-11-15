@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using RenderApp.Utility;
 using OpenTK;
-namespace RenderApp.Control
+namespace RenderApp.RAControl
 {
     public abstract class IControl
     {
@@ -35,6 +35,14 @@ namespace RenderApp.Control
             return true;
         }
         /// <summary>
+        /// コントローラ開始処理
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool Binding()
+        {
+            return true;
+        }
+        /// <summary>
         /// コントローラ終了処理
         /// </summary>
         /// <returns></returns>
@@ -42,11 +50,11 @@ namespace RenderApp.Control
         {
             return true;
         }
-        /// <summary>
-        /// コントローラ開始処理
-        /// </summary>
-        /// <returns></returns>
-        public virtual bool Binding()
+        public virtual bool Execute()
+        {
+            return true;
+        }
+        public virtual bool Reset()
         {
             return true;
         }

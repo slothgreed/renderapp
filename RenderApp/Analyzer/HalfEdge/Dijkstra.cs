@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using RenderApp.AssetModel;
 namespace RenderApp.Analyzer
 {
     public struct Node
@@ -18,24 +18,42 @@ namespace RenderApp.Analyzer
             vertex = _v;
         }
     }
-    class Dijkstra
+    class Dijkstra : RACommand.ICommand,IAnalyzer
     {
-        private HalfEdge halfEdge;
-        public Dijkstra(HalfEdge halfedge)
+        public Geometry Geometry
         {
-            halfEdge = halfedge;
+            get;
+            set;
         }
-
-        public float DistanceDijkstra(int index1, int index2)
+        public int StartIndex
         {
-            if (index1 < 0 ||
-                index2 < 0 ||
-                index1 > halfEdge.m_Vertex.Count ||
-                index2 > halfEdge.m_Vertex.Count)
+            get;
+            set;
+        }
+        public int EndIndex
+        {
+            get;
+            set;
+        }
+        private float _distance;
+        public float Distance
+        {
+            get
             {
-                return 0;
+                return _distance;
             }
-
+            set
+            {
+                _distance = value;
+            }
+        }
+        private HalfEdge halfEdge;
+        public Dijkstra()
+        {
+            Reset();
+        }
+        private bool DistanceDijkstra(int index1, int index2)
+        {
             Node[] nodeArray = new Node[halfEdge.m_Vertex.Count];
 
             for (int i = 0; i < nodeArray.Length; i++)
@@ -43,8 +61,36 @@ namespace RenderApp.Analyzer
                 nodeArray[i] = new Node(false, -1, halfEdge.m_Vertex[i]);
             }
 
-            return 0;
+            return true;
         }
+
+        public bool CanExecute()
+        {
+            if (Geometry == null)
+                return false;
+
+            if (StartIndex < 0 ||
+                EndIndex < 0 ||
+                StartIndex > halfEdge.m_Vertex.Count ||
+                EndIndex > halfEdge.m_Vertex.Count)
+            {
+                return false;
+            }
+            return true;
+        }
+        public bool Execute()
+        {
+            var analyze = Geometry.MaterialItem.FindAnalyze(HalfEdge.ToString());
+            if (analyze != null)
+            {
+                halfEdge = analyze as HalfEdge;
+            }
+            HalfEdge half = new HalfEdge(Geometry);
+            Geometry.MaterialItem.AddAnalayzer(half);
+            halfEdge = half;
+            return DistanceDijkstra(StartIndex, EndIndex);
+        }
+
         private void CalcDijkstra(Node[] nodes,int start,int end)
         {
             //initialize
@@ -65,13 +111,21 @@ namespace RenderApp.Analyzer
                     {
                         around.cost = newCost;
                     }
-
                 }
             }
         }
-     
-        
+        public bool Reset()
+        {
+            StartIndex = -1;
+            EndIndex = -1;
+            Geometry = null;
+            Distance = -1;
+            return true;
+        }
 
-
+        public bool Undo()
+        {
+            return false;
+        }
     }
 }

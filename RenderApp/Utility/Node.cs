@@ -127,7 +127,7 @@ namespace RenderApp.Utility
         }
         #endregion
         #region [remove method]
-        private void RemoveChild(RANode child)
+        public void RemoveChild(RANode child)
         {
             if(Children.Contains(child))
             {
@@ -230,7 +230,6 @@ namespace RenderApp.Utility
                 }
             }
         }
-
 
     }
 }

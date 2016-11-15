@@ -143,12 +143,13 @@
     </ApplicationDefinition>
     <Compile Include="Analyzer\HalfEdge\Dijkstra.cs" />
     <Compile Include="AssetModel\AssetFactory.cs" />
+    <Compile Include="RACommand\ICommand.cs" />
     <Compile Include="Utility\Node.cs" />
-    <Compile Include="Control\CameraControl.cs" />
+    <Compile Include="RAControl\CameraControl.cs" />
     <Compile Include="Converter\EnumConverter.cs" />
     <Compile Include="Globals\Project.cs" />
     <Compile Include="GLUtil\ShaderModel\ShaderFactory.cs" />
-    <Compile Include="GLUtil\Output.cs" />
+    <Compile Include="Utility\Output.cs" />
     <Compile Include="AssetModel\EnvironmentProbe.cs" />
     <Compile Include="AssetModel\Geometry\File\GeometryLoader.cs" />
     <Compile Include="GLUtil\ShaderModel\ShaderProgramInfo.cs" />
@@ -159,10 +160,10 @@
     <Compile Include="RenderSystem\PostProcess.cs" />
     <Compile Include="RenderSystem\RenderQueue.cs" />
     <Compile Include="RenderSystem\RenderSystem.cs" />
-    <Compile Include="Control\DijkstraControl.cs" />
-    <Compile Include="Control\IControl.cs" />
-    <Compile Include="Control\DefaultControl.cs" />
-    <Compile Include="Control\ControlManager.cs" />
+    <Compile Include="RAControl\DijkstraControl.cs" />
+    <Compile Include="RAControl\IControl.cs" />
+    <Compile Include="RAControl\DefaultControl.cs" />
+    <Compile Include="RAControl\ControlManager.cs" />
     <Compile Include="Utility\ActiveItems.cs" />
     <Compile Include="Utility\NotifyNodeChangedEventArgs.cs">
       <AutoGen>True</AutoGen>

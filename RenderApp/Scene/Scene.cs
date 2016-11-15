@@ -53,10 +53,17 @@ namespace RenderApp
         /// <summary>
         /// 選択中のアセット
         /// </summary>
+        private Asset _selectAsset;
         public Asset SelectAsset
         {
-            get;
-            set;
+            get
+            {
+                return _selectAsset;
+            }
+            set
+            {
+                _selectAsset = value;
+            }
         }
 
         #endregion
@@ -251,8 +258,9 @@ namespace RenderApp
         /// ポリゴンごとに行うので、CPUベースで
         /// </summary>
         /// <param name="mouse"></param>
-        public void Picking(Vector2 mouse, ref Vector3 tri1, ref Vector3 tri2, ref Vector3 tri3)
+        public bool Picking(Vector2 mouse,ref Geometry geometry,ref int index)
         {
+            index = -1;
             float minLength = float.MaxValue;
             int[] a = new int[3];
             Vector3 near = Vector3.Zero;
@@ -265,7 +273,7 @@ namespace RenderApp
             CCalc.GetClipPos(MainCamera.Matrix, MainCamera.ProjMatrix, viewport, mouse, out near, out far);
             foreach (RANode geometryNode in RootNode.AllChildren())
             {
-                Geometry geometry = null;
+                geometry = null;
                 if(geometryNode.RAObject is Geometry)
                 {
                     geometry = geometryNode.RAObject as Geometry;
@@ -290,13 +298,16 @@ namespace RenderApp
                         Vector3 result = Vector3.Zero;
                         if (CCalc.CrossPlanetoLinePos(vertex1, vertex2, vertex3, near, far, ref minLength, out result))
                         {
-                            tri1 = vertex1;
-                            tri2 = vertex2;
-                            tri3 = vertex3;
+                            index = 3 * i;
                         }
                     }
                 }
             }
+            if(index == -1)
+            {
+                return false;   
+            }
+            return true;
 
         }
 

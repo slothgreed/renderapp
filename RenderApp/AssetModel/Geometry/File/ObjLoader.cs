@@ -33,24 +33,14 @@ namespace RenderApp.AssetModel
 
                 Console.WriteLine(filePath + "開けません。現在のフォルダ位置" + System.Environment.CurrentDirectory);
             }
-
-
         }
-
-       
 
         #region [ファイルのロード処理]
         #region [構造の変更]
         private void SetDrawArrayData()
         {
-            //Position = m_posStream;
-            //Normal = m_norStream;
-            //Color = m_colStream;
-            //TexCoord = m_texStream;
-            //Index = m_posIndex;
 
-
-            MaterialItem = new Material(FileName);
+            MaterialItem = Material.Default;
             HalfEdge half = null;
             if (Normal.Count == 0)
             {
