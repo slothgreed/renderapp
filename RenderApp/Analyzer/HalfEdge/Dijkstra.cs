@@ -18,7 +18,7 @@ namespace RenderApp.Analyzer
             vertex = _v;
         }
     }
-    class Dijkstra : RACommand.ICommand,IAnalyzer
+    class Dijkstra : RA_Command.ICommand,IAnalyzer
     {
         public Geometry Geometry
         {

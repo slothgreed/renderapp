@@ -144,6 +144,16 @@
     <Compile Include="Analyzer\HalfEdge\Dijkstra.cs" />
     <Compile Include="AssetModel\AssetFactory.cs" />
     <Compile Include="RACommand\ICommand.cs" />
+    <Compile Include="RenderSystem\Post_Effect\Bloom.cs" />
+    <Compile Include="RenderSystem\Post_Effect\DOF.cs" />
+    <Compile Include="RenderSystem\Post_Effect\PostEffect.cs" />
+    <Compile Include="RenderSystem\Post_Effect\PostEffectT4.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PostEffectT4.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RenderSystem\Post_Effect\Sobel.cs" />
+    <Compile Include="RenderSystem\Post_Effect\SSAO.cs" />
     <Compile Include="Utility\RANode.cs" />
     <Compile Include="RAControl\CameraControl.cs" />
     <Compile Include="Converter\EnumConverter.cs" />
@@ -455,12 +465,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AssetModel\Node\" />
-    <Folder Include="RenderSystem\PostEffect\" />
     <Folder Include="Scene\Shader\ShaderType\" />
     <Folder Include="Themes\" />
     <Folder Include="ViewModel\Property\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="RenderSystem\Post_Effect\PostEffectT4.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PostEffectT4.cs</LastGenOutput>
+    </Content>
     <Content Include="Utility\NotifyNodeChangedEventArgs.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>NotifyNodeChangedEventArgs.cs</LastGenOutput>

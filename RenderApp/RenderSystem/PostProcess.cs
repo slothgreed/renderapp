@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using RenderApp.GLUtil.ShaderModel;
-namespace RenderApp
+namespace RenderApp.Render_System
 {
     public class PostProcess
     {

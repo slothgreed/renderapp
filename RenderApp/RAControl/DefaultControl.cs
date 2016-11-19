@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RenderApp.GLUtil;
-namespace RenderApp.RAControl
+namespace RenderApp.RA_Control
 {
     class DefaultControl : IControl
     {

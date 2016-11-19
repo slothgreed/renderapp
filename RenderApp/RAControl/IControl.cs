@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using RenderApp.Utility;
 using OpenTK;
-namespace RenderApp.RAControl
+namespace RenderApp.RA_Control
 {
     public abstract class IControl
     {

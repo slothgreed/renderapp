@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using OpenTK.Graphics.OpenGL;
-namespace RenderApp
+namespace RenderApp.Render_System
 {
     public class RenderSystem
     {

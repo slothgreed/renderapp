@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.GLUtil;
-namespace RenderApp
+namespace RenderApp.Render_System
 {
     public class RenderPassFactory
     {

@@ -140,7 +140,6 @@ namespace RenderApp.GLUtil.ShaderModel
             Initialize();
         }
         #endregion
-
         #region [bind buffer]
         public void BindBuffer(Geometry geometry)
         {
@@ -181,12 +180,14 @@ namespace RenderApp.GLUtil.ShaderModel
         }
 
 
-        internal void SetValue(string key, object value)
+        internal bool SetValue(string key, object value)
         {
             if (_shaderVariable.ContainsKey(key))
             {
                 _shaderVariable[key].variable = value;
+                return true;
             }
+            return false;
         }
         /// <summary>
         /// Uniform変数のBinding
@@ -295,7 +296,6 @@ namespace RenderApp.GLUtil.ShaderModel
             Output.GLError();
         }
         #endregion
-
         /// <summary>
         /// 初期状態の設定
         /// </summary>

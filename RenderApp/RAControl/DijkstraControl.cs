@@ -10,7 +10,7 @@ using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using RenderApp.Globals;
 using RenderApp.Analyzer;
-namespace RenderApp.RAControl
+namespace RenderApp.RA_Control
 {
     class DijkstraControl : IControl
     {

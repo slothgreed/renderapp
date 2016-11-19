@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-namespace RenderApp.RAControl
+namespace RenderApp.RA_Control
 {
     public class ControlManager : IControl
     {

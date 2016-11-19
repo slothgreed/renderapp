@@ -11,7 +11,8 @@ using RenderApp.Utility;
 using System.IO;
 using System.Windows.Forms;
 using System.Timers;
-using RenderApp.RAControl;
+using RenderApp.RA_Control;
+using RenderApp.Render_System;
 namespace RenderApp.GLUtil
 {
     public delegate void CreateViewportHandler();

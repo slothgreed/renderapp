@@ -14,8 +14,9 @@ using System.Windows.Forms;
 using RenderApp.AssetModel.LightModel;
 using RenderApp.View.Dialog;
 using RenderApp.ViewModel.Dialog;
-using RenderApp.RAControl;
+using RenderApp.RA_Control;
 using RenderApp.Globals;
+using RenderApp.Render_System;
 namespace RenderApp.ViewModel
 {
     public partial class MainWindowViewModel : ViewModelBase

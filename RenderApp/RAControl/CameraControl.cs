@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace RenderApp.RAControl
+namespace RenderApp.RA_Control
 {
     class CameraControl : IControl
     {
