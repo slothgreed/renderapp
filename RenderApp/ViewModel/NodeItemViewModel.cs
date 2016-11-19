@@ -139,9 +139,23 @@ namespace RenderApp.ViewModel
                 Parent = parent;
             }
             node.InsertNodeEvent += InsertNodeEvent;
+            node.RemoveNodeEvent += RemoveNodeEvent;
             DisplayName = node.Name;
             Model = node;
             
+        }
+
+        private void RemoveNodeEvent(object sender, NotifyNodeChangedEventArgs e)
+        {
+            if (sender is RANode)
+            {
+                RANode node = sender as RANode;
+                NodeItemViewModel nodeVM = Children.Where(p => p.DisplayName == node.Name).FirstOrDefault();
+                if(nodeVM != null)
+                {
+                    Children.Remove(nodeVM);
+                }
+            }
         }
         private void InsertNodeEvent(object sender, NotifyNodeChangedEventArgs e)
         {

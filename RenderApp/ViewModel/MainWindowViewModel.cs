@@ -84,6 +84,18 @@ namespace RenderApp.ViewModel
                 SetValue(ref _LUSelectItem, value);
             }
         }
+        private string _taskBarText;
+        public string TaskBarText
+        {
+            get
+            {
+                return _taskBarText;
+            }
+            set
+            {
+                SetValue(ref _taskBarText, value);
+            }
+        }
         #endregion
 
         #region [constructor]

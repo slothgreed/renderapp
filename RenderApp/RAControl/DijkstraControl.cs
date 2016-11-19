@@ -15,6 +15,7 @@ namespace RenderApp.RAControl
     class DijkstraControl : IControl
     {
         private Dijkstra Dijkstra;
+        private RAObject SelectGeometry;
         public override bool Down(System.Windows.Forms.MouseEventArgs mouse)
         {
             int vertex_Index = 0;
@@ -93,6 +94,10 @@ namespace RenderApp.RAControl
         {
             Scene.ActiveScene.DeleteNode("Picking");
             return true;
+        }
+        private void SelectObject(RAObject select)
+        {
+            SelectGeometry = select;
         }
     }
 }

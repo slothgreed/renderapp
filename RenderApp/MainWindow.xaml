@@ -83,6 +83,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
+            <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <Menu VerticalAlignment="Top" Grid.Row="0" Height="25">
             <MenuItem Header="Project">
@@ -136,86 +137,9 @@
             <TabControl Grid.Column ="2" Grid.Row ="0" ItemsSource="{Binding RightUpItemsSource}" ContentTemplateSelector="{StaticResource TabItemTemplateSelector}" ItemTemplate="{StaticResource TabItemHeaderTempalte}"/>
             <TabControl Grid.Column ="2" Grid.Row ="1" ItemsSource="{Binding RightDownItemsSource}" ContentTemplateSelector="{StaticResource TabItemTemplateSelector}" ItemTemplate="{StaticResource TabItemHeaderTempalte}"/>
             <TabControl Grid.Column ="1" Grid.Row ="0" Grid.RowSpan="2" ItemsSource="{Binding CenterItemsSource}" ContentTemplateSelector="{StaticResource TabItemTemplateSelector}" ItemTemplate="{StaticResource TabItemHeaderTempalte}"/>
-
-
-            <!--<avalon:DockingManager x:Name="dockingManager"  Grid.Row="1" 
-                               AnchorablesSource="{Binding Anchorables}"
-                               DocumentsSource="{Binding Documents}"
-                               ActiveContent="{Binding ActivePane,Mode=TwoWay}">
-            <avalon:DockingManager.LayoutUpdateStrategy>
-                <vm:AvalonUpdateStrategy/>
-            </avalon:DockingManager.LayoutUpdateStrategy>
-            <avalon:DockingManager.LayoutItemTemplateSelector>
-                <vm:AvalonPaneTemplateSelector>
-                    <vm:AvalonPaneTemplateSelector.AssetTemplate>
-                        <DataTemplate DataType="{x:Type vm:RootNodeViewModel}">
-                            <v:RootNodeView/>
-                        </DataTemplate>   
-                    </vm:AvalonPaneTemplateSelector.AssetTemplate>
-                    <vm:AvalonPaneTemplateSelector.ShaderProgramTemplate>
-                        <DataTemplate  DataType="{x:Type vm:ShaderProgramViewModel}">
-                            <v:ShaderProgramView/>
-                        </DataTemplate>
-                    </vm:AvalonPaneTemplateSelector.ShaderProgramTemplate>
-                    <vm:AvalonPaneTemplateSelector.MaterialTemplate>
-                        <DataTemplate  DataType="{x:Type vm:MaterialViewModel}">
-                            <v:MaterialView/>
-                        </DataTemplate>
-                    </vm:AvalonPaneTemplateSelector.MaterialTemplate>
-                    <vm:AvalonPaneTemplateSelector.TexureTemplate>
-                        <DataTemplate  DataType="{x:Type vm:TextureViewModel}">
-                            <v:TextureView/>
-                        </DataTemplate>
-                    </vm:AvalonPaneTemplateSelector.TexureTemplate>
-                    <vm:AvalonPaneTemplateSelector.ViewportTemplate>
-                        <DataTemplate  DataType="{x:Type vm:ViewportViewModel}">
-                            <v:ViewportView/>
-                        </DataTemplate>
-                    </vm:AvalonPaneTemplateSelector.ViewportTemplate>
-                    <vm:AvalonPaneTemplateSelector.GeometryTemplate>
-                        <DataTemplate DataType="{x:Type vm:GeometryViewModel}">
-                            <v:GeometryView/>
-                        </DataTemplate>
-                    </vm:AvalonPaneTemplateSelector.GeometryTemplate>
-                    <vm:AvalonPaneTemplateSelector.ShaderTemplate>
-                        <DataTemplate DataType="{x:Type vm:ShaderViewModel}">
-                            <v:ShaderView/>
-                        </DataTemplate>
-                    </vm:AvalonPaneTemplateSelector.ShaderTemplate>
-                    <vm:AvalonPaneTemplateSelector.RenderTemplate>
-                        <DataTemplate DataType="{x:Type vm:RenderSystemViewModel}">
-                            <v:RenderSystemView/>
-                        </DataTemplate>
-                    </vm:AvalonPaneTemplateSelector.RenderTemplate>
-                </vm:AvalonPaneTemplateSelector>
-                
-            </avalon:DockingManager.LayoutItemTemplateSelector>
-            
-            
-            <avalon:DockingManager.LayoutItemContainerStyleSelector>
-                <vm:AvalonPaneStyleSelector>
-                    <vm:AvalonPaneStyleSelector.AnchorableStyle>
-                        <Style TargetType="{x:Type avalon:LayoutItem}">
-                            <Setter Property="Title" Value="{Binding Model.Title}"/>
-                        </Style>
-                    </vm:AvalonPaneStyleSelector.AnchorableStyle>
-                    <vm:AvalonPaneStyleSelector.DocumentStyle>
-                        <Style TargetType="{x:Type avalon:LayoutItem}">
-                            <Setter Property="Title" Value="{Binding Model.Title}"/>
-                        </Style>
-                    </vm:AvalonPaneStyleSelector.DocumentStyle>
-                </vm:AvalonPaneStyleSelector>
-            </avalon:DockingManager.LayoutItemContainerStyleSelector>
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="SizeChanged">
-                    <i:InvokeCommandAction Command="{Binding SizeChanged}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-            <avalon:LayoutRoot/>
-        </avalon:DockingManager>-->
-
-
         </Grid>
+        
+        <TextBlock Grid.Row="2" Text="{Binding TaskBarText}"></TextBlock>
     </Grid>
     
 </Window>

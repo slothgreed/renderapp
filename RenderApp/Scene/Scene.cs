@@ -186,9 +186,18 @@ namespace RenderApp
         /// <param name="key"></param>
         /// <param name="assetType"></param>
         /// <returns></returns>
-        public object FindObject(string key)
+        public RAObject FindObject(string key)
         {
-            return RootNode.FindChild(key);
+            RANode obj;
+            obj = RootNode.FindChild(key);
+            if(obj == null)
+            {
+                return null;
+            }
+            else
+            {
+                return obj.RAObject;
+            }
         }
       
         public void AddRootSceneObject(RAObject value)
@@ -237,6 +246,9 @@ namespace RenderApp
 
             Geometry map = AssetFactory.Instance.CreateEnvironmentMap();
             AddRootSceneObject(map);
+
+            Geometry duck = new CObjFile("Duck","C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/smallduck.obj");
+            AddRootSceneObject(duck);
         }
         #endregion
         #region [dispose]
@@ -255,12 +267,45 @@ namespace RenderApp
 
         #region [process]
         /// <summary>
-        /// ポリゴンごとに行うので、CPUベースで
+        /// Picking
+        /// </summary>
+        /// <param name="mouse">マウス座標</param>
+        /// <param name="geometry">形状データ</param>
+        /// <param name="minLength">この数値以下のポリゴンを取得</param>
+        /// <param name="selectIndex">選択したデータの頂点番号</param>
+        /// <returns></returns>
+        public bool Picking(Vector3 near, Vector3 far, Geometry geometry, ref float minLength, ref int selectIndex)
+        {
+            bool select = false;
+            //頂点配列の時
+            if (geometry.Index.Count != 0)
+            {
+
+            }
+            else
+            {
+                for (int i = 0; i < geometry.Position.Count / 3; i++)
+                {
+                    Vector3 vertex1 = CCalc.Multiply(geometry.ModelMatrix, geometry.Position[3 * i]);
+                    Vector3 vertex2 = CCalc.Multiply(geometry.ModelMatrix, geometry.Position[3 * i + 1]);
+                    Vector3 vertex3 = CCalc.Multiply(geometry.ModelMatrix, geometry.Position[3 * i + 2]);
+                    Vector3 result = Vector3.Zero;
+                    if (CCalc.CrossPlanetoLinePos(vertex1, vertex2, vertex3, near, far, ref minLength, out result))
+                    {
+                        selectIndex = 3 * i;
+                        select = true;
+                    }
+                }
+            }
+            return select;
+        }
+        /// <summary>
+        /// ポリゴンごとに行うので、CPUベースで頂点番号を取得
         /// </summary>
         /// <param name="mouse"></param>
-        public bool Picking(Vector2 mouse,ref Geometry geometry,ref int index)
+        public bool Picking(Vector2 mouse,ref Geometry selectGeometry,ref int selectIndex)
         {
-            index = -1;
+            selectIndex = -1;
             float minLength = float.MaxValue;
             int[] a = new int[3];
             Vector3 near = Vector3.Zero;
@@ -271,10 +316,11 @@ namespace RenderApp
             viewport[2] = Viewport.Instance.Width;
             viewport[3] = Viewport.Instance.Height;
             CCalc.GetClipPos(MainCamera.Matrix, MainCamera.ProjMatrix, viewport, mouse, out near, out far);
+            Geometry geometry;
             foreach (RANode geometryNode in RootNode.AllChildren())
             {
                 geometry = null;
-                if(geometryNode.RAObject is Geometry)
+                if (geometryNode.RAObject is Geometry)
                 {
                     geometry = geometryNode.RAObject as Geometry;
                 }
@@ -282,28 +328,12 @@ namespace RenderApp
                 {
                     continue;
                 }
-                
-                //頂点配列の時
-                if (geometry.Index.Count != 0)
+                if(Picking(near, far, geometry,ref minLength,ref selectIndex))
                 {
-
-                }
-                else
-                {
-                    for (int i = 0; i < geometry.Position.Count / 3; i++)
-                    {
-                        Vector3 vertex1 = CCalc.Multiply(geometry.ModelMatrix, geometry.Position[3 * i]);
-                        Vector3 vertex2 = CCalc.Multiply(geometry.ModelMatrix, geometry.Position[3 * i + 1]);
-                        Vector3 vertex3 = CCalc.Multiply(geometry.ModelMatrix, geometry.Position[3 * i + 2]);
-                        Vector3 result = Vector3.Zero;
-                        if (CCalc.CrossPlanetoLinePos(vertex1, vertex2, vertex3, near, far, ref minLength, out result))
-                        {
-                            index = 3 * i;
-                        }
-                    }
+                    selectGeometry = geometry;
                 }
             }
-            if(index == -1)
+            if(selectIndex == -1)
             {
                 return false;   
             }

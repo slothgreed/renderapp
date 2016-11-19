@@ -8,7 +8,6 @@ namespace RenderApp
 {
     public abstract class RAObject
     {
-        private static int objectCounter = 0;
         public RAObject()
         {
         }
@@ -21,7 +20,7 @@ namespace RenderApp
             }
             set
             {
-                _key = value + (objectCounter++).ToString();
+                _key = value;
             }
         }
 

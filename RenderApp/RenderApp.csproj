@@ -144,7 +144,7 @@
     <Compile Include="Analyzer\HalfEdge\Dijkstra.cs" />
     <Compile Include="AssetModel\AssetFactory.cs" />
     <Compile Include="RACommand\ICommand.cs" />
-    <Compile Include="Utility\Node.cs" />
+    <Compile Include="Utility\RANode.cs" />
     <Compile Include="RAControl\CameraControl.cs" />
     <Compile Include="Converter\EnumConverter.cs" />
     <Compile Include="Globals\Project.cs" />
@@ -170,6 +170,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NotifyNodeChangedEventArgs.tt</DependentUpon>
     </Compile>
+    <Compile Include="Utility\TGAImage.cs" />
     <Compile Include="ViewModel\RootNodeViewModelT4.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
