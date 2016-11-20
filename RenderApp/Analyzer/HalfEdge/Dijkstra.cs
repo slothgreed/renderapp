@@ -47,18 +47,18 @@ namespace RenderApp.Analyzer
                 _distance = value;
             }
         }
-        private HalfEdge halfEdge;
+        private HalfEdge _halfEdge;
         public Dijkstra()
         {
             Reset();
         }
         private bool DistanceDijkstra(int index1, int index2)
         {
-            Node[] nodeArray = new Node[halfEdge.m_Vertex.Count];
+            Node[] nodeArray = new Node[_halfEdge.m_Vertex.Count];
 
             for (int i = 0; i < nodeArray.Length; i++)
             {
-                nodeArray[i] = new Node(false, -1, halfEdge.m_Vertex[i]);
+                nodeArray[i] = new Node(false, -1, _halfEdge.m_Vertex[i]);
             }
 
             return true;
@@ -71,8 +71,8 @@ namespace RenderApp.Analyzer
 
             if (StartIndex < 0 ||
                 EndIndex < 0 ||
-                StartIndex > halfEdge.m_Vertex.Count ||
-                EndIndex > halfEdge.m_Vertex.Count)
+                StartIndex > _halfEdge.m_Vertex.Count ||
+                EndIndex > _halfEdge.m_Vertex.Count)
             {
                 return false;
             }
@@ -80,14 +80,17 @@ namespace RenderApp.Analyzer
         }
         public bool Execute()
         {
-            var analyze = Geometry.MaterialItem.FindAnalyze(HalfEdge.ToString());
+            var analyze = Geometry.FindAnalyze(HalfEdge.ToString());
             if (analyze != null)
             {
-                halfEdge = analyze as HalfEdge;
+                _halfEdge = analyze as HalfEdge;
             }
-            HalfEdge half = new HalfEdge(Geometry);
-            Geometry.MaterialItem.AddAnalayzer(half);
-            halfEdge = half;
+            else
+            {
+                HalfEdge half = new HalfEdge(Geometry);
+                Geometry.AddAnalayzer(half);
+                _halfEdge = half;
+            }
             return DistanceDijkstra(StartIndex, EndIndex);
         }
 

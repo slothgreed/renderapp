@@ -144,16 +144,17 @@
     <Compile Include="Analyzer\HalfEdge\Dijkstra.cs" />
     <Compile Include="AssetModel\AssetFactory.cs" />
     <Compile Include="RACommand\ICommand.cs" />
-    <Compile Include="RenderSystem\Post_Effect\Bloom.cs" />
-    <Compile Include="RenderSystem\Post_Effect\DOF.cs" />
-    <Compile Include="RenderSystem\Post_Effect\PostEffect.cs" />
-    <Compile Include="RenderSystem\Post_Effect\PostEffectT4.cs">
+    <Compile Include="Render_System\Post_Effect\Bloom.cs" />
+    <Compile Include="Render_System\Post_Effect\DOF.cs" />
+    <Compile Include="Render_System\Post_Effect\PostEffect.cs" />
+    <Compile Include="Render_System\Post_Effect\PostEffectT4.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PostEffectT4.tt</DependentUpon>
     </Compile>
-    <Compile Include="RenderSystem\Post_Effect\Sobel.cs" />
-    <Compile Include="RenderSystem\Post_Effect\SSAO.cs" />
+    <Compile Include="Render_System\Post_Effect\Selection.cs" />
+    <Compile Include="Render_System\Post_Effect\Sobel.cs" />
+    <Compile Include="Render_System\Post_Effect\SSAO.cs" />
     <Compile Include="Utility\RANode.cs" />
     <Compile Include="RAControl\CameraControl.cs" />
     <Compile Include="Converter\EnumConverter.cs" />
@@ -166,10 +167,10 @@
     <Compile Include="Globals\Enum.cs" />
     <Compile Include="GLUtil\TextureFactory.cs" />
     <Compile Include="RAObject.cs" />
-    <Compile Include="RenderSystem\GBuffer.cs" />
-    <Compile Include="RenderSystem\PostProcess.cs" />
-    <Compile Include="RenderSystem\RenderQueue.cs" />
-    <Compile Include="RenderSystem\RenderSystem.cs" />
+    <Compile Include="Render_System\GBuffer.cs" />
+    <Compile Include="Render_System\PostPlane.cs" />
+    <Compile Include="Render_System\RenderQueue.cs" />
+    <Compile Include="Render_System\RenderSystem.cs" />
     <Compile Include="RAControl\DijkstraControl.cs" />
     <Compile Include="RAControl\IControl.cs" />
     <Compile Include="RAControl\DefaultControl.cs" />
@@ -181,6 +182,14 @@
       <DependentUpon>NotifyNodeChangedEventArgs.tt</DependentUpon>
     </Compile>
     <Compile Include="Utility\TGAImage.cs" />
+    <Compile Include="ViewModel\Controller\ControllerViewModelT4.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControllerViewModelT4.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\Controller\DijkstraViewModel.cs" />
+    <Compile Include="ViewModel\Controller\IControllerViewModelBase.cs" />
+    <Compile Include="ViewModel\Controller\SelectViewModel.cs" />
     <Compile Include="ViewModel\RootNodeViewModelT4.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -196,7 +205,7 @@
     <Compile Include="ViewModel\ComboItemViewModel.cs" />
     <Compile Include="ViewModel\DefaultViewModel.cs" />
     <Compile Include="ViewModel\Dialog\DialogViewModelBase.cs" />
-    <Compile Include="ViewModel\Dialog\VoxelDialogViewModel.cs" />
+    <Compile Include="ViewModel\Controller\VoxelViewModel.cs" />
     <Compile Include="ViewModel\GeometryViewModel.cs" />
     <Compile Include="ViewModel\MathViewModel.cs" />
     <Compile Include="ViewModel\MaterialItemSelector.cs">
@@ -213,6 +222,12 @@
     <Compile Include="ViewModel\ImageViewModel.cs" />
     <Compile Include="ViewModel\NodeItemViewModel.cs" />
     <Compile Include="ViewModel\ViewportViewModel.cs" />
+    <Compile Include="View\Controller\DijkstraView.xaml.cs">
+      <DependentUpon>DijkstraView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controller\SelectView.xaml.cs">
+      <DependentUpon>SelectView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\RootNodeView.xaml.cs">
       <DependentUpon>RootNodeView.xaml</DependentUpon>
     </Compile>
@@ -239,12 +254,12 @@
     </Compile>
     <Compile Include="GLUtil\ShaderModel\ShaderProgram.cs" />
     <Compile Include="Scene\Shader\Bezier\Bezier.cs" />
-    <Compile Include="RenderSystem\RenderPassFactory.cs" />
+    <Compile Include="Render_System\RenderPassFactory.cs" />
     <Compile Include="AssetModel\Geometry\Primitive\Space.cs" />
     <Compile Include="AssetModel\Geometry\Primitive\Primitive.cs" />
     <Compile Include="View\PropertyGrid.cs" />
-    <Compile Include="View\Dialog\VoxelDialogView.xaml.cs">
-      <DependentUpon>VoxelDialogView.xaml</DependentUpon>
+    <Compile Include="View\Controller\VoxelView.xaml.cs">
+      <DependentUpon>VoxelView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\GeometryView.xaml.cs">
       <DependentUpon>GeometryView.xaml</DependentUpon>
@@ -317,6 +332,14 @@
     <Compile Include="View\ViewportView.xaml.cs">
       <DependentUpon>ViewportView.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\Controller\DijkstraView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controller\SelectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\RootNodeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -333,7 +356,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\Dialog\VoxelDialogView.xaml">
+    <Page Include="View\Controller\VoxelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -468,15 +491,20 @@
     <Folder Include="Scene\Shader\ShaderType\" />
     <Folder Include="Themes\" />
     <Folder Include="ViewModel\Property\" />
+    <Folder Include="View\Dialog\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="RenderSystem\Post_Effect\PostEffectT4.tt">
+    <Content Include="Render_System\Post_Effect\PostEffectT4.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PostEffectT4.cs</LastGenOutput>
     </Content>
     <Content Include="Utility\NotifyNodeChangedEventArgs.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>NotifyNodeChangedEventArgs.cs</LastGenOutput>
+    </Content>
+    <Content Include="ViewModel\Controller\ControllerViewModelT4.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ControllerViewModelT4.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

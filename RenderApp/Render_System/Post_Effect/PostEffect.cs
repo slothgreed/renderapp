@@ -7,7 +7,7 @@ using RenderApp.GLUtil.ShaderModel;
 using System.Runtime.CompilerServices;
 namespace RenderApp.Render_System.Post_Effect
 {
-    class PostEffect
+    abstract class PostEffect
     {
         public Shader PostShader
         {
@@ -31,6 +31,6 @@ namespace RenderApp.Render_System.Post_Effect
             }
          
         }
-
+        public abstract void Initialize();
     }
 }

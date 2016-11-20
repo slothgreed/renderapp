@@ -7,7 +7,6 @@ using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using RenderApp.Analyzer;
 using RenderApp.GLUtil.ShaderModel;
 namespace RenderApp.AssetModel
 {
@@ -72,7 +71,6 @@ namespace RenderApp.AssetModel
             }
 
             TextureItem = new Dictionary<TextureKind, Texture>();
-            AnalyzeItem = new Dictionary<string,IAnalyzer>();
             if (name == null)
             {
                 Key = _name;
@@ -122,30 +120,6 @@ namespace RenderApp.AssetModel
             }
         }
         #endregion
-        #region [analyzer bind]
-        private Dictionary<string,IAnalyzer> AnalyzeItem
-        {
-            get;
-            set;
-        }
-        public void AddAnalayzer(IAnalyzer analyze)
-        {
-            if (AnalyzeItem == null)
-            {
-                AnalyzeItem = new Dictionary<string,IAnalyzer>();
-            }
-            AnalyzeItem.Add(analyze.GetType().Name, analyze);
-        }
-        public IAnalyzer FindAnalyze(string typeName)
-        {
-            if(AnalyzeItem.ContainsKey(typeName))
-            {
-                return AnalyzeItem[typeName];
-            }
-            return null;
-        }
-        #endregion
-
         public override void Dispose()
         {
 

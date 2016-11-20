@@ -25,6 +25,7 @@ namespace RenderApp.RA_Control
             Geometry geometry = null;
             if (mouse.Button == System.Windows.Forms.MouseButtons.Left)
             {
+
                 if(Scene.ActiveScene.Picking(LeftMouse.Click,ref geometry,ref vertex_Index))
                 {
                     if(Dijkstra.Geometry == null)
@@ -63,6 +64,8 @@ namespace RenderApp.RA_Control
                         else
                         {
                             picking.AddVertex(new List<Vector3>() { tri1, tri2, tri3 }, CCalc.RandomColor());
+                            Dijkstra.Execute();
+
                         }
                     }
                 }

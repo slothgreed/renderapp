@@ -8,17 +8,17 @@ namespace RenderApp.Render_System
 {
     public class RenderQueue
     {
-        List<PostProcess> list = new List<PostProcess>();
+        List<PostPlane> list = new List<PostPlane>();
 
         public RenderQueue()
         {
            
         }
-        public void AddPass(PostProcess pass)
+        public void AddPass(PostPlane pass)
         {
             list.Add(pass);
         }
-        public void RemovePass(PostProcess pass)
+        public void RemovePass(PostPlane pass)
         {
             list.Remove(pass);
         }
@@ -37,7 +37,7 @@ namespace RenderApp.Render_System
             }
             list.Clear();
         }
-        public PostProcess FindPostProcess(int index)
+        public PostPlane FindPostProcess(int index)
         {
             if(index < 0 || index > Num)
             {
@@ -53,14 +53,14 @@ namespace RenderApp.Render_System
             }
         }
 
-        public IEnumerable<PostProcess> Items()
+        public IEnumerable<PostPlane> Items()
         {
             foreach(var loop in list)
             {
                 yield return loop;
             }
         }
-        public PostProcess Items(int index)
+        public PostPlane Items(int index)
         {
             if(index < 0 || index > Num)
             {

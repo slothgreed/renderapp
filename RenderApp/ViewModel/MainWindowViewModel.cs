@@ -12,11 +12,11 @@ using RenderApp.Utility;
 using RenderApp.GLUtil.ShaderModel;
 using System.Windows.Forms;
 using RenderApp.AssetModel.LightModel;
-using RenderApp.View.Dialog;
 using RenderApp.ViewModel.Dialog;
 using RenderApp.RA_Control;
 using RenderApp.Globals;
 using RenderApp.Render_System;
+using RenderApp.ViewModel.Controller;
 namespace RenderApp.ViewModel
 {
     public partial class MainWindowViewModel : ViewModelBase
@@ -108,6 +108,7 @@ namespace RenderApp.ViewModel
             _LeftUpItemsSource.Add( new RootNodeViewModel(Project.ActiveProject.RootNode, "Project"));
             _RightUpItemsSource.Add( new MaterialViewModel());
             _RightDownItemsSource.Add(new ShaderProgramViewModel(null));
+            _RightDownItemsSource.Add(new VoxelViewModel());
             _CenterItemsSource.Add( new ViewportViewModel());
 
             Viewport.Instance.OnCreateViewportEvent += OnCreateViewportEvent;
@@ -369,18 +370,6 @@ namespace RenderApp.ViewModel
         #region [Analyze Menu Command]
         private void VoxelizeCommand()
         {
-            
-            var dvm = new VoxelDialogViewModel();
-            var dlg = new VoxelDialogView(dvm);
-            dlg.ShowDialog();
-            if(!(bool)dlg.DialogResult)
-            {
-                return;
-            }
-            if(!AssetFactory.Instance.CreateVoxel(Scene.ActiveScene.SelectAsset,dvm.PartitionNum))
-            {
-                MessageBox.Show("Trianglesのポリゴンモデルのみで作成できます。");
-            }
         }
         private void OctreeCommand()
         {
@@ -431,6 +420,7 @@ namespace RenderApp.ViewModel
                 var vm = _RightDownItemsSource.Where(p => p is ShaderProgramViewModel).FirstOrDefault();
                 ReplaceTabItem(_RightDownItemsSource, vm, window);
             }
+
         }
         private void ReplaceTabItem(ObservableCollection<DockWindowViewModel> tabControl, DockWindowViewModel oldItem, DockWindowViewModel newItem)
         {

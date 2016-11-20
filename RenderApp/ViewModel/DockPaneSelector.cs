@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
+using RenderApp.ViewModel.Controller;
 namespace RenderApp.ViewModel
 {
 
@@ -33,6 +34,9 @@ namespace RenderApp.ViewModel
         public DataTemplate GeometryTemplate { get; set; }
         public DataTemplate ShaderTemplate { get; set; }
         public DataTemplate RenderTemplate { get; set; }
+        public DataTemplate VoxelTemplate { get; set; }
+        public DataTemplate SelectObjectTemplate { get; set; }
+        public DataTemplate DijkstraTemplate { get; set; }
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             if (item is MaterialViewModel)
@@ -66,6 +70,18 @@ namespace RenderApp.ViewModel
             if(item is RenderSystemViewModel)
             {
                 return RenderTemplate;
+            }
+            if(item is VoxelViewModel)
+            {
+                return VoxelTemplate;
+            }
+            if(item is DijkstraViewModel)
+            {
+                return DijkstraTemplate;
+            }
+            if(item is SelectViewModel)
+            {
+                return SelectObjectTemplate;
             }
             return base.SelectTemplate(item, container);
 

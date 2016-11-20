@@ -33,7 +33,7 @@ namespace RenderApp.Render_System
         /// <summary>
         /// ライティングステージ
         /// </summary>
-        private PostProcess LightingStage;
+        private PostPlane LightingStage;
         /// <summary>
         /// ポストプロセス結果
         /// </summary>
@@ -41,11 +41,11 @@ namespace RenderApp.Render_System
         /// <summary>
         /// 後処理のUtil（選択とか）
         /// </summary>
-        private PostProcess SelectionStage;
+        private PostPlane SelectionStage;
         /// <summary>
         /// 最終出力画像
         /// </summary>
-        private PostProcess OutputStage;
+        private PostPlane OutputStage;
         /// <summary>
         /// FrameBufferの横
         /// </summary>
@@ -78,7 +78,7 @@ namespace RenderApp.Render_System
             }
 
             FrameBuffer lightingFrame = RenderPassFactory.Instance.CreateDefaultLithingBuffer(Width, Height);
-            LightingStage = new PostProcess("DefaultLight", ShaderFactory.Instance.DefaultLightShader, lightingFrame);
+            LightingStage = new PostPlane("DefaultLight", ShaderFactory.Instance.DefaultLightShader, lightingFrame);
             LightingStage.SetPlaneTexture(TextureKind.Albedo, GBufferStage.FindTexture(TextureKind.Albedo));
             LightingStage.SetPlaneTexture(TextureKind.Normal, GBufferStage.FindTexture(TextureKind.Normal));
             LightingStage.SetPlaneTexture(TextureKind.World, GBufferStage.FindTexture(TextureKind.World));
@@ -88,11 +88,11 @@ namespace RenderApp.Render_System
             ProcessingTexture.Add(lightingFrame.TextureList[0]);
 
             FrameBuffer selectionBuffer = RenderPassFactory.Instance.CreateSelectionBuffer(Width, Height);
-            SelectionStage = new PostProcess("Selection", ShaderFactory.Instance.DefaultSelectionShader, selectionBuffer);
+            SelectionStage = new PostPlane("Selection", ShaderFactory.Instance.DefaultSelectionShader, selectionBuffer);
             SelectionStage.SetPlaneTexture(TextureKind.Albedo, GBufferStage.FindTexture(TextureKind.Normal));
             ProcessingTexture.Add(selectionBuffer.TextureList[0]);
             
-            OutputStage = new PostProcess("OutputShader", ShaderFactory.Instance.OutputShader);
+            OutputStage = new PostPlane("OutputShader", ShaderFactory.Instance.OutputShader);
             OutputTexture = GBufferStage.TextureList[0];
             OutputTexture = lightingFrame.TextureList[0];
 
@@ -187,7 +187,7 @@ namespace RenderApp.Render_System
             }
             OutputStage.SetValue("uSelectMap", SelectionStage.FrameBufferItem.TextureList[0].ID);
             OutputStage.SetPlaneTexture(TextureKind.Albedo, OutputTexture);
-            OutputStage.OutputRender();
+            OutputStage.Render();
         }
 
         internal void TogglePostProcess()

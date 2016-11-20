@@ -63,7 +63,7 @@ namespace RenderApp.Render_System.Post_Effect
             }
         }
         #region [Shaderの初期化関数]
-        public void Initialize()
+        public override void Initialize()
         {
             uThreshold = 1.0f;
             uWidth = 1;

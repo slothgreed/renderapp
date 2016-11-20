@@ -13,8 +13,6 @@ namespace RenderApp.AssetModel
 {
     public class CObjFile : GeometryLoader
     {
-        
-        
         public CObjFile(string name,string filePath)
             :base(name)
         {
@@ -45,7 +43,7 @@ namespace RenderApp.AssetModel
             if (Normal.Count == 0)
             {
                 half = new HalfEdge(m_posStream, m_posIndex);
-                MaterialItem.AddAnalayzer(half);
+                AddAnalayzer(half);
 
                 for (int i = 0; i < m_posIndex.Count / 3; i++)
                 {

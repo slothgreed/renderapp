@@ -5,7 +5,9 @@
         xmlns:avalon="http://schemas.xceed.com/wpf/xaml/avalondock"
         xmlns:local="clr-namespace:RenderApp"
         xmlns:vm="clr-namespace:RenderApp.ViewModel"
+        xmlns:vmc="clr-namespace:RenderApp.ViewModel.Controller"
         xmlns:v="clr-namespace:RenderApp.View"
+        xmlns:vc="clr-namespace:RenderApp.View.Controller"
         xmlns:asset="clr-namespace:RenderApp.AssetModel"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -70,6 +72,24 @@
                     <v:RenderSystemView/>
                 </DataTemplate>
             </vm:DockPaneTemplateSelector.RenderTemplate>
+
+            <vm:DockPaneTemplateSelector.VoxelTemplate>
+                <DataTemplate DataType="{x:Type vmc:VoxelViewModel}">
+                    <vc:VoxelView/>
+                </DataTemplate>
+            </vm:DockPaneTemplateSelector.VoxelTemplate>
+            
+            <vm:DockPaneTemplateSelector.DijkstraTemplate>
+                <DataTemplate DataType="{x:Type vmc:DijkstraViewModel}">
+                    <vc:DijkstraView/>
+                </DataTemplate>
+            </vm:DockPaneTemplateSelector.DijkstraTemplate>
+            
+            <vm:DockPaneTemplateSelector.SelectObjectTemplate>
+                <DataTemplate DataType="{x:Type vmc:SelectViewModel}">
+                    <vc:SelectView/>
+                </DataTemplate>
+            </vm:DockPaneTemplateSelector.SelectObjectTemplate>
         </vm:DockPaneTemplateSelector>
         
         <DataTemplate x:Key="TabItemHeaderTempalte">
