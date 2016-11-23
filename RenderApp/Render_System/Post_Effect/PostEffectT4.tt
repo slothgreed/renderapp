@@ -1,1 +1,44 @@
-﻿
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ import namespace="System" #>
+<#
+ var classProperty = new Tuple<string,string[],string[]>[]
+ {
+	Tuple.Create(
+	"Selection",
+	new string[]{"int"},
+	new string[]{"uID"})
+ };
+#>
+using System;
+namespace RenderApp.Render_System.Post_Effect
+{
+<#
+	for(int classIndex = 0; classIndex < classProperty.Length; classIndex++){
+#>
+	public partial class <#=classProperty[classIndex].Item1#> : PostEffect
+	{
+<#
+	for(int propetyIndex = 0; propetyIndex < classProperty[classIndex].Item2.Length; propetyIndex++){
+#>
+		private <#=classProperty[classIndex].Item2[propetyIndex]#> _<#=classProperty[classIndex].Item3[propetyIndex]#>;
+		public <#=classProperty[classIndex].Item2[propetyIndex]#> <#=classProperty[classIndex].Item3[propetyIndex]#>
+		{
+			get
+			{
+				return _<#=classProperty[classIndex].Item3[propetyIndex]#>;
+			}
+			set
+			{
+				SetValue<<#=classProperty[classIndex].Item2[propetyIndex]#>>(ref _<#=classProperty[classIndex].Item3[propetyIndex]#>,value); 
+			}
+		}
+
+<#
+	}
+#>
+
+	}
+<#
+	}
+#>
+}

@@ -7,7 +7,7 @@ using RenderApp.GLUtil.ShaderModel;
 using System.Runtime.CompilerServices;
 namespace RenderApp.Render_System.Post_Effect
 {
-    abstract class PostEffect
+    public abstract class PostEffect
     {
         public Shader PostShader
         {
@@ -29,7 +29,6 @@ namespace RenderApp.Render_System.Post_Effect
             {
                 Utility.Output.Error("Set Shader Error " + memberName);
             }
-         
         }
         public abstract void Initialize();
     }
