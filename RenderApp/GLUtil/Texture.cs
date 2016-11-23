@@ -11,7 +11,7 @@ using RenderApp.Utility;
 namespace RenderApp.GLUtil
 {
 
-    public class Texture : Asset
+    public class Texture : RAFile
     {
         #region [member]
         private string DummyTexturePath
@@ -72,17 +72,17 @@ namespace RenderApp.GLUtil
         }
 
         public Texture(string name,string path)
-            :base(name)
+            : base(path)
         {
             LoadTexture(path);
         }
         public Texture(string name,string path, TextureType target = TextureType.Texture2D)
-            :base(name)
+            : base(path)
         {
             LoadTexture(path, target);
         }
         public Texture(string name, int width, int height)
-            : base(name)
+            : base("")
         {
             this.Key = name;
             CreateFrameBuffer2D(width,height);
@@ -98,7 +98,6 @@ namespace RenderApp.GLUtil
         }
         public void LoadTexture(string path, TextureType target = TextureType.Texture2D)
         {
-            this.FilePath = path;
             this.TexType = target;
 
             switch (target)
@@ -117,7 +116,6 @@ namespace RenderApp.GLUtil
         public Texture(string name,string px, string py, string pz, string nx, string ny, string nz)
             : base(name)
         {
-            this.FilePath = px;
             this.ID = CreateCubeMapTexture(px, nx, py, ny, pz, nz);
             this.TexType = TextureType.CubeMap;
             Initialize();

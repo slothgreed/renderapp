@@ -53,8 +53,8 @@ namespace RenderApp
         /// <summary>
         /// 選択中のアセット
         /// </summary>
-        private Asset _selectAsset;
-        public Asset SelectAsset
+        private RAFile _selectAsset;
+        public RAFile SelectAsset
         {
             get
             {
@@ -210,7 +210,7 @@ namespace RenderApp
             parent.AddChild(value);
         }
 
-        private string GetNewKey<T>(string key, Dictionary<string, T> AssetList) where T : Asset
+        private string GetNewKey<T>(string key, Dictionary<string, T> AssetList) where T : RAFile
         {
             string newKey = key;
             int serialNumber = 0;
@@ -247,8 +247,11 @@ namespace RenderApp
             Geometry map = AssetFactory.Instance.CreateEnvironmentMap();
             AddRootSceneObject(map);
 
-            Geometry duck = new CObjFile("Duck","C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/smallduck.obj");
-            AddRootSceneObject(duck);
+            List<Geometry> ducks = AssetFactory.Instance.CreateLoad3DModel("C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/smallduck.obj");
+            foreach(var duck in ducks)
+            {
+                AddRootSceneObject(duck);
+            }
         }
         #endregion
         #region [dispose]

@@ -190,8 +190,8 @@ namespace RenderApp.ViewModel
             {
                 foreach (var filename in dlg.FileNames)
                 {
-                    Geometry geometry = AssetFactory.Instance.CreateLoad3DModel(filename);
-                    if (geometry != null)
+                    List<Geometry> geometrys = AssetFactory.Instance.CreateLoad3DModel(filename);
+                    foreach(var geometry in geometrys)
                     {
                         Project.ActiveProject.AddChild(AssetFactory.Instance.CreateGeometry(geometry));
                     }
@@ -274,17 +274,17 @@ namespace RenderApp.ViewModel
         }
         private void CreateCubeCommand()
         {
-            Cube cube = new Cube(Asset.GetNameFromType(EAssetType.Geometry), Scene.ActiveScene.WorldMin, Scene.ActiveScene.WorldMax);
+            Cube cube = new Cube(RAFile.GetNameFromType(EAssetType.Geometry), Scene.ActiveScene.WorldMin, Scene.ActiveScene.WorldMax);
             AssetFactory.Instance.CreateGeometry(cube);
         }
         private void CreateSphereCommand()
         {
-            Sphere sphere = new Sphere(Asset.GetNameFromType(EAssetType.Geometry), 5, 5, 5, true, OpenTK.Vector3.UnitY);
+            Sphere sphere = new Sphere(RAFile.GetNameFromType(EAssetType.Geometry), 5, 5, 5, true, OpenTK.Vector3.UnitY);
             AssetFactory.Instance.CreateGeometry(sphere);
         }
         private void CreatePlaneCommand()
         {
-            Plane plane = new Plane(Asset.GetNameFromType(EAssetType.Geometry));
+            Plane plane = new Plane(RAFile.GetNameFromType(EAssetType.Geometry));
             AssetFactory.Instance.CreateGeometry(plane);
         }
         private void CreateWireFrameCommand()

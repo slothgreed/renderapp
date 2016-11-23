@@ -143,6 +143,8 @@
     </ApplicationDefinition>
     <Compile Include="Analyzer\HalfEdge\Dijkstra.cs" />
     <Compile Include="AssetModel\AssetFactory.cs" />
+    <Compile Include="AssetModel\Geometry\File\GeometryFile.cs" />
+    <Compile Include="AssetModel\Geometry\File\MaterialFileInfo.cs" />
     <Compile Include="RACommand\ICommand.cs" />
     <Compile Include="Render_System\Post_Effect\Bloom.cs" />
     <Compile Include="Render_System\Post_Effect\DOF.cs" />
@@ -162,7 +164,7 @@
     <Compile Include="GLUtil\ShaderModel\ShaderFactory.cs" />
     <Compile Include="Utility\Output.cs" />
     <Compile Include="AssetModel\EnvironmentProbe.cs" />
-    <Compile Include="AssetModel\Geometry\File\GeometryLoader.cs" />
+    <Compile Include="AssetModel\Geometry\File\GeometryInfo.cs" />
     <Compile Include="GLUtil\ShaderModel\ShaderProgramInfo.cs" />
     <Compile Include="Globals\Enum.cs" />
     <Compile Include="GLUtil\TextureFactory.cs" />
@@ -200,7 +202,7 @@
     <Compile Include="AssetModel\LightModel\DirectionLight.cs" />
     <Compile Include="AssetModel\LightModel\PointLight.cs" />
     <Compile Include="AssetModel\LightModel\SpotLight.cs" />
-    <Compile Include="AssetModel\Asset.cs" />
+    <Compile Include="RAFile.cs" />
     <Compile Include="ViewModel\DockWindowViewModel.cs" />
     <Compile Include="ViewModel\ComboItemViewModel.cs" />
     <Compile Include="ViewModel\DefaultViewModel.cs" />

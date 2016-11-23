@@ -100,9 +100,9 @@ namespace RenderApp.ViewModel
             if (ActiveNode.Model is RANode)
             {
                 var node = ActiveNode.Model as RANode;
-                if (node.RAObject is Asset)
+                if (node.RAObject is RAFile)
                 {
-                    var asset = node.RAObject as Asset;
+                    var asset = node.RAObject as RAFile;
                     if (File.Exists(asset.FilePath))
                     {
                         Process.Start("EXPLORER.exe", @"/select," + asset.FilePath);

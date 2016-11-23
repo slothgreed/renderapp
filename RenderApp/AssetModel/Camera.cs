@@ -11,7 +11,7 @@ namespace RenderApp.AssetModel
     /// <summary>
     /// カメラ
     /// </summary>
-    public class Camera : Asset
+    public class Camera : RAFile
     {
         #region [property method]
         public Matrix4 ProjMatrix { get; set; }
@@ -98,7 +98,7 @@ namespace RenderApp.AssetModel
         /// <summary>
         /// projectionのfar
         /// </summary>
-        private float _far = 300;
+        private float _far = 10000;
         public float Far
         {
             get

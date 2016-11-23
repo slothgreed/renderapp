@@ -11,16 +11,40 @@ using System.Windows.Forms;
 using RenderApp.Analyzer;
 namespace RenderApp.AssetModel
 {
-    public class CObjFile : GeometryLoader
+    public class OBJMaterial : MaterialFileInfo
     {
+        public string name;
+        public Vector3 Ka;
+        public Vector3 Kd;
+        public Vector3 Ks;
+        public Vector3 Ke;
+        public float Ns;
+        public float Ni;
+        public float d;
+        public float Tr;
+        public Vector3 Tf;
+        public float illum;
+        public string map_Ka;
+        public string map_Kd;
+        public string map_d;
+        public string map_bump;
+        public string bump;
+    }
+
+    public class CObjFile : GeometryFile
+    {
+        private Dictionary<string, OBJMaterial> mtlList = new Dictionary<string,OBJMaterial>();
+        private List<Vector3> posAllList = new List<Vector3>();
+        /// <summary>
+        /// 読み込み時のファイルの最初かどうかのフラグ
+        /// </summary>
+        private bool CreateInfoFlag = true;
         public CObjFile(string name,string filePath)
-            :base(name)
+            :base(filePath)
         {
             try
             {
-                FilePath = filePath;
-                m_posStream.Clear();
-                m_norStream.Clear();
+                geometryInfo = new List<GeometryInfo>();
                 string[] parser = File.ReadAllLines(filePath, System.Text.Encoding.GetEncoding("Shift_JIS"));
 
                 ReadData(parser);
@@ -37,32 +61,29 @@ namespace RenderApp.AssetModel
         #region [構造の変更]
         private void SetDrawArrayData()
         {
+            //MaterialItem = Material.Default;
+            //HalfEdge half = null;
+            //if (Normal.Count == 0)
+            //{
+            //    half = new HalfEdge(m_posStream, m_posIndex);
+            //    AddAnalayzer(half);
 
-            MaterialItem = Material.Default;
-            HalfEdge half = null;
-            if (Normal.Count == 0)
-            {
-                half = new HalfEdge(m_posStream, m_posIndex);
-                AddAnalayzer(half);
+            //    for (int i = 0; i < m_posIndex.Count / 3; i++)
+            //    {
+            //        Position.Add(m_posStream[m_posIndex[3 * i]]);
+            //        Position.Add(m_posStream[m_posIndex[3 * i + 1]]);
+            //        Position.Add(m_posStream[m_posIndex[3 * i + 2]]);
 
-                for (int i = 0; i < m_posIndex.Count / 3; i++)
-                {
-                    Position.Add(m_posStream[m_posIndex[3 * i]]);
-                    Position.Add(m_posStream[m_posIndex[3 * i + 1]]);
-                    Position.Add(m_posStream[m_posIndex[3 * i + 2]]);
+            //        Normal.Add(half.GetNormal(m_posIndex[3 * i]));
+            //        Normal.Add(half.GetNormal(m_posIndex[3 * i + 1]));
+            //        Normal.Add(half.GetNormal(m_posIndex[3 * i + 2]));
 
-                    Normal.Add(half.GetNormal(m_posIndex[3 * i]));
-                    Normal.Add(half.GetNormal(m_posIndex[3 * i + 1]));
-                    Normal.Add(half.GetNormal(m_posIndex[3 * i + 2]));
-
-                    TexCoord.Add(m_texStream[m_texIndex[3 * i]]);
-                    TexCoord.Add(m_texStream[m_texIndex[3 * i + 1]]);
-                    TexCoord.Add(m_texStream[m_texIndex[3 * i + 2]]);
-                }
-            }
-            MaterialItem.AddTexture(TextureKind.Albedo, new GLUtil.Texture(m_Materials[0].imageFile,DirectoryPath + @"\" + m_Materials[0].imageFile));
-
-
+            //        TexCoord.Add(m_texStream[m_texIndex[3 * i]]);
+            //        TexCoord.Add(m_texStream[m_texIndex[3 * i + 1]]);
+            //        TexCoord.Add(m_texStream[m_texIndex[3 * i + 2]]);
+            //    }
+            //}
+            //MaterialItem.AddTexture(TextureKind.Albedo, new GLUtil.Texture(m_Materials[0].imageFile,DirectoryPath + @"\" + m_Materials[0].imageFile));
         }
 
         #endregion
@@ -80,11 +101,27 @@ namespace RenderApp.AssetModel
                 int counter = 0;
 
                 String[] line;
+                GeometryInfo data = null;
+                
                 while (parser.Length != counter)
                 {
+                    parser[counter] = parser[counter].Trim();
                     line = parser[counter].Split(' ');
-
-                    ReadLineData(line);
+                    if(line[0] == "v")
+                    {
+                        if (CreateInfoFlag)
+                        {
+                            data = new GeometryInfo();
+                            geometryInfo.Add(data);
+                            CreateInfoFlag = false;
+                        }
+                    }
+                    if (line[0] == "f")
+                    {
+                        CreateInfoFlag = true;
+                    }
+                    ReadLineData(data, line);
+                    
 
                     counter++;
                 }
@@ -100,106 +137,95 @@ namespace RenderApp.AssetModel
         /// 1行ずつの読み込み
         /// </summary>
         /// <param name="line"></param>
-        private void ReadLineData(string[] line)
+        private void ReadLineData(GeometryInfo data, string[] line)
         {
-            try
+            line = line.Where(p => p != "").ToArray();
+            for (int i = 0; i < line.Length; i++)
             {
-                Vector3 pos;
-                for (int i = 0; i < line.Length; i++)
+                //コメント領域
+                if (line[i] == "#" || line[i] == "") break;
+
+                if (line[i] == "mtllib")
                 {
-                    //コメント領域
-                    if (line[i] == "#" || line[i] == "") break;
-
-                    if (line[i] == "mtllib") OpenMTL(line[i + 1]);
-                    if (line[i] == "v")
-                    {   
-                        float X = float.MaxValue;
-                        float Y = float.MaxValue;
-                        float Z = float.MaxValue;
-                        int offset = 1;
-                        while(true)
-                        {
-                            if(line[i + offset]=="")
-                            {
-                                offset++;
-                            }
-                            else if(X == float.MaxValue)
-                            {
-                                X = float.Parse(line[i + offset]);
-                                offset++;
-                            }else if(Y == float.MaxValue)
-                            {
-                                Y = float.Parse(line[i + offset]);
-                                offset++;
-                            }
-                            else
-                            {
-                                Z = float.Parse(line[i + offset]);
-                                break;
-                            }
-                        }
-
-                        pos = new Vector3(X, Y, Z);
-                        m_posStream.Add(pos);
-
-                        break;
-                    }
-                    if (line[i] == "vt")
-                    {
-                        m_texStream.Add(new Vector2(float.Parse(line[i + 1]), float.Parse(line[i + 2])));
-                        break;
-                    }
-                    if (line[i] == "vn")
-                    {
-                        m_norStream.Add(new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3])));
-                        break;
-                    }
-                    if (line[i] == "f")
-                    {
-                        SetIndexBuffer(line);
-                        break;
-                    }
-                    if (line[i] == "usemtl")
-                    {
-
-                    }
+                    OpenMTL(line[i + 1]);
+                    break;
                 }
-
-            }
-            catch (Exception)
-            {
-
-                throw;
+                if (line[i] == "v")
+                {
+                    data.posStream.Add(new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3])));
+                    posAllList.Add(data.posStream[data.posStream.Count - 1]);
+                    break;
+                }
+                if (line[i] == "vt")
+                {
+                    data.texStream.Add(new Vector2(float.Parse(line[i + 1]), float.Parse(line[i + 2])));
+                    break;
+                }
+                if (line[i] == "vn")
+                {
+                    data.norStream.Add(new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3])));
+                    break;
+                }
+                if (line[i] == "f")
+                {
+                    SetIndexBuffer(data, line);
+                    break;
+                }
+                if (line[i] == "g")
+                {
+                    data.group = line[i + 1];
+                }
+                if (line[i] == "usemtl")
+                {
+                    if (mtlList.ContainsKey(line[i + 1]))
+                    {
+                        data.Material = mtlList[line[i + 1]];
+                    }
+                    else
+                    {
+                        Utility.Output.Error("not found material on load obje file");
+                    }
+                    break;
+                }
+                if (line[i] == "s")
+                {
+                    //TODO;
+                    break;
+                }
             }
         }
-        private void SetIndexBuffer(string[] line)
+        private void SetIndexBuffer(GeometryInfo data, string[] line)
         {
-            try
+            if(line.Length == 4)
             {
-                
+                if(data.geometryType == GeometryType.None)
+                {
+                    data.geometryType = GeometryType.Triangle;
+                }
+                else if(data.geometryType == GeometryType.Quad)
+                {
+                    data.geometryType = GeometryType.Mix;
+                }
                 string[] part1;
                 string[] part2;
                 string[] part3;
-                if (line.Length > 4)
-                {
-                    throw new Exception();
-                }
+
                 part1 = line[1].Split('/');
                 part2 = line[2].Split('/');
                 part3 = line[3].Split('/');
 
                 //Index番号となるようにー1
                 //objファイルのインデックスは1から、リストの順を基準にしたいため0からに
-                m_posIndex.Add(Math.Abs(int.Parse(part1[0])) - 1);
-                m_posIndex.Add(Math.Abs(int.Parse(part2[0])) - 1);
-                m_posIndex.Add(Math.Abs(int.Parse(part3[0])) - 1);
+                data.posIndex.Add(Math.Abs(int.Parse(part1[0])) - 1);
+                data.posIndex.Add(Math.Abs(int.Parse(part2[0])) - 1);
+                data.posIndex.Add(Math.Abs(int.Parse(part3[0])) - 1);
                 if (part1.Length > 1)
                 {
                     if (part1[1] != "")
                     {
-                        m_texIndex.Add(Math.Abs(int.Parse(part1[1])) - 1);
-                        m_texIndex.Add(Math.Abs(int.Parse(part2[1])) - 1);
-                        m_texIndex.Add(Math.Abs(int.Parse(part3[1])) - 1);
+                        data.texIndex.Add(Math.Abs(int.Parse(part1[1])) - 1);
+                        data.texIndex.Add(Math.Abs(int.Parse(part2[1])) - 1);
+                        data.texIndex.Add(Math.Abs(int.Parse(part3[1])) - 1);
 
                     }
                 }
@@ -207,23 +233,65 @@ namespace RenderApp.AssetModel
                 {
                     if (part1[2] != "")
                     {
-                        m_norIndex.Add(Math.Abs(int.Parse(part1[2])) - 1);
-                        m_norIndex.Add(Math.Abs(int.Parse(part2[2])) - 1);
-                        m_norIndex.Add(Math.Abs(int.Parse(part3[2])) - 1);
+                        data.norIndex.Add(Math.Abs(int.Parse(part1[2])) - 1);
+                        data.norIndex.Add(Math.Abs(int.Parse(part2[2])) - 1);
+                        data.norIndex.Add(Math.Abs(int.Parse(part3[2])) - 1);
 
                     }
                 }
             }
-            catch (Exception)
+            else if(line.Length == 5)
             {
-
-                Console.WriteLine("3角形以外の形状を含みます。");
-                throw;
+                if (data.geometryType == GeometryType.None)
+                {
+                    data.geometryType = GeometryType.Quad;
+                }
+                else if (data.geometryType == GeometryType.Quad)
+                {
+                    data.geometryType = GeometryType.Triangle;
+                }
+                string[] part1;
+                string[] part2;
+                string[] part3;
+                string[] part4;
+                part1 = line[1].Split('/');
+                part2 = line[2].Split('/');
+                part3 = line[3].Split('/');
+                part4 = line[4].Split('/');
+                //Index番号となるようにー1
+                //objファイルのインデックスは1から、リストの順を基準にしたいため0からに
+                data.posIndex.Add(Math.Abs(int.Parse(part1[0])) - 1);
+                data.posIndex.Add(Math.Abs(int.Parse(part2[0])) - 1);
+                data.posIndex.Add(Math.Abs(int.Parse(part3[0])) - 1);
+                data.posIndex.Add(Math.Abs(int.Parse(part4[0])) - 1);
+                if (part1.Length > 1)
+                {
+                    if (part1[1] != "")
+                    {
+                        data.texIndex.Add(Math.Abs(int.Parse(part1[1])) - 1);
+                        data.texIndex.Add(Math.Abs(int.Parse(part2[1])) - 1);
+                        data.texIndex.Add(Math.Abs(int.Parse(part3[1])) - 1);
+                        data.texIndex.Add(Math.Abs(int.Parse(part3[1])) - 1);
+                    }
+                }
+                if (part1.Length > 2)
+                {
+                    if (part1[2] != "")
+                    {
+                        data.norIndex.Add(Math.Abs(int.Parse(part1[2])) - 1);
+                        data.norIndex.Add(Math.Abs(int.Parse(part2[2])) - 1);
+                        data.norIndex.Add(Math.Abs(int.Parse(part3[2])) - 1);
+                        data.norIndex.Add(Math.Abs(int.Parse(part4[2])) - 1);
+                    }
+                }
+            }else
+            {
+                Utility.Output.Error("we dont support more than 4 polygons");
             }
         }
         private bool OpenMTL(string file_name)
         {
-            string directory = System.IO.Path.GetDirectoryName(FilePath);
+            string directory = DirectoryPath;
             string mtlFile = directory + @"\" + file_name;
 
             if (!File.Exists(mtlFile))
@@ -232,50 +300,141 @@ namespace RenderApp.AssetModel
             }
             string[] parser = File.ReadAllLines(mtlFile, System.Text.Encoding.GetEncoding("Shift_JIS"));
 
-            try
+            int counter = 0;
+
+            String[] line;
+            OBJMaterial mat = null;
+            while (parser.Length != counter)
             {
-                int counter = 0;
+                line = parser[counter].Split(' ');
 
-                String[] line;
-                CMaterial mat = new CMaterial();
-                while (parser.Length != counter)
+                for (int i = 0; i < line.Length; i++)
                 {
-                    line = parser[counter].Split(' ');
+                    line[i] = line[i].Replace("\t","");
+                    
+                    //コメント領域
+                    if (line[i] == "#" || line[i] == "") break;
+                    
 
-                    for (int i = 0; i < line.Length; i++)
+                    if (line[i] == "newmtl")
                     {
-                        //コメント領域
-                        if (line[i] == "#" || line[i] == "") break;
-                        if (line[i] == "newmtl")
+                        if(mat !=null)
                         {
-                            mat = new CMaterial();
-                            mat.name = line[i];
+                            mtlList.Add(mat.name,mat);
                         }
-                        if (line[i] == "Ka")
-                            mat.Ka = new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3]));
-                        if (line[i] == "Kd")
-                            mat.Kd = new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3]));
-                        if (line[i] == "Ks")
-                            mat.Ks = new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3]));
-                        if (line[i] == "map_Kd")
+                        mat = new OBJMaterial();
+                        mat.name = line[i + 1];
+                        break;
+                    }
+                    if(mat != null)
+                    {
+                        switch(line[i])
                         {
-
-                            mat.imageFile = line[i + 1];
-                            m_Materials.Add(mat);
+                            case "Ns":
+                                mat.Ns = float.Parse(line[i + 1]);
+                                break;
+                            case "Ni":
+                                mat.Ni = float.Parse(line[i + 1]);
+                                break;
+                            case "d":
+                                mat.d = float.Parse(line[i + 1]);
+                                break;
+                            case "Tr":
+                                mat.Tr = float.Parse(line[i + 1]);
+                                break;
+                            case "Tf":
+                                mat.Ka = new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3]));
+                                break;
+                            case "illum":
+                                mat.illum = float.Parse(line[i + 1]);
+                                break;
+                            case "Ka":
+                                mat.Ka = new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3]));
+                                break;
+                            case "Kd":
+                                mat.Kd = new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3]));
+                                break;
+                            case "Ks":
+                                mat.Ks = new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3]));
+                                break;
+                            case "Ke":
+                                mat.Ke = new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3]));
+                                break;
+                            case "map_Ka":
+                                mat.map_Ka = DirectoryPath + line[i + 1];
+                                break;
+                            case "map_Kd":
+                                mat.map_Kd = DirectoryPath + line[i + 1];
+                                break;
+                            case "map_d":
+                                mat.map_d = DirectoryPath + line[i + 1];
+                                break;
+                            case "map_bump":
+                                mat.map_bump = DirectoryPath + line[i + 1];
+                                break;
+                            case "bump":
+                                mat.bump = DirectoryPath + line[i + 1];
+                                break;
                         }
                     }
-
-                    counter++;
                 }
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("mtlの読み込みに失敗しました。");
-                return false;
+
+                counter++;
             }
             return true;
         }
         #endregion
         #endregion
+
+        public override List<Geometry> ConvertGeometry()
+        {
+            List<Geometry> geometrys = new List<Geometry>();
+            for(int i = 0; i < geometryInfo.Count; i++)
+            {
+                Geometry geometry = null;
+                if(geometryInfo[i].geometryType == GeometryType.Triangle)
+                {
+                    var Position = new List<Vector3>();
+
+                    for (int j = 0; j < geometryInfo[i].posStream.Count / 3; j++)
+                    {
+                        Position.Add(posAllList[geometryInfo[i].posIndex[3 * j]]);
+                        Position.Add(posAllList[geometryInfo[i].posIndex[3 * j + 1]]);
+                        Position.Add(posAllList[geometryInfo[i].posIndex[3 * j + 2]]);
+                    }
+
+                    geometry = new Primitive(
+                        FileName + i.ToString(),
+                        geometryInfo[i].posStream,
+                        PrimitiveType.Triangles
+                        );
+                }
+                else
+                {
+                    var Position = new List<Vector3>();
+
+                    for (int j = 0; j < geometryInfo[i].posStream.Count / 4; j++)
+                    {
+                        Position.Add(posAllList[geometryInfo[i].posIndex[4 * j]]);
+                        Position.Add(posAllList[geometryInfo[i].posIndex[4 * j + 1]]);
+                        Position.Add(posAllList[geometryInfo[i].posIndex[4 * j + 2]]);
+                        Position.Add(posAllList[geometryInfo[i].posIndex[4 * j + 3]]);
+
+                    }
+
+                    geometry = new Primitive(
+                        FileName + i.ToString(),
+                        geometryInfo[i].posStream,
+                        PrimitiveType.Quads
+                        );
+                }
+                if(geometry != null)
+                {
+                    geometrys.Add(geometry);
+
+                }
+            }
+            return geometrys;
+        }
     }
 }

@@ -10,7 +10,7 @@ using OpenTK.Graphics.OpenGL;
 using RenderApp.GLUtil.ShaderModel;
 namespace RenderApp.AssetModel
 {
-    public class Material : Asset
+    public class Material : RAFile
     {
 
         #region [property method]

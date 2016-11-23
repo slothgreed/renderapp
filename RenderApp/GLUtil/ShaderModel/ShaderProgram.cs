@@ -9,7 +9,7 @@ using RenderApp.AssetModel;
 using OpenTK;
 namespace RenderApp.GLUtil.ShaderModel
 {
-    public class ShaderProgram : Asset
+    public class ShaderProgram : RAFile
     {
        
         private ShaderType? _shaderType;
@@ -56,9 +56,8 @@ namespace RenderApp.GLUtil.ShaderModel
             }
         }
         public ShaderProgram(string name,string filePath)
-            :base(name)
+            : base(filePath)
         {
-            FilePath = filePath;
             StreamReader reader = new StreamReader(FilePath);
             _shaderCode = reader.ReadToEnd();
             reader.Close();

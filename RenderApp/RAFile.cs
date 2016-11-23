@@ -5,15 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace RenderApp.AssetModel
+namespace RenderApp
 {
 
-    public abstract class Asset : RAObject
+    public abstract class RAFile : RAObject
     {
-        public Asset(string name)
+        public RAFile(string filePath)
         {
-            Key = name;
-            System.Diagnostics.Debug.WriteLine("create asset " + name + ":");
+            FileName = Path.GetFileName(filePath);
+            FilePath = filePath;
+            Key = FileName;
+
+            System.Diagnostics.Debug.WriteLine("create asset " + filePath + ":");
         }
         private string _directoryPath;
         public string DirectoryPath
@@ -34,39 +37,18 @@ namespace RenderApp.AssetModel
         /// <summary>
         /// テクスチャパス
         /// </summary>
-        private string _filePath;
         public string FilePath
         {
-            get
-            {
-                return _filePath;
-            }
-            protected set
-            {
-                _filePath = value;
-            }
+            get;
+            private set;
         }
         /// <summary>
         /// テクスチャ名
         /// </summary>
-        private string _fileName;
-        public virtual string FileName
+        public string FileName
         {
-            get
-            {
-                if (_fileName == null)
-                {
-                    _fileName = System.IO.Path.GetFileName(FilePath);
-                }
-                return _fileName;
-            }
-            set
-            {
-                if (_fileName == null)
-                {
-                    _fileName = System.IO.Path.GetFileName(FilePath);
-                }
-            }
+            get;
+            private set;
         }
 
         public override string ToString()

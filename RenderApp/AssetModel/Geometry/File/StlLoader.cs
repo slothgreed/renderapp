@@ -7,14 +7,14 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Windows.Forms;
 using RenderApp.Analyzer;
+using System.IO;
 namespace RenderApp.AssetModel
 {
     /// <summary>
     /// STLのローダ現在テキストファイルのみ
     /// </summary>
-    public class StlFile : GeometryLoader
+    public class StlFile : GeometryFile
     {
-
 
         /// <summary>
         /// STLのローダ。
@@ -23,12 +23,16 @@ namespace RenderApp.AssetModel
         /// <param name="position"></param>
         /// <param name="normal"></param>
         public StlFile(string name,string filePath)
-            :base(name)    
+            :base(filePath)
         {
             try
             {
+                var data = new GeometryInfo();
                 String[] parser = File.ReadAllLines(filePath, System.Text.Encoding.GetEncoding("Shift_JIS"));
-                ReadData(parser);
+                ReadData(data,parser);
+
+                geometryInfo = new List<GeometryInfo>();
+                geometryInfo.Add(data);
                 //HalfEdge half = new HalfEdge(Position);
                 ////position;
                 //Position.Clear();
@@ -39,6 +43,7 @@ namespace RenderApp.AssetModel
                 //        Position.Add(vertex.Position);
                 //    }
                 //}
+
             }
             catch (Exception)
             {
@@ -54,7 +59,7 @@ namespace RenderApp.AssetModel
         /// <param name="parser">STLデータ</param>
         /// <param name="position">位置情報を格納</param>
         /// <param name="normal">法線情報を格納</param>
-        private void ReadData(String[] parser)
+        private void ReadData(GeometryInfo data,String[] parser)
         {
             try
             {
@@ -73,9 +78,9 @@ namespace RenderApp.AssetModel
                         if (line[i] == "facet" && line[i + 1] == "normal")
                         {
                             ////同じなものを3つ作って頂点の法線ベクトルにする
-                            Normal.Add(new Vector3(float.Parse(line[i + 2]), float.Parse(line[i + 3]), float.Parse(line[i + 4])));
-                            Normal.Add(new Vector3(float.Parse(line[i + 2]), float.Parse(line[i + 3]), float.Parse(line[i + 4])));
-                            Normal.Add(new Vector3(float.Parse(line[i + 2]), float.Parse(line[i + 3]), float.Parse(line[i + 4])));
+                            data.Normal.Add(new Vector3(float.Parse(line[i + 2]), float.Parse(line[i + 3]), float.Parse(line[i + 4])));
+                            data.Normal.Add(new Vector3(float.Parse(line[i + 2]), float.Parse(line[i + 3]), float.Parse(line[i + 4])));
+                            data.Normal.Add(new Vector3(float.Parse(line[i + 2]), float.Parse(line[i + 3]), float.Parse(line[i + 4])));
                             break;
                         }
                         if (line[i] == "vertex")
@@ -86,8 +91,8 @@ namespace RenderApp.AssetModel
                             }
 
                             pos = new Vector3(float.Parse(line[i + offset + 1]), float.Parse(line[i + offset + 2]), float.Parse(line[i + offset + 3]));
-                         
-                            Position.Add(pos);                        
+
+                            data.Position.Add(pos);                        
                             offset = 0;
                             break;
                         }
@@ -120,6 +125,11 @@ namespace RenderApp.AssetModel
             }
             write.WriteLine("endsolid vcg");
             write.Close();
+        }
+
+        public override List<Geometry> ConvertGeometry()
+        {
+            return null;
         }
     }
 }

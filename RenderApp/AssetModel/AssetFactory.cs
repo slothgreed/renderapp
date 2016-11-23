@@ -25,12 +25,13 @@ namespace RenderApp.AssetModel
 
         public Geometry CreateEnvironmentMap()
         {
+            return null;
             string SphereMapAlbedo = ProjectInfo.TextureDirectory + @"\SphreMap.jpg";
             string SphereMapVertexShader = ProjectInfo.ShaderDirectory + @"\sphereMap.vert";
             string SphereMapFragmentShader = ProjectInfo.ShaderDirectory + @"\sphereMap.frag";
             Sphere sphere = new Sphere("SphereMap",Scene.ActiveScene.WorldMax.X * 2, 20, 20, false, Vector3.UnitX);
             sphere.MaterialItem = new Material("SphereMaterial");
-            Texture texture = TextureFactory.Instance.CreateTexture(Asset.GetNameFromPath(SphereMapAlbedo), SphereMapAlbedo);
+            Texture texture = TextureFactory.Instance.CreateTexture(RAFile.GetNameFromPath(SphereMapAlbedo), SphereMapAlbedo);
             sphere.MaterialItem.AddTexture(TextureKind.Albedo, texture);
             sphere.MaterialItem.AddTexture(TextureKind.Albedo, texture);
             Project.ActiveProject.AddChild(sphere.MaterialItem);
@@ -57,7 +58,7 @@ namespace RenderApp.AssetModel
         }
 
         #region analyze method
-        internal bool CanCreateGeometry(Asset asset)
+        internal bool CanCreateGeometry(RAFile asset)
         {
             if (!(asset is Geometry))
             {
@@ -71,7 +72,7 @@ namespace RenderApp.AssetModel
             return true;
         }
 
-        internal bool CreateWireFrame(Asset asset)
+        internal bool CreateWireFrame(RAFile asset)
         {
             if (!CanCreateGeometry(asset))
             {
@@ -96,7 +97,7 @@ namespace RenderApp.AssetModel
 
             return true;
         }
-        internal bool CreatePolygon(Asset asset)
+        internal bool CreatePolygon(RAFile asset)
         {
             if (!CanCreateGeometry(asset))
             {
@@ -110,7 +111,7 @@ namespace RenderApp.AssetModel
 
             return true;
         }
-        internal bool CreateVoxel(Asset asset, int partition = 64)
+        internal bool CreateVoxel(RAFile asset, int partition = 64)
         {
             if (!CanCreateGeometry(asset))
             {
@@ -124,7 +125,7 @@ namespace RenderApp.AssetModel
             return true;
         }
 
-        internal bool CreateOctree(Asset asset)
+        internal bool CreateOctree(RAFile asset)
         {
             if (!CanCreateGeometry(asset))
             {
@@ -145,15 +146,17 @@ namespace RenderApp.AssetModel
             return plane;
         }
 
-        internal Geometry CreateLoad3DModel(string filename)
+        internal List<Geometry> CreateLoad3DModel(string filePath)
         {
-            string extension = System.IO.Path.GetExtension(filename);
+            string extension = System.IO.Path.GetExtension(filePath);
             switch (extension)
             {
                 case ".obj":
-                    return new CObjFile(Asset.GetNameFromPath(filename), filename);
+                    var obj = new CObjFile(RAFile.GetNameFromPath(filePath), filePath);
+                    return obj.ConvertGeometry();
                 case ".stl":
-                    return new StlFile(Asset.GetNameFromPath(filename), filename);
+                    var stl = new StlFile(RAFile.GetNameFromPath(filePath), filePath);
+                    return stl.ConvertGeometry();
             }
             return null;
         }

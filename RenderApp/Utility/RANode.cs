@@ -65,6 +65,10 @@ namespace RenderApp.Utility
         }
         public void AddChild(RAObject child)
         {
+            if(child == null)
+            {
+                return;
+            }
             if (FindChild(child.Key) == null)
             {
                 RANode node = new RANode(child);

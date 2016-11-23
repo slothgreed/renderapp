@@ -11,7 +11,7 @@ using RenderApp.Utility;
 using RenderApp.Analyzer;
 namespace RenderApp.AssetModel
 {
-    public abstract class Geometry : Asset
+    public abstract class Geometry : RAFile
     {
         #region [static property]
         private static int GeometryIDCounter = 0;

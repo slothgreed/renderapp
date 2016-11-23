@@ -139,7 +139,7 @@ namespace RenderApp.GLUtil
         //glControlの起動時に実行される。
         private void glControl_Load(object sender, EventArgs e)
         {
-            GL.ClearColor(0,0,0,1);
+            GL.ClearColor(1,0,0,1);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.CullFace);

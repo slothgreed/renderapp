@@ -10,7 +10,7 @@ namespace RenderApp.AssetModel.LightModel
     /// <summary>
     /// 光源
     /// </summary>
-    public abstract class Light : Asset
+    public abstract class Light : RAFile
     {
         public Vector3 Position { get;private set; }
         public Vector3 Direction { get; private set; }

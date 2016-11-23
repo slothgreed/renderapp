@@ -7,7 +7,7 @@ using RenderApp.AssetModel;
 
 namespace RenderApp.AssetModel
 {
-    public class EnvironmentProbe : Asset
+    public class EnvironmentProbe : RAFile
     {
         public EnvironmentProbe(string name)
             :base(name)
