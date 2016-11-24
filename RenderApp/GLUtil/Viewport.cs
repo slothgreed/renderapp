@@ -49,7 +49,7 @@ namespace RenderApp.GLUtil
         /// <summary>
         /// タイマー変数
         /// </summary>
-        public CTimer m_AnimationTimer = null;
+        public RATimer m_AnimationTimer = null;
         /// <summary>
         /// glControl
         /// </summary>
@@ -229,7 +229,7 @@ namespace RenderApp.GLUtil
         {
             if(m_AnimationTimer==null)
             {
-                m_AnimationTimer = new CTimer(1, OnAnimationTimer);
+                m_AnimationTimer = new RATimer(1, OnAnimationTimer);
 
             }
             m_AnimationTimer.Start();

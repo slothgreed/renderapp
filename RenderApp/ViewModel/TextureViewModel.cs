@@ -37,7 +37,7 @@ namespace RenderApp.ViewModel
                 }
                 else
                 {
-                    return Model.FilePath;
+                    return Model.ImageInfo.FilePath;
                 }
             }
         }

@@ -61,15 +61,15 @@ namespace RenderApp.Analyzer
                 return false;
             }
 
-            if(Math.Abs(v1.Position.X - v2.Position.X) > CCalc.THRESHOLD05)
+            if(Math.Abs(v1.Position.X - v2.Position.X) > RACalc.THRESHOLD05)
             {
                 return false;
             }
-            if (Math.Abs(v1.Position.Y - v2.Position.Y) > CCalc.THRESHOLD05)
+            if (Math.Abs(v1.Position.Y - v2.Position.Y) > RACalc.THRESHOLD05)
             {
                 return false;
             }
-            if (Math.Abs(v1.Position.Z - v2.Position.Z) > CCalc.THRESHOLD05)
+            if (Math.Abs(v1.Position.Z - v2.Position.Z) > RACalc.THRESHOLD05)
             {
                 return false;
             }

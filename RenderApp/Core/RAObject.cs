@@ -11,6 +11,10 @@ namespace RenderApp
         public RAObject()
         {
         }
+        public RAObject(string name)
+        {
+            Key = name;
+        }
         private string _key = null;
         public string Key
         {

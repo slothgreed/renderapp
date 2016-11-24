@@ -9,7 +9,7 @@ using OpenTK;
 namespace RenderApp.Utility
 {
 
-    public class CTimer
+    public class RATimer
     {
         public delegate void OnTimerEvent(object source, EventArgs e);
 
@@ -33,7 +33,7 @@ namespace RenderApp.Utility
         /// <summary>
         /// タイマーの初期化
         /// </summary>
-        public CTimer(int interval, OnTimerEvent timer)
+        public RATimer(int interval, OnTimerEvent timer)
         {
             m_Timer = new DispatcherTimer();
             m_Timer.Interval = TimeSpan.FromMilliseconds(32);

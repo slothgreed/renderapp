@@ -103,7 +103,7 @@ namespace RenderApp.AssetModel
             Position.Add(v1);
             Position.Add(v2);
             Position.Add(v3);
-            surface = CCalc.GetPlaneFormula(Position[0], Position[1], Position[2]);
+            surface = RACalc.GetPlaneFormula(Position[0], Position[1], Position[2]);
             Normal.Add(new Vector3(surface));
 
             TexCoord.Add(Vector2.Zero);
@@ -148,7 +148,7 @@ namespace RenderApp.AssetModel
             Position.Add(q3);
 
             normal = Vector3.Cross(q1 - q0, q2 - q0).Normalized();
-            surface = CCalc.GetPlaneFormula(q0, normal);
+            surface = RACalc.GetPlaneFormula(q0, normal);
 
             Normal.Add(normal);
             Normal.Add(normal);
@@ -172,7 +172,7 @@ namespace RenderApp.AssetModel
             Vector3 line = far - near;
             Vector3 result = new Vector3();
             
-            result = CCalc.crossPlanetoLine(near, far, surface);
+            result = RACalc.crossPlanetoLine(near, far, surface);
 
             return result;
         }

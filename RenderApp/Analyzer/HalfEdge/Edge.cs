@@ -74,7 +74,7 @@ namespace RenderApp.Analyzer
                         return _angle = 0.0f;
                     }
 
-                    _angle = Utility.CCalc.Angle((End - Start).Normalized(), (Before.Opposite.Start - Before.Opposite.End).Normalized());
+                    _angle = Utility.RACalc.Angle((End - Start).Normalized(), (Before.Opposite.Start - Before.Opposite.End).Normalized());
                 }
                 return _angle;
             }

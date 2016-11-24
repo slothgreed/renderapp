@@ -10,9 +10,9 @@ namespace RenderApp.RA_Control
 {
     public abstract class IControl
     {
-        protected static Mouse LeftMouse = new Mouse();
-        protected static Mouse MiddleMouse = new Mouse();
-        protected static Mouse RightMouse = new Mouse();
+        protected static RAMouse LeftMouse = new RAMouse();
+        protected static RAMouse MiddleMouse = new RAMouse();
+        protected static RAMouse RightMouse = new RAMouse();
 
         public virtual bool Down(MouseEventArgs mouse)
         {

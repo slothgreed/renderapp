@@ -146,6 +146,7 @@
     <Compile Include="AssetModel\Geometry\File\GeometryFile.cs" />
     <Compile Include="AssetModel\Geometry\File\MaterialFileInfo.cs" />
     <Compile Include="RACommand\ICommand.cs" />
+    <Compile Include="Core\RAImageInfo.cs" />
     <Compile Include="Render_System\Post_Effect\Bloom.cs" />
     <Compile Include="Render_System\Post_Effect\DOF.cs" />
     <Compile Include="Render_System\Post_Effect\PostEffect.cs" />
@@ -157,7 +158,7 @@
     <Compile Include="Render_System\Post_Effect\Selection.cs" />
     <Compile Include="Render_System\Post_Effect\Sobel.cs" />
     <Compile Include="Render_System\Post_Effect\SSAO.cs" />
-    <Compile Include="Utility\RANode.cs" />
+    <Compile Include="Core\RANode.cs" />
     <Compile Include="RAControl\CameraControl.cs" />
     <Compile Include="Converter\EnumConverter.cs" />
     <Compile Include="Globals\Project.cs" />
@@ -168,7 +169,7 @@
     <Compile Include="GLUtil\ShaderModel\ShaderProgramInfo.cs" />
     <Compile Include="Globals\Enum.cs" />
     <Compile Include="GLUtil\TextureFactory.cs" />
-    <Compile Include="RAObject.cs" />
+    <Compile Include="Core\RAObject.cs" />
     <Compile Include="Render_System\GBuffer.cs" />
     <Compile Include="Render_System\PostPlane.cs" />
     <Compile Include="Render_System\RenderQueue.cs" />
@@ -202,7 +203,7 @@
     <Compile Include="AssetModel\LightModel\DirectionLight.cs" />
     <Compile Include="AssetModel\LightModel\PointLight.cs" />
     <Compile Include="AssetModel\LightModel\SpotLight.cs" />
-    <Compile Include="RAFile.cs" />
+    <Compile Include="Core\RAFile.cs" />
     <Compile Include="ViewModel\DockWindowViewModel.cs" />
     <Compile Include="ViewModel\ComboItemViewModel.cs" />
     <Compile Include="ViewModel\DefaultViewModel.cs" />
@@ -316,18 +317,17 @@
     <Compile Include="View\TextureView.xaml.cs">
       <DependentUpon>TextureView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utility\Mouse.cs" />
+    <Compile Include="Core\RAMouse.cs" />
     <Compile Include="Scene\Shader\OffScreen\Defferd\CDeffed.cs" />
     <Compile Include="Scene\Shader\OffScreen\Shadow\CShadowMap.cs" />
-    <Compile Include="Utility\Calc.cs" />
+    <Compile Include="Utility\RACalc.cs" />
     <Compile Include="Utility\CFileIO.cs" />
     <Compile Include="AssetModel\Geometry\File\ObjLoader.cs" />
-    <Compile Include="Utility\CTimer.cs" />
+    <Compile Include="Core\RATimer.cs" />
     <Compile Include="AssetModel\Geometry\File\StlLoader.cs" />
     <Compile Include="Utility\AppException.cs" />
     <Compile Include="Utility\TrueTypeFont.cs" />
     <Compile Include="Utility\Util.cs" />
-    <Compile Include="Utility\Write.cs" />
     <Compile Include="Analyzer\Tree\Voxel.cs" />
     <Compile Include="GLUtil\Viewport.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />

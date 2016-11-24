@@ -318,7 +318,7 @@ namespace RenderApp.AssetModel
             if (Ex.Length != 0)
             {
                 Ex.Normalize();
-                float angle = -CCalc.Angle(vector1, vector2, Ex);
+                float angle = -RACalc.Angle(vector1, vector2, Ex);
                 Matrix4 mat = Matrix4.CreateFromAxisAngle(Ex, angle);
                 return SetModelViewRotateXYZ(mat, init);
             }

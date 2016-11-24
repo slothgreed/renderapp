@@ -12,7 +12,7 @@ namespace RenderApp.Utility
     /// <summary>
     /// マウスのクラス(右左ホイールは各インスタンス生成すること)
     /// </summary>
-    public class Mouse
+    public class RAMouse
     {
         #region [メンバ変数]
         /// <summary>
@@ -57,7 +57,7 @@ namespace RenderApp.Utility
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public Mouse()
+        public RAMouse()
         {
 
         }

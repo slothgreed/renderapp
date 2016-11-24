@@ -92,7 +92,7 @@ namespace RenderApp.AssetModel
                 position.Add(geometry.Position[3 * i]);
 
             }
-            Geometry wireframe = new Primitive("WireFrame :" + geometry.Key, position, CCalc.RandomColor(), PrimitiveType.Lines);
+            Geometry wireframe = new Primitive("WireFrame :" + geometry.Key, position, RACalc.RandomColor(), PrimitiveType.Lines);
             CreateGeometry(wireframe);
 
             return true;
@@ -119,7 +119,7 @@ namespace RenderApp.AssetModel
             }
             Geometry geometry = asset as Geometry;
             Analyzer.Voxel voxel = new Analyzer.Voxel(geometry.Position, geometry.Index, geometry.ModelMatrix, partition);
-            Geometry wireframe = new Primitive("Voxel :" + geometry.Key, voxel.vPosition, voxel.vNormal, CCalc.RandomColor(), PrimitiveType.Quads);
+            Geometry wireframe = new Primitive("Voxel :" + geometry.Key, voxel.vPosition, voxel.vNormal, RACalc.RandomColor(), PrimitiveType.Quads);
             CreateGeometry(wireframe);
 
             return true;

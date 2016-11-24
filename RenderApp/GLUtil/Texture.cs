@@ -11,7 +11,7 @@ using RenderApp.Utility;
 namespace RenderApp.GLUtil
 {
 
-    public class Texture : RAFile
+    public class Texture : RAObject
     {
         #region [member]
         private string DummyTexturePath
@@ -20,6 +20,11 @@ namespace RenderApp.GLUtil
             {
                 return ProjectInfo.TextureDirectory + @"\Dummy.png";
             }
+        }
+        public RAImageInfo ImageInfo
+        {
+            get;
+            private set;
         }
         
         /// <summary>
@@ -72,19 +77,20 @@ namespace RenderApp.GLUtil
         }
 
         public Texture(string name,string path)
-            : base(path)
+            : base(name)
         {
             LoadTexture(path);
+            ImageInfo = new RAImageInfo(path);
         }
         public Texture(string name,string path, TextureType target = TextureType.Texture2D)
-            : base(path)
+            : base(name)
         {
             LoadTexture(path, target);
+            ImageInfo = new RAImageInfo(path);
         }
         public Texture(string name, int width, int height)
-            : base("")
+            : base(name)
         {
-            this.Key = name;
             CreateFrameBuffer2D(width,height);
         }
         private void CreateFrameBuffer2D(int width,int height)
@@ -110,18 +116,7 @@ namespace RenderApp.GLUtil
             Initialize();
         }
 
-        /// <summary>
-        /// TODO:cubemapは別クラスへ処理
-        /// </summary>
-        public Texture(string name,string px, string py, string pz, string nx, string ny, string nz)
-            : base(name)
-        {
-            this.ID = CreateCubeMapTexture(px, nx, py, ny, pz, nz);
-            this.TexType = TextureType.CubeMap;
-            Initialize();
-        }
-
-        #endregion
+       #endregion
         
 
         private void BindWrapMode(TextureWrapMode wrapMode)
@@ -149,29 +144,27 @@ namespace RenderApp.GLUtil
         #region [テクスチャ周り]
         private void Load2DTexture()
         {
-            try
+            if (ImageInfo == null)
             {
-                Bitmap image = new Bitmap(this.FilePath);
-                GL.BindTexture(TextureTarget.Texture2D, this.ID);
-                if(System.IO.Path.GetExtension(FilePath) == ".bmp")
-                {
-                    image.RotateFlip(RotateFlipType.RotateNoneFlipY);
-                }
-
-                //データ読み込み
-                BitmapData bmp_data = image.LockBits(new Rectangle(0, 0, image.Width, image.Height),
-                    ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-
-                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, bmp_data.Width, bmp_data.Height, 0,
-                    OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bmp_data.Scan0);
-                image.UnlockBits(bmp_data);
-                GL.BindTexture(TextureTarget.Texture2D, 0);
+                return;
             }
-            catch (Exception)
+            Bitmap image = new Bitmap(ImageInfo.FilePath);
+            GL.BindTexture(TextureTarget.Texture2D, this.ID);
+            if (System.IO.Path.GetExtension(ImageInfo.FilePath) == ".bmp")
             {
-                Output.Error("BindTextureBufferの失敗");
+                image.RotateFlip(RotateFlipType.RotateNoneFlipY);
             }
+
+            //データ読み込み
+            BitmapData bmp_data = image.LockBits(new Rectangle(0, 0, image.Width, image.Height),
+                ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, bmp_data.Width, bmp_data.Height, 0,
+                OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bmp_data.Scan0);
+            image.UnlockBits(bmp_data);
+            GL.BindTexture(TextureTarget.Texture2D, 0);
         }
+    
         /// <summary>
         /// テクスチャの読み込み
         /// </summary>

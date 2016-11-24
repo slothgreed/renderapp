@@ -22,7 +22,7 @@ namespace RenderApp.Analyzer
         {
             get
             {
-                return CCalc.Normal(
+                return RACalc.Normal(
                     m_Edge[1].Start.GetPosition() - m_Edge[0].Start.GetPosition(),
                     m_Edge[2].Start.GetPosition() - m_Edge[0].Start.GetPosition()
                     );

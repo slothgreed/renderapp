@@ -289,11 +289,11 @@ namespace RenderApp
             {
                 for (int i = 0; i < geometry.Position.Count / 3; i++)
                 {
-                    Vector3 vertex1 = CCalc.Multiply(geometry.ModelMatrix, geometry.Position[3 * i]);
-                    Vector3 vertex2 = CCalc.Multiply(geometry.ModelMatrix, geometry.Position[3 * i + 1]);
-                    Vector3 vertex3 = CCalc.Multiply(geometry.ModelMatrix, geometry.Position[3 * i + 2]);
+                    Vector3 vertex1 = RACalc.Multiply(geometry.ModelMatrix, geometry.Position[3 * i]);
+                    Vector3 vertex2 = RACalc.Multiply(geometry.ModelMatrix, geometry.Position[3 * i + 1]);
+                    Vector3 vertex3 = RACalc.Multiply(geometry.ModelMatrix, geometry.Position[3 * i + 2]);
                     Vector3 result = Vector3.Zero;
-                    if (CCalc.CrossPlanetoLinePos(vertex1, vertex2, vertex3, near, far, ref minLength, out result))
+                    if (RACalc.CrossPlanetoLinePos(vertex1, vertex2, vertex3, near, far, ref minLength, out result))
                     {
                         selectIndex = 3 * i;
                         select = true;
@@ -318,7 +318,7 @@ namespace RenderApp
             viewport[1] = 0;
             viewport[2] = Viewport.Instance.Width;
             viewport[3] = Viewport.Instance.Height;
-            CCalc.GetClipPos(MainCamera.Matrix, MainCamera.ProjMatrix, viewport, mouse, out near, out far);
+            RACalc.GetClipPos(MainCamera.Matrix, MainCamera.ProjMatrix, viewport, mouse, out near, out far);
             Geometry geometry;
             foreach (RANode geometryNode in RootNode.AllChildren())
             {

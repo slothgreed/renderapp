@@ -33,18 +33,30 @@ namespace RenderApp.ViewModel
         {
             get
             {
-                if(Model.FilePath == null)
+                if(Model.ImageInfo == null)
                 {
                     return @"C:\Users\ido\Desktop\RenderApp-clone\RenderApp\Thumbnail\noimage.png";
                 }
-                return Model.FilePath;
+                if(Model.ImageInfo.FilePath == null)
+                {
+                    return @"C:\Users\ido\Desktop\RenderApp-clone\RenderApp\Thumbnail\noimage.png";
+                }
+                return Model.ImageInfo.FilePath;
             }
         }
         public string FileName
         {
             get
             {
-                return Model.FileName;
+                if (Model.ImageInfo == null)
+                {
+                    return "";
+                }
+                if (Model.ImageInfo.FilePath == null)
+                {
+                    return "";
+                }
+                return Model.ImageInfo.FileName;
             }
         }
         private List<string> _items;
@@ -74,7 +86,7 @@ namespace RenderApp.ViewModel
             Name = name;
             _items = new List<string>();
             //_items = new List<string>(RenderApp.Scene.ActiveScene.GetAssetListStr(EAssetType.Textures));
-            SelectIndex = _items.IndexOf(model.FileName);
+            SelectIndex = _items.IndexOf(model.ImageInfo.FileName);
         }
 
         public ImageViewModel(Texture model)
