@@ -58,7 +58,7 @@ namespace RenderApp.AssetModel
         }
 
         #region analyze method
-        internal bool CanCreateGeometry(RAFile asset)
+        internal bool CanCreateGeometry(RAObject asset)
         {
             if (!(asset is Geometry))
             {
@@ -72,7 +72,7 @@ namespace RenderApp.AssetModel
             return true;
         }
 
-        internal bool CreateWireFrame(RAFile asset)
+        internal bool CreateWireFrame(RAObject asset)
         {
             if (!CanCreateGeometry(asset))
             {
@@ -97,7 +97,7 @@ namespace RenderApp.AssetModel
 
             return true;
         }
-        internal bool CreatePolygon(RAFile asset)
+        internal bool CreatePolygon(RAObject asset)
         {
             if (!CanCreateGeometry(asset))
             {
@@ -111,7 +111,7 @@ namespace RenderApp.AssetModel
 
             return true;
         }
-        internal bool CreateVoxel(RAFile asset, int partition = 64)
+        internal bool CreateVoxel(RAObject asset, int partition = 64)
         {
             if (!CanCreateGeometry(asset))
             {
@@ -125,7 +125,7 @@ namespace RenderApp.AssetModel
             return true;
         }
 
-        internal bool CreateOctree(RAFile asset)
+        internal bool CreateOctree(RAObject asset)
         {
             if (!CanCreateGeometry(asset))
             {

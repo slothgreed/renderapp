@@ -11,7 +11,7 @@ using RenderApp.Utility;
 using RenderApp.Analyzer;
 namespace RenderApp.AssetModel
 {
-    public abstract class Geometry : RAFile
+    public abstract class Geometry : RAObject
     {
         #region [static property]
         private static int GeometryIDCounter = 0;
@@ -127,7 +127,7 @@ namespace RenderApp.AssetModel
         }
 
 
-        public Geometry(string name, PrimitiveType renderType = PrimitiveType.Triangles)
+        public Geometry(string name, PrimitiveType renderType)
             : base(name)
         {
             Initialize(name, renderType);

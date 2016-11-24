@@ -61,7 +61,7 @@ namespace RenderApp.AssetModel
         /// <summary>
         /// ズームの最大値
         /// </summary>
-        public float m_ZoomMax = 150;
+        public float m_ZoomMax = 1500;
         #endregion
         #region [平行移動関連]
         /// <summary>
@@ -79,7 +79,7 @@ namespace RenderApp.AssetModel
         /// <summary>
         /// 平行移動量の倍率設定
         /// </summary>
-        public float m_PanRatio = 1.0f;
+        public float m_PanRatio = 5.0f;
         /// <summary>
         /// projectionのnear
         /// </summary>

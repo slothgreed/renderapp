@@ -32,5 +32,9 @@ namespace RenderApp
         {
             
         }
+        public override string ToString()
+        {
+            return Key;
+        } 
     }
 }

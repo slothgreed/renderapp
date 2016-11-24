@@ -53,8 +53,8 @@ namespace RenderApp
         /// <summary>
         /// 選択中のアセット
         /// </summary>
-        private RAFile _selectAsset;
-        public RAFile SelectAsset
+        private RAObject _selectAsset;
+        public RAObject SelectAsset
         {
             get
             {
