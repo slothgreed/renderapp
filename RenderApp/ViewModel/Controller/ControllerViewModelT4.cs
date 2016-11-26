@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 namespace RenderApp.ViewModel.Controller
 {
-    public partial class SelectViewModel : DockWindowViewModel
+	public partial class SelectViewModel : TabItemViewModel
 	{
 		private ICommand _Execute;
 		public ICommand Execute
@@ -22,7 +22,7 @@ namespace RenderApp.ViewModel.Controller
 			}
 		}
 	}
-	public partial class DijkstraViewModel : DockWindowViewModel
+	public partial class DijkstraViewModel : TabItemViewModel
 	{
 		private ICommand _Execute;
 		public ICommand Execute
@@ -37,7 +37,7 @@ namespace RenderApp.ViewModel.Controller
 			}
 		}
 	}
-	public partial class VoxelViewModel : DockWindowViewModel
+	public partial class VoxelViewModel : TabItemViewModel
 	{
 		private ICommand _Execute;
 		public ICommand Execute

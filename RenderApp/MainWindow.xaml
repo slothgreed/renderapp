@@ -95,7 +95,7 @@
         <DataTemplate x:Key="TabItemHeaderTempalte">
             <DockPanel>
                 <TextBlock Text="{Binding Title}" DockPanel.Dock="Left"/>
-                <Button Content=" x " Command="{Binding CloseTabItem}" DockPanel.Dock="Right"/>
+                <Button Content=" x " Command="{Binding CloseTabItem}" DockPanel.Dock="Right" Background="White"/>
             </DockPanel>
         </DataTemplate>
     </Window.Resources>
@@ -152,11 +152,11 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <TabControl Grid.Column ="0" Grid.Row ="0" ItemsSource="{Binding LeftUpItemsSource}" ContentTemplateSelector="{StaticResource TabItemTemplateSelector}" ItemTemplate="{StaticResource TabItemHeaderTempalte}" SelectedItem="{Binding LUSelectItem}"/>
-            <TabControl Grid.Column ="0" Grid.Row ="1" ItemsSource="{Binding LeftDownItemsSource}" ContentTemplateSelector="{StaticResource TabItemTemplateSelector}" ItemTemplate="{StaticResource TabItemHeaderTempalte}"/>
-            <TabControl Grid.Column ="2" Grid.Row ="0" ItemsSource="{Binding RightUpItemsSource}" ContentTemplateSelector="{StaticResource TabItemTemplateSelector}" ItemTemplate="{StaticResource TabItemHeaderTempalte}"/>
-            <TabControl Grid.Column ="2" Grid.Row ="1" ItemsSource="{Binding RightDownItemsSource}" ContentTemplateSelector="{StaticResource TabItemTemplateSelector}" ItemTemplate="{StaticResource TabItemHeaderTempalte}"/>
-            <TabControl Grid.Column ="1" Grid.Row ="0" Grid.RowSpan="2" ItemsSource="{Binding CenterItemsSource}" ContentTemplateSelector="{StaticResource TabItemTemplateSelector}" ItemTemplate="{StaticResource TabItemHeaderTempalte}"/>
+            <v:TabControlView Grid.Column="0" Grid.Row="0" DataContext="{Binding LeftUpDockPanel}"/>
+            <v:TabControlView Grid.Column="0" Grid.Row="1" DataContext="{Binding LeftDownDockPanel}"/>
+            <v:TabControlView Grid.Column="2" Grid.Row="0" DataContext="{Binding RightUpDockPanel}"/>
+            <v:TabControlView Grid.Column="2" Grid.Row="1" DataContext="{Binding RightDownDockPanel}"/>
+            <v:TabControlView Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" DataContext="{Binding CenterDockPanel}"/>
         </Grid>
         
         <TextBlock Grid.Row="2" Text="{Binding TaskBarText}"></TextBlock>

@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="RenderApp.View.TabControlView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:v="clr-namespace:RenderApp.View"
+             xmlns:vc="clr-namespace:RenderApp.View.Controller"
+             xmlns:vm="clr-namespace:RenderApp.ViewModel"
+             xmlns:vmc="clr-namespace:RenderApp.ViewModel.Controller"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <vm:DockPaneTemplateSelector x:Key="TabItemTemplateSelector">
+            <vm:DockPaneTemplateSelector.AssetTemplate>
+                <DataTemplate DataType="{x:Type vm:RootNodeViewModel}">
+                    <v:RootNodeView/>
+                </DataTemplate>
+            </vm:DockPaneTemplateSelector.AssetTemplate>
+            <vm:DockPaneTemplateSelector.ShaderProgramTemplate>
+                <DataTemplate  DataType="{x:Type vm:ShaderProgramViewModel}">
+                    <v:ShaderProgramView/>
+                </DataTemplate>
+            </vm:DockPaneTemplateSelector.ShaderProgramTemplate>
+            <vm:DockPaneTemplateSelector.MaterialTemplate>
+                <DataTemplate  DataType="{x:Type vm:MaterialViewModel}">
+                    <v:MaterialView/>
+                </DataTemplate>
+            </vm:DockPaneTemplateSelector.MaterialTemplate>
+            <vm:DockPaneTemplateSelector.TexureTemplate>
+                <DataTemplate  DataType="{x:Type vm:TextureViewModel}">
+                    <v:TextureView/>
+                </DataTemplate>
+            </vm:DockPaneTemplateSelector.TexureTemplate>
+            <vm:DockPaneTemplateSelector.ViewportTemplate>
+                <DataTemplate  DataType="{x:Type vm:ViewportViewModel}">
+                    <v:ViewportView/>
+                </DataTemplate>
+            </vm:DockPaneTemplateSelector.ViewportTemplate>
+            <vm:DockPaneTemplateSelector.GeometryTemplate>
+                <DataTemplate DataType="{x:Type vm:GeometryViewModel}">
+                    <v:GeometryView/>
+                </DataTemplate>
+            </vm:DockPaneTemplateSelector.GeometryTemplate>
+            <vm:DockPaneTemplateSelector.ShaderTemplate>
+                <DataTemplate DataType="{x:Type vm:ShaderViewModel}">
+                    <v:ShaderView/>
+                </DataTemplate>
+            </vm:DockPaneTemplateSelector.ShaderTemplate>
+            <vm:DockPaneTemplateSelector.RenderTemplate>
+                <DataTemplate DataType="{x:Type vm:RenderSystemViewModel}">
+                    <v:RenderSystemView/>
+                </DataTemplate>
+            </vm:DockPaneTemplateSelector.RenderTemplate>
+
+            <vm:DockPaneTemplateSelector.VoxelTemplate>
+                <DataTemplate DataType="{x:Type vmc:VoxelViewModel}">
+                    <vc:VoxelView/>
+                </DataTemplate>
+            </vm:DockPaneTemplateSelector.VoxelTemplate>
+
+            <vm:DockPaneTemplateSelector.DijkstraTemplate>
+                <DataTemplate DataType="{x:Type vmc:DijkstraViewModel}">
+                    <vc:DijkstraView/>
+                </DataTemplate>
+            </vm:DockPaneTemplateSelector.DijkstraTemplate>
+
+            <vm:DockPaneTemplateSelector.SelectObjectTemplate>
+                <DataTemplate DataType="{x:Type vmc:SelectViewModel}">
+                    <vc:SelectView/>
+                </DataTemplate>
+            </vm:DockPaneTemplateSelector.SelectObjectTemplate>
+        </vm:DockPaneTemplateSelector>
+
+        <DataTemplate x:Key="TabItemHeaderTempalte">
+            <DockPanel>
+                <TextBlock Text="{Binding Title}" DockPanel.Dock="Left"/>
+                <Button Content=" x " Command="{Binding CloseTabItem}" DockPanel.Dock="Right" Background="White"/>
+            </DockPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <TabControl ItemsSource="{Binding ItemsSource}" SelectedItem="{Binding ActiveItem}" ContentTemplateSelector="{StaticResource TabItemTemplateSelector}" ItemTemplate="{StaticResource TabItemHeaderTempalte}"/>
+
+
+</UserControl>

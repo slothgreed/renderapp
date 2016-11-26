@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RenderApp.ViewModel.Controller
 {
-    public partial class DijkstraViewModel : DockWindowViewModel, IControllerViewModelBase
+    public partial class DijkstraViewModel : TabItemViewModel, IControllerViewModelBase
     {
         public override string Title
         {

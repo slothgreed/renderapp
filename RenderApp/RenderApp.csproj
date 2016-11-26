@@ -160,7 +160,7 @@
     <Compile Include="Render_System\Post_Effect\SSAO.cs" />
     <Compile Include="Core\RANode.cs" />
     <Compile Include="RAControl\CameraControl.cs" />
-    <Compile Include="Converter\EnumConverter.cs" />
+    <Compile Include="ViewModel\Converter\EnumConverter.cs" />
     <Compile Include="Globals\Project.cs" />
     <Compile Include="GLUtil\ShaderModel\ShaderFactory.cs" />
     <Compile Include="Utility\Output.cs" />
@@ -224,6 +224,8 @@
     <Compile Include="ViewModel\ShaderViewModel.cs" />
     <Compile Include="ViewModel\ImageViewModel.cs" />
     <Compile Include="ViewModel\NodeItemViewModel.cs" />
+    <Compile Include="ViewModel\TabControlViewModel.cs" />
+    <Compile Include="ViewModel\TabItemViewModel.cs" />
     <Compile Include="ViewModel\ViewportViewModel.cs" />
     <Compile Include="View\Controller\DijkstraView.xaml.cs">
       <DependentUpon>DijkstraView.xaml</DependentUpon>
@@ -314,6 +316,12 @@
     <Compile Include="View\ShaderView.xaml.cs">
       <DependentUpon>ShaderView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TabControlView.xaml.cs">
+      <DependentUpon>TabControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TabItemView.xaml.cs">
+      <DependentUpon>TabItemView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TextureView.xaml.cs">
       <DependentUpon>TextureView.xaml</DependentUpon>
     </Compile>
@@ -383,6 +391,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ShaderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TabControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TabItemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -493,7 +509,6 @@
     <Folder Include="Scene\Shader\ShaderType\" />
     <Folder Include="Themes\" />
     <Folder Include="ViewModel\Property\" />
-    <Folder Include="View\Dialog\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Render_System\Post_Effect\PostEffectT4.tt">

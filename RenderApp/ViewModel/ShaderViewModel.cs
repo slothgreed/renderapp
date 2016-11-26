@@ -10,7 +10,7 @@ using OpenTK;
 using RenderApp.GLUtil.ShaderModel;
 namespace RenderApp.ViewModel
 {
-    class ShaderViewModel : DockWindowViewModel
+    class ShaderViewModel : TabItemViewModel
     {
         public override string Title
         {

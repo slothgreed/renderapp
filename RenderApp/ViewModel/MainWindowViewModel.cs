@@ -73,18 +73,6 @@ namespace RenderApp.ViewModel
         }
 
         private Viewport m_Viewport;
-        private DockWindowViewModel _LUSelectItem;
-        public DockWindowViewModel LUSelectItem
-        {
-            get
-            {
-                return _LUSelectItem;
-            }
-            set
-            {
-                SetValue(ref _LUSelectItem, value);
-            }
-        }
         private string _taskBarText;
         public string TaskBarText
         {
@@ -99,26 +87,33 @@ namespace RenderApp.ViewModel
         }
         #endregion
 
+
         #region [constructor]
  
 
         public MainWindowViewModel()
         {
+            LeftUpDockPanel = new TabControlViewModel();
+            LeftDownDockPanel = new TabControlViewModel();
+            RightUpDockPanel = new TabControlViewModel();
+            RightDownDockPanel = new TabControlViewModel();
+            CenterDockPanel = new TabControlViewModel();
 
-            _LeftUpItemsSource.Add( new RootNodeViewModel(Project.ActiveProject.RootNode, "Project"));
-            _RightUpItemsSource.Add( new MaterialViewModel());
-            _RightDownItemsSource.Add(new ShaderProgramViewModel(null));
-            _RightDownItemsSource.Add(new VoxelViewModel());
-            _CenterItemsSource.Add( new ViewportViewModel());
-
+            LeftUpDockPanel.Add( new RootNodeViewModel(Project.ActiveProject.RootNode, "Project"));
+            RightUpDockPanel.Add( new MaterialViewModel());
+            CenterDockPanel.Add( new ViewportViewModel());
+            RightDownDockPanel = new TabControlViewModel();
+            RightDownDockPanel.Add(new ShaderProgramViewModel(null));
+            RightDownDockPanel.Add(new VoxelViewModel());
             Viewport.Instance.OnCreateViewportEvent += OnCreateViewportEvent;
             _instance = this;
         }
 
+
         void OnCreateViewportEvent()
         {
-            _LeftUpItemsSource.Add(new RootNodeViewModel(Scene.ActiveScene.RootNode, "Scene"));
-            _LeftDownItemsSource.Add(new RenderSystemViewModel(Viewport.Instance.RenderSystem));
+            LeftUpDockPanel.Add(new RootNodeViewModel(Scene.ActiveScene.RootNode, "Scene"));
+            LeftDownDockPanel.Add(new RenderSystemViewModel(Viewport.Instance.RenderSystem));
         }
         #endregion
 
@@ -387,7 +382,7 @@ namespace RenderApp.ViewModel
             {
                 return;
             }
-            DockWindowViewModel vm = null;
+            TabItemViewModel vm = null;
             if(node.RAObject is Geometry)
             {
                 vm = new GeometryViewModel((Geometry)node.RAObject);
@@ -403,38 +398,21 @@ namespace RenderApp.ViewModel
             }
             ReplaceTabWindow(vm);
         }
-        public void ReplaceTabWindow(DockWindowViewModel window)
+        public void ReplaceTabWindow(TabItemViewModel window)
         {
             if(window is GeometryViewModel)
             {
-                var vm = _LeftDownItemsSource.Where(p => p is GeometryViewModel).FirstOrDefault();
-                ReplaceTabItem(_LeftDownItemsSource,vm, window);
+                LeftDownDockPanel.ReplaceVM(window);
             }
             if(window is MaterialViewModel)
             {
-                var vm = _RightUpItemsSource.Where(p => p is MaterialViewModel).FirstOrDefault();
-                ReplaceTabItem(_RightUpItemsSource, vm, window);
+                RightUpDockPanel.ReplaceVM(window);
             }
             if (window is ShaderProgramViewModel)
             {
-                var vm = _RightDownItemsSource.Where(p => p is ShaderProgramViewModel).FirstOrDefault();
-                ReplaceTabItem(_RightDownItemsSource, vm, window);
+                RightDownDockPanel.ReplaceVM(window);
             }
 
-        }
-        private void ReplaceTabItem(ObservableCollection<DockWindowViewModel> tabControl, DockWindowViewModel oldItem, DockWindowViewModel newItem)
-        {
-            if (tabControl.Contains(oldItem))
-            {
-                int index = tabControl.IndexOf(oldItem);
-                tabControl.Remove(oldItem);
-                if (tabControl.Count > index)
-                {
-                    tabControl.Insert(index, newItem);
-                    return;
-                }
-            }
-            tabControl.Add(newItem);
         }
 
         public override void UpdateProperty()
@@ -442,30 +420,5 @@ namespace RenderApp.ViewModel
             Viewport.Instance.glControl_Paint(null, null);
         }
         #endregion
-
-
-        internal void CloseTabWindow(DockWindowViewModel dockVM)
-        {
-            if(LeftDownItemsSource.Contains(dockVM))
-            {
-                LeftDownItemsSource.Remove(dockVM);
-            }
-            if (LeftUpItemsSource.Contains(dockVM))
-            {
-                LeftUpItemsSource.Remove(dockVM);
-            }
-            if (RightUpItemsSource.Contains(dockVM))
-            {
-                RightUpItemsSource.Remove(dockVM);
-            }
-            if (RightDownItemsSource.Contains(dockVM))
-            {
-                RightDownItemsSource.Remove(dockVM);
-            }
-            if (CenterItemsSource.Contains(dockVM))
-            {
-                CenterItemsSource.Remove(dockVM);
-            }
-        }
     }
 }

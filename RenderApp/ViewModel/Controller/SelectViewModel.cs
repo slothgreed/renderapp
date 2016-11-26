@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RenderApp.ViewModel.Controller
 {
-    public partial class SelectViewModel : DockWindowViewModel
+    public partial class SelectViewModel : TabItemViewModel
     {
         public override string Title
         {

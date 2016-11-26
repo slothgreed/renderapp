@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RenderApp.ViewModel
 {
-    public class ModelViewModel : DockWindowViewModel
+    public class ModelViewModel : TabItemViewModel
     {
         public ModelViewModel()
         {

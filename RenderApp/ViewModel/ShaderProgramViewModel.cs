@@ -8,7 +8,7 @@ using RenderApp.GLUtil;
 using RenderApp.GLUtil.ShaderModel;
 namespace RenderApp.ViewModel
 {
-    public class ShaderProgramViewModel : DockWindowViewModel
+    public class ShaderProgramViewModel : TabItemViewModel
     {
 
         public override  string Title

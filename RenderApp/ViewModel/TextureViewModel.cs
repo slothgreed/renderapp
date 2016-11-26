@@ -10,7 +10,7 @@ using RenderApp;
 using RenderApp.GLUtil;
 namespace RenderApp.ViewModel
 {
-    public class TextureViewModel : DockWindowViewModel
+    public class TextureViewModel : TabItemViewModel
     {
         public static string[] TargetStr
         {

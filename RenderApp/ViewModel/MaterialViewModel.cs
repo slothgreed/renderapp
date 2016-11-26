@@ -12,7 +12,7 @@ using OpenTK;
 using RenderApp.GLUtil;
 namespace RenderApp.ViewModel
 {
-    public class MaterialViewModel : DockWindowViewModel
+    public class MaterialViewModel : TabItemViewModel
     {
 
         private Dictionary<string,object> _items;

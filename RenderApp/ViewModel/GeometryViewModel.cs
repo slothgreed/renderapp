@@ -9,7 +9,7 @@ using RenderApp.GLUtil;
 using OpenTK;
 namespace RenderApp.ViewModel
 {
-    public class GeometryViewModel : DockWindowViewModel
+    public class GeometryViewModel : TabItemViewModel
     {
         public override string Title
         {

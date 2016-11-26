@@ -7,7 +7,7 @@ using RenderApp.Render_System;
 using System.Collections.ObjectModel;
 namespace RenderApp.ViewModel
 {
-    public class RenderSystemViewModel : DockWindowViewModel
+    public class RenderSystemViewModel : TabItemViewModel
     {
         public RenderSystem Model
         {

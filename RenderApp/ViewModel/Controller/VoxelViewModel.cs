@@ -8,7 +8,7 @@ using RenderApp.AssetModel;
 using System.Windows;
 namespace RenderApp.ViewModel.Controller
 {
-    public partial class VoxelViewModel : DockWindowViewModel, IControllerViewModelBase
+    public partial class VoxelViewModel : TabItemViewModel, IControllerViewModelBase
     {
         private int _partitionNum = 64; 
         public int PartitionNum

@@ -15,6 +15,7 @@ namespace RenderApp.Utility
         {
             Debug.WriteLine(error);
         }
+
         public static void GLError([CallerMemberName]string methodName = "")
         {
             ErrorCode error = GL.GetError();

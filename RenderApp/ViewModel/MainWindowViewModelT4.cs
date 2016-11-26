@@ -5,8 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-
-
 namespace RenderApp.ViewModel
 {
 	public partial class MainWindowViewModel
@@ -156,109 +154,66 @@ namespace RenderApp.ViewModel
 				}
 			}
 
-			private ObservableCollection<DockWindowViewModel> _CenterItemsSource = new ObservableCollection<DockWindowViewModel>();
-			public ObservableCollection<DockWindowViewModel> CenterItemsSource
+			private TabControlViewModel _LeftUpDockPanel;
+			public TabControlViewModel LeftUpDockPanel
 			{
 				get
 				{
-					return _CenterItemsSource;
-				}
-			}
-			private ObservableCollection<DockWindowViewModel> _LeftUpItemsSource = new ObservableCollection<DockWindowViewModel>();
-			public ObservableCollection<DockWindowViewModel> LeftUpItemsSource
-			{
-				get
-				{
-					return _LeftUpItemsSource;
-				}
-			}
-			private ObservableCollection<DockWindowViewModel> _LeftDownItemsSource = new ObservableCollection<DockWindowViewModel>();
-			public ObservableCollection<DockWindowViewModel> LeftDownItemsSource
-			{
-				get
-				{
-					return _LeftDownItemsSource;
-				}
-			}
-			private ObservableCollection<DockWindowViewModel> _RightUpItemsSource = new ObservableCollection<DockWindowViewModel>();
-			public ObservableCollection<DockWindowViewModel> RightUpItemsSource
-			{
-				get
-				{
-					return _RightUpItemsSource;
-				}
-			}
-			private ObservableCollection<DockWindowViewModel> _RightDownItemsSource = new ObservableCollection<DockWindowViewModel>();
-			public ObservableCollection<DockWindowViewModel> RightDownItemsSource
-			{
-				get
-				{
-					return _RightDownItemsSource;
-				}
-			}
-
-			private DockWindowViewModel _CenterSelectItem;
-			public DockWindowViewModel CenterSelectItem
-			{
-				get
-				{
-					return _CenterSelectItem;
+					return _LeftUpDockPanel;
 				}
 				set
 				{
-					SetValue(ref _CenterSelectItem,value);
+					SetValue(ref _LeftUpDockPanel,value);
 				}
 			}
-			private DockWindowViewModel _LeftUpSelectItem;
-			public DockWindowViewModel LeftUpSelectItem
+			private TabControlViewModel _LeftDownDockPanel;
+			public TabControlViewModel LeftDownDockPanel
 			{
 				get
 				{
-					return _LeftUpSelectItem;
+					return _LeftDownDockPanel;
 				}
 				set
 				{
-					SetValue(ref _LeftUpSelectItem,value);
+					SetValue(ref _LeftDownDockPanel,value);
 				}
 			}
-			private DockWindowViewModel _LeftDownSelectItem;
-			public DockWindowViewModel LeftDownSelectItem
+			private TabControlViewModel _RightUpDockPanel;
+			public TabControlViewModel RightUpDockPanel
 			{
 				get
 				{
-					return _LeftDownSelectItem;
+					return _RightUpDockPanel;
 				}
 				set
 				{
-					SetValue(ref _LeftDownSelectItem,value);
+					SetValue(ref _RightUpDockPanel,value);
 				}
 			}
-			private DockWindowViewModel _RightUpSelectItem;
-			public DockWindowViewModel RightUpSelectItem
+			private TabControlViewModel _RightDownDockPanel;
+			public TabControlViewModel RightDownDockPanel
 			{
 				get
 				{
-					return _RightUpSelectItem;
+					return _RightDownDockPanel;
 				}
 				set
 				{
-					SetValue(ref _RightUpSelectItem,value);
+					SetValue(ref _RightDownDockPanel,value);
 				}
 			}
-			private DockWindowViewModel _RightDownSelectItem;
-			public DockWindowViewModel RightDownSelectItem
+			private TabControlViewModel _CenterDockPanel;
+			public TabControlViewModel CenterDockPanel
 			{
 				get
 				{
-					return _RightDownSelectItem;
+					return _CenterDockPanel;
 				}
 				set
 				{
-					SetValue(ref _RightDownSelectItem,value);
+					SetValue(ref _CenterDockPanel,value);
 				}
 			}
-
-
 
 	}
 

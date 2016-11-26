@@ -7,18 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-
-<#
-	string[] _windowProperty = 
+<# 
+	string[] _property =
 	{
-		"Center",
-		"LeftUp",
-		"LeftDown",
-		"RightUp",
-		"RightDown"
+		"LeftUpDockPanel",
+		"LeftDownDockPanel",
+		"RightUpDockPanel",
+		"RightDownDockPanel",
+		"CenterDockPanel"
 	};
 #>
-
 <#
 	string[] _command =
 	{
@@ -63,44 +61,25 @@ namespace RenderApp.ViewModel
 #>
 
 <#
-		for(int i =0 ; i < _windowProperty.Length; i++)
+		for(int i =0 ; i < _property.Length; i++)
 		{
 #>
-			private ObservableCollection<DockWindowViewModel> _<#=_windowProperty[i]#>ItemsSource = new ObservableCollection<DockWindowViewModel>();
-			public ObservableCollection<DockWindowViewModel> <#=_windowProperty[i]#>ItemsSource
+			private TabControlViewModel _<#=_property[i]#>;
+			public TabControlViewModel <#=_property[i]#>
 			{
 				get
 				{
-					return _<#=_windowProperty[i]#>ItemsSource;
-				}
-			}
-<#
-		}
-
-#>
-
-<#
-		for(int i =0 ; i < _windowProperty.Length; i++)
-		{
-#>
-			private DockWindowViewModel _<#=_windowProperty[i]#>SelectItem;
-			public DockWindowViewModel <#=_windowProperty[i]#>SelectItem
-			{
-				get
-				{
-					return _<#=_windowProperty[i]#>SelectItem;
+					return _<#=_property[i]#>;
 				}
 				set
 				{
-					SetValue(ref _<#=_windowProperty[i]#>SelectItem,value);
+					SetValue(ref _<#=_property[i]#>,value);
 				}
 			}
 <#
 		}
 
 #>
-
-
 
 	}
 

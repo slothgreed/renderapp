@@ -14,7 +14,7 @@ using RenderApp.Utility;
 namespace RenderApp.ViewModel
 {
    
-    public partial class RootNodeViewModel : DockWindowViewModel
+    public partial class RootNodeViewModel : TabItemViewModel
     {
 
         public ObservableCollection<NodeItemViewModel> RootNode

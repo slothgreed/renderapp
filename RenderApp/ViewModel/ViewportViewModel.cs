@@ -7,7 +7,7 @@ using System.Windows.Forms.Integration;
 using RenderApp.GLUtil;
 namespace RenderApp.ViewModel
 {
-    public class ViewportViewModel : DockWindowViewModel
+    public class ViewportViewModel : TabItemViewModel
     {
         public override string Title
         {
