@@ -275,33 +275,6 @@ namespace RenderApp.AssetModel
                     }
                 }
                 data.geometryType = GeometryType.Triangle;
-                ////Index番号となるようにー1
-                ////objファイルのインデックスは1から、リストの順を基準にしたいため0からに
-                //data.posIndex.Add(int.Parse(part1[0]) - 1);
-                //data.posIndex.Add(int.Parse(part2[0]) - 1);
-                //data.posIndex.Add(int.Parse(part3[0]) - 1);
-                //data.posIndex.Add(int.Parse(part4[0]) - 1);
-
-                //if (part1.Length > 1)
-                //{
-                //    if (part1[1] != "")
-                //    {
-                //        data.texIndex.Add(int.Parse(part1[1]) - 1);
-                //        data.texIndex.Add(int.Parse(part2[1]) - 1);
-                //        data.texIndex.Add(int.Parse(part3[1]) - 1);
-                //        data.texIndex.Add(int.Parse(part4[1]) - 1);
-                //    }
-                //}
-                //if (part1.Length > 2)
-                //{
-                //    if (part1[2] != "")
-                //    {
-                //        data.norIndex.Add(int.Parse(part1[2]) - 1);
-                //        data.norIndex.Add(int.Parse(part2[2]) - 1);
-                //        data.norIndex.Add(int.Parse(part3[2]) - 1);
-                //        data.norIndex.Add(int.Parse(part4[2]) - 1);
-                //    }
-                //}
             }else
             {
                 Utility.Output.Error("we dont support more than 4 polygons");
