@@ -85,6 +85,11 @@ namespace RenderApp.AssetModel
         {
             Position = position;
             Normal = normal;
+            Vector3 color = Utility.RACalc.RandomColor();
+            for (int i = 0; i < Position.Count; i++)
+            {
+                Color.Add(color);
+            }
             TexCoord = texcoord;
             Initialize();
         }

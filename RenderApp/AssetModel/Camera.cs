@@ -61,7 +61,7 @@ namespace RenderApp.AssetModel
         /// <summary>
         /// ズームの最大値
         /// </summary>
-        public float m_ZoomMax = 1500;
+        public float m_ZoomMax = 600;
         #endregion
         #region [平行移動関連]
         /// <summary>
@@ -199,7 +199,7 @@ namespace RenderApp.AssetModel
             LookAt = Vector3.Zero;
             Up = Vector3.UnitY;
             m_ZoomLength = m_ZoomMax;
-            m_theta = 90.0f;
+            m_theta = 180.0f;
             m_phi = 0.0f;
             UpdateCamera();
         }

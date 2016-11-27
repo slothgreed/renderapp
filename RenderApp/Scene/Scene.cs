@@ -251,9 +251,11 @@ namespace RenderApp
             {
                 AddRootSceneObject(sponza);
             }
-            List<Geometry> ducks = AssetFactory.Instance.CreateLoad3DModel("C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/smallduck.obj");
+            List<Geometry> ducks = AssetFactory.Instance.CreateLoad3DModel("C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/duck/duck.obj");
             foreach(var duck in ducks)
             {
+                duck.RotateX(-90);
+                duck.RotateY(0);
                 AddRootSceneObject(duck);
             }
         }

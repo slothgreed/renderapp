@@ -14,21 +14,21 @@ namespace RenderApp.AssetModel
     public class OBJMaterial : MaterialFileInfo
     {
         public string name;
-        public Vector3 Ka;
-        public Vector3 Kd;
-        public Vector3 Ks;
-        public Vector3 Ke;
-        public float Ns;
-        public float Ni;
-        public float d;
-        public float Tr;
-        public Vector3 Tf;
-        public float illum;
-        public string map_Ka;
-        public string map_Kd;
-        public string map_d;
-        public string map_bump;
-        public string bump;
+        public Vector3 Ka;//ambient
+        public Vector3 Kd;//diffuse
+        public Vector3 Ks;//specular
+        public Vector3 Ke;//
+        public float Ns;//specular指数
+        public float Ni;//屈折率
+        public Vector3 Tf;//atmosphereの値（無視rgbで指定されてるがrと同一っぽい）
+        public string map_Ka;//ambientMap
+        public string map_Kd;//diffuseMap
+        public string map_bump;//bumpMap
+
+        public string map_d;//透過度テクスチャ（無視）
+        public float d;//透過（無視）
+        public float Tr;//透過（無視）
+        public float illum;//0~10のパラメータで異なる（無視）sponza全部2（Color on and Ambient on）
     }
 
     public class CObjFile : GeometryFile
@@ -50,7 +50,6 @@ namespace RenderApp.AssetModel
                 string[] parser = File.ReadAllLines(filePath, System.Text.Encoding.GetEncoding("Shift_JIS"));
 
                 ReadData(parser);
-                SetDrawArrayData();
             }
             catch (Exception)
             {
@@ -359,10 +358,8 @@ namespace RenderApp.AssetModel
                                 mat.map_d = directory + line[i + 1];
                                 break;
                             case "map_bump":
-                                mat.map_bump = directory + line[i + 1];
-                                break;
                             case "bump":
-                                mat.bump = directory + line[i + 1];
+                                mat.map_bump = directory + line[i + 1];
                                 break;
                         }
                     }
@@ -376,32 +373,6 @@ namespace RenderApp.AssetModel
         
         #endregion
         #endregion
-        private void SetDrawArrayData()
-        {
-            //MaterialItem = Material.Default;
-            //HalfEdge half = null;
-            //if (Normal.Count == 0)
-            //{
-            //    half = new HalfEdge(m_posStream, m_posIndex);
-            //    AddAnalayzer(half);
-
-            //    for (int i = 0; i < m_posIndex.Count / 3; i++)
-            //    {
-            //        Position.Add(m_posStream[m_posIndex[3 * i]]);
-            //        Position.Add(m_posStream[m_posIndex[3 * i + 1]]);
-            //        Position.Add(m_posStream[m_posIndex[3 * i + 2]]);
-
-            //        Normal.Add(half.GetNormal(m_posIndex[3 * i]));
-            //        Normal.Add(half.GetNormal(m_posIndex[3 * i + 1]));
-            //        Normal.Add(half.GetNormal(m_posIndex[3 * i + 2]));
-
-            //        TexCoord.Add(m_texStream[m_texIndex[3 * i]]);
-            //        TexCoord.Add(m_texStream[m_texIndex[3 * i + 1]]);
-            //        TexCoord.Add(m_texStream[m_texIndex[3 * i + 2]]);
-            //    }
-            //}
-            //MaterialItem.AddTexture(TextureKind.Albedo, new GLUtil.Texture(m_Materials[0].imageFile,DirectoryPath + @"\" + m_Materials[0].imageFile));
-        }
 
         public override List<Geometry> ConvertGeometry()
         {
