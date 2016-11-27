@@ -333,7 +333,6 @@
     <Compile Include="AssetModel\Geometry\File\ObjLoader.cs" />
     <Compile Include="Core\RATimer.cs" />
     <Compile Include="AssetModel\Geometry\File\StlLoader.cs" />
-    <Compile Include="Utility\AppException.cs" />
     <Compile Include="Utility\TrueTypeFont.cs" />
     <Compile Include="Utility\Util.cs" />
     <Compile Include="Analyzer\Tree\Voxel.cs" />

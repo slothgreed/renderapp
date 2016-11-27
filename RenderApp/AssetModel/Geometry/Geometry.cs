@@ -338,6 +338,7 @@ namespace RenderApp.AssetModel
         }
         #endregion
         #endregion
+        #region [convert mesh]
         protected void ConvertPerTriangle()
         {
             if (Index.Count == 0)
@@ -364,18 +365,18 @@ namespace RenderApp.AssetModel
             var newNormal = new List<Vector3>();
 
 
-            for(int i = 0; i < Index.Count; i+=3)
+            for (int i = 0; i < Index.Count; i += 3)
             {
                 newPosition.Add(Position[Index[i]]);
                 newPosition.Add(Position[Index[i + 1]]);
                 newPosition.Add(Position[Index[i + 2]]);
-                if(texArray)
+                if (texArray)
                 {
                     newTexcoord.Add(TexCoord[Index[i]]);
                     newTexcoord.Add(TexCoord[Index[i + 1]]);
                     newTexcoord.Add(TexCoord[Index[i + 2]]);
                 }
-                if(colorArray)
+                if (colorArray)
                 {
                     newColor.Add(Color[Index[i]]);
                     newColor.Add(Color[Index[i + 1]]);
@@ -423,11 +424,11 @@ namespace RenderApp.AssetModel
             var newTexcoord = new List<Vector2>();
             var newColor = new List<Vector3>();
             var newNormal = new List<Vector3>();
-             bool isExist = false;
-            for(int i = 0; i< Position.Count;i++)
+            bool isExist = false;
+            for (int i = 0; i < Position.Count; i++)
             {
                 isExist = false;
-                for (int j = 0; j < newPosition.Count; j++ )
+                for (int j = 0; j < newPosition.Count; j++)
                 {
                     if (newPosition[j] == Position[i])
                     {
@@ -439,18 +440,18 @@ namespace RenderApp.AssetModel
                 if (!isExist)
                 {
                     newPosition.Add(Position[i]);
-                    Index.Add(newPosition.Count -1 );
+                    Index.Add(newPosition.Count - 1);
 
 
-                    if(texArray)
+                    if (texArray)
                     {
                         newTexcoord.Add(TexCoord[i]);
                     }
-                    if(colorArray)
+                    if (colorArray)
                     {
                         newColor.Add(Color[i]);
                     }
-                    if(normalArray)
+                    if (normalArray)
                     {
                         newNormal.Add(Normal[i]);
                     }
@@ -462,6 +463,8 @@ namespace RenderApp.AssetModel
             Normal = newNormal;
 
         }
+        #endregion
+       
 
     }
 }
