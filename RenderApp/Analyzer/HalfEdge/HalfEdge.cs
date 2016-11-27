@@ -59,11 +59,7 @@ namespace RenderApp.Analyzer
 
             if (CheckOppositeEdge())
             {
-                Console.WriteLine("OK!");
-            }
-            else
-            {
-                Console.WriteLine("NG!");
+                Output.Log(Output.LogLevel.Debug, "Create Half Edge OK!");
             }
         }
         /// <summary>

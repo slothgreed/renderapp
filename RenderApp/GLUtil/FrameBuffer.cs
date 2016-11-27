@@ -108,7 +108,7 @@ namespace RenderApp.GLUtil
 
             GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, 0);
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
-            Output.GLError();
+            Output.GLLog(Output.LogLevel.Error);
         }
 
         private void CreateFrameBuffer(int textureNum, out int[] textureId, FramebufferAttachment[] attachment)
@@ -141,7 +141,7 @@ namespace RenderApp.GLUtil
             GL.BindTexture(TextureTarget.Texture2D, 0);
             GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, 0);
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
-            Output.GLError();
+            Output.GLLog(Output.LogLevel.Error);
         }
         public void Dispose()
         {

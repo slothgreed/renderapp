@@ -119,7 +119,7 @@ namespace RenderApp.AssetModel
             MaterialItem = Material.Default;
             if(GeometryIDCounter > 255)
             {
-                Output.Error("ToManyObject");
+                Output.Log(Output.LogLevel.Warning,"To Many Object");
             }
             GeometryIDCounter++;
             ID = GeometryIDCounter;
@@ -191,7 +191,7 @@ namespace RenderApp.AssetModel
                 GL.DrawElements(RenderType, Index.Count, DrawElementsType.UnsignedInt, 0);
             }
             MaterialItem.UnBindShader();
-            Output.GLError();
+            Output.GLLog(Output.LogLevel.Error);
         }
 
         #endregion

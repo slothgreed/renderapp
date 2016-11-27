@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using RenderApp.Utility;
 namespace RenderApp.Analyzer
 {
     public class Parameter
@@ -81,7 +81,7 @@ namespace RenderApp.Analyzer
         {
             if(m_Mean == 0)
             {
-                Console.WriteLine("don't calc mean value");
+                Output.Log(Output.LogLevel.Warning, "don't calc mean value");
                 return;
             }
             for(int i = 0; i < m_value.Count; i++)
@@ -98,7 +98,7 @@ namespace RenderApp.Analyzer
         {
             if(m_Valiance == 0)
             {
-                Console.WriteLine("don't calc valiace value");
+                Output.Log(Output.LogLevel.Warning, "don't calc valiace value");
                 return 0;
             }
             float k = 1/(float)Math.Sqrt((double)(2 * Math.PI * m_Valiance));

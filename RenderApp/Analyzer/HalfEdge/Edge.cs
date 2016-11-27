@@ -70,7 +70,7 @@ namespace RenderApp.Analyzer
                 {
                     if(Start == null || End == null || Before == null || Opposite == null)
                     {
-                        Utility.Output.GLError("half edge angle error");
+                        Utility.Output.GLLog(Utility.Output.LogLevel.Error, "half edge angle error");
                         return _angle = 0.0f;
                     }
 
@@ -87,7 +87,7 @@ namespace RenderApp.Analyzer
             {
                 if(Start == null || End == null)
                 {
-                    Utility.Output.GLError("half edge Length error");
+                    Utility.Output.GLLog(Utility.Output.LogLevel.Error,"half edge Length error");
                     return 0.0f;
                 }
                 return (Start - End).Length;

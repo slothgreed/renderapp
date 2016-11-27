@@ -190,12 +190,6 @@ namespace RenderApp.AssetModel
 
             ConvertVertexArray();
             
-            //for (int i = 0; i < Position.Count; i += 3)
-            //{
-            //    Console.WriteLine("Postion\r\n" + Position[i].ToString() + "\r\n" + Position[i + 1].ToString() + "\r\n" + Position[i + 2].ToString());
-            //    Console.WriteLine("PostionNormalize\r\n" + Position[i].Normalized().ToString() + "\r\n" + Position[i + 1].Normalized().ToString() + "\r\n" + Position[i + 2].Normalized().ToString());
-            //    Console.WriteLine("Texcoord\r\n" + TexCoord[i].ToString() + "\r\n" + TexCoord[i + 1].ToString() + "\r\n" + TexCoord[i + 2].ToString() + "\r\n");
-            //}
         }
         /// <summary>
         /// 仮実装

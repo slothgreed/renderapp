@@ -176,7 +176,7 @@ namespace RenderApp.GLUtil.ShaderModel
             }
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-            Output.GLError();
+            Output.GLLog(Output.LogLevel.Error);
         }
 
 
@@ -244,7 +244,7 @@ namespace RenderApp.GLUtil.ShaderModel
                     GL.Uniform1(uniform.ID, (int)uniform.variable);
                 }
             }
-            Output.GLError();
+            Output.GLLog(Output.LogLevel.Error);
         }
         /// <summary>
         /// AttributeのBinding
@@ -293,7 +293,7 @@ namespace RenderApp.GLUtil.ShaderModel
                 }
 
             }
-            Output.GLError();
+            Output.GLLog(Output.LogLevel.Error);
         }
         #endregion
         /// <summary>
@@ -483,7 +483,7 @@ namespace RenderApp.GLUtil.ShaderModel
                     info.variableType = EVariableType.FloatArray;
                     break;
                 default:
-                    Console.WriteLine("Shader ReadError" + name);
+                    Output.Log(Output.LogLevel.Error,"Shader ReadError" + name);
                     break;
             }
             return;
@@ -529,7 +529,7 @@ namespace RenderApp.GLUtil.ShaderModel
                     info.variableType = EVariableType.Mat4;
                     break;
                 default:
-                    Console.WriteLine("Shader ReadError" + name);
+                    Output.Log(Output.LogLevel.Error,"Shader ReadError" + name);
                     break;
             }
             return;
@@ -597,7 +597,7 @@ namespace RenderApp.GLUtil.ShaderModel
                         break;
                 }
             }
-            Output.GLError();
+            Output.GLLog(Output.LogLevel.Error);
         }
         #endregion
         
@@ -672,7 +672,7 @@ namespace RenderApp.GLUtil.ShaderModel
                         break;
                 }
             }
-            Output.GLError();
+            Output.GLLog(Output.LogLevel.Error);
         }
 
         #endregion
@@ -684,7 +684,7 @@ namespace RenderApp.GLUtil.ShaderModel
         public void Dispose()
         {
             GL.DeleteProgram(_program);
-            Output.GLError();
+            Output.GLLog(Output.LogLevel.Error);
         }
         #endregion
 
@@ -705,7 +705,7 @@ namespace RenderApp.GLUtil.ShaderModel
             GL.DeleteShader(fshader);
 
             GL.LinkProgram(program);
-            Output.GLError();
+            Output.GLLog(Output.LogLevel.Error);
             return program;
 
         }
@@ -738,13 +738,13 @@ namespace RenderApp.GLUtil.ShaderModel
             int status;
             string info;
             GL.GetProgramInfoLog(program, out info);
-            Console.WriteLine(info);
+            Output.Log(Output.LogLevel.Debug, info);
             GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
             if (status == 0)
             {
-                Console.WriteLine(GL.GetProgramInfoLog(program));
+                Output.Log(Output.LogLevel.Error, GL.GetProgramInfoLog(program));
             }
-            Output.GLError();
+            Output.GLLog(Output.LogLevel.Error);
             return program;
         }
         private int CompailShader(ShaderType shaderType, string shaderCode)
@@ -761,26 +761,26 @@ namespace RenderApp.GLUtil.ShaderModel
                 switch (shaderType)
                 {
                     case ShaderType.FragmentShader:
-                        Console.WriteLine(FragShader.FileName);
+                        Output.Log(Output.LogLevel.Debug,FragShader.FileName);
                         break;
                     case ShaderType.GeometryShader:
-                        Console.WriteLine(GeomShader.FileName);
+                        Output.Log(Output.LogLevel.Debug, GeomShader.FileName);
                         break;
                     case ShaderType.TessControlShader:
-                        Console.WriteLine(TesShader.FileName);
+                        Output.Log(Output.LogLevel.Debug, TesShader.FileName);
                         break;
                     case ShaderType.TessEvaluationShader:
-                        Console.WriteLine(TcsShader.FileName);
+                        Output.Log(Output.LogLevel.Debug, TcsShader.FileName);
                         break;
                     case ShaderType.VertexShader:
-                        Console.WriteLine(VertexShader.FileName);
+                        Output.Log(Output.LogLevel.Debug, VertexShader.FileName);
                         break;
                     default:
                         break;
                 }
-                Console.WriteLine(info);
+                Output.Log(Output.LogLevel.Debug, info);
             }
-            Output.GLError();
+            Output.GLLog(Output.LogLevel.Error);
             return shader;
         }
 
@@ -826,13 +826,13 @@ namespace RenderApp.GLUtil.ShaderModel
             int status;
             string info;
             GL.GetProgramInfoLog(program, out info);
-            Console.WriteLine(info);
+            Output.Log(Output.LogLevel.Debug, info);
             GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
             if (status == 0)
             {
                 throw new Exception(GL.GetProgramInfoLog(program));
             }
-            Output.GLError();
+            Output.GLLog(Output.LogLevel.Error);
             return program;
         }
 
@@ -863,13 +863,13 @@ namespace RenderApp.GLUtil.ShaderModel
             int status;
             string info;
             GL.GetProgramInfoLog(program, out info);
-            Console.WriteLine(info);
+            Output.Log(Output.LogLevel.Debug, info);
             GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
             if (status == 0)
             {
                 throw new Exception(GL.GetProgramInfoLog(program));
             }
-            Output.GLError();
+            Output.GLLog(Output.LogLevel.Error);
             return program;
         }
         #endregion

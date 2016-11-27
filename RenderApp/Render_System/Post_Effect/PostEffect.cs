@@ -27,7 +27,7 @@ namespace RenderApp.Render_System.Post_Effect
             }
             else
             {
-                Utility.Output.Error("Set Shader Error " + memberName);
+                Utility.Output.Log(Utility.Output.LogLevel.Error, "Set Shader Error " + memberName);
             }
         }
         public abstract void Initialize();

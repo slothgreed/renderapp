@@ -125,7 +125,7 @@ namespace RenderApp.GLUtil
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, Convert.ToInt32(wrapMode));
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, Convert.ToInt32(wrapMode));
             GL.BindTexture(TextureTarget.Texture2D, 0);
-            Output.GLError();
+            Output.GLLog(Output.LogLevel.Error);
         }
         private void BindFilter(TextureMinFilter filter)
         {
@@ -133,7 +133,7 @@ namespace RenderApp.GLUtil
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)filter);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)filter);
             GL.BindTexture(TextureTarget.Texture2D, 0);
-            Output.GLError();
+            Output.GLLog(Output.LogLevel.Error);
         }
 
         public override void Dispose()
@@ -183,7 +183,7 @@ namespace RenderApp.GLUtil
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)this.Filter);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)this.Filter);
             GL.BindTexture(TextureTarget.Texture2D, 0);
-            Output.GLError();
+            Output.GLLog(Output.LogLevel.Error);
         }
         #endregion
         #region [CubeMap]
@@ -224,7 +224,7 @@ namespace RenderApp.GLUtil
                 }
 
                 GL.BindTexture(TextureTarget.TextureCubeMap, 0);
-                Output.GLError();
+                Output.GLLog(Output.LogLevel.Error);
                 return texId;
 
             }

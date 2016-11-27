@@ -154,7 +154,7 @@ namespace RenderApp.GLUtil
             Scene.Create("MainScene");
             Scene.ActiveScene.Initialize();
             m_AppstartUp = true;
-            Output.GLError();
+            Output.GLLog(Output.LogLevel.Error);
             OnCreateViewportEvent();
         }
         //Loadより先に呼ばれる
@@ -166,7 +166,7 @@ namespace RenderApp.GLUtil
                 Scene.ActiveScene.MainCamera.SetProjMatrix((float)m_glControl.Size.Width / m_glControl.Size.Height);
                 GL.Viewport(0, 0, m_glControl.Size.Width, m_glControl.Size.Height);
                 RenderSystem.SizeChanged(m_glControl.Size.Width, m_glControl.Size.Height);
-                Output.GLError();
+                Output.GLLog(Output.LogLevel.Error);
                 glControl_Paint(null, null);
             }
 

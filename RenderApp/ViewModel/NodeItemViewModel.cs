@@ -121,7 +121,7 @@ namespace RenderApp.ViewModel
                     if(_isSelected == true)
                     {
                         ActiveItem = this;
-                        Console.WriteLine(this.DisplayName);
+                        Output.Log(Output.LogLevel.Debug, this.DisplayName);
                     }
                 }
             }

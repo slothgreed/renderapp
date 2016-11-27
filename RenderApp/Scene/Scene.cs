@@ -246,7 +246,11 @@ namespace RenderApp
 
             Geometry map = AssetFactory.Instance.CreateEnvironmentMap();
             AddRootSceneObject(map);
-
+            List<Geometry> sponzas = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/crytek-sponza/sponza.obj");
+            foreach (var sponza in sponzas)
+            {
+                AddRootSceneObject(sponza);
+            }
             List<Geometry> ducks = AssetFactory.Instance.CreateLoad3DModel("C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/smallduck.obj");
             foreach(var duck in ducks)
             {

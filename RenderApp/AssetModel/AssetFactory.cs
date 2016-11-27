@@ -25,7 +25,6 @@ namespace RenderApp.AssetModel
 
         public Geometry CreateEnvironmentMap()
         {
-            return null;
             string SphereMapAlbedo = ProjectInfo.TextureDirectory + @"\SphreMap.jpg";
             string SphereMapVertexShader = ProjectInfo.ShaderDirectory + @"\sphereMap.vert";
             string SphereMapFragmentShader = ProjectInfo.ShaderDirectory + @"\sphereMap.frag";

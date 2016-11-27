@@ -54,8 +54,7 @@ namespace RenderApp.AssetModel
             }
             catch (Exception)
             {
-
-                Console.WriteLine(filePath + "開けません。現在のフォルダ位置" + System.Environment.CurrentDirectory);
+                Utility.Output.Log(Utility.Output.LogLevel.Warning, filePath + "開けません。");
             }
         }
 
@@ -162,7 +161,7 @@ namespace RenderApp.AssetModel
                     }
                     else
                     {
-                        Utility.Output.Error("not found material on load obje file" + line[i + 1]);
+                        Utility.Output.Log(Utility.Output.LogLevel.Warning, "not found material on load obj file" + line[i + 1]);
                     }
                     break;
                 }
@@ -277,7 +276,7 @@ namespace RenderApp.AssetModel
                 data.geometryType = GeometryType.Triangle;
             }else
             {
-                Utility.Output.Error("we dont support more than 4 polygons");
+                Utility.Output.Log(Utility.Output.LogLevel.Warning,"we dont support more than 4 polygons");
             }
         }
         #region [read mtl file]

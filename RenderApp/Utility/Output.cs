@@ -11,17 +11,31 @@ namespace RenderApp.Utility
 {
     class Output
     {
-        public static void Error(string error)
+        public enum LogLevel
         {
-            Debug.WriteLine(error);
+            NONE,
+            Debug,
+            Warning,
+            Error,
+        }
+        public static LogLevel outputLogLevel = LogLevel.Error;
+        public static void Log(LogLevel level, string error, [CallerMemberName]string methodName = "")
+        {
+            if(level <= outputLogLevel)
+            {
+                Console.WriteLine(error);
+            }
         }
 
-        public static void GLError([CallerMemberName]string methodName = "")
+        public static void GLLog(LogLevel level, [CallerMemberName]string methodName = "")
         {
-            ErrorCode error = GL.GetError();
-            if (error != ErrorCode.NoError)
+            if(level <= outputLogLevel)
             {
-                Console.WriteLine(methodName + ":" + error);
+                ErrorCode error = GL.GetError();
+                if (error != ErrorCode.NoError)
+                {
+                    Console.WriteLine(methodName + ":" + error);
+                }
             }
         }
     }
