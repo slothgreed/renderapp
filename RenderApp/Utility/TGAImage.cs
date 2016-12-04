@@ -8,7 +8,9 @@ using System.Drawing;
 using System.Drawing.Imaging;
 namespace RenderApp.Utility
 {
-    class TGAImage
+
+
+    class TGAImage : RAImageInfo
     {
         struct TGAStruct
         {
@@ -35,7 +37,8 @@ namespace RenderApp.Utility
         private UInt32 bpp;
 
         public UInt32 ID;
-        public TGAImage()
+        public TGAImage(string path) :
+            base(path)
         {
 
         }

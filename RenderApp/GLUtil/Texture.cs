@@ -21,10 +21,20 @@ namespace RenderApp.GLUtil
                 return ProjectInfo.TextureDirectory + @"\Dummy.png";
             }
         }
+        private RAImageInfo _imageInfo;
         public RAImageInfo ImageInfo
         {
-            get;
-            private set;
+            get
+            {
+                return _imageInfo;
+            }
+            set
+            {
+                _imageInfo = value;
+                _imageInfo.LoadImageData();
+                Load2DTexture();
+
+            }
         }
         
         /// <summary>
@@ -72,21 +82,16 @@ namespace RenderApp.GLUtil
 
         public static readonly Texture Empty;
         #region [constructor]
-        private void Initialize()
-        {
-        }
 
         public Texture(string name,string path)
             : base(name)
         {
             LoadTexture(path);
-            ImageInfo = new RAImageInfo(path);
         }
         public Texture(string name,string path, TextureType target = TextureType.Texture2D)
             : base(name)
         {
             LoadTexture(path, target);
-            ImageInfo = new RAImageInfo(path);
         }
         public Texture(string name, int width, int height)
             : base(name)
@@ -112,8 +117,6 @@ namespace RenderApp.GLUtil
                     CreateTextureBuffer2D();
                     break;
             }
-            Load2DTexture();
-            Initialize();
         }
 
        #endregion
@@ -148,20 +151,12 @@ namespace RenderApp.GLUtil
             {
                 return;
             }
-            Bitmap image = new Bitmap(ImageInfo.FilePath);
-            GL.BindTexture(TextureTarget.Texture2D, this.ID);
-            if (System.IO.Path.GetExtension(ImageInfo.FilePath) == ".bmp")
-            {
-                image.RotateFlip(RotateFlipType.RotateNoneFlipY);
-            }
+            ImageInfo.Lock();
 
-            //データ読み込み
-            BitmapData bmp_data = image.LockBits(new Rectangle(0, 0, image.Width, image.Height),
-                ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, ImageInfo.Width, ImageInfo.Height,
+                0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, ImageInfo.Scan0);
 
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, bmp_data.Width, bmp_data.Height, 0,
-                OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bmp_data.Scan0);
-            image.UnlockBits(bmp_data);
+            ImageInfo.UnLock();
             GL.BindTexture(TextureTarget.Texture2D, 0);
         }
     

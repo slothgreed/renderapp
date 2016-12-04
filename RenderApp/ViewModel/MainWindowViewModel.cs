@@ -209,6 +209,10 @@ namespace RenderApp.ViewModel
                     {
                         TextureFactory.Instance.CreateTexture(Path.GetFileName(filename), filename);
                     }
+                    else if(extension == "tga")
+                    {
+                        TextureFactory.Instance.CreateTexture(Path.GetFileName(filename), filename);
+                    }
                 }
             }
         }
