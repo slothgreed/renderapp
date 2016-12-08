@@ -197,22 +197,14 @@ namespace RenderApp.ViewModel
         {
             System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
             dlg.InitialDirectory = ProjectInfo.ProjectDirectory;
-            dlg.Filter = "画像ファイル(*.bmp;*.jpg;*png)|*.bmp;*.jpg;*.png;";
+            dlg.Filter = "画像ファイル(*.bmp;*.jpg;*png;tga)|*.bmp;*.jpg;*.png;*.tga;";
             dlg.Title = "開くファイルを選択してください。";
             dlg.Multiselect = true;
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 foreach (var filename in dlg.FileNames)
                 {
-                    string extension = Path.GetExtension(filename);
-                    if (extension == ".bmp" || extension == ".png" || extension == ".jpg")
-                    {
-                        TextureFactory.Instance.CreateTexture(Path.GetFileName(filename), filename);
-                    }
-                    else if(extension == "tga")
-                    {
-                        TextureFactory.Instance.CreateTexture(Path.GetFileName(filename), filename);
-                    }
+                    TextureFactory.Instance.CreateTexture(Path.GetFileName(filename),filename);
                 }
             }
         }

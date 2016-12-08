@@ -31,7 +31,10 @@ namespace RenderApp.GLUtil
             set
             {
                 _imageInfo = value;
-                _imageInfo.LoadImageData();
+                if(!_imageInfo.Loaded)
+                {
+                    _imageInfo.LoadImageData();
+                }
                 Load2DTexture();
 
             }
@@ -53,13 +56,14 @@ namespace RenderApp.GLUtil
         /// <summary>
         /// MinMag兼ねたフィルタ
         /// </summary>
-        private TextureMinFilter _filter = TextureMinFilter.Linear;
+        private TextureMinFilter _filter = TextureMinFilter.Nearest;
         public TextureMinFilter Filter
         {
             get { return _filter; }
             set
             {
-                BindFilter(value);
+                _filter = value;
+                BindFilter(_filter);
             }
         }
         /// <summary>
@@ -103,8 +107,8 @@ namespace RenderApp.GLUtil
             this.ID = GL.GenTexture();
             GL.BindTexture(TextureTarget.Texture2D, this.ID);
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb32f, width, height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgb, PixelType.Byte, IntPtr.Zero);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMinFilter.Nearest);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)Filter);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)Filter);
             GL.BindTexture(TextureTarget.Texture2D, 0);
         }
         public void LoadTexture(string path, TextureType target = TextureType.Texture2D)
@@ -151,6 +155,7 @@ namespace RenderApp.GLUtil
             {
                 return;
             }
+            GL.BindTexture(TextureTarget.Texture2D, this.ID);
             ImageInfo.Lock();
 
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, ImageInfo.Width, ImageInfo.Height,

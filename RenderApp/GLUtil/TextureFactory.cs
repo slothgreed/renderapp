@@ -18,6 +18,28 @@ namespace RenderApp.GLUtil
                 return _instance;
             }
         }
+        public Texture CreateTexture(string name, string path)
+        {
+            string extension = System.IO.Path.GetExtension(path);
+            ImageKind kind = ImageKind.None;
+            switch (extension)
+            {
+                case ".bmp":
+                    kind = ImageKind.BMP;
+                    break;
+                case ".png":
+                    kind = ImageKind.PNG;
+                    break;
+                case ".jpg":
+                    kind = ImageKind.JPG;
+                    break;
+                case ".tga":
+                    kind = ImageKind.TGA;
+                    break;
+            }
+
+            return CreateTexture(name,path,kind);
+        }
         public Texture CreateTexture(string name,string path,ImageKind kind)
         {
             RAImageInfo image = null;
@@ -29,8 +51,10 @@ namespace RenderApp.GLUtil
                     image = new RAImageInfo(path);
                     break;
                 case ImageKind.TGA:
-                    image = new TGAImage(name, path);
+                    image = new TGAImage(path);
                     break;
+                default:
+                    return null;
             }
             Texture texture = texture = new Texture(name, path);
             texture.ImageInfo = image;

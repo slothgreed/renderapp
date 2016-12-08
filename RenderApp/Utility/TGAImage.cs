@@ -30,11 +30,7 @@ namespace RenderApp.Utility
         private Byte BitPerPixel;
         private Byte Discripter;
         
-        private UInt32 imageSize;
-        private BitmapData imageData;
-        private UInt32 internalFormat;
-        private UInt32 width;
-        private UInt32 bpp;
+        private int imageSize;
 
         public UInt32 ID;
         public TGAImage(string path) :
@@ -42,15 +38,8 @@ namespace RenderApp.Utility
         {
 
         }
-        bool ReadTGAImage(string filename)
+        private void ReadHeaderData(BinaryReader binary)
         {
-            Stream fp = File.Open(filename, FileMode.Open);
-            if (fp == null)
-                return false;
-
-            BinaryReader binary = new BinaryReader(fp);
-            fp.Close();
-
             IDFieldLength = binary.ReadByte();
             ColorMapType = binary.ReadByte();
             ImageType = binary.ReadByte();
@@ -63,17 +52,53 @@ namespace RenderApp.Utility
             ImageOriginX.High = binary.ReadByte();
             ImageOriginY.Low = binary.ReadByte();
             ImageOriginY.High = binary.ReadByte();
+            ImageWidth.Low = binary.ReadByte();
+            ImageWidth.High = binary.ReadByte();
+            ImageHeight.Low = binary.ReadByte();
+            ImageHeight.High = binary.ReadByte();
             BitPerPixel = binary.ReadByte();
             Discripter = binary.ReadByte();
 
-            
-            binary.Close();
+        }
+        private bool ReadTGAImage(string filename)
+        {
+            Stream fp = File.Open(filename, FileMode.Open);
+            if (fp == null)
+                return false;
 
+            BinaryReader binary = new BinaryReader(fp);
+            ReadHeaderData(binary);
+
+            Width = TGAStructValue(ImageWidth);
+            Height = TGAStructValue(ImageHeight);
+            imageSize = Width * Height * BitPerPixel;
+
+            Byte[] rgb = binary.ReadBytes(imageSize);
+
+            bmpImage = new Bitmap(Width, Height);
+
+            int counter = 0;
+            for (int i = 0; i < Width; i++)
+            {
+                for(int j = 0; j < Height; j++)
+                {
+                    bmpImage.SetPixel(i, j, Color.FromArgb(rgb[3 * counter + 2], rgb[3 * counter + 1], rgb[3 * counter]));
+                    counter++;
+                }
+            }
+
+            binary.Close();
+            fp.Close();
+            Loaded = true;
             return true;
         }
-        UInt32 Load(string filename)
+        private int TGAStructValue(TGAStruct data)
         {
-            return 0;
+            return data.High * 256 + data.Low;
+        }
+        public override bool LoadImageData()
+        {
+            return ReadTGAImage(FilePath);
         }
 
     }

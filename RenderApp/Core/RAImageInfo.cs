@@ -8,12 +8,14 @@ using System.Drawing;
 
 namespace RenderApp
 {
-    enum ImageKind
+    public enum ImageKind
     {
+        None,
         PNG,
         JPG,
         BMP,
-        TGA
+        TGA,
+        Num
     }
 
     /// <summary>
@@ -33,12 +35,12 @@ namespace RenderApp
             set;
         }
 
-        Bitmap bmpImage
+        public Bitmap bmpImage
         {
             get;
             set;
         }
-        BitmapData bmpData
+        public BitmapData bmpData
         {
             get;
             set;
@@ -48,14 +50,22 @@ namespace RenderApp
             get;
             set;
         }
-        
+        public bool Loaded
+        {
+            get;
+            set;
+        }
         public RAImageInfo(string path)
             :base(path)
         {
 
         }
-        public virtual void LoadImageData()
+        public virtual bool LoadImageData()
         {
+            if(Loaded)
+            {
+                return true;
+            }
             bmpImage = new Bitmap(FilePath);
             if (System.IO.Path.GetExtension(FilePath) == ".bmp")
             {
@@ -63,6 +73,8 @@ namespace RenderApp
             }
             Width = bmpImage.Width;
             Height = bmpImage.Height;
+            Loaded = true;
+            return true;
         }
 
         public void Lock()
