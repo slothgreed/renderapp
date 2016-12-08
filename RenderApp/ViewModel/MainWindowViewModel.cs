@@ -204,7 +204,7 @@ namespace RenderApp.ViewModel
             {
                 foreach (var filename in dlg.FileNames)
                 {
-                    TextureFactory.Instance.CreateTexture(Path.GetFileName(filename),filename);
+                    TextureFactory.Instance.CreateTexture(filename);
                 }
             }
         }

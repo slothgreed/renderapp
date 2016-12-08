@@ -31,7 +31,7 @@ namespace RenderApp.AssetModel
             string SphereMapFragmentShader = ProjectInfo.ShaderDirectory + @"\sphereMap.frag";
             Sphere sphere = new Sphere("SphereMap",Scene.ActiveScene.WorldMax.X * 2, 20, 20, false, Vector3.UnitX);
             sphere.MaterialItem = new Material("SphereMaterial");
-            Texture texture = TextureFactory.Instance.CreateTexture(RAFile.GetNameFromPath(SphereMapAlbedo), SphereMapAlbedo);
+            Texture texture = TextureFactory.Instance.CreateTexture(SphereMapAlbedo);
             sphere.MaterialItem.AddTexture(TextureKind.Albedo, texture);
             sphere.MaterialItem.AddTexture(TextureKind.Albedo, texture);
             Project.ActiveProject.AddChild(sphere.MaterialItem);
