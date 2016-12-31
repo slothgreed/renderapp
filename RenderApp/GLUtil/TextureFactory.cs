@@ -57,7 +57,7 @@ namespace RenderApp.GLUtil
                     return null;
             }
             Texture texture = texture = new Texture(RAFile.GetNameFromPath(path), path);
-            texture.ImageInfo = image;
+            texture.LoadTexture(image);
             Project.ActiveProject.AddChild(texture);
             return texture;
         }

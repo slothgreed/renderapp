@@ -8,6 +8,7 @@ using OpenTK.Graphics.OpenGL;
 using System.Drawing.Imaging;
 using RenderApp.AssetModel;
 using RenderApp.Utility;
+using RenderApp.GLUtil.Buffer;
 namespace RenderApp.GLUtil
 {
 
@@ -31,27 +32,26 @@ namespace RenderApp.GLUtil
             set
             {
                 _imageInfo = value;
-                if(!_imageInfo.Loaded)
-                {
-                    _imageInfo.LoadImageData();
-                }
-                Load2DTexture();
-
             }
+        }
+        public TextureBuffer TextureBuffer
+        {
+            get;
+            set;
         }
         
         /// <summary>
         /// テクスチャID
         /// </summary>
-        public int ID { get; set; }
-        /// <summary>
-        /// 1D,2D,CubeMap etc
-        /// </summary>
-        private TextureType _type = TextureType.Texture2D;
-        public TextureType TexType
-        {
-            get { return _type; }
-            set { _type = value; }
+        public int ID { 
+            get
+            {
+                return TextureBuffer.ID;
+            }
+            set
+            {
+                TextureBuffer.ID = value;
+            }
         }
         /// <summary>
         /// MinMag兼ねたフィルタ
@@ -87,95 +87,77 @@ namespace RenderApp.GLUtil
         public static readonly Texture Empty;
         #region [constructor]
 
-        public Texture(string name,string path)
+        public Texture(string name, string path)
             : base(name)
         {
-            CreateTextureBuffer(path);
-        }
-        public Texture(string name,string path, TextureType target = TextureType.Texture2D)
-            : base(name)
-        {
-            CreateTextureBuffer(path, target);
+            CreateTextureBuffer2D();
         }
         public Texture(string name, int width, int height)
             : base(name)
         {
-            CreateFrameBuffer2D(width,height);
+            CreateTextureBuffer2D();
+            SetEmptyTexture(width, height);
         }
-        private void CreateFrameBuffer2D(int width,int height)
+        private void SetEmptyTexture(int width, int height)
         {
-            this.ID = GL.GenTexture();
-            GL.BindTexture(TextureTarget.Texture2D, this.ID);
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb32f, width, height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgb, PixelType.Byte, IntPtr.Zero);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)Filter);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)Filter);
-            GL.BindTexture(TextureTarget.Texture2D, 0);
+            TextureBuffer.BindBuffer();
+            GL.TexImage2D(TextureBuffer.Target, 0, PixelInternalFormat.Rgb8, width, height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgb, PixelType.Byte, IntPtr.Zero);
+            TextureBuffer.UnBindBuffer();
         }
-        public void CreateTextureBuffer(string path, TextureType target = TextureType.Texture2D)
-        {
-            this.TexType = target;
-
-            switch (target)
-            {
-                case TextureType.Texture2D:
-                    CreateTextureBuffer2D();
-                    break;
-            }
-        }
-
-       #endregion
-        
-
+        #endregion
         private void BindWrapMode(TextureWrapMode wrapMode)
         {
-            GL.BindTexture(TextureTarget.Texture2D, this.ID);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, Convert.ToInt32(wrapMode));
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, Convert.ToInt32(wrapMode));
-            GL.BindTexture(TextureTarget.Texture2D, 0);
+            TextureBuffer.BindBuffer();
+            GL.TexParameter(TextureBuffer.Target, TextureParameterName.TextureWrapS, Convert.ToInt32(wrapMode));
+            GL.TexParameter(TextureBuffer.Target, TextureParameterName.TextureWrapT, Convert.ToInt32(wrapMode));
+            TextureBuffer.UnBindBuffer();
             Output.GLLog(Output.LogLevel.Error);
         }
         private void BindFilter(TextureMinFilter filter)
         {
-            GL.BindTexture(TextureTarget.Texture2D, this.ID);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)filter);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)filter);
-            GL.BindTexture(TextureTarget.Texture2D, 0);
+            TextureBuffer.BindBuffer();
+            GL.TexParameter(TextureBuffer.Target, TextureParameterName.TextureMinFilter, (int)filter);
+            GL.TexParameter(TextureBuffer.Target, TextureParameterName.TextureMagFilter, (int)filter);
+            TextureBuffer.UnBindBuffer();
             Output.GLLog(Output.LogLevel.Error);
         }
 
         public override void Dispose()
         {
-            GL.DeleteTexture(this.ID);
-            this.ID = 0;
+            TextureBuffer.Dispose();
         }
         #region [テクスチャ周り]
-        private void Load2DTexture()
+        public void LoadTexture(RAImageInfo image)
         {
-            if (ImageInfo == null)
+            ImageInfo = image;
+
+            if (!ImageInfo.Loaded)
             {
-                return;
+                ImageInfo.LoadImageData();
             }
-            GL.BindTexture(TextureTarget.Texture2D, this.ID);
+
+            TextureBuffer.BindBuffer();
+
             ImageInfo.Lock();
 
             if(ImageInfo.Format == System.Drawing.Imaging.PixelFormat.Format24bppRgb)
             {
-                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, ImageInfo.Width, ImageInfo.Height,
+                GL.TexImage2D(TextureBuffer.Target, 0, PixelInternalFormat.Rgba, ImageInfo.Width, ImageInfo.Height,
                                 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgr, PixelType.UnsignedByte, ImageInfo.Scan0);
             }
             else if(ImageInfo.Format == System.Drawing.Imaging.PixelFormat.Format32bppArgb)
             {
-                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, ImageInfo.Width, ImageInfo.Height,
+                GL.TexImage2D(TextureBuffer.Target, 0, PixelInternalFormat.Rgba, ImageInfo.Width, ImageInfo.Height,
                                 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, ImageInfo.Scan0);
             }
             else
             {
-                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, ImageInfo.Width, ImageInfo.Height,
+                GL.TexImage2D(TextureBuffer.Target, 0, PixelInternalFormat.Rgba, ImageInfo.Width, ImageInfo.Height,
                                 0, OpenTK.Graphics.OpenGL.PixelFormat.ColorIndex, PixelType.UnsignedByte, ImageInfo.Scan0);
             }
 
             ImageInfo.UnLock();
-            GL.BindTexture(TextureTarget.Texture2D, 0);
+            TextureBuffer.UnBindBuffer();
         }
     
         /// <summary>
@@ -185,68 +167,65 @@ namespace RenderApp.GLUtil
         /// <rereturns>バインドしたテクスチャID</rereturns>
         public void CreateTextureBuffer2D()
         {
-            if(this.ID != 0)
-            {
-                Dispose();
-            }
-            this.ID = GL.GenTexture();
-            GL.BindTexture(TextureTarget.Texture2D, this.ID);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, Convert.ToInt32(this.WrapMode));
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, Convert.ToInt32(this.WrapMode));
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)this.Filter);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)this.Filter);
-            GL.BindTexture(TextureTarget.Texture2D, 0);
+            TextureBuffer = new TextureBuffer();
+            TextureBuffer.GenBuffer();
+            TextureBuffer.BindBuffer();
+            GL.TexParameter(TextureBuffer.Target, TextureParameterName.TextureWrapS, Convert.ToInt32(this.WrapMode));
+            GL.TexParameter(TextureBuffer.Target, TextureParameterName.TextureWrapT, Convert.ToInt32(this.WrapMode));
+            GL.TexParameter(TextureBuffer.Target, TextureParameterName.TextureMinFilter, (int)this.Filter);
+            GL.TexParameter(TextureBuffer.Target, TextureParameterName.TextureMagFilter, (int)this.Filter);
+            TextureBuffer.UnBindBuffer();
             Output.GLLog(Output.LogLevel.Error);
         }
         #endregion
         #region [CubeMap 現在廃止]
-        /// <summary>
-        /// CubeMapTextureの作成
-        /// </summary>
-        /// <rereturns>バインドしたテクスチャID</rereturns>
-        public int CreateCubeMapTexture(string PXfile, string NXfile, string PYfile, string NYfile, string PZfile, string NZfile)
-        {
-            try
-            {
-                Bitmap PX = new Bitmap(PXfile);
-                Bitmap NX = new Bitmap(NXfile);
-                Bitmap PY = new Bitmap(PYfile);
-                Bitmap NY = new Bitmap(NYfile);
-                Bitmap PZ = new Bitmap(PZfile);
-                Bitmap NZ = new Bitmap(NZfile);
+        ///// <summary>
+        ///// CubeMapTextureの作成
+        ///// </summary>
+        ///// <rereturns>バインドしたテクスチャID</rereturns>
+        //public int CreateCubeMapTexture(string PXfile, string NXfile, string PYfile, string NYfile, string PZfile, string NZfile)
+        //{
+        //    try
+        //    {
+        //        Bitmap PX = new Bitmap(PXfile);
+        //        Bitmap NX = new Bitmap(NXfile);
+        //        Bitmap PY = new Bitmap(PYfile);
+        //        Bitmap NY = new Bitmap(NYfile);
+        //        Bitmap PZ = new Bitmap(PZfile);
+        //        Bitmap NZ = new Bitmap(NZfile);
 
-                Bitmap[] image = { PX, NX, PZ, NZ, PY, NY };
-                int texId = GL.GenTexture();
-                GL.BindTexture(TextureTarget.TextureCubeMap, texId);
-                GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
-                GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
-                GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapR, (int)TextureWrapMode.ClampToEdge);
-                GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
-                GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+        //        Bitmap[] image = { PX, NX, PZ, NZ, PY, NY };
+        //        int texId = GL.GenTexture();
+        //        GL.BindTexture(TextureTarget.TextureCubeMap, texId);
+        //        GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
+        //        GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
+        //        GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapR, (int)TextureWrapMode.ClampToEdge);
+        //        GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+        //        GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
 
-                for (int i = 0; i < 6; i++)
-                {
-                    //データ読み込み
-                    BitmapData bmp_data = image[i].LockBits(new Rectangle(0, 0, image[i].Width, image[i].Height),
-                        ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+        //        for (int i = 0; i < 6; i++)
+        //        {
+        //            //データ読み込み
+        //            BitmapData bmp_data = image[i].LockBits(new Rectangle(0, 0, image[i].Width, image[i].Height),
+        //                ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
-                    GL.TexImage2D(TextureTarget.TextureCubeMapPositiveX + i, 0, PixelInternalFormat.Rgba,
-                        image[i].Width, image[i].Height,
-                        0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bmp_data.Scan0);
-                    image[i].UnlockBits(bmp_data);
-                }
+        //            GL.TexImage2D(TextureTarget.TextureCubeMapPositiveX + i, 0, PixelInternalFormat.Rgba,
+        //                image[i].Width, image[i].Height,
+        //                0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bmp_data.Scan0);
+        //            image[i].UnlockBits(bmp_data);
+        //        }
 
-                GL.BindTexture(TextureTarget.TextureCubeMap, 0);
-                Output.GLLog(Output.LogLevel.Error);
-                return texId;
+        //        GL.BindTexture(TextureTarget.TextureCubeMap, 0);
+        //        Output.GLLog(Output.LogLevel.Error);
+        //        return texId;
 
-            }
-            catch (Exception)
-            {
-                throw new System.IO.FileLoadException(PXfile + PYfile + PZfile + NXfile + NYfile + NZfile);
-            }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw new System.IO.FileLoadException(PXfile + PYfile + PZfile + NXfile + NYfile + NZfile);
+        //    }
 
-        }
+        //}
         #endregion
     }
 }
