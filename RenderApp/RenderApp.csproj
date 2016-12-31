@@ -145,6 +145,9 @@
     <Compile Include="AssetModel\AssetFactory.cs" />
     <Compile Include="AssetModel\Geometry\File\GeometryFile.cs" />
     <Compile Include="AssetModel\Geometry\File\MaterialFileInfo.cs" />
+    <Compile Include="GLUtil\Buffer\ArrayBuffer.cs" />
+    <Compile Include="GLUtil\Buffer\BufferObject.cs" />
+    <Compile Include="GLUtil\Buffer\TextureBuffer.cs" />
     <Compile Include="RACommand\ICommand.cs" />
     <Compile Include="Core\RAImageInfo.cs" />
     <Compile Include="Render_System\Post_Effect\Bloom.cs" />

@@ -379,7 +379,7 @@ namespace RenderApp.AssetModel
         public override List<Geometry> ConvertGeometry()
         {
             List<Geometry> geometrys = new List<Geometry>();
-            int counter = 0;
+
             foreach(var material in mtlList.Values)
             {
                 Geometry geometry = null;
