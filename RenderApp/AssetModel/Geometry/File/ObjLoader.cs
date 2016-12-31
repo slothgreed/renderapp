@@ -9,6 +9,7 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using System.Windows.Forms;
 using RenderApp.Analyzer;
+using RenderApp.GLUtil;
 namespace RenderApp.AssetModel
 {
     public class OBJMaterial : MaterialFileInfo
@@ -17,38 +18,41 @@ namespace RenderApp.AssetModel
         public Vector3 Ka;//ambient
         public Vector3 Kd;//diffuse
         public Vector3 Ks;//specular
-        public Vector3 Ke;//
+        public Vector3 Ke;//emissive
         public float Ns;//specular指数
         public float Ni;//屈折率
-        public Vector3 Tf;//atmosphereの値（無視rgbで指定されてるがrと同一っぽい）
         public string map_Ka;//ambientMap
-        public string map_Kd;//diffuseMap
+        public string map_Kd;//diffuseMap(sponzaはambientと一緒
+        public string map_Ns;//specular
         public string map_bump;//bumpMap
-
+        
+        public Vector3 Tf;//atmosphereの値（無視rgbで指定されてるがrと同一っぽい）
         public string map_d;//透過度テクスチャ（無視）
         public float d;//透過（無視）
         public float Tr;//透過（無視）
         public float illum;//0~10のパラメータで異なる（無視）sponza全部2（Color on and Ambient on）
+        public VertexArrayInfo vertexArrayInfo = new VertexArrayInfo();//ポリゴンのIndex情報を保持
     }
 
     public class CObjFile : GeometryFile
     {
-        private Dictionary<string, OBJMaterial> mtlList = new Dictionary<string,OBJMaterial>();
-        private List<Vector3> posAllList = new List<Vector3>();
-        private List<Vector3> norAllList = new List<Vector3>();
-        private List<Vector2> texAllList = new List<Vector2>();
         /// <summary>
-        /// 読み込み時のファイルの最初かどうかのフラグ
+        /// 頂点・色・テクスチャ座標を保持。
         /// </summary>
-        private bool CreateInfoFlag = true;
+        private VertexInfo vertexInfo;
+        private Dictionary<string, OBJMaterial> mtlList = new Dictionary<string,OBJMaterial>();
+        /// <summary>
+        /// objファイルのローダ
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="filePath"></param>
         public CObjFile(string name,string filePath)
             :base(filePath)
         {
             try
             {
-                geometryInfo = new List<GeometryInfo>();
+                vertexInfo = new VertexInfo();
                 string[] parser = File.ReadAllLines(filePath, System.Text.Encoding.GetEncoding("Shift_JIS"));
-
                 ReadData(parser);
             }
             catch (Exception)
@@ -75,28 +79,12 @@ namespace RenderApp.AssetModel
                 int counter = 0;
 
                 String[] line;
-                GeometryInfo data = null;
-                
+                OBJMaterial currentMat = null;
                 while (parser.Length != counter)
                 {
                     parser[counter] = parser[counter].Trim();
                     line = parser[counter].Split(' ');
-                    if(line[0] == "v")
-                    {
-                        if (CreateInfoFlag)
-                        {
-                            data = new GeometryInfo();
-                            geometryInfo.Add(data);
-                            CreateInfoFlag = false;
-                        }
-                    }
-                    if (line[0] == "f")
-                    {
-                        CreateInfoFlag = true;
-                    }
-                    ReadLineData(data, line);
-                    
-
+                    ReadLineData(ref currentMat,line);
                     counter++;
                 }
             }
@@ -111,7 +99,7 @@ namespace RenderApp.AssetModel
         /// 1行ずつの読み込み
         /// </summary>
         /// <param name="line"></param>
-        private void ReadLineData(GeometryInfo data, string[] line)
+        private void ReadLineData(ref OBJMaterial currentMat, string[] line)
         {
             line = line.Where(p => p != "").ToArray();
             for (int i = 0; i < line.Length; i++)
@@ -126,37 +114,36 @@ namespace RenderApp.AssetModel
                 }
                 if (line[i] == "v")
                 {
-                    data.posStream.Add(new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3])));
-                    posAllList.Add(data.posStream[data.posStream.Count - 1]);
+                    vertexInfo.posStream.Add(new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3])));
                     break;
                 }
                 if (line[i] == "vt")
                 {
-                    data.texStream.Add(new Vector2(float.Parse(line[i + 1]), float.Parse(line[i + 2])));
-                    texAllList.Add(data.texStream[data.texStream.Count - 1]);
+                    vertexInfo.texStream.Add(new Vector2(float.Parse(line[i + 1]), float.Parse(line[i + 2])));
                     break;
                 }
                 if (line[i] == "vn")
                 {
-                    data.norStream.Add(new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3])));
-                    norAllList.Add(data.norStream[data.norStream.Count - 1]);
-
+                    vertexInfo.norStream.Add(new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3])));
                     break;
                 }
                 if (line[i] == "f")
                 {
-                    SetIndexBuffer(data, line);
+                    if(currentMat != null)
+                    {
+                        SetIndexBuffer(currentMat,line);
+                    }
                     break;
                 }
                 if (line[i] == "g")
                 {
-                    data.group = line[i + 1];
+                    //vertexInfo.group = line[i + 1];
                 }
                 if (line[i] == "usemtl")
                 {
                     if (mtlList.ContainsKey(line[i + 1]))
                     {
-                        data.Material = mtlList[line[i + 1]];
+                        currentMat = mtlList[line[i + 1]];
                     }
                     else
                     {
@@ -171,18 +158,15 @@ namespace RenderApp.AssetModel
                 }
             }
         }
-        private void SetIndexBuffer(GeometryInfo data, string[] line)
+
+        /// <summary>
+        /// IndexBufferの設定
+        /// </summary>
+        /// <param name="line"></param>
+        private void SetIndexBuffer(OBJMaterial currentMat,string[] line)
         {
             if(line.Length == 4)
             {
-                if(data.geometryType == GeometryType.None)
-                {
-                    data.geometryType = GeometryType.Triangle;
-                }
-                else if(data.geometryType == GeometryType.Quad)
-                {
-                    data.geometryType = GeometryType.Mix;
-                }
                 string[] part1;
                 string[] part2;
                 string[] part3;
@@ -193,16 +177,16 @@ namespace RenderApp.AssetModel
 
                 //Index番号となるようにー1
                 //objファイルのインデックスは1から、リストの順を基準にしたいため0からに
-                data.posIndex.Add(int.Parse(part1[0]) - 1);
-                data.posIndex.Add(int.Parse(part2[0]) - 1);
-                data.posIndex.Add(int.Parse(part3[0]) - 1);
+                currentMat.vertexArrayInfo.posIndex.Add(int.Parse(part1[0]) - 1);
+                currentMat.vertexArrayInfo.posIndex.Add(int.Parse(part2[0]) - 1);
+                currentMat.vertexArrayInfo.posIndex.Add(int.Parse(part3[0]) - 1);
                 if (part1.Length > 1)
                 {
                     if (part1[1] != "")
                     {
-                        data.texIndex.Add(int.Parse(part1[1]) - 1);
-                        data.texIndex.Add(int.Parse(part2[1]) - 1);
-                        data.texIndex.Add(int.Parse(part3[1]) - 1);
+                        currentMat.vertexArrayInfo.texIndex.Add(int.Parse(part1[1]) - 1);
+                        currentMat.vertexArrayInfo.texIndex.Add(int.Parse(part2[1]) - 1);
+                        currentMat.vertexArrayInfo.texIndex.Add(int.Parse(part3[1]) - 1);
 
                     }
                 }
@@ -210,23 +194,16 @@ namespace RenderApp.AssetModel
                 {
                     if (part1[2] != "")
                     {
-                        data.norIndex.Add(int.Parse(part1[2]) - 1);
-                        data.norIndex.Add(int.Parse(part2[2]) - 1);
-                        data.norIndex.Add(int.Parse(part3[2]) - 1);
+                        currentMat.vertexArrayInfo.norIndex.Add(int.Parse(part1[2]) - 1);
+                        currentMat.vertexArrayInfo.norIndex.Add(int.Parse(part2[2]) - 1);
+                        currentMat.vertexArrayInfo.norIndex.Add(int.Parse(part3[2]) - 1);
 
                     }
                 }
             }
             else if(line.Length == 5)
             {
-                if (data.geometryType == GeometryType.None)
-                {
-                    data.geometryType = GeometryType.Quad;
-                }
-                else if (data.geometryType == GeometryType.Triangle)
-                {
-                    data.geometryType = GeometryType.Mix;
-                }
+                //4角形は3角系に変換
                 string[] part1;
                 string[] part2;
                 string[] part3;
@@ -238,41 +215,39 @@ namespace RenderApp.AssetModel
 
                 //Index番号となるようにー1
                 //objファイルのインデックスは1から、リストの順を基準にしたいため0からに
-                //4角形は3角系に変換
-                data.posIndex.Add(int.Parse(part1[0]) - 1);
-                data.posIndex.Add(int.Parse(part2[0]) - 1);
-                data.posIndex.Add(int.Parse(part3[0]) - 1);
+                currentMat.vertexArrayInfo.posIndex.Add(int.Parse(part1[0]) - 1);
+                currentMat.vertexArrayInfo.posIndex.Add(int.Parse(part2[0]) - 1);
+                currentMat.vertexArrayInfo.posIndex.Add(int.Parse(part3[0]) - 1);
 
-                data.posIndex.Add(int.Parse(part1[0]) - 1);
-                data.posIndex.Add(int.Parse(part3[0]) - 1);
-                data.posIndex.Add(int.Parse(part4[0]) - 1);
+                currentMat.vertexArrayInfo.posIndex.Add(int.Parse(part1[0]) - 1);
+                currentMat.vertexArrayInfo.posIndex.Add(int.Parse(part3[0]) - 1);
+                currentMat.vertexArrayInfo.posIndex.Add(int.Parse(part4[0]) - 1);
                 if (part1.Length > 1)
                 {
                     if (part1[1] != "")
                     {
-                        data.texIndex.Add(int.Parse(part1[1]) - 1);
-                        data.texIndex.Add(int.Parse(part2[1]) - 1);
-                        data.texIndex.Add(int.Parse(part3[1]) - 1);
+                        currentMat.vertexArrayInfo.texIndex.Add(int.Parse(part1[1]) - 1);
+                        currentMat.vertexArrayInfo.texIndex.Add(int.Parse(part2[1]) - 1);
+                        currentMat.vertexArrayInfo.texIndex.Add(int.Parse(part3[1]) - 1);
 
-                        data.texIndex.Add(int.Parse(part1[1]) - 1);
-                        data.texIndex.Add(int.Parse(part3[1]) - 1);
-                        data.texIndex.Add(int.Parse(part4[1]) - 1);
+                        currentMat.vertexArrayInfo.texIndex.Add(int.Parse(part1[1]) - 1);
+                        currentMat.vertexArrayInfo.texIndex.Add(int.Parse(part3[1]) - 1);
+                        currentMat.vertexArrayInfo.texIndex.Add(int.Parse(part4[1]) - 1);
                     }
                 }
                 if (part1.Length > 2)
                 {
                     if (part1[2] != "")
                     {
-                        data.norIndex.Add(int.Parse(part1[2]) - 1);
-                        data.norIndex.Add(int.Parse(part2[2]) - 1);
-                        data.norIndex.Add(int.Parse(part3[2]) - 1);
+                        currentMat.vertexArrayInfo.norIndex.Add(int.Parse(part1[2]) - 1);
+                        currentMat.vertexArrayInfo.norIndex.Add(int.Parse(part2[2]) - 1);
+                        currentMat.vertexArrayInfo.norIndex.Add(int.Parse(part3[2]) - 1);
 
-                        data.norIndex.Add(int.Parse(part1[2]) - 1);
-                        data.norIndex.Add(int.Parse(part3[2]) - 1);
-                        data.norIndex.Add(int.Parse(part4[2]) - 1);
+                        currentMat.vertexArrayInfo.norIndex.Add(int.Parse(part1[2]) - 1);
+                        currentMat.vertexArrayInfo.norIndex.Add(int.Parse(part3[2]) - 1);
+                        currentMat.vertexArrayInfo.norIndex.Add(int.Parse(part4[2]) - 1);
                     }
                 }
-                data.geometryType = GeometryType.Triangle;
             }else
             {
                 Utility.Output.Log(Utility.Output.LogLevel.Warning,"we dont support more than 4 polygons");
@@ -354,6 +329,9 @@ namespace RenderApp.AssetModel
                             case "map_Kd":
                                 mat.map_Kd = directory + line[i + 1];
                                 break;
+                            case "map_Ns":
+                                mat.map_Ns = directory + line[i + 1];
+                                break;
                             case "map_d":
                                 mat.map_d = directory + line[i + 1];
                                 break;
@@ -373,89 +351,80 @@ namespace RenderApp.AssetModel
         
         #endregion
         #endregion
+        public Material CreateMaterial(OBJMaterial material)
+        {
+            Material mat = new Material(material.name);
+            if(material.map_Kd != null)
+            {
+                Texture albedo = TextureFactory.Instance.CreateTexture(material.map_Kd);
+                mat.AddTexture(TextureKind.Albedo, albedo);
+            }
 
+            if(material.map_bump != null)
+            {
+                Texture bump = TextureFactory.Instance.CreateTexture(material.map_bump);
+                mat.AddTexture(TextureKind.Normal, bump);
+            }
+            
+            if(material.map_Ns != null)
+            {
+                Texture spec = TextureFactory.Instance.CreateTexture(material.map_Ns);
+                mat.AddTexture(TextureKind.Specular, spec);
+            }
+            mat.SetShader(ShaderFactory.Instance.CreateShaderVF(ProjectInfo.ShaderDirectory + @"\ObjGeometry"));
+            
+            return mat;
+            
+        }
         public override List<Geometry> ConvertGeometry()
         {
             List<Geometry> geometrys = new List<Geometry>();
-            for(int i = 0; i < geometryInfo.Count; i++)
+            int counter = 0;
+            foreach(var material in mtlList.Values)
             {
                 Geometry geometry = null;
-                if(geometryInfo[i].geometryType == GeometryType.Triangle)
+                var Position = new List<Vector3>();
+                var Normal = new List<Vector3>();
+                var TexCoord = new List<Vector2>();
+                for (int j = 0; j < material.vertexArrayInfo.posIndex.Count / 3; j++)
                 {
-                    var Position = new List<Vector3>();
-                    var Normal = new List<Vector3>();
-                    var TexCoord = new List<Vector2>();
-                    for (int j = 0; j < geometryInfo[i].posIndex.Count / 3; j++)
+                    Position.Add(vertexInfo.posStream[material.vertexArrayInfo.posIndex[3 * j]]);
+                    Position.Add(vertexInfo.posStream[material.vertexArrayInfo.posIndex[3 * j + 1]]);
+                    Position.Add(vertexInfo.posStream[material.vertexArrayInfo.posIndex[3 * j + 2]]);
+                    if (vertexInfo.norStream.Count != 0)
                     {
-                        Position.Add(posAllList[geometryInfo[i].posIndex[3 * j]]);
-                        Position.Add(posAllList[geometryInfo[i].posIndex[3 * j + 1]]);
-                        Position.Add(posAllList[geometryInfo[i].posIndex[3 * j + 2]]);
-                        if(norAllList.Count != 0)
-                        {
-                            Normal.Add(norAllList[geometryInfo[i].norIndex[3 * j]]);
-                            Normal.Add(norAllList[geometryInfo[i].norIndex[3 * j + 1]]);
-                            Normal.Add(norAllList[geometryInfo[i].norIndex[3 * j + 2]]);
-                        }
-                        if(texAllList.Count != 0)
-                        {
-                            TexCoord.Add(texAllList[geometryInfo[i].texIndex[3 * j]]);
-                            TexCoord.Add(texAllList[geometryInfo[i].texIndex[3 * j + 1]]);
-                            TexCoord.Add(texAllList[geometryInfo[i].texIndex[3 * j + 2]]);
-                        }
+                        Normal.Add(vertexInfo.norStream[material.vertexArrayInfo.norIndex[3 * j]]);
+                        Normal.Add(vertexInfo.norStream[material.vertexArrayInfo.norIndex[3 * j + 1]]);
+                        Normal.Add(vertexInfo.norStream[material.vertexArrayInfo.norIndex[3 * j + 2]]);
                     }
-
-                    geometry = new Primitive(
-                        FileName + i.ToString(),
-                        Position,
-                        Normal,
-                        TexCoord,
-                        PrimitiveType.Triangles
-                        );
-                }
-                else if(geometryInfo[i].geometryType == GeometryType.Quad)
-                {
-                    var Position = new List<Vector3>();
-                    var Normal = new List<Vector3>();
-                    var TexCoord = new List<Vector2>();
-                    for (int j = 0; j < geometryInfo[i].posIndex.Count / 4; j++)
+                    if (vertexInfo.texStream.Count != 0)
                     {
-                        Position.Add(posAllList[geometryInfo[i].posIndex[4 * j]]);
-                        Position.Add(posAllList[geometryInfo[i].posIndex[4 * j + 1]]);
-                        Position.Add(posAllList[geometryInfo[i].posIndex[4 * j + 2]]);
-                        Position.Add(posAllList[geometryInfo[i].posIndex[4 * j + 3]]);
-
-                        if (norAllList.Count != 0)
-                        {
-                            Normal.Add(norAllList[geometryInfo[i].norIndex[4 * j]]);
-                            Normal.Add(norAllList[geometryInfo[i].norIndex[4 * j + 1]]);
-                            Normal.Add(norAllList[geometryInfo[i].norIndex[4 * j + 2]]);
-                            Normal.Add(norAllList[geometryInfo[i].norIndex[4 * j + 2]]);
-                        }
-                        if (texAllList.Count != 0)
-                        {
-                            TexCoord.Add(texAllList[geometryInfo[i].texIndex[4 * j]]);
-                            TexCoord.Add(texAllList[geometryInfo[i].texIndex[4 * j + 1]]);
-                            TexCoord.Add(texAllList[geometryInfo[i].texIndex[4 * j + 2]]);
-                            TexCoord.Add(texAllList[geometryInfo[i].texIndex[4 * j + 2]]);
-                        }
+                        TexCoord.Add(vertexInfo.texStream[material.vertexArrayInfo.texIndex[3 * j]]);
+                        TexCoord.Add(vertexInfo.texStream[material.vertexArrayInfo.texIndex[3 * j + 1]]);
+                        TexCoord.Add(vertexInfo.texStream[material.vertexArrayInfo.texIndex[3 * j + 2]]);
                     }
-
-                    geometry = new Primitive(
-                        FileName + i.ToString(),
-                        Position,
-                        Normal,
-                        TexCoord,
-                        PrimitiveType.Quads
-                        );
                 }
 
-                if(geometry != null)
+                geometry = new Primitive(
+                    material.name,
+                    Position,
+                    Normal,
+                    TexCoord,
+                    PrimitiveType.Triangles
+                    );
+
+
+                geometry.MaterialItem = CreateMaterial(material);
+
+                if (geometry != null)
                 {
                     geometrys.Add(geometry);
 
                 }
+
             }
             return geometrys;
         }
+
     }
 }

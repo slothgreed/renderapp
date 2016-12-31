@@ -16,7 +16,7 @@ namespace RenderApp
             FilePath = filePath;
             Key = FileName;
 
-            System.Diagnostics.Debug.WriteLine("create asset " + filePath + ":");
+            Utility.Output.Log(Utility.Output.LogLevel.Debug,"create asset " + filePath + ":");
         }
         private string _directoryPath;
         public string DirectoryPath

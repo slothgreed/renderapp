@@ -366,6 +366,12 @@ namespace RenderApp.GLUtil.ShaderModel
                             info.variable = TextureItem[TextureKind.Albedo].ID;
                         }
                         break;
+                    case "uSpecularMap":
+                        if(TextureItem.ContainsKey(TextureKind.Specular))
+                        {
+                            info.variable = TextureItem[TextureKind.Specular].ID;
+                        }
+                        break;
                     case "uWorldMap":
                         if (TextureItem.ContainsKey(TextureKind.World))
                         {

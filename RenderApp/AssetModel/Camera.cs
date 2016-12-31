@@ -79,7 +79,7 @@ namespace RenderApp.AssetModel
         /// <summary>
         /// 平行移動量の倍率設定
         /// </summary>
-        public float m_PanRatio = 5.0f;
+        public float m_PanRatio = 10.0f;
         /// <summary>
         /// projectionのnear
         /// </summary>
@@ -244,33 +244,32 @@ namespace RenderApp.AssetModel
             {
                 m_Pan += move;
             }
-            //境界ないかチェック
-            if (m_Pan.X > m_PanMax.X)
-            {
-                m_Pan.X = m_PanMax.X;
-            }
-            if (m_Pan.Y > m_PanMax.Y)
-            {
-                m_Pan.Y = m_PanMax.Y;
-            }
-            if (m_Pan.Z > m_PanMax.Z)
-            {
-                m_Pan.Z = m_PanMax.Z;
-            }
+            ////境界ないかチェック
+            //if (m_Pan.X > m_PanMax.X)
+            //{
+            //    m_Pan.X = m_PanMax.X;
+            //}
+            //if (m_Pan.Y > m_PanMax.Y)
+            //{
+            //    m_Pan.Y = m_PanMax.Y;
+            //}
+            //if (m_Pan.Z > m_PanMax.Z)
+            //{
+            //    m_Pan.Z = m_PanMax.Z;
+            //}
 
-            if (m_Pan.X < m_PanMin.X)
-            {
-                m_Pan.X = m_PanMin.X;
-            }
-            if (m_Pan.Y < m_PanMin.Y)
-            {
-                m_Pan.Y = m_PanMin.Y;
-            }
-            if (m_Pan.Z < m_PanMin.Z)
-            {
-                m_Pan.Z = m_PanMin.Z;
-            }
-
+            //if (m_Pan.X < m_PanMin.X)
+            //{
+            //    m_Pan.X = m_PanMin.X;
+            //}
+            //if (m_Pan.Y < m_PanMin.Y)
+            //{
+            //    m_Pan.Y = m_PanMin.Y;
+            //}
+            //if (m_Pan.Z < m_PanMin.Z)
+            //{
+            //    m_Pan.Z = m_PanMin.Z;
+            //}
             UpdateCamera();
         }
 
@@ -334,14 +333,14 @@ namespace RenderApp.AssetModel
             }
             //拡大縮小
             m_ZoomLength *= ratio;
-            if (m_ZoomLength < m_ZoomMin)
-            {
-                m_ZoomLength = m_ZoomMin;
-            }
-            else if (m_ZoomLength > m_ZoomMax)
-            {
-                m_ZoomLength = m_ZoomMax;
-            }
+            //if (m_ZoomLength < m_ZoomMin)
+            //{
+            //    m_ZoomLength = m_ZoomMin;
+            //}
+            //else if (m_ZoomLength > m_ZoomMax)
+            //{
+            //    m_ZoomLength = m_ZoomMax;
+            //}
             UpdateCamera();
         }
         #endregion

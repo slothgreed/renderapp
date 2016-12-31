@@ -18,14 +18,34 @@ namespace RenderApp.GLUtil
                 return _instance;
             }
         }
-        public List<Shader> ShaderList = new List<Shader>();
+        public Dictionary<string, Shader> ShaderList = new Dictionary<string, Shader>();
         private ShaderProgram CreateShaderProgram(string key,string path)
         {
             ShaderProgram program = new ShaderProgram(key, path);
             Project.ActiveProject.AddChild(program);
             return program;
         }
-
+        /// <summary>
+        /// vert,frag専用ファイル名は同一のもの
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public Shader CreateShaderVF(string path)
+        {
+            string name = RAFile.GetNameFromPath(path);
+            if(ShaderList.Keys.Contains(name))
+            {
+                return ShaderList[name];
+            }
+            else
+            {
+                ShaderProgram vert = CreateShaderProgram(path, path + ".vert");
+                ShaderProgram frag = CreateShaderProgram(path, path + ".frag");
+                Shader shader = new Shader(vert, frag);
+                ShaderList.Add(name, shader);
+                return shader;
+            }
+        }
         private Shader _defaultLightShader;
         public Shader DefaultLightShader
         {
@@ -33,14 +53,7 @@ namespace RenderApp.GLUtil
             {
                 if(_defaultLightShader == null)
                 {
-                    string path = ProjectInfo.ShaderDirectory;
-                    string vPath = @"\Defferd.vert";
-                    string fPath = @"\Defferd.frag";
-                    ShaderProgram vert = CreateShaderProgram(vPath, path + vPath);
-                    ShaderProgram frag = CreateShaderProgram(fPath, path + fPath);
-                    Shader deffered = new Shader(vert, frag);
-                    _defaultLightShader = deffered;
-                    ShaderList.Add(_defaultLightShader);
+                    _defaultLightShader = CreateShaderVF(ProjectInfo.ShaderDirectory + @"\Defferd");
                 }
                 return _defaultLightShader;
             }
@@ -52,14 +65,7 @@ namespace RenderApp.GLUtil
             {
                 if (_defaultAnalyzeShader == null)
                 {
-                    string path = ProjectInfo.ShaderDirectory;
-                    string vPath = @"\ConstantGeometry.vert";
-                    string fPath = @"\ConstantGeometry.frag";
-                    ShaderProgram vert = CreateShaderProgram(vPath, path + vPath);
-                    ShaderProgram frag = CreateShaderProgram(fPath, path + fPath);
-                    Shader deffered = new Shader(vert, frag);
-                    _defaultAnalyzeShader = deffered;
-                    ShaderList.Add(_defaultAnalyzeShader);
+                    _defaultAnalyzeShader = CreateShaderVF(ProjectInfo.ShaderDirectory + @"\ConstantGeometry");
                 }
                 return _defaultAnalyzeShader;
             }
@@ -71,14 +77,7 @@ namespace RenderApp.GLUtil
             {
                 if (_defaultDefferredShader == null)
                 {
-                    string path = ProjectInfo.ShaderDirectory;
-                    string vPath = @"\MaterialGeometry.vert";
-                    string fPath = @"\MaterialGeometry.frag";
-                    ShaderProgram vert = CreateShaderProgram(vPath, path + vPath);
-                    ShaderProgram frag = CreateShaderProgram(fPath, path + fPath);
-                    Shader diffuse = new Shader(vert, frag);
-                    _defaultDefferredShader = diffuse;
-                    ShaderList.Add(_defaultDefferredShader);
+                    _defaultDefferredShader = CreateShaderVF(ProjectInfo.ShaderDirectory + @"\MaterialGeometry");
                 }
                 return _defaultDefferredShader;
             }
@@ -90,14 +89,7 @@ namespace RenderApp.GLUtil
             {
                 if(_outputShader == null)
                 {
-                    string path = ProjectInfo.ShaderDirectory;
-                    string vPath = @"\Output.vert";
-                    string fPath = @"\Output.frag";
-                    ShaderProgram vert = CreateShaderProgram(vPath, path + vPath);
-                    ShaderProgram frag = CreateShaderProgram(fPath, path + fPath);
-                    Shader output = new Shader(vert, frag);
-                    _outputShader = output;
-                    ShaderList.Add(_outputShader);
+                    _outputShader = CreateShaderVF(ProjectInfo.ShaderDirectory + @"\Output");
                 }
                 return _outputShader;
             }
@@ -105,7 +97,7 @@ namespace RenderApp.GLUtil
 
         public void Dispose()
         {
-            foreach(var shadre in ShaderList)
+            foreach(var shadre in ShaderList.Values)
             {
                 shadre.Dispose();
             }
@@ -118,14 +110,8 @@ namespace RenderApp.GLUtil
             {
                 if (_selectionShader == null)
                 {
-                    string path = ProjectInfo.ShaderDirectory;
-                    string vPath = @"\Selection.vert";
-                    string fPath = @"\Selection.frag";
-                    ShaderProgram vert = CreateShaderProgram(vPath, path + vPath);
-                    ShaderProgram frag = CreateShaderProgram(fPath, path + fPath);
-                    Shader output = new Shader(vert, frag);
-                    _selectionShader = output;
-                    ShaderList.Add(_selectionShader);
+                    _selectionShader = CreateShaderVF(ProjectInfo.ShaderDirectory + @"\Selection");
+
                 }
                 return _selectionShader;
             }

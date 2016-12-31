@@ -15,7 +15,7 @@ namespace RenderApp.AssetModel
     /// </summary>
     public class StlFile : GeometryFile
     {
-
+        public GeometryInfo geometryInfo;
         /// <summary>
         /// STLのローダ。
         /// </summary>
@@ -31,8 +31,7 @@ namespace RenderApp.AssetModel
                 String[] parser = File.ReadAllLines(filePath, System.Text.Encoding.GetEncoding("Shift_JIS"));
                 ReadData(data,parser);
 
-                geometryInfo = new List<GeometryInfo>();
-                geometryInfo.Add(data);
+                geometryInfo = new GeometryInfo();
                 //HalfEdge half = new HalfEdge(Position);
                 ////position;
                 //Position.Clear();

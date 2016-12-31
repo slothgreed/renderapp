@@ -8,7 +8,6 @@ namespace RenderApp.AssetModel
 {
     public abstract class GeometryFile : RAFile
     {
-        protected List<GeometryInfo> geometryInfo;
         public GeometryFile(string filePath)
             :base(filePath)
         {

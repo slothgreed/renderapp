@@ -56,7 +56,7 @@ namespace RenderApp.GLUtil
         /// <summary>
         /// MinMag兼ねたフィルタ
         /// </summary>
-        private TextureMinFilter _filter = TextureMinFilter.Nearest;
+        private TextureMinFilter _filter = TextureMinFilter.Linear;
         public TextureMinFilter Filter
         {
             get { return _filter; }
@@ -90,12 +90,12 @@ namespace RenderApp.GLUtil
         public Texture(string name,string path)
             : base(name)
         {
-            LoadTexture(path);
+            CreateTextureBuffer(path);
         }
         public Texture(string name,string path, TextureType target = TextureType.Texture2D)
             : base(name)
         {
-            LoadTexture(path, target);
+            CreateTextureBuffer(path, target);
         }
         public Texture(string name, int width, int height)
             : base(name)
@@ -111,7 +111,7 @@ namespace RenderApp.GLUtil
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)Filter);
             GL.BindTexture(TextureTarget.Texture2D, 0);
         }
-        public void LoadTexture(string path, TextureType target = TextureType.Texture2D)
+        public void CreateTextureBuffer(string path, TextureType target = TextureType.Texture2D)
         {
             this.TexType = target;
 
@@ -158,8 +158,21 @@ namespace RenderApp.GLUtil
             GL.BindTexture(TextureTarget.Texture2D, this.ID);
             ImageInfo.Lock();
 
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, ImageInfo.Width, ImageInfo.Height,
-                0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, ImageInfo.Scan0);
+            if(ImageInfo.Format == System.Drawing.Imaging.PixelFormat.Format24bppRgb)
+            {
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, ImageInfo.Width, ImageInfo.Height,
+                                0, OpenTK.Graphics.OpenGL.PixelFormat.Bgr, PixelType.UnsignedByte, ImageInfo.Scan0);
+            }
+            else if(ImageInfo.Format == System.Drawing.Imaging.PixelFormat.Format32bppArgb)
+            {
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, ImageInfo.Width, ImageInfo.Height,
+                                0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, ImageInfo.Scan0);
+            }
+            else
+            {
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, ImageInfo.Width, ImageInfo.Height,
+                                0, OpenTK.Graphics.OpenGL.PixelFormat.ColorIndex, PixelType.UnsignedByte, ImageInfo.Scan0);
+            }
 
             ImageInfo.UnLock();
             GL.BindTexture(TextureTarget.Texture2D, 0);
@@ -186,7 +199,7 @@ namespace RenderApp.GLUtil
             Output.GLLog(Output.LogLevel.Error);
         }
         #endregion
-        #region [CubeMap]
+        #region [CubeMap 現在廃止]
         /// <summary>
         /// CubeMapTextureの作成
         /// </summary>

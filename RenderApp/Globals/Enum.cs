@@ -94,6 +94,7 @@ namespace RenderApp
         None = -1,
         Albedo,
         Normal,
+        Specular,
         Height,
         Emissive,
         World,

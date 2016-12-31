@@ -17,7 +17,6 @@ namespace RenderApp
         TGA,
         Num
     }
-
     /// <summary>
     /// BMPで保持
     /// </summary>
@@ -55,10 +54,16 @@ namespace RenderApp
             get;
             set;
         }
+        public PixelFormat Format
+        {
+            get;
+            set;
+        }
+
         public RAImageInfo(string path)
             :base(path)
         {
-
+            Format = PixelFormat.Format32bppArgb;
         }
         public virtual bool LoadImageData()
         {
@@ -81,7 +86,7 @@ namespace RenderApp
         {
             NowLock = true;
             bmpData = bmpImage.LockBits(new Rectangle(0, 0, Width,Height),
-                ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                ImageLockMode.ReadOnly, Format);
 
         }
         public IntPtr Scan0

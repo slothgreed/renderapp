@@ -140,7 +140,6 @@ namespace RenderApp.ViewModel
         }
         private void SaveProjectCommand()
         {
-
         }
         private void SaveAsProjectCommand()
         {

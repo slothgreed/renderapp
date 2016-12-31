@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 namespace RenderApp.Utility
 {
 
@@ -32,7 +33,6 @@ namespace RenderApp.Utility
         
         private int imageSize;
 
-        public UInt32 ID;
         public TGAImage(string path) :
             base(path)
         {
@@ -58,7 +58,6 @@ namespace RenderApp.Utility
             ImageHeight.High = binary.ReadByte();
             BitPerPixel = binary.ReadByte();
             Discripter = binary.ReadByte();
-
         }
         private bool ReadTGAImage(string filename)
         {
@@ -73,20 +72,26 @@ namespace RenderApp.Utility
             Height = TGAStructValue(ImageHeight);
             imageSize = Width * Height * BitPerPixel;
 
+            if (filename.Contains("spec"))
+            {
+                int a = 0;
+            }
             Byte[] rgb = binary.ReadBytes(imageSize);
 
-            bmpImage = new Bitmap(Width, Height);
-
-            int counter = 0;
-            for (int i = 0; i < Width; i++)
+            if(BitPerPixel == 24)
             {
-                for(int j = 0; j < Height; j++)
-                {
-                    bmpImage.SetPixel(i, j, Color.FromArgb(rgb[3 * counter + 2], rgb[3 * counter + 1], rgb[3 * counter]));
-                    counter++;
-                }
+                Format = PixelFormat.Format24bppRgb;
+                bmpImage = new Bitmap(Width, Height, Width * 3, Format, Marshal.UnsafeAddrOfPinnedArrayElement(rgb, 0));
             }
-
+            else if(BitPerPixel == 32)
+            {
+                Format = PixelFormat.Format32bppArgb;
+                bmpImage = new Bitmap(Width, Height, Width * 4, Format, Marshal.UnsafeAddrOfPinnedArrayElement(rgb, 0));
+            }else if(BitPerPixel == 8)
+            {
+                Format = PixelFormat.Format8bppIndexed;
+                bmpImage = new Bitmap(Width, Height, Width, Format, Marshal.UnsafeAddrOfPinnedArrayElement(rgb, 0));
+            }
             binary.Close();
             fp.Close();
             Loaded = true;
