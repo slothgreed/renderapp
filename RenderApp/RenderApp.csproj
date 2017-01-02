@@ -147,6 +147,8 @@
     <Compile Include="AssetModel\Geometry\File\MaterialFileInfo.cs" />
     <Compile Include="GLUtil\Buffer\ArrayBuffer.cs" />
     <Compile Include="GLUtil\Buffer\BufferObject.cs" />
+    <Compile Include="GLUtil\Buffer\RenderBuffer.cs" />
+    <Compile Include="GLUtil\Buffer\SamplerBuffer.cs" />
     <Compile Include="GLUtil\Buffer\TextureBuffer.cs" />
     <Compile Include="RACommand\ICommand.cs" />
     <Compile Include="Core\RAImageInfo.cs" />

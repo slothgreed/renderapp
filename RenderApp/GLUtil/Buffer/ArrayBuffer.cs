@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RenderApp.Utility;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 namespace RenderApp.GLUtil.Buffer
@@ -50,7 +51,7 @@ namespace RenderApp.GLUtil.Buffer
         {
             Target = target;
         }
-        public override void GenBuffer()
+        public override void PreGenBuffer()
         {
            this.ID = GL.GenBuffer();
         }
@@ -92,16 +93,16 @@ namespace RenderApp.GLUtil.Buffer
             }
         }
         
-        public override void BindBuffer()
+        public override void PreBindBuffer()
         {
             GL.BindBuffer(Target, ID);
         }
-        public override void UnBindBuffer()
+        public override void PreUnBindBuffer()
         {
-            GL.BindBuffer(Target, ID);
+            GL.BindBuffer(Target, 0);
         }
 
-        public override void Dispose()
+        public override void PreDispose()
         {
             GL.DeleteBuffer(ID);
         }

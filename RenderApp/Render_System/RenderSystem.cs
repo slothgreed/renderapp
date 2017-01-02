@@ -110,7 +110,7 @@ namespace RenderApp.Render_System
         }
         public void Picking(int x, int y)
         {
-            GL.BindFramebuffer(FramebufferTarget.Framebuffer, GBufferStage.FrameId);
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, GBufferStage.ID);
             GL.ReadBuffer(ReadBufferMode.ColorAttachment1);
             IntPtr ptr = IntPtr.Zero;
             float[] pixels = new float[4];

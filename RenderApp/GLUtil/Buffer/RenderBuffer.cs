@@ -4,28 +4,46 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
+using RenderApp.Utility;
 namespace RenderApp.GLUtil.Buffer
 {
     public class RenderBuffer : BufferObject
     {
-        public override void GenBuffer()
+        RenderbufferStorage BufferStorage
+        {
+            get;
+            set;
+        }
+        public override void PreGenBuffer()
         {
             ID = GL.GenRenderbuffer();
         }
 
-        public override void BindBuffer()
+        public override void PreBindBuffer()
         {
             GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer,ID);
         }
 
-        public override void UnBindBuffer()
+        public override void PreUnBindBuffer()
         {
             GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, 0);
         }
-
-        public override void Dispose()
+        public void Storage(RenderbufferStorage storage,int width,int height)
         {
-            GL.DeleteRenderbuffer(0);
+            BufferStorage = storage;
+            SizeChanged(width,height);
+        }
+        public void SizeChanged(int width,int height)
+        {
+            BindBuffer();
+            GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, BufferStorage , width, height);
+            UnBindBuffer();
+            Output.GLLog(Output.LogLevel.Error);
+
+        }
+        public override void PreDispose()
+        {
+            GL.DeleteRenderbuffer(ID);
         }
     }
 }

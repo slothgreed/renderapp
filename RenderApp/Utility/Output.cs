@@ -19,6 +19,7 @@ namespace RenderApp.Utility
             Error,
         }
         public static LogLevel outputLogLevel = LogLevel.Error;
+        public static LogLevel glLogLevel = LogLevel.Error;
         public static void Log(LogLevel level, string error, [CallerMemberName]string methodName = "")
         {
             if(level <= outputLogLevel)
@@ -29,7 +30,7 @@ namespace RenderApp.Utility
 
         public static void GLLog(LogLevel level, [CallerMemberName]string methodName = "")
         {
-            if(level <= outputLogLevel)
+            if (level <= glLogLevel)
             {
                 ErrorCode error = GL.GetError();
                 if (error != ErrorCode.NoError)

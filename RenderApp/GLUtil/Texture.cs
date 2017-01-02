@@ -96,14 +96,9 @@ namespace RenderApp.GLUtil
             : base(name)
         {
             CreateTextureBuffer2D();
-            SetEmptyTexture(width, height);
+            TextureBuffer.SetEmpty(width, height);
         }
-        private void SetEmptyTexture(int width, int height)
-        {
-            TextureBuffer.BindBuffer();
-            GL.TexImage2D(TextureBuffer.Target, 0, PixelInternalFormat.Rgb8, width, height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgb, PixelType.Byte, IntPtr.Zero);
-            TextureBuffer.UnBindBuffer();
-        }
+
         #endregion
         private void BindWrapMode(TextureWrapMode wrapMode)
         {
