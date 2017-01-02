@@ -9,6 +9,7 @@ using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using RenderApp.Utility;
 using RenderApp.Analyzer;
+using RenderApp.GLUtil.Buffer;
 namespace RenderApp.AssetModel
 {
     public abstract class Geometry : RAObject
@@ -20,11 +21,21 @@ namespace RenderApp.AssetModel
         public int ID { get; private set; }
         public PrimitiveType RenderType { get; set; }
         public List<Vector3> Position { get; protected set; }
+        public ArrayBuffer PositionBuffer { get; protected set; }
+        
         public List<Vector3> Normal { get; protected set; }
+        public ArrayBuffer NormalBuffer { get; protected set; }
+        
         public List<Vector3> Color { get; protected set; }
+        public ArrayBuffer ColorBuffer { get; protected set; }
+        
         public List<Vector2> TexCoord { get; protected set; }
-        public List<int> Timer { get; protected set; }
+        public ArrayBuffer TexBuffer { get; protected set; }
+
         public List<int> Index { get; protected set; }
+        public ArrayBuffer IndexBuffer { get; protected set; }
+
+        public List<int> Timer { get; protected set; }
         public Vector3 Min { get; protected set; }
         public Vector3 Max { get; protected set; }
         public Matrix4 ModelMatrix
@@ -131,6 +142,7 @@ namespace RenderApp.AssetModel
             : base(name)
         {
             Initialize(name, renderType);
+
         }
         public Geometry(string name)
             : base(name)

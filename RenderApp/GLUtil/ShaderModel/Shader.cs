@@ -363,43 +363,43 @@ namespace RenderApp.GLUtil.ShaderModel
                     case "uAlbedoMap":
                         if (TextureItem.ContainsKey(TextureKind.Albedo))
                         {
-                            info.variable = TextureItem[TextureKind.Albedo].ID;
+                            info.variable = TextureItem[TextureKind.Albedo].DeviceID;
                         }
                         break;
                     case "uSpecularMap":
                         if(TextureItem.ContainsKey(TextureKind.Specular))
                         {
-                            info.variable = TextureItem[TextureKind.Specular].ID;
+                            info.variable = TextureItem[TextureKind.Specular].DeviceID;
                         }
                         break;
                     case "uWorldMap":
                         if (TextureItem.ContainsKey(TextureKind.World))
                         {
-                            info.variable = TextureItem[TextureKind.World].ID;
+                            info.variable = TextureItem[TextureKind.World].DeviceID;
                         }
                         break;
                     case "uLightingMap":
                         if (TextureItem.ContainsKey(TextureKind.Lighting))
                         {
-                            info.variable = TextureItem[TextureKind.Lighting].ID;
+                            info.variable = TextureItem[TextureKind.Lighting].DeviceID;
                         }
                         break;
                     case "uNormalMap":
                         if (TextureItem.ContainsKey(TextureKind.Normal))
                         {
-                            info.variable = TextureItem[TextureKind.Normal].ID;
+                            info.variable = TextureItem[TextureKind.Normal].DeviceID;
                         }
                         break;
                     case "uHeightMap":
                         if (TextureItem.ContainsKey(TextureKind.Height))
                         {
-                            info.variable = TextureItem[TextureKind.Height].ID;
+                            info.variable = TextureItem[TextureKind.Height].DeviceID;
                         }
                         break;
                     case "uEmissiveMap":
                         if (TextureItem.ContainsKey(TextureKind.Emissive))
                         {
-                            info.variable = TextureItem[TextureKind.Emissive].ID;
+                            info.variable = TextureItem[TextureKind.Emissive].DeviceID;
                         }
                         break;
                 }

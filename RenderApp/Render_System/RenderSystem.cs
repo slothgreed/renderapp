@@ -110,7 +110,7 @@ namespace RenderApp.Render_System
         }
         public void Picking(int x, int y)
         {
-            GL.BindFramebuffer(FramebufferTarget.Framebuffer, GBufferStage.ID);
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, GBufferStage.DeviceID);
             GL.ReadBuffer(ReadBufferMode.ColorAttachment1);
             IntPtr ptr = IntPtr.Zero;
             float[] pixels = new float[4];
@@ -185,7 +185,7 @@ namespace RenderApp.Render_System
             {
                 PostStage.Render();
             }
-            OutputStage.SetValue("uSelectMap", SelectionStage.FrameBufferItem.TextureList[0].ID);
+            OutputStage.SetValue("uSelectMap", SelectionStage.FrameBufferItem.TextureList[0].DeviceID);
             OutputStage.SetPlaneTexture(TextureKind.Albedo, OutputTexture);
             OutputStage.Render();
         }

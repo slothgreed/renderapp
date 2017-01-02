@@ -16,22 +16,22 @@ namespace RenderApp.GLUtil.Buffer
 
         public override void PreGenBuffer()
         {
-            ID = GL.GenSampler();
+            DeviceID = GL.GenSampler();
         }
 
         public override void PreDispose()
         {
-            GL.DeleteSampler(ID);
+            GL.DeleteSampler(DeviceID);
         }
 
         public override void PreBindBuffer()
         {
-            GL.BindSampler(ActiveTexture, ID);
+            GL.BindSampler(ActiveTexture, DeviceID);
         }
 
         public override void PreUnBindBuffer()
         {
-            GL.BindSampler(ActiveTexture, ID);
+            GL.BindSampler(ActiveTexture, DeviceID);
         }
     }
 }

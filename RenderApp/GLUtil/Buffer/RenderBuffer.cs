@@ -16,12 +16,12 @@ namespace RenderApp.GLUtil.Buffer
         }
         public override void PreGenBuffer()
         {
-            ID = GL.GenRenderbuffer();
+            DeviceID = GL.GenRenderbuffer();
         }
 
         public override void PreBindBuffer()
         {
-            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer,ID);
+            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer,DeviceID);
         }
 
         public override void PreUnBindBuffer()
@@ -43,7 +43,7 @@ namespace RenderApp.GLUtil.Buffer
         }
         public override void PreDispose()
         {
-            GL.DeleteRenderbuffer(ID);
+            GL.DeleteRenderbuffer(DeviceID);
         }
     }
 }

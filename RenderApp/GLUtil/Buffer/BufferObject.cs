@@ -9,7 +9,7 @@ namespace RenderApp.GLUtil
     public abstract class BufferObject
     {
         public bool NowBind;
-        public int ID { get; set; }
+        public int DeviceID { get; set; }
         public abstract void PreGenBuffer();
         public abstract void PreDispose();
         public abstract void PreBindBuffer();
@@ -17,7 +17,7 @@ namespace RenderApp.GLUtil
 
         public virtual void GenBuffer()
         {
-            if (ID != -1)
+            if (DeviceID != -1)
             {
                 Dispose();
             }
@@ -43,11 +43,11 @@ namespace RenderApp.GLUtil
         public virtual void Dispose()
         {
             PreDispose();
-            ID = -1;
+            DeviceID = -1;
         }
         public BufferObject()
         {
-            ID = -1;
+            DeviceID = -1;
         }
     }
 }

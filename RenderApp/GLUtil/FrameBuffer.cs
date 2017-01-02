@@ -77,11 +77,11 @@ namespace RenderApp.GLUtil
             RenderBuffer.GenBuffer();
             RenderBuffer.Storage(RenderbufferStorage.DepthComponent32,Width,Height);
 
-            GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, RenderBuffer.ID);
+            GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, RenderBuffer.DeviceID);
             
             for(int i = 0; i < TextureList.Count; i++)
             {
-                GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, Attachment[i], TextureTarget.Texture2D, TextureList[i].ID, 0);
+                GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, Attachment[i], TextureTarget.Texture2D, TextureList[i].DeviceID, 0);
             }
 
             RenderBuffer.UnBindBuffer();
@@ -102,7 +102,7 @@ namespace RenderApp.GLUtil
         }
         public void ClearBuffer()
         {
-            if (ID != -1)
+            if (DeviceID != -1)
             {
                 BindBuffer();
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -111,7 +111,7 @@ namespace RenderApp.GLUtil
         }
         public override void PreBindBuffer()
         {
-            GL.BindFramebuffer(FramebufferTarget.Framebuffer, ID);
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, DeviceID);
             GL.DrawBuffers(OutputBuffers.Count, OutputBuffers.ToArray());
         }
         public override void PreUnBindBuffer()
@@ -121,11 +121,11 @@ namespace RenderApp.GLUtil
         }
         public override void PreGenBuffer()
         {
-            ID = GL.GenFramebuffer();
+            DeviceID = GL.GenFramebuffer();
         }
         public override void PreDispose()
         {
-            GL.DeleteFramebuffer(ID);
+            GL.DeleteFramebuffer(DeviceID);
             RenderBuffer.Dispose();
             foreach(var texture in TextureList)
             {

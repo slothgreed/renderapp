@@ -31,7 +31,7 @@ namespace RenderApp.GLUtil.Buffer
         }
         public override void PreGenBuffer()
         {
-            ID = GL.GenTexture();
+            DeviceID = GL.GenTexture();
         }
         public void SetData()
         {
@@ -39,7 +39,7 @@ namespace RenderApp.GLUtil.Buffer
         }
         public override void PreBindBuffer()
         {
-            GL.BindTexture(Target, ID);
+            GL.BindTexture(Target, DeviceID);
         }
         public override void PreUnBindBuffer()
         {
@@ -47,7 +47,7 @@ namespace RenderApp.GLUtil.Buffer
         }
         public override void PreDispose()
         {
-            GL.DeleteTexture(ID);
+            GL.DeleteTexture(DeviceID);
         }
         public void SizeChanged(int width, int height)
         {

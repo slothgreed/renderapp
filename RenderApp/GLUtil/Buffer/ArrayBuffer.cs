@@ -19,7 +19,7 @@ namespace RenderApp.GLUtil.Buffer
         Vec4Array,
     }
    
-    class ArrayBuffer : BufferObject
+    public class ArrayBuffer : BufferObject
     {
         public BufferUsageHint UsageHint
         {
@@ -53,13 +53,13 @@ namespace RenderApp.GLUtil.Buffer
         }
         public override void PreGenBuffer()
         {
-           this.ID = GL.GenBuffer();
+           this.DeviceID = GL.GenBuffer();
         }
         public void SetData(object data,EArrayType arrayType)
         {
             Data = data;
             ArrayType = arrayType;
-
+            BindBuffer();
             switch (ArrayType)
             {
                 case EArrayType.None:
@@ -69,33 +69,34 @@ namespace RenderApp.GLUtil.Buffer
                     GL.BufferData(Target, (IntPtr)(intTmp.Count * sizeof(int)), intTmp.ToArray(), UsageHint);
                     break;
                 case EArrayType.FloatArray:
-                    List<int> fArray = (List<int>)data;
+                    List<float> fArray = (List<float>)data;
                     GL.BufferData(Target, (IntPtr)(fArray.Count * sizeof(float)), fArray.ToArray(), UsageHint); 
                     break;
                 case EArrayType.DoubleArra:
-                    List<int> dArray = (List<int>)data;
+                    List<double> dArray = (List<double>)data;
                     GL.BufferData(Target, (IntPtr)(dArray.Count * sizeof(double)), dArray.ToArray(), UsageHint);
                     break;
                 case EArrayType.Vec2Array:
-                    List<int> v2Array = (List<int>)data;
+                    List<Vector2> v2Array = (List<Vector2>)data;
                     GL.BufferData(Target, (IntPtr)(v2Array.Count * Vector2.SizeInBytes), v2Array.ToArray(), UsageHint);
                     break;
                 case EArrayType.Vec3Array:
-                    List<int> v3Array = (List<int>)data;
+                    List<Vector3> v3Array = (List<Vector3>)data;
                     GL.BufferData(Target, (IntPtr)(v3Array.Count * Vector3.SizeInBytes), v3Array.ToArray(), UsageHint);
                     break;
                 case EArrayType.Vec4Array:
-                    List<int> v4Array = (List<int>)data;
+                    List<Vector4> v4Array = (List<Vector4>)data;
                     GL.BufferData(Target, (IntPtr)(v4Array.Count * Vector4.SizeInBytes), v4Array.ToArray(), UsageHint);
                     break;
                 default:
                     break;
             }
+            UnBindBuffer();
         }
         
         public override void PreBindBuffer()
         {
-            GL.BindBuffer(Target, ID);
+            GL.BindBuffer(Target, DeviceID);
         }
         public override void PreUnBindBuffer()
         {
@@ -104,7 +105,7 @@ namespace RenderApp.GLUtil.Buffer
 
         public override void PreDispose()
         {
-            GL.DeleteBuffer(ID);
+            GL.DeleteBuffer(DeviceID);
         }
     }
 }

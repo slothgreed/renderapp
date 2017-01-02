@@ -43,14 +43,14 @@ namespace RenderApp.GLUtil
         /// <summary>
         /// テクスチャID
         /// </summary>
-        public int ID { 
+        public int DeviceID { 
             get
             {
-                return TextureBuffer.ID;
+                return TextureBuffer.DeviceID;
             }
             set
             {
-                TextureBuffer.ID = value;
+                TextureBuffer.DeviceID = value;
             }
         }
         /// <summary>

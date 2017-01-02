@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using RenderApp.GLUtil.Buffer;
 namespace RenderApp.AssetModel
 {
     /// <summary>
@@ -15,6 +16,37 @@ namespace RenderApp.AssetModel
         private void Initialize()
         {
             MaterialItem = Material.Constant;
+
+            if(Position.Count != 0)
+            {
+                PositionBuffer = new ArrayBuffer();
+                PositionBuffer.GenBuffer();
+                PositionBuffer.SetData(Position, EArrayType.Vec3Array);
+            }
+            if (Normal.Count != 0)
+            {
+                NormalBuffer = new ArrayBuffer();
+                NormalBuffer.GenBuffer();
+                NormalBuffer.SetData(Normal, EArrayType.Vec3Array);
+            }
+            if (Color.Count != 0)
+            {
+                ColorBuffer = new ArrayBuffer();
+                ColorBuffer.GenBuffer();
+                ColorBuffer.SetData(Color, EArrayType.Vec3Array);
+            }
+            if (TexCoord.Count != 0)
+            {
+                TexBuffer = new ArrayBuffer();
+                TexBuffer.GenBuffer();
+                TexBuffer.SetData(TexCoord, EArrayType.Vec2Array);
+            }
+            if(Index.Count != 0)
+            {
+                IndexBuffer = new ArrayBuffer(BufferTarget.ElementArrayBuffer);
+                IndexBuffer.GenBuffer();
+                IndexBuffer.SetData(Index, EArrayType.IntArray);
+            }
         }
         public string m_Name = "";
         /// <summary>
