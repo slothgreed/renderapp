@@ -8,7 +8,7 @@ using OpenTK.Graphics.OpenGL;
 using RenderApp.Utility;
 namespace RenderApp.AssetModel
 {
-    class GridPlane : Geometry
+    class GridPlane : VertexInfo
     {
 
         /// <summary>
@@ -23,7 +23,6 @@ namespace RenderApp.AssetModel
         /// コンストラクタ
         /// </summary>
         public GridPlane(string name,float Area,float Space)
-            : base(name)
         {
             m_Area = Area;
             m_Space = Space;

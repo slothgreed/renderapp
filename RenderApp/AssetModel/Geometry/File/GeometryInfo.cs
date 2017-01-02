@@ -22,13 +22,6 @@ namespace RenderApp.AssetModel
         public List<Vector3> Normal = new List<Vector3>();
         public List<Vector3> Color = new List<Vector3>();
         public List<Vector2> TexCoord = new List<Vector2>();
-        /// <summary>
-        /// ファイルの読み込んだ順番に格納される
-        /// </summary>
-        public List<Vector3> posStream = new List<Vector3>();
-        public List<Vector3> norStream = new List<Vector3>();
-        public List<Vector3> colStream = new List<Vector3>();
-        public List<Vector2> texStream = new List<Vector2>();
     }
     public class VertexArrayInfo
     {

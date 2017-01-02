@@ -9,13 +9,22 @@ using RenderApp.Utility;
 using RenderApp.GLUtil;
 namespace RenderApp.AssetModel
 {
-    public class Cube : Geometry
+    public class Cube : VertexInfo
     {
+        public Vector3 Min
+        {
+            get;
+            set;
+        }
+        public Vector3 Max
+        {
+            get;
+            set;
+        }
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public Cube(string name,Vector3 min,Vector3 max)
-            : base(name)
         {
             Min = min;
             Max = max;

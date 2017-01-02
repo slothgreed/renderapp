@@ -148,7 +148,7 @@ namespace RenderApp.GLUtil.ShaderModel
             int activeCount = 0;
             foreach (ShaderProgramInfo loop in _shaderVariable.Values)
             {
-                if (loop.ID == -1)
+                if (loop.ShaderID == -1)
                 {
                     continue;
                 }
@@ -168,9 +168,9 @@ namespace RenderApp.GLUtil.ShaderModel
             {
                 if (loop.shaderVariableType == EShaderVariableType.Uniform)
                 {
-                    if (loop.ID != -1)
+                    if (loop.ShaderID != -1)
                     {
-                        GL.DisableVertexAttribArray(loop.ID);
+                        GL.DisableVertexAttribArray(loop.ShaderID);
                     }
                 }
             }
@@ -200,48 +200,48 @@ namespace RenderApp.GLUtil.ShaderModel
                 //Output.Error("Shader Binding Error" + uniform.Name);
                 return;
             }
-            if (uniform.ID == -1)
+            if (uniform.ShaderID == -1)
             {
                 return;
             }
             if (uniform.variableType == EVariableType.Vec2)
             {
-                GL.Uniform2(uniform.ID, (Vector2)uniform.variable);
+                GL.Uniform2(uniform.ShaderID, (Vector2)uniform.variable);
             }
             else if (uniform.variableType == EVariableType.Vec3)
             {
-                GL.Uniform3(uniform.ID, (Vector3)uniform.variable);
+                GL.Uniform3(uniform.ShaderID, (Vector3)uniform.variable);
             }
             else if (uniform.variableType == EVariableType.Mat3)
             {
                 Matrix3 tmp = (Matrix3)uniform.variable;
-                GL.UniformMatrix3(uniform.ID, false, ref tmp);
+                GL.UniformMatrix3(uniform.ShaderID, false, ref tmp);
             }
             else if (uniform.variableType == EVariableType.Mat4)
             {
                 Matrix4 tmp = (Matrix4)uniform.variable;
-                GL.UniformMatrix4(uniform.ID, false, ref tmp);
+                GL.UniformMatrix4(uniform.ShaderID, false, ref tmp);
             }
             else if (uniform.variableType == EVariableType.Int)
             {
-                GL.Uniform1(uniform.ID, (int)uniform.variable);
+                GL.Uniform1(uniform.ShaderID, (int)uniform.variable);
             }
             else if (uniform.variableType == EVariableType.Texture2D)
             {
                 GL.ActiveTexture(TextureUnit.Texture0 + activeCount);
                 GL.BindTexture(TextureTarget.Texture2D, (int)uniform.variable);
-                GL.Uniform1(uniform.ID, activeCount);
+                GL.Uniform1(uniform.ShaderID, activeCount);
                 activeCount++;
             }
             else
             {
                 if (uniform.variableType == EVariableType.Float)
                 {
-                    GL.Uniform1(uniform.ID, (float)uniform.variable);
+                    GL.Uniform1(uniform.ShaderID, (float)uniform.variable);
                 }
                 else
                 {
-                    GL.Uniform1(uniform.ID, (int)uniform.variable);
+                    GL.Uniform1(uniform.ShaderID, (int)uniform.variable);
                 }
             }
             Output.GLLog(Output.LogLevel.Error);
@@ -253,45 +253,45 @@ namespace RenderApp.GLUtil.ShaderModel
         /// <param name="attribute"></param>
         private void BindAttributeState(Geometry geometry, ShaderProgramInfo attribute)
         {
-            if (attribute.ID == -1)
+            if (attribute.ShaderID == -1)
             {
                 return;
             }
-            if (attribute.Name == "index")
-            {
-                GL.BindBuffer(BufferTarget.ElementArrayBuffer, attribute.VertexBufferId);
-                List<int> tmp = (List<int>)attribute.variable;
-                GL.BufferData(BufferTarget.ElementArrayBuffer, (IntPtr)(tmp.Count * sizeof(int)), tmp.ToArray(), BufferUsageHint.StaticDraw);
-            }
-            else
-            {
-                GL.EnableVertexAttribArray(attribute.ID);
-                GL.BindBuffer(BufferTarget.ArrayBuffer, attribute.VertexBufferId);
-                if (attribute.variableType == EVariableType.Vec2Array)
-                {
-                    List<Vector2> tmp = (List<Vector2>)attribute.variable;
-                    GL.BufferData<Vector2>(BufferTarget.ArrayBuffer, new IntPtr(tmp.Count * Vector2.SizeInBytes), tmp.ToArray(), BufferUsageHint.StaticDraw);
-                    GL.VertexAttribPointer(attribute.ID, 2, VertexAttribPointerType.Float, false, Vector2.SizeInBytes, 0);
-                }
-                if (attribute.variableType == EVariableType.Vec3Array)
-                {
-                    List<Vector3> tmp = (List<Vector3>)attribute.variable;
-                    GL.BufferData<Vector3>(BufferTarget.ArrayBuffer, new IntPtr(tmp.Count * Vector3.SizeInBytes), tmp.ToArray(), BufferUsageHint.StaticDraw);
-                    GL.VertexAttribPointer(attribute.ID, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
-                }
-                if (attribute.variableType == EVariableType.Vec4Array)
-                {
-                    List<Vector4> tmp = (List<Vector4>)attribute.variable;
-                    GL.BufferData<Vector4>(BufferTarget.ArrayBuffer, new IntPtr(tmp.Count * Vector4.SizeInBytes), tmp.ToArray(), BufferUsageHint.StaticDraw);
-                    GL.VertexAttribPointer(attribute.ID, 4, VertexAttribPointerType.Float, false, Vector4.SizeInBytes, 0);
-                }
-                if (attribute.variableType == EVariableType.IntArray)
-                {
-                    List<int> tmp = (List<int>)attribute.variable;
-                    GL.BufferData(BufferTarget.ElementArrayBuffer, (IntPtr)(tmp.Count * sizeof(int)), tmp.ToArray(), BufferUsageHint.StaticDraw);
-                    GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
-                }
 
+            if (attribute.Name == "position" && geometry.PositionBuffer != null)
+            {
+                GL.EnableVertexAttribArray(attribute.ShaderID);
+                geometry.PositionBuffer.BindBuffer();
+                GL.VertexAttribPointer(attribute.ShaderID, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
+                geometry.PositionBuffer.UnBindBuffer();
+            }
+            if (attribute.Name == "normal" && geometry.NormalBuffer != null)
+            {
+                GL.EnableVertexAttribArray(attribute.ShaderID);
+                geometry.NormalBuffer.SetData(geometry.Normal, Buffer.EArrayType.Vec3Array);
+                geometry.NormalBuffer.BindBuffer();
+                GL.VertexAttribPointer(attribute.ShaderID, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
+                geometry.NormalBuffer.UnBindBuffer();
+            }
+            if (attribute.Name == "color" && geometry.ColorBuffer != null)
+            {
+                GL.EnableVertexAttribArray(attribute.ShaderID);
+                geometry.NormalBuffer.SetData(geometry.Color, Buffer.EArrayType.Vec3Array);
+                geometry.NormalBuffer.BindBuffer();
+                GL.VertexAttribPointer(attribute.ShaderID, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
+                geometry.NormalBuffer.UnBindBuffer();
+            }
+            if (attribute.Name == "texcoord" && geometry.TexBuffer != null)
+            {
+                GL.EnableVertexAttribArray(attribute.ShaderID);
+                geometry.TexBuffer.SetData(geometry.TexCoord, Buffer.EArrayType.Vec2Array);
+                geometry.TexBuffer.BindBuffer();
+                GL.VertexAttribPointer(attribute.ShaderID, 2, VertexAttribPointerType.Float, false, Vector2.SizeInBytes, 0);
+                geometry.TexBuffer.UnBindBuffer();
+            }
+            if(attribute.Name == "index" && geometry.IndexBuffer != null)
+            {
+                geometry.IndexBuffer.BindBuffer();
             }
             Output.GLLog(Output.LogLevel.Error);
         }
@@ -431,7 +431,6 @@ namespace RenderApp.GLUtil.ShaderModel
             info.Name = "index";
             info.variable = new List<int>();
             info.shaderVariableType = EShaderVariableType.Attribute;
-            info.VertexBufferId = GL.GenBuffer();
             _shaderVariable.Add(info.Name, info);
 
         }
@@ -588,7 +587,6 @@ namespace RenderApp.GLUtil.ShaderModel
                         {
                             info.Name = code[2];
                             info.shaderVariableType = EShaderVariableType.Attribute;
-                            info.VertexBufferId = GL.GenBuffer();
                             _shaderVariable.Add(info.Name, info);
                         }
                         break;
@@ -671,10 +669,10 @@ namespace RenderApp.GLUtil.ShaderModel
                 switch(loop.shaderVariableType)
                 {
                     case EShaderVariableType.Attribute:
-                        loop.ID = GL.GetAttribLocation(_program, loop.Name);
+                        loop.ShaderID = GL.GetAttribLocation(_program, loop.Name);
                         break;
                     case EShaderVariableType.Uniform:
-                        loop.ID = GL.GetUniformLocation(_program, loop.Name);
+                        loop.ShaderID = GL.GetUniformLocation(_program, loop.Name);
                         break;
                 }
             }

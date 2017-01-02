@@ -7,14 +7,14 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 namespace RenderApp.AssetModel
 {
-    public class Sphere : Geometry
+    public class Sphere : VertexInfo
     {
+        public Geometry geometry;
         /// <param name="radial">半径</param>
         /// <param name="hpartition">高さ分割数</param>
         /// <param name="wpartition">横分割数</param>
         /// <param name="orient">面の方向true=外向きfalse=内向き</param>
         public Sphere(string name,float radial, int hpartition, int wpartition,bool orient,Vector3 color)
-            : base(name)
         {
             SetObjectData(radial, hpartition, wpartition,orient,color);
         }
@@ -188,7 +188,8 @@ namespace RenderApp.AssetModel
                 }
             }
 
-            ConvertVertexArray();
+            geometry = new Primitive("Sphere", Position, Normal, TexCoord, PrimitiveType.Triangles);
+            geometry.ConvertVertexArray();
             
         }
         /// <summary>

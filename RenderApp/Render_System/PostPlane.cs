@@ -19,11 +19,11 @@ namespace RenderApp.Render_System
         public PostPlane(string name,Shader shader,FrameBuffer frame)
         {
             FrameBufferItem = frame;
-            Plane = AssetFactory.Instance.CreatePlane(name, shader);
+            Plane = AssetFactory.Instance.CreatePlane(name, shader).geometry;
         }
         public PostPlane(string name,Shader shader)
         {
-            Plane = AssetFactory.Instance.CreatePlane(name, shader);
+            Plane = AssetFactory.Instance.CreatePlane(name, shader).geometry;
         }
         public void SetValue(string key,object value)
         {

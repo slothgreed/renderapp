@@ -412,7 +412,7 @@ namespace RenderApp.AssetModel
         /// <summary>
         /// 頂点配列に変換
         /// </summary>
-        protected void ConvertVertexArray()
+        public void ConvertVertexArray()
         {
             if (Index.Count != 0)
                 return;

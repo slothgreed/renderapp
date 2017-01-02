@@ -8,10 +8,9 @@ using OpenTK.Graphics.OpenGL;
 using RenderApp.Utility;
 namespace RenderApp.AssetModel
 {
-    class Axis : Geometry
+    class Axis : VertexInfo
     {
         public Axis(string name,Vector3 min, Vector3 max)
-            :base(name)
         {
             SetObjectData(min, max);
         }

@@ -13,7 +13,7 @@ namespace RenderApp.GLUtil.ShaderModel
     public class ShaderProgramInfo
     {
         public string Name { get; set; }
-        public int ID { get; set; }
+        public int ShaderID { get; set; }
         public int VertexBufferId { get; set; }
         public object variable { get; set; }
         public EShaderVariableType shaderVariableType { get; set; }

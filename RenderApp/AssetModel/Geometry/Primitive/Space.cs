@@ -8,14 +8,21 @@ using OpenTK.Graphics.OpenGL;
 using RenderApp.Utility;
 namespace RenderApp.AssetModel
 {
-    public class Space : Geometry
+    public class Space : VertexInfo
     {
+        public Vector3 Min
+        {
+            get;
+            set;
+        }
+        public Vector3 Max
+        {
+            get;
+            set;
+        }
         
         public Space(string name,Vector3 min, Vector3 max)
-            :base(name)
         {
-            Min = min;
-            Max = max;
             
             Vector3 v0 = new Vector3(min.X, min.Y, min.Z);
             Vector3 v1 = new Vector3(max.X, min.Y, min.Z);

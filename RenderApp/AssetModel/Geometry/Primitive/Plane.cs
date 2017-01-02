@@ -9,7 +9,7 @@ using OpenTK.Graphics.OpenGL;
 using RenderApp.Utility;
 namespace RenderApp.AssetModel
 {
-    public class Plane :Geometry
+    public class Plane
     {
         #region [メンバ変数]
         /// <summary>
@@ -21,16 +21,20 @@ namespace RenderApp.AssetModel
         /// コンストラクタ
         /// </summary>
         public Plane(string name,Vector3 q0, Vector3 q1, Vector3 q2, Vector3 q3)
-            : base(name,PrimitiveType.Quads)
         {
             MakeInfinityPlane(q0, q1, q2, q3);
+            geometry = new Primitive(name,Position,Normal,TexCoord,PrimitiveType.Quads);
         }
         public Plane(string name)
-            : base(name,PrimitiveType.Quads)
         {
             MakeInfinityPlane(new Vector3(-1, -1, 0), new Vector3(1, -1, 0), new Vector3(1, 1, 0), new Vector3(-1, 1, 0));
+            geometry = new Primitive(name, Position, Normal, TexCoord, PrimitiveType.Quads);
         }
-        
+        public Geometry geometry;
+        List<Vector3> Position = new List<Vector3>();
+        List<Vector3> Color = new List<Vector3>();
+        List<Vector3> Normal = new List<Vector3>();
+        List<Vector2> TexCoord = new List<Vector2>();
         #region [形状の作成]
         /// <summary>
         /// 形状の設定

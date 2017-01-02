@@ -114,17 +114,17 @@ namespace RenderApp.AssetModel
                 }
                 if (line[i] == "v")
                 {
-                    vertexInfo.posStream.Add(new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3])));
+                    vertexInfo.Position.Add(new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3])));
                     break;
                 }
                 if (line[i] == "vt")
                 {
-                    vertexInfo.texStream.Add(new Vector2(float.Parse(line[i + 1]), float.Parse(line[i + 2])));
+                    vertexInfo.TexCoord.Add(new Vector2(float.Parse(line[i + 1]), float.Parse(line[i + 2])));
                     break;
                 }
                 if (line[i] == "vn")
                 {
-                    vertexInfo.norStream.Add(new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3])));
+                    vertexInfo.Normal.Add(new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3])));
                     break;
                 }
                 if (line[i] == "f")
@@ -388,40 +388,29 @@ namespace RenderApp.AssetModel
                 var TexCoord = new List<Vector2>();
                 for (int j = 0; j < material.vertexArrayInfo.posIndex.Count / 3; j++)
                 {
-                    Position.Add(vertexInfo.posStream[material.vertexArrayInfo.posIndex[3 * j]]);
-                    Position.Add(vertexInfo.posStream[material.vertexArrayInfo.posIndex[3 * j + 1]]);
-                    Position.Add(vertexInfo.posStream[material.vertexArrayInfo.posIndex[3 * j + 2]]);
-                    if (vertexInfo.norStream.Count != 0)
+                    Position.Add(vertexInfo.Position[material.vertexArrayInfo.posIndex[3 * j]]);
+                    Position.Add(vertexInfo.Position[material.vertexArrayInfo.posIndex[3 * j + 1]]);
+                    Position.Add(vertexInfo.Position[material.vertexArrayInfo.posIndex[3 * j + 2]]);
+                    if (vertexInfo.Normal.Count != 0)
                     {
-                        Normal.Add(vertexInfo.norStream[material.vertexArrayInfo.norIndex[3 * j]]);
-                        Normal.Add(vertexInfo.norStream[material.vertexArrayInfo.norIndex[3 * j + 1]]);
-                        Normal.Add(vertexInfo.norStream[material.vertexArrayInfo.norIndex[3 * j + 2]]);
+                        Normal.Add(vertexInfo.Normal[material.vertexArrayInfo.norIndex[3 * j]]);
+                        Normal.Add(vertexInfo.Normal[material.vertexArrayInfo.norIndex[3 * j + 1]]);
+                        Normal.Add(vertexInfo.Normal[material.vertexArrayInfo.norIndex[3 * j + 2]]);
                     }
-                    if (vertexInfo.texStream.Count != 0)
+                    if (vertexInfo.TexCoord.Count != 0)
                     {
-                        TexCoord.Add(vertexInfo.texStream[material.vertexArrayInfo.texIndex[3 * j]]);
-                        TexCoord.Add(vertexInfo.texStream[material.vertexArrayInfo.texIndex[3 * j + 1]]);
-                        TexCoord.Add(vertexInfo.texStream[material.vertexArrayInfo.texIndex[3 * j + 2]]);
+                        TexCoord.Add(vertexInfo.TexCoord[material.vertexArrayInfo.texIndex[3 * j]]);
+                        TexCoord.Add(vertexInfo.TexCoord[material.vertexArrayInfo.texIndex[3 * j + 1]]);
+                        TexCoord.Add(vertexInfo.TexCoord[material.vertexArrayInfo.texIndex[3 * j + 2]]);
                     }
                 }
 
-                geometry = new Primitive(
-                    material.name,
-                    Position,
-                    Normal,
-                    TexCoord,
-                    PrimitiveType.Triangles
-                    );
-
-
+                geometry = new Primitive(material.name, Position, Normal, TexCoord, PrimitiveType.Triangles);
                 geometry.MaterialItem = CreateMaterial(material);
-
                 if (geometry != null)
                 {
                     geometrys.Add(geometry);
-
                 }
-
             }
             return geometrys;
         }

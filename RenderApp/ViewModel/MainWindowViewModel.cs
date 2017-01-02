@@ -264,18 +264,18 @@ namespace RenderApp.ViewModel
         }
         private void CreateCubeCommand()
         {
-            Cube cube = new Cube(RAFile.GetNameFromType(EAssetType.Geometry), Scene.ActiveScene.WorldMin, Scene.ActiveScene.WorldMax);
-            AssetFactory.Instance.CreateGeometry(cube);
+            //Cube cube = new Cube(RAFile.GetNameFromType(EAssetType.Geometry), Scene.ActiveScene.WorldMin, Scene.ActiveScene.WorldMax);
+            //AssetFactory.Instance.CreateGeometry(cube);
         }
         private void CreateSphereCommand()
         {
-            Sphere sphere = new Sphere(RAFile.GetNameFromType(EAssetType.Geometry), 5, 5, 5, true, OpenTK.Vector3.UnitY);
-            AssetFactory.Instance.CreateGeometry(sphere);
+            //Sphere sphere = new Sphere(RAFile.GetNameFromType(EAssetType.Geometry), 5, 5, 5, true, OpenTK.Vector3.UnitY);
+            //AssetFactory.Instance.CreateGeometry(sphere);
         }
         private void CreatePlaneCommand()
         {
             Plane plane = new Plane(RAFile.GetNameFromType(EAssetType.Geometry));
-            AssetFactory.Instance.CreateGeometry(plane);
+            AssetFactory.Instance.CreateGeometry(plane.geometry);
         }
         private void CreateWireFrameCommand()
         {
