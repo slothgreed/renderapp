@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.Utility;
+using RenderApp.GLUtil.Buffer;
 namespace RenderApp.GLUtil
 {
-    public class FrameBuffer
+    public class FrameBuffer : BufferObject
     {
         public string Name { get; private set; }
         /// <summary>
@@ -25,7 +26,7 @@ namespace RenderApp.GLUtil
         /// <summary>
         /// レンダーバッファID
         /// </summary>
-        public int RenderId { get; private set; }
+        public RenderBuffer RenderBuffer { get; private set; }
         /// <summary>
         /// テクスチャ
         /// </summary>
@@ -56,8 +57,6 @@ namespace RenderApp.GLUtil
         public FrameBuffer(string FrameName,int width,int height,string[] textureName)
         {
             this.Name = FrameName;
-
-
             Initialize(width, height, textureName);
         }
 
@@ -94,19 +93,18 @@ namespace RenderApp.GLUtil
         {
             FrameId = GL.GenFramebuffer();
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, FrameId);
-            this.RenderId = GL.GenRenderbuffer();
-
-            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, RenderId);
+            RenderBuffer.GenBuffer();
+            RenderBuffer.BindBuffer();
             GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, RenderbufferStorage.DepthComponent32, Width, Height);
 
-            GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, RenderId);
+            GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, RenderBuffer.ID);
             
             for(int i = 0; i < TextureList.Count; i++)
             {
                 GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, attachment[i], TextureTarget.Texture2D, TextureList[i].ID, 0);
             }
 
-            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, 0);
+            RenderBuffer.UnBindBuffer();
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
             Output.GLLog(Output.LogLevel.Error);
         }
@@ -116,8 +114,8 @@ namespace RenderApp.GLUtil
             FrameId = GL.GenFramebuffer();
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, FrameId);
             //レンダーバッファ
-            this.RenderId = GL.GenRenderbuffer();
-            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, RenderId);
+            RenderBuffer.GenBuffer();
+            RenderBuffer.BindBuffer();
             GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, RenderbufferStorage.DepthComponent32, Width, Height);
             //テクスチャの割り当て
             textureId = new int[textureNum];
@@ -132,21 +130,21 @@ namespace RenderApp.GLUtil
             }
 
             //割り当て
-            GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, RenderId);
+            GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, RenderBuffer.ID);
             for (int i = 0; i < textureNum; i++)
             {
                 GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, attachment[i], TextureTarget.Texture2D, textureId[i], 0);
             }
 
             GL.BindTexture(TextureTarget.Texture2D, 0);
-            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, 0);
+            RenderBuffer.UnBindBuffer();
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
             Output.GLLog(Output.LogLevel.Error);
         }
         public void Dispose()
         {
             GL.DeleteFramebuffer(FrameId);
-            GL.DeleteRenderbuffer(RenderId);
+            RenderBuffer.Dispose();
         }
         public void SizeChanged(int width,int height)
         {
@@ -170,7 +168,7 @@ namespace RenderApp.GLUtil
                 GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
             }
         }
-        public void BindBuffer()
+        public override void BindBuffer()
         {
             if(FrameId != 0)
             {
@@ -178,7 +176,7 @@ namespace RenderApp.GLUtil
                 GL.DrawBuffers(OutputBuffers.Count,OutputBuffers.ToArray());
             }
         }
-        public void UnBindBuffer()
+        public override void UnBindBuffer()
         {
             if (FrameId != 0)
             {
@@ -186,10 +184,14 @@ namespace RenderApp.GLUtil
                 GL.DrawBuffer(DefaultOutBuffer);
             }
         }
+        public override void GenBuffer()
+        {
+        }
         public override string ToString()
         {
             return this.Name;
         }
+
 
     }
 }
