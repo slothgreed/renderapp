@@ -29,18 +29,6 @@ namespace RenderApp.AssetModel.RA_Geometry
                 vertexInfo = new VertexInfo();
                 String[] parser = File.ReadAllLines(filePath, System.Text.Encoding.GetEncoding("Shift_JIS"));
                 ReadData(vertexInfo, parser);
-
-                //HalfEdge half = new HalfEdge(Position);
-                ////position;
-                //Position.Clear();
-                //foreach(var mesh in half.m_Mesh)
-                //{
-                //    foreach(var vertex in mesh.GetAroundVertex())
-                //    {
-                //        Position.Add(vertex.Position);
-                //    }
-                //}
-
             }
             catch (Exception)
             {

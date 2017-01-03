@@ -12,7 +12,7 @@ using RenderApp.Analyzer;
 using RenderApp.GLUtil;
 namespace RenderApp.AssetModel.RA_Geometry
 {
-    public class OBJMaterial : MaterialFileInfo
+    public class OBJMaterial
     {
         public string name;
         public Vector3 Ka;//ambient

@@ -143,8 +143,6 @@
     </ApplicationDefinition>
     <Compile Include="Analyzer\HalfEdge\Dijkstra.cs" />
     <Compile Include="AssetModel\AssetFactory.cs" />
-    <Compile Include="AssetModel\Geometry\File\GeometryFile.cs" />
-    <Compile Include="AssetModel\Geometry\File\MaterialFileInfo.cs" />
     <Compile Include="AssetModel\Geometry\IConvertGeometry.cs" />
     <Compile Include="GLUtil\Buffer\ArrayBuffer.cs" />
     <Compile Include="GLUtil\Buffer\BufferObject.cs" />
@@ -171,7 +169,7 @@
     <Compile Include="GLUtil\ShaderModel\ShaderFactory.cs" />
     <Compile Include="Utility\Output.cs" />
     <Compile Include="AssetModel\EnvironmentProbe.cs" />
-    <Compile Include="AssetModel\Geometry\File\VertexInfo.cs" />
+    <Compile Include="AssetModel\Geometry\VertexInfo.cs" />
     <Compile Include="GLUtil\ShaderModel\ShaderProgramInfo.cs" />
     <Compile Include="Globals\Enum.cs" />
     <Compile Include="GLUtil\TextureFactory.cs" />
