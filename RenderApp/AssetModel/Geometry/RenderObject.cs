@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.GLUtil.Buffer;
-namespace RenderApp.AssetModel.RA_Geometry
+namespace RenderApp.AssetModel
 {
     /// <summary>
     /// 任意形状(triangle,quad,line,patchのみ対応)

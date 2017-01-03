@@ -8,7 +8,7 @@ using OpenTK.Graphics.OpenGL;
 using RenderApp.Utility;
 namespace RenderApp.AssetModel.RA_Geometry
 {
-    class GridPlane
+    class GridPlane : IRenderObject
     {
         /// <summary>
         /// グリッドの範囲
@@ -34,9 +34,9 @@ namespace RenderApp.AssetModel.RA_Geometry
             Area = area;
             Space = space;
         }
-        
 
-        public List<Geometry> ConvertGeometry()
+
+        public List<RenderObject> CreateRenderObject()
         {
             List<Vector3> Position = new List<Vector3>();
             List<Vector3> Color = new List<Vector3>();
@@ -61,14 +61,23 @@ namespace RenderApp.AssetModel.RA_Geometry
                     Position.Add(line_fin1);
                     Position.Add(line_start2);
                     Position.Add(line_fin2);
-                    Color.Add(new Vector3(1.0f,1.0f,1.0f));
-                    Color.Add(new Vector3(1.0f,1.0f,1.0f));
-                    Color.Add(new Vector3(1.0f,1.0f,1.0f));
-                    Color.Add(new Vector3(1.0f,1.0f,1.0f));
+                    Color.Add(Vector3.One);
+                    Color.Add(Vector3.One);
+                    Color.Add(Vector3.One);
+                    Color.Add(Vector3.One);
                 }
             }
-            Geometry geometry = new RenderObject("gridPlane",Position, Color, PrimitiveType.Triangles);
-            return new List<Geometry>(){geometry};
+            RenderObject geometry = new RenderObject("gridPlane", Position, Color, PrimitiveType.Triangles);
+            _renderObject = new List<RenderObject>() { geometry };
+            return _renderObject;
+        }
+        private List<RenderObject> _renderObject;
+        public List<RenderObject> RenderObject
+        {
+            get
+            {
+                return _renderObject;
+            }
         }
     }
 }

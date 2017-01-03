@@ -12,7 +12,7 @@ namespace RenderApp.AssetModel.RA_Geometry
     /// <summary>
     /// STLのローダ現在テキストファイルのみ
     /// </summary>
-    public class StlFile : RAFile,IConvertGeometry
+    public class StlFile : RAFile,IRenderObject
     {
         VertexInfo vertexInfo;
         /// <summary>
@@ -112,11 +112,20 @@ namespace RenderApp.AssetModel.RA_Geometry
             write.Close();
         }
 
-        public List<Geometry> ConvertGeometry()
+        public List<RenderObject> CreateRenderObject()
         {
-            Geometry geometry = new RenderObject(FileName, vertexInfo.Position, vertexInfo.Normal, PrimitiveType.Triangles);
+            RenderObject geometry = new RenderObject(FileName, vertexInfo.Position, vertexInfo.Normal, PrimitiveType.Triangles);
 
-            return new List<Geometry>() { geometry };
+            _renderObject = new List<RenderObject>() { geometry };
+            return _renderObject;
+        }
+        private List<RenderObject> _renderObject;
+        public List<RenderObject> RenderObject
+        {
+            get
+            {
+                return _renderObject;
+            }
         }
     }
 }

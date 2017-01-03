@@ -34,7 +34,7 @@ namespace RenderApp.AssetModel.RA_Geometry
         public VertexArrayInfo vertexArrayInfo = new VertexArrayInfo();//ポリゴンのIndex情報を保持
     }
 
-    public class CObjFile : RAFile , IConvertGeometry
+    public class CObjFile : RAFile , IRenderObject
     {
         /// <summary>
         /// 頂点・色・テクスチャ座標を保持。
@@ -376,13 +376,13 @@ namespace RenderApp.AssetModel.RA_Geometry
             return mat;
             
         }
-        public List<Geometry> ConvertGeometry()
+        public List<RenderObject> CreateRenderObject()
         {
-            List<Geometry> geometrys = new List<Geometry>();
+            List<RenderObject> geometrys = new List<RenderObject>();
 
             foreach(var material in mtlList.Values)
             {
-                Geometry geometry = null;
+                RenderObject geometry = null;
                 var Position = new List<Vector3>();
                 var Normal = new List<Vector3>();
                 var TexCoord = new List<Vector2>();
@@ -412,8 +412,16 @@ namespace RenderApp.AssetModel.RA_Geometry
                     geometrys.Add(geometry);
                 }
             }
+            _renderObject = geometrys;
             return geometrys;
         }
-
+        private List<RenderObject> _renderObject;
+        public List<RenderObject> RenderObject
+        {
+            get
+            {
+                return _renderObject;
+            }
+        }
     }
 }

@@ -185,7 +185,7 @@ namespace RenderApp.ViewModel
             {
                 foreach (var filename in dlg.FileNames)
                 {
-                    List<Geometry> geometrys = AssetFactory.Instance.CreateLoad3DModel(filename);
+                    List<RenderObject> geometrys = AssetFactory.Instance.CreateLoad3DModel(filename);
                     foreach(var geometry in geometrys)
                     {
                         Project.ActiveProject.AddChild(AssetFactory.Instance.CreateGeometry(geometry));
@@ -276,7 +276,7 @@ namespace RenderApp.ViewModel
         private void CreatePlaneCommand()
         {
             Plane plane = new Plane(RAFile.GetNameFromType(EAssetType.Geometry));
-            AssetFactory.Instance.CreateGeometry(plane.geometry);
+            AssetFactory.Instance.CreateGeometry(plane.CreateRenderObject().First());
         }
         private void CreateWireFrameCommand()
         {

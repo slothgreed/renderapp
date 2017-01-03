@@ -27,17 +27,17 @@ namespace RenderApp.AssetModel
         public Geometry CreateEnvironmentMap()
         {
             return null;
-            string SphereMapAlbedo = ProjectInfo.TextureDirectory + @"\SphreMap.jpg";
-            string SphereMapVertexShader = ProjectInfo.ShaderDirectory + @"\sphereMap.vert";
-            string SphereMapFragmentShader = ProjectInfo.ShaderDirectory + @"\sphereMap.frag";
-            Sphere sphere = new Sphere("SphereMap",Scene.ActiveScene.WorldMax.X * 2, 20, 20, false, Vector3.UnitX);
-            sphere.geometry.MaterialItem = new Material("SphereMaterial");
-            Texture texture = TextureFactory.Instance.CreateTexture(SphereMapAlbedo);
-            sphere.geometry.MaterialItem.AddTexture(TextureKind.Albedo, texture);
-            sphere.geometry.MaterialItem.AddTexture(TextureKind.Albedo, texture);
-            Project.ActiveProject.AddChild(sphere.geometry.MaterialItem);
-            Project.ActiveProject.AddChild(texture);
-            return sphere.geometry;
+            //string SphereMapAlbedo = ProjectInfo.TextureDirectory + @"\SphreMap.jpg";
+            //string SphereMapVertexShader = ProjectInfo.ShaderDirectory + @"\sphereMap.vert";
+            //string SphereMapFragmentShader = ProjectInfo.ShaderDirectory + @"\sphereMap.frag";
+            //Sphere sphere = new Sphere("SphereMap",Scene.ActiveScene.WorldMax.X * 2, 20, 20, false, Vector3.UnitX);
+            //sphere.geometry.MaterialItem = new Material("SphereMaterial");
+            //Texture texture = TextureFactory.Instance.CreateTexture(SphereMapAlbedo);
+            //sphere.geometry.MaterialItem.AddTexture(TextureKind.Albedo, texture);
+            //sphere.geometry.MaterialItem.AddTexture(TextureKind.Albedo, texture);
+            //Project.ActiveProject.AddChild(sphere.geometry.MaterialItem);
+            //Project.ActiveProject.AddChild(texture);
+            //return sphere.geometry;
         }
 
         internal Camera CreateMainCamera()
@@ -137,27 +137,28 @@ namespace RenderApp.AssetModel
         }
         #endregion
 
-        internal Plane CreatePlane(string name, Shader shader)
+        internal Geometry CreatePlane(string name, Shader shader)
         {
             Plane plane;
             plane = new Plane(name);
-            plane.geometry.MaterialItem = new Material(name);
-            Project.ActiveProject.AddChild(plane.geometry.MaterialItem);
-            plane.geometry.MaterialItem.SetShader(shader);
-            return plane;
+            Geometry renderObject = plane.CreateRenderObject().First();
+            renderObject.MaterialItem = new Material(name);
+            Project.ActiveProject.AddChild(renderObject.MaterialItem);
+            renderObject.MaterialItem.SetShader(shader);
+            return renderObject;
         }
 
-        internal List<Geometry> CreateLoad3DModel(string filePath)
+        internal List<RenderObject> CreateLoad3DModel(string filePath)
         {
             string extension = System.IO.Path.GetExtension(filePath);
             switch (extension)
             {
                 case ".obj":
                     var obj = new CObjFile(RAFile.GetNameFromPath(filePath), filePath);
-                    return obj.ConvertGeometry();
+                    return obj.CreateRenderObject();
                 case ".stl":
                     var stl = new StlFile(RAFile.GetNameFromPath(filePath), filePath);
-                    return stl.ConvertGeometry();
+                    return stl.CreateRenderObject();
             }
             return null;
         }
