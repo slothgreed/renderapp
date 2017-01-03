@@ -16,6 +16,7 @@ using RenderApp.ViewModel.Dialog;
 using RenderApp.RA_Control;
 using RenderApp.Globals;
 using RenderApp.Render_System;
+using RenderApp.AssetModel.RA_Geometry;
 using RenderApp.ViewModel.Controller;
 namespace RenderApp.ViewModel
 {

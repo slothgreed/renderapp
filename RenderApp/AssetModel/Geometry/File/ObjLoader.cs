@@ -10,7 +10,7 @@ using OpenTK.Graphics.OpenGL;
 using System.Windows.Forms;
 using RenderApp.Analyzer;
 using RenderApp.GLUtil;
-namespace RenderApp.AssetModel
+namespace RenderApp.AssetModel.RA_Geometry
 {
     public class OBJMaterial : MaterialFileInfo
     {
@@ -34,7 +34,7 @@ namespace RenderApp.AssetModel
         public VertexArrayInfo vertexArrayInfo = new VertexArrayInfo();//ポリゴンのIndex情報を保持
     }
 
-    public class CObjFile : GeometryFile
+    public class CObjFile : RAFile , IConvertGeometry
     {
         /// <summary>
         /// 頂点・色・テクスチャ座標を保持。
@@ -376,7 +376,7 @@ namespace RenderApp.AssetModel
             return mat;
             
         }
-        public override List<Geometry> ConvertGeometry()
+        public List<Geometry> ConvertGeometry()
         {
             List<Geometry> geometrys = new List<Geometry>();
 
@@ -405,7 +405,7 @@ namespace RenderApp.AssetModel
                     }
                 }
 
-                geometry = new Primitive(material.name, Position, Normal, TexCoord, PrimitiveType.Triangles);
+                geometry = new RenderObject(material.name, Position, Normal, TexCoord, PrimitiveType.Triangles);
                 geometry.MaterialItem = CreateMaterial(material);
                 if (geometry != null)
                 {

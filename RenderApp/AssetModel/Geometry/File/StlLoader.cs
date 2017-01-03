@@ -7,15 +7,14 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Windows.Forms;
 using RenderApp.Analyzer;
-using System.IO;
-namespace RenderApp.AssetModel
+namespace RenderApp.AssetModel.RA_Geometry
 {
     /// <summary>
     /// STLのローダ現在テキストファイルのみ
     /// </summary>
-    public class StlFile : GeometryFile
+    public class StlFile : RAFile,IConvertGeometry
     {
-        public GeometryInfo geometryInfo;
+        VertexInfo vertexInfo;
         /// <summary>
         /// STLのローダ。
         /// </summary>
@@ -27,11 +26,10 @@ namespace RenderApp.AssetModel
         {
             try
             {
-                var data = new GeometryInfo();
+                vertexInfo = new VertexInfo();
                 String[] parser = File.ReadAllLines(filePath, System.Text.Encoding.GetEncoding("Shift_JIS"));
-                ReadData(data,parser);
+                ReadData(vertexInfo, parser);
 
-                geometryInfo = new GeometryInfo();
                 //HalfEdge half = new HalfEdge(Position);
                 ////position;
                 //Position.Clear();
@@ -58,7 +56,7 @@ namespace RenderApp.AssetModel
         /// <param name="parser">STLデータ</param>
         /// <param name="position">位置情報を格納</param>
         /// <param name="normal">法線情報を格納</param>
-        private void ReadData(GeometryInfo data,String[] parser)
+        private void ReadData(VertexInfo data,String[] parser)
         {
             try
             {
@@ -126,9 +124,11 @@ namespace RenderApp.AssetModel
             write.Close();
         }
 
-        public override List<Geometry> ConvertGeometry()
+        public List<Geometry> ConvertGeometry()
         {
-            return null;
+            Geometry geometry = new RenderObject(FileName, vertexInfo.Position, vertexInfo.Normal, PrimitiveType.Triangles);
+
+            return new List<Geometry>() { geometry };
         }
     }
 }

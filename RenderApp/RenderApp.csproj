@@ -145,6 +145,7 @@
     <Compile Include="AssetModel\AssetFactory.cs" />
     <Compile Include="AssetModel\Geometry\File\GeometryFile.cs" />
     <Compile Include="AssetModel\Geometry\File\MaterialFileInfo.cs" />
+    <Compile Include="AssetModel\Geometry\IConvertGeometry.cs" />
     <Compile Include="GLUtil\Buffer\ArrayBuffer.cs" />
     <Compile Include="GLUtil\Buffer\BufferObject.cs" />
     <Compile Include="GLUtil\Buffer\RenderBuffer.cs" />
@@ -170,7 +171,7 @@
     <Compile Include="GLUtil\ShaderModel\ShaderFactory.cs" />
     <Compile Include="Utility\Output.cs" />
     <Compile Include="AssetModel\EnvironmentProbe.cs" />
-    <Compile Include="AssetModel\Geometry\File\GeometryInfo.cs" />
+    <Compile Include="AssetModel\Geometry\File\VertexInfo.cs" />
     <Compile Include="GLUtil\ShaderModel\ShaderProgramInfo.cs" />
     <Compile Include="Globals\Enum.cs" />
     <Compile Include="GLUtil\TextureFactory.cs" />
@@ -265,8 +266,7 @@
     <Compile Include="GLUtil\ShaderModel\ShaderProgram.cs" />
     <Compile Include="Scene\Shader\Bezier\Bezier.cs" />
     <Compile Include="Render_System\RenderPassFactory.cs" />
-    <Compile Include="AssetModel\Geometry\Primitive\Space.cs" />
-    <Compile Include="AssetModel\Geometry\Primitive\Primitive.cs" />
+    <Compile Include="AssetModel\Geometry\RenderObject.cs" />
     <Compile Include="View\PropertyGrid.cs" />
     <Compile Include="View\Controller\VoxelView.xaml.cs">
       <DependentUpon>VoxelView.xaml</DependentUpon>

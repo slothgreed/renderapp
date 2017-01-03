@@ -10,6 +10,7 @@ using OpenTK;
 using RenderApp.Utility;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.Globals;
+using RenderApp.AssetModel.RA_Geometry;
 namespace RenderApp.AssetModel
 {
     class AssetFactory
@@ -92,7 +93,7 @@ namespace RenderApp.AssetModel
                 position.Add(geometry.Position[3 * i]);
 
             }
-            Geometry wireframe = new Primitive("WireFrame :" + geometry.Key, position, RACalc.RandomColor(), PrimitiveType.Lines);
+            Geometry wireframe = new RenderObject("WireFrame :" + geometry.Key, position, RACalc.RandomColor(), PrimitiveType.Lines);
             CreateGeometry(wireframe);
 
             return true;
@@ -106,7 +107,7 @@ namespace RenderApp.AssetModel
             Geometry geometry = asset as Geometry;
             List<Vector3> position = new List<Vector3>(geometry.Position);
             List<Vector3> normal = new List<Vector3>(geometry.Normal);
-            Geometry polygon = new Primitive("Polygon :" + geometry.Key, position, normal, new Vector3(0.7f, 0.7f, 0.7f), PrimitiveType.Triangles);
+            Geometry polygon = new RenderObject("Polygon :" + geometry.Key, position, normal, new Vector3(0.7f, 0.7f, 0.7f), PrimitiveType.Triangles);
             CreateGeometry(polygon);
 
             return true;
@@ -119,7 +120,7 @@ namespace RenderApp.AssetModel
             }
             Geometry geometry = asset as Geometry;
             Analyzer.Voxel voxel = new Analyzer.Voxel(geometry.Position, geometry.Index, geometry.ModelMatrix, partition);
-            Geometry wireframe = new Primitive("Voxel :" + geometry.Key, voxel.vPosition, voxel.vNormal, RACalc.RandomColor(), PrimitiveType.Quads);
+            Geometry wireframe = new RenderObject("Voxel :" + geometry.Key, voxel.vPosition, voxel.vNormal, RACalc.RandomColor(), PrimitiveType.Quads);
             CreateGeometry(wireframe);
 
             return true;

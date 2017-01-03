@@ -6,21 +6,35 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.Utility;
-namespace RenderApp.AssetModel
+namespace RenderApp.AssetModel.RA_Geometry
 {
-    class Axis : VertexInfo
+    class Axis : IConvertGeometry
     {
+        public Vector3 Min
+        {
+            get;
+            set;
+        }
+        public Vector3 Max
+        {
+            get;
+            set;
+        }
         public Axis(string name,Vector3 min, Vector3 max)
         {
-            SetObjectData(min, max);
+            Min = min;
+            Max = max;
         }
-        private void SetObjectData(Vector3 min, Vector3 max)
+
+        public List<Geometry> ConvertGeometry()
         {
-            Position.Add(new Vector3(max.X, 0.0f, 0.0f));
+            List<Vector3> Position = new List<Vector3>();
+            List<Vector3> Color = new List<Vector3>();
+            Position.Add(new Vector3(Max.X, 0.0f, 0.0f));
             Position.Add(new Vector3(0.0f, 0.0f, 0.0f));
-            Position.Add(new Vector3(0.0f, max.Y, 0.0f));
+            Position.Add(new Vector3(0.0f, Max.Y, 0.0f));
             Position.Add(new Vector3(0.0f, 0.0f, 0.0f));
-            Position.Add(new Vector3(0.0f, 0.0f, max.Z));
+            Position.Add(new Vector3(0.0f, 0.0f, Max.Z));
             Position.Add(new Vector3(0.0f, 0.0f, 0.0f));
 
             Color.Add(new Vector3(1, 0, 0));
@@ -30,6 +44,7 @@ namespace RenderApp.AssetModel
             Color.Add(new Vector3(0, 0, 1));
             Color.Add(new Vector3(0, 0, 1));
 
+            return new List<Geometry>() { new RenderObject("axis",Position, Color, PrimitiveType.Lines)};
         }
     }
 }

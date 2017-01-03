@@ -7,6 +7,7 @@ using OpenTK;
 using RenderApp;
 using RenderApp.Utility;
 using RenderApp.AssetModel;
+using RenderApp.AssetModel.RA_Geometry;
 using RenderApp.GLUtil;
 using RenderApp.Globals;
 using RenderApp.Analyzer;
@@ -50,10 +51,10 @@ namespace RenderApp.RA_Control
                         tri1 += normal * 0.01f;
                         tri2 += normal * 0.01f;
                         tri3 += normal * 0.01f;
-                        var picking = Scene.ActiveScene.FindObject("Picking") as Primitive;
+                        var picking = Scene.ActiveScene.FindObject("Picking") as RenderObject;
                         if (picking == null)
                         {
-                            Primitive triangle = new Primitive("Picking", new List<Vector3>() { tri1, tri2, tri3 }, RACalc.RandomColor(), OpenTK.Graphics.OpenGL.PrimitiveType.Triangles);
+                            RenderObject triangle = new RenderObject("Picking", new List<Vector3>() { tri1, tri2, tri3 }, RACalc.RandomColor(), OpenTK.Graphics.OpenGL.PrimitiveType.Triangles);
                             AssetFactory.Instance.CreateGeometry(triangle);
                         }
                         else if (picking.TriangleNum == 2)

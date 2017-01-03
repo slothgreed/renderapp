@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.GLUtil.Buffer;
-namespace RenderApp.AssetModel
+namespace RenderApp.AssetModel.RA_Geometry
 {
     /// <summary>
     /// 任意形状(triangle,quad,line,patchのみ対応)
     /// </summary>
-    public class Primitive : Geometry
+    public class RenderObject : Geometry
     {
         private void Initialize()
         {
@@ -52,7 +52,7 @@ namespace RenderApp.AssetModel
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public Primitive(string name,List<Vector3> position,List<Vector3> normal,List<Vector3> color,PrimitiveType prim)
+        public RenderObject(string name,List<Vector3> position,List<Vector3> normal,List<Vector3> color,PrimitiveType prim)
             :base(name,prim)
         {
             Position = new List<Vector3>(position);
@@ -63,7 +63,7 @@ namespace RenderApp.AssetModel
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public Primitive(string name, List<Vector3> position, PrimitiveType prim)
+        public RenderObject(string name, List<Vector3> position, PrimitiveType prim)
             : base(name, prim)
         {
             Position = new List<Vector3>(position);
@@ -73,7 +73,7 @@ namespace RenderApp.AssetModel
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public Primitive(string name, List<Vector3> position, List<Vector3> normal, PrimitiveType prim)
+        public RenderObject(string name, List<Vector3> position, List<Vector3> normal, PrimitiveType prim)
             : base(name, prim)
         {
             Position = new List<Vector3>(position);
@@ -87,7 +87,7 @@ namespace RenderApp.AssetModel
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public Primitive(string name, List<Vector3> position, List<Vector3> normal, Vector3 color, PrimitiveType prim)
+        public RenderObject(string name, List<Vector3> position, List<Vector3> normal, Vector3 color, PrimitiveType prim)
             : base(name, prim)
         {
             Position = new List<Vector3>(position);
@@ -101,7 +101,7 @@ namespace RenderApp.AssetModel
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public Primitive(string name, List<Vector3> position, Vector3 color, PrimitiveType prim)
+        public RenderObject(string name, List<Vector3> position, Vector3 color, PrimitiveType prim)
             : base(name, prim)
         {
             Position = position;
@@ -112,7 +112,7 @@ namespace RenderApp.AssetModel
             }
             Initialize();
         }
-        public Primitive(string name,List<Vector3> position, List<Vector3> normal,List<Vector2> texcoord,PrimitiveType prim = PrimitiveType.Triangles)
+        public RenderObject(string name,List<Vector3> position, List<Vector3> normal,List<Vector2> texcoord,PrimitiveType prim = PrimitiveType.Triangles)
             :base(name,prim)
         {
             Position = position;
@@ -125,7 +125,7 @@ namespace RenderApp.AssetModel
             TexCoord = texcoord;
             Initialize();
         }
-        public Primitive(string name, List<Vector3> position, List<Vector2> texcoord, PrimitiveType prim)
+        public RenderObject(string name, List<Vector3> position, List<Vector2> texcoord, PrimitiveType prim)
             : base(name, prim)
         {
             //TODO:Normal

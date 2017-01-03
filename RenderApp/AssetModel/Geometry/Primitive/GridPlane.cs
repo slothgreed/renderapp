@@ -6,39 +6,48 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.Utility;
-namespace RenderApp.AssetModel
+namespace RenderApp.AssetModel.RA_Geometry
 {
-    class GridPlane : VertexInfo
+    class GridPlane
     {
-
         /// <summary>
         /// グリッドの範囲
         /// </summary>
-        private float m_Area;
+        public float Area
+        {
+            get;
+            set;
+        }
         /// <summary>
         /// グリッドの幅
         /// </summary>
-        private float m_Space;
+        public float Space
+        {
+            get;
+            set;
+        }
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public GridPlane(string name,float Area,float Space)
+        public GridPlane(string name,float area,float space)
         {
-            m_Area = Area;
-            m_Space = Space;
+            Area = area;
+            Space = space;
         }
         
 
-        private void SetObjectData()
+        public List<Geometry> ConvertGeometry()
         {
+            List<Vector3> Position = new List<Vector3>();
+            List<Vector3> Color = new List<Vector3>();
 
             Vector3 line_start1 = new Vector3();
             Vector3 line_fin1 = new Vector3();
             Vector3 line_start2 = new Vector3();
             Vector3 line_fin2 = new Vector3();
-            float world = m_Area;
+            float world = Area;
 
-            for (float i = -world; i < world; i+=m_Space)
+            for (float i = -world; i < world; i+=Space)
             {
                 if (i != 0)
                 {
@@ -58,14 +67,8 @@ namespace RenderApp.AssetModel
                     Color.Add(new Vector3(1.0f,1.0f,1.0f));
                 }
             }
+            Geometry geometry = new RenderObject("gridPlane",Position, Color, PrimitiveType.Triangles);
+            return new List<Geometry>(){geometry};
         }
-
-        public void Remake(float Area, float Space)
-        {
-            m_Area = Area;
-            m_Space = Space;
-            SetObjectData();
-        }
-
     }
 }

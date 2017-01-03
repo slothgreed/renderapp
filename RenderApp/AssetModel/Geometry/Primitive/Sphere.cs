@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-namespace RenderApp.AssetModel
+namespace RenderApp.AssetModel.RA_Geometry
 {
     public class Sphere : VertexInfo
     {
@@ -188,7 +188,7 @@ namespace RenderApp.AssetModel
                 }
             }
 
-            geometry = new Primitive("Sphere", Position, Normal, TexCoord, PrimitiveType.Triangles);
+            geometry = new RenderObject("Sphere", Position, Normal, TexCoord, PrimitiveType.Triangles);
             geometry.ConvertVertexArray();
             
         }
