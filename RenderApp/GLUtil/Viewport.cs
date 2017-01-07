@@ -40,7 +40,7 @@ namespace RenderApp.GLUtil
             {
                 if (_renderSystem == null)
                 {
-                    _renderSystem = new RenderSystem(Width, Height);
+                    _renderSystem = new RenderSystem(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
                 }
                 return _renderSystem;
             }
@@ -78,20 +78,6 @@ namespace RenderApp.GLUtil
         public event CreateViewportHandler OnCreateViewportEvent;
         #endregion
 
-        public int Width
-        {
-            get
-            {
-               return glControl.Width;
-            }
-        }
-        public int Height
-        {
-            get
-            {
-                return glControl.Height;
-            }
-        }
         #region [initialize method]
         private Viewport()
         {
@@ -139,18 +125,7 @@ namespace RenderApp.GLUtil
         //glControlの起動時に実行される。
         private void glControl_Load(object sender, EventArgs e)
         {
-            GL.ClearColor(1,0,0,1);
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            GL.Enable(EnableCap.DepthTest);
-            GL.Enable(EnableCap.CullFace);
-            GL.Enable(EnableCap.AlphaTest);
-            
-            GL.FrontFace(FrontFaceDirection.Ccw);//反時計回り
-            GL.Enable(EnableCap.PolygonOffsetFill);
-            GL.Enable(EnableCap.Texture2D);
-            GL.PolygonOffset(1.0f, 1.0f);
-            GL.CullFace(CullFaceMode.Back);
-            GL.Viewport(0, 0, m_glControl.Size.Width, m_glControl.Size.Height);
+            DeviceContext.Instance.Initialize(m_glControl.Size.Width,m_glControl.Size.Height);
             Scene.Create("MainScene");
             Scene.ActiveScene.Initialize();
             m_AppstartUp = true;
@@ -163,8 +138,9 @@ namespace RenderApp.GLUtil
         {
             if (m_AppstartUp)
             {
-                Scene.ActiveScene.MainCamera.SetProjMatrix((float)m_glControl.Size.Width / m_glControl.Size.Height);
-                GL.Viewport(0, 0, m_glControl.Size.Width, m_glControl.Size.Height);
+                DeviceContext.Instance.SizeChanged(m_glControl.Size.Width, m_glControl.Size.Height);
+                Scene.ActiveScene.MainCamera.SetProjMatrix((float)DeviceContext.Instance.Width / DeviceContext.Instance.Height);
+                DeviceContext.Instance.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
                 RenderSystem.SizeChanged(m_glControl.Size.Width, m_glControl.Size.Height);
                 Output.GLLog(Output.LogLevel.Error);
                 glControl_Paint(null, null);
@@ -183,7 +159,7 @@ namespace RenderApp.GLUtil
             {
                 return;
             }
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            DeviceContext.Instance.Clear();
             RenderSystem.Render();
             m_NowRender = true;
             m_glControl.SwapBuffers();

@@ -141,11 +141,12 @@ namespace RenderApp.GLUtil.ShaderModel
         }
         #endregion
         #region [bind buffer]
+        private int ActiveTextureCounter;
         public void BindBuffer(Geometry geometry)
         {
             GL.UseProgram(Program);
 
-            int activeCount = 0;
+            ActiveTextureCounter = 0;
             foreach (ShaderProgramInfo loop in _shaderVariable.Values)
             {
                 if (loop.ShaderID == -1)
@@ -154,7 +155,7 @@ namespace RenderApp.GLUtil.ShaderModel
                 }
                 if (loop.shaderVariableType == EShaderVariableType.Uniform)
                 {
-                    BindUniformState(loop, ref activeCount);
+                    BindUniformState(loop, ref ActiveTextureCounter);
                 }
                 if (loop.shaderVariableType == EShaderVariableType.Attribute)
                 {
@@ -173,6 +174,11 @@ namespace RenderApp.GLUtil.ShaderModel
                         GL.DisableVertexAttribArray(loop.ShaderID);
                     }
                 }
+            }
+            for (int i = 0; i < ActiveTextureCounter; i++)
+            {
+                GL.ActiveTexture(TextureUnit.Texture0 + i);
+                GL.BindTexture(TextureTarget.Texture2D, 0);
             }
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
@@ -324,10 +330,10 @@ namespace RenderApp.GLUtil.ShaderModel
                         info.variable = geometry.ID;
                         break;
                     case "uWidth":
-                        info.variable = Viewport.Instance.Width;
+                        info.variable = DeviceContext.Instance.Width;
                         break;
                     case "uHeight":
-                        info.variable = Viewport.Instance.Height;
+                        info.variable = DeviceContext.Instance.Height;
                         break;
                     case "uMVP":
                         Matrix4 vp = Scene.ActiveScene.MainCamera.CameraProjMatrix;

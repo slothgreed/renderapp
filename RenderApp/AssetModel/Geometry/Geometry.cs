@@ -196,11 +196,11 @@ namespace RenderApp.AssetModel
             MaterialItem.BindShader(this);
             if (Index.Count == 0)
             {
-                GL.DrawArrays(RenderType, 0, Position.Count);
+                DeviceContext.Instance.DrawArrays(RenderType, 0, Position.Count);
             }
             else
             {
-                GL.DrawElements(RenderType, Index.Count, DrawElementsType.UnsignedInt, 0);
+                DeviceContext.Instance.DrawElements(RenderType, Index.Count, DrawElementsType.UnsignedInt, 0);
             }
             MaterialItem.UnBindShader();
             Output.GLLog(Output.LogLevel.Error);

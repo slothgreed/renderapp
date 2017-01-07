@@ -110,13 +110,15 @@ namespace RenderApp.Render_System
         }
         public void Picking(int x, int y)
         {
-            GL.BindFramebuffer(FramebufferTarget.Framebuffer, GBufferStage.DeviceID);
+            GBufferStage.BindBuffer();
+
             GL.ReadBuffer(ReadBufferMode.ColorAttachment1);
             IntPtr ptr = IntPtr.Zero;
             float[] pixels = new float[4];
             GL.ReadPixels(x, y, 1, 1, PixelFormat.Rgba, PixelType.Float, pixels);
             GL.ReadBuffer(ReadBufferMode.None);
-            GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+            GBufferStage.UnBindBuffer();
+
             int id = (int)(pixels[3] * 255);
             foreach(var geometryNode in Scene.ActiveScene.RootNode.AllChildren())
             {

@@ -246,11 +246,11 @@ namespace RenderApp
 
             //Geometry map = AssetFactory.Instance.CreateEnvironmentMap();
             //AddRootSceneObject(map);
-            List<RenderObject> sponzas = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/crytek-sponza/sponza.obj");
-            foreach (var sponza in sponzas)
-            {
-                AddRootSceneObject(sponza);
-            }
+            //List<RenderObject> sponzas = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/crytek-sponza/sponza.obj");
+            //foreach (var sponza in sponzas)
+            //{
+            //    AddRootSceneObject(sponza);
+            //}
             List<RenderObject> ducks = AssetFactory.Instance.CreateLoad3DModel("C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/duck/duck.obj");
             foreach(var duck in ducks)
             {
@@ -322,8 +322,8 @@ namespace RenderApp
             int[] viewport = new int[4];
             viewport[0] = 0;
             viewport[1] = 0;
-            viewport[2] = Viewport.Instance.Width;
-            viewport[3] = Viewport.Instance.Height;
+            viewport[2] = DeviceContext.Instance.Width;
+            viewport[3] = DeviceContext.Instance.Height;
             RACalc.GetClipPos(MainCamera.Matrix, MainCamera.ProjMatrix, viewport, mouse, out near, out far);
             Geometry geometry;
             foreach (RANode geometryNode in RootNode.AllChildren())
