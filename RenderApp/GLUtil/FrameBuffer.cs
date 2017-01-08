@@ -105,7 +105,7 @@ namespace RenderApp.GLUtil
             if (DeviceID != -1)
             {
                 BindBuffer();
-                GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+                DeviceContext.Instance.Clear();
                 UnBindBuffer();
             }
         }

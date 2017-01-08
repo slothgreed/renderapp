@@ -18,9 +18,11 @@ namespace RenderApp.GLUtil
                 return _instance;
             }
         }
+        public Dictionary<string, Texture> TextureList = new Dictionary<string, Texture>();
         public Texture CreateTexture(string path)
         {
             string extension = System.IO.Path.GetExtension(path);
+            extension = extension.ToLower();
             ImageKind kind = ImageKind.None;
             switch (extension)
             {
@@ -42,6 +44,10 @@ namespace RenderApp.GLUtil
         }
         public Texture CreateTexture(string path, ImageKind kind)
         {
+            if(TextureList.ContainsKey(path))
+            {
+                return TextureList[path];
+            }
             RAImageInfo image = null;
             switch (kind)
             {
@@ -56,7 +62,8 @@ namespace RenderApp.GLUtil
                 default:
                     return null;
             }
-            Texture texture = texture = new Texture(RAFile.GetNameFromPath(path), path);
+            Texture texture = new Texture(RAFile.GetNameFromPath(path), path);
+            TextureList.Add(path, texture);
             texture.LoadTexture(image);
             Project.ActiveProject.AddChild(texture);
             return texture;

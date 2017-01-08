@@ -67,7 +67,8 @@ namespace RenderApp.AssetModel.RA_Geometry
                     Color.Add(Vector3.One);
                 }
             }
-            RenderObject geometry = new RenderObject("gridPlane", Position, Color, PrimitiveType.Triangles);
+            RenderObject geometry = new RenderObject("gridPlane");
+            geometry.CreatePC(Position, Color, PrimitiveType.Triangles);
             _renderObject = new List<RenderObject>() { geometry };
             return _renderObject;
         }

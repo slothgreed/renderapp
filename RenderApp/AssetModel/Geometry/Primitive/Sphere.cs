@@ -188,7 +188,8 @@ namespace RenderApp.AssetModel.RA_Geometry
                 }
             }
 
-            geometry = new RenderObject("Sphere", Position, Normal, TexCoord, PrimitiveType.Triangles);
+            RenderObject geometry = new RenderObject("Sphere");
+            geometry.CreatePNT(Position, Normal, TexCoord, PrimitiveType.Triangles);
             geometry.ConvertVertexArray();
             
         }

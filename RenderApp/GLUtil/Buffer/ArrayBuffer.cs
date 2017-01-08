@@ -21,6 +21,7 @@ namespace RenderApp.GLUtil.Buffer
    
     public class ArrayBuffer : BufferObject
     {
+
         public BufferUsageHint UsageHint
         {
             get;
@@ -46,10 +47,12 @@ namespace RenderApp.GLUtil.Buffer
         {
             Target = BufferTarget.ArrayBuffer;
             UsageHint = BufferUsageHint.StaticDraw;
+            Enable = true;
         }
         public ArrayBuffer(BufferTarget target)
         {
             Target = target;
+            Enable = true;
         }
         public override void PreGenBuffer()
         {

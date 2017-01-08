@@ -30,7 +30,7 @@ namespace RenderApp.AssetModel
         public ArrayBuffer ColorBuffer { get; protected set; }
         
         public List<Vector2> TexCoord { get; protected set; }
-        public ArrayBuffer TexBuffer { get; protected set; }
+        public ArrayBuffer TexCoordBuffer { get; protected set; }
 
         public List<int> Index { get; protected set; }
         public ArrayBuffer IndexBuffer { get; protected set; }

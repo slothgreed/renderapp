@@ -15,6 +15,11 @@ namespace RenderApp.GLUtil
         public abstract void PreBindBuffer();
         public abstract void PreUnBindBuffer();
 
+        public bool Enable
+        {
+            get;
+            set;
+        }
         public virtual void GenBuffer()
         {
             if (DeviceID != -1)

@@ -43,7 +43,7 @@ namespace RenderApp.GLUtil
         }
         public void Initialize(int width,int height)
         {
-            GL.ClearColor(1, 0, 0, 1);
+            GL.ClearColor(1, 1, 0, 1);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             Enable(EnableCap.DepthTest);
             Enable(EnableCap.CullFace);

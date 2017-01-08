@@ -50,12 +50,19 @@ namespace RenderApp.AssetModel.RA_Geometry
                 Vector2.UnitY,
                 Vector2.UnitX + Vector2.UnitY
             };
-            var front = new RenderObject("Front", new List<Vector3> { v0, v3, v2, v1 }, PrimitiveType.Quads);
-            var left = new RenderObject("Left", new List<Vector3> { v0, v4, v7, v3 }, PrimitiveType.Quads);
-            var back = new RenderObject("Back", new List<Vector3> { v4, v5, v6, v7 }, PrimitiveType.Quads);
-            var right = new RenderObject("Right", new List<Vector3> { v1, v2, v6, v5 }, PrimitiveType.Quads);
-            var top = new RenderObject("Top", new List<Vector3> { v2, v3, v7, v6 }, PrimitiveType.Quads);
-            var bottom = new RenderObject("Bottom", new List<Vector3> { v1, v5, v4, v0 }, PrimitiveType.Quads);
+            var front = new RenderObject("Front");
+            var left = new RenderObject("Left");
+            var back = new RenderObject("Back");
+            var right = new RenderObject("Right");
+            var top = new RenderObject("Top");
+            var bottom = new RenderObject("Bottom");
+
+            front.CreateP(new List<Vector3> { v0, v3, v2, v1 }, PrimitiveType.Quads);
+            front.CreateP(new List<Vector3> { v0, v4, v7, v3 }, PrimitiveType.Quads);
+            front.CreateP(new List<Vector3> { v4, v5, v6, v7 }, PrimitiveType.Quads);
+            front.CreateP(new List<Vector3> { v1, v2, v6, v5 }, PrimitiveType.Quads);
+            front.CreateP(new List<Vector3> { v2, v3, v7, v6 }, PrimitiveType.Quads);
+            front.CreateP(new List<Vector3> { v1, v5, v4, v0 }, PrimitiveType.Quads);
 
             geometry.Add(front);
             geometry.Add(left);

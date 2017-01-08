@@ -37,9 +37,9 @@ namespace RenderApp.AssetModel
             }
             if (TexCoord.Count != 0)
             {
-                TexBuffer = new ArrayBuffer();
-                TexBuffer.GenBuffer();
-                TexBuffer.SetData(TexCoord, EArrayType.Vec2Array);
+                TexCoordBuffer = new ArrayBuffer();
+                TexCoordBuffer.GenBuffer();
+                TexCoordBuffer.SetData(TexCoord, EArrayType.Vec2Array);
             }
             if(Index.Count != 0)
             {
@@ -48,36 +48,49 @@ namespace RenderApp.AssetModel
                 IndexBuffer.SetData(Index, EArrayType.IntArray);
             }
         }
-        public string m_Name = "";
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public RenderObject(string name,List<Vector3> position,List<Vector3> normal,List<Vector3> color,PrimitiveType prim)
-            :base(name,prim)
+        public RenderObject(string name)
+            :base(name)
+        {
+        }
+        public void CreatePNC(List<Vector3> position, List<Vector3> normal, List<Vector3> color, PrimitiveType prim)
         {
             Position = new List<Vector3>(position);
             Normal = new List<Vector3>(normal);
             Color = new List<Vector3>(color);
             Initialize();
         }
+        internal void CreatePNC(List<Vector3> position, List<Vector3> normal, Vector3 color, PrimitiveType prim)
+        {
+            Position = new List<Vector3>(position);
+            Normal = new List<Vector3>(normal);
+            for (int i = 0; i < Position.Count; i++)
+            {
+                Color.Add(Vector3.UnitY);
+            } 
+            Initialize();
+        }
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public RenderObject(string name, List<Vector3> position, PrimitiveType prim)
-            : base(name, prim)
+        public void CreateP(List<Vector3> position, PrimitiveType prim)
         {
             Position = new List<Vector3>(position);
+            RenderType = prim;
             CalcNormal(Position, prim);
             Initialize();
         }
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public RenderObject(string name, List<Vector3> position, List<Vector3> normal, PrimitiveType prim)
-            : base(name, prim)
+        public void CreatePN(List<Vector3> position, List<Vector3> normal, PrimitiveType prim)
         {
             Position = new List<Vector3>(position);
             Normal = new List<Vector3>(normal);
+            RenderType = prim;
             for (int i = 0; i < Position.Count; i++)
             {
                 Color.Add(Vector3.UnitY);
@@ -87,11 +100,11 @@ namespace RenderApp.AssetModel
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public RenderObject(string name, List<Vector3> position, List<Vector3> normal, Vector3 color, PrimitiveType prim)
-            : base(name, prim)
+        public void CreatePNC(string name, List<Vector3> position, List<Vector3> normal, Vector3 color, PrimitiveType prim)
         {
             Position = new List<Vector3>(position);
             Normal = new List<Vector3>(normal);
+            RenderType = prim;
             for (int i = 0; i < Position.Count; i++)
             {
                 Color.Add(color);
@@ -101,41 +114,52 @@ namespace RenderApp.AssetModel
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public RenderObject(string name, List<Vector3> position, Vector3 color, PrimitiveType prim)
-            : base(name, prim)
+        public void CreatePNC(string name, List<Vector3> position, List<Vector3> normal, List<Vector3> color, PrimitiveType prim)
+        {
+            Position = new List<Vector3>(position);
+            Normal = new List<Vector3>(normal);
+            Color = new List<Vector3>(color);
+            RenderType = prim;
+            Initialize();
+        }
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public void CreatePC(List<Vector3> position, Vector3 color, PrimitiveType prim)
         {
             Position = position;
-            CalcNormal(Position, prim); 
+            RenderType = prim;
             for (int i = 0; i < Position.Count; i++)
             {
                 Color.Add(color);
             }
             Initialize();
         }
-        public RenderObject(string name,List<Vector3> position, List<Vector3> normal,List<Vector2> texcoord,PrimitiveType prim = PrimitiveType.Triangles)
-            :base(name,prim)
+        internal void CreatePC(List<Vector3> position, List<Vector3> color, PrimitiveType prim)
+        {
+            Position = new List<Vector3>(position);
+            Color = new List<Vector3>(color);
+            RenderType = prim;
+            Initialize();
+        }
+        public void CreatePNT(List<Vector3> position, List<Vector3> normal,List<Vector2> texcoord,PrimitiveType prim)
         {
             Position = position;
             Normal = normal;
-            Vector3 color = Utility.RACalc.RandomColor();
-            for (int i = 0; i < Position.Count; i++)
+            if(Normal.Count == 0)
             {
-                Color.Add(color);
+                CalcNormal(position, prim);
             }
+            RenderType = prim;
             TexCoord = texcoord;
             Initialize();
         }
-        public RenderObject(string name, List<Vector3> position, List<Vector2> texcoord, PrimitiveType prim)
-            : base(name, prim)
+
+        public void CreatePT(List<Vector3> position, List<Vector2> texcoord, PrimitiveType prim)
         {
-            //TODO:Normal
             Position = position;
             TexCoord = texcoord;
-            CalcNormal(Position,prim);
-            for (int i = 0; i < Position.Count; i++)
-            {
-                Color.Add(Vector3.UnitY);
-            }
+            CalcNormal(position, prim);
             Initialize();
         }
         private void CalcNormal(List<Vector3> position,PrimitiveType prim)
@@ -144,7 +168,7 @@ namespace RenderApp.AssetModel
             {
                 for(int i = 0; i < position.Count; i+=3)
                 {
-                    Vector3 normal = Vector3.Cross(position[0] - position[1], position[2] - position[1]);
+                    Vector3 normal = Vector3.Cross( position[i + 2] - position[i + 1],position[i] - position[i + 1]).Normalized();
                     Normal.Add(normal);
                     Normal.Add(normal);
                     Normal.Add(normal);
@@ -152,7 +176,7 @@ namespace RenderApp.AssetModel
             }else{
                 for (int i = 0; i < position.Count; i+=4)
                 {
-                    Vector3 normal = Vector3.Cross(position[0] - position[1], position[2] - position[1]).Normalized();
+                    Vector3 normal = Vector3.Cross(position[i + 2] - position[i + 1], position[i] - position[i + 1]).Normalized();
                     Normal.Add(normal);
                     Normal.Add(normal);
                     Normal.Add(normal);
@@ -190,6 +214,10 @@ namespace RenderApp.AssetModel
                 Color.Add(_color);
             }
         }
-        
+
+
+
+
+
     }
 }

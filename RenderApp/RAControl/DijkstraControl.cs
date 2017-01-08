@@ -54,7 +54,8 @@ namespace RenderApp.RA_Control
                         var picking = Scene.ActiveScene.FindObject("Picking") as RenderObject;
                         if (picking == null)
                         {
-                            RenderObject triangle = new RenderObject("Picking", new List<Vector3>() { tri1, tri2, tri3 }, RACalc.RandomColor(), OpenTK.Graphics.OpenGL.PrimitiveType.Triangles);
+                            RenderObject triangle = new RenderObject("Picking");
+                            triangle.CreatePC(new List<Vector3>() { tri1, tri2, tri3 }, RACalc.RandomColor(), OpenTK.Graphics.OpenGL.PrimitiveType.Triangles);
                             AssetFactory.Instance.CreateGeometry(triangle);
                         }
                         else if (picking.TriangleNum == 2)

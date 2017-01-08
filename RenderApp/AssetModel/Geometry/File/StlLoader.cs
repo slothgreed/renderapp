@@ -114,8 +114,8 @@ namespace RenderApp.AssetModel.RA_Geometry
 
         public List<RenderObject> CreateRenderObject()
         {
-            RenderObject geometry = new RenderObject(FileName, vertexInfo.Position, vertexInfo.Normal, PrimitiveType.Triangles);
-
+            RenderObject geometry = new RenderObject(FileName);
+            geometry.CreatePN(vertexInfo.Position, vertexInfo.Normal, PrimitiveType.Triangles);
             _renderObject = new List<RenderObject>() { geometry };
             return _renderObject;
         }

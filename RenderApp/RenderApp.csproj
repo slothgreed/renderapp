@@ -165,6 +165,7 @@
     <Compile Include="Render_System\Post_Effect\SSAO.cs" />
     <Compile Include="Core\RANode.cs" />
     <Compile Include="RAControl\CameraControl.cs" />
+    <Compile Include="Utility\ShaderCreater.cs" />
     <Compile Include="ViewModel\Converter\EnumConverter.cs" />
     <Compile Include="Globals\Project.cs" />
     <Compile Include="GLUtil\ShaderModel\ShaderFactory.cs" />

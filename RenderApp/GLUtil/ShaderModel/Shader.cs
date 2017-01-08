@@ -84,6 +84,72 @@ namespace RenderApp.GLUtil.ShaderModel
             }
         }
         #endregion
+        public bool ExistShaderProgram(ShaderProgram prog,string path)
+        {
+            if(prog == null)
+            {
+                return false;
+            }
+            if(prog.FilePath == path)
+            {
+                return true;
+            }
+            return false;
+        }
+        public bool FindShaderCombi(string vert,string frag)
+        {
+           if(ExistShaderProgram(VertexShader,vert) && 
+              ExistShaderProgram(FragShader,frag))
+           {
+               return true;
+           }
+           else
+           {
+               return false;
+           }
+        }
+        public bool FindShaderCombi(string vert, string frag,string geom)
+        {
+            if (ExistShaderProgram(VertexShader, vert) &&
+               ExistShaderProgram(FragShader, frag) &&
+               ExistShaderProgram(GeomShader, geom))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool FindShaderCombi(string vert, string frag, string tes, string tcs)
+        {
+            if (ExistShaderProgram(VertexShader, vert) &&
+               ExistShaderProgram(FragShader, frag) &&
+               ExistShaderProgram(TesShader, tes) &&
+               ExistShaderProgram(TcsShader, tcs))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool FindShaderCombi(string vert, string frag, string geom,string tes,string tcs)
+        {
+            if (ExistShaderProgram(VertexShader, vert) &&
+               ExistShaderProgram(FragShader, frag) &&
+               ExistShaderProgram(GeomShader, geom) &&
+               ExistShaderProgram(TesShader, tes) &&
+               ExistShaderProgram(TcsShader, tcs))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         #region [constructor]
         public Shader(ShaderProgram vert, ShaderProgram frag)
         {
@@ -287,13 +353,13 @@ namespace RenderApp.GLUtil.ShaderModel
                 GL.VertexAttribPointer(attribute.ShaderID, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
                 geometry.NormalBuffer.UnBindBuffer();
             }
-            if (attribute.Name == "texcoord" && geometry.TexBuffer != null)
+            if (attribute.Name == "texcoord" && geometry.TexCoordBuffer != null)
             {
                 GL.EnableVertexAttribArray(attribute.ShaderID);
-                geometry.TexBuffer.SetData(geometry.TexCoord, Buffer.EArrayType.Vec2Array);
-                geometry.TexBuffer.BindBuffer();
+                geometry.TexCoordBuffer.SetData(geometry.TexCoord, Buffer.EArrayType.Vec2Array);
+                geometry.TexCoordBuffer.BindBuffer();
                 GL.VertexAttribPointer(attribute.ShaderID, 2, VertexAttribPointerType.Float, false, Vector2.SizeInBytes, 0);
-                geometry.TexBuffer.UnBindBuffer();
+                geometry.TexCoordBuffer.UnBindBuffer();
             }
             if(attribute.Name == "index" && geometry.IndexBuffer != null)
             {

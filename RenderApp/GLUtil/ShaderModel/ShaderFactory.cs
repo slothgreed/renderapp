@@ -19,11 +19,33 @@ namespace RenderApp.GLUtil
             }
         }
         public Dictionary<string, Shader> ShaderList = new Dictionary<string, Shader>();
+        private Dictionary<string, ShaderProgram> ShaderProgramList = new Dictionary<string, ShaderProgram>();
+
         private ShaderProgram CreateShaderProgram(string key,string path)
         {
-            ShaderProgram program = new ShaderProgram(key, path);
-            Project.ActiveProject.AddChild(program);
-            return program;
+            if(ShaderProgramList.ContainsKey(key))
+            {
+                return ShaderProgramList[key];
+            }
+            else
+            {
+                ShaderProgram program = new ShaderProgram(key, path);
+                Project.ActiveProject.AddChild(program);
+                return program;
+            }
+        }
+
+        public Shader FindShader(string vert,string frag)
+        {
+            foreach (var sh in ShaderList.Values)
+            {
+                if (sh.FindShaderCombi(vert,frag))
+                {
+                    return sh;
+                }
+            }
+            return null;
+
         }
         /// <summary>
         /// vert,frag専用ファイル名は同一のもの
@@ -32,19 +54,41 @@ namespace RenderApp.GLUtil
         /// <returns></returns>
         public Shader CreateShaderVF(string path)
         {
-            string name = RAFile.GetNameFromPath(path);
-            if(ShaderList.Keys.Contains(name))
+            Shader shader = FindShader(path + ".vert", path + ".frag");
+            if (shader != null)
             {
-                return ShaderList[name];
-            }
-            else
-            {
-                ShaderProgram vert = CreateShaderProgram(path, path + ".vert");
-                ShaderProgram frag = CreateShaderProgram(path, path + ".frag");
-                Shader shader = new Shader(vert, frag);
-                ShaderList.Add(name, shader);
                 return shader;
             }
+            string name = RAFile.GetNameFromPath(path);
+            ShaderProgram vert = CreateShaderProgram(path, path + ".vert");
+            ShaderProgram frag = CreateShaderProgram(path, path + ".frag");
+            shader = new Shader(vert, frag);
+            ShaderList.Add(name, shader);
+            return shader;
+
+        }
+        /// <summary>
+        /// vert,frag専用ファイル名は同一のもの
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public Shader CreateShaderVF(string vPath, string fPath)
+        {
+            if (vPath == null || fPath == null)
+            {
+                return DefaultDefferredShader;
+            }
+            Shader shader = FindShader(vPath, fPath);
+            if (shader == null)
+            {
+                string vname = RAFile.GetNameFromPath(vPath);
+                string fname = RAFile.GetNameFromPath(fPath);
+                ShaderProgram vert = CreateShaderProgram(vPath, vPath);
+                ShaderProgram frag = CreateShaderProgram(fPath, fPath);
+                shader = new Shader(vert, frag);
+                ShaderList.Add(vname+fname, shader);
+            }
+            return shader;
         }
         private Shader _defaultLightShader;
         public Shader DefaultLightShader

@@ -351,7 +351,7 @@ namespace RenderApp.AssetModel.RA_Geometry
         
         #endregion
         #endregion
-        public Material CreateMaterial(OBJMaterial material)
+        public void SetMaterial(Geometry geometry,OBJMaterial material)
         {
             Material mat = new Material(material.name);
             if(material.map_Kd != null)
@@ -371,10 +371,10 @@ namespace RenderApp.AssetModel.RA_Geometry
                 Texture spec = TextureFactory.Instance.CreateTexture(material.map_Ns);
                 mat.AddTexture(TextureKind.Specular, spec);
             }
-            mat.SetShader(ShaderFactory.Instance.CreateShaderVF(ProjectInfo.ShaderDirectory + @"\ObjGeometry"));
-            
-            return mat;
-            
+            geometry.MaterialItem = mat;
+            string vertex = Utility.ShaderCreater.Instance.GetVertexShader(geometry);
+            string frag = Utility.ShaderCreater.Instance.GetOBJFragShader(geometry);
+            mat.SetShader(ShaderFactory.Instance.CreateShaderVF(vertex,frag));
         }
         public List<RenderObject> CreateRenderObject()
         {
@@ -405,8 +405,9 @@ namespace RenderApp.AssetModel.RA_Geometry
                     }
                 }
 
-                geometry = new RenderObject(material.name, Position, Normal, TexCoord, PrimitiveType.Triangles);
-                geometry.MaterialItem = CreateMaterial(material);
+                geometry = new RenderObject(material.name);
+                geometry.CreatePNT(Position, Normal, TexCoord, PrimitiveType.Triangles);
+                SetMaterial(geometry,material);
                 if (geometry != null)
                 {
                     geometrys.Add(geometry);
