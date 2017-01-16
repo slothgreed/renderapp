@@ -8,5 +8,5 @@
              xmlns:gl="clr-namespace:RenderApp.GLUtil"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <v:PropertyGridView DataContext="{Binding Property}"/>
+    <v:PropertyGridView PropertyItem="{Binding Item}"/>
 </UserControl>

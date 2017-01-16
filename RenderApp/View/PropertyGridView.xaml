@@ -11,9 +11,9 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+    <!--<Grid>
         <StackPanel x:Name="propertyGrid"
-                           Margin="2">
+                           Margin="2" >
             <StackPanel.Resources>
                 <Style TargetType="TextBox">
                     <Setter Property="Width" Value="60"/>
@@ -156,5 +156,5 @@
                 </ItemsControl.ItemTemplateSelector>
             </ItemsControl>
         </StackPanel>
-    </Grid>
+    </Grid>-->
 </UserControl>

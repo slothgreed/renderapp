@@ -25,10 +25,17 @@ namespace RenderApp.ViewModel
                 }
             }
         }
-        public Dictionary<string,object> Items
+        private Dictionary<string, object> _item;
+        public Dictionary<string, object> Item
         {
-            get;
-            private set;
+            get
+            {
+                return _item;
+            }
+            private set
+            {
+                SetValue(ref _item, value);
+            }
         }
         public PropertyGridViewModel Property
         {
@@ -43,12 +50,12 @@ namespace RenderApp.ViewModel
         public GeometryViewModel(Geometry model)
         {
             Model = model;
-            Items = new Dictionary<string,object>();
-            Items.Add("Translate",model.Translate);
-            Items.Add("Scale",model.Scale);
-            Items.Add("Rotate",model.Rotate);
-            Items.Add("Material", model.MaterialItem.ToString());
-            Property = new PropertyGridViewModel(Items);
+            _item = new Dictionary<string, object>();
+            _item.Add("Translate", model.Translate);
+            _item.Add("Scale", model.Scale);
+            _item.Add("Rotate", model.Rotate);
+            _item.Add("Material", model.MaterialItem.ToString());
+            //Property = new PropertyGridViewModel(PropertyItem);
         }
 
         public GeometryViewModel()

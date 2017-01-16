@@ -9,6 +9,13 @@ namespace RenderApp.ViewModel
 {
     public class PropertyGridViewModel : DynamicObject,INotifyPropertyChanged//, ICustomTypeDescriptor
     {
+        public Dictionary<string,object> Item
+        {
+            get
+            {
+                return PropertyItems;
+            }
+        }
         private readonly Dictionary<string, object> PropertyItems = new Dictionary<string, object>();
         public PropertyGridViewModel(Dictionary<string,object> model)
         {
