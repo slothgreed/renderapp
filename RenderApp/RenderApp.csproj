@@ -165,6 +165,7 @@
     <Compile Include="Render_System\Post_Effect\SSAO.cs" />
     <Compile Include="Core\RANode.cs" />
     <Compile Include="RAControl\CameraControl.cs" />
+    <Compile Include="Utility\ImageLoader\HDRImage.cs" />
     <Compile Include="Utility\ShaderCreater.cs" />
     <Compile Include="ViewModel\Converter\EnumConverter.cs" />
     <Compile Include="Globals\Project.cs" />
@@ -190,7 +191,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NotifyNodeChangedEventArgs.tt</DependentUpon>
     </Compile>
-    <Compile Include="Utility\TGAImage.cs" />
+    <Compile Include="Utility\ImageLoader\TGAImage.cs" />
     <Compile Include="ViewModel\Controller\ControllerViewModelT4.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

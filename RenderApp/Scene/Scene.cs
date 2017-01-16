@@ -246,17 +246,25 @@ namespace RenderApp
 
             //Geometry map = AssetFactory.Instance.CreateEnvironmentMap();
             //AddRootSceneObject(map);
-            List<RenderObject> sponzas = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/crytek-sponza/sponza.obj");
-            foreach (var sponza in sponzas)
-            {
-                AddRootSceneObject(sponza);
-            }
+
+            //List<RenderObject> sponzas = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/crytek-sponza/sponza.obj");
+            //foreach (var sponza in sponzas)
+            //{
+            //    AddRootSceneObject(sponza);
+            //}
             List<RenderObject> ducks = AssetFactory.Instance.CreateLoad3DModel("C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/duck/duck.obj");
             foreach(var duck in ducks)
             {
                 duck.RotateX(-90);
                 duck.RotateY(0);
                 AddRootSceneObject(duck);
+            }
+            List<RenderObject> bunnys = AssetFactory.Instance.CreateLoad3DModel("C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/StanfordBunny.stl");
+            foreach (var bunny in bunnys)
+            {
+                bunny.RotateX(-90);
+                bunny.RotateY(0);
+                AddRootSceneObject(bunny);
             }
         }
         #endregion

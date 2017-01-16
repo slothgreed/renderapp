@@ -72,10 +72,6 @@ namespace RenderApp.Utility
             Height = TGAStructValue(ImageHeight);
             imageSize = Width * Height * BitPerPixel;
 
-            if (filename.Contains("spec"))
-            {
-                int a = 0;
-            }
             Byte[] rgb = binary.ReadBytes(imageSize);
 
             if(BitPerPixel == 24)

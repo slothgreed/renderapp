@@ -15,7 +15,6 @@ namespace RenderApp
             FileName = Path.GetFileName(filePath);
             FilePath = filePath;
             Key = FileName;
-
             Utility.Output.Log(Utility.Output.LogLevel.Debug,"create asset " + filePath + ":");
         }
         private string _directoryPath;
@@ -35,7 +34,7 @@ namespace RenderApp
             }
         }
         /// <summary>
-        /// テクスチャパス
+        /// ファイルパス
         /// </summary>
         public string FilePath
         {
