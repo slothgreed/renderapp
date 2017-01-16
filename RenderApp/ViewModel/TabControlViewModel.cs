@@ -59,12 +59,19 @@ namespace RenderApp.ViewModel
             Remove(oldItem);
             Add(newItem);
         }
-        public void ReplaceVM(TabItemViewModel newItem)
+        public TabItemViewModel FindVM<T>() where T : TabItemViewModel
         {
-            var vm = ItemsSource.Where(p => p is ShaderProgramViewModel).FirstOrDefault();
-            if(vm != null)
+            return ItemsSource.Where(p => p is T).FirstOrDefault();
+        }
+        public void ReplaceVM(TabItemViewModel oldItem,TabItemViewModel newItem)
+        {
+            if(oldItem != null)
             {
-                Remove(vm);
+                Remove(oldItem);
+                Add(newItem);
+            }
+            else
+            {
                 Add(newItem);
             }
         }
