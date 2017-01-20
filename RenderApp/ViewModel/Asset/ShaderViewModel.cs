@@ -8,7 +8,9 @@ using System.Collections.ObjectModel;
 using RenderApp.GLUtil;
 using OpenTK;
 using RenderApp.GLUtil.ShaderModel;
-namespace RenderApp.ViewModel
+using RenderApp.ViewModel.DockTabVM;
+using RenderApp.ViewModel.PropertyVM;
+namespace RenderApp.ViewModel.AssetVM
 {
     class ShaderViewModel : TabItemViewModel
     {

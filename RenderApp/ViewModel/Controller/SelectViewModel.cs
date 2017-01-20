@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using RenderApp.ViewModel.DockTabVM;
 namespace RenderApp.ViewModel.Controller
 {
     public partial class SelectViewModel : TabItemViewModel

@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using RenderApp.Render_System;
 using System.Collections.ObjectModel;
+using RenderApp.ViewModel.DockTabVM;
+
 namespace RenderApp.ViewModel
 {
     public class RenderSystemViewModel : TabItemViewModel

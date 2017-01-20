@@ -7,7 +7,9 @@ using RenderApp.AssetModel;
 using System.Collections.ObjectModel;
 using RenderApp.GLUtil;
 using OpenTK;
-namespace RenderApp.ViewModel
+using RenderApp.ViewModel.DockTabVM;
+using RenderApp.ViewModel.PropertyVM;
+namespace RenderApp.ViewModel.AssetVM
 {
     public class GeometryViewModel : TabItemViewModel
     {
@@ -55,7 +57,6 @@ namespace RenderApp.ViewModel
             Item.Add("Scale", model.Scale);
             Item.Add("Rotate", model.Rotate);
             Item.Add("Material", model.MaterialItem.ToString());
-            //Property = new PropertyGridViewModel(PropertyItem);
         }
 
         public GeometryViewModel()

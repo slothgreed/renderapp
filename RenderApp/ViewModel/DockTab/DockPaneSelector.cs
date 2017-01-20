@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
 using RenderApp.ViewModel.Controller;
-namespace RenderApp.ViewModel
+using RenderApp.ViewModel.NodeVM;
+using RenderApp.ViewModel.AssetVM;
+namespace RenderApp.ViewModel.DockTabVM
 {
 
     class DockPaneStyleSelector : StyleSelector

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
 using RenderApp.View;
-namespace RenderApp.ViewModel
+namespace RenderApp.ViewModel.PropertyVM
 {
     class PropertyGridTemplate : DataTemplateSelector
     {
@@ -22,23 +22,23 @@ namespace RenderApp.ViewModel
             if (item is PropertyAttribute)
             {
                 PropertyAttribute control = item as PropertyAttribute;
-                if(control.Value is Vector2ViewModel)
+                if(control.Value is MathVM.Vector2ViewModel)
                 {
                     return Vector2Template;
                 }
-                if (control.Value is Vector3ViewModel)
+                if (control.Value is OpenTK.Vector3)
                 {
                     return Vector3Template;
                 }
-                if (control.Value is Vector4ViewModel)
+                if (control.Value is MathVM.Vector4ViewModel)
                 {
                     return Vector4Template;
                 }
-                if (control.Value is Matrix3ViewModel)
+                if (control.Value is MathVM.Matrix3ViewModel)
                 {
                     return Matrix3Template;
                 }
-                if (control.Value is Matrix4ViewModel)
+                if (control.Value is MathVM.Matrix4ViewModel)
                 {
                     return Matrix4Template;
                 }

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using RenderApp.GLUtil.ShaderModel;
-namespace RenderApp.ViewModel
+using RenderApp.ViewModel.DockTabVM;
+namespace RenderApp.ViewModel.AssetVM
 {
     public class ShaderProgramViewModel : TabItemViewModel
     {

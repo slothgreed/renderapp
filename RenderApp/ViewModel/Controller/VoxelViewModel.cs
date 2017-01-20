@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using RenderApp.ViewModel;
 using RenderApp.AssetModel;
 using System.Windows;
+using RenderApp.ViewModel.DockTabVM;
 namespace RenderApp.ViewModel.Controller
 {
     public partial class VoxelViewModel : TabItemViewModel, IControllerViewModelBase

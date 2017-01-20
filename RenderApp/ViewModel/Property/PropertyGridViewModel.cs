@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Dynamic;
 using System.ComponentModel;
-namespace RenderApp.ViewModel
+using RenderApp.ViewModel.AssetVM;
+using RenderApp.ViewModel.MathVM;
+namespace RenderApp.ViewModel.PropertyVM
 {
     public class PropertyGridViewModel : DynamicObject,INotifyPropertyChanged//, ICustomTypeDescriptor
     {

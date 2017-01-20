@@ -18,6 +18,9 @@ using RenderApp.Globals;
 using RenderApp.Render_System;
 using RenderApp.AssetModel.RA_Geometry;
 using RenderApp.ViewModel.Controller;
+using RenderApp.ViewModel.DockTabVM;
+using RenderApp.ViewModel.AssetVM;
+using RenderApp.ViewModel.NodeVM;
 namespace RenderApp.ViewModel
 {
     public partial class MainWindowViewModel : ViewModelBase

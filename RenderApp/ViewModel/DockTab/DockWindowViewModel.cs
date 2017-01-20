@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using RenderApp;
 using System.Windows.Input;
 
-namespace RenderApp.ViewModel
+namespace RenderApp.ViewModel.DockTabVM
 {
     public abstract class DockWindowViewModel : ViewModelBase
     {

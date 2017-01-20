@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using RenderApp.Utility;
-namespace RenderApp.ViewModel
+namespace RenderApp.ViewModel.NodeVM
 {
     public class NodeItemViewModel : ViewModelBase
     {

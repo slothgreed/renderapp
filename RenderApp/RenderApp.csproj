@@ -201,39 +201,44 @@
     <Compile Include="ViewModel\Controller\IControllerViewModelBase.cs" />
     <Compile Include="ViewModel\Controller\SelectViewModel.cs" />
     <Compile Include="ViewModel\DynamicViewModelBase.cs" />
-    <Compile Include="ViewModel\PropertyGridViewModel.cs" />
-    <Compile Include="ViewModel\RootNodeViewModelT4.cs">
+    <Compile Include="ViewModel\Math\Matrix3ViewModel.cs" />
+    <Compile Include="ViewModel\Math\Matrix4ViewModel.cs" />
+    <Compile Include="ViewModel\Math\NumericViewModel.cs" />
+    <Compile Include="ViewModel\Math\Vector2ViewModel.cs" />
+    <Compile Include="ViewModel\Math\Vector3ViewModel.cs" />
+    <Compile Include="ViewModel\Math\Vector4ViewModel.cs" />
+    <Compile Include="ViewModel\Property\PropertyGridViewModel.cs" />
+    <Compile Include="ViewModel\Node\RootNodeViewModelT4.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RootNodeViewModelT4.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\DockPaneSelector.cs" />
+    <Compile Include="ViewModel\DockTab\DockPaneSelector.cs" />
     <Compile Include="AssetModel\Geometry\Geometry.cs" />
     <Compile Include="AssetModel\LightModel\DirectionLight.cs" />
     <Compile Include="AssetModel\LightModel\PointLight.cs" />
     <Compile Include="AssetModel\LightModel\SpotLight.cs" />
     <Compile Include="Core\RAFile.cs" />
-    <Compile Include="ViewModel\DockWindowViewModel.cs" />
+    <Compile Include="ViewModel\DockTab\DockWindowViewModel.cs" />
     <Compile Include="ViewModel\ComboItemViewModel.cs" />
     <Compile Include="ViewModel\DefaultViewModel.cs" />
     <Compile Include="ViewModel\Dialog\DialogViewModelBase.cs" />
     <Compile Include="ViewModel\Controller\VoxelViewModel.cs" />
-    <Compile Include="ViewModel\GeometryViewModel.cs" />
-    <Compile Include="ViewModel\MathViewModel.cs" />
+    <Compile Include="ViewModel\Asset\GeometryViewModel.cs" />
+    <Compile Include="ViewModel\Math\MathViewModel.cs" />
     <Compile Include="ViewModel\MaterialItemSelector.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MaterialItemSelector.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\MaterialViewModel.cs" />
-    <Compile Include="ViewModel\PropertyControl.cs" />
-    <Compile Include="ViewModel\PropertyGridSelector.cs" />
+    <Compile Include="ViewModel\Asset\MaterialViewModel.cs" />
+    <Compile Include="ViewModel\Property\PropertyGridSelector.cs" />
     <Compile Include="ViewModel\RenderSystemViewModel.cs" />
-    <Compile Include="ViewModel\ShaderViewModel.cs" />
-    <Compile Include="ViewModel\ImageViewModel.cs" />
-    <Compile Include="ViewModel\NodeItemViewModel.cs" />
-    <Compile Include="ViewModel\TabControlViewModel.cs" />
-    <Compile Include="ViewModel\TabItemViewModel.cs" />
+    <Compile Include="ViewModel\Asset\ShaderViewModel.cs" />
+    <Compile Include="ViewModel\Asset\ImageViewModel.cs" />
+    <Compile Include="ViewModel\Node\NodeItemViewModel.cs" />
+    <Compile Include="ViewModel\DockTab\TabControlViewModel.cs" />
+    <Compile Include="ViewModel\DockTab\TabItemViewModel.cs" />
     <Compile Include="ViewModel\ViewportViewModel.cs" />
     <Compile Include="View\Controller\DijkstraView.xaml.cs">
       <DependentUpon>DijkstraView.xaml</DependentUpon>
@@ -241,10 +246,28 @@
     <Compile Include="View\Controller\SelectView.xaml.cs">
       <DependentUpon>SelectView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Math\Matrix3View.xaml.cs">
+      <DependentUpon>Matrix3View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Math\Matrix4View.xaml.cs">
+      <DependentUpon>Matrix4View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Math\NumericView.xaml.cs">
+      <DependentUpon>NumericView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Math\Vector2View.xaml.cs">
+      <DependentUpon>Vector2View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Math\Vector3View.xaml.cs">
+      <DependentUpon>Vector3View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Math\Vector4View.xaml.cs">
+      <DependentUpon>Vector4View.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\RootNodeView.xaml.cs">
       <DependentUpon>RootNodeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\RootNodeViewModel.cs" />
+    <Compile Include="ViewModel\Node\RootNodeViewModel.cs" />
     <Compile Include="Globals\Global.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModelT4.cs">
@@ -255,7 +278,6 @@
     <Compile Include="Analyzer\Tree\BDB.cs" />
     <Compile Include="Analyzer\IAnalyzer.cs" />
     <Compile Include="Scene\Material\Material.cs" />
-    <Compile Include="ViewModel\ModelViewModel.cs" />
     <Compile Include="Analyzer\Tree\Kdtree.cs" />
     <Compile Include="Analyzer\Tree\Octree.cs" />
     <Compile Include="Scene\Scene.cs" />
@@ -284,7 +306,7 @@
     <Compile Include="View\ShaderProgramView.xaml.cs">
       <DependentUpon>ShaderProgramView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\ShaderProgramViewModel.cs" />
+    <Compile Include="ViewModel\Asset\ShaderProgramViewModel.cs" />
     <Compile Include="GLUtil\Texture.cs" />
     <Compile Include="GLUtil\ShaderModel\Shader.cs" />
     <Compile Include="Scene\Shader\HeightMap\HeightMap.cs" />
@@ -315,7 +337,7 @@
     <Compile Include="Scene\Shader\Luminous\Luminous.cs" />
     <Compile Include="Scene\Shader\OffScreen\Sobel\CSobel.cs" />
     <Compile Include="Scene\Shader\OffScreen\SSAO\SSAO.cs" />
-    <Compile Include="ViewModel\TextureViewModel.cs" />
+    <Compile Include="ViewModel\Asset\TextureViewModel.cs" />
     <Compile Include="View\MaterialView.xaml.cs">
       <DependentUpon>MaterialView.xaml</DependentUpon>
     </Compile>
@@ -352,6 +374,30 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controller\SelectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Math\Matrix3View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Math\Matrix4View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Math\NumericView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Math\Vector2View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Math\Vector3View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Math\Vector4View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -430,7 +476,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="ViewModel\RootNodeViewModelT4.tt">
+    <None Include="ViewModel\Node\RootNodeViewModelT4.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RootNodeViewModelT4.cs</LastGenOutput>
     </None>
@@ -513,7 +559,6 @@
     <Folder Include="AssetModel\Node\" />
     <Folder Include="Scene\Shader\ShaderType\" />
     <Folder Include="Themes\" />
-    <Folder Include="ViewModel\Property\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Render_System\Post_Effect\PostEffectT4.tt">

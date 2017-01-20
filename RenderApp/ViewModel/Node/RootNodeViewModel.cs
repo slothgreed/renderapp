@@ -11,7 +11,8 @@ using RenderApp.AssetModel;
 using System.Diagnostics;
 using System.IO;
 using RenderApp.Utility;
-namespace RenderApp.ViewModel
+using RenderApp.ViewModel.DockTabVM;
+namespace RenderApp.ViewModel.NodeVM
 {
    
     public partial class RootNodeViewModel : TabItemViewModel

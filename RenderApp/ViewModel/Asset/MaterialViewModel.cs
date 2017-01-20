@@ -10,7 +10,9 @@ using System.Windows.Controls;
 using System.Windows;
 using OpenTK;
 using RenderApp.GLUtil;
-namespace RenderApp.ViewModel
+using RenderApp.ViewModel.DockTabVM;
+using RenderApp.ViewModel.PropertyVM;
+namespace RenderApp.ViewModel.AssetVM
 {
     public class MaterialViewModel : TabItemViewModel
     {

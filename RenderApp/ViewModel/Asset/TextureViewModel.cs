@@ -8,7 +8,8 @@ using OpenTK.Graphics.OpenGL;
 using RenderApp.Utility;
 using RenderApp;
 using RenderApp.GLUtil;
-namespace RenderApp.ViewModel
+using RenderApp.ViewModel.DockTabVM;
+namespace RenderApp.ViewModel.AssetVM
 {
     public class TextureViewModel : TabItemViewModel
     {

@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using RenderApp.ViewModel;
+using RenderApp.ViewModel.MathVM;
+using RenderApp.ViewModel.AssetVM;
 namespace RenderApp.View
 {
     /// <summary>
@@ -87,7 +89,7 @@ namespace RenderApp.View
                     }
                     else if (loop.Value is OpenTK.Vector3)
                     {
-                        Attributes.Add(new PropertyAttribute(loop.Key, new Vector3ViewModel(loop.Key,this.DataContext,(OpenTK.Vector3)loop.Value)));
+                        Attributes.Add(new PropertyAttribute(loop.Key, (OpenTK.Vector3)loop.Value));
                     }
                     else if (loop.Value is OpenTK.Vector4)
                     {
