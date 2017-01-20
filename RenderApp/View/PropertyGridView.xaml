@@ -11,14 +11,15 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <!--<Grid>
-        <StackPanel x:Name="propertyGrid"
-                           Margin="2" >
+    <StackPanel>
+        <Button Content="PropertyGrid1"/>
+        <StackPanel>
             <StackPanel.Resources>
-                <Style TargetType="TextBox">
+                <Style TargetType="TextBlock" x:Key="NameTemplate">
                     <Setter Property="Width" Value="60"/>
                     <Setter Property="TextAlignment" Value="Right"/>
                     <Setter Property="Margin" Value="3,2,3,2"/>
+                    <Setter Property="Background" Value="WhiteSmoke"/>
                 </Style>
 
                 <Style TargetType="TextBlock" x:Key="XTemplate">
@@ -47,6 +48,141 @@
                     <Setter Property="Padding" Value="2"/>
                 </Style>
             </StackPanel.Resources>
+            
+            <ItemsControl x:Name="PropertyGrid">
+                <ItemsControl.ItemTemplateSelector>
+                    <vm:PropertyGridTemplate>
+                        <vm:PropertyGridTemplate.DefaultTemplate>
+                            <DataTemplate>
+                                <WrapPanel>
+                                    <TextBlock Text="{Binding Key}" Style="{StaticResource NameTemplate}"/>
+                                    <TextBlock Text="{Binding Value, StringFormat=N3}"></TextBlock>
+                                </WrapPanel>
+                            </DataTemplate>
+                        </vm:PropertyGridTemplate.DefaultTemplate>
+                        <vm:PropertyGridTemplate.Vector2Template>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <WrapPanel>
+                                        <TextBlock Text="{Binding Key}" Style="{StaticResource NameTemplate}"/>
+                                        <TextBlock Text="X" Style="{StaticResource XTemplate}"/>
+                                        <TextBox Text="{Binding Value.X, StringFormat=N3}"/>
+                                        <TextBlock Text="Y" Style="{StaticResource YTemplate}"/>
+                                        <TextBox Text="{Binding Value.Y, StringFormat=N3}"/>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </vm:PropertyGridTemplate.Vector2Template>
+                        <vm:PropertyGridTemplate.Vector3Template>
+                            <DataTemplate>
+                                <StackPanel >
+                                    <WrapPanel>
+                                        <TextBlock Text="{Binding Key}" Style="{StaticResource NameTemplate}"/>
+                                        <TextBlock Text="X" Style="{StaticResource XTemplate}"/>
+                                        <TextBox Text="{Binding Value.X, StringFormat=N3}"/>
+                                        <TextBlock Text="Y" Style="{StaticResource YTemplate}"/>
+                                        <TextBox Text="{Binding Value.Y, StringFormat=N3}" />
+                                        <TextBlock Text="Z"  Style="{StaticResource ZTemplate}"/>
+                                        <TextBox Text="{Binding Value.Z, StringFormat=N3}" />
+                                    </WrapPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </vm:PropertyGridTemplate.Vector3Template>
+                        <vm:PropertyGridTemplate.Vector4Template>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <WrapPanel>
+                                        <TextBlock Text="{Binding Key}" Style="{StaticResource NameTemplate}"/>
+                                        <TextBlock Text="X"  Style="{StaticResource XTemplate}"/>
+                                        <TextBox Text="{Binding Value.X, StringFormat=N3}"/>
+                                        <TextBlock Text="Y"  Style="{StaticResource YTemplate}"></TextBlock>
+                                        <TextBox Text="{Binding Value.Y, StringFormat=N3}"/>
+                                        <TextBlock Text="Z"  Style="{StaticResource ZTemplate}"></TextBlock>
+                                        <TextBox Text="{Binding Value.Z, StringFormat=N3}"/>
+                                        <TextBlock Text="W"  Style="{StaticResource WTemplate}"></TextBlock>
+                                        <TextBox Text="{Binding Value.W, StringFormat=N3}"/>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </vm:PropertyGridTemplate.Vector4Template>
+
+                        <vm:PropertyGridTemplate.Matrix3Template>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Key}" Style="{StaticResource NameTemplate}"/>
+                                    <WrapPanel>
+                                        <TextBox Text="{Binding Value.M11, StringFormat=N3}"/>
+                                        <TextBox Text="{Binding Value.M12, StringFormat=N3}"/>
+                                        <TextBox Text="{Binding Value.M13, StringFormat=N3}"/>
+                                    </WrapPanel>
+                                    <WrapPanel>
+                                        <TextBox Text="{Binding Value.M21, StringFormat=N3}"/>
+                                        <TextBox Text="{Binding Value.M22, StringFormat=N3}"/>
+                                        <TextBox Text="{Binding Value.M23, StringFormat=N3}"/>
+                                    </WrapPanel>
+                                    <WrapPanel>
+                                        <TextBox Text="{Binding Value.M31, StringFormat=N3}"/>
+                                        <TextBox Text="{Binding Value.M32, StringFormat=N3}"/>
+                                        <TextBox Text="{Binding Value.M33, StringFormat=N3}"/>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </vm:PropertyGridTemplate.Matrix3Template>
+
+                        <vm:PropertyGridTemplate.Matrix4Template>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Key}" Style="{StaticResource NameTemplate}"/>
+                                    <WrapPanel>
+                                        <TextBox Text="{Binding Value.M11, StringFormat=N3}"/>
+                                        <TextBox Text="{Binding Value.M12, StringFormat=N3}"/>
+                                        <TextBox Text="{Binding Value.M13, StringFormat=N3}"/>
+                                        <TextBox Text="{Binding Value.M14, StringFormat=N3}"/>
+                                    </WrapPanel>
+                                    <WrapPanel>
+                                        <TextBox Text="{Binding Value.M21, StringFormat=N3}"/>
+                                        <TextBox Text="{Binding Value.M22, StringFormat=N3}"/>
+                                        <TextBox Text="{Binding Value.M23, StringFormat=N3}"/>
+                                        <TextBox Text="{Binding Value.M24, StringFormat=N3}"/>
+                                    </WrapPanel>
+                                    <WrapPanel>
+                                        <TextBox Text="{Binding Value.M31, StringFormat=N3}"/>
+                                        <TextBox Text="{Binding Value.M32, StringFormat=N3}"/>
+                                        <TextBox Text="{Binding Value.M33, StringFormat=N3}"/>
+                                        <TextBox Text="{Binding Value.M23, StringFormat=N3}"/>
+                                    </WrapPanel>
+                                    <WrapPanel>
+                                        <TextBox Text="{Binding Value.M31, StringFormat=N3}"/>
+                                        <TextBox Text="{Binding Value.M32, StringFormat=N3}"/>
+                                        <TextBox Text="{Binding Value.M33, StringFormat=N3}"/>
+                                        <TextBox Text="{Binding Value.M34, StringFormat=N3}"/>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </vm:PropertyGridTemplate.Matrix4Template>
+                    </vm:PropertyGridTemplate>
+                </ItemsControl.ItemTemplateSelector>
+            </ItemsControl>
+            <!--<ItemsControl x:Name="PropertyGrid">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <WrapPanel>
+                            <Border BorderThickness="2" BorderBrush="Green">
+                                <TextBlock Text="{Binding Key}" Foreground="Green"/>
+                            </Border>
+                            <Border BorderThickness="2" BorderBrush="Blue">
+                                <TextBox Text="{Binding Value}" Foreground="Green"/>
+                            </Border>
+                        </WrapPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>-->
+        </StackPanel>
+    </StackPanel>
+    <!--<Grid>
+        <StackPanel x:Name="propertyGrid"
+                           Margin="2" >
+
             <ItemsControl ItemsSource="{Binding DynamicObject}">
                 <ItemsControl.ItemTemplateSelector>
                     <vm:PropertyGridTemplate>

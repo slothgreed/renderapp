@@ -200,6 +200,8 @@
     <Compile Include="ViewModel\Controller\DijkstraViewModel.cs" />
     <Compile Include="ViewModel\Controller\IControllerViewModelBase.cs" />
     <Compile Include="ViewModel\Controller\SelectViewModel.cs" />
+    <Compile Include="ViewModel\DynamicViewModelBase.cs" />
+    <Compile Include="ViewModel\PropertyGridViewModel.cs" />
     <Compile Include="ViewModel\RootNodeViewModelT4.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -226,7 +228,6 @@
     <Compile Include="ViewModel\MaterialViewModel.cs" />
     <Compile Include="ViewModel\PropertyControl.cs" />
     <Compile Include="ViewModel\PropertyGridSelector.cs" />
-    <Compile Include="ViewModel\PropertyGridViewModel.cs" />
     <Compile Include="ViewModel\RenderSystemViewModel.cs" />
     <Compile Include="ViewModel\ShaderViewModel.cs" />
     <Compile Include="ViewModel\ImageViewModel.cs" />
@@ -268,7 +269,6 @@
     <Compile Include="Scene\Shader\Bezier\Bezier.cs" />
     <Compile Include="Render_System\RenderPassFactory.cs" />
     <Compile Include="AssetModel\Geometry\RenderObject.cs" />
-    <Compile Include="View\PropertyGrid.cs" />
     <Compile Include="View\Controller\VoxelView.xaml.cs">
       <DependentUpon>VoxelView.xaml</DependentUpon>
     </Compile>

@@ -125,6 +125,14 @@ namespace RenderApp.ViewModel
             {
                 ProjectInfo.IsOpen = true;
             }
+
+            List<RenderObject> geometrys = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/StanfordBunny.stl");
+            foreach (var geometry in geometrys)
+            {
+                geometry.RotateX(-90);
+                geometry.RotateY(0);
+                Project.ActiveProject.AddChild(AssetFactory.Instance.CreateGeometry(geometry));
+            }
         }
         private void OpenProjectCommand()
         {

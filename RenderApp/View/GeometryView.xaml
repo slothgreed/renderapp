@@ -8,5 +8,8 @@
              xmlns:gl="clr-namespace:RenderApp.GLUtil"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <v:PropertyGridView PropertyItem="{Binding Item}"/>
+    <StackPanel>
+        <v:PropertyGridView PropertyItem="{Binding Item}"/>
+    </StackPanel>
+    
 </UserControl>

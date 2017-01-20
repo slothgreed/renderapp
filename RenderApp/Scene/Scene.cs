@@ -259,13 +259,7 @@ namespace RenderApp
                 duck.RotateY(0);
                 AddRootSceneObject(duck);
             }
-            List<RenderObject> bunnys = AssetFactory.Instance.CreateLoad3DModel("C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/StanfordBunny.stl");
-            foreach (var bunny in bunnys)
-            {
-                bunny.RotateX(-90);
-                bunny.RotateY(0);
-                AddRootSceneObject(bunny);
-            }
+
         }
         #endregion
         #region [dispose]

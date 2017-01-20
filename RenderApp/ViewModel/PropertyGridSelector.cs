@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
+using RenderApp.View;
 namespace RenderApp.ViewModel
 {
     class PropertyGridTemplate : DataTemplateSelector
@@ -18,26 +19,26 @@ namespace RenderApp.ViewModel
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            if(item is PropertyControl)
+            if (item is PropertyAttribute)
             {
-                PropertyControl control = item as PropertyControl;
-                if(control.Type == "Vector2")
+                PropertyAttribute control = item as PropertyAttribute;
+                if(control.Value is Vector2ViewModel)
                 {
                     return Vector2Template;
                 }
-                if (control.Type == "Vector3")
+                if (control.Value is Vector3ViewModel)
                 {
                     return Vector3Template;
                 }
-                if (control.Type == "Vector4")
+                if (control.Value is Vector4ViewModel)
                 {
                     return Vector4Template;
                 }
-                if (control.Type == "Matrix3")
+                if (control.Value is Matrix3ViewModel)
                 {
                     return Matrix3Template;
                 }
-                if (control.Type == "Matrix4")
+                if (control.Value is Matrix4ViewModel)
                 {
                     return Matrix4Template;
                 }

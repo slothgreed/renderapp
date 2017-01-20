@@ -50,11 +50,11 @@ namespace RenderApp.ViewModel
         public GeometryViewModel(Geometry model)
         {
             Model = model;
-            _item = new Dictionary<string, object>();
-            _item.Add("Translate", model.Translate);
-            _item.Add("Scale", model.Scale);
-            _item.Add("Rotate", model.Rotate);
-            _item.Add("Material", model.MaterialItem.ToString());
+            Item = new Dictionary<string, object>();
+            Item.Add("Translate", model.Translate);
+            Item.Add("Scale", model.Scale);
+            Item.Add("Rotate", model.Rotate);
+            Item.Add("Material", model.MaterialItem.ToString());
             //Property = new PropertyGridViewModel(PropertyItem);
         }
 

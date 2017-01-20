@@ -15,13 +15,27 @@ using RenderApp.ViewModel;
 namespace RenderApp.View
 {
     /// <summary>
+    /// PropertyAttribute
+    /// </summary>
+    public class PropertyAttribute
+    {
+        public PropertyAttribute(string key, object value)
+        {
+            Key = key;
+            Value = value;
+        }
+        public string Key { get; set; }
+        public object Value { get; set; }
+    }
+
+    /// <summary>
     /// PropertyGridView.xaml の相互作用ロジック
     /// </summary>
     public partial class PropertyGridView : UserControl
     {
         public PropertyGridView()
         {
-            //InitializeComponent();
+            InitializeComponent();
         }
 
         #region [Binding Item]
@@ -40,25 +54,15 @@ namespace RenderApp.View
             }
         }
         #endregion
-        public static readonly DependencyProperty DynamicObjectProperty =
-            DependencyProperty.Register("DynamicObject", typeof(Dictionary<string, object>), typeof(PropertyGridView),
-            new FrameworkPropertyMetadata(null));
-        public Dictionary<string, object> DynamicObject
-        {
-            get
-            {
-                return (Dictionary<string, object>)GetValue(PropertyItemProperty);
-            }
-            private set
-            {
-                SetValue(DynamicObjectProperty, value);
-            }
-        }
 
+        public List<PropertyAttribute> Attributes
+        {
+            get;
+            set;
+        }
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
         }
         protected override void OnInitialized(EventArgs e)
         {
@@ -68,53 +72,49 @@ namespace RenderApp.View
         {
             base.OnPropertyChanged(e);
 
-            if(DynamicObject == null && PropertyItem != null)
+            if (Attributes == null && PropertyItem != null)
             {
-                DynamicObject = new Dictionary<string, object>();
+                Attributes = new List<PropertyAttribute>();
                 foreach (KeyValuePair<string, object> loop in PropertyItem)
                 {
                     if (loop.Value is GLUtil.Texture)
                     {
-                        DynamicObject.Add(loop.Key, new ImageViewModel(loop.Key, (GLUtil.Texture)loop.Value));
+                        Attributes.Add(new PropertyAttribute(loop.Key, new ImageViewModel(loop.Key, (GLUtil.Texture)loop.Value)));
                     }
                     else if (loop.Value is OpenTK.Vector2)
                     {
-                        DynamicObject.Add(loop.Key + "X", ((OpenTK.Vector2)loop.Value).X);
-                        DynamicObject.Add(loop.Key + "Y", ((OpenTK.Vector2)loop.Value).Y);
+                        Attributes.Add(new PropertyAttribute(loop.Key, new Vector2ViewModel(loop.Key, (OpenTK.Vector2)loop.Value)));
                     }
                     else if (loop.Value is OpenTK.Vector3)
                     {
-                        DynamicObject.Add(loop.Key + "X", ((OpenTK.Vector3)loop.Value).X);
-                        DynamicObject.Add(loop.Key + "Y", ((OpenTK.Vector3)loop.Value).Y);
-                        DynamicObject.Add(loop.Key + "Z", ((OpenTK.Vector3)loop.Value).Z);
+                        Attributes.Add(new PropertyAttribute(loop.Key, new Vector3ViewModel(loop.Key,this.DataContext,(OpenTK.Vector3)loop.Value)));
                     }
                     else if (loop.Value is OpenTK.Vector4)
                     {
-                        DynamicObject.Add(loop.Key + "X", ((OpenTK.Vector4)loop.Value).X);
-                        DynamicObject.Add(loop.Key + "Y", ((OpenTK.Vector4)loop.Value).Y);
-                        DynamicObject.Add(loop.Key + "Z", ((OpenTK.Vector4)loop.Value).Z);
-                        DynamicObject.Add(loop.Key + "W", ((OpenTK.Vector4)loop.Value).W);
-
+                        Attributes.Add(new PropertyAttribute(loop.Key, new Vector4ViewModel(loop.Key, (OpenTK.Vector4)loop.Value)));
                     }
                     else if (loop.Value is OpenTK.Matrix3)
                     {
-                        DynamicObject.Add(loop.Key, new Matrix3ViewModel(loop.Key, (OpenTK.Matrix3)loop.Value));
+                        Attributes.Add(new PropertyAttribute(loop.Key, new Matrix3ViewModel(loop.Key, (OpenTK.Matrix3)loop.Value)));
 
                     }
                     else if (loop.Value is OpenTK.Matrix4)
                     {
-                        DynamicObject.Add(loop.Key, new Matrix4ViewModel(loop.Key, (OpenTK.Matrix4)loop.Value));
+                        Attributes.Add(new PropertyAttribute(loop.Key, new Matrix4ViewModel(loop.Key, (OpenTK.Matrix4)loop.Value)));
                     }
                     else if (loop.Value is NumericViewModel)
                     {
-                        DynamicObject.Add(loop.Key, new NumericViewModel(loop.Key, (float)loop.Value));
+                        Attributes.Add(new PropertyAttribute(loop.Key, new NumericViewModel(loop.Key, (float)loop.Value)));
                     }
                     else
                     {
-                        DynamicObject.Add(loop.Key, new DefaultViewModel(loop.Key, loop.Value.ToString()));
+                        Attributes.Add(new PropertyAttribute(loop.Key, new DefaultViewModel(loop.Key, loop.Value.ToString())));
                     }
                 }
+                this.PropertyGrid.ItemsSource = Attributes;
+
             }
         }
+
     }
 }
