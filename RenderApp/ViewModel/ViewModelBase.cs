@@ -30,6 +30,13 @@ namespace RenderApp.ViewModel
             member = value;
             OnPropertyChanged(memberName);
         }
+        protected void SetValue<T>(Func<T, bool> updateFunc, T value,[CallerMemberName]string memberName = "")
+        {
+            OnPropertyChanging(memberName);
+            updateFunc(value);
+            OnPropertyChanged(memberName);
+        }
+
         protected void OnPropertyChange([CallerMemberName]string memberName = "")
         {
             OnPropertyChanging(memberName);

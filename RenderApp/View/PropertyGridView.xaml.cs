@@ -57,11 +57,6 @@ namespace RenderApp.View
         }
         #endregion
 
-        public List<PropertyAttribute> Attributes
-        {
-            get;
-            set;
-        }
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -73,49 +68,6 @@ namespace RenderApp.View
         protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
             base.OnPropertyChanged(e);
-
-            if (Attributes == null && PropertyItem != null)
-            {
-                Attributes = new List<PropertyAttribute>();
-                foreach (KeyValuePair<string, object> loop in PropertyItem)
-                {
-                    if (loop.Value is GLUtil.Texture)
-                    {
-                        Attributes.Add(new PropertyAttribute(loop.Key, new ImageViewModel(loop.Key, (GLUtil.Texture)loop.Value)));
-                    }
-                    else if (loop.Value is OpenTK.Vector2)
-                    {
-                        Attributes.Add(new PropertyAttribute(loop.Key, new Vector2ViewModel(loop.Key, (OpenTK.Vector2)loop.Value)));
-                    }
-                    else if (loop.Value is OpenTK.Vector3)
-                    {
-                        Attributes.Add(new PropertyAttribute(loop.Key, (OpenTK.Vector3)loop.Value));
-                    }
-                    else if (loop.Value is OpenTK.Vector4)
-                    {
-                        Attributes.Add(new PropertyAttribute(loop.Key, new Vector4ViewModel(loop.Key, (OpenTK.Vector4)loop.Value)));
-                    }
-                    else if (loop.Value is OpenTK.Matrix3)
-                    {
-                        Attributes.Add(new PropertyAttribute(loop.Key, new Matrix3ViewModel(loop.Key, (OpenTK.Matrix3)loop.Value)));
-
-                    }
-                    else if (loop.Value is OpenTK.Matrix4)
-                    {
-                        Attributes.Add(new PropertyAttribute(loop.Key, new Matrix4ViewModel(loop.Key, (OpenTK.Matrix4)loop.Value)));
-                    }
-                    else if (loop.Value is NumericViewModel)
-                    {
-                        Attributes.Add(new PropertyAttribute(loop.Key, new NumericViewModel(loop.Key, (float)loop.Value)));
-                    }
-                    else
-                    {
-                        Attributes.Add(new PropertyAttribute(loop.Key, new DefaultViewModel(loop.Key, loop.Value.ToString())));
-                    }
-                }
-                this.PropertyGrid.ItemsSource = Attributes;
-
-            }
         }
 
     }

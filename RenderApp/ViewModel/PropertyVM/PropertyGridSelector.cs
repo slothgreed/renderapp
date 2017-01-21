@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
 using RenderApp.View;
+using RenderApp.ViewModel.MathVM;
+using RenderApp.ViewModel.AssetVM;
 namespace RenderApp.ViewModel.PropertyVM
 {
     class PropertyGridTemplate : DataTemplateSelector
@@ -19,29 +21,20 @@ namespace RenderApp.ViewModel.PropertyVM
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            if (item is PropertyAttribute)
+            if(item is KeyValuePair<string,object>)
             {
-                PropertyAttribute control = item as PropertyAttribute;
-                if(control.Value is MathVM.Vector2ViewModel)
-                {
+                var key = (KeyValuePair<string, object>)item;
+
+                if (key.Value is Vector2ViewModel)
                     return Vector2Template;
-                }
-                if (control.Value is OpenTK.Vector3)
-                {
+                if (key.Value is Vector3ViewModel)
                     return Vector3Template;
-                }
-                if (control.Value is MathVM.Vector4ViewModel)
-                {
+                if (key.Value is Vector4ViewModel)
                     return Vector4Template;
-                }
-                if (control.Value is MathVM.Matrix3ViewModel)
-                {
+                if (key.Value is Matrix3ViewModel)
                     return Matrix3Template;
-                }
-                if (control.Value is MathVM.Matrix4ViewModel)
-                {
+                if (key.Value is Matrix4ViewModel)
                     return Matrix4Template;
-                }
             }
             return DefaultTemplate;
 

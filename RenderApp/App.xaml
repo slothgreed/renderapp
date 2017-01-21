@@ -3,13 +3,38 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <!--<ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary  Source="Themes/BureauBlue.xaml" x:Name="StyleBlue"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>-->
+        <Style TargetType="TextBlock" x:Key="NameTemplate">
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="3,2,3,2"/>
+            <Setter Property="Background" Value="WhiteSmoke"/>
+        </Style>
 
+        <Style TargetType="TextBlock" x:Key="VectorXStyle">
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Background" Value="Pink"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="Padding" Value="2"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="VectorYStyle">
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Background" Value="LightGreen"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="Padding" Value="2"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="VectorZStyle">
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Background" Value="LightBlue"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="Padding" Value="2"/>
+        </Style>
 
+        <Style TargetType="TextBlock" x:Key="VectorWStyle">
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="Padding" Value="2"/>
+        </Style>
     </Application.Resources>
     
 </Application>

@@ -43,7 +43,7 @@ namespace RenderApp.AssetModel
             get;
             private set;
         }
-        public Vector3 _translate = Vector3.Zero;
+        private Vector3 _translate = Vector3.Zero;
         public Vector3 Translate
         {
             get

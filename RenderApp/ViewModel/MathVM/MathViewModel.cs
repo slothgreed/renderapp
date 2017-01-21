@@ -20,5 +20,11 @@ namespace RenderApp.ViewModel.MathVM
                 SetValue<string>(ref _name, value);
             }
         }
+        protected object Owner
+        {
+            get;
+            set;
+        }
+
     }
 }

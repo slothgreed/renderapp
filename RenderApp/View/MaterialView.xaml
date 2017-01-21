@@ -7,6 +7,6 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:gl="clr-namespace:RenderApp.GLUtil"
         >
-    <v:PropertyGridView DataContext="{Binding Property}"/>
+    <v:PropertyGridView/>
 </UserControl>
 

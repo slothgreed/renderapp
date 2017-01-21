@@ -414,12 +414,12 @@ namespace RenderApp.ViewModel
             }
             if(window is MaterialViewModel)
             {
-                var oldItem = RightUpDockPanel.FindVM<GeometryViewModel>();
+                var oldItem = RightUpDockPanel.FindVM<MaterialViewModel>();
                 RightUpDockPanel.ReplaceVM(oldItem,window);
             }
             if (window is ShaderProgramViewModel)
             {
-                var oldItem = RightDownDockPanel.FindVM<GeometryViewModel>();
+                var oldItem = RightDownDockPanel.FindVM<ShaderProgramViewModel>();
                 RightDownDockPanel.ReplaceVM(oldItem,window);
             }
 

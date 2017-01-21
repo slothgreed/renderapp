@@ -8,9 +8,9 @@
     <StackPanel>
         <WrapPanel>
             <TextBlock Text="{Binding Key}" Style="{StaticResource NameTemplate}"/>
-            <TextBlock Text="X" Style="{StaticResource XTemplate}"/>
+            <TextBlock Text="X" Style="{StaticResource VectorXStyle}"/>
             <TextBox Text="{Binding Value.X, StringFormat=N3}"/>
-            <TextBlock Text="Y" Style="{StaticResource YTemplate}"/>
+            <TextBlock Text="Y" Style="{StaticResource VectorYStyle}"/>
             <TextBox Text="{Binding Value.Y, StringFormat=N3}"/>
         </WrapPanel>
     </StackPanel>

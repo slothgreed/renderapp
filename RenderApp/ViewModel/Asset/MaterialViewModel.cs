@@ -14,25 +14,22 @@ using RenderApp.ViewModel.DockTabVM;
 using RenderApp.ViewModel.PropertyVM;
 namespace RenderApp.ViewModel.AssetVM
 {
-    public class MaterialViewModel : TabItemViewModel
+    public class MaterialViewModel : TabItemViewModel,IPropertyGridViewModel
     {
 
-        private Dictionary<string,object> _items;
-        public Dictionary<string,object> Items
+        private Dictionary<string,object> _item;
+        public Dictionary<string,object> PropertyItem
         {
             get
             {
-                return _items;
+                return _item;
             }
-        }
-        private PropertyGridViewModel _property;
-        public PropertyGridViewModel Property
-        {
-            get
+            set
             {
-                return _property;
+                SetValue(ref _item, value);
             }
         }
+
         private Material _model;
         public Material Model
         {
@@ -44,21 +41,28 @@ namespace RenderApp.ViewModel.AssetVM
         }
         public MaterialViewModel(Material model)
         {
-            _items = new Dictionary<string, object>();
+            Title = model.Key;
+            _item = new Dictionary<string, object>();
 
             model.CurrentShader.ActiveShader.ForEach(
-                loop => Items.Add(loop.shaderType.ToString(),loop.FileName)
+                loop => PropertyItem.Add(loop.shaderType.ToString(),loop.FileName)
                 );
             foreach (KeyValuePair<TextureKind,Texture> loop in model.TextureItem)
             {
-                Items.Add(loop.Key.ToString(), loop.Value);
+                PropertyItem.Add(loop.Key.ToString(), loop.Value);
             }
-            _property = new PropertyGridViewModel(Items);
         }
-
+        private string _title = "";
         public override string Title
         {
-            get { return "Material"; }
+            get
+            {
+                return "Material : " + _title;
+            }
+            set
+            {
+                SetValue(ref _title, value);
+            }
         }
 
         public override void UpdateProperty()

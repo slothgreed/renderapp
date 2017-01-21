@@ -9,9 +9,10 @@ using RenderApp.GLUtil;
 using OpenTK;
 using RenderApp.ViewModel.DockTabVM;
 using RenderApp.ViewModel.PropertyVM;
+using RenderApp.ViewModel.MathVM;
 namespace RenderApp.ViewModel.AssetVM
 {
-    public class GeometryViewModel : TabItemViewModel
+    public class GeometryViewModel : TabItemViewModel,IPropertyGridViewModel
     {
         public override string Title
         {
@@ -28,21 +29,16 @@ namespace RenderApp.ViewModel.AssetVM
             }
         }
         private Dictionary<string, object> _item;
-        public Dictionary<string, object> Item
+        public Dictionary<string, object> PropertyItem
         {
             get
             {
                 return _item;
             }
-            private set
+            set
             {
                 SetValue(ref _item, value);
             }
-        }
-        public PropertyGridViewModel Property
-        {
-            get;
-            private set;
         }
         public Geometry Model
         {
@@ -52,11 +48,11 @@ namespace RenderApp.ViewModel.AssetVM
         public GeometryViewModel(Geometry model)
         {
             Model = model;
-            Item = new Dictionary<string, object>();
-            Item.Add("Translate", model.Translate);
-            Item.Add("Scale", model.Scale);
-            Item.Add("Rotate", model.Rotate);
-            Item.Add("Material", model.MaterialItem.ToString());
+            PropertyItem = new Dictionary<string, object>();
+            PropertyItem.Add("Translate", new Vector3ViewModel(Model, "Translate", model.Translate));
+            PropertyItem.Add("Scale", new Vector3ViewModel(Model, "Scale", model.Scale));
+            PropertyItem.Add("Rotate", new Vector3ViewModel(Model, "Rotate", model.Rotate));
+            PropertyItem.Add("Material", model.MaterialItem.Key);
         }
 
         public GeometryViewModel()

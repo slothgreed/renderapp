@@ -201,44 +201,44 @@
     <Compile Include="ViewModel\Controller\IControllerViewModelBase.cs" />
     <Compile Include="ViewModel\Controller\SelectViewModel.cs" />
     <Compile Include="ViewModel\DynamicViewModelBase.cs" />
-    <Compile Include="ViewModel\Math\Matrix3ViewModel.cs" />
-    <Compile Include="ViewModel\Math\Matrix4ViewModel.cs" />
-    <Compile Include="ViewModel\Math\NumericViewModel.cs" />
-    <Compile Include="ViewModel\Math\Vector2ViewModel.cs" />
-    <Compile Include="ViewModel\Math\Vector3ViewModel.cs" />
-    <Compile Include="ViewModel\Math\Vector4ViewModel.cs" />
-    <Compile Include="ViewModel\Property\PropertyGridViewModel.cs" />
-    <Compile Include="ViewModel\Node\RootNodeViewModelT4.cs">
+    <Compile Include="ViewModel\MathVM\Matrix3ViewModel.cs" />
+    <Compile Include="ViewModel\MathVM\Matrix4ViewModel.cs" />
+    <Compile Include="ViewModel\MathVM\NumericViewModel.cs" />
+    <Compile Include="ViewModel\MathVM\Vector2ViewModel.cs" />
+    <Compile Include="ViewModel\MathVM\Vector3ViewModel.cs" />
+    <Compile Include="ViewModel\MathVM\Vector4ViewModel.cs" />
+    <Compile Include="ViewModel\PropertyVM\IPropertyGridViewModel.cs" />
+    <Compile Include="ViewModel\NodeVM\RootNodeViewModelT4.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RootNodeViewModelT4.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\DockTab\DockPaneSelector.cs" />
+    <Compile Include="ViewModel\DockTabVM\DockPaneSelector.cs" />
     <Compile Include="AssetModel\Geometry\Geometry.cs" />
     <Compile Include="AssetModel\LightModel\DirectionLight.cs" />
     <Compile Include="AssetModel\LightModel\PointLight.cs" />
     <Compile Include="AssetModel\LightModel\SpotLight.cs" />
     <Compile Include="Core\RAFile.cs" />
-    <Compile Include="ViewModel\DockTab\DockWindowViewModel.cs" />
+    <Compile Include="ViewModel\DockTabVM\DockWindowViewModel.cs" />
     <Compile Include="ViewModel\ComboItemViewModel.cs" />
     <Compile Include="ViewModel\DefaultViewModel.cs" />
     <Compile Include="ViewModel\Dialog\DialogViewModelBase.cs" />
     <Compile Include="ViewModel\Controller\VoxelViewModel.cs" />
     <Compile Include="ViewModel\Asset\GeometryViewModel.cs" />
-    <Compile Include="ViewModel\Math\MathViewModel.cs" />
+    <Compile Include="ViewModel\MathVM\MathViewModel.cs" />
     <Compile Include="ViewModel\MaterialItemSelector.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MaterialItemSelector.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\Asset\MaterialViewModel.cs" />
-    <Compile Include="ViewModel\Property\PropertyGridSelector.cs" />
+    <Compile Include="ViewModel\PropertyVM\PropertyGridSelector.cs" />
     <Compile Include="ViewModel\RenderSystemViewModel.cs" />
     <Compile Include="ViewModel\Asset\ShaderViewModel.cs" />
     <Compile Include="ViewModel\Asset\ImageViewModel.cs" />
-    <Compile Include="ViewModel\Node\NodeItemViewModel.cs" />
-    <Compile Include="ViewModel\DockTab\TabControlViewModel.cs" />
-    <Compile Include="ViewModel\DockTab\TabItemViewModel.cs" />
+    <Compile Include="ViewModel\NodeVM\NodeItemViewModel.cs" />
+    <Compile Include="ViewModel\DockTabVM\TabControlViewModel.cs" />
+    <Compile Include="ViewModel\DockTabVM\TabItemViewModel.cs" />
     <Compile Include="ViewModel\ViewportViewModel.cs" />
     <Compile Include="View\Controller\DijkstraView.xaml.cs">
       <DependentUpon>DijkstraView.xaml</DependentUpon>
@@ -267,7 +267,7 @@
     <Compile Include="View\RootNodeView.xaml.cs">
       <DependentUpon>RootNodeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\Node\RootNodeViewModel.cs" />
+    <Compile Include="ViewModel\NodeVM\RootNodeViewModel.cs" />
     <Compile Include="Globals\Global.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModelT4.cs">
@@ -476,7 +476,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="ViewModel\Node\RootNodeViewModelT4.tt">
+    <None Include="ViewModel\NodeVM\RootNodeViewModelT4.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RootNodeViewModelT4.cs</LastGenOutput>
     </None>

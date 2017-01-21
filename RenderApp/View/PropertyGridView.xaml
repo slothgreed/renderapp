@@ -14,44 +14,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel>
-        <Button Content="PropertyGrid1"/>
         <StackPanel>
-            <StackPanel.Resources>
-                <Style TargetType="TextBlock" x:Key="NameTemplate">
-                    <Setter Property="Width" Value="60"/>
-                    <Setter Property="TextAlignment" Value="Right"/>
-                    <Setter Property="Margin" Value="3,2,3,2"/>
-                    <Setter Property="Background" Value="WhiteSmoke"/>
-                </Style>
-
-                <Style TargetType="TextBlock" x:Key="XTemplate">
-                    <Setter Property="Width" Value="20"/>
-                    <Setter Property="Background" Value="Pink"/>
-                    <Setter Property="TextAlignment" Value="Right"/>
-                    <Setter Property="Padding" Value="2"/>
-                </Style>
-                <Style TargetType="TextBlock" x:Key="YTemplate">
-                    <Setter Property="Width" Value="20"/>
-                    <Setter Property="Background" Value="LightGreen"/>
-                    <Setter Property="TextAlignment" Value="Right"/>
-                    <Setter Property="Padding" Value="2"/>
-                </Style>
-                <Style TargetType="TextBlock" x:Key="ZTemplate">
-                    <Setter Property="Width" Value="20"/>
-                    <Setter Property="Background" Value="LightBlue"/>
-                    <Setter Property="TextAlignment" Value="Right"/>
-                    <Setter Property="Padding" Value="2"/>
-                </Style>
-
-                <Style TargetType="TextBlock" x:Key="WTemplate">
-                    <Setter Property="Width" Value="20"/>
-                    <Setter Property="Background" Value="White"/>
-                    <Setter Property="TextAlignment" Value="Right"/>
-                    <Setter Property="Padding" Value="2"/>
-                </Style>
-            </StackPanel.Resources>
-            
-            <ItemsControl x:Name="PropertyGrid">
+           
+            <ItemsControl x:Name="PropertyGrid" ItemsSource="{Binding PropertyItem}">
                 <ItemsControl.ItemTemplateSelector>
                     <vmp:PropertyGridTemplate>
                         <vmp:PropertyGridTemplate.DefaultTemplate>

@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel>
-        <v:PropertyGridView PropertyItem="{Binding Item}"/>
+        <v:PropertyGridView/>
     </StackPanel>
     
 </UserControl>

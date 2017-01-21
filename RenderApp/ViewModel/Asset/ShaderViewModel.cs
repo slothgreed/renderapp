@@ -12,7 +12,7 @@ using RenderApp.ViewModel.DockTabVM;
 using RenderApp.ViewModel.PropertyVM;
 namespace RenderApp.ViewModel.AssetVM
 {
-    class ShaderViewModel : TabItemViewModel
+    class ShaderViewModel : TabItemViewModel,IPropertyGridViewModel
     {
         public override string Title
         {
@@ -21,47 +21,41 @@ namespace RenderApp.ViewModel.AssetVM
                 return "Shader";
             }
         }
-        public Dictionary<string,object> Items
+        public Dictionary<string,object> PropertyItem
         {
             get;
-            private set;
-        }
-        public PropertyGridViewModel Property
-        {
-            get;
-            private set;
+            set;
         }
         public ShaderViewModel(Material material)
         {
-            Items = new Dictionary<string,object>();
+            PropertyItem = new Dictionary<string, object>();
             foreach (ShaderProgramInfo loop in material.CurrentShader.GetShaderVariable())
             {
                 if (loop.variable is Vector2)
                 {
-                    Items.Add(loop.Name, (Vector2)loop.variable);
+                    PropertyItem.Add(loop.Name, (Vector2)loop.variable);
                 }
                 if (loop.variable is Vector3)
                 {
-                    Items.Add(loop.Name, (Vector3)loop.variable);
+                    PropertyItem.Add(loop.Name, (Vector3)loop.variable);
                 }
                 if (loop.variable is Vector4)
                 {
-                    Items.Add(loop.Name, (Vector4)loop.variable);
+                    PropertyItem.Add(loop.Name, (Vector4)loop.variable);
                 }
                 if (loop.variable is Matrix3)
                 {
-                    Items.Add(loop.Name, (Matrix3)loop.variable);
+                    PropertyItem.Add(loop.Name, (Matrix3)loop.variable);
                 }
                 if (loop.variable is Matrix4)
                 {
-                    Items.Add(loop.Name, (Matrix4)loop.variable);
+                    PropertyItem.Add(loop.Name, (Matrix4)loop.variable);
                 }
                 if (loop.variable is Texture)
                 {
-                    Items.Add(loop.Name, (Texture)loop.variable);
+                    PropertyItem.Add(loop.Name, (Texture)loop.variable);
                 }
             }
-            Property = new PropertyGridViewModel(Items);
         }
         public override void UpdateProperty()
         {
