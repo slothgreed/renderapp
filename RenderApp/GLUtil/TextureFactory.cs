@@ -38,6 +38,9 @@ namespace RenderApp.GLUtil
                 case ".tga":
                     kind = ImageKind.TGA;
                     break;
+                case ".hdr":
+                    kind = ImageKind.HDR;
+                    break;
             }
 
             return CreateTexture(path, kind);
@@ -58,6 +61,9 @@ namespace RenderApp.GLUtil
                     break;
                 case ImageKind.TGA:
                     image = new TGAImage(path);
+                    break;
+                case ImageKind.HDR:
+                    image = new HDRImage(path);
                     break;
                 default:
                     return null;

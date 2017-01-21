@@ -208,7 +208,7 @@ namespace RenderApp.ViewModel
         {
             System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
             dlg.InitialDirectory = ProjectInfo.ProjectDirectory;
-            dlg.Filter = "画像ファイル(*.bmp;*.jpg;*png;tga)|*.bmp;*.jpg;*.png;*.tga;";
+            dlg.Filter = "画像ファイル(*.bmp;*.jpg;*png;tga;*.hdr)|*.bmp;*.jpg;*.png;*.tga;*.hdr;";
             dlg.Title = "開くファイルを選択してください。";
             dlg.Multiselect = true;
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)

@@ -15,6 +15,7 @@ namespace RenderApp
         JPG,
         BMP,
         TGA,
+        HDR,
         Num
     }
     /// <summary>
