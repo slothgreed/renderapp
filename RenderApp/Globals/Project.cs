@@ -61,7 +61,21 @@ namespace RenderApp.Globals
                 ShaderProgramRoot.AddChild(value);
             }
         }
-
+        internal IEnumerable<RAObject> GetObject(RAAsset assetType)
+        {
+            switch (assetType)
+            {
+                case RAAsset.Model:
+                    return GeometryRoot.AllChildrenObject();
+                case RAAsset.Texture:
+                    return TextureRoot.AllChildrenObject();
+                case RAAsset.Material:
+                    return MaterialRoot.AllChildrenObject();
+                case RAAsset.ShaderProgram:
+                    return ShaderProgramRoot.AllChildrenObject();
+            }
+            return null;
+        }
         internal void Dispose()
         {
             GeometryRoot.Dispose();

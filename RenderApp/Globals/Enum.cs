@@ -87,7 +87,9 @@ namespace RenderApp
     {
         Model,
         Texture,
-        Shader
+        Material,
+        ShaderProgram,
+        Shader,
     }
     public enum TextureKind
     {

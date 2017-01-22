@@ -353,7 +353,7 @@ namespace RenderApp.AssetModel.RA_Geometry
         #endregion
         public void SetMaterial(Geometry geometry,OBJMaterial material)
         {
-            Material mat = new Material(material.name);
+            Material mat = AssetFactory.Instance.CreateMaterial(material.name);
             if(material.map_Kd != null)
             {
                 Texture albedo = TextureFactory.Instance.CreateTexture(material.map_Kd);

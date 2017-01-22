@@ -235,5 +235,18 @@ namespace RenderApp.Utility
             }
         }
 
+        internal IEnumerable<RAObject> AllChildrenObject()
+        {
+            foreach (var child in Children)
+            {
+                yield return child.RAObject;
+
+                foreach (var grand in child.Children)
+                {
+                    yield return grand.RAObject;
+                }
+            }
+        }
+
     }
 }

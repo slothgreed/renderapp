@@ -39,7 +39,12 @@ namespace RenderApp.AssetModel
             //Project.ActiveProject.AddChild(texture);
             //return sphere.geometry;
         }
-
+        public Material CreateMaterial(string name)
+        {
+            Material material = new Material(name);
+            Project.ActiveProject.AddChild(material);
+            return material;
+        }
         internal Camera CreateMainCamera()
         {
             return new Camera("MainCamera");
@@ -145,7 +150,7 @@ namespace RenderApp.AssetModel
             Plane plane;
             plane = new Plane(name);
             Geometry renderObject = plane.CreateRenderObject().First();
-            renderObject.MaterialItem = new Material(name);
+            renderObject.MaterialItem = CreateMaterial(name);
             Project.ActiveProject.AddChild(renderObject.MaterialItem);
             renderObject.MaterialItem.SetShader(shader);
             return renderObject;

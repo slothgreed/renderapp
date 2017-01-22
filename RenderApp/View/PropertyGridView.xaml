@@ -54,6 +54,15 @@
                                 <vmath:Matrix4View/>
                             </DataTemplate>
                         </vmp:PropertyGridTemplate.Matrix4Template>
+                        
+                        <vmp:PropertyGridTemplate.ComboItemTemplate>
+                            <DataTemplate>
+                                <WrapPanel>
+                                    <TextBlock Text="{Binding Key}" Style="{StaticResource NameTemplate}"/>
+                                    <ComboBox ItemsSource="{Binding Value.Items}" SelectedIndex="{Binding Value.SelectedIndex}"/>
+                                </WrapPanel>
+                            </DataTemplate>
+                        </vmp:PropertyGridTemplate.ComboItemTemplate>
                     </vmp:PropertyGridTemplate>
                 </ItemsControl.ItemTemplateSelector>
             </ItemsControl>

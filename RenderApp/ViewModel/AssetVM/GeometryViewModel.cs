@@ -52,7 +52,7 @@ namespace RenderApp.ViewModel.AssetVM
             PropertyItem.Add("Translate", new Vector3ViewModel(Model, "Translate", model.Translate));
             PropertyItem.Add("Scale", new Vector3ViewModel(Model, "Scale", model.Scale));
             PropertyItem.Add("Rotate", new Vector3ViewModel(Model, "Rotate", model.Rotate));
-            PropertyItem.Add("Material", model.MaterialItem.Key);
+            PropertyItem.Add("Material", new ComboItemViewModel(Model,"MaterialItem", RenderApp.Globals.Project.ActiveProject.GetObject(RAAsset.Material), 0));
         }
 
         public GeometryViewModel()

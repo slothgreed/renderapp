@@ -134,7 +134,7 @@ namespace RenderApp.AssetModel
             {
                 if(_default == null)
                 {
-                    _default = new Material("Default");
+                    _default = AssetFactory.Instance.CreateMaterial("Default");
                     _default.SetShader(ShaderFactory.Instance.DefaultDefferredShader);
                 }
                 return _default;
@@ -150,7 +150,7 @@ namespace RenderApp.AssetModel
             {
                 if(_constant == null)
                 {
-                    _constant = new Material("Analyze");
+                    _constant = AssetFactory.Instance.CreateMaterial("Analyze");
                     _constant.SetShader(ShaderFactory.Instance.DefaultAnalyzeShader);
                 }
                 return _constant;

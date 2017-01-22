@@ -33,8 +33,21 @@ namespace RenderApp.ViewModel
         protected void SetValue<T>(Func<T, bool> updateFunc, T value,[CallerMemberName]string memberName = "")
         {
             OnPropertyChanging(memberName);
-            updateFunc(value);
+            if(updateFunc != null)
+            {
+                updateFunc(value);
+            }
             OnPropertyChanged(memberName);
+        }
+        protected void SetValue<T>(Action<T> action,T value, [CallerMemberName]string memberName = "")
+        {
+            OnPropertyChanging(memberName);
+            if(action != null)
+            {
+                action(value);
+            }
+            OnPropertyChanged(memberName);
+
         }
 
         protected void OnPropertyChange([CallerMemberName]string memberName = "")
