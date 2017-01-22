@@ -8,31 +8,60 @@ namespace RenderApp.ViewModel.MathVM
 {
     public class Vector4ViewModel : MathViewModel
     {
+        Func<Vector4, bool> updateFunc;
         private Vector4 Model;
-        public Vector4ViewModel(string name, Vector4 value)
+        public Vector4ViewModel(object owner,string name, Vector4 value)
         {
+            Owner = owner;
             Name = name;
             Model = value;
+            updateFunc = new Func<Vector4, bool>(UpdateProperty);
         }
         public float X
         {
             get { return Model.X; }
-            set { SetValue<float>(ref Model.X, value); }
+            set
+            {
+                SetValue<Vector4>(updateFunc, new Vector4(value, Y, Z, W));
+            }
         }
         public float Y
         {
             get { return Model.Y; }
-            set { SetValue<float>(ref Model.Y, value); }
+            set
+            {
+                SetValue<Vector4>(updateFunc, new Vector4(X, value, Z, W));
+            }
         }
         public float Z
         {
             get { return Model.Z; }
-            set { SetValue<float>(ref Model.Z, value); }
+            set
+            {
+                SetValue<Vector4>(updateFunc, new Vector4(X, Y, value, W));
+            }
         }
         public float W
         {
             get { return Model.W; }
-            set { SetValue<float>(ref Model.W, value); }
+            set
+            {
+                SetValue<Vector4>(updateFunc, new Vector4(X, Y, Z, value));
+            }
+        }
+        public bool UpdateProperty(Vector4 value)
+        {
+            Model = value;
+            if (Owner == null)
+                return false;
+
+            var property = Owner.GetType().GetProperty(Name);
+            if (property == null)
+                return false;
+
+            property.SetValue(Owner, value);
+
+            return true;
         }
         public override void UpdateProperty()
         {

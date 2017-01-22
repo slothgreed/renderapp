@@ -8,23 +8,46 @@ namespace RenderApp.ViewModel.MathVM
 {
     public class Vector2ViewModel : MathViewModel
     {
+        Func<Vector2, bool> updateFunc;
         private Vector2 Model;
 
-        public Vector2ViewModel(string name, Vector2 value)
+        public Vector2ViewModel(object owner,string name, Vector2 value)
         {
+            Owner = owner;
             Name = name;
             Model = value;
+            updateFunc = new Func<Vector2, bool>(UpdateProperty);
         }
 
         public float X
         {
             get { return Model.X; }
-            set { SetValue<float>(ref Model.X, value); }
+            set
+            {
+                SetValue<Vector2>(updateFunc, new Vector2(value, Y));
+            }
         }
         public float Y
         {
             get { return Model.Y; }
-            set { SetValue<float>(ref Model.Y, value); }
+            set
+            {
+                SetValue<Vector2>(updateFunc, new Vector2(value, Y));
+            }
+        }
+        public bool UpdateProperty(Vector2 value)
+        {
+                        Model = value;
+            if (Owner == null)
+                return false;
+
+            var property = Owner.GetType().GetProperty(Name);
+            if (property == null)
+                return false;
+
+            property.SetValue(Owner, value);
+
+            return true;
         }
         public override void UpdateProperty()
         {
