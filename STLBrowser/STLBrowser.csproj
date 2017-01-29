@@ -34,8 +34,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="OpenTK.GLControl, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dll\OpenTK.GLControl.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -47,6 +52,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -58,6 +64,7 @@
     <Compile Include="MyDirectory.cs" />
     <Compile Include="ViewModel\STLBrowserViewModel.cs" />
     <Compile Include="ViewModel\ThumbnailFileViewModel.cs" />
+    <Compile Include="ViewModel\ViewportViewModel.cs" />
     <Compile Include="View\STLBrowserView.xaml.cs">
       <DependentUpon>STLBrowserView.xaml</DependentUpon>
     </Compile>
@@ -68,6 +75,9 @@
     </Compile>
     <Compile Include="View\ThumbnailFileView.xaml.cs">
       <DependentUpon>ThumbnailFileView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewportView.xaml.cs">
+      <DependentUpon>ViewportView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -94,9 +104,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\ViewportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="STLMainWindowViewModel.cs" />
+    <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

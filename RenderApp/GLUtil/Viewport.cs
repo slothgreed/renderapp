@@ -131,7 +131,10 @@ namespace RenderApp.GLUtil
             Scene.ActiveScene.Initialize();
             m_AppstartUp = true;
             Logger.GLLog(Logger.LogLevel.Error);
-            OnCreateViewportEvent();
+            if(OnCreateViewportEvent != null)
+            {
+                OnCreateViewportEvent();
+            }
         }
         //Loadより先に呼ばれる
         //glControlのサイズ変更時に実行される。

@@ -5,7 +5,7 @@
         xmlns:v="clr-namespace:STLBrowser.View"
         Title="MainWindow" Height="350" Width="525">
     <Window.DataContext>
-        <vm:STLMainWindowViewModel/>
+        <vm:MainWindowViewModel/>
     </Window.DataContext>
     
     <Grid>
@@ -16,6 +16,6 @@
         </Grid.ColumnDefinitions>
         <v:FileTreeView Grid.Column="0" DataContext="{Binding FileTreeViewModel}"/>
         <v:STLBrowserView Grid.Column="1" DataContext="{Binding STLBrowserViewModel}"/>
-        <Button Content="test" Grid.Column="2"/>
+        <v:ViewportView Grid.Column="2" DataContext="{Binding ViewportViewModel}"/>
     </Grid>
 </Window>

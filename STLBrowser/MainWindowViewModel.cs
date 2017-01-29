@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using KI.Foundation.ViewModel;
 namespace STLBrowser.ViewModel
 {
-    public class STLMainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ViewModelBase
     {
         private FileTreeViewModel _FileTreeViewModel;
         public FileTreeViewModel FileTreeViewModel
@@ -29,13 +29,26 @@ namespace STLBrowser.ViewModel
             }
             set
             {
-                _STLBrowserViewModel = value;
+                SetValue(ref _STLBrowserViewModel, value);
             }
         }
-        public STLMainWindowViewModel()
+        private ViewportViewModel _ViewportViewModel;
+        public ViewportViewModel ViewportViewModel
+        {
+            get
+            {
+                return _ViewportViewModel;
+            }
+            set
+            {
+                SetValue(ref _ViewportViewModel, value);
+            }
+        }
+        public MainWindowViewModel()
         {
             FileTreeViewModel = new FileTreeViewModel(@"C:\Users\ido\Documents\GitHub\RenderApp");
             STLBrowserViewModel = new STLBrowserViewModel(@"C:\Users\ido\Documents\GitHub\RenderApp");
+            ViewportViewModel = new ViewportViewModel();
         }
 
         public override void UpdateProperty()
