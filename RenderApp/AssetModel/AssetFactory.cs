@@ -98,7 +98,7 @@ namespace RenderApp.AssetModel
                 position.Add(geometry.Position[3 * i]);
 
             }
-            RenderObject wireframe = new RenderObject("WireFrame :" + geometry.Key);
+            RenderObject wireframe = new RenderObject("WireFrame :" + geometry.Name);
             wireframe.CreatePC(position, RACalc.RandomColor(), PrimitiveType.Lines);
             CreateGeometry(wireframe);
 
@@ -113,7 +113,7 @@ namespace RenderApp.AssetModel
             Geometry geometry = asset as Geometry;
             List<Vector3> position = new List<Vector3>(geometry.Position);
             List<Vector3> normal = new List<Vector3>(geometry.Normal);
-            RenderObject polygon = new RenderObject("Polygon :" + geometry.Key);
+            RenderObject polygon = new RenderObject("Polygon :" + geometry.Name);
             polygon.CreatePNC(position, normal, new Vector3(0.7f, 0.7f, 0.7f), PrimitiveType.Triangles);
             CreateGeometry(polygon);
 
@@ -127,7 +127,7 @@ namespace RenderApp.AssetModel
             }
             Geometry geometry = asset as Geometry;
             Analyzer.Voxel voxel = new Analyzer.Voxel(geometry.Position, geometry.Index, geometry.ModelMatrix, partition);
-            RenderObject wireframe = new RenderObject("Voxel :" + geometry.Key);
+            RenderObject wireframe = new RenderObject("Voxel :" + geometry.Name);
             wireframe.CreatePNC(voxel.vPosition, voxel.vNormal, RACalc.RandomColor(), PrimitiveType.Quads);
             CreateGeometry(wireframe);
 

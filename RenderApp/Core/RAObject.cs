@@ -13,18 +13,18 @@ namespace RenderApp
         }
         public RAObject(string name)
         {
-            Key = name;
+            Name = name;
         }
-        private string _key = null;
-        public string Key
+        private string _name = null;
+        public string Name
         {
             get
             {
-                return _key;
+                return _name;
             }
             set
             {
-                _key = value;
+                _name = value;
             }
         }
 
@@ -34,7 +34,7 @@ namespace RenderApp
         }
         public override string ToString()
         {
-            return Key;
+            return Name;
         } 
     }
 }

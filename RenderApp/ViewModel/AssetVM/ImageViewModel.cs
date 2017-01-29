@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using RenderApp.GLUtil;
 using System.IO;
 using System.Windows.Media;
+using KI.Foundation.ViewModel;
+
 namespace RenderApp.ViewModel.AssetVM
 {
     class ImageViewModel : ViewModelBase

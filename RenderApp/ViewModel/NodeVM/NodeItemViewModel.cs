@@ -8,6 +8,8 @@ using System.Collections.ObjectModel;
 using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using RenderApp.Utility;
+using KI.Foundation.ViewModel;
+
 namespace RenderApp.ViewModel.NodeVM
 {
     public class NodeItemViewModel : ViewModelBase
@@ -103,7 +105,7 @@ namespace RenderApp.ViewModel.NodeVM
                 SetValue<string>(ref _displayName, value);
                 if(Model != null)
                 {
-                    Model.RAObject.Key = _displayName;
+                    Model.RAObject.Name = _displayName;
                 }
             }
         }

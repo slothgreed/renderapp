@@ -41,7 +41,7 @@ namespace RenderApp.ViewModel.AssetVM
         }
         public MaterialViewModel(Material model)
         {
-            Title = model.Key;
+            Title = model.Name;
             _item = new Dictionary<string, object>();
 
             model.CurrentShader.ActiveShader.ForEach(

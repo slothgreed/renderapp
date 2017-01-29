@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using KI.Foundation.ViewModel;
 
 namespace RenderApp.ViewModel.DockTabVM
 {

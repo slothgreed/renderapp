@@ -14,7 +14,7 @@ namespace RenderApp
         {
             FileName = Path.GetFileName(filePath);
             FilePath = filePath;
-            Key = FileName;
+            Name = FileName;
             Utility.Output.Log(Utility.Output.LogLevel.Debug,"create asset " + filePath + ":");
         }
         private string _directoryPath;
@@ -52,9 +52,9 @@ namespace RenderApp
 
         public override string ToString()
         {
-            if(Key != null)
+            if(Name != null)
             {
-                return Key;
+                return Name;
             }
             if(FileName != null)
             {

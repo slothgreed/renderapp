@@ -34,7 +34,7 @@ namespace RenderApp.Utility
                 {
                     return emptyName;
                 }
-                return RAObject.Key;
+                return RAObject.Name;
             }
         }
         public RAObject RAObject;
@@ -69,7 +69,7 @@ namespace RenderApp.Utility
             {
                 return;
             }
-            if (FindChild(child.Key) == null)
+            if (FindChild(child.Name) == null)
             {
                 RANode node = new RANode(child);
                 node.Parent = this;
@@ -118,9 +118,9 @@ namespace RenderApp.Utility
                 AddChild(child);
                 return;
             }
-            if (FindChild(child.Key) == null)
+            if (FindChild(child.Name) == null)
             {
-                var node = new RANode(child.Key);
+                var node = new RANode(child.Name);
                 Children.Insert(index, node);
                 if (InsertNodeEvent != null)
                 {
@@ -144,7 +144,7 @@ namespace RenderApp.Utility
         }
         public void RemoveChild(RAObject child)
         {
-            var remove = FindChild(child.Key);
+            var remove = FindChild(child.Name);
             if(remove != null)
             {
                 RemoveChild(remove);
@@ -178,7 +178,7 @@ namespace RenderApp.Utility
         #region [check child]
         public bool ExistChild(RAObject child)
         {
-            if (FindChild(child.Key) != null)
+            if (FindChild(child.Name) != null)
             {
                 return true;
             }
@@ -209,7 +209,7 @@ namespace RenderApp.Utility
         public override string ToString()
         {
             if (RAObject != null)
-                return RAObject.Key;
+                return RAObject.Name;
             return emptyName;
         }
 

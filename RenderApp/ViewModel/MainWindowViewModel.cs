@@ -21,6 +21,8 @@ using RenderApp.ViewModel.Controller;
 using RenderApp.ViewModel.DockTabVM;
 using RenderApp.ViewModel.AssetVM;
 using RenderApp.ViewModel.NodeVM;
+using KI.Foundation.ViewModel;
+
 namespace RenderApp.ViewModel
 {
     public partial class MainWindowViewModel : ViewModelBase

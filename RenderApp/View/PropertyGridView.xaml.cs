@@ -12,8 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using RenderApp.ViewModel;
-using RenderApp.ViewModel.MathVM;
-using RenderApp.ViewModel.AssetVM;
+using KI.Foundation.View;
+
 namespace RenderApp.View
 {
     /// <summary>

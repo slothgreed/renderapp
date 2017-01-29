@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
 using RenderApp.View;
-using RenderApp.ViewModel.MathVM;
+using KI.Foundation.ViewModel;
 using RenderApp.ViewModel.AssetVM;
 namespace RenderApp.ViewModel.PropertyVM
 {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KI.Foundation.ViewModel;
 
 namespace RenderApp.ViewModel
 {
@@ -39,12 +40,7 @@ namespace RenderApp.ViewModel
                 SetValue(action, value);
             }
         }
-        //public ComboItemViewModel(object owner, string name, List<string> value, int selectedIndex = 0)
-        //{
-        //    action = new Action<int>(UpdateProperty);
-        //    Name = name;
-        //    SelectedIndex = selectedIndex;
-        //}
+
 
         public ComboItemViewModel(object owner, string name, IEnumerable<RAObject> value, int selectedIndex = 0)
         {

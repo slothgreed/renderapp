@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using OpenTK;
 using RenderApp.GLUtil;
-using RenderApp.ViewModel.MathVM;
+using KI.Foundation.ViewModel;
 using RenderApp.ViewModel.AssetVM;
 namespace RenderApp.ViewModel
 {

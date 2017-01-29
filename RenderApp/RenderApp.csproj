@@ -23,6 +23,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -112,29 +114,6 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsFormsIntegration" />
-    <Reference Include="Xceed.Wpf.AvalonDock, Version=2.8.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Extended.Wpf.Toolkit.2.8\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=2.8.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Extended.Wpf.Toolkit.2.8\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Expression">
-      <HintPath>..\packages\AvalonDock.2.0.2000\lib\net40\Xceed.Wpf.AvalonDock.Themes.Expression.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.2.8\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.2.8\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.DataGrid">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.2.8\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.Toolkit">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.2.8\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -201,12 +180,6 @@
     <Compile Include="ViewModel\Controller\IControllerViewModelBase.cs" />
     <Compile Include="ViewModel\Controller\SelectViewModel.cs" />
     <Compile Include="ViewModel\DynamicViewModelBase.cs" />
-    <Compile Include="ViewModel\MathVM\Matrix3ViewModel.cs" />
-    <Compile Include="ViewModel\MathVM\Matrix4ViewModel.cs" />
-    <Compile Include="ViewModel\MathVM\NumericViewModel.cs" />
-    <Compile Include="ViewModel\MathVM\Vector2ViewModel.cs" />
-    <Compile Include="ViewModel\MathVM\Vector3ViewModel.cs" />
-    <Compile Include="ViewModel\MathVM\Vector4ViewModel.cs" />
     <Compile Include="ViewModel\PropertyVM\IPropertyGridViewModel.cs" />
     <Compile Include="ViewModel\NodeVM\RootNodeViewModelT4.cs">
       <AutoGen>True</AutoGen>
@@ -225,7 +198,6 @@
     <Compile Include="ViewModel\Dialog\DialogViewModelBase.cs" />
     <Compile Include="ViewModel\Controller\VoxelViewModel.cs" />
     <Compile Include="ViewModel\AssetVM\GeometryViewModel.cs" />
-    <Compile Include="ViewModel\MathVM\MathViewModel.cs" />
     <Compile Include="ViewModel\MaterialItemSelector.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -245,24 +217,6 @@
     </Compile>
     <Compile Include="View\Controller\SelectView.xaml.cs">
       <DependentUpon>SelectView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Math\Matrix3View.xaml.cs">
-      <DependentUpon>Matrix3View.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Math\Matrix4View.xaml.cs">
-      <DependentUpon>Matrix4View.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Math\NumericView.xaml.cs">
-      <DependentUpon>NumericView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Math\Vector2View.xaml.cs">
-      <DependentUpon>Vector2View.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Math\Vector3View.xaml.cs">
-      <DependentUpon>Vector3View.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Math\Vector4View.xaml.cs">
-      <DependentUpon>Vector4View.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\RootNodeView.xaml.cs">
       <DependentUpon>RootNodeView.xaml</DependentUpon>
@@ -365,7 +319,6 @@
     <Compile Include="Utility\Util.cs" />
     <Compile Include="Analyzer\Tree\Voxel.cs" />
     <Compile Include="GLUtil\Viewport.cs" />
-    <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\ViewportView.xaml.cs">
       <DependentUpon>ViewportView.xaml</DependentUpon>
     </Compile>
@@ -374,30 +327,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controller\SelectView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Math\Matrix3View.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Math\Matrix4View.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Math\NumericView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Math\Vector2View.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Math\Vector3View.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Math\Vector4View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -573,6 +502,12 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ControllerViewModelT4.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KI.Foundation\KI.Foundation.csproj">
+      <Project>{cfc71ace-112a-467f-96ec-6566d4a6dfc6}</Project>
+      <Name>KI.Foundation</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

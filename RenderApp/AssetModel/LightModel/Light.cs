@@ -29,11 +29,11 @@ namespace RenderApp.AssetModel.LightModel
             Shiness = 1;
             if (name != null)
             {
-                Key = name;
+                Name = name;
             }
             else
             {
-                Key = _objectName;
+                Name = _objectName;
             }
         }
         public override void Dispose()

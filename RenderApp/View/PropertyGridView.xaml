@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:RenderApp.ViewModel"
              xmlns:vmp="clr-namespace:RenderApp.ViewModel.PropertyVM"
-             xmlns:vmath="clr-namespace:RenderApp.View.Math"
+             xmlns:vmath="clr-namespace:KI.Foundation.View;assembly=KI.Foundation"
              xmlns:v="clr-namespace:RenderApp.View"
              xmlns:gl="clr-namespace:RenderApp.GLUtil"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"

@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using RenderApp.ViewModel;
 using System.Windows.Input;
+using KI.Foundation.ViewModel;
+
 namespace RenderApp.ViewModel.Dialog
 {
     public abstract class DialogViewModelBase : ViewModelBase

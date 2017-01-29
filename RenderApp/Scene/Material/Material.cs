@@ -73,7 +73,7 @@ namespace RenderApp.AssetModel
             TextureItem = new Dictionary<TextureKind, Texture>();
             if (name == null)
             {
-                Key = _name;
+                Name = _name;
             }
         }
         #endregion

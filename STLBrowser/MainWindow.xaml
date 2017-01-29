@@ -1,0 +1,21 @@
+﻿<Window x:Class="STLBrowser.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:STLBrowser.ViewModel"
+        xmlns:v="clr-namespace:STLBrowser.View"
+        Title="MainWindow" Height="350" Width="525">
+    <Window.DataContext>
+        <vm:STLMainWindowViewModel/>
+    </Window.DataContext>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <v:FileTreeView Grid.Column="0" DataContext="{Binding FileTreeViewModel}"/>
+        <v:STLBrowserView Grid.Column="1" DataContext="{Binding STLBrowserViewModel}"/>
+        <Button Content="test" Grid.Column="2"/>
+    </Grid>
+</Window>
