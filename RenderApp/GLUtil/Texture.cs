@@ -7,7 +7,7 @@ using System.Drawing;
 using OpenTK.Graphics.OpenGL;
 using System.Drawing.Imaging;
 using RenderApp.AssetModel;
-using RenderApp.Utility;
+using KI.Foundation.Utility;
 using RenderApp.GLUtil.Buffer;
 namespace RenderApp.GLUtil
 {
@@ -106,7 +106,7 @@ namespace RenderApp.GLUtil
             GL.TexParameter(TextureBuffer.Target, TextureParameterName.TextureWrapS, Convert.ToInt32(wrapMode));
             GL.TexParameter(TextureBuffer.Target, TextureParameterName.TextureWrapT, Convert.ToInt32(wrapMode));
             TextureBuffer.UnBindBuffer();
-            Output.GLLog(Output.LogLevel.Error);
+            Logger.GLLog(Logger.LogLevel.Error);
         }
         private void BindFilter(TextureMinFilter filter)
         {
@@ -114,7 +114,7 @@ namespace RenderApp.GLUtil
             GL.TexParameter(TextureBuffer.Target, TextureParameterName.TextureMinFilter, (int)filter);
             GL.TexParameter(TextureBuffer.Target, TextureParameterName.TextureMagFilter, (int)filter);
             TextureBuffer.UnBindBuffer();
-            Output.GLLog(Output.LogLevel.Error);
+            Logger.GLLog(Logger.LogLevel.Error);
         }
 
         public override void Dispose()
@@ -170,7 +170,7 @@ namespace RenderApp.GLUtil
             GL.TexParameter(TextureBuffer.Target, TextureParameterName.TextureMinFilter, (int)this.Filter);
             GL.TexParameter(TextureBuffer.Target, TextureParameterName.TextureMagFilter, (int)this.Filter);
             TextureBuffer.UnBindBuffer();
-            Output.GLLog(Output.LogLevel.Error);
+            Logger.GLLog(Logger.LogLevel.Error);
         }
         #endregion
         #region [CubeMap 現在廃止]

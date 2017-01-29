@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RenderApp.Utility;
+using KI.Foundation.Utility;
+
 namespace RenderApp.GLUtil
 {
     public abstract class BufferObject
@@ -27,23 +28,23 @@ namespace RenderApp.GLUtil
                 Dispose();
             }
             PreGenBuffer();
-            Output.GLLog(Output.LogLevel.Error);
+            Logger.GLLog(Logger.LogLevel.Error);
         }
         public virtual void BindBuffer()
         {
             PreBindBuffer();
             if(NowBind)
             {
-                Output.Log(Output.LogLevel.Warning,"Duplicate Bind Error");
+                Logger.Log(Logger.LogLevel.Warning,"Duplicate Bind Error");
             }
             NowBind = true;
-            Output.GLLog(Output.LogLevel.Error);
+            Logger.GLLog(Logger.LogLevel.Error);
         }
         public virtual void UnBindBuffer()
         {
             PreUnBindBuffer();
             NowBind = false;
-            Output.GLLog(Output.LogLevel.Error);
+            Logger.GLLog(Logger.LogLevel.Error);
         }
         public virtual void Dispose()
         {

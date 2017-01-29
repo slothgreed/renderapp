@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing.Imaging;
 using System.Drawing;
+using KI.Foundation.Utility;
 
 namespace RenderApp
 {
@@ -96,7 +97,7 @@ namespace RenderApp
             {
                 if(!NowLock)
                 {
-                    Utility.Output.Log(Utility.Output.LogLevel.Warning, "Not Lock");
+                    Logger.Log(Logger.LogLevel.Warning, "Not Lock");
                 }
                 return bmpData.Scan0;
             }

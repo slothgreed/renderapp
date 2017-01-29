@@ -7,7 +7,7 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK;
 using RenderApp.AssetModel;
 using RenderApp.GLUtil;
-using RenderApp.Utility;
+using KI.Foundation.Utility;
 using RenderApp.Analyzer;
 using RenderApp.GLUtil.Buffer;
 namespace RenderApp.AssetModel
@@ -130,7 +130,7 @@ namespace RenderApp.AssetModel
             MaterialItem = Material.Default;
             if(GeometryIDCounter > 255)
             {
-                Output.Log(Output.LogLevel.Warning,"To Many Object");
+                Logger.Log(Logger.LogLevel.Warning,"To Many Object");
             }
             GeometryIDCounter++;
             ID = GeometryIDCounter;
@@ -203,7 +203,7 @@ namespace RenderApp.AssetModel
                 DeviceContext.Instance.DrawElements(RenderType, Index.Count, DrawElementsType.UnsignedInt, 0);
             }
             MaterialItem.UnBindShader();
-            Output.GLLog(Output.LogLevel.Error);
+            Logger.GLLog(Logger.LogLevel.Error);
         }
 
         #endregion
@@ -330,7 +330,7 @@ namespace RenderApp.AssetModel
             if (Ex.Length != 0)
             {
                 Ex.Normalize();
-                float angle = -RACalc.Angle(vector1, vector2, Ex);
+                float angle = Utility.RACalc.Angle(vector1, vector2, Ex);
                 Matrix4 mat = Matrix4.CreateFromAxisAngle(Ex, angle);
                 return SetModelViewRotateXYZ(mat, init);
             }

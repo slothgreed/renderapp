@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using RenderApp.GLUtil.ShaderModel;
 using System.Runtime.CompilerServices;
+using KI.Foundation.Utility;
+
 namespace RenderApp.Render_System.Post_Effect
 {
     public abstract class PostEffect
@@ -27,7 +29,7 @@ namespace RenderApp.Render_System.Post_Effect
             }
             else
             {
-                Utility.Output.Log(Utility.Output.LogLevel.Error, "Set Shader Error " + memberName);
+                Logger.Log(Logger.LogLevel.Error, "Set Shader Error " + memberName);
             }
         }
         public abstract void Initialize();

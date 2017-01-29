@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.Utility;
 using RenderApp.GLUtil.Buffer;
+using KI.Foundation.Utility;
+
 namespace RenderApp.GLUtil
 {
     public class FrameBuffer : BufferObject
@@ -86,7 +88,7 @@ namespace RenderApp.GLUtil
 
             RenderBuffer.UnBindBuffer();
             UnBindBuffer();
-            Output.GLLog(Output.LogLevel.Error);
+            Logger.GLLog(Logger.LogLevel.Error);
         }
 
         public void SizeChanged(int width,int height)

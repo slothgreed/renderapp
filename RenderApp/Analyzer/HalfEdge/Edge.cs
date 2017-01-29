@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
+using KI.Foundation.Utility;
+
 namespace RenderApp.Analyzer
 {
     public class Edge
@@ -70,7 +72,7 @@ namespace RenderApp.Analyzer
                 {
                     if(Start == null || End == null || Before == null || Opposite == null)
                     {
-                        Utility.Output.GLLog(Utility.Output.LogLevel.Error, "half edge angle error");
+                        Logger.GLLog(Logger.LogLevel.Error, "half edge angle error");
                         return _angle = 0.0f;
                     }
 
@@ -87,7 +89,7 @@ namespace RenderApp.Analyzer
             {
                 if(Start == null || End == null)
                 {
-                    Utility.Output.GLLog(Utility.Output.LogLevel.Error,"half edge Length error");
+                    Logger.GLLog(Logger.LogLevel.Error,"half edge Length error");
                     return 0.0f;
                 }
                 return (Start - End).Length;

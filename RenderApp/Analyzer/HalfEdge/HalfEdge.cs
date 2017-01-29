@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
-using RenderApp.Utility;
+using KI.Foundation.Utility;
 //using OpenCvSharp;
 namespace RenderApp.Analyzer
 {
@@ -59,7 +59,7 @@ namespace RenderApp.Analyzer
 
             if (CheckOppositeEdge())
             {
-                Output.Log(Output.LogLevel.Debug, "Create Half Edge OK!");
+                Logger.Log(Logger.LogLevel.Debug, "Create Half Edge OK!");
             }
         }
         /// <summary>

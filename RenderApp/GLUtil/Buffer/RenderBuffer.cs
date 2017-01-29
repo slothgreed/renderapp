@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
-using RenderApp.Utility;
+using KI.Foundation.Utility;
 namespace RenderApp.GLUtil.Buffer
 {
     public class RenderBuffer : BufferObject
@@ -38,7 +38,7 @@ namespace RenderApp.GLUtil.Buffer
             BindBuffer();
             GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, BufferStorage , width, height);
             UnBindBuffer();
-            Output.GLLog(Output.LogLevel.Error);
+            Logger.GLLog(Logger.LogLevel.Error);
 
         }
         public override void PreDispose()

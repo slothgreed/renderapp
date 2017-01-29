@@ -149,7 +149,6 @@
     <Compile Include="ViewModel\Converter\EnumConverter.cs" />
     <Compile Include="Globals\Project.cs" />
     <Compile Include="GLUtil\ShaderModel\ShaderFactory.cs" />
-    <Compile Include="Utility\Output.cs" />
     <Compile Include="AssetModel\EnvironmentProbe.cs" />
     <Compile Include="AssetModel\Geometry\VertexInfo.cs" />
     <Compile Include="GLUtil\ShaderModel\ShaderProgramInfo.cs" />

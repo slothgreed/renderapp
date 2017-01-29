@@ -9,6 +9,7 @@ using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using RenderApp.Utility;
 using KI.Foundation.ViewModel;
+using KI.Foundation.Utility;
 
 namespace RenderApp.ViewModel.NodeVM
 {
@@ -123,7 +124,7 @@ namespace RenderApp.ViewModel.NodeVM
                     if(_isSelected == true)
                     {
                         ActiveItem = this;
-                        Output.Log(Output.LogLevel.Debug, this.DisplayName);
+                        Logger.Log(Logger.LogLevel.Debug, this.DisplayName);
                     }
                 }
             }

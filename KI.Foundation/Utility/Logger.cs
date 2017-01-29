@@ -7,9 +7,10 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
-namespace RenderApp.Utility
+
+namespace KI.Foundation.Utility
 {
-    class Output
+    public class Logger
     {
         public enum LogLevel
         {

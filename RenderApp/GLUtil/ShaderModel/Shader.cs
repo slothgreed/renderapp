@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using RenderApp.Utility;
+using KI.Foundation.Utility;
 using RenderApp.GLUtil;
 using RenderApp.AssetModel;
 namespace RenderApp.GLUtil.ShaderModel
@@ -248,7 +248,7 @@ namespace RenderApp.GLUtil.ShaderModel
             }
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-            Output.GLLog(Output.LogLevel.Error);
+            Logger.GLLog(Logger.LogLevel.Error);
         }
 
 
@@ -316,7 +316,7 @@ namespace RenderApp.GLUtil.ShaderModel
                     GL.Uniform1(uniform.ShaderID, (int)uniform.variable);
                 }
             }
-            Output.GLLog(Output.LogLevel.Error);
+            Logger.GLLog(Logger.LogLevel.Error);
         }
         /// <summary>
         /// AttributeのBinding
@@ -365,7 +365,7 @@ namespace RenderApp.GLUtil.ShaderModel
             {
                 geometry.IndexBuffer.BindBuffer();
             }
-            Output.GLLog(Output.LogLevel.Error);
+            Logger.GLLog(Logger.LogLevel.Error);
         }
         #endregion
         /// <summary>
@@ -560,7 +560,7 @@ namespace RenderApp.GLUtil.ShaderModel
                     info.variableType = EVariableType.FloatArray;
                     break;
                 default:
-                    Output.Log(Output.LogLevel.Error,"Shader ReadError" + name);
+                    Logger.Log(Logger.LogLevel.Error,"Shader ReadError" + name);
                     break;
             }
             return;
@@ -606,7 +606,7 @@ namespace RenderApp.GLUtil.ShaderModel
                     info.variableType = EVariableType.Mat4;
                     break;
                 default:
-                    Output.Log(Output.LogLevel.Error,"Shader ReadError" + name);
+                    Logger.Log(Logger.LogLevel.Error,"Shader ReadError" + name);
                     break;
             }
             return;
@@ -673,7 +673,7 @@ namespace RenderApp.GLUtil.ShaderModel
                         break;
                 }
             }
-            Output.GLLog(Output.LogLevel.Error);
+            Logger.GLLog(Logger.LogLevel.Error);
         }
         #endregion
         
@@ -748,7 +748,7 @@ namespace RenderApp.GLUtil.ShaderModel
                         break;
                 }
             }
-            Output.GLLog(Output.LogLevel.Error);
+            Logger.GLLog(Logger.LogLevel.Error);
         }
 
         #endregion
@@ -760,7 +760,7 @@ namespace RenderApp.GLUtil.ShaderModel
         public void Dispose()
         {
             GL.DeleteProgram(_program);
-            Output.GLLog(Output.LogLevel.Error);
+            Logger.GLLog(Logger.LogLevel.Error);
         }
         #endregion
 
@@ -781,7 +781,7 @@ namespace RenderApp.GLUtil.ShaderModel
             GL.DeleteShader(fshader);
 
             GL.LinkProgram(program);
-            Output.GLLog(Output.LogLevel.Error);
+            Logger.GLLog(Logger.LogLevel.Error);
             return program;
 
         }
@@ -814,13 +814,13 @@ namespace RenderApp.GLUtil.ShaderModel
             int status;
             string info;
             GL.GetProgramInfoLog(program, out info);
-            Output.Log(Output.LogLevel.Debug, info);
+            Logger.Log(Logger.LogLevel.Debug, info);
             GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
             if (status == 0)
             {
-                Output.Log(Output.LogLevel.Error, GL.GetProgramInfoLog(program));
+                Logger.Log(Logger.LogLevel.Error, GL.GetProgramInfoLog(program));
             }
-            Output.GLLog(Output.LogLevel.Error);
+            Logger.GLLog(Logger.LogLevel.Error);
             return program;
         }
         private int CompailShader(ShaderType shaderType, string shaderCode)
@@ -837,26 +837,26 @@ namespace RenderApp.GLUtil.ShaderModel
                 switch (shaderType)
                 {
                     case ShaderType.FragmentShader:
-                        Output.Log(Output.LogLevel.Debug,FragShader.FileName);
+                        Logger.Log(Logger.LogLevel.Debug,FragShader.FileName);
                         break;
                     case ShaderType.GeometryShader:
-                        Output.Log(Output.LogLevel.Debug, GeomShader.FileName);
+                        Logger.Log(Logger.LogLevel.Debug, GeomShader.FileName);
                         break;
                     case ShaderType.TessControlShader:
-                        Output.Log(Output.LogLevel.Debug, TesShader.FileName);
+                        Logger.Log(Logger.LogLevel.Debug, TesShader.FileName);
                         break;
                     case ShaderType.TessEvaluationShader:
-                        Output.Log(Output.LogLevel.Debug, TcsShader.FileName);
+                        Logger.Log(Logger.LogLevel.Debug, TcsShader.FileName);
                         break;
                     case ShaderType.VertexShader:
-                        Output.Log(Output.LogLevel.Debug, VertexShader.FileName);
+                        Logger.Log(Logger.LogLevel.Debug, VertexShader.FileName);
                         break;
                     default:
                         break;
                 }
-                Output.Log(Output.LogLevel.Debug, info);
+                Logger.Log(Logger.LogLevel.Debug, info);
             }
-            Output.GLLog(Output.LogLevel.Error);
+            Logger.GLLog(Logger.LogLevel.Error);
             return shader;
         }
 
@@ -902,13 +902,13 @@ namespace RenderApp.GLUtil.ShaderModel
             int status;
             string info;
             GL.GetProgramInfoLog(program, out info);
-            Output.Log(Output.LogLevel.Debug, info);
+            Logger.Log(Logger.LogLevel.Debug, info);
             GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
             if (status == 0)
             {
                 throw new Exception(GL.GetProgramInfoLog(program));
             }
-            Output.GLLog(Output.LogLevel.Error);
+            Logger.GLLog(Logger.LogLevel.Error);
             return program;
         }
 
@@ -939,13 +939,13 @@ namespace RenderApp.GLUtil.ShaderModel
             int status;
             string info;
             GL.GetProgramInfoLog(program, out info);
-            Output.Log(Output.LogLevel.Debug, info);
+            Logger.Log(Logger.LogLevel.Debug, info);
             GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
             if (status == 0)
             {
                 throw new Exception(GL.GetProgramInfoLog(program));
             }
-            Output.GLLog(Output.LogLevel.Error);
+            Logger.GLLog(Logger.LogLevel.Error);
             return program;
         }
         #endregion

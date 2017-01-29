@@ -13,6 +13,8 @@ using System.Windows.Forms;
 using System.Timers;
 using RenderApp.RA_Control;
 using RenderApp.Render_System;
+using KI.Foundation.Utility;
+
 namespace RenderApp.GLUtil
 {
     public delegate void CreateViewportHandler();
@@ -129,7 +131,7 @@ namespace RenderApp.GLUtil
             Scene.Create("MainScene");
             Scene.ActiveScene.Initialize();
             m_AppstartUp = true;
-            Output.GLLog(Output.LogLevel.Error);
+            Logger.GLLog(Logger.LogLevel.Error);
             OnCreateViewportEvent();
         }
         //Loadより先に呼ばれる
@@ -142,7 +144,7 @@ namespace RenderApp.GLUtil
                 Scene.ActiveScene.MainCamera.SetProjMatrix((float)DeviceContext.Instance.Width / DeviceContext.Instance.Height);
                 DeviceContext.Instance.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
                 RenderSystem.SizeChanged(m_glControl.Size.Width, m_glControl.Size.Height);
-                Output.GLLog(Output.LogLevel.Error);
+                Logger.GLLog(Logger.LogLevel.Error);
                 glControl_Paint(null, null);
             }
 

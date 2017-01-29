@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using KI.Foundation.Utility;
 
 namespace RenderApp
 {
@@ -15,7 +16,7 @@ namespace RenderApp
             FileName = Path.GetFileName(filePath);
             FilePath = filePath;
             Name = FileName;
-            Utility.Output.Log(Utility.Output.LogLevel.Debug,"create asset " + filePath + ":");
+            Logger.Log(Logger.LogLevel.Debug,"create asset " + filePath + ":");
         }
         private string _directoryPath;
         public string DirectoryPath

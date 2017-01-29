@@ -10,6 +10,8 @@ using OpenTK.Graphics.OpenGL;
 using System.Windows.Forms;
 using RenderApp.Analyzer;
 using RenderApp.GLUtil;
+using KI.Foundation.Utility;
+
 namespace RenderApp.AssetModel.RA_Geometry
 {
     public class OBJMaterial
@@ -57,7 +59,7 @@ namespace RenderApp.AssetModel.RA_Geometry
             }
             catch (Exception)
             {
-                Utility.Output.Log(Utility.Output.LogLevel.Warning, filePath + "開けません。");
+                Logger.Log(Logger.LogLevel.Warning, filePath + "開けません。");
             }
         }
 
@@ -147,7 +149,7 @@ namespace RenderApp.AssetModel.RA_Geometry
                     }
                     else
                     {
-                        Utility.Output.Log(Utility.Output.LogLevel.Warning, "not found material on load obj file" + line[i + 1]);
+                        Logger.Log(Logger.LogLevel.Warning, "not found material on load obj file" + line[i + 1]);
                     }
                     break;
                 }
@@ -250,7 +252,7 @@ namespace RenderApp.AssetModel.RA_Geometry
                 }
             }else
             {
-                Utility.Output.Log(Utility.Output.LogLevel.Warning,"we dont support more than 4 polygons");
+                Logger.Log(Logger.LogLevel.Warning,"we dont support more than 4 polygons");
             }
         }
         #region [read mtl file]
