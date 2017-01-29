@@ -79,7 +79,6 @@ namespace RenderApp.GLUtil
 
         public event CreateViewportHandler OnCreateViewportEvent;
         #endregion
-
         #region [initialize method]
         private Viewport()
         {
@@ -170,8 +169,6 @@ namespace RenderApp.GLUtil
         }
         #endregion
         #region [mouse event]
-
-
         private void glControl_MouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             ControlManager.Instance.ProcessInput(e, ControlManager.MOUSE_STATE.WHEEL);

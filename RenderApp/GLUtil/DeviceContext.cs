@@ -6,13 +6,6 @@ using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 namespace RenderApp.GLUtil
 {
-    /// <summary>
-    /// enableCapから使いそうなもの抽出
-    /// </summary>
-    public enum EEnableCap
-    {
-        
-    }
     public class DeviceContext
     {
         private static DeviceContext _Instance;
