@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KI.Foundation.ViewModel;
+using KI.Foundation.Core;
 
 namespace RenderApp.ViewModel
 {
@@ -16,8 +17,8 @@ namespace RenderApp.ViewModel
             get;
             set;
         }
-        private List<RAObject> _items;
-        public List<RAObject> Items
+        private List<KIObject> _items;
+        public List<KIObject> Items
         {
             get
             {
@@ -42,11 +43,11 @@ namespace RenderApp.ViewModel
         }
 
 
-        public ComboItemViewModel(object owner, string name, IEnumerable<RAObject> value, int selectedIndex = 0)
+        public ComboItemViewModel(object owner, string name, IEnumerable<KIObject> value, int selectedIndex = 0)
         {
             Owner = owner;
             Name = name;
-            _items = new List<RAObject>();
+            _items = new List<KIObject>();
             foreach(var item in value)
             {
                 Items.Add(item);

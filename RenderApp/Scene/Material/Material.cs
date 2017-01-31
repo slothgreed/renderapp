@@ -7,10 +7,11 @@ using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using KI.Foundation.Core;
 using RenderApp.GLUtil.ShaderModel;
 namespace RenderApp.AssetModel
 {
-    public class Material : RAFile
+    public class Material : KIFile
     {
 
         #region [property method]

@@ -7,12 +7,14 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Windows.Forms;
 using RenderApp.Analyzer;
+using KI.Foundation.Core;
+
 namespace RenderApp.AssetModel.RA_Geometry
 {
     /// <summary>
     /// STLのローダ現在テキストファイルのみ
     /// </summary>
-    public class StlFile : RAFile,IRenderObject
+    public class StlFile : KIFile,IRenderObject
     {
         VertexInfo vertexInfo;
         /// <summary>

@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using RenderApp.Analyzer;
 using RenderApp.GLUtil;
 using KI.Foundation.Utility;
+using KI.Foundation.Core;
 
 namespace RenderApp.AssetModel.RA_Geometry
 {
@@ -36,7 +37,7 @@ namespace RenderApp.AssetModel.RA_Geometry
         public VertexArrayInfo vertexArrayInfo = new VertexArrayInfo();//ポリゴンのIndex情報を保持
     }
 
-    public class CObjFile : RAFile , IRenderObject
+    public class CObjFile : KIFile , IRenderObject
     {
         /// <summary>
         /// 頂点・色・テクスチャ座標を保持。
@@ -64,9 +65,6 @@ namespace RenderApp.AssetModel.RA_Geometry
         }
 
         #region [ファイルのロード処理]
-        #region [構造の変更]
-
-        #endregion
         #region [データのロード]
         /// <summary>
         /// OBJデータのロード

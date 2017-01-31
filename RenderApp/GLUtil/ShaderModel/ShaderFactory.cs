@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using RenderApp.GLUtil.ShaderModel;
 using RenderApp.AssetModel;
 using RenderApp.Globals;
+using KI.Foundation.Core;
 namespace RenderApp.GLUtil
 {
     public class ShaderFactory
@@ -59,7 +60,7 @@ namespace RenderApp.GLUtil
             {
                 return shader;
             }
-            string name = RAFile.GetNameFromPath(path);
+            string name = KIFile.GetNameFromPath(path);
             ShaderProgram vert = CreateShaderProgram(path, path + ".vert");
             ShaderProgram frag = CreateShaderProgram(path, path + ".frag");
             shader = new Shader(vert, frag);
@@ -81,8 +82,8 @@ namespace RenderApp.GLUtil
             Shader shader = FindShader(vPath, fPath);
             if (shader == null)
             {
-                string vname = RAFile.GetNameFromPath(vPath);
-                string fname = RAFile.GetNameFromPath(fPath);
+                string vname = KIFile.GetNameFromPath(vPath);
+                string fname = KIFile.GetNameFromPath(fPath);
                 ShaderProgram vert = CreateShaderProgram(vPath, vPath);
                 ShaderProgram frag = CreateShaderProgram(fPath, fPath);
                 shader = new Shader(vert, frag);

@@ -17,10 +17,6 @@ using RenderApp.RA_Control;
 using RenderApp.Globals;
 using RenderApp.Render_System;
 using RenderApp.AssetModel.RA_Geometry;
-using RenderApp.ViewModel.Controller;
-using RenderApp.ViewModel.DockTabVM;
-using RenderApp.ViewModel.AssetVM;
-using RenderApp.ViewModel.NodeVM;
 using KI.Foundation.ViewModel;
 
 namespace RenderApp.ViewModel
@@ -288,8 +284,8 @@ namespace RenderApp.ViewModel
         }
         private void CreatePlaneCommand()
         {
-            Plane plane = new Plane(RAFile.GetNameFromType(EAssetType.Geometry));
-            AssetFactory.Instance.CreateGeometry(plane.CreateRenderObject().First());
+            //Plane plane = new Plane(KIFile.GetNameFromType(EAssetType.Geometry));
+            //AssetFactory.Instance.CreateGeometry(plane.CreateRenderObject().First());
         }
         private void CreateWireFrameCommand()
         {

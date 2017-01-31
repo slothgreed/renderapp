@@ -10,6 +10,8 @@ using RenderApp.ViewModel;
 using RenderApp.GLUtil.ShaderModel;
 using RenderApp.AssetModel.LightModel;
 using RenderApp.Utility;
+using KI.Foundation.Core;
+
 namespace RenderApp
 {
     public class Scene
@@ -53,8 +55,8 @@ namespace RenderApp
         /// <summary>
         /// 選択中のアセット
         /// </summary>
-        private RAObject _selectAsset;
-        public RAObject SelectAsset
+        private KIObject _selectAsset;
+        public KIObject SelectAsset
         {
             get
             {
@@ -186,7 +188,7 @@ namespace RenderApp
         /// <param name="key"></param>
         /// <param name="assetType"></param>
         /// <returns></returns>
-        public RAObject FindObject(string key)
+        public KIObject FindObject(string key)
         {
             RANode obj;
             obj = RootNode.FindChild(key);
@@ -200,17 +202,17 @@ namespace RenderApp
             }
         }
       
-        public void AddRootSceneObject(RAObject value)
+        public void AddRootSceneObject(KIObject value)
         {
             AddSceneObject(RootNode,value);
         }
 
-        public void AddSceneObject(RANode parent, RAObject value)
+        public void AddSceneObject(RANode parent, KIObject value)
         {
             parent.AddChild(value);
         }
 
-        private string GetNewKey<T>(string key, Dictionary<string, T> AssetList) where T : RAFile
+        private string GetNewKey<T>(string key, Dictionary<string, T> AssetList) where T : KIFile
         {
             string newKey = key;
             int serialNumber = 0;

@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:RenderApp.ViewModel"
-             xmlns:vmp="clr-namespace:RenderApp.ViewModel.PropertyVM"
              xmlns:vmath="clr-namespace:KI.Foundation.View;assembly=KI.Foundation"
              xmlns:v="clr-namespace:RenderApp.View"
              xmlns:gl="clr-namespace:RenderApp.GLUtil"
@@ -18,52 +17,52 @@
            
             <ItemsControl x:Name="PropertyGrid" ItemsSource="{Binding PropertyItem}">
                 <ItemsControl.ItemTemplateSelector>
-                    <vmp:PropertyGridTemplate>
-                        <vmp:PropertyGridTemplate.DefaultTemplate>
+                    <vm:PropertyGridTemplate>
+                        <vm:PropertyGridTemplate.DefaultTemplate>
                             <DataTemplate>
                                 <WrapPanel>
                                     <TextBlock Text="{Binding Key}" Style="{StaticResource NameTemplate}"/>
                                     <TextBlock Text="{Binding Value, StringFormat=N3}"></TextBlock>
                                 </WrapPanel>
                             </DataTemplate>
-                        </vmp:PropertyGridTemplate.DefaultTemplate>
-                        <vmp:PropertyGridTemplate.Vector2Template>
+                        </vm:PropertyGridTemplate.DefaultTemplate>
+                        <vm:PropertyGridTemplate.Vector2Template>
                             <DataTemplate>
                                 <vmath:Vector2View/>
                             </DataTemplate>
-                        </vmp:PropertyGridTemplate.Vector2Template>
-                        <vmp:PropertyGridTemplate.Vector3Template>
+                        </vm:PropertyGridTemplate.Vector2Template>
+                        <vm:PropertyGridTemplate.Vector3Template>
                             <DataTemplate>
                                 <vmath:Vector3View/>
                             </DataTemplate>
-                        </vmp:PropertyGridTemplate.Vector3Template>
-                        <vmp:PropertyGridTemplate.Vector4Template>
+                        </vm:PropertyGridTemplate.Vector3Template>
+                        <vm:PropertyGridTemplate.Vector4Template>
                             <DataTemplate>
                                 <vmath:Vector4View/>
                             </DataTemplate>
-                        </vmp:PropertyGridTemplate.Vector4Template>
+                        </vm:PropertyGridTemplate.Vector4Template>
 
-                        <vmp:PropertyGridTemplate.Matrix3Template>
+                        <vm:PropertyGridTemplate.Matrix3Template>
                             <DataTemplate>
                                 <vmath:Matrix3View/>
                             </DataTemplate>
-                        </vmp:PropertyGridTemplate.Matrix3Template>
+                        </vm:PropertyGridTemplate.Matrix3Template>
 
-                        <vmp:PropertyGridTemplate.Matrix4Template>
+                        <vm:PropertyGridTemplate.Matrix4Template>
                             <DataTemplate>
                                 <vmath:Matrix4View/>
                             </DataTemplate>
-                        </vmp:PropertyGridTemplate.Matrix4Template>
+                        </vm:PropertyGridTemplate.Matrix4Template>
                         
-                        <vmp:PropertyGridTemplate.ComboItemTemplate>
+                        <vm:PropertyGridTemplate.ComboItemTemplate>
                             <DataTemplate>
                                 <WrapPanel>
                                     <TextBlock Text="{Binding Key}" Style="{StaticResource NameTemplate}"/>
                                     <ComboBox ItemsSource="{Binding Value.Items}" SelectedIndex="{Binding Value.SelectedIndex}"/>
                                 </WrapPanel>
                             </DataTemplate>
-                        </vmp:PropertyGridTemplate.ComboItemTemplate>
-                    </vmp:PropertyGridTemplate>
+                        </vm:PropertyGridTemplate.ComboItemTemplate>
+                    </vm:PropertyGridTemplate>
                 </ItemsControl.ItemTemplateSelector>
             </ItemsControl>
         </StackPanel>

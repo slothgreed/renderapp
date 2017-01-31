@@ -7,8 +7,7 @@ using System.Windows.Controls;
 using System.Windows;
 using RenderApp.View;
 using KI.Foundation.ViewModel;
-using RenderApp.ViewModel.AssetVM;
-namespace RenderApp.ViewModel.PropertyVM
+namespace RenderApp.ViewModel
 {
     class PropertyGridTemplate : DataTemplateSelector
     {

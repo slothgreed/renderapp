@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms.Integration;
 using RenderApp.GLUtil;
-using RenderApp.ViewModel.DockTabVM;
 namespace RenderApp.ViewModel
 {
     public class ViewportViewModel : TabItemViewModel

@@ -5,12 +5,13 @@ using System.Text;
 using OpenTK;
 using RenderApp.Utility;
 using RenderApp.AssetModel;
+using KI.Foundation.Core;
 namespace RenderApp.AssetModel.LightModel
 {
     /// <summary>
     /// 光源
     /// </summary>
-    public abstract class Light : RAFile
+    public abstract class Light : KIObject
     {
         public Vector3 Position { get;private set; }
         public Vector3 Direction { get; private set; }

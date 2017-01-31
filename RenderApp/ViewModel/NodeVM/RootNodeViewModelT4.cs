@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-namespace RenderApp.ViewModel.NodeVM
+namespace RenderApp.ViewModel
 {
 	public partial class RootNodeViewModel
 	{

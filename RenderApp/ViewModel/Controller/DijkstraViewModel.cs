@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RenderApp.ViewModel.DockTabVM;
-namespace RenderApp.ViewModel.Controller
+
+namespace RenderApp.ViewModel
 {
     public partial class DijkstraViewModel : TabItemViewModel, IControllerViewModelBase
     {

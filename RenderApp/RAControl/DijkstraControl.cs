@@ -11,12 +11,14 @@ using RenderApp.AssetModel.RA_Geometry;
 using RenderApp.GLUtil;
 using RenderApp.Globals;
 using RenderApp.Analyzer;
+using KI.Foundation.Core;
+
 namespace RenderApp.RA_Control
 {
     class DijkstraControl : IControl
     {
         private Dijkstra Dijkstra;
-        private RAObject SelectGeometry;
+        private KIObject SelectGeometry;
         public override bool Down(System.Windows.Forms.MouseEventArgs mouse)
         {
             int vertex_Index = 0;
@@ -100,7 +102,7 @@ namespace RenderApp.RA_Control
             Scene.ActiveScene.DeleteNode("Picking");
             return true;
         }
-        private void SelectObject(RAObject select)
+        private void SelectObject(KIObject select)
         {
             SelectGeometry = select;
         }

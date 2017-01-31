@@ -6,75 +6,70 @@
              xmlns:v="clr-namespace:RenderApp.View"
              xmlns:vc="clr-namespace:RenderApp.View.Controller"
              xmlns:vm="clr-namespace:RenderApp.ViewModel"
-             xmlns:vmc="clr-namespace:RenderApp.ViewModel.Controller"
-             xmlns:vmd="clr-namespace:RenderApp.ViewModel.DockTabVM"
-             xmlns:vma="clr-namespace:RenderApp.ViewModel.AssetVM"
-             xmlns:vmn="clr-namespace:RenderApp.ViewModel.NodeVM"
-
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
     <UserControl.Resources>
-        <vmd:DockPaneTemplateSelector x:Key="TabItemTemplateSelector">
-            <vmd:DockPaneTemplateSelector.AssetTemplate>
-                <DataTemplate DataType="{x:Type vmn:RootNodeViewModel}">
+        <vm:DockPaneTemplateSelector x:Key="TabItemTemplateSelector">
+            <vm:DockPaneTemplateSelector.AssetTemplate>
+                <DataTemplate DataType="{x:Type vm:RootNodeViewModel}">
                     <v:RootNodeView/>
                 </DataTemplate>
-            </vmd:DockPaneTemplateSelector.AssetTemplate>
-            <vmd:DockPaneTemplateSelector.ShaderProgramTemplate>
-                <DataTemplate  DataType="{x:Type vma:ShaderProgramViewModel}">
+            </vm:DockPaneTemplateSelector.AssetTemplate>
+            <vm:DockPaneTemplateSelector.ShaderProgramTemplate>
+                <DataTemplate  DataType="{x:Type vm:ShaderProgramViewModel}">
                     <v:ShaderProgramView/>
                 </DataTemplate>
-            </vmd:DockPaneTemplateSelector.ShaderProgramTemplate>
-            <vmd:DockPaneTemplateSelector.MaterialTemplate>
-                <DataTemplate  DataType="{x:Type vma:MaterialViewModel}">
+            </vm:DockPaneTemplateSelector.ShaderProgramTemplate>
+            <vm:DockPaneTemplateSelector.MaterialTemplate>
+                <DataTemplate  DataType="{x:Type vm:MaterialViewModel}">
                     <v:MaterialView/>
                 </DataTemplate>
-            </vmd:DockPaneTemplateSelector.MaterialTemplate>
-            <vmd:DockPaneTemplateSelector.TexureTemplate>
-                <DataTemplate  DataType="{x:Type vma:TextureViewModel}">
+            </vm:DockPaneTemplateSelector.MaterialTemplate>
+            <vm:DockPaneTemplateSelector.TexureTemplate>
+                <DataTemplate  DataType="{x:Type vm:TextureViewModel}">
                     <v:TextureView/>
                 </DataTemplate>
-            </vmd:DockPaneTemplateSelector.TexureTemplate>
-            <vmd:DockPaneTemplateSelector.ViewportTemplate>
+            </vm:DockPaneTemplateSelector.TexureTemplate>
+            <vm:DockPaneTemplateSelector.ViewportTemplate>
                 <DataTemplate  DataType="{x:Type vm:ViewportViewModel}">
                     <v:ViewportView/>
                 </DataTemplate>
-            </vmd:DockPaneTemplateSelector.ViewportTemplate>
-            <vmd:DockPaneTemplateSelector.GeometryTemplate>
-                <DataTemplate DataType="{x:Type vma:GeometryViewModel}">
+            </vm:DockPaneTemplateSelector.ViewportTemplate>
+            <vm:DockPaneTemplateSelector.GeometryTemplate>
+                <DataTemplate DataType="{x:Type vm:GeometryViewModel}">
                     <v:GeometryView/>
                 </DataTemplate>
-            </vmd:DockPaneTemplateSelector.GeometryTemplate>
-            <vmd:DockPaneTemplateSelector.ShaderTemplate>
-                <DataTemplate DataType="{x:Type vma:ShaderViewModel}">
+            </vm:DockPaneTemplateSelector.GeometryTemplate>
+            <vm:DockPaneTemplateSelector.ShaderTemplate>
+                <DataTemplate DataType="{x:Type vm:ShaderViewModel}">
                     <v:ShaderView/>
                 </DataTemplate>
-            </vmd:DockPaneTemplateSelector.ShaderTemplate>
-            <vmd:DockPaneTemplateSelector.RenderTemplate>
+            </vm:DockPaneTemplateSelector.ShaderTemplate>
+            <vm:DockPaneTemplateSelector.RenderTemplate>
                 <DataTemplate DataType="{x:Type vm:RenderSystemViewModel}">
                     <v:RenderSystemView/>
                 </DataTemplate>
-            </vmd:DockPaneTemplateSelector.RenderTemplate>
+            </vm:DockPaneTemplateSelector.RenderTemplate>
 
-            <vmd:DockPaneTemplateSelector.VoxelTemplate>
-                <DataTemplate DataType="{x:Type vmc:VoxelViewModel}">
+            <vm:DockPaneTemplateSelector.VoxelTemplate>
+                <DataTemplate DataType="{x:Type vm:VoxelViewModel}">
                     <vc:VoxelView/>
                 </DataTemplate>
-            </vmd:DockPaneTemplateSelector.VoxelTemplate>
+            </vm:DockPaneTemplateSelector.VoxelTemplate>
 
-            <vmd:DockPaneTemplateSelector.DijkstraTemplate>
-                <DataTemplate DataType="{x:Type vmc:DijkstraViewModel}">
+            <vm:DockPaneTemplateSelector.DijkstraTemplate>
+                <DataTemplate DataType="{x:Type vm:DijkstraViewModel}">
                     <vc:DijkstraView/>
                 </DataTemplate>
-            </vmd:DockPaneTemplateSelector.DijkstraTemplate>
+            </vm:DockPaneTemplateSelector.DijkstraTemplate>
 
-            <vmd:DockPaneTemplateSelector.SelectObjectTemplate>
-                <DataTemplate DataType="{x:Type vmc:SelectViewModel}">
+            <vm:DockPaneTemplateSelector.SelectObjectTemplate>
+                <DataTemplate DataType="{x:Type vm:SelectViewModel}">
                     <vc:SelectView/>
                 </DataTemplate>
-            </vmd:DockPaneTemplateSelector.SelectObjectTemplate>
-        </vmd:DockPaneTemplateSelector>
+            </vm:DockPaneTemplateSelector.SelectObjectTemplate>
+        </vm:DockPaneTemplateSelector>
 
         <DataTemplate x:Key="TabItemHeaderTempalte">
             <DockPanel>

@@ -7,7 +7,7 @@ using RenderApp;
 using System.Windows.Input;
 using KI.Foundation.ViewModel;
 
-namespace RenderApp.ViewModel.DockTabVM
+namespace RenderApp.ViewModel
 {
     public abstract class DockWindowViewModel : ViewModelBase
     {

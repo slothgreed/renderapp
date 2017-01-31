@@ -6,12 +6,14 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.AssetModel;
+using KI.Foundation.Core;
+
 namespace RenderApp.AssetModel
 {
     /// <summary>
     /// カメラ
     /// </summary>
-    public class Camera : RAFile
+    public class Camera : KIFile
     {
         #region [property method]
         public Matrix4 ProjMatrix { get; set; }

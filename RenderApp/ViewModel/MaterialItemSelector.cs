@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using OpenTK;
 using RenderApp.GLUtil;
 using KI.Foundation.ViewModel;
-using RenderApp.ViewModel.AssetVM;
+using RenderApp.ViewModel;
 namespace RenderApp.ViewModel
 {
     class MaterialItemTemplateSelector : DataTemplateSelector

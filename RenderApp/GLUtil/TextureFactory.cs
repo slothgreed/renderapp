@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RenderApp.Globals;
 using RenderApp.Utility;
+using KI.Foundation.Core;
 namespace RenderApp.GLUtil
 {
     public class TextureFactory
@@ -68,7 +69,7 @@ namespace RenderApp.GLUtil
                 default:
                     return null;
             }
-            Texture texture = new Texture(RAFile.GetNameFromPath(path), path);
+            Texture texture = new Texture(KIFile.GetNameFromPath(path), path);
             TextureList.Add(path, texture);
             texture.LoadTexture(image);
             Project.ActiveProject.AddChild(texture);

@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:vm="clr-namespace:RenderApp.ViewModel"
-        xmlns:vmn="clr-namespace:RenderApp.ViewModel.NodeVM"
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d" 
@@ -35,7 +34,7 @@
             </Controls:MultiSelectTreeView.ItemContainerStyle>
 
             <Controls:MultiSelectTreeView.Resources>
-                <HierarchicalDataTemplate DataType="{x:Type vmn:NodeItemViewModel}"  ItemsSource="{Binding Children}">
+                <HierarchicalDataTemplate DataType="{x:Type vm:NodeItemViewModel}"  ItemsSource="{Binding Children}">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock
 								Text="{Binding DisplayName}"

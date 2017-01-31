@@ -14,7 +14,7 @@ using System.Timers;
 using RenderApp.RA_Control;
 using RenderApp.Render_System;
 using KI.Foundation.Utility;
-
+using KI.Foundation.Core;
 namespace RenderApp.GLUtil
 {
     public delegate void CreateViewportHandler();
@@ -51,7 +51,7 @@ namespace RenderApp.GLUtil
         /// <summary>
         /// タイマー変数
         /// </summary>
-        public RATimer m_AnimationTimer = null;
+        public KITimer m_AnimationTimer = null;
         /// <summary>
         /// glControl
         /// </summary>
@@ -207,7 +207,7 @@ namespace RenderApp.GLUtil
         {
             if(m_AnimationTimer==null)
             {
-                m_AnimationTimer = new RATimer(1, OnAnimationTimer);
+                m_AnimationTimer = new KITimer(1, OnAnimationTimer);
 
             }
             m_AnimationTimer.Start();

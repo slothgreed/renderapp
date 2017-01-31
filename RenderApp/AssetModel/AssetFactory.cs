@@ -11,6 +11,8 @@ using RenderApp.Utility;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.Globals;
 using RenderApp.AssetModel.RA_Geometry;
+using KI.Foundation.Core;
+
 namespace RenderApp.AssetModel
 {
     class AssetFactory
@@ -64,7 +66,7 @@ namespace RenderApp.AssetModel
         }
 
         #region analyze method
-        internal bool CanCreateGeometry(RAObject asset)
+        internal bool CanCreateGeometry(KIObject asset)
         {
             if (!(asset is Geometry))
             {
@@ -78,7 +80,7 @@ namespace RenderApp.AssetModel
             return true;
         }
 
-        internal bool CreateWireFrame(RAObject asset)
+        internal bool CreateWireFrame(KIObject asset)
         {
             if (!CanCreateGeometry(asset))
             {
@@ -104,7 +106,7 @@ namespace RenderApp.AssetModel
 
             return true;
         }
-        internal bool CreatePolygon(RAObject asset)
+        internal bool CreatePolygon(KIObject asset)
         {
             if (!CanCreateGeometry(asset))
             {
@@ -119,7 +121,7 @@ namespace RenderApp.AssetModel
 
             return true;
         }
-        internal bool CreateVoxel(RAObject asset, int partition = 64)
+        internal bool CreateVoxel(KIObject asset, int partition = 64)
         {
             if (!CanCreateGeometry(asset))
             {
@@ -134,7 +136,7 @@ namespace RenderApp.AssetModel
             return true;
         }
 
-        internal bool CreateOctree(RAObject asset)
+        internal bool CreateOctree(KIObject asset)
         {
             if (!CanCreateGeometry(asset))
             {
@@ -159,13 +161,14 @@ namespace RenderApp.AssetModel
         internal List<RenderObject> CreateLoad3DModel(string filePath)
         {
             string extension = System.IO.Path.GetExtension(filePath);
+            string fileName = System.IO.Path.GetFileName(filePath);
             switch (extension)
             {
                 case ".obj":
-                    var obj = new CObjFile(RAFile.GetNameFromPath(filePath), filePath);
+                    var obj = new CObjFile(fileName, filePath);
                     return obj.CreateRenderObject();
                 case ".stl":
-                    var stl = new StlFile(RAFile.GetNameFromPath(filePath), filePath);
+                    var stl = new StlFile(fileName, filePath);
                     return stl.CreateRenderObject();
             }
             return null;

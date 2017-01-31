@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RenderApp.ViewModel.PropertyVM
+namespace RenderApp.ViewModel
 {
     public interface IPropertyGridViewModel
     {

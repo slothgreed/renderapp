@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RenderApp
+namespace KI.Foundation.Core
 {
-    public abstract class RAObject
+    public abstract class KIObject
     {
-        public RAObject()
+        public KIObject()
         {
         }
-        public RAObject(string name)
+        public KIObject(string name)
         {
             Name = name;
         }

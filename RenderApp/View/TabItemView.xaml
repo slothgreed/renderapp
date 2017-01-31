@@ -7,7 +7,6 @@
              xmlns:v="clr-namespace:RenderApp.View"
              xmlns:vc="clr-namespace:RenderApp.View.Controller"
              xmlns:vm="clr-namespace:RenderApp.ViewModel"
-             xmlns:vmc="clr-namespace:RenderApp.ViewModel.Controller"
              d:DesignHeight="300" d:DesignWidth="300">
     <!--<UserControl.Resources>
         <vm:DockPaneTemplateSelector x:Key="TabItemTemplateSelector">

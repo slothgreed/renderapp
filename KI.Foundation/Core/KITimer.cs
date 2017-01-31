@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Threading;
 using OpenTK;
-namespace RenderApp.Utility
+namespace KI.Foundation.Core
 {
 
-    public class RATimer
+    public class KITimer
     {
         public delegate void OnTimerEvent(object source, EventArgs e);
 
@@ -33,7 +33,7 @@ namespace RenderApp.Utility
         /// <summary>
         /// タイマーの初期化
         /// </summary>
-        public RATimer(int interval, OnTimerEvent timer)
+        public KITimer(int interval, OnTimerEvent timer)
         {
             m_Timer = new DispatcherTimer();
             m_Timer.Interval = TimeSpan.FromMilliseconds(32);

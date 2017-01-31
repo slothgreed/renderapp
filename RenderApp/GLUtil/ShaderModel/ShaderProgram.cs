@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using System.IO;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.AssetModel;
+using KI.Foundation.Core;
 using OpenTK;
 namespace RenderApp.GLUtil.ShaderModel
 {
-    public class ShaderProgram : RAFile
+    public class ShaderProgram : KIFile
     {
        
         private ShaderType? _shaderType;

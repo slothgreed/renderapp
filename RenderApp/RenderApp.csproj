@@ -154,7 +154,6 @@
     <Compile Include="GLUtil\ShaderModel\ShaderProgramInfo.cs" />
     <Compile Include="Globals\Enum.cs" />
     <Compile Include="GLUtil\TextureFactory.cs" />
-    <Compile Include="Core\RAObject.cs" />
     <Compile Include="Render_System\GBuffer.cs" />
     <Compile Include="Render_System\PostPlane.cs" />
     <Compile Include="Render_System\RenderQueue.cs" />
@@ -190,7 +189,6 @@
     <Compile Include="AssetModel\LightModel\DirectionLight.cs" />
     <Compile Include="AssetModel\LightModel\PointLight.cs" />
     <Compile Include="AssetModel\LightModel\SpotLight.cs" />
-    <Compile Include="Core\RAFile.cs" />
     <Compile Include="ViewModel\DockTabVM\DockWindowViewModel.cs" />
     <Compile Include="ViewModel\ComboItemViewModel.cs" />
     <Compile Include="ViewModel\DefaultViewModel.cs" />
@@ -312,7 +310,6 @@
     <Compile Include="Utility\RACalc.cs" />
     <Compile Include="Utility\CFileIO.cs" />
     <Compile Include="AssetModel\Geometry\File\ObjLoader.cs" />
-    <Compile Include="Core\RATimer.cs" />
     <Compile Include="AssetModel\Geometry\File\StlLoader.cs" />
     <Compile Include="Utility\TrueTypeFont.cs" />
     <Compile Include="Utility\Util.cs" />
@@ -484,7 +481,6 @@
     <EmbeddedResource Include="Thumbnail\noimage.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AssetModel\Node\" />
     <Folder Include="Scene\Shader\ShaderType\" />
     <Folder Include="Themes\" />
   </ItemGroup>

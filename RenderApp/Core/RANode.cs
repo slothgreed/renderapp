@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RenderApp;
+using KI.Foundation.Core;
+
 namespace RenderApp.Utility
 {
 
@@ -37,10 +39,10 @@ namespace RenderApp.Utility
                 return RAObject.Name;
             }
         }
-        public RAObject RAObject;
+        public KIObject RAObject;
         private RANode Parent;
 
-        public RANode(RAObject _MyObject)
+        public RANode(KIObject _MyObject)
         {
             RAObject = _MyObject;
             Children = new List<RANode>();
@@ -63,7 +65,7 @@ namespace RenderApp.Utility
                 }
             }
         }
-        public void AddChild(RAObject child)
+        public void AddChild(KIObject child)
         {
             if(child == null)
             {
@@ -111,7 +113,7 @@ namespace RenderApp.Utility
                 }
             }
         }
-        public void Insert(int index, RAObject child)
+        public void Insert(int index, KIObject child)
         {
             if (Children.Count < index)
             {
@@ -142,7 +144,7 @@ namespace RenderApp.Utility
                 }
             }
         }
-        public void RemoveChild(RAObject child)
+        public void RemoveChild(KIObject child)
         {
             var remove = FindChild(child.Name);
             if(remove != null)
@@ -176,7 +178,7 @@ namespace RenderApp.Utility
         }
         #endregion
         #region [check child]
-        public bool ExistChild(RAObject child)
+        public bool ExistChild(KIObject child)
         {
             if (FindChild(child.Name) != null)
             {
@@ -235,7 +237,7 @@ namespace RenderApp.Utility
             }
         }
 
-        internal IEnumerable<RAObject> AllChildrenObject()
+        internal IEnumerable<KIObject> AllChildrenObject()
         {
             foreach (var child in Children)
             {

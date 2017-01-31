@@ -11,8 +11,8 @@ using RenderApp.AssetModel;
 using System.Diagnostics;
 using System.IO;
 using RenderApp.Utility;
-using RenderApp.ViewModel.DockTabVM;
-namespace RenderApp.ViewModel.NodeVM
+using KI.Foundation.Core;
+namespace RenderApp.ViewModel
 {
    
     public partial class RootNodeViewModel : TabItemViewModel
@@ -101,9 +101,9 @@ namespace RenderApp.ViewModel.NodeVM
             if (ActiveNode.Model is RANode)
             {
                 var node = ActiveNode.Model as RANode;
-                if (node.RAObject is RAFile)
+                if (node.RAObject is KIFile)
                 {
-                    var asset = node.RAObject as RAFile;
+                    var asset = node.RAObject as KIFile;
                     if (File.Exists(asset.FilePath))
                     {
                         Process.Start("EXPLORER.exe", @"/select," + asset.FilePath);

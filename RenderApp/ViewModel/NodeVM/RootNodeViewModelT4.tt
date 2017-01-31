@@ -14,7 +14,7 @@ using System.Windows.Input;
 	};
 
 #>
-namespace RenderApp.ViewModel.NodeVM
+namespace RenderApp.ViewModel
 {
 	public partial class RootNodeViewModel
 	{

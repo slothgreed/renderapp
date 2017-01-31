@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RenderApp.AssetModel;
-
+using KI.Foundation.Core;
 namespace RenderApp.AssetModel
 {
-    public class EnvironmentProbe : RAFile
+    public class EnvironmentProbe : KIObject
     {
         public EnvironmentProbe(string name)
             :base(name)

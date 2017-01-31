@@ -8,7 +8,7 @@ using System.IO;
 using System.Windows.Media;
 using KI.Foundation.ViewModel;
 
-namespace RenderApp.ViewModel.AssetVM
+namespace RenderApp.ViewModel
 {
     class ImageViewModel : ViewModelBase
     {

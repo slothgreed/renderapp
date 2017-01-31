@@ -9,10 +9,12 @@ using System.Drawing.Imaging;
 using RenderApp.AssetModel;
 using KI.Foundation.Utility;
 using RenderApp.GLUtil.Buffer;
+using KI.Foundation.Core;
+
 namespace RenderApp.GLUtil
 {
 
-    public class Texture : RAObject
+    public class Texture : KIObject
     {
         #region [member]
         private string DummyTexturePath

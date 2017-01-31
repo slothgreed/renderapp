@@ -6,18 +6,10 @@ using System.Threading.Tasks;
 using System.IO;
 using KI.Foundation.Utility;
 
-namespace RenderApp
+namespace KI.Foundation.Core
 {
-
-    public abstract class RAFile : RAObject
+    public abstract class KIFile : KIObject
     {
-        public RAFile(string filePath)
-        {
-            FileName = Path.GetFileName(filePath);
-            FilePath = filePath;
-            Name = FileName;
-            Logger.Log(Logger.LogLevel.Debug,"create asset " + filePath + ":");
-        }
         private string _directoryPath;
         public string DirectoryPath
         {
@@ -51,36 +43,17 @@ namespace RenderApp
             private set;
         }
 
-        public override string ToString()
+        public KIFile(string filePath)
         {
-            if(Name != null)
-            {
-                return Name;
-            }
-            if(FileName != null)
-            {
-                return FileName;
-            }
-            return "Unknown";
-
+            FileName = Path.GetFileName(filePath);
+            FilePath = filePath;
+            Name = FileName;
+            Logger.Log(Logger.LogLevel.Debug, "create asset " + filePath + ":");
         }
-        public static Dictionary<EAssetType, int> AssetNum = new Dictionary<EAssetType,int>();
-
+        
         public static string GetNameFromPath(string path)
         {
-            return Path.GetFileName(path);
-        }
-        public static string GetNameFromType(EAssetType type)
-        {
-            if(!AssetNum.ContainsKey(type))
-            {
-                AssetNum.Add(type, 0);
-            }
-            else
-            {
-                AssetNum[type]++;
-            }
-            return type.ToString() + AssetNum[type];
+           return Path.GetFileName(path);
         }
     }
 }

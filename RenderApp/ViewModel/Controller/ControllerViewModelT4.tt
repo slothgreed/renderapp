@@ -25,7 +25,7 @@ using RenderApp.ViewModel.DockTab;
 		"Execute",
 	};
 #>
-namespace RenderApp.ViewModel.Controller
+namespace RenderApp.ViewModel
 {
 <#
 	for(int classIndex = 0; classIndex < _class.Length; classIndex++)

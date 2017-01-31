@@ -7,6 +7,8 @@ using RenderApp.GLUtil;
 using RenderApp.AssetModel;
 using RenderApp.Utility;
 using RenderApp.GLUtil.ShaderModel;
+using KI.Foundation.Core;
+
 namespace RenderApp.Globals
 {
     public class Project
@@ -41,7 +43,7 @@ namespace RenderApp.Globals
         
         }
 
-        internal void AddChild(RAObject value)
+        internal void AddChild(KIObject value)
         {
             if (value is Geometry)
             {
@@ -61,7 +63,7 @@ namespace RenderApp.Globals
                 ShaderProgramRoot.AddChild(value);
             }
         }
-        internal IEnumerable<RAObject> GetObject(RAAsset assetType)
+        internal IEnumerable<KIObject> GetObject(RAAsset assetType)
         {
             switch (assetType)
             {

@@ -5,9 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using RenderApp.ViewModel.DockTabVM;
 
-namespace RenderApp.ViewModel.Controller
+namespace RenderApp.ViewModel
 {
 	public partial class SelectViewModel : TabItemViewModel
 	{

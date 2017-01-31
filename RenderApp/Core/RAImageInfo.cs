@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing.Imaging;
 using System.Drawing;
 using KI.Foundation.Utility;
+using KI.Foundation.Core;
 
 namespace RenderApp
 {
@@ -22,7 +23,7 @@ namespace RenderApp
     /// <summary>
     /// BMPで保持
     /// </summary>
-    public class RAImageInfo : RAFile
+    public class RAImageInfo : KIFile
     {
         public int Width
         {

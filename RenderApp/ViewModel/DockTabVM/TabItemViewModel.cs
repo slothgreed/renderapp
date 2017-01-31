@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using KI.Foundation.ViewModel;
 
-namespace RenderApp.ViewModel.DockTabVM
+namespace RenderApp.ViewModel
 {
     public class TabItemViewModel : ViewModelBase
     {

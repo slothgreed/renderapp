@@ -11,7 +11,7 @@ using RenderApp.Utility;
 using KI.Foundation.ViewModel;
 using KI.Foundation.Utility;
 
-namespace RenderApp.ViewModel.NodeVM
+namespace RenderApp.ViewModel
 {
     public class NodeItemViewModel : ViewModelBase
     {

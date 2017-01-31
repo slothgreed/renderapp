@@ -10,9 +10,11 @@ using RenderApp.GLUtil;
 using KI.Foundation.Utility;
 using RenderApp.Analyzer;
 using RenderApp.GLUtil.Buffer;
+using KI.Foundation.Core;
+
 namespace RenderApp.AssetModel
 {
-    public abstract class Geometry : RAObject
+    public abstract class Geometry : KIObject
     {
         #region [static property]
         private static int GeometryIDCounter = 0;

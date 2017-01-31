@@ -7,11 +7,9 @@ using RenderApp.AssetModel;
 using System.Collections.ObjectModel;
 using RenderApp.GLUtil;
 using OpenTK;
-using RenderApp.ViewModel.DockTabVM;
-using RenderApp.ViewModel.PropertyVM;
 using KI.Foundation.ViewModel;
 
-namespace RenderApp.ViewModel.AssetVM
+namespace RenderApp.ViewModel
 {
     public class GeometryViewModel : TabItemViewModel,IPropertyGridViewModel
     {
