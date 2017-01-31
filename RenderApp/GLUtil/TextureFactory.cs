@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using RenderApp.Globals;
 using RenderApp.Utility;
 using KI.Foundation.Core;
+using KI.Gfx.KIImage;
 namespace RenderApp.GLUtil
 {
     public class TextureFactory
@@ -52,13 +53,13 @@ namespace RenderApp.GLUtil
             {
                 return TextureList[path];
             }
-            RAImageInfo image = null;
+            KIImageInfo image = null;
             switch (kind)
             {
                 case ImageKind.PNG:
                 case ImageKind.JPG:
                 case ImageKind.BMP:
-                    image = new RAImageInfo(path);
+                    image = new KIImageInfo(path);
                     break;
                 case ImageKind.TGA:
                     image = new TGAImage(path);

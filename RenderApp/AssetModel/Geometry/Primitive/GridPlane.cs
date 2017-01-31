@@ -8,7 +8,7 @@ using OpenTK.Graphics.OpenGL;
 using RenderApp.Utility;
 namespace RenderApp.AssetModel.RA_Geometry
 {
-    class GridPlane : IRenderObject
+    class GridPlane : IRenderObjectConverter
     {
         /// <summary>
         /// グリッドの範囲

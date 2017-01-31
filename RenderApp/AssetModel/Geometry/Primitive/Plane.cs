@@ -9,7 +9,7 @@ using OpenTK.Graphics.OpenGL;
 using RenderApp.Utility;
 namespace RenderApp.AssetModel.RA_Geometry
 {
-    public class Plane : IRenderObject
+    public class Plane : IRenderObjectConverter
     {
         #region [メンバ変数]
         /// <summary>

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
-namespace RenderApp.AssetModel.LightModel
+namespace KI.Gfx.KIAsset
 {
-    class PointLight : Light
+    public class PointLight : Light
     {
         public PointLight(string name,Vector3 lightPos, Vector3 lightDir) 
             : base(name,lightPos,lightDir)

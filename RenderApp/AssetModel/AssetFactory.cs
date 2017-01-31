@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using RenderApp.GLUtil.ShaderModel;
 using RenderApp.GLUtil;
-using RenderApp.AssetModel.LightModel;
 using OpenTK;
 using RenderApp.Utility;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.Globals;
 using RenderApp.AssetModel.RA_Geometry;
 using KI.Foundation.Core;
+using KI.Gfx.KIAsset;
 
 namespace RenderApp.AssetModel
 {
@@ -165,10 +165,10 @@ namespace RenderApp.AssetModel
             switch (extension)
             {
                 case ".obj":
-                    var obj = new CObjFile(fileName, filePath);
+                    var obj = new OBJConverter(fileName, filePath);
                     return obj.CreateRenderObject();
                 case ".stl":
-                    var stl = new StlFile(fileName, filePath);
+                    var stl = new STLConverter(fileName, filePath);
                     return stl.CreateRenderObject();
             }
             return null;

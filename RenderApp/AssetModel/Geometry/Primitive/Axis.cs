@@ -8,7 +8,7 @@ using OpenTK.Graphics.OpenGL;
 using RenderApp.Utility;
 namespace RenderApp.AssetModel.RA_Geometry
 {
-    class Axis : IRenderObject
+    class Axis : IRenderObjectConverter
     {
         public Vector3 Min
         {

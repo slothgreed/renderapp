@@ -7,11 +7,9 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
-namespace RenderApp.Utility
+namespace KI.Gfx.KIImage
 {
-
-
-    class TGAImage : RAImageInfo
+    public class TGAImage : KIImageInfo
     {
         struct TGAStruct
         {

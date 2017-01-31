@@ -5,16 +5,16 @@ using System.Text;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace RenderApp.Utility
+namespace KI.Gfx.KIImage
 {
-    public class HDRImage : RAImageInfo
+    public class HDRImage : KIImageInfo
     {
         public HDRImage(string path)
             :base(path)
         {
 
         }
-        public string Format
+        public string HDRFormat
         {
             get;
             private set;
@@ -57,7 +57,7 @@ namespace RenderApp.Utility
                 {
                     //不要文字を削除
                     str = str.Replace("FORMAT=", "");
-                    Format = str;
+                    HDRFormat = str;
                 }
 
                 if(str.Contains("EXPOSURE="))

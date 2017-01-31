@@ -8,7 +8,7 @@ using System.Drawing;
 using KI.Foundation.Utility;
 using KI.Foundation.Core;
 
-namespace RenderApp
+namespace KI.Gfx.KIImage
 {
     public enum ImageKind
     {
@@ -23,7 +23,7 @@ namespace RenderApp
     /// <summary>
     /// BMPで保持
     /// </summary>
-    public class RAImageInfo : KIFile
+    public class KIImageInfo : KIFile
     {
         public int Width
         {
@@ -63,7 +63,7 @@ namespace RenderApp
             set;
         }
 
-        public RAImageInfo(string path)
+        public KIImageInfo(string path)
             :base(path)
         {
             Format = PixelFormat.Format32bppArgb;
@@ -107,11 +107,6 @@ namespace RenderApp
         {
             bmpImage.UnlockBits(bmpData);
             NowLock = false;
-        }
-
-        private void Save(string path, TextureKind kind)
-        {
-
         }
 
     }

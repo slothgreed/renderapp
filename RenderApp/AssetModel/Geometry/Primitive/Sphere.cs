@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using KI.Gfx.KIGeometry;
 namespace RenderApp.AssetModel.RA_Geometry
 {
     public class Sphere : VertexInfo

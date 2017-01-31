@@ -15,6 +15,8 @@ using RenderApp.RA_Control;
 using RenderApp.Render_System;
 using KI.Foundation.Utility;
 using KI.Foundation.Core;
+using System.Drawing;
+
 namespace RenderApp.GLUtil
 {
     public delegate void CreateViewportHandler();
@@ -113,6 +115,25 @@ namespace RenderApp.GLUtil
 
         }
 
+        /// <summary>
+        /// スクリーンショット
+        /// </summary>
+        /// <returns></returns>
+        private Bitmap GetColorBufferData()
+        {
+            if (GraphicsContext.CurrentContext == null)
+                throw new GraphicsContextMissingException();
+
+            System.Drawing.Rectangle r = new System.Drawing.Rectangle(glControl.Location, glControl.Size);
+            Bitmap bmp = new Bitmap(glControl.Width, glControl.Height);
+
+            System.Drawing.Imaging.BitmapData data = bmp.LockBits(r, System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+            DeviceContext.Instance.ReadPixel(data);
+            bmp.UnlockBits(data);
+
+            bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
+            return bmp;
+        }
 
         public void Initialize()
         {

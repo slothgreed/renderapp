@@ -10,7 +10,7 @@ using RenderApp.AssetModel;
 using KI.Foundation.Utility;
 using RenderApp.GLUtil.Buffer;
 using KI.Foundation.Core;
-
+using KI.Gfx.KIImage;
 namespace RenderApp.GLUtil
 {
 
@@ -24,8 +24,8 @@ namespace RenderApp.GLUtil
                 return ProjectInfo.TextureDirectory + @"\Dummy.png";
             }
         }
-        private RAImageInfo _imageInfo;
-        public RAImageInfo ImageInfo
+        private KIImageInfo _imageInfo;
+        public KIImageInfo ImageInfo
         {
             get
             {
@@ -124,7 +124,7 @@ namespace RenderApp.GLUtil
             TextureBuffer.Dispose();
         }
         #region [テクスチャ周り]
-        public void LoadTexture(RAImageInfo image)
+        public void LoadTexture(KIImageInfo image)
         {
             ImageInfo = image;
 

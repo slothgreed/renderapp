@@ -11,7 +11,6 @@ using RenderApp.GLUtil;
 using RenderApp.Utility;
 using RenderApp.GLUtil.ShaderModel;
 using System.Windows.Forms;
-using RenderApp.AssetModel.LightModel;
 using RenderApp.ViewModel.Dialog;
 using RenderApp.RA_Control;
 using RenderApp.Globals;

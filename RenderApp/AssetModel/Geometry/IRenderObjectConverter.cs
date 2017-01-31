@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RenderApp.AssetModel.RA_Geometry
 {
-    interface IRenderObject
+    interface IRenderObjectConverter
     {
         List<RenderObject> RenderObject { get; }
         List<RenderObject> CreateRenderObject();

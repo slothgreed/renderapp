@@ -8,6 +8,9 @@ namespace RenderApp.GLUtil
 {
     public class DeviceContext
     {
+        /// <summary>
+        /// Multi化はしない
+        /// </summary>
         private static DeviceContext _Instance;
         public static DeviceContext Instance
         {

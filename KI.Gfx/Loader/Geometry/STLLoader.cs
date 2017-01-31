@@ -5,25 +5,24 @@ using System.Text;
 using System.IO;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using System.Windows.Forms;
-using RenderApp.Analyzer;
+using KI.Foundation.Utility;
 using KI.Foundation.Core;
 
-namespace RenderApp.AssetModel.RA_Geometry
+namespace KI.Gfx.KIGeometry
 {
     /// <summary>
     /// STLのローダ現在テキストファイルのみ
     /// </summary>
-    public class StlFile : KIFile,IRenderObject
+    public class STLLoader : KIFile
     {
-        VertexInfo vertexInfo;
+        public VertexInfo vertexInfo;
         /// <summary>
         /// STLのローダ。
         /// </summary>
         /// <param name="filePath"></param>
         /// <param name="position"></param>
         /// <param name="normal"></param>
-        public StlFile(string name,string filePath)
+        public STLLoader(string name,string filePath)
             :base(filePath)
         {
             try
@@ -35,7 +34,7 @@ namespace RenderApp.AssetModel.RA_Geometry
             catch (Exception)
             {
 
-                MessageBox.Show(filePath + "開けません。現在のフォルダ位置" + System.Environment.CurrentDirectory);   
+                Logger.Log(Logger.LogLevel.Error,filePath + "開けません。現在のフォルダ位置" + System.Environment.CurrentDirectory);   
             }
 
             
@@ -114,20 +113,5 @@ namespace RenderApp.AssetModel.RA_Geometry
             write.Close();
         }
 
-        public List<RenderObject> CreateRenderObject()
-        {
-            RenderObject geometry = new RenderObject(FileName);
-            geometry.CreatePN(vertexInfo.Position, vertexInfo.Normal, PrimitiveType.Triangles);
-            _renderObject = new List<RenderObject>() { geometry };
-            return _renderObject;
-        }
-        private List<RenderObject> _renderObject;
-        public List<RenderObject> RenderObject
-        {
-            get
-            {
-                return _renderObject;
-            }
-        }
     }
 }

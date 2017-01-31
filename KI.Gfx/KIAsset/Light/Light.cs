@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using OpenTK;
-using RenderApp.Utility;
-using RenderApp.AssetModel;
 using KI.Foundation.Core;
-namespace RenderApp.AssetModel.LightModel
+namespace KI.Gfx.KIAsset
 {
     /// <summary>
     /// 光源

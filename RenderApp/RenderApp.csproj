@@ -122,7 +122,7 @@
     </ApplicationDefinition>
     <Compile Include="Analyzer\HalfEdge\Dijkstra.cs" />
     <Compile Include="AssetModel\AssetFactory.cs" />
-    <Compile Include="AssetModel\Geometry\IRenderObject.cs" />
+    <Compile Include="AssetModel\Geometry\IRenderObjectConverter.cs" />
     <Compile Include="GLUtil\Buffer\ArrayBuffer.cs" />
     <Compile Include="GLUtil\Buffer\BufferObject.cs" />
     <Compile Include="GLUtil\DeviceContext.cs" />
@@ -130,7 +130,6 @@
     <Compile Include="GLUtil\Buffer\SamplerBuffer.cs" />
     <Compile Include="GLUtil\Buffer\TextureBuffer.cs" />
     <Compile Include="RACommand\ICommand.cs" />
-    <Compile Include="Core\RAImageInfo.cs" />
     <Compile Include="Render_System\Post_Effect\Bloom.cs" />
     <Compile Include="Render_System\Post_Effect\DOF.cs" />
     <Compile Include="Render_System\Post_Effect\PostEffect.cs" />
@@ -144,13 +143,11 @@
     <Compile Include="Render_System\Post_Effect\SSAO.cs" />
     <Compile Include="Core\RANode.cs" />
     <Compile Include="RAControl\CameraControl.cs" />
-    <Compile Include="Utility\ImageLoader\HDRImage.cs" />
     <Compile Include="Utility\ShaderCreater.cs" />
     <Compile Include="ViewModel\Converter\EnumConverter.cs" />
     <Compile Include="Globals\Project.cs" />
     <Compile Include="GLUtil\ShaderModel\ShaderFactory.cs" />
     <Compile Include="AssetModel\EnvironmentProbe.cs" />
-    <Compile Include="AssetModel\Geometry\VertexInfo.cs" />
     <Compile Include="GLUtil\ShaderModel\ShaderProgramInfo.cs" />
     <Compile Include="Globals\Enum.cs" />
     <Compile Include="GLUtil\TextureFactory.cs" />
@@ -168,7 +165,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NotifyNodeChangedEventArgs.tt</DependentUpon>
     </Compile>
-    <Compile Include="Utility\ImageLoader\TGAImage.cs" />
     <Compile Include="ViewModel\Controller\ControllerViewModelT4.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -186,9 +182,6 @@
     </Compile>
     <Compile Include="ViewModel\DockTabVM\DockPaneSelector.cs" />
     <Compile Include="AssetModel\Geometry\Geometry.cs" />
-    <Compile Include="AssetModel\LightModel\DirectionLight.cs" />
-    <Compile Include="AssetModel\LightModel\PointLight.cs" />
-    <Compile Include="AssetModel\LightModel\SpotLight.cs" />
     <Compile Include="ViewModel\DockTabVM\DockWindowViewModel.cs" />
     <Compile Include="ViewModel\ComboItemViewModel.cs" />
     <Compile Include="ViewModel\DefaultViewModel.cs" />
@@ -283,7 +276,6 @@
     <Compile Include="AssetModel\Geometry\Primitive\Cube.cs" />
     <Compile Include="AssetModel\Geometry\Primitive\Plane.cs" />
     <Compile Include="AssetModel\Geometry\Primitive\GridPlane.cs" />
-    <Compile Include="AssetModel\LightModel\Light.cs" />
     <Compile Include="Scene\Shader\OffScreen\DOF\DOF.cs" />
     <Compile Include="Scene\Shader\Luminous\Luminous.cs" />
     <Compile Include="Scene\Shader\OffScreen\Sobel\CSobel.cs" />
@@ -308,9 +300,8 @@
     <Compile Include="Scene\Shader\OffScreen\Defferd\CDeffed.cs" />
     <Compile Include="Scene\Shader\OffScreen\Shadow\CShadowMap.cs" />
     <Compile Include="Utility\RACalc.cs" />
-    <Compile Include="Utility\CFileIO.cs" />
-    <Compile Include="AssetModel\Geometry\File\ObjLoader.cs" />
-    <Compile Include="AssetModel\Geometry\File\StlLoader.cs" />
+    <Compile Include="AssetModel\Geometry\File\OBJConverter.cs" />
+    <Compile Include="AssetModel\Geometry\File\STLConverter.cs" />
     <Compile Include="Utility\TrueTypeFont.cs" />
     <Compile Include="Utility\Util.cs" />
     <Compile Include="Analyzer\Tree\Voxel.cs" />
@@ -502,6 +493,10 @@
     <ProjectReference Include="..\KI.Foundation\KI.Foundation.csproj">
       <Project>{cfc71ace-112a-467f-96ec-6566d4a6dfc6}</Project>
       <Name>KI.Foundation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KI.Gfx\KI.Gfx.csproj">
+      <Project>{f5e989a2-028f-4e60-869c-ec57413376c6}</Project>
+      <Name>KI.Gfx</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

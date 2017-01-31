@@ -8,10 +8,9 @@ using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using RenderApp.ViewModel;
 using RenderApp.GLUtil.ShaderModel;
-using RenderApp.AssetModel.LightModel;
 using RenderApp.Utility;
 using KI.Foundation.Core;
-
+using KI.Gfx.KIAsset;
 namespace RenderApp
 {
     public class Scene
