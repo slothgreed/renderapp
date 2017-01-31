@@ -7,12 +7,12 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
-namespace RenderApp.Utility
+namespace KI.Foundation.Core
 {
     /// <summary>
     /// マウスのクラス(右左ホイールは各インスタンス生成すること)
     /// </summary>
-    public class RAMouse
+    public class KIMouse
     {
         #region [メンバ変数]
         /// <summary>
@@ -57,7 +57,7 @@ namespace RenderApp.Utility
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public RAMouse()
+        public KIMouse()
         {
 
         }
@@ -90,7 +90,7 @@ namespace RenderApp.Utility
             Drag(x, y);
          }
 
-        internal void Up(int x, int y)
+        public void Up(int x, int y)
         {
             Before = Vector2.Zero;
             Current = Vector2.Zero;

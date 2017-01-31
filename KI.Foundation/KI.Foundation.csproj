@@ -50,6 +50,7 @@
     <Compile Include="Core\KIObject.cs" />
     <Compile Include="Core\KIFile.cs" />
     <Compile Include="Core\KITimer.cs" />
+    <Compile Include="Core\KIMouse.cs" />
     <Compile Include="Utility\Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\Math\MathViewModel.cs" />

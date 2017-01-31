@@ -141,7 +141,7 @@
     <Compile Include="Render_System\Post_Effect\Selection.cs" />
     <Compile Include="Render_System\Post_Effect\Sobel.cs" />
     <Compile Include="Render_System\Post_Effect\SSAO.cs" />
-    <Compile Include="Core\RANode.cs" />
+    <Compile Include="Tree\RANode.cs" />
     <Compile Include="RAControl\CameraControl.cs" />
     <Compile Include="Utility\ShaderCreater.cs" />
     <Compile Include="ViewModel\Converter\EnumConverter.cs" />
@@ -296,7 +296,6 @@
     <Compile Include="View\TextureView.xaml.cs">
       <DependentUpon>TextureView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Core\RAMouse.cs" />
     <Compile Include="Scene\Shader\OffScreen\Defferd\CDeffed.cs" />
     <Compile Include="Scene\Shader\OffScreen\Shadow\CShadowMap.cs" />
     <Compile Include="Utility\RACalc.cs" />

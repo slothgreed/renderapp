@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using RenderApp.Utility;
 using OpenTK;
+using KI.Foundation.Core;
 namespace RenderApp.RA_Control
 {
     public abstract class IControl
     {
-        protected static RAMouse LeftMouse = new RAMouse();
-        protected static RAMouse MiddleMouse = new RAMouse();
-        protected static RAMouse RightMouse = new RAMouse();
+        protected static KIMouse LeftMouse = new KIMouse();
+        protected static KIMouse MiddleMouse = new KIMouse();
+        protected static KIMouse RightMouse = new KIMouse();
 
         public virtual bool Down(MouseEventArgs mouse)
         {

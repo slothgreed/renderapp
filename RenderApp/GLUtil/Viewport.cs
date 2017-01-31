@@ -19,7 +19,14 @@ using System.Drawing;
 
 namespace RenderApp.GLUtil
 {
-    public delegate void CreateViewportHandler();
+    public delegate void OnLoadedHandler(object sender,EventArgs e);
+    public delegate void OnMouseDownHandler(object sender, MouseEventArgs e);
+    public delegate void OnMouseMoveHandler(object sender, MouseEventArgs e);
+    public delegate void OnMouseUpHandler(object sender, MouseEventArgs e);
+    public delegate void OnMouseWheelHandler(object sender, MouseEventArgs e);
+    public delegate void OnRenderHandler(object sender, PaintEventArgs e);
+    public delegate void OnResizeHandler(object sender,EventArgs e);
+
     /// <summary>
     /// 描画用のGlobal変数を保持するクラス
     /// </summary>
@@ -79,7 +86,14 @@ namespace RenderApp.GLUtil
         /// </summary>
         public GLControl glControl { get { return m_glControl; } }
 
-        public event CreateViewportHandler OnCreateViewportEvent;
+        public event OnLoadedHandler OnLoaded;
+        public event OnMouseDownHandler OnMouseDown;
+        public event OnMouseMoveHandler OnMouseMove;
+        public event OnMouseUpHandler OnMouseUp;
+        public event OnMouseWheelHandler OnMouseWheel;
+        public event OnRenderHandler OnRender;
+        public event OnResizeHandler OnResize;
+        
         #endregion
         #region [initialize method]
         private Viewport()
@@ -115,32 +129,9 @@ namespace RenderApp.GLUtil
 
         }
 
-        /// <summary>
-        /// スクリーンショット
-        /// </summary>
-        /// <returns></returns>
-        private Bitmap GetColorBufferData()
-        {
-            if (GraphicsContext.CurrentContext == null)
-                throw new GraphicsContextMissingException();
-
-            System.Drawing.Rectangle r = new System.Drawing.Rectangle(glControl.Location, glControl.Size);
-            Bitmap bmp = new Bitmap(glControl.Width, glControl.Height);
-
-            System.Drawing.Imaging.BitmapData data = bmp.LockBits(r, System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-            DeviceContext.Instance.ReadPixel(data);
-            bmp.UnlockBits(data);
-
-            bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
-            return bmp;
-        }
-
         public void Initialize()
         {
-            //CFrameBufferManager.Initialize(m_glControl.Width, m_glControl.Height);
-            //ShaderManager.Initialize();
             m_StopWatch = new Stopwatch();
-            
         }
         #endregion
         #region [context event]
@@ -148,13 +139,11 @@ namespace RenderApp.GLUtil
         private void glControl_Load(object sender, EventArgs e)
         {
             DeviceContext.Instance.Initialize(m_glControl.Size.Width,m_glControl.Size.Height);
-            Scene.Create("MainScene");
-            Scene.ActiveScene.Initialize();
             m_AppstartUp = true;
             Logger.GLLog(Logger.LogLevel.Error);
-            if(OnCreateViewportEvent != null)
+            if(OnLoaded != null)
             {
-                OnCreateViewportEvent();
+                OnLoaded(sender, e);
             }
         }
         //Loadより先に呼ばれる
@@ -164,9 +153,10 @@ namespace RenderApp.GLUtil
             if (m_AppstartUp)
             {
                 DeviceContext.Instance.SizeChanged(m_glControl.Size.Width, m_glControl.Size.Height);
-                Scene.ActiveScene.MainCamera.SetProjMatrix((float)DeviceContext.Instance.Width / DeviceContext.Instance.Height);
-                DeviceContext.Instance.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
-                RenderSystem.SizeChanged(m_glControl.Size.Width, m_glControl.Size.Height);
+                if (OnResize != null)
+                {
+                    OnResize(sender, e);
+                }
                 Logger.GLLog(Logger.LogLevel.Error);
                 glControl_Paint(null, null);
             }
@@ -174,7 +164,7 @@ namespace RenderApp.GLUtil
         }
 
         //glControlの描画時に実行される。
-        public void glControl_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
+        public void glControl_Paint(object sender, PaintEventArgs e)
         {
             if (!m_AppstartUp)
             {
@@ -185,7 +175,11 @@ namespace RenderApp.GLUtil
                 return;
             }
             DeviceContext.Instance.Clear();
-            RenderSystem.Render();
+
+            if(OnRender != null)
+            {
+                OnRender(sender, e);
+            }
             m_NowRender = true;
             m_glControl.SwapBuffers();
             m_NowRender = false;
@@ -193,30 +187,42 @@ namespace RenderApp.GLUtil
         }
         #endregion
         #region [mouse event]
-        private void glControl_MouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void glControl_MouseWheel(object sender, MouseEventArgs e)
         {
-            ControlManager.Instance.ProcessInput(e, ControlManager.MOUSE_STATE.WHEEL);
+            if(OnMouseWheel != null)
+            {
+                OnMouseWheel(sender, e);
+            }
             glControl_Paint(null, null);
         }
 
-        private void glControl_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void glControl_MouseDown(object sender, MouseEventArgs e)
         {
-            ControlManager.Instance.ProcessInput(e, ControlManager.MOUSE_STATE.DOWN);
+            if (OnMouseDown != null)
+            {
+                OnMouseDown(sender, e);
+            } 
             glControl_Paint(null, null);
         }
         private void glControl_MouseUp(object sender, MouseEventArgs e)
         {
-            ControlManager.Instance.ProcessInput(e, ControlManager.MOUSE_STATE.UP);
+            if (OnMouseUp != null)
+            {
+                OnMouseUp(sender, e);
+            } 
             glControl_Paint(null, null);
         }
-        private void glControl_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void glControl_MouseMove(object sender, MouseEventArgs e)
         {
             if (!m_AppstartUp)
             {
                 return;
             }
             m_glControl.Focus();
-            ControlManager.Instance.ProcessInput(e, ControlManager.MOUSE_STATE.MOVE);
+            if(OnMouseMove != null)
+            {
+                OnMouseMove(sender, e);
+            }
             if (e.Button != MouseButtons.None)
             {
                 glControl_Paint(null, null);
@@ -263,6 +269,26 @@ namespace RenderApp.GLUtil
                 m_AnimationTimer.Stop();
 
             }
+        }
+
+        /// <summary>
+        /// スクリーンショット
+        /// </summary>
+        /// <returns></returns>
+        private Bitmap GetColorBufferData()
+        {
+            if (GraphicsContext.CurrentContext == null)
+                throw new GraphicsContextMissingException();
+
+            System.Drawing.Rectangle r = new System.Drawing.Rectangle(glControl.Location, glControl.Size);
+            Bitmap bmp = new Bitmap(glControl.Width, glControl.Height);
+
+            System.Drawing.Imaging.BitmapData data = bmp.LockBits(r, System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+            DeviceContext.Instance.ReadPixel(data);
+            bmp.UnlockBits(data);
+
+            bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
+            return bmp;
         }
         #endregion
 
