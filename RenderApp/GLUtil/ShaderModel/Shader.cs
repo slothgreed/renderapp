@@ -402,7 +402,7 @@ namespace RenderApp.GLUtil.ShaderModel
                         info.variable = DeviceContext.Instance.Height;
                         break;
                     case "uMVP":
-                        Matrix4 vp = Scene.ActiveScene.MainCamera.CameraProjMatrix;
+                        Matrix4 vp = SceneManager.Instance.ActiveScene.MainCamera.CameraProjMatrix;
                         info.variable = geometry.ModelMatrix * vp;
                         break;
                     case "uModelMatrix":
@@ -412,25 +412,25 @@ namespace RenderApp.GLUtil.ShaderModel
                         info.variable = geometry.NormalMatrix;
                         break;
                     case "uProjectMatrix":
-                        info.variable = Scene.ActiveScene.MainCamera.ProjMatrix;
+                        info.variable = SceneManager.Instance.ActiveScene.MainCamera.ProjMatrix;
                         break;
                     case "uUnProjectMatrix":
-                        info.variable = Scene.ActiveScene.MainCamera.UnProject;
+                        info.variable = SceneManager.Instance.ActiveScene.MainCamera.UnProject;
                         break;
                     case "uCameraPosition":
-                        info.variable = Scene.ActiveScene.MainCamera.Position;
+                        info.variable = SceneManager.Instance.ActiveScene.MainCamera.Position;
                         break;
                     case "uCameraMatrix":
-                        info.variable = Scene.ActiveScene.MainCamera.Matrix;
+                        info.variable = SceneManager.Instance.ActiveScene.MainCamera.Matrix;
                         break;
                     case "uLightPosition":
-                        info.variable = Scene.ActiveScene.SunLight.Position;
+                        info.variable = SceneManager.Instance.ActiveScene.SunLight.Position;
                         break;
                     case "uLightDirection":
-                        info.variable = Scene.ActiveScene.SunLight.Direction;
+                        info.variable = SceneManager.Instance.ActiveScene.SunLight.Direction;
                         break;
                     case "uLightMatrix":
-                        info.variable = Scene.ActiveScene.SunLight.Matrix;
+                        info.variable = SceneManager.Instance.ActiveScene.SunLight.Matrix;
                         break;
                     case "uAlbedoMap":
                         if (TextureItem.ContainsKey(TextureKind.Albedo))

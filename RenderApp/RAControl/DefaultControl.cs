@@ -12,7 +12,7 @@ namespace RenderApp.RA_Control
         {
             if(mouse.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                Viewport.Instance.RenderSystem.Picking((int)LeftMouse.Click.X, (int)LeftMouse.Click.Y);
+                SceneManager.Instance.RenderSystem.Picking((int)LeftMouse.Click.X, (int)LeftMouse.Click.Y);
             }
             return true;
         }

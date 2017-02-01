@@ -49,15 +49,11 @@ namespace RenderApp.ViewModel
         {
             get
             {
-                if(m_Viewport == null)
+                if (SceneManager.Instance.RenderSystem == null)
                 {
                     return false;
                 }
-                if(m_Viewport.RenderSystem == null)
-                {
-                    return false;
-                }
-                return m_Viewport.RenderSystem.PostProcessMode;
+                return SceneManager.Instance.RenderSystem.PostProcessMode;
             }
         }
         #endregion
@@ -118,20 +114,20 @@ namespace RenderApp.ViewModel
         #region [Viewport Method]
         public void OnLoadedEvent(object sender, EventArgs e)
         {
-            Scene.Create("MainScene");
-            Scene.ActiveScene.Initialize();
-            LeftUpDockPanel.Add(new RootNodeViewModel(Scene.ActiveScene.RootNode, "Scene"));
-            LeftDownDockPanel.Add(new RenderSystemViewModel(Viewport.Instance.RenderSystem));
+            SceneManager.Instance.Create("MainScene");
+            SceneManager.Instance.ActiveScene.Initialize();
+            LeftUpDockPanel.Add(new RootNodeViewModel(SceneManager.Instance.ActiveScene.RootNode, "Scene"));
+            LeftDownDockPanel.Add(new RenderSystemViewModel(SceneManager.Instance.RenderSystem));
         }
         private void OnResizeEvent(object sender, EventArgs e)
         {
-            Scene.ActiveScene.MainCamera.SetProjMatrix((float)DeviceContext.Instance.Width / DeviceContext.Instance.Height);
-            Viewport.Instance.RenderSystem.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
+            SceneManager.Instance.ActiveScene.MainCamera.SetProjMatrix((float)DeviceContext.Instance.Width / DeviceContext.Instance.Height);
+            SceneManager.Instance.RenderSystem.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
         }
 
         private void OnRenderEvent(object sender, PaintEventArgs e)
         {
-            Viewport.Instance.RenderSystem.Render();
+            SceneManager.Instance.RenderSystem.Render();
         }
 
         private void OnMouseWheelEvent(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -315,7 +311,7 @@ namespace RenderApp.ViewModel
         }
         private void CreateCubeCommand()
         {
-            //Cube cube = new Cube(RAFile.GetNameFromType(EAssetType.Geometry), Scene.ActiveScene.WorldMin, Scene.ActiveScene.WorldMax);
+            //Cube cube = new Cube(RAFile.GetNameFromType(EAssetType.Geometry), SceneManager.Instance.ActiveScene.WorldMin, SceneManager.Instance.ActiveScene.WorldMax);
             //AssetFactory.Instance.CreateGeometry(cube);
         }
         private void CreateSphereCommand()
@@ -330,14 +326,14 @@ namespace RenderApp.ViewModel
         }
         private void CreateWireFrameCommand()
         {
-            if (!AssetFactory.Instance.CreateWireFrame(Scene.ActiveScene.SelectAsset))
+            if (!AssetFactory.Instance.CreateWireFrame(SceneManager.Instance.ActiveScene.SelectAsset))
             {
                 MessageBox.Show("Trianglesのポリゴンモデルのみで作成できます。");
             }
         }
         private void CreatePolygonCommand()
         {
-            if (!AssetFactory.Instance.CreatePolygon(Scene.ActiveScene.SelectAsset))
+            if (!AssetFactory.Instance.CreatePolygon(SceneManager.Instance.ActiveScene.SelectAsset))
             {
                 MessageBox.Show("Trianglesのポリゴンモデルのみで作成できます。");
             }
@@ -372,7 +368,7 @@ namespace RenderApp.ViewModel
         #region [MainWindow Event Command]
         private void WindowCloseCommand()
         {
-            Scene.AllDispose();
+            SceneManager.Instance.ActiveScene.Dispose();
             Project.ActiveProject.Dispose();
             ShaderFactory.Instance.Dispose();
             RenderPassFactory.Instance.Dispose();
@@ -403,7 +399,7 @@ namespace RenderApp.ViewModel
         #region [Rendering Menu Command]
         public void TogglePostProcessCommand()
         {
-            m_Viewport.RenderSystem.TogglePostProcess();
+            SceneManager.Instance.RenderSystem.TogglePostProcess();
             OnPropertyChanged("PostProcessMode");
         }
         #endregion
@@ -414,7 +410,7 @@ namespace RenderApp.ViewModel
         }
         private void OctreeCommand()
         {
-            if (!AssetFactory.Instance.CreateOctree(Scene.ActiveScene.SelectAsset))
+            if (!AssetFactory.Instance.CreateOctree(SceneManager.Instance.ActiveScene.SelectAsset))
             {
                 MessageBox.Show("Trianglesのポリゴンモデルのみで作成できます。");
             }
@@ -432,7 +428,7 @@ namespace RenderApp.ViewModel
             if(node.RAObject is Geometry)
             {
                 vm = new GeometryViewModel((Geometry)node.RAObject);
-                Scene.ActiveScene.SelectAsset = (Geometry)node.RAObject;
+                SceneManager.Instance.ActiveScene.SelectAsset = (Geometry)node.RAObject;
             }
             else if(node.RAObject is Material)
             {

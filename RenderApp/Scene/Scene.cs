@@ -13,7 +13,7 @@ using KI.Foundation.Core;
 using KI.Gfx.KIAsset;
 namespace RenderApp
 {
-    public class Scene
+    public class Scene : KIObject
     {
 
         /// <summary>
@@ -25,32 +25,16 @@ namespace RenderApp
         /// </summary>
         public readonly Vector3 WorldMin = new Vector3(-50, 0, -50);
 
+        public Scene(string name)
+            : base(name)
+        {
+
+        }
         #region [scene dictionary]
-        private static Dictionary<string, Scene> SceneList = new Dictionary<string, Scene>();
         /// <summary>
         /// ルートノード
         /// </summary>
         public RANode RootNode;
-        ///// <summary>
-        ///// アセットリスト TODO実装
-        ///// </summary>
-        //private List<Dictionary<string, Asset>> AssetList = new List<Dictionary<string, Asset>>();
-        ///// <summary>
-        ///// モデルリスト
-        ///// </summary>
-        //private Dictionary<string, Geometry> GeometryList = new Dictionary<string, Geometry>();
-        ///// <summary>
-        ///// 光源オブジェクト
-        ///// </summary>
-        //private Dictionary<string, Light> LightList = new Dictionary<string, Light>();
-        ///// <summary>
-        ///// カメラオブジェクト
-        ///// </summary>
-        //private Dictionary<string, Camera> CameraList = new Dictionary<string, Camera>();
-        ///// <summary>
-        ///// 環境プローブオブジェクト
-        ///// </summary>
-        //private Dictionary<string, EnvironmentProbe> EnvProbeList = new Dictionary<string, EnvironmentProbe>();
         /// <summary>
         /// 選択中のアセット
         /// </summary>
@@ -69,7 +53,6 @@ namespace RenderApp
 
         #endregion
         #region [default property]
-
         /// <summary>
         /// カメラ
         /// </summary>
@@ -97,90 +80,8 @@ namespace RenderApp
                 _sunLight = value;
             }
         }
-
-        #endregion
-        #region [static member]
-        /// <summary>
-        /// Activeシーン
-        /// </summary>
-        private static Scene _activeScene;
-        public static Scene ActiveScene
-        {
-            get
-            {
-                return _activeScene;
-            }
-        }
-        public static Scene Create(string name)
-        {
-            SceneList.Add(name, new Scene());
-            _activeScene = SceneList[name];
-            return _activeScene;
-        }
         #endregion
         #region [public scene method]
-        //public IEnumerable<string> GetAssetListStr(EAssetType assetType)
-        //{
-        //    switch (assetType)
-        //    {
-        //        case EAssetType.Geometry:
-        //            foreach (var loop in GeometryList)
-        //            {
-        //                yield return loop.Key;
-        //            }
-        //            break;
-        //        case EAssetType.Light:
-        //            foreach (var loop in LightList)
-        //            {
-        //                yield return loop.Key;
-        //            }
-        //            break;
-        //        case EAssetType.Camera:
-        //            foreach (var loop in CameraList)
-        //            {
-        //                yield return loop.Key;
-        //            }
-        //            break;
-        //        case EAssetType.EnvProbe:
-        //            foreach (var loop in EnvProbeList)
-        //            {
-        //                yield return loop.Key;
-        //            }
-        //            break;
-        //    }
-        //}
-
-        //public IEnumerable<Asset> GetAssetList(EAssetType assetType)
-        //{
-        //    switch (assetType)
-        //    {
-        //        case EAssetType.Geometry:
-        //            foreach (var loop in GeometryList)
-        //            {
-        //                yield return loop.Value;
-        //            }
-        //            break;
-        //        case EAssetType.Light:
-        //            foreach (var loop in LightList)
-        //            {
-        //                yield return loop.Value;
-        //            }
-        //            break;
-        //        case EAssetType.Camera:
-        //            foreach (var loop in CameraList)
-        //            {
-        //                yield return loop.Value;
-        //            }
-        //            break;
-        //        case EAssetType.EnvProbe:
-        //            foreach (var loop in EnvProbeList)
-        //            {
-        //                yield return loop.Value;
-        //            }
-        //            break;
-        //    }
-        //}
-
         /// <summary>
         /// シーンのオブジェクトの取得
         /// </summary>
@@ -200,15 +101,17 @@ namespace RenderApp
                 return obj.RAObject;
             }
         }
-      
-        public void AddRootSceneObject(KIObject value)
-        {
-            AddSceneObject(RootNode,value);
-        }
 
-        public void AddSceneObject(RANode parent, KIObject value)
+        public void AddObject(KIObject value, RANode parent = null)
         {
-            parent.AddChild(value);
+            if (parent == null)
+            {
+                RootNode.AddChild(value);
+            }
+            else
+            {
+                parent.AddChild(value);
+            }
         }
 
         private string GetNewKey<T>(string key, Dictionary<string, T> AssetList) where T : KIFile
@@ -239,44 +142,28 @@ namespace RenderApp
         public void Initialize()
         {
             RootNode = new RANode("ROOT");
-            MainCamera = AssetFactory.Instance.CreateMainCamera();
-            Scene.ActiveScene.AddRootSceneObject(MainCamera);
-
-            SunLight = AssetFactory.Instance.CreateSunLight();
-            Scene.ActiveScene.AddRootSceneObject(SunLight);
-
-            //Geometry map = AssetFactory.Instance.CreateEnvironmentMap();
-            //AddRootSceneObject(map);
 
             //List<RenderObject> sponzas = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/crytek-sponza/sponza.obj");
             //foreach (var sponza in sponzas)
             //{
             //    AddRootSceneObject(sponza);
             //}
-            List<RenderObject> ducks = AssetFactory.Instance.CreateLoad3DModel("C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/duck/duck.obj");
-            foreach(var duck in ducks)
-            {
-                duck.RotateX(-90);
-                duck.RotateY(0);
-                AddRootSceneObject(duck);
-            }
+            //List<RenderObject> ducks = AssetFactory.Instance.CreateLoad3DModel("C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/duck/duck.obj");
+            //foreach(var duck in ducks)
+            //{
+            //    duck.RotateX(-90);
+            //    duck.RotateY(0);
+            //    AddRootSceneObject(duck);
+            //}
 
         }
         #endregion
         #region [dispose]
-        public void Dispose()
+        public override void Dispose()
         {
             RootNode.Dispose();
         }
-        public static void AllDispose()
-        {
-            foreach (var scene in SceneList.Values)
-            {
-                scene.Dispose();
-            }
-        }
         #endregion
-
         #region [process]
         /// <summary>
         /// Picking
@@ -352,11 +239,7 @@ namespace RenderApp
             return true;
 
         }
-
-       
         #endregion
 
-
-        
     }
 }

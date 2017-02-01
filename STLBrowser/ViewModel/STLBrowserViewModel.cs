@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using KI.Foundation.ViewModel;
 using STLBrowser.Model;
+using RenderApp;
 namespace STLBrowser.ViewModel
 {
     public class STLBrowserViewModel : ViewModelBase
@@ -31,9 +32,12 @@ namespace STLBrowser.ViewModel
             STLFiles.Add(new ThumbnailFileViewModel(new STLFile("CCC")));
         }
 
+        private void OnSelectedSTLFile()
+        {
+        }
         public override void UpdateProperty()
         {
-            throw new NotImplementedException();
+            SceneManager.Instance.AddObject(@"C:\Users\ido\Documents\GitHub\renderapp\STLBrowser\TestFolder\StanfordBunny.stl");
         }
     }
 }

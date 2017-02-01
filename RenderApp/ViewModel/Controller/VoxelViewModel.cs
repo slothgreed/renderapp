@@ -33,7 +33,7 @@ namespace RenderApp.ViewModel
         }
         private void ExecuteCommand()
         {
-            if (!AssetFactory.Instance.CreateVoxel(Scene.ActiveScene.SelectAsset, PartitionNum))
+            if (!AssetFactory.Instance.CreateVoxel(SceneManager.Instance.ActiveScene.SelectAsset, PartitionNum))
             {
                 MessageBox.Show("Trianglesのポリゴンモデルのみで作成できます。");
             }

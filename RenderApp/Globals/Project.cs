@@ -48,7 +48,7 @@ namespace RenderApp.Globals
             if (value is Geometry)
             {
                 GeometryRoot.AddChild(value);
-                Scene.ActiveScene.AddRootSceneObject(value);
+                SceneManager.Instance.ActiveScene.AddObject(value);
             }
             if (value is Texture)
             {

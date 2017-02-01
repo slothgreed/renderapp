@@ -32,7 +32,7 @@ namespace RenderApp.AssetModel
             //string SphereMapAlbedo = ProjectInfo.TextureDirectory + @"\SphreMap.jpg";
             //string SphereMapVertexShader = ProjectInfo.ShaderDirectory + @"\sphereMap.vert";
             //string SphereMapFragmentShader = ProjectInfo.ShaderDirectory + @"\sphereMap.frag";
-            //Sphere sphere = new Sphere("SphereMap",Scene.ActiveScene.WorldMax.X * 2, 20, 20, false, Vector3.UnitX);
+            //Sphere sphere = new Sphere("SphereMap",SceneManager.Instance.ActiveScene.WorldMax.X * 2, 20, 20, false, Vector3.UnitX);
             //sphere.geometry.MaterialItem = new Material("SphereMaterial");
             //Texture texture = TextureFactory.Instance.CreateTexture(SphereMapAlbedo);
             //sphere.geometry.MaterialItem.AddTexture(TextureKind.Albedo, texture);
@@ -60,7 +60,7 @@ namespace RenderApp.AssetModel
         {
             if(geometry.MaterialItem != null)
             {
-                Scene.ActiveScene.AddRootSceneObject(geometry);
+                SceneManager.Instance.ActiveScene.AddObject(geometry);
             }
             return geometry;
         }

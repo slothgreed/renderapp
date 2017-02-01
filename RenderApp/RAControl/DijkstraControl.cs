@@ -29,7 +29,7 @@ namespace RenderApp.RA_Control
             if (mouse.Button == System.Windows.Forms.MouseButtons.Left)
             {
 
-                if(Scene.ActiveScene.Picking(LeftMouse.Click,ref geometry,ref vertex_Index))
+                if(SceneManager.Instance.ActiveScene.Picking(LeftMouse.Click,ref geometry,ref vertex_Index))
                 {
                     if(Dijkstra.Geometry == null)
                     {
@@ -53,7 +53,7 @@ namespace RenderApp.RA_Control
                         tri1 += normal * 0.01f;
                         tri2 += normal * 0.01f;
                         tri3 += normal * 0.01f;
-                        var picking = Scene.ActiveScene.FindObject("Picking") as RenderObject;
+                        var picking = SceneManager.Instance.ActiveScene.FindObject("Picking") as RenderObject;
                         if (picking == null)
                         {
                             RenderObject triangle = new RenderObject("Picking");
@@ -99,7 +99,7 @@ namespace RenderApp.RA_Control
         /// <returns></returns>
         public override bool UnBinding()
         {
-            Scene.ActiveScene.DeleteNode("Picking");
+            SceneManager.Instance.ActiveScene.DeleteNode("Picking");
             return true;
         }
         private void SelectObject(KIObject select)

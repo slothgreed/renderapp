@@ -25,5 +25,11 @@ namespace STLBrowser
             InitializeComponent();
 
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var vm = this.DataContext as STLBrowser.ViewModel.MainWindowViewModel;
+            vm.STLBrowserViewModel.UpdateProperty();
+        }
     }
 }

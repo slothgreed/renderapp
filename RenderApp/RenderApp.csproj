@@ -141,6 +141,7 @@
     <Compile Include="Render_System\Post_Effect\Selection.cs" />
     <Compile Include="Render_System\Post_Effect\Sobel.cs" />
     <Compile Include="Render_System\Post_Effect\SSAO.cs" />
+    <Compile Include="Scene\SceneManager.cs" />
     <Compile Include="Tree\RANode.cs" />
     <Compile Include="RAControl\CameraControl.cs" />
     <Compile Include="Utility\ShaderCreater.cs" />

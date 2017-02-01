@@ -8,14 +8,10 @@
         <vm:MainWindowViewModel/>
     </Window.DataContext>
     
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <v:FileTreeView Grid.Column="0" DataContext="{Binding FileTreeViewModel}"/>
+    <DockPanel>
+        <Button Click="Button_Click"/>
+        <v:FileTreeView Grid.Column="0" DataContext="{Binding FileTreeViewModel}" DockPanel.Dock="Left"/>
         <v:STLBrowserView Grid.Column="1" DataContext="{Binding STLBrowserViewModel}"/>
-        <v:ViewportView Grid.Column="2" DataContext="{Binding ViewportViewModel}"/>
-    </Grid>
+        <v:ViewportView Grid.Column="2" DataContext="{Binding ViewportViewModel}" DockPanel.Dock="Right"/>
+    </DockPanel>
 </Window>

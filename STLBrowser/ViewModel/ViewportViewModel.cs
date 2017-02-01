@@ -55,18 +55,22 @@ namespace STLBrowser.ViewModel
 
         public void OnLoadedEvent(object sender, EventArgs e)
         {
-            Scene.Create("MainScene");
-            Scene.ActiveScene.Initialize();
+            SceneManager.Instance.Create("MainScene");
+            SceneManager.Instance.CreateMainCamera();
+            SceneManager.Instance.CreateSceneLight();
         }
         private void OnResizeEvent(object sender, EventArgs e)
         {
-            Scene.ActiveScene.MainCamera.SetProjMatrix((float)DeviceContext.Instance.Width / DeviceContext.Instance.Height);
-            Viewport.Instance.RenderSystem.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
+            if (SceneManager.Instance.ActiveScene != null)
+            {
+                SceneManager.Instance.ActiveScene.MainCamera.SetProjMatrix((float)DeviceContext.Instance.Width / DeviceContext.Instance.Height);
+            }
+            SceneManager.Instance.RenderSystem.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
         }
 
         private void OnRenderEvent(object sender, PaintEventArgs e)
         {
-            Viewport.Instance.RenderSystem.Render();
+            SceneManager.Instance.RenderSystem.Render();
         }
 
         private void OnMouseWheelEvent(object sender, System.Windows.Forms.MouseEventArgs e)

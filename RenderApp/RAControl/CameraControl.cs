@@ -50,11 +50,11 @@ namespace RenderApp.RA_Control
                     break;
                 case System.Windows.Forms.MouseButtons.Middle:
                     MiddleMouse.Move(mouse.X, mouse.Y);
-                    Scene.ActiveScene.MainCamera.Translate(MiddleMouse.Delta.X, MiddleMouse.Delta.Y, 0);
+                    SceneManager.Instance.ActiveScene.MainCamera.Translate(MiddleMouse.Delta.X, MiddleMouse.Delta.Y, 0);
                     break;
                 case System.Windows.Forms.MouseButtons.Right:
                     RightMouse.Move(mouse.X, mouse.Y);
-                    Scene.ActiveScene.MainCamera.Rotate(RightMouse.Delta.X, RightMouse.Delta.Y, 0);
+                    SceneManager.Instance.ActiveScene.MainCamera.Rotate(RightMouse.Delta.X, RightMouse.Delta.Y, 0);
                     break;
             }
             return true;
@@ -80,7 +80,7 @@ namespace RenderApp.RA_Control
             switch (mouse.Button)
             {
                 case MouseButtons.None:
-                    Scene.ActiveScene.MainCamera.Zoom((int)mouse.Delta);
+                    SceneManager.Instance.ActiveScene.MainCamera.Zoom((int)mouse.Delta);
                     break;
             }
             return true;

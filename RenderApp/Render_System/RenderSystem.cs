@@ -120,7 +120,7 @@ namespace RenderApp.Render_System
             GBufferStage.UnBindBuffer();
 
             int id = (int)(pixels[3] * 255);
-            foreach(var geometryNode in Scene.ActiveScene.RootNode.AllChildren())
+            foreach(var geometryNode in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
             {
                 Geometry geometry = null;
                 if(geometryNode.RAObject is Geometry)
@@ -133,7 +133,7 @@ namespace RenderApp.Render_System
                 }
                 if(geometry.ID == id)
                 {
-                    Scene.ActiveScene.SelectAsset = geometry;
+                    SceneManager.Instance.ActiveScene.SelectAsset = geometry;
                     break;
                 }
             }
@@ -149,7 +149,7 @@ namespace RenderApp.Render_System
         {
             GBufferStage.ClearBuffer();
             GBufferStage.BindBuffer();
-            foreach (var asset in Scene.ActiveScene.RootNode.AllChildren())
+            foreach (var asset in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
             {
                 if(asset.RAObject is Geometry)
                 {
@@ -163,11 +163,11 @@ namespace RenderApp.Render_System
             LightingStage.ClearBuffer();
             LightingStage.Render();
 
-            if (Scene.ActiveScene.SelectAsset != null)
+            if (SceneManager.Instance.ActiveScene.SelectAsset != null)
             {
-                if (Scene.ActiveScene.SelectAsset is Geometry)
+                if (SceneManager.Instance.ActiveScene.SelectAsset is Geometry)
                 {
-                    var geometry = Scene.ActiveScene.SelectAsset as Geometry;
+                    var geometry = SceneManager.Instance.ActiveScene.SelectAsset as Geometry;
                     SelectionStage.SetValue("uID", geometry.ID);
                 }
                 else

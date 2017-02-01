@@ -44,18 +44,7 @@ namespace RenderApp.GLUtil
                 return m_Instance;
             }
         }
-        private RenderSystem _renderSystem;
-        public RenderSystem RenderSystem
-        {
-            get
-            {
-                if (_renderSystem == null)
-                {
-                    _renderSystem = new RenderSystem(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
-                }
-                return _renderSystem;
-            }
-        }
+
         #region [member]
         /// <summary>
         /// タイマー変数
@@ -150,6 +139,10 @@ namespace RenderApp.GLUtil
         //glControlのサイズ変更時に実行される。
         private void glControl_Resize(object sender, EventArgs e)
         {
+            if(m_glControl.Size.Width == 0 || m_glControl.Size.Height == 0)
+            {
+                m_glControl.Size = new Size(128, 128);
+            }
             if (m_AppstartUp)
             {
                 DeviceContext.Instance.SizeChanged(m_glControl.Size.Width, m_glControl.Size.Height);
