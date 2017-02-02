@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using OpenTK;
 using KI.Foundation.Utility;
 
-namespace RenderApp.Analyzer
+namespace KI.Gfx.Analyzer
 {
     public class Edge
     {
@@ -76,7 +76,7 @@ namespace RenderApp.Analyzer
                         return _angle = 0.0f;
                     }
 
-                    _angle = Utility.RACalc.Angle((End - Start).Normalized(), (Before.Opposite.Start - Before.Opposite.End).Normalized());
+                    _angle = KICalc.Angle((End - Start).Normalized(), (Before.Opposite.Start - Before.Opposite.End).Normalized());
                 }
                 return _angle;
             }

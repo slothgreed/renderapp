@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
-namespace RenderApp.GLUtil.Buffer
+namespace KI.Gfx.GLUtil.Buffer
 {
     class SamplerBuffer : BufferObject
     {

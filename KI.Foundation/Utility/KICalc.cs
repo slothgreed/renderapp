@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using OpenTK;
-namespace RenderApp.Utility
+namespace KI.Foundation.Utility
 {
-    class RACalc
+    public class KICalc
     {
 
         public const float THRESHOLD05 = 0.00001f;          // 誤差範囲 0.00001
         public static Vector3[] RGB = new Vector3[256];
 
-        static RACalc()
+        static KICalc()
         {
             float scale = 4;
             for(int i = 0; i < 256; i++)
@@ -264,7 +264,7 @@ namespace RenderApp.Utility
                 if (length < min)
                 {
                     //四角形ない
-                    if (RACalc.innerSurface(result, v1, v2, v3, v4))
+                    if (KICalc.innerSurface(result, v1, v2, v3, v4))
                     {
                         min = length;
                         return true;
@@ -301,7 +301,7 @@ namespace RenderApp.Utility
                 if (length < min)
                 {
                     //3角形ない
-                    if (RACalc.innerSurface(result, v1, v2, v3))
+                    if (KICalc.innerSurface(result, v1, v2, v3))
                     {
                         min = length;
                         return true;

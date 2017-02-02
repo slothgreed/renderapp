@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
-using RenderApp.Utility;
-namespace RenderApp.GLUtil.Buffer
+namespace KI.Gfx.GLUtil.Buffer
 {
     public class TextureBuffer : BufferObject
     {

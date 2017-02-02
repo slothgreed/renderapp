@@ -12,6 +12,7 @@ using RenderApp.GLUtil;
 using RenderApp.Globals;
 using RenderApp.Analyzer;
 using KI.Foundation.Core;
+using KI.Foundation.Utility;
 
 namespace RenderApp.RA_Control
 {
@@ -49,7 +50,7 @@ namespace RenderApp.RA_Control
 
                     if (tri1 != Vector3.Zero && tri2 != Vector3.Zero && tri3 != Vector3.Zero)
                     {
-                        Vector3 normal = RACalc.Normal(tri1, tri2, tri3);
+                        Vector3 normal = KICalc.Normal(tri1, tri2, tri3);
                         tri1 += normal * 0.01f;
                         tri2 += normal * 0.01f;
                         tri3 += normal * 0.01f;
@@ -57,17 +58,17 @@ namespace RenderApp.RA_Control
                         if (picking == null)
                         {
                             RenderObject triangle = new RenderObject("Picking");
-                            triangle.CreatePC(new List<Vector3>() { tri1, tri2, tri3 }, RACalc.RandomColor(), OpenTK.Graphics.OpenGL.PrimitiveType.Triangles);
+                            triangle.CreatePC(new List<Vector3>() { tri1, tri2, tri3 }, KICalc.RandomColor(), OpenTK.Graphics.OpenGL.PrimitiveType.Triangles);
                             AssetFactory.Instance.CreateGeometry(triangle);
                         }
                         else if (picking.TriangleNum == 2)
                         {
                             picking.Dispose();
-                            picking.AddVertex(new List<Vector3>() { tri1, tri2, tri3 }, RACalc.RandomColor());
+                            picking.AddVertex(new List<Vector3>() { tri1, tri2, tri3 }, KICalc.RandomColor());
                         }
                         else
                         {
-                            picking.AddVertex(new List<Vector3>() { tri1, tri2, tri3 }, RACalc.RandomColor());
+                            picking.AddVertex(new List<Vector3>() { tri1, tri2, tri3 }, KICalc.RandomColor());
                             Dijkstra.Execute();
 
                         }

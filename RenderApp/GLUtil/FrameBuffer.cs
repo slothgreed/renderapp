@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.Utility;
-using RenderApp.GLUtil.Buffer;
+using KI.Gfx.GLUtil;
+using KI.Gfx.GLUtil.Buffer;
 using KI.Foundation.Utility;
-
+using RenderApp.GLUtil;
 namespace RenderApp.GLUtil
 {
     public class FrameBuffer : BufferObject

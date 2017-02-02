@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
-namespace RenderApp.Analyzer
+namespace KI.Gfx.Analyzer
 {
     public class Octree : IAnalyzer
     {

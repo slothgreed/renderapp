@@ -9,8 +9,9 @@ using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using KI.Foundation.Utility;
 using RenderApp.Analyzer;
-using RenderApp.GLUtil.Buffer;
+using KI.Gfx.GLUtil.Buffer;
 using KI.Foundation.Core;
+using KI.Gfx.Analyzer;
 
 namespace RenderApp.AssetModel
 {
@@ -332,7 +333,7 @@ namespace RenderApp.AssetModel
             if (Ex.Length != 0)
             {
                 Ex.Normalize();
-                float angle = Utility.RACalc.Angle(vector1, vector2, Ex);
+                float angle = KICalc.Angle(vector1, vector2, Ex);
                 Matrix4 mat = Matrix4.CreateFromAxisAngle(Ex, angle);
                 return SetModelViewRotateXYZ(mat, init);
             }

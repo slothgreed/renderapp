@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RenderApp.Analyzer
+namespace RenderApp
 {
-    public interface IAnalyzer
+    class AppSystem
     {
+
     }
 }

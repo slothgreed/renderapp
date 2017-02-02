@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RenderApp.AssetModel;
 using RenderApp.GLUtil;
+using KI.Gfx.GLUtil;
 namespace RenderApp.Utility
 {
     public class ShaderCreater

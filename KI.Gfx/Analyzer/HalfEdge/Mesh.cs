@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
-using RenderApp.Utility;
-namespace RenderApp.Analyzer
+using KI.Foundation.Utility;
+namespace KI.Gfx.Analyzer
 {
     public class Mesh
     {
@@ -22,7 +22,7 @@ namespace RenderApp.Analyzer
         {
             get
             {
-                return RACalc.Normal(
+                return KICalc.Normal(
                     m_Edge[1].Start.GetPosition() - m_Edge[0].Start.GetPosition(),
                     m_Edge[2].Start.GetPosition() - m_Edge[0].Start.GetPosition()
                     );

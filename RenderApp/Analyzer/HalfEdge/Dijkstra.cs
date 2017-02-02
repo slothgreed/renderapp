@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RenderApp.AssetModel;
+using KI.Gfx.Analyzer;
+
 namespace RenderApp.Analyzer
 {
     public struct Node

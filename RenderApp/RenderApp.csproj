@@ -121,14 +121,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Analyzer\HalfEdge\Dijkstra.cs" />
+    <Compile Include="AppSystem.cs" />
     <Compile Include="AssetModel\AssetFactory.cs" />
     <Compile Include="AssetModel\Geometry\IRenderObjectConverter.cs" />
-    <Compile Include="GLUtil\Buffer\ArrayBuffer.cs" />
-    <Compile Include="GLUtil\Buffer\BufferObject.cs" />
     <Compile Include="GLUtil\DeviceContext.cs" />
-    <Compile Include="GLUtil\Buffer\RenderBuffer.cs" />
-    <Compile Include="GLUtil\Buffer\SamplerBuffer.cs" />
-    <Compile Include="GLUtil\Buffer\TextureBuffer.cs" />
     <Compile Include="RACommand\ICommand.cs" />
     <Compile Include="Render_System\Post_Effect\Bloom.cs" />
     <Compile Include="Render_System\Post_Effect\DOF.cs" />
@@ -220,11 +216,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MainWindowViewModelT4.tt</DependentUpon>
     </Compile>
-    <Compile Include="Analyzer\Tree\BDB.cs" />
-    <Compile Include="Analyzer\IAnalyzer.cs" />
     <Compile Include="Scene\Material\Material.cs" />
-    <Compile Include="Analyzer\Tree\Kdtree.cs" />
-    <Compile Include="Analyzer\Tree\Octree.cs" />
     <Compile Include="Scene\Scene.cs" />
     <Compile Include="Globals\ProjectInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -265,13 +257,9 @@
     <Compile Include="Scene\Shader\MRT\General\ConstantShader.cs" />
     <Compile Include="Scene\Shader\Diffuse\CDiffuse.cs" />
     <Compile Include="Scene\Shader\DisplaceMent\DisplaceMentMap.cs" />
-    <Compile Include="Analyzer\HalfEdge\Edge.cs" />
     <Compile Include="Analyzer\HalfEdge\HalfEdge.cs" />
-    <Compile Include="Analyzer\HalfEdge\Mesh.cs" />
     <Compile Include="Scene\Shader\ColorRender\CColorShader.cs" />
     <Compile Include="AssetModel\Geometry\Primitive\Sphere.cs" />
-    <Compile Include="Analyzer\Parameter.cs" />
-    <Compile Include="Analyzer\HalfEdge\Vertex.cs" />
     <Compile Include="AssetModel\Geometry\Primitive\Axis.cs" />
     <Compile Include="AssetModel\Camera.cs" />
     <Compile Include="AssetModel\Geometry\Primitive\Cube.cs" />
@@ -299,12 +287,10 @@
     </Compile>
     <Compile Include="Scene\Shader\OffScreen\Defferd\CDeffed.cs" />
     <Compile Include="Scene\Shader\OffScreen\Shadow\CShadowMap.cs" />
-    <Compile Include="Utility\RACalc.cs" />
     <Compile Include="AssetModel\Geometry\File\OBJConverter.cs" />
     <Compile Include="AssetModel\Geometry\File\STLConverter.cs" />
     <Compile Include="Utility\TrueTypeFont.cs" />
     <Compile Include="Utility\Util.cs" />
-    <Compile Include="Analyzer\Tree\Voxel.cs" />
     <Compile Include="GLUtil\Viewport.cs" />
     <Compile Include="View\ViewportView.xaml.cs">
       <DependentUpon>ViewportView.xaml</DependentUpon>

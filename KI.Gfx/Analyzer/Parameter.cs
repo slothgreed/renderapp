@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using KI.Foundation.Utility;
 
-namespace RenderApp.Analyzer
+namespace KI.Gfx.Analyzer
 {
     public class Parameter
     {
@@ -33,7 +33,6 @@ namespace RenderApp.Analyzer
         public void SetValue(List<float> value)
         {
             m_value = value;
-            m_value.Sort();
         }
         /// <summary>
         /// パラメータを加える

@@ -8,9 +8,11 @@ using OpenTK.Graphics.OpenGL;
 using System.Drawing.Imaging;
 using RenderApp.AssetModel;
 using KI.Foundation.Utility;
-using RenderApp.GLUtil.Buffer;
+using KI.Gfx.GLUtil.Buffer;
 using KI.Foundation.Core;
 using KI.Gfx.KIImage;
+using RenderApp.GLUtil;
+
 namespace RenderApp.GLUtil
 {
 

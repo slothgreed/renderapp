@@ -12,6 +12,7 @@ using RenderApp.Globals;
 using RenderApp.AssetModel.RA_Geometry;
 using KI.Foundation.Core;
 using KI.Gfx.KIAsset;
+using KI.Foundation.Utility;
 
 namespace RenderApp.AssetModel
 {
@@ -101,7 +102,7 @@ namespace RenderApp.AssetModel
 
             }
             RenderObject wireframe = new RenderObject("WireFrame :" + geometry.Name);
-            wireframe.CreatePC(position, RACalc.RandomColor(), PrimitiveType.Lines);
+            wireframe.CreatePC(position, KICalc.RandomColor(), PrimitiveType.Lines);
             CreateGeometry(wireframe);
 
             return true;
@@ -128,9 +129,9 @@ namespace RenderApp.AssetModel
                 return false;
             }
             Geometry geometry = asset as Geometry;
-            Analyzer.Voxel voxel = new Analyzer.Voxel(geometry.Position, geometry.Index, geometry.ModelMatrix, partition);
+            KI.Gfx.Analyzer.Voxel voxel = new KI.Gfx.Analyzer.Voxel(geometry.Position, geometry.Index, geometry.ModelMatrix, partition);
             RenderObject wireframe = new RenderObject("Voxel :" + geometry.Name);
-            wireframe.CreatePNC(voxel.vPosition, voxel.vNormal, RACalc.RandomColor(), PrimitiveType.Quads);
+            wireframe.CreatePNC(voxel.vPosition, voxel.vNormal, KICalc.RandomColor(), PrimitiveType.Quads);
             CreateGeometry(wireframe);
 
             return true;

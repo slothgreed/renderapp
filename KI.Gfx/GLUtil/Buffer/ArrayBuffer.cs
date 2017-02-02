@@ -3,22 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RenderApp.Utility;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-namespace RenderApp.GLUtil.Buffer
+namespace KI.Gfx.GLUtil.Buffer
 {
-    public enum EArrayType
-    {
-        None,
-        IntArray,
-        FloatArray,
-        DoubleArra,
-        Vec2Array,
-        Vec3Array,
-        Vec4Array,
-    }
-   
+
     public class ArrayBuffer : BufferObject
     {
 

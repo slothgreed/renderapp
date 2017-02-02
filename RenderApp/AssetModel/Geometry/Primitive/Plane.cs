@@ -6,7 +6,7 @@ using System.Text;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
-using RenderApp.Utility;
+using KI.Foundation.Utility;
 namespace RenderApp.AssetModel.RA_Geometry
 {
     public class Plane : IRenderObjectConverter
@@ -43,7 +43,7 @@ namespace RenderApp.AssetModel.RA_Geometry
         {
             List<Vector3> Normal = new List<Vector3>();
             List<Vector2> TexCoord = new List<Vector2>();
-            surface = RACalc.GetPlaneFormula(Position[0], Position[1], Position[2]);
+            surface = KICalc.GetPlaneFormula(Position[0], Position[1], Position[2]);
 
             Normal.Add(new Vector3(surface));
             Normal.Add(Normal[0]);
@@ -81,7 +81,7 @@ namespace RenderApp.AssetModel.RA_Geometry
             Vector3 line = far - near;
             Vector3 result = new Vector3();
             
-            result = RACalc.crossPlanetoLine(near, far, surface);
+            result = KICalc.crossPlanetoLine(near, far, surface);
 
             return result;
         }

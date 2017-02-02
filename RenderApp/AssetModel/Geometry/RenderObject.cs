@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using RenderApp.GLUtil.Buffer;
+using KI.Gfx.GLUtil;
+using KI.Gfx.GLUtil.Buffer;
 namespace RenderApp.AssetModel
 {
     /// <summary>

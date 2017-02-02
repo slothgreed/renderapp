@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
-using RenderApp.Utility;
-namespace RenderApp.Analyzer
+using KI.Foundation.Utility;
+namespace KI.Gfx.Analyzer
 {
     public class BDB : IAnalyzer
     {
@@ -176,7 +176,7 @@ namespace RenderApp.Analyzer
         /// </summary>
         private static Vector3 GetTriNormal(Vector3 v0, Vector3 v1, Vector3 v2)
         {
-            return RACalc.Normal(v1 - v0, v2 - v0);
+            return KICalc.Normal(v1 - v0, v2 - v0);
         }
         /// <summary>
         /// BDBの三角形群を取得

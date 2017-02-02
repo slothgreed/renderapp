@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using RenderApp.GLUtil;
 using OpenTK;
-using RenderApp.Utility;
+using KI.Foundation.Utility;
 using RenderApp.AssetModel;
+using RenderApp.Utility;
 namespace RenderApp.RA_Control
 {
     class SelectObjectControl : IControl
@@ -39,11 +40,11 @@ namespace RenderApp.RA_Control
             {
                 for (int i = 0; i < geometry.Position.Count / 3; i++)
                 {
-                    Vector3 vertex1 = RACalc.Multiply(geometry.ModelMatrix, geometry.Position[3 * i]);
-                    Vector3 vertex2 = RACalc.Multiply(geometry.ModelMatrix, geometry.Position[3 * i + 1]);
-                    Vector3 vertex3 = RACalc.Multiply(geometry.ModelMatrix, geometry.Position[3 * i + 2]);
+                    Vector3 vertex1 = KICalc.Multiply(geometry.ModelMatrix, geometry.Position[3 * i]);
+                    Vector3 vertex2 = KICalc.Multiply(geometry.ModelMatrix, geometry.Position[3 * i + 1]);
+                    Vector3 vertex3 = KICalc.Multiply(geometry.ModelMatrix, geometry.Position[3 * i + 2]);
                     Vector3 result = Vector3.Zero;
-                    if (RACalc.CrossPlanetoLinePos(vertex1, vertex2, vertex3, near, far, ref minLength, out result))
+                    if (KICalc.CrossPlanetoLinePos(vertex1, vertex2, vertex3, near, far, ref minLength, out result))
                     {
                         selectIndex = 3 * i;
                         select = true;
@@ -70,7 +71,7 @@ namespace RenderApp.RA_Control
             viewport[3] = DeviceContext.Instance.Height;
 
             Scene activeScene = SceneManager.Instance.ActiveScene;
-            RACalc.GetClipPos(
+            KICalc.GetClipPos(
                 activeScene.MainCamera.Matrix, 
                 activeScene.MainCamera.ProjMatrix,
                 viewport, mouse, out near, out far);

@@ -5,8 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using KI.Foundation.Utility;
 
-namespace RenderApp.GLUtil
+namespace KI.Gfx.GLUtil
 {
+    public enum EArrayType
+    {
+        None,
+        IntArray,
+        FloatArray,
+        DoubleArra,
+        Vec2Array,
+        Vec3Array,
+        Vec4Array,
+    }
+   
     public abstract class BufferObject
     {
         public bool NowBind;

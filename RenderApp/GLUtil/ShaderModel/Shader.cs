@@ -8,6 +8,7 @@ using OpenTK.Graphics.OpenGL;
 using KI.Foundation.Utility;
 using RenderApp.GLUtil;
 using RenderApp.AssetModel;
+using KI.Gfx.GLUtil;
 namespace RenderApp.GLUtil.ShaderModel
 {
     public class Shader
@@ -340,7 +341,7 @@ namespace RenderApp.GLUtil.ShaderModel
             if (attribute.Name == "normal" && geometry.NormalBuffer != null)
             {
                 GL.EnableVertexAttribArray(attribute.ShaderID);
-                geometry.NormalBuffer.SetData(geometry.Normal, Buffer.EArrayType.Vec3Array);
+                geometry.NormalBuffer.SetData(geometry.Normal, EArrayType.Vec3Array);
                 geometry.NormalBuffer.BindBuffer();
                 GL.VertexAttribPointer(attribute.ShaderID, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
                 geometry.NormalBuffer.UnBindBuffer();
@@ -348,7 +349,7 @@ namespace RenderApp.GLUtil.ShaderModel
             if (attribute.Name == "color" && geometry.ColorBuffer != null)
             {
                 GL.EnableVertexAttribArray(attribute.ShaderID);
-                geometry.NormalBuffer.SetData(geometry.Color, Buffer.EArrayType.Vec3Array);
+                geometry.NormalBuffer.SetData(geometry.Color, EArrayType.Vec3Array);
                 geometry.NormalBuffer.BindBuffer();
                 GL.VertexAttribPointer(attribute.ShaderID, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
                 geometry.NormalBuffer.UnBindBuffer();
@@ -356,7 +357,7 @@ namespace RenderApp.GLUtil.ShaderModel
             if (attribute.Name == "texcoord" && geometry.TexCoordBuffer != null)
             {
                 GL.EnableVertexAttribArray(attribute.ShaderID);
-                geometry.TexCoordBuffer.SetData(geometry.TexCoord, Buffer.EArrayType.Vec2Array);
+                geometry.TexCoordBuffer.SetData(geometry.TexCoord, EArrayType.Vec2Array);
                 geometry.TexCoordBuffer.BindBuffer();
                 GL.VertexAttribPointer(attribute.ShaderID, 2, VertexAttribPointerType.Float, false, Vector2.SizeInBytes, 0);
                 geometry.TexCoordBuffer.UnBindBuffer();
@@ -906,7 +907,7 @@ namespace RenderApp.GLUtil.ShaderModel
             GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
             if (status == 0)
             {
-                throw new Exception(GL.GetProgramInfoLog(program));
+                Logger.GLLog(Logger.LogLevel.Error, GL.GetProgramInfoLog(program));
             }
             Logger.GLLog(Logger.LogLevel.Error);
             return program;
@@ -943,7 +944,7 @@ namespace RenderApp.GLUtil.ShaderModel
             GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
             if (status == 0)
             {
-                throw new Exception(GL.GetProgramInfoLog(program));
+                Logger.GLLog(Logger.LogLevel.Error, GL.GetProgramInfoLog(program));
             }
             Logger.GLLog(Logger.LogLevel.Error);
             return program;
