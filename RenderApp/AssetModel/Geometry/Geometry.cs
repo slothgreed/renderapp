@@ -212,10 +212,6 @@ namespace RenderApp.AssetModel
         #endregion
 
         #region [modelmatrix]
-        //基本的に各関数では、変換処理ができない場合形状位置を変えないようにしています。
-        //段階を踏んで変換を行いたい場合は、各変換行列を生成し、掛け合わせた値を
-        //Transformation()関数で変換しましょう
-        //なお、Transformation関数でも、変換できない場合は、変換しません。
         #region [translate]
         /// <summary>
         ///　モデルビューに平行移動を適用
