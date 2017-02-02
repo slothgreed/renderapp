@@ -158,7 +158,7 @@
     <Compile Include="Render_System\RenderSystem.cs" />
     <Compile Include="RAControl\DijkstraControl.cs" />
     <Compile Include="RAControl\IControl.cs" />
-    <Compile Include="RAControl\DefaultControl.cs" />
+    <Compile Include="RAControl\SelectObjectControl.cs" />
     <Compile Include="RAControl\ControlManager.cs" />
     <Compile Include="Utility\ActiveItems.cs" />
     <Compile Include="Utility\NotifyNodeChangedEventArgs.cs">

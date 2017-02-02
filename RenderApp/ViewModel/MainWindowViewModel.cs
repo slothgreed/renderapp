@@ -355,7 +355,7 @@ namespace RenderApp.ViewModel
             switch(menuParam)
             {
                 case RAController.Default:
-                    ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.Default;
+                    ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.SelectObject;
                     break;
                 case RAController.Dijkstra:
                     ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.Dijkstra;

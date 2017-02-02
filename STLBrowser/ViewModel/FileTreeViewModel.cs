@@ -29,20 +29,36 @@ namespace STLBrowser.ViewModel
             get;
             set;
         }
-
-        private ICommand _SelectedFolderChanged;
-        public ICommand SelectedFolderChangedCommand
+        private ICommand _OpenFolder;
+        public ICommand OpenFolder
         {
             get
             {
-                if(_SelectedFolderChanged == null)
+                if(_OpenFolder == null)
                 {
-                    _SelectedFolderChanged = CreateCommand(OnSelectedFolderChanged);
+                    _OpenFolder = CreateCommand(OnOpenFolderCommand);
                 }
-                return _SelectedFolderChanged;
+                return _OpenFolder;
             }
         }
-        private void OnSelectedFolderChanged()
+        private void OnOpenFolderCommand()
+        {
+
+            return;
+        }
+        private ICommand _SelectedItemChanged;
+        public ICommand SelectedItemChanged
+        {
+            get
+            {
+                if(_SelectedItemChanged == null)
+                {
+                    _SelectedItemChanged = CreateCommand(OnSelectedFolderChanged);
+                }
+                return _SelectedItemChanged;
+            }
+        }
+        private void OnSelectedFolderChanged(object sender)
         {
 
         }

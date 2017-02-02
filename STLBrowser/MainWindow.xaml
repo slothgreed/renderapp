@@ -9,7 +9,6 @@
     </Window.DataContext>
     
     <DockPanel>
-        <Button Click="Button_Click"/>
         <v:FileTreeView Grid.Column="0" DataContext="{Binding FileTreeViewModel}" DockPanel.Dock="Left"/>
         <v:STLBrowserView Grid.Column="1" DataContext="{Binding STLBrowserViewModel}"/>
         <v:ViewportView Grid.Column="2" DataContext="{Binding ViewportViewModel}" DockPanel.Dock="Right"/>

@@ -2,9 +2,16 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:STLBrowser.ViewModel">
-    <Grid>
-        <TextBlock Text="{Binding FolderPath}"/>
-        <ScrollViewer>
+    <Grid Background="LightGray">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <WrapPanel Margin="2">
+            <TextBlock Text="{Binding FolderPath}" Grid.Row="0" Margin="2" ToolTip="{Binding FolderPath}"/>
+            <Button Content="参照"/>
+        </WrapPanel>
+        <ScrollViewer Grid.Row="1">
             <TreeView ItemsSource="{Binding Root.Directorys}">
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate ItemsSource="{Binding Directorys}">

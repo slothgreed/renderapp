@@ -28,8 +28,8 @@ namespace RenderApp.RA_Control
             Geometry geometry = null;
             if (mouse.Button == System.Windows.Forms.MouseButtons.Left)
             {
-
-                if(SceneManager.Instance.ActiveScene.Picking(LeftMouse.Click,ref geometry,ref vertex_Index))
+                var SelectObjectController = ControlManager.Instance.Controllers[ControlManager.CONTROL_MODE.SelectObject] as SelectObjectControl;
+                if (SelectObjectController.Picking(LeftMouse.Click, ref geometry, ref vertex_Index))
                 {
                     if(Dijkstra.Geometry == null)
                     {

@@ -8,12 +8,12 @@ namespace RenderApp.RA_Control
 {
     public class ControlManager : IControl
     {
-        private Dictionary<CONTROL_MODE,IControl> Controllers = new Dictionary<CONTROL_MODE, IControl>();
+        public Dictionary<CONTROL_MODE,IControl> Controllers = new Dictionary<CONTROL_MODE, IControl>();
 
         private IControl CameraController = new CameraControl();
         public enum CONTROL_MODE
         {
-            Default,
+            SelectObject,
             Dijkstra
         }
         public enum MOUSE_STATE
@@ -25,7 +25,7 @@ namespace RenderApp.RA_Control
             WHEEL,
         }
 
-        CONTROL_MODE _mode = CONTROL_MODE.Default;
+        CONTROL_MODE _mode = CONTROL_MODE.SelectObject;
         public CONTROL_MODE Mode
         {
             get
@@ -50,7 +50,7 @@ namespace RenderApp.RA_Control
         }
         private ControlManager()
         {
-            Controllers.Add(CONTROL_MODE.Default,new DefaultControl());
+            Controllers.Add(CONTROL_MODE.SelectObject,new SelectObjectControl());
             Controllers.Add(CONTROL_MODE.Dijkstra,new DijkstraControl());
             CameraController = new CameraControl();
         }
