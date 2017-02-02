@@ -138,7 +138,6 @@
     <Compile Include="Render_System\Post_Effect\Sobel.cs" />
     <Compile Include="Render_System\Post_Effect\SSAO.cs" />
     <Compile Include="Scene\SceneManager.cs" />
-    <Compile Include="Tree\RANode.cs" />
     <Compile Include="RAControl\CameraControl.cs" />
     <Compile Include="Utility\ShaderCreater.cs" />
     <Compile Include="ViewModel\Converter\EnumConverter.cs" />
@@ -157,11 +156,6 @@
     <Compile Include="RAControl\SelectObjectControl.cs" />
     <Compile Include="RAControl\ControlManager.cs" />
     <Compile Include="Utility\ActiveItems.cs" />
-    <Compile Include="Utility\NotifyNodeChangedEventArgs.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>NotifyNodeChangedEventArgs.tt</DependentUpon>
-    </Compile>
     <Compile Include="ViewModel\Controller\ControllerViewModelT4.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -465,10 +459,6 @@
     <Content Include="Render_System\Post_Effect\PostEffectT4.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PostEffectT4.cs</LastGenOutput>
-    </Content>
-    <Content Include="Utility\NotifyNodeChangedEventArgs.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>NotifyNodeChangedEventArgs.cs</LastGenOutput>
     </Content>
     <Content Include="ViewModel\Controller\ControllerViewModelT4.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

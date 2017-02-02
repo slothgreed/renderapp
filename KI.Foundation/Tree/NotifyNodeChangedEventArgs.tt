@@ -16,9 +16,9 @@
 	string[,] _eventArgsValue = new string[,]
 	{
 		{"NotifyNodeChangedAction","NodeAction"},
-		{"Node","NewItems"},
+		{"KINode","NewItems"},
 		{"int","NewIndex"},
-		{"Node","OldItems"},
+		{"KINode","OldItems"},
 		{"int","OldIndex"}
 	};
 
@@ -37,7 +37,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-namespace RenderApp.Utility
+namespace KI.Foundation.Tree
 {
 	public enum <#=_action#>
 	{

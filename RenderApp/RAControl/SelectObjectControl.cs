@@ -8,6 +8,8 @@ using OpenTK;
 using KI.Foundation.Utility;
 using RenderApp.AssetModel;
 using RenderApp.Utility;
+using KI.Foundation.Tree;
+
 namespace RenderApp.RA_Control
 {
     class SelectObjectControl : IControl
@@ -77,12 +79,12 @@ namespace RenderApp.RA_Control
                 viewport, mouse, out near, out far);
 
             Geometry geometry;
-            foreach (RANode geometryNode in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
+            foreach (KINode geometryNode in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
             {
                 geometry = null;
-                if (geometryNode.RAObject is Geometry)
+                if (geometryNode._KIObject is Geometry)
                 {
-                    geometry = geometryNode.RAObject as Geometry;
+                    geometry = geometryNode._KIObject as Geometry;
                 }
                 else
                 {

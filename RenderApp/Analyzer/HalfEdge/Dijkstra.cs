@@ -82,18 +82,19 @@ namespace RenderApp.Analyzer
         }
         public bool Execute()
         {
-            var analyze = Geometry.FindAnalyze(HalfEdge.ToString());
-            if (analyze != null)
-            {
-                _halfEdge = analyze as HalfEdge;
-            }
-            else
-            {
-                HalfEdge half = new HalfEdge(Geometry);
-                Geometry.AddAnalayzer(half);
-                _halfEdge = half;
-            }
-            return DistanceDijkstra(StartIndex, EndIndex);
+            //var analyze = Geometry.FindAnalyze(HalfEdge.ToString());
+            //if (analyze != null)
+            //{
+            //    _halfEdge = analyze as HalfEdge;
+            //}
+            //else
+            //{
+            //    HalfEdge half = new HalfEdge(Geometry);
+            //    Geometry.AddAnalayzer(half);
+            //    _halfEdge = half;
+            //}
+            //return DistanceDijkstra(StartIndex, EndIndex);
+            return true;
         }
 
         private void CalcDijkstra(Node[] nodes,int start,int end)

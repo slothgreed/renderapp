@@ -17,6 +17,7 @@ using RenderApp.Globals;
 using RenderApp.Render_System;
 using RenderApp.AssetModel.RA_Geometry;
 using KI.Foundation.ViewModel;
+using KI.Foundation.Tree;
 
 namespace RenderApp.ViewModel
 {
@@ -418,25 +419,25 @@ namespace RenderApp.ViewModel
         #endregion
 
         #region [Update Method]
-        public void UpdateSelectNode(RANode node)
+        public void UpdateSelectNode(KINode node)
         {
-            if(node.RAObject == null)
+            if(node._KIObject == null)
             {
                 return;
             }
             TabItemViewModel vm = null;
-            if(node.RAObject is Geometry)
+            if(node._KIObject is Geometry)
             {
-                vm = new GeometryViewModel((Geometry)node.RAObject);
-                SceneManager.Instance.ActiveScene.SelectAsset = (Geometry)node.RAObject;
+                vm = new GeometryViewModel((Geometry)node._KIObject);
+                SceneManager.Instance.ActiveScene.SelectAsset = (Geometry)node._KIObject;
             }
-            else if(node.RAObject is Material)
+            else if(node._KIObject is Material)
             {
-                vm = new MaterialViewModel((Material)node.RAObject);
+                vm = new MaterialViewModel((Material)node._KIObject);
             }
-            else if (node.RAObject is ShaderProgram)
+            else if (node._KIObject is ShaderProgram)
             {
-                vm = new ShaderProgramViewModel((ShaderProgram)node.RAObject);
+                vm = new ShaderProgramViewModel((ShaderProgram)node._KIObject);
             }
             ReplaceTabWindow(vm);
         }

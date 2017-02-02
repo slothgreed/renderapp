@@ -11,6 +11,8 @@ using RenderApp.GLUtil.ShaderModel;
 using RenderApp.Utility;
 using KI.Foundation.Core;
 using KI.Gfx.KIAsset;
+using KI.Foundation.Tree;
+
 namespace RenderApp
 {
     public class Scene : KIObject
@@ -34,7 +36,7 @@ namespace RenderApp
         /// <summary>
         /// ルートノード
         /// </summary>
-        public RANode RootNode;
+        public KINode RootNode;
         /// <summary>
         /// 選択中のアセット
         /// </summary>
@@ -90,7 +92,7 @@ namespace RenderApp
         /// <returns></returns>
         public KIObject FindObject(string key)
         {
-            RANode obj;
+            KINode obj;
             obj = RootNode.FindChild(key);
             if(obj == null)
             {
@@ -98,11 +100,11 @@ namespace RenderApp
             }
             else
             {
-                return obj.RAObject;
+                return obj._KIObject;
             }
         }
 
-        public void AddObject(KIObject value, RANode parent = null)
+        public void AddObject(KIObject value, KINode parent = null)
         {
             if (parent == null)
             {
@@ -141,7 +143,7 @@ namespace RenderApp
         /// </summary>
         public void Initialize()
         {
-            RootNode = new RANode("ROOT");
+            RootNode = new KINode("ROOT");
 
             //List<RenderObject> sponzas = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/crytek-sponza/sponza.obj");
             //foreach (var sponza in sponzas)

@@ -8,34 +8,35 @@ using RenderApp.AssetModel;
 using RenderApp.Utility;
 using RenderApp.GLUtil.ShaderModel;
 using KI.Foundation.Core;
+using KI.Foundation.Tree;
 
 namespace RenderApp.Globals
 {
     public class Project
     {
-        public RANode RootNode;
-        private RANode GeometryRoot;
+        public KINode RootNode;
+        private KINode GeometryRoot;
         /// <summary>
         /// Textureオブジェクト
         /// </summary>
-        private RANode TextureRoot;
+        private KINode TextureRoot;
         /// <summary>
         /// マテリアルオブジェクト
         /// </summary>
-        private RANode MaterialRoot;
+        private KINode MaterialRoot;
         /// <summary>
         /// シェーダオブジェクト
         /// </summary>
-        private RANode ShaderProgramRoot;
+        private KINode ShaderProgramRoot;
         public static Project ActiveProject = new Project();
 
         private Project()
         {
-            RootNode = new RANode("ROOT");
-            GeometryRoot = new RANode("Geometry");
-            TextureRoot = new RANode("Texture");
-            MaterialRoot = new RANode("Material");
-            ShaderProgramRoot = new RANode("ShaderProgram");
+            RootNode = new KINode("ROOT");
+            GeometryRoot = new KINode("Geometry");
+            TextureRoot = new KINode("Texture");
+            MaterialRoot = new KINode("Material");
+            ShaderProgramRoot = new KINode("ShaderProgram");
             RootNode.AddChild(GeometryRoot);
             RootNode.AddChild(TextureRoot);
             RootNode.AddChild(MaterialRoot);

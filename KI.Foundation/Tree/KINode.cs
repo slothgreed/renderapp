@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RenderApp;
 using KI.Foundation.Core;
 
-namespace RenderApp.Utility
+namespace KI.Foundation.Tree
 {
 
-    public class RANode 
+    public class KINode 
     {
         public delegate void InsertNodeEventHandler(object sender, NotifyNodeChangedEventArgs e);
         public InsertNodeEventHandler InsertNodeEvent;
@@ -17,12 +16,7 @@ namespace RenderApp.Utility
         public delegate void RemoveNodeEventHandler(object sender, NotifyNodeChangedEventArgs e);
         public RemoveNodeEventHandler RemoveNodeEvent;
 
-        public bool IsVisible
-        {
-            get;
-            set;
-        }
-        public List<RANode> Children
+        public List<KINode> Children
         {
             get;
             private set;
@@ -32,28 +26,28 @@ namespace RenderApp.Utility
         {
             get
             {
-                if (RAObject == null)
+                if (_KIObject == null)
                 {
                     return emptyName;
                 }
-                return RAObject.Name;
+                return _KIObject.Name;
             }
         }
-        public KIObject RAObject;
-        private RANode Parent;
+        public KIObject _KIObject;
+        private KINode Parent;
 
-        public RANode(KIObject _MyObject)
+        public KINode(KIObject _kiobject)
         {
-            RAObject = _MyObject;
-            Children = new List<RANode>();
+            _KIObject = _kiobject;
+            Children = new List<KINode>();
         }
-        public RANode(string name)
+        public KINode(string name)
         {
             emptyName = name;
-            Children = new List<RANode>();
+            Children = new List<KINode>();
         }
         #region [add child]
-        internal void AddChild(RANode node)
+        public void AddChild(KINode node)
         {
             if (FindChild(node.Name) == null)
             {
@@ -73,7 +67,7 @@ namespace RenderApp.Utility
             }
             if (FindChild(child.Name) == null)
             {
-                RANode node = new RANode(child);
+                KINode node = new KINode(child);
                 node.Parent = this;
                 Children.Add(node);
                 if (InsertNodeEvent != null)
@@ -86,7 +80,7 @@ namespace RenderApp.Utility
         {
             if (FindChild(name) == null)
             {
-                RANode node = new RANode(name);
+                KINode node = new KINode(name);
                 node.Parent = this;
                 Children.Add(node);
                 if (InsertNodeEvent != null)
@@ -105,7 +99,7 @@ namespace RenderApp.Utility
             }
             if (FindChild(name) == null)
             {
-                var node = new RANode(name);
+                var node = new KINode(name);
                 Children.Insert(index, node);
                 if(InsertNodeEvent != null)
                 {
@@ -122,7 +116,7 @@ namespace RenderApp.Utility
             }
             if (FindChild(child.Name) == null)
             {
-                var node = new RANode(child.Name);
+                var node = new KINode(child.Name);
                 Children.Insert(index, node);
                 if (InsertNodeEvent != null)
                 {
@@ -133,7 +127,7 @@ namespace RenderApp.Utility
         }
         #endregion
         #region [remove method]
-        public void RemoveChild(RANode child)
+        public void RemoveChild(KINode child)
         {
             if(Children.Contains(child))
             {
@@ -186,11 +180,11 @@ namespace RenderApp.Utility
             }
             return false;
         }
-        public RANode FindChild(string key)
+        public KINode FindChild(string key)
         {
            return Children.Where(p => p.Name == key).FirstOrDefault();
         }
-        public RANode FindRecursiveChild(string key)
+        public KINode FindRecursiveChild(string key)
         {
             foreach(var child in Children)
             {
@@ -210,45 +204,47 @@ namespace RenderApp.Utility
         #endregion
         public override string ToString()
         {
-            if (RAObject != null)
-                return RAObject.Name;
+            if (_KIObject != null)
+                return _KIObject.Name;
             return emptyName;
         }
 
-        internal void Dispose()
+        public void Dispose()
         {
-            RAObject.Dispose();
+            _KIObject.Dispose();
             foreach(var child in Children)
             {
                 child.Dispose();
             }
         }
-
-        internal IEnumerable<RANode> AllChildren()
+        #region [getter]
+        public IEnumerable<KINode> AllChildren()
         {
-            foreach(var child in Children)
+            foreach (var child in Children)
             {
                 yield return child;
 
-                foreach(var grand in child.Children )
+                foreach (var grand in child.Children)
                 {
                     yield return grand;
                 }
             }
         }
 
-        internal IEnumerable<KIObject> AllChildrenObject()
+        public IEnumerable<KIObject> AllChildrenObject()
         {
             foreach (var child in Children)
             {
-                yield return child.RAObject;
+                yield return child._KIObject;
 
                 foreach (var grand in child.Children)
                 {
-                    yield return grand.RAObject;
+                    yield return grand._KIObject;
                 }
             }
-        }
+        }       
+        #endregion
+
 
     }
 }

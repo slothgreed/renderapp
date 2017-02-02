@@ -12,6 +12,8 @@ using System.Diagnostics;
 using System.IO;
 using RenderApp.Utility;
 using KI.Foundation.Core;
+using KI.Foundation.Tree;
+
 namespace RenderApp.ViewModel
 {
    
@@ -36,19 +38,19 @@ namespace RenderApp.ViewModel
             }
         }
 
-        public RootNodeViewModel(RANode rootNode, string title)
+        public RootNodeViewModel(KINode rootNode, string title)
         {
             Title = title;
-            Initialize(new List<RANode>() { rootNode });
+            Initialize(new List<KINode>() { rootNode });
             
         }
-        public RootNodeViewModel(List<RANode> rootNodes,string title)
+        public RootNodeViewModel(List<KINode> rootNodes,string title)
         {
             Title = title;
             Initialize(rootNodes);
             
         }
-        public void Initialize(List<RANode> rootNodes)
+        public void Initialize(List<KINode> rootNodes)
         {
             if (rootNodes != null)
             {
@@ -66,7 +68,7 @@ namespace RenderApp.ViewModel
         /// 再帰関数
         /// </summary>
         /// <param name="node"></param>
-        private void InitAddNode(RANode parent,NodeItemViewModel parentVM)
+        private void InitAddNode(KINode parent,NodeItemViewModel parentVM)
         {
             foreach (var node in parent.Children)
             {
@@ -98,12 +100,12 @@ namespace RenderApp.ViewModel
             {
                 return;
             }
-            if (ActiveNode.Model is RANode)
+            if (ActiveNode.Model is KINode)
             {
-                var node = ActiveNode.Model as RANode;
-                if (node.RAObject is KIFile)
+                var node = ActiveNode.Model as KINode;
+                if (node._KIObject is KIFile)
                 {
-                    var asset = node.RAObject as KIFile;
+                    var asset = node._KIObject as KIFile;
                     if (File.Exists(asset.FilePath))
                     {
                         Process.Start("EXPLORER.exe", @"/select," + asset.FilePath);

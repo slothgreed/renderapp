@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-namespace RenderApp.Utility
+namespace KI.Foundation.Tree
 {
 	public enum NotifyNodeChangedAction
 	{
@@ -18,33 +18,33 @@ namespace RenderApp.Utility
 	public class NotifyNodeChangedEventArgs
 	{
 		public NotifyNodeChangedAction NodeAction;
-		public RANode NewItems;
+		public KINode NewItems;
 		public int NewIndex;
-		public RANode OldItems;
+		public KINode OldItems;
 		public int OldIndex;
 
 		public NotifyNodeChangedEventArgs(NotifyNodeChangedAction _NodeAction)
 		{
 			NodeAction = _NodeAction;
 		}
-		public NotifyNodeChangedEventArgs(NotifyNodeChangedAction _NodeAction,RANode _NewItems)
+		public NotifyNodeChangedEventArgs(NotifyNodeChangedAction _NodeAction,KINode _NewItems)
 		{
 			NodeAction = _NodeAction;
 			NewItems = _NewItems;
 		}
-		public NotifyNodeChangedEventArgs(NotifyNodeChangedAction _NodeAction,RANode _NewItems,int _NewIndex)
+		public NotifyNodeChangedEventArgs(NotifyNodeChangedAction _NodeAction,KINode _NewItems,int _NewIndex)
 		{
 			NodeAction = _NodeAction;
 			NewItems = _NewItems;
 			NewIndex = _NewIndex;
 		}
-		public NotifyNodeChangedEventArgs(NotifyNodeChangedAction _NodeAction,RANode _NewItems,RANode _OldItems)
+		public NotifyNodeChangedEventArgs(NotifyNodeChangedAction _NodeAction,KINode _NewItems,KINode _OldItems)
 		{
 			NodeAction = _NodeAction;
 			NewItems = _NewItems;
 			OldItems = _OldItems;
 		}
-		public NotifyNodeChangedEventArgs(NotifyNodeChangedAction _NodeAction,RANode _NewItems,int _NewIndex,RANode _OldItems,int _OldIndex)
+		public NotifyNodeChangedEventArgs(NotifyNodeChangedAction _NodeAction,KINode _NewItems,int _NewIndex,KINode _OldItems,int _OldIndex)
 		{
 			NodeAction = _NodeAction;
 			NewItems = _NewItems;

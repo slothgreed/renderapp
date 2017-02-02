@@ -10,7 +10,7 @@ using RenderApp.GLUtil;
 using RenderApp.Utility;
 using KI.Foundation.ViewModel;
 using KI.Foundation.Utility;
-
+using KI.Foundation.Tree;
 namespace RenderApp.ViewModel
 {
     public class NodeItemViewModel : ViewModelBase
@@ -20,7 +20,7 @@ namespace RenderApp.ViewModel
             get;
             private set;
         }
-        public RANode Model
+        public KINode Model
         {
             get;
             private set;
@@ -106,7 +106,7 @@ namespace RenderApp.ViewModel
                 SetValue<string>(ref _displayName, value);
                 if(Model != null)
                 {
-                    Model.RAObject.Name = _displayName;
+                    Model._KIObject.Name = _displayName;
                 }
             }
         }
@@ -134,7 +134,7 @@ namespace RenderApp.ViewModel
             _children = new ObservableCollection<NodeItemViewModel>();
         }
 
-        public NodeItemViewModel(RANode node,NodeItemViewModel parent)
+        public NodeItemViewModel(KINode node,NodeItemViewModel parent)
             : this()
         {
             if (parent != null)
@@ -150,9 +150,9 @@ namespace RenderApp.ViewModel
 
         private void RemoveNodeEvent(object sender, NotifyNodeChangedEventArgs e)
         {
-            if (sender is RANode)
+            if (sender is KINode)
             {
-                RANode node = sender as RANode;
+                KINode node = sender as KINode;
                 NodeItemViewModel nodeVM = Children.Where(p => p.DisplayName == node.Name).FirstOrDefault();
                 if(nodeVM != null)
                 {
@@ -162,9 +162,9 @@ namespace RenderApp.ViewModel
         }
         private void InsertNodeEvent(object sender, NotifyNodeChangedEventArgs e)
         {
-            if (sender is RANode)
+            if (sender is KINode)
             {
-                RANode node = sender as RANode;
+                KINode node = sender as KINode;
                 if(Children.Count > e.NewIndex)
                 {
                     Children.Insert(e.NewIndex, new NodeItemViewModel(node, this));

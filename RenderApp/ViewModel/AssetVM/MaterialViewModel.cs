@@ -50,7 +50,6 @@ namespace RenderApp.ViewModel
                 PropertyItem.Add(loop.Key.ToString(), loop.Value);
             }
         }
-        private string _title = "";
         public override string Title
         {
             get

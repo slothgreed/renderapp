@@ -17,9 +17,6 @@ namespace RenderApp.AssetModel
 {
     public abstract class Geometry : KIObject
     {
-        #region [static property]
-        private static int GeometryIDCounter = 0;
-        #endregion
         #region Propety
         public int ID { get; private set; }
         public PrimitiveType RenderType { get; set; }
@@ -120,27 +117,6 @@ namespace RenderApp.AssetModel
         }
         #endregion
         #region Initializer disposer
-        private void Initialize(string name = null, PrimitiveType renderType = PrimitiveType.Triangles)
-        {
-            RenderType = renderType;
-            Position = new List<Vector3>();
-            Normal = new List<Vector3>();
-            Color = new List<Vector3>();
-            TexCoord = new List<Vector2>();
-            Index = new List<int>();
-            Timer = new List<int>();
-            ModelMatrix = Matrix4.Identity;
-            MaterialItem = Material.Default;
-            if(GeometryIDCounter > 255)
-            {
-                Logger.Log(Logger.LogLevel.Warning,"To Many Object");
-            }
-            GeometryIDCounter++;
-            ID = GeometryIDCounter;
-            AnalyzeItem = new Dictionary<string, IAnalyzer>();
-        }
-
-
         public Geometry(string name, PrimitiveType renderType)
             : base(name)
         {
@@ -152,6 +128,20 @@ namespace RenderApp.AssetModel
         {
             Initialize(name, PrimitiveType.Triangles);
         }
+
+        private void Initialize(string name = null, PrimitiveType renderType = PrimitiveType.Triangles)
+        {
+            RenderType = renderType;
+            Position = new List<Vector3>();
+            Normal = new List<Vector3>();
+            Color = new List<Vector3>();
+            TexCoord = new List<Vector2>();
+            Index = new List<int>();
+            Timer = new List<int>();
+            ModelMatrix = Matrix4.Identity;
+            MaterialItem = Material.Default;
+        }
+
         public override void Dispose()
         {
             Position.Clear();
@@ -165,31 +155,6 @@ namespace RenderApp.AssetModel
             Scale = Vector3.One;
             Rotate = Vector3.Zero;
         }
-        #endregion
-        #region analyze
-        #region [analyzer bind]
-        private Dictionary<string, IAnalyzer> AnalyzeItem
-        {
-            get;
-            set;
-        }
-        public void AddAnalayzer(IAnalyzer analyze)
-        {
-            if (AnalyzeItem == null)
-            {
-                AnalyzeItem = new Dictionary<string, IAnalyzer>();
-            }
-            AnalyzeItem.Add(analyze.GetType().Name, analyze);
-        }
-        public IAnalyzer FindAnalyze(string typeName)
-        {
-            if (AnalyzeItem.ContainsKey(typeName))
-            {
-                return AnalyzeItem[typeName];
-            }
-            return null;
-        }
-        #endregion
         #endregion
 
         #region render
@@ -337,7 +302,6 @@ namespace RenderApp.AssetModel
         }
         #endregion
         #region [Transformation]
-
         /// <summary>
         /// 初期形状から一括変換する用
         /// </summary>
