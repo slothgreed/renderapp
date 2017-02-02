@@ -443,9 +443,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
@@ -453,7 +450,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Scene\Shader\ShaderType\" />
-    <Folder Include="Themes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Render_System\Post_Effect\PostEffectT4.tt">

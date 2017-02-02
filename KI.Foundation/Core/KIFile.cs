@@ -44,11 +44,11 @@ namespace KI.Foundation.Core
         }
 
         public KIFile(string filePath)
+            :base(filePath)
         {
             FileName = Path.GetFileName(filePath);
             FilePath = filePath;
             Name = FileName;
-            Logger.Log(Logger.LogLevel.Debug, "create asset " + filePath + ":");
         }
         
         public static string GetNameFromPath(string path)
