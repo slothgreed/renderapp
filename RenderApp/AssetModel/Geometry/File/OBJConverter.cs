@@ -8,7 +8,6 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using System.Windows.Forms;
-using RenderApp.Analyzer;
 using RenderApp.GLUtil;
 using KI.Foundation.Utility;
 using KI.Foundation.Core;

@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RenderApp.AssetModel;
 using KI.Foundation.Command;
-using KI.Gfx.Analyzer;
+using KI.Gfx;
 
-namespace RenderApp.Analyzer
+namespace KI.Gfx.Analyzer
 {
     public struct Node
     {
@@ -21,9 +20,9 @@ namespace RenderApp.Analyzer
             vertex = _v;
         }
     }
-    class Dijkstra : ICommand, IAnalyzer
+    public class Dijkstra : ICommand, IAnalyzer
     {
-        public Geometry Geometry
+        public GeometryInfo Geometry
         {
             get;
             set;

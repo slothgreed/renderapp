@@ -120,7 +120,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Analyzer\HalfEdge\Dijkstra.cs" />
     <Compile Include="AppSystem.cs" />
     <Compile Include="AssetModel\AssetFactory.cs" />
     <Compile Include="AssetModel\Geometry\IRenderObjectConverter.cs" />
@@ -249,11 +248,9 @@
     <Compile Include="Scene\Shader\MRT\General\ConstantShader.cs" />
     <Compile Include="Scene\Shader\Diffuse\CDiffuse.cs" />
     <Compile Include="Scene\Shader\DisplaceMent\DisplaceMentMap.cs" />
-    <Compile Include="Analyzer\HalfEdge\HalfEdge.cs" />
     <Compile Include="Scene\Shader\ColorRender\CColorShader.cs" />
     <Compile Include="AssetModel\Geometry\Primitive\Sphere.cs" />
     <Compile Include="AssetModel\Geometry\Primitive\Axis.cs" />
-    <Compile Include="AssetModel\Camera.cs" />
     <Compile Include="AssetModel\Geometry\Primitive\Cube.cs" />
     <Compile Include="AssetModel\Geometry\Primitive\Plane.cs" />
     <Compile Include="AssetModel\Geometry\Primitive\GridPlane.cs" />

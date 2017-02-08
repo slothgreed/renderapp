@@ -8,7 +8,6 @@ using OpenTK;
 using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using KI.Foundation.Utility;
-using RenderApp.Analyzer;
 using KI.Foundation.Core;
 using KI.Gfx;
 using KI.Gfx.Analyzer;

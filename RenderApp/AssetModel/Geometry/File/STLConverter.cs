@@ -6,7 +6,6 @@ using System.IO;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Windows.Forms;
-using RenderApp.Analyzer;
 using KI.Foundation.Core;
 using KI.Gfx.KIGeometry;
 namespace RenderApp.AssetModel.RA_Geometry

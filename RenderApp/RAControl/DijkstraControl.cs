@@ -10,9 +10,9 @@ using RenderApp.AssetModel;
 using RenderApp.AssetModel.RA_Geometry;
 using RenderApp.GLUtil;
 using RenderApp.Globals;
-using RenderApp.Analyzer;
 using KI.Foundation.Core;
 using KI.Foundation.Utility;
+using KI.Gfx.Analyzer;
 
 namespace RenderApp.RA_Control
 {
@@ -34,7 +34,7 @@ namespace RenderApp.RA_Control
                 {
                     if(Dijkstra.Geometry == null)
                     {
-                        Dijkstra.Geometry = geometry;
+                        Dijkstra.Geometry = geometry.GeometryInfo;
                     }
                     if(Dijkstra.StartIndex == -1)
                     {
