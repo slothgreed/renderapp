@@ -123,7 +123,6 @@
     <Compile Include="AppSystem.cs" />
     <Compile Include="AssetModel\AssetFactory.cs" />
     <Compile Include="AssetModel\Geometry\IRenderObjectConverter.cs" />
-    <Compile Include="GLUtil\DeviceContext.cs" />
     <Compile Include="Render_System\Post_Effect\Bloom.cs" />
     <Compile Include="Render_System\Post_Effect\DOF.cs" />
     <Compile Include="Render_System\Post_Effect\PostEffect.cs" />
@@ -141,7 +140,6 @@
     <Compile Include="ViewModel\Converter\EnumConverter.cs" />
     <Compile Include="Globals\Project.cs" />
     <Compile Include="GLUtil\ShaderModel\ShaderFactory.cs" />
-    <Compile Include="GLUtil\ShaderModel\ShaderProgramInfo.cs" />
     <Compile Include="Globals\Enum.cs" />
     <Compile Include="GLUtil\TextureFactory.cs" />
     <Compile Include="Render_System\GBuffer.cs" />
@@ -215,7 +213,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="GLUtil\ShaderModel\ShaderProgram.cs" />
     <Compile Include="Scene\Shader\Bezier\Bezier.cs" />
     <Compile Include="Render_System\RenderPassFactory.cs" />
     <Compile Include="AssetModel\Geometry\RenderObject.cs" />
@@ -235,7 +232,6 @@
       <DependentUpon>ShaderProgramView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\AssetVM\ShaderProgramViewModel.cs" />
-    <Compile Include="GLUtil\Texture.cs" />
     <Compile Include="GLUtil\ShaderModel\Shader.cs" />
     <Compile Include="Scene\Shader\HeightMap\HeightMap.cs" />
     <Compile Include="Scene\Shader\Line\CEffectLine.cs" />

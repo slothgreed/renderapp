@@ -6,33 +6,6 @@ using System.Threading.Tasks;
 
 namespace RenderApp
 {
-    public enum EShaderVariableType
-    {
-        None,
-        Uniform,
-        Attribute,
-    }
-    public enum EVariableType
-    {
-        None,
-        Vec2,
-        Vec3,
-        Vec4,
-        Int,
-        Float,
-        Double,
-        Mat3,
-        Mat4,
-        Vec2Array,
-        Vec3Array,
-        Vec4Array,
-        IntArray,
-        FloatArray,
-        DoubleArra,
-        Texture2D,
-        Texture3D
-    }
-
     public enum EAssetType
     {
         Unknown,

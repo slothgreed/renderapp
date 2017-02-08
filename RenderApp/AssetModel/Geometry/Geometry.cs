@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 using OpenTK;
-using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using KI.Foundation.Utility;
 using KI.Foundation.Core;
 using KI.Gfx;
+using KI.Gfx.GLUtil;
 using KI.Gfx.Analyzer;
 using KI.Gfx.GLUtil.Buffer;
 namespace RenderApp.AssetModel

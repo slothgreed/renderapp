@@ -6,26 +6,18 @@ using System.Threading.Tasks;
 using System.Drawing;
 using OpenTK.Graphics.OpenGL;
 using System.Drawing.Imaging;
-using RenderApp.AssetModel;
 using KI.Foundation.Utility;
-using KI.Gfx.GLUtil.Buffer;
 using KI.Foundation.Core;
+using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIImage;
-using RenderApp.GLUtil;
 
-namespace RenderApp.GLUtil
+namespace KI.Gfx.KIAsset
 {
 
     public class Texture : KIObject
     {
         #region [member]
-        private string DummyTexturePath
-        {
-            get
-            {
-                return ProjectInfo.TextureDirectory + @"\Dummy.png";
-            }
-        }
+
         private KIImageInfo _imageInfo;
         public KIImageInfo ImageInfo
         {
@@ -176,55 +168,6 @@ namespace RenderApp.GLUtil
             TextureBuffer.UnBindBuffer();
             Logger.GLLog(Logger.LogLevel.Error);
         }
-        #endregion
-        #region [CubeMap 現在廃止]
-        ///// <summary>
-        ///// CubeMapTextureの作成
-        ///// </summary>
-        ///// <rereturns>バインドしたテクスチャID</rereturns>
-        //public int CreateCubeMapTexture(string PXfile, string NXfile, string PYfile, string NYfile, string PZfile, string NZfile)
-        //{
-        //    try
-        //    {
-        //        Bitmap PX = new Bitmap(PXfile);
-        //        Bitmap NX = new Bitmap(NXfile);
-        //        Bitmap PY = new Bitmap(PYfile);
-        //        Bitmap NY = new Bitmap(NYfile);
-        //        Bitmap PZ = new Bitmap(PZfile);
-        //        Bitmap NZ = new Bitmap(NZfile);
-
-        //        Bitmap[] image = { PX, NX, PZ, NZ, PY, NY };
-        //        int texId = GL.GenTexture();
-        //        GL.BindTexture(TextureTarget.TextureCubeMap, texId);
-        //        GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
-        //        GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
-        //        GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapR, (int)TextureWrapMode.ClampToEdge);
-        //        GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
-        //        GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
-
-        //        for (int i = 0; i < 6; i++)
-        //        {
-        //            //データ読み込み
-        //            BitmapData bmp_data = image[i].LockBits(new Rectangle(0, 0, image[i].Width, image[i].Height),
-        //                ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-
-        //            GL.TexImage2D(TextureTarget.TextureCubeMapPositiveX + i, 0, PixelInternalFormat.Rgba,
-        //                image[i].Width, image[i].Height,
-        //                0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bmp_data.Scan0);
-        //            image[i].UnlockBits(bmp_data);
-        //        }
-
-        //        GL.BindTexture(TextureTarget.TextureCubeMap, 0);
-        //        Output.GLLog(Output.LogLevel.Error);
-        //        return texId;
-
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw new System.IO.FileLoadException(PXfile + PYfile + PZfile + NXfile + NYfile + NZfile);
-        //    }
-
-        //}
         #endregion
     }
 }

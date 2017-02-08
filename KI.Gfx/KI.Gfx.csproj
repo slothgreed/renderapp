@@ -65,12 +65,14 @@
     <Compile Include="GLUtil\Buffer\RenderBuffer.cs" />
     <Compile Include="GLUtil\Buffer\SamplerBuffer.cs" />
     <Compile Include="GLUtil\Buffer\TextureBuffer.cs" />
+    <Compile Include="GLUtil\DeviceContext.cs" />
     <Compile Include="KIAsset\Camera.cs" />
     <Compile Include="KIAsset\EnvironmentProbe.cs" />
     <Compile Include="KIAsset\Light\DirectionLight.cs" />
     <Compile Include="KIAsset\Light\Light.cs" />
     <Compile Include="KIAsset\Light\PointLight.cs" />
     <Compile Include="KIAsset\Light\SpotLight.cs" />
+    <Compile Include="KIAsset\Texture.cs" />
     <Compile Include="Loader\Geometry\OBJLoader.cs" />
     <Compile Include="Loader\Geometry\STLLoader.cs" />
     <Compile Include="Loader\Image\HDRImage.cs" />
@@ -78,6 +80,8 @@
     <Compile Include="KIImageInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GeometryInfo.cs" />
+    <Compile Include="Shader\ShaderProgram.cs" />
+    <Compile Include="Shader\ShaderProgramInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KI.Foundation\KI.Foundation.csproj">

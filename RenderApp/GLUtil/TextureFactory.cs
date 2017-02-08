@@ -7,6 +7,7 @@ using RenderApp.Globals;
 using RenderApp.Utility;
 using KI.Foundation.Core;
 using KI.Gfx.KIImage;
+using KI.Gfx.KIAsset;
 namespace RenderApp.GLUtil
 {
     public class TextureFactory
@@ -18,6 +19,13 @@ namespace RenderApp.GLUtil
             get
             {
                 return _instance;
+            }
+        }
+        private string DummyTexturePath
+        {
+            get
+            {
+                return ProjectInfo.TextureDirectory + @"\Dummy.png";
             }
         }
         public Dictionary<string, Texture> TextureList = new Dictionary<string, Texture>();

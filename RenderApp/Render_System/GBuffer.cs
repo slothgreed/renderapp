@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RenderApp.GLUtil;
+using KI.Gfx.KIAsset;
 namespace RenderApp.Render_System
 {
     class GBuffer : FrameBuffer

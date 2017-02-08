@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using RenderApp.GLUtil.ShaderModel;
+using KI.Gfx;
 namespace RenderApp.ViewModel
 {
     public class ShaderProgramViewModel : TabItemViewModel

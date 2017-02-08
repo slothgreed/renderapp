@@ -7,6 +7,7 @@ using RenderApp.Render_System;
 using RenderApp.GLUtil;
 using RenderApp.AssetModel;
 using KI.Gfx.KIAsset;
+using KI.Gfx.GLUtil;
 namespace RenderApp
 {
     public class SceneManager
@@ -34,7 +35,7 @@ namespace RenderApp
             {
                 if (_renderSystem == null)
                 {
-                    _renderSystem = new RenderSystem(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
+                    _renderSystem = new RenderSystem();
                 }
                 return _renderSystem;
             }

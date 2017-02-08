@@ -7,6 +7,7 @@ using RenderApp.GLUtil.ShaderModel;
 using RenderApp.AssetModel;
 using RenderApp.Globals;
 using KI.Foundation.Core;
+using KI.Gfx;
 namespace RenderApp.GLUtil
 {
     public class ShaderFactory

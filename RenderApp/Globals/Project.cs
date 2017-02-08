@@ -9,6 +9,8 @@ using RenderApp.Utility;
 using RenderApp.GLUtil.ShaderModel;
 using KI.Foundation.Core;
 using KI.Foundation.Tree;
+using KI.Gfx;
+using KI.Gfx.KIAsset;
 
 namespace RenderApp.Globals
 {

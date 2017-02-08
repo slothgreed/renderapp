@@ -4,21 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using RenderApp.AssetModel;
 using System.IO;
 using System.Collections.ObjectModel;
-using RenderApp.GLUtil;
-using RenderApp.Utility;
-using RenderApp.GLUtil.ShaderModel;
 using System.Windows.Forms;
+using RenderApp.AssetModel;
+using RenderApp.Globals;
+using RenderApp.GLUtil;
+using RenderApp.GLUtil.ShaderModel;
+using RenderApp.Utility;
 using RenderApp.ViewModel.Dialog;
 using RenderApp.RA_Control;
-using RenderApp.Globals;
 using RenderApp.Render_System;
 using RenderApp.AssetModel.RA_Geometry;
 using KI.Foundation.ViewModel;
 using KI.Foundation.Tree;
-
+using KI.Gfx.GLUtil;
+using KI.Gfx;
 namespace RenderApp.ViewModel
 {
     public partial class MainWindowViewModel : ViewModelBase
@@ -115,8 +116,11 @@ namespace RenderApp.ViewModel
         #region [Viewport Method]
         public void OnLoadedEvent(object sender, EventArgs e)
         {
+            SceneManager.Instance.RenderSystem.Initialize(DeviceContext.Instance.Width,DeviceContext.Instance.Height);
             SceneManager.Instance.Create("MainScene");
             SceneManager.Instance.ActiveScene.Initialize();
+            SceneManager.Instance.CreateMainCamera();
+            SceneManager.Instance.CreateSceneLight();
             LeftUpDockPanel.Add(new RootNodeViewModel(SceneManager.Instance.ActiveScene.RootNode, "Scene"));
             LeftDownDockPanel.Add(new RenderSystemViewModel(SceneManager.Instance.RenderSystem));
         }
@@ -381,17 +385,12 @@ namespace RenderApp.ViewModel
         public void LoadedCommand()
         {
             m_Viewport = Viewport.Instance;
-
-            if (m_Viewport != null)
-            {
-                m_Viewport.Initialize();
-            }
         }
         public void ClosedCommand()
         {
             if (m_Viewport != null)
             {
-                m_Viewport.Closed();
+                m_Viewport.Dispose();
             }
             GC.Collect();
         }

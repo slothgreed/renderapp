@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
-namespace RenderApp.GLUtil
+namespace KI.Gfx.GLUtil
 {
     public class DeviceContext
     {
@@ -77,19 +77,19 @@ namespace RenderApp.GLUtil
             GL.DrawElements(type, count, elementType, indices);
         }
 
-        internal void SizeChanged(int width, int height)
+        public void SizeChanged(int width, int height)
         {
             Width = width;
             Height = height;
             GL.Viewport(0, 0, Width, Height);
         }
 
-        internal void ReadPixel(System.Drawing.Imaging.BitmapData data)
+        public void ReadPixel(System.Drawing.Imaging.BitmapData data)
         {
             GL.ReadPixels(0, 0, Width, Height, OpenTK.Graphics.OpenGL.PixelFormat.Bgr, PixelType.UnsignedByte, data.Scan0);
         }
 
-        internal void Clear()
+        public void Clear()
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         }

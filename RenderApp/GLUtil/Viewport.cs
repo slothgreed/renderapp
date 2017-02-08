@@ -16,7 +16,7 @@ using RenderApp.Render_System;
 using KI.Foundation.Utility;
 using KI.Foundation.Core;
 using System.Drawing;
-
+using KI.Gfx.GLUtil;
 namespace RenderApp.GLUtil
 {
     public delegate void OnLoadedHandler(object sender,EventArgs e);
@@ -47,10 +47,6 @@ namespace RenderApp.GLUtil
 
         #region [member]
         /// <summary>
-        /// タイマー変数
-        /// </summary>
-        public KITimer m_AnimationTimer = null;
-        /// <summary>
         /// glControl
         /// </summary>
         private GLControl m_glControl;
@@ -62,10 +58,6 @@ namespace RenderApp.GLUtil
         /// 起動後か
         /// </summary>
         private bool m_AppstartUp = false;
-        /// <summary>
-        /// ストップウォッチ
-        /// </summary>
-        private Stopwatch m_StopWatch = null;
         /// <summary>
         /// レンダリング時間(mm)
         /// </summary>
@@ -87,9 +79,9 @@ namespace RenderApp.GLUtil
         #region [initialize method]
         private Viewport()
         {
-            CreateGLWindow();
+            Initialize();
         }
-        private void CreateGLWindow()
+        private void Initialize()
         {
             GraphicsMode mode = new GraphicsMode(
                 //ColorFormat構造体を用いて、各色のピクセル当たりのビット数(カラーバッファのサイズ)
@@ -118,10 +110,6 @@ namespace RenderApp.GLUtil
 
         }
 
-        public void Initialize()
-        {
-            m_StopWatch = new Stopwatch();
-        }
         #endregion
         #region [context event]
         //glControlの起動時に実行される。
@@ -222,46 +210,18 @@ namespace RenderApp.GLUtil
             }
         }
         #endregion
-        #region [timer event]
-        public void StartTimer()
-        {
-            if(m_AnimationTimer==null)
-            {
-                m_AnimationTimer = new KITimer(1, OnAnimationTimer);
 
-            }
-            m_AnimationTimer.Start();
-
-        }
-        public void StopTimer()
-        {
-            if(m_AnimationTimer == null)
-            {
-                return;
-            }
-            m_AnimationTimer.Stop();
-            glControl_Paint(null, null);
-        }
-
-        public void OnAnimationTimer(object source, EventArgs e)
-        {
-            
-            m_AnimationTimer.AddTimer();
-            float Length = 20;
-            float angle = m_AnimationTimer.RadianCount;
-            Vector3 lightPos = new Vector3((float)Math.Sin(angle) * Length,25, (float)Math.Cos(angle) * Length);
-            //GlobalModel.Light.SetPosition(lightPos);
-            glControl_Paint(null, null);
-        }
-        #endregion
         #region [Main Window Event]
-        public void Closed()
+        public void Dispose()
         {
-            if(m_AnimationTimer != null)
-            {
-                m_AnimationTimer.Stop();
-
-            }
+            m_glControl.Load -= glControl_Load;
+            m_glControl.MouseDown -= glControl_MouseDown;
+            m_glControl.MouseMove -= glControl_MouseMove;
+            m_glControl.MouseUp -= glControl_MouseUp;
+            m_glControl.MouseWheel -= glControl_MouseWheel;
+            m_glControl.Paint -= glControl_Paint;
+            m_glControl.Resize -= glControl_Resize;
+            m_glControl = null;
         }
 
         /// <summary>
@@ -275,7 +235,6 @@ namespace RenderApp.GLUtil
 
             System.Drawing.Rectangle r = new System.Drawing.Rectangle(glControl.Location, glControl.Size);
             Bitmap bmp = new Bitmap(glControl.Width, glControl.Height);
-
             System.Drawing.Imaging.BitmapData data = bmp.LockBits(r, System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
             DeviceContext.Instance.ReadPixel(data);
             bmp.UnlockBits(data);

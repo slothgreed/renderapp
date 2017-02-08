@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using OpenTK.Graphics.OpenGL;
+using KI.Gfx.KIAsset;
 namespace RenderApp.Render_System
 {
     public class RenderSystem
@@ -59,16 +60,15 @@ namespace RenderApp.Render_System
             get;
             set;
         }
-        public RenderSystem(int width,int height)
+        public RenderSystem()
+        {
+        }
+        public void Initialize(int width,int height)
         {
             Width = width;
             Height = height;
             PostStage = new RenderQueue();
             ProcessingTexture = new List<Texture>();
-            Initialize();
-        }
-        private void Initialize()
-        {
             PostProcessMode = false;
             GBufferStage = RenderPassFactory.Instance.CreateGBuffer(Width, Height);
 

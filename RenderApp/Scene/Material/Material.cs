@@ -9,6 +9,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using KI.Foundation.Core;
 using RenderApp.GLUtil.ShaderModel;
+using KI.Gfx.KIAsset;
 namespace RenderApp.AssetModel
 {
     public class Material : KIFile

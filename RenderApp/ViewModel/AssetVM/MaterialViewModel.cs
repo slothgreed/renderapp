@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows;
 using OpenTK;
 using RenderApp.GLUtil;
+using KI.Gfx.KIAsset;
 namespace RenderApp.ViewModel
 {
     public class MaterialViewModel : TabItemViewModel,IPropertyGridViewModel

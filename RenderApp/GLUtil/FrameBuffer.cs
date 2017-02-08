@@ -9,6 +9,7 @@ using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Foundation.Utility;
 using RenderApp.GLUtil;
+using KI.Gfx.KIAsset;
 namespace RenderApp.GLUtil
 {
     public class FrameBuffer : BufferObject

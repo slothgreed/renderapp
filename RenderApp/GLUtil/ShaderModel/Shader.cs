@@ -9,6 +9,8 @@ using KI.Foundation.Utility;
 using RenderApp.GLUtil;
 using RenderApp.AssetModel;
 using KI.Gfx.GLUtil;
+using KI.Gfx;
+using KI.Gfx.KIAsset;
 namespace RenderApp.GLUtil.ShaderModel
 {
     public class Shader
@@ -85,6 +87,7 @@ namespace RenderApp.GLUtil.ShaderModel
             }
         }
         #endregion
+
         public bool ExistShaderProgram(ShaderProgram prog,string path)
         {
             if(prog == null)
@@ -270,7 +273,7 @@ namespace RenderApp.GLUtil.ShaderModel
         {
             if(uniform.variable == null)
             {
-                //Output.Error("Shader Binding Error" + uniform.Name);
+                Logger.Log(Logger.LogLevel.Warning, "Shader Binding Error" + uniform.Name);
                 return;
             }
             if (uniform.ShaderID == -1)
@@ -319,6 +322,7 @@ namespace RenderApp.GLUtil.ShaderModel
             }
             Logger.GLLog(Logger.LogLevel.Error);
         }
+
         /// <summary>
         /// AttributeのBinding
         /// </summary>

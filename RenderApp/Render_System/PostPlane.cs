@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using RenderApp.GLUtil.ShaderModel;
+using KI.Gfx.KIAsset;
 namespace RenderApp.Render_System
 {
     public class PostPlane

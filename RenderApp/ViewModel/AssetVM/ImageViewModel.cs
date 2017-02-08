@@ -7,6 +7,7 @@ using RenderApp.GLUtil;
 using System.IO;
 using System.Windows.Media;
 using KI.Foundation.ViewModel;
+using KI.Gfx.KIAsset;
 
 namespace RenderApp.ViewModel
 {

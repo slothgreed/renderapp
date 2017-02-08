@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms.Integration;
-using RenderApp.GLUtil;
-using KI.Foundation.ViewModel;
-using RenderApp.RA_Control;
 using System.Windows.Forms;
 using RenderApp;
+using RenderApp.GLUtil;
+using RenderApp.RA_Control;
+using KI.Foundation.ViewModel;
+using KI.Gfx.GLUtil;
 namespace STLBrowser.ViewModel
 {
     public class ViewportViewModel : ViewModelBase
@@ -58,6 +59,7 @@ namespace STLBrowser.ViewModel
             SceneManager.Instance.Create("MainScene");
             SceneManager.Instance.CreateMainCamera();
             SceneManager.Instance.CreateSceneLight();
+            SceneManager.Instance.RenderSystem.Initialize(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
         }
         private void OnResizeEvent(object sender, EventArgs e)
         {

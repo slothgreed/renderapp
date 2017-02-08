@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RenderApp.AssetModel;
 using System.Collections.ObjectModel;
+using RenderApp.AssetModel;
 using RenderApp.GLUtil;
-using OpenTK;
 using RenderApp.GLUtil.ShaderModel;
+using OpenTK;
+using KI.Gfx;
+using KI.Gfx.KIAsset;
 namespace RenderApp.ViewModel
 {
     class ShaderViewModel : TabItemViewModel,IPropertyGridViewModel
