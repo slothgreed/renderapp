@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KI.Foundation.Core;
-namespace RenderApp.AssetModel
+namespace KI.Gfx.KIAsset
 {
     public class EnvironmentProbe : KIObject
     {

@@ -31,7 +31,9 @@ namespace KI.Gfx.KIGeometry
         public float d;//透過（無視）
         public float Tr;//透過（無視）
         public float illum;//0~10のパラメータで異なる（無視）sponza全部2（Color on and Ambient on）
-        public VertexArrayInfo vertexArrayInfo = new VertexArrayInfo();//ポリゴンのIndex情報を保持
+        public List<int> posIndex = new List<int>();//ポリゴンのIndex情報を保持
+        public List<int> norIndex = new List<int>();//ポリゴンのIndex情報を保持
+        public List<int> texIndex = new List<int>();//ポリゴンのIndex情報を保持
     }
 
     public class OBJLoader : KIFile
@@ -39,7 +41,7 @@ namespace KI.Gfx.KIGeometry
         /// <summary>
         /// 頂点・色・テクスチャ座標を保持。
         /// </summary>
-        public VertexInfo vertexInfo;
+        public GeometryInfo vertexInfo;
         public Dictionary<string, OBJMaterial> mtlList = new Dictionary<string,OBJMaterial>();
         /// <summary>
         /// objファイルのローダ
@@ -51,7 +53,7 @@ namespace KI.Gfx.KIGeometry
         {
             try
             {
-                vertexInfo = new VertexInfo();
+                vertexInfo = new GeometryInfo();
                 string[] parser = File.ReadAllLines(filePath, System.Text.Encoding.GetEncoding("Shift_JIS"));
                 ReadData(parser);
             }
@@ -174,16 +176,16 @@ namespace KI.Gfx.KIGeometry
 
                 //Index番号となるようにー1
                 //objファイルのインデックスは1から、リストの順を基準にしたいため0からに
-                currentMat.vertexArrayInfo.posIndex.Add(int.Parse(part1[0]) - 1);
-                currentMat.vertexArrayInfo.posIndex.Add(int.Parse(part2[0]) - 1);
-                currentMat.vertexArrayInfo.posIndex.Add(int.Parse(part3[0]) - 1);
+                currentMat.posIndex.Add(int.Parse(part1[0]) - 1);
+                currentMat.posIndex.Add(int.Parse(part2[0]) - 1);
+                currentMat.posIndex.Add(int.Parse(part3[0]) - 1);
                 if (part1.Length > 1)
                 {
                     if (part1[1] != "")
                     {
-                        currentMat.vertexArrayInfo.texIndex.Add(int.Parse(part1[1]) - 1);
-                        currentMat.vertexArrayInfo.texIndex.Add(int.Parse(part2[1]) - 1);
-                        currentMat.vertexArrayInfo.texIndex.Add(int.Parse(part3[1]) - 1);
+                        currentMat.texIndex.Add(int.Parse(part1[1]) - 1);
+                        currentMat.texIndex.Add(int.Parse(part2[1]) - 1);
+                        currentMat.texIndex.Add(int.Parse(part3[1]) - 1);
 
                     }
                 }
@@ -191,9 +193,9 @@ namespace KI.Gfx.KIGeometry
                 {
                     if (part1[2] != "")
                     {
-                        currentMat.vertexArrayInfo.norIndex.Add(int.Parse(part1[2]) - 1);
-                        currentMat.vertexArrayInfo.norIndex.Add(int.Parse(part2[2]) - 1);
-                        currentMat.vertexArrayInfo.norIndex.Add(int.Parse(part3[2]) - 1);
+                        currentMat.norIndex.Add(int.Parse(part1[2]) - 1);
+                        currentMat.norIndex.Add(int.Parse(part2[2]) - 1);
+                        currentMat.norIndex.Add(int.Parse(part3[2]) - 1);
 
                     }
                 }
@@ -212,37 +214,37 @@ namespace KI.Gfx.KIGeometry
 
                 //Index番号となるようにー1
                 //objファイルのインデックスは1から、リストの順を基準にしたいため0からに
-                currentMat.vertexArrayInfo.posIndex.Add(int.Parse(part1[0]) - 1);
-                currentMat.vertexArrayInfo.posIndex.Add(int.Parse(part2[0]) - 1);
-                currentMat.vertexArrayInfo.posIndex.Add(int.Parse(part3[0]) - 1);
+                currentMat.posIndex.Add(int.Parse(part1[0]) - 1);
+                currentMat.posIndex.Add(int.Parse(part2[0]) - 1);
+                currentMat.posIndex.Add(int.Parse(part3[0]) - 1);
 
-                currentMat.vertexArrayInfo.posIndex.Add(int.Parse(part1[0]) - 1);
-                currentMat.vertexArrayInfo.posIndex.Add(int.Parse(part3[0]) - 1);
-                currentMat.vertexArrayInfo.posIndex.Add(int.Parse(part4[0]) - 1);
+                currentMat.posIndex.Add(int.Parse(part1[0]) - 1);
+                currentMat.posIndex.Add(int.Parse(part3[0]) - 1);
+                currentMat.posIndex.Add(int.Parse(part4[0]) - 1);
                 if (part1.Length > 1)
                 {
                     if (part1[1] != "")
                     {
-                        currentMat.vertexArrayInfo.texIndex.Add(int.Parse(part1[1]) - 1);
-                        currentMat.vertexArrayInfo.texIndex.Add(int.Parse(part2[1]) - 1);
-                        currentMat.vertexArrayInfo.texIndex.Add(int.Parse(part3[1]) - 1);
+                        currentMat.texIndex.Add(int.Parse(part1[1]) - 1);
+                        currentMat.texIndex.Add(int.Parse(part2[1]) - 1);
+                        currentMat.texIndex.Add(int.Parse(part3[1]) - 1);
 
-                        currentMat.vertexArrayInfo.texIndex.Add(int.Parse(part1[1]) - 1);
-                        currentMat.vertexArrayInfo.texIndex.Add(int.Parse(part3[1]) - 1);
-                        currentMat.vertexArrayInfo.texIndex.Add(int.Parse(part4[1]) - 1);
+                        currentMat.texIndex.Add(int.Parse(part1[1]) - 1);
+                        currentMat.texIndex.Add(int.Parse(part3[1]) - 1);
+                        currentMat.texIndex.Add(int.Parse(part4[1]) - 1);
                     }
                 }
                 if (part1.Length > 2)
                 {
                     if (part1[2] != "")
                     {
-                        currentMat.vertexArrayInfo.norIndex.Add(int.Parse(part1[2]) - 1);
-                        currentMat.vertexArrayInfo.norIndex.Add(int.Parse(part2[2]) - 1);
-                        currentMat.vertexArrayInfo.norIndex.Add(int.Parse(part3[2]) - 1);
+                        currentMat.norIndex.Add(int.Parse(part1[2]) - 1);
+                        currentMat.norIndex.Add(int.Parse(part2[2]) - 1);
+                        currentMat.norIndex.Add(int.Parse(part3[2]) - 1);
 
-                        currentMat.vertexArrayInfo.norIndex.Add(int.Parse(part1[2]) - 1);
-                        currentMat.vertexArrayInfo.norIndex.Add(int.Parse(part3[2]) - 1);
-                        currentMat.vertexArrayInfo.norIndex.Add(int.Parse(part4[2]) - 1);
+                        currentMat.norIndex.Add(int.Parse(part1[2]) - 1);
+                        currentMat.norIndex.Add(int.Parse(part3[2]) - 1);
+                        currentMat.norIndex.Add(int.Parse(part4[2]) - 1);
                     }
                 }
             }else

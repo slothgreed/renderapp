@@ -89,16 +89,16 @@ namespace RenderApp.AssetModel
             }
             Geometry geometry = asset as Geometry;
             List<Vector3> position = new List<Vector3>();
-            for (int i = 0; i < geometry.Position.Count / 3; i++)
+            for (int i = 0; i < geometry.GeometryInfo.Position.Count / 3; i++)
             {
-                position.Add(geometry.Position[3 * i]);
-                position.Add(geometry.Position[3 * i + 1]);
+                position.Add(geometry.GeometryInfo.Position[3 * i]);
+                position.Add(geometry.GeometryInfo.Position[3 * i + 1]);
 
-                position.Add(geometry.Position[3 * i + 1]);
-                position.Add(geometry.Position[3 * i + 2]);
+                position.Add(geometry.GeometryInfo.Position[3 * i + 1]);
+                position.Add(geometry.GeometryInfo.Position[3 * i + 2]);
 
-                position.Add(geometry.Position[3 * i + 2]);
-                position.Add(geometry.Position[3 * i]);
+                position.Add(geometry.GeometryInfo.Position[3 * i + 2]);
+                position.Add(geometry.GeometryInfo.Position[3 * i]);
 
             }
             RenderObject wireframe = new RenderObject("WireFrame :" + geometry.Name);
@@ -114,8 +114,8 @@ namespace RenderApp.AssetModel
                 return false;
             }
             Geometry geometry = asset as Geometry;
-            List<Vector3> position = new List<Vector3>(geometry.Position);
-            List<Vector3> normal = new List<Vector3>(geometry.Normal);
+            List<Vector3> position = new List<Vector3>(geometry.GeometryInfo.Position);
+            List<Vector3> normal = new List<Vector3>(geometry.GeometryInfo.Normal);
             RenderObject polygon = new RenderObject("Polygon :" + geometry.Name);
             polygon.CreatePNC(position, normal, new Vector3(0.7f, 0.7f, 0.7f), PrimitiveType.Triangles);
             CreateGeometry(polygon);
@@ -129,7 +129,7 @@ namespace RenderApp.AssetModel
                 return false;
             }
             Geometry geometry = asset as Geometry;
-            KI.Gfx.Analyzer.Voxel voxel = new KI.Gfx.Analyzer.Voxel(geometry.Position, geometry.Index, geometry.ModelMatrix, partition);
+            KI.Gfx.Analyzer.Voxel voxel = new KI.Gfx.Analyzer.Voxel(geometry.GeometryInfo.Position, geometry.GeometryInfo.Index, geometry.ModelMatrix, partition);
             RenderObject wireframe = new RenderObject("Voxel :" + geometry.Name);
             wireframe.CreatePNC(voxel.vPosition, voxel.vNormal, KICalc.RandomColor(), PrimitiveType.Quads);
             CreateGeometry(wireframe);

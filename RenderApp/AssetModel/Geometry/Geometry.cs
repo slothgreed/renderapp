@@ -9,10 +9,10 @@ using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using KI.Foundation.Utility;
 using RenderApp.Analyzer;
-using KI.Gfx.GLUtil.Buffer;
 using KI.Foundation.Core;
+using KI.Gfx;
 using KI.Gfx.Analyzer;
-
+using KI.Gfx.GLUtil.Buffer;
 namespace RenderApp.AssetModel
 {
     public abstract class Geometry : KIObject
@@ -20,21 +20,14 @@ namespace RenderApp.AssetModel
         #region Propety
         public int ID { get; private set; }
         public PrimitiveType RenderType { get; set; }
-        public List<Vector3> Position { get; protected set; }
+        public GeometryInfo GeometryInfo { get; set; }
         public ArrayBuffer PositionBuffer { get; protected set; }
-        
-        public List<Vector3> Normal { get; protected set; }
         public ArrayBuffer NormalBuffer { get; protected set; }
-        
-        public List<Vector3> Color { get; protected set; }
         public ArrayBuffer ColorBuffer { get; protected set; }
-        
-        public List<Vector2> TexCoord { get; protected set; }
         public ArrayBuffer TexCoordBuffer { get; protected set; }
-
-        public List<int> Index { get; protected set; }
         public ArrayBuffer IndexBuffer { get; protected set; }
 
+        
         public List<int> Timer { get; protected set; }
         public Vector3 Min { get; protected set; }
         public Vector3 Max { get; protected set; }
@@ -102,19 +95,7 @@ namespace RenderApp.AssetModel
                 _materialItem = value;
             }
         }
-        public int TriangleNum { 
-            get
-            {
-                if(Index.Count == 0)
-                {
-                    return Position.Count / 3;
-                }
-                else
-                {
-                    return Index.Count / 3;
-                }
-            }
-        }
+
         #endregion
         #region Initializer disposer
         public Geometry(string name, PrimitiveType renderType)
@@ -132,11 +113,7 @@ namespace RenderApp.AssetModel
         private void Initialize(string name = null, PrimitiveType renderType = PrimitiveType.Triangles)
         {
             RenderType = renderType;
-            Position = new List<Vector3>();
-            Normal = new List<Vector3>();
-            Color = new List<Vector3>();
-            TexCoord = new List<Vector2>();
-            Index = new List<int>();
+            GeometryInfo = new GeometryInfo();
             Timer = new List<int>();
             ModelMatrix = Matrix4.Identity;
             MaterialItem = Material.Default;
@@ -144,11 +121,7 @@ namespace RenderApp.AssetModel
 
         public override void Dispose()
         {
-            Position.Clear();
-            Color.Clear();
-            Normal.Clear();
-            TexCoord.Clear();
-            Index.Clear();
+            GeometryInfo.Dispose();
             Timer.Clear();
             ModelMatrix = Matrix4.Identity;
             Translate = Vector3.Zero;
@@ -162,13 +135,13 @@ namespace RenderApp.AssetModel
         {
             MaterialItem.InitializeState(this);
             MaterialItem.BindShader(this);
-            if (Index.Count == 0)
+            if (GeometryInfo.Index.Count == 0)
             {
-                DeviceContext.Instance.DrawArrays(RenderType, 0, Position.Count);
+                DeviceContext.Instance.DrawArrays(RenderType, 0, GeometryInfo.Position.Count);
             }
             else
             {
-                DeviceContext.Instance.DrawElements(RenderType, Index.Count, DrawElementsType.UnsignedInt, 0);
+                DeviceContext.Instance.DrawElements(RenderType, GeometryInfo.Index.Count, DrawElementsType.UnsignedInt, 0);
             }
             MaterialItem.UnBindShader();
             Logger.GLLog(Logger.LogLevel.Error);
@@ -184,7 +157,6 @@ namespace RenderApp.AssetModel
         /// <param name="move"></param>
         private void CalcTranslate(Vector3 move)
         {
-
             ModelMatrix = ModelMatrix.ClearTranslation();
             Matrix4 translate = Matrix4.CreateTranslation(move);
             ModelMatrix *= translate;
@@ -313,133 +285,6 @@ namespace RenderApp.AssetModel
         }
         #endregion
         #endregion
-        #region [convert mesh]
-        protected void ConvertPerTriangle()
-        {
-            if (Index.Count == 0)
-                return;
-
-            if (Position.Count == 0)
-                return;
-
-            bool texArray = false;
-            bool colorArray = false;
-            bool normalArray = false;
-            if (TexCoord.Count == Position.Count)
-                texArray = true;
-
-            if (Normal.Count == Position.Count)
-                normalArray = true;
-
-            if (Color.Count == Position.Count)
-                colorArray = true;
-
-            var newPosition = new List<Vector3>();
-            var newTexcoord = new List<Vector2>();
-            var newColor = new List<Vector3>();
-            var newNormal = new List<Vector3>();
-
-
-            for (int i = 0; i < Index.Count; i += 3)
-            {
-                newPosition.Add(Position[Index[i]]);
-                newPosition.Add(Position[Index[i + 1]]);
-                newPosition.Add(Position[Index[i + 2]]);
-                if (texArray)
-                {
-                    newTexcoord.Add(TexCoord[Index[i]]);
-                    newTexcoord.Add(TexCoord[Index[i + 1]]);
-                    newTexcoord.Add(TexCoord[Index[i + 2]]);
-                }
-                if (colorArray)
-                {
-                    newColor.Add(Color[Index[i]]);
-                    newColor.Add(Color[Index[i + 1]]);
-                    newColor.Add(Color[Index[i + 2]]);
-                }
-
-                if (normalArray)
-                {
-                    newNormal.Add(Normal[Index[i]]);
-                    newNormal.Add(Normal[Index[i + 1]]);
-                    newNormal.Add(Normal[Index[i + 2]]);
-                }
-            }
-
-            Position = newPosition;
-            Normal = newNormal;
-            TexCoord = newTexcoord;
-            Color = newColor;
-            Index.Clear();
-        }
-        /// <summary>
-        /// 頂点配列に変換
-        /// </summary>
-        public void ConvertVertexArray()
-        {
-            if (Index.Count != 0)
-                return;
-
-            if (Position.Count == 0)
-                return;
-
-            bool texArray = false;
-            bool colorArray = false;
-            bool normalArray = false;
-            if (TexCoord.Count == Position.Count)
-                texArray = true;
-
-            if (Normal.Count == Position.Count)
-                normalArray = true;
-
-            if (Color.Count == Position.Count)
-                colorArray = true;
-
-            var newPosition = new List<Vector3>();
-            var newTexcoord = new List<Vector2>();
-            var newColor = new List<Vector3>();
-            var newNormal = new List<Vector3>();
-            bool isExist = false;
-            for (int i = 0; i < Position.Count; i++)
-            {
-                isExist = false;
-                for (int j = 0; j < newPosition.Count; j++)
-                {
-                    if (newPosition[j] == Position[i])
-                    {
-                        isExist = true;
-                        Index.Add(j);
-                        break;
-                    }
-                }
-                if (!isExist)
-                {
-                    newPosition.Add(Position[i]);
-                    Index.Add(newPosition.Count - 1);
-
-
-                    if (texArray)
-                    {
-                        newTexcoord.Add(TexCoord[i]);
-                    }
-                    if (colorArray)
-                    {
-                        newColor.Add(Color[i]);
-                    }
-                    if (normalArray)
-                    {
-                        newNormal.Add(Normal[i]);
-                    }
-                }
-            }
-            Position = newPosition;
-            TexCoord = newTexcoord;
-            Color = newColor;
-            Normal = newNormal;
-
-        }
-        #endregion
-       
 
     }
 }

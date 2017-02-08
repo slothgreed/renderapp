@@ -5,10 +5,9 @@ using System.Text;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
-using RenderApp.AssetModel;
 using KI.Foundation.Core;
 
-namespace RenderApp.AssetModel
+namespace KI.Gfx.KIAsset
 {
     /// <summary>
     /// カメラ

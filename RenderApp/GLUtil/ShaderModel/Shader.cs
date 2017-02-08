@@ -341,7 +341,7 @@ namespace RenderApp.GLUtil.ShaderModel
             if (attribute.Name == "normal" && geometry.NormalBuffer != null)
             {
                 GL.EnableVertexAttribArray(attribute.ShaderID);
-                geometry.NormalBuffer.SetData(geometry.Normal, EArrayType.Vec3Array);
+                geometry.NormalBuffer.SetData(geometry.GeometryInfo.Normal, EArrayType.Vec3Array);
                 geometry.NormalBuffer.BindBuffer();
                 GL.VertexAttribPointer(attribute.ShaderID, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
                 geometry.NormalBuffer.UnBindBuffer();
@@ -349,7 +349,7 @@ namespace RenderApp.GLUtil.ShaderModel
             if (attribute.Name == "color" && geometry.ColorBuffer != null)
             {
                 GL.EnableVertexAttribArray(attribute.ShaderID);
-                geometry.NormalBuffer.SetData(geometry.Color, EArrayType.Vec3Array);
+                geometry.NormalBuffer.SetData(geometry.GeometryInfo.Color, EArrayType.Vec3Array);
                 geometry.NormalBuffer.BindBuffer();
                 GL.VertexAttribPointer(attribute.ShaderID, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
                 geometry.NormalBuffer.UnBindBuffer();
@@ -357,7 +357,7 @@ namespace RenderApp.GLUtil.ShaderModel
             if (attribute.Name == "texcoord" && geometry.TexCoordBuffer != null)
             {
                 GL.EnableVertexAttribArray(attribute.ShaderID);
-                geometry.TexCoordBuffer.SetData(geometry.TexCoord, EArrayType.Vec2Array);
+                geometry.TexCoordBuffer.SetData(geometry.GeometryInfo.TexCoord, EArrayType.Vec2Array);
                 geometry.TexCoordBuffer.BindBuffer();
                 GL.VertexAttribPointer(attribute.ShaderID, 2, VertexAttribPointerType.Float, false, Vector2.SizeInBytes, 0);
                 geometry.TexCoordBuffer.UnBindBuffer();
@@ -379,19 +379,19 @@ namespace RenderApp.GLUtil.ShaderModel
                 switch (info.Name)
                 {
                     case "position":
-                        info.variable = geometry.Position;
+                        info.variable = geometry.GeometryInfo.Position;
                         break;
                     case "normal":
-                        info.variable = geometry.Normal;
+                        info.variable = geometry.GeometryInfo.Normal;
                         break;
                     case "color":
-                        info.variable = geometry.Color;
+                        info.variable = geometry.GeometryInfo.Color;
                         break;
                     case "texcoord":
-                        info.variable = geometry.TexCoord;
+                        info.variable = geometry.GeometryInfo.TexCoord;
                         break;
                     case "index":
-                        info.variable = geometry.Index;
+                        info.variable = geometry.GeometryInfo.Index;
                         break;
                     case "uGeometryID":
                         info.variable = geometry.ID;

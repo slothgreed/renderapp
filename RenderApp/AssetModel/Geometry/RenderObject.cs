@@ -18,35 +18,35 @@ namespace RenderApp.AssetModel
         {
             MaterialItem = Material.Constant;
 
-            if(Position.Count != 0)
+            if (GeometryInfo.Position.Count != 0)
             {
                 PositionBuffer = new ArrayBuffer();
                 PositionBuffer.GenBuffer();
-                PositionBuffer.SetData(Position, EArrayType.Vec3Array);
+                PositionBuffer.SetData(GeometryInfo.Position, EArrayType.Vec3Array);
             }
-            if (Normal.Count != 0)
+            if (GeometryInfo.Normal.Count != 0)
             {
                 NormalBuffer = new ArrayBuffer();
                 NormalBuffer.GenBuffer();
-                NormalBuffer.SetData(Normal, EArrayType.Vec3Array);
+                NormalBuffer.SetData(GeometryInfo.Normal, EArrayType.Vec3Array);
             }
-            if (Color.Count != 0)
+            if (GeometryInfo.Color.Count != 0)
             {
                 ColorBuffer = new ArrayBuffer();
                 ColorBuffer.GenBuffer();
-                ColorBuffer.SetData(Color, EArrayType.Vec3Array);
+                ColorBuffer.SetData(GeometryInfo.Color, EArrayType.Vec3Array);
             }
-            if (TexCoord.Count != 0)
+            if (GeometryInfo.TexCoord.Count != 0)
             {
                 TexCoordBuffer = new ArrayBuffer();
                 TexCoordBuffer.GenBuffer();
-                TexCoordBuffer.SetData(TexCoord, EArrayType.Vec2Array);
+                TexCoordBuffer.SetData(GeometryInfo.TexCoord, EArrayType.Vec2Array);
             }
-            if(Index.Count != 0)
+            if (GeometryInfo.Index.Count != 0)
             {
                 IndexBuffer = new ArrayBuffer(BufferTarget.ElementArrayBuffer);
                 IndexBuffer.GenBuffer();
-                IndexBuffer.SetData(Index, EArrayType.IntArray);
+                IndexBuffer.SetData(GeometryInfo.Index, EArrayType.IntArray);
             }
         }
 
@@ -59,18 +59,18 @@ namespace RenderApp.AssetModel
         }
         public void CreatePNC(List<Vector3> position, List<Vector3> normal, List<Vector3> color, PrimitiveType prim)
         {
-            Position = new List<Vector3>(position);
-            Normal = new List<Vector3>(normal);
-            Color = new List<Vector3>(color);
+            GeometryInfo.Position = new List<Vector3>(position);
+            GeometryInfo.Normal = new List<Vector3>(normal);
+            GeometryInfo.Color = new List<Vector3>(color);
             Initialize();
         }
         internal void CreatePNC(List<Vector3> position, List<Vector3> normal, Vector3 color, PrimitiveType prim)
         {
-            Position = new List<Vector3>(position);
-            Normal = new List<Vector3>(normal);
-            for (int i = 0; i < Position.Count; i++)
+            GeometryInfo.Position = new List<Vector3>(position);
+            GeometryInfo.Normal = new List<Vector3>(normal);
+            for (int i = 0; i < GeometryInfo.Position.Count; i++)
             {
-                Color.Add(Vector3.UnitY);
+                GeometryInfo.Color.Add(Vector3.UnitY);
             } 
             Initialize();
         }
@@ -79,9 +79,9 @@ namespace RenderApp.AssetModel
         /// </summary>
         public void CreateP(List<Vector3> position, PrimitiveType prim)
         {
-            Position = new List<Vector3>(position);
+            GeometryInfo.Position = new List<Vector3>(position);
             RenderType = prim;
-            CalcNormal(Position, prim);
+            CalcNormal(GeometryInfo.Position, prim);
             Initialize();
         }
         /// <summary>
@@ -89,12 +89,12 @@ namespace RenderApp.AssetModel
         /// </summary>
         public void CreatePN(List<Vector3> position, List<Vector3> normal, PrimitiveType prim)
         {
-            Position = new List<Vector3>(position);
-            Normal = new List<Vector3>(normal);
+            GeometryInfo.Position = new List<Vector3>(position);
+            GeometryInfo.Normal = new List<Vector3>(normal);
             RenderType = prim;
-            for (int i = 0; i < Position.Count; i++)
+            for (int i = 0; i < GeometryInfo.Position.Count; i++)
             {
-                Color.Add(Vector3.UnitY);
+                GeometryInfo.Color.Add(Vector3.UnitY);
             }
             Initialize();
         }
@@ -103,12 +103,12 @@ namespace RenderApp.AssetModel
         /// </summary>
         public void CreatePNC(string name, List<Vector3> position, List<Vector3> normal, Vector3 color, PrimitiveType prim)
         {
-            Position = new List<Vector3>(position);
-            Normal = new List<Vector3>(normal);
+            GeometryInfo.Position = new List<Vector3>(position);
+            GeometryInfo.Normal = new List<Vector3>(normal);
             RenderType = prim;
-            for (int i = 0; i < Position.Count; i++)
+            for (int i = 0; i < GeometryInfo.Position.Count; i++)
             {
-                Color.Add(color);
+                GeometryInfo.Color.Add(color);
             }
             Initialize();
         }
@@ -117,9 +117,9 @@ namespace RenderApp.AssetModel
         /// </summary>
         public void CreatePNC(string name, List<Vector3> position, List<Vector3> normal, List<Vector3> color, PrimitiveType prim)
         {
-            Position = new List<Vector3>(position);
-            Normal = new List<Vector3>(normal);
-            Color = new List<Vector3>(color);
+            GeometryInfo.Position = new List<Vector3>(position);
+            GeometryInfo.Normal = new List<Vector3>(normal);
+            GeometryInfo.Color = new List<Vector3>(color);
             RenderType = prim;
             Initialize();
         }
@@ -128,38 +128,38 @@ namespace RenderApp.AssetModel
         /// </summary>
         public void CreatePC(List<Vector3> position, Vector3 color, PrimitiveType prim)
         {
-            Position = position;
+            GeometryInfo.Position = position;
             RenderType = prim;
-            for (int i = 0; i < Position.Count; i++)
+            for (int i = 0; i < GeometryInfo.Position.Count; i++)
             {
-                Color.Add(color);
+                GeometryInfo.Color.Add(color);
             }
             Initialize();
         }
         internal void CreatePC(List<Vector3> position, List<Vector3> color, PrimitiveType prim)
         {
-            Position = new List<Vector3>(position);
-            Color = new List<Vector3>(color);
+            GeometryInfo.Position = new List<Vector3>(position);
+            GeometryInfo.Color = new List<Vector3>(color);
             RenderType = prim;
             Initialize();
         }
         public void CreatePNT(List<Vector3> position, List<Vector3> normal,List<Vector2> texcoord,PrimitiveType prim)
         {
-            Position = position;
-            Normal = normal;
-            if(Normal.Count == 0)
+            GeometryInfo.Position = position;
+            GeometryInfo.Normal = normal;
+            if (GeometryInfo.Normal.Count == 0)
             {
                 CalcNormal(position, prim);
             }
             RenderType = prim;
-            TexCoord = texcoord;
+            GeometryInfo.TexCoord = texcoord;
             Initialize();
         }
 
         public void CreatePT(List<Vector3> position, List<Vector2> texcoord, PrimitiveType prim)
         {
-            Position = position;
-            TexCoord = texcoord;
+            GeometryInfo.Position = position;
+            GeometryInfo.TexCoord = texcoord;
             CalcNormal(position, prim);
             Initialize();
         }
@@ -170,18 +170,18 @@ namespace RenderApp.AssetModel
                 for(int i = 0; i < position.Count; i+=3)
                 {
                     Vector3 normal = Vector3.Cross( position[i + 2] - position[i + 1],position[i] - position[i + 1]).Normalized();
-                    Normal.Add(normal);
-                    Normal.Add(normal);
-                    Normal.Add(normal);
+                    GeometryInfo.Normal.Add(normal);
+                    GeometryInfo.Normal.Add(normal);
+                    GeometryInfo.Normal.Add(normal);
                 }
             }else{
                 for (int i = 0; i < position.Count; i+=4)
                 {
                     Vector3 normal = Vector3.Cross(position[i + 2] - position[i + 1], position[i] - position[i + 1]).Normalized();
-                    Normal.Add(normal);
-                    Normal.Add(normal);
-                    Normal.Add(normal);
-                    Normal.Add(normal);
+                    GeometryInfo.Normal.Add(normal);
+                    GeometryInfo.Normal.Add(normal);
+                    GeometryInfo.Normal.Add(normal);
+                    GeometryInfo.Normal.Add(normal);
                 }
             }
         }
@@ -208,11 +208,11 @@ namespace RenderApp.AssetModel
                     }
                     break;
             }
-            Position.AddRange(addVertex);
+            GeometryInfo.Position.AddRange(addVertex);
             CalcNormal(addVertex,RenderType);
             foreach(var position in addVertex)
             {
-                Color.Add(_color);
+                GeometryInfo.Color.Add(_color);
             }
         }
 

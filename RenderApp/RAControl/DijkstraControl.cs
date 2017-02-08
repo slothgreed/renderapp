@@ -44,9 +44,9 @@ namespace RenderApp.RA_Control
                     {
                         Dijkstra.EndIndex = vertex_Index;
                     }
-                    tri1 = geometry.Position[vertex_Index];
-                    tri2 = geometry.Position[vertex_Index + 1];
-                    tri3 = geometry.Position[vertex_Index + 2];
+                    tri1 = geometry.GeometryInfo.Position[vertex_Index];
+                    tri2 = geometry.GeometryInfo.Position[vertex_Index + 1];
+                    tri3 = geometry.GeometryInfo.Position[vertex_Index + 2];
 
                     if (tri1 != Vector3.Zero && tri2 != Vector3.Zero && tri3 != Vector3.Zero)
                     {
@@ -61,7 +61,7 @@ namespace RenderApp.RA_Control
                             triangle.CreatePC(new List<Vector3>() { tri1, tri2, tri3 }, KICalc.RandomColor(), OpenTK.Graphics.OpenGL.PrimitiveType.Triangles);
                             AssetFactory.Instance.CreateGeometry(triangle);
                         }
-                        else if (picking.TriangleNum == 2)
+                        else if (picking.GeometryInfo.TriangleNum == 2)
                         {
                             picking.Dispose();
                             picking.AddVertex(new List<Vector3>() { tri1, tri2, tri3 }, KICalc.RandomColor());

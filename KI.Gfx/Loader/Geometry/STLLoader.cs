@@ -15,7 +15,7 @@ namespace KI.Gfx.KIGeometry
     /// </summary>
     public class STLLoader : KIFile
     {
-        public VertexInfo vertexInfo;
+        public GeometryInfo vertexInfo;
         /// <summary>
         /// STLのローダ。
         /// </summary>
@@ -27,7 +27,7 @@ namespace KI.Gfx.KIGeometry
         {
             try
             {
-                vertexInfo = new VertexInfo();
+                vertexInfo = new GeometryInfo();
                 String[] parser = File.ReadAllLines(filePath, System.Text.Encoding.GetEncoding("Shift_JIS"));
                 ReadData(vertexInfo, parser);
             }
@@ -45,7 +45,7 @@ namespace KI.Gfx.KIGeometry
         /// <param name="parser">STLデータ</param>
         /// <param name="position">位置情報を格納</param>
         /// <param name="normal">法線情報を格納</param>
-        private void ReadData(VertexInfo data,String[] parser)
+        private void ReadData(GeometryInfo data,String[] parser)
         {
             try
             {

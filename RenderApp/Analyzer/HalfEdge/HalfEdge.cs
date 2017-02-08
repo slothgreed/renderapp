@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 using KI.Foundation.Utility;
-using KI.Gfx.Analyzer;
-namespace RenderApp.Analyzer
+using KI.Gfx;
+namespace KI.Gfx.Analyzer
 {
     public class HalfEdge : IAnalyzer
     {
@@ -20,7 +20,6 @@ namespace RenderApp.Analyzer
         public Parameter MinCurvature = new Parameter();
         public Parameter Voronoi = new Parameter();
         public Parameter Saliency = new Parameter();
-        private AssetModel.Geometry geometry;
         /// <summary>
         /// メッシュのインデックスと、頂点を受け取る
         /// </summary>
@@ -31,7 +30,7 @@ namespace RenderApp.Analyzer
             Initialize(position, poly_Index);
         }
 
-        public HalfEdge(AssetModel.Geometry geometry)
+        public HalfEdge(GeometryInfo geometry)
         {
             Initialize(geometry.Position, geometry.Index);
         }

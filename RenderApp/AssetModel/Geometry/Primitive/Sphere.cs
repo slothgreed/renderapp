@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using KI.Gfx;
 using KI.Gfx.KIGeometry;
 namespace RenderApp.AssetModel.RA_Geometry
 {
-    public class Sphere : VertexInfo
+    public class Sphere : GeometryInfo
     {
         public Geometry geometry;
         /// <param name="radial">半径</param>
@@ -190,8 +191,8 @@ namespace RenderApp.AssetModel.RA_Geometry
             }
 
             RenderObject geometry = new RenderObject("Sphere");
+            ConvertVertexArray();
             geometry.CreatePNT(Position, Normal, TexCoord, PrimitiveType.Triangles);
-            geometry.ConvertVertexArray();
             
         }
         /// <summary>

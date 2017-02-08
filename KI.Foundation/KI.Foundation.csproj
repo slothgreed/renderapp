@@ -47,6 +47,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Command\ICommand.cs" />
     <Compile Include="Core\KIObject.cs" />
     <Compile Include="Core\KIFile.cs" />
     <Compile Include="Core\KITimer.cs" />

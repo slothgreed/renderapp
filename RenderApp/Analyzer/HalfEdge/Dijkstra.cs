@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RenderApp.AssetModel;
+using KI.Foundation.Command;
 using KI.Gfx.Analyzer;
 
 namespace RenderApp.Analyzer
@@ -20,7 +21,7 @@ namespace RenderApp.Analyzer
             vertex = _v;
         }
     }
-    class Dijkstra : RA_Command.ICommand,IAnalyzer
+    class Dijkstra : ICommand, IAnalyzer
     {
         public Geometry Geometry
         {
@@ -49,7 +50,7 @@ namespace RenderApp.Analyzer
                 _distance = value;
             }
         }
-        private HalfEdge _halfEdge;
+        private HalfEdge _halfEdge = null;
         public Dijkstra()
         {
             Reset();

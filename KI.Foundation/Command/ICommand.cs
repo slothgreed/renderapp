@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RenderApp.RA_Command
+namespace KI.Foundation.Command
 {
-    interface ICommand
+    public interface ICommand
     {
         /// <summary>
         /// 処理できるか？

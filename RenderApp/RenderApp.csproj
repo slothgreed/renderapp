@@ -125,7 +125,6 @@
     <Compile Include="AssetModel\AssetFactory.cs" />
     <Compile Include="AssetModel\Geometry\IRenderObjectConverter.cs" />
     <Compile Include="GLUtil\DeviceContext.cs" />
-    <Compile Include="RACommand\ICommand.cs" />
     <Compile Include="Render_System\Post_Effect\Bloom.cs" />
     <Compile Include="Render_System\Post_Effect\DOF.cs" />
     <Compile Include="Render_System\Post_Effect\PostEffect.cs" />
@@ -143,7 +142,6 @@
     <Compile Include="ViewModel\Converter\EnumConverter.cs" />
     <Compile Include="Globals\Project.cs" />
     <Compile Include="GLUtil\ShaderModel\ShaderFactory.cs" />
-    <Compile Include="AssetModel\EnvironmentProbe.cs" />
     <Compile Include="GLUtil\ShaderModel\ShaderProgramInfo.cs" />
     <Compile Include="Globals\Enum.cs" />
     <Compile Include="GLUtil\TextureFactory.cs" />

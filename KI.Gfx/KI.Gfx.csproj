@@ -63,6 +63,8 @@
     <Compile Include="GLUtil\Buffer\RenderBuffer.cs" />
     <Compile Include="GLUtil\Buffer\SamplerBuffer.cs" />
     <Compile Include="GLUtil\Buffer\TextureBuffer.cs" />
+    <Compile Include="KIAsset\Camera.cs" />
+    <Compile Include="KIAsset\EnvironmentProbe.cs" />
     <Compile Include="KIAsset\Light\DirectionLight.cs" />
     <Compile Include="KIAsset\Light\Light.cs" />
     <Compile Include="KIAsset\Light\PointLight.cs" />

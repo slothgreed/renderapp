@@ -63,22 +63,22 @@ namespace RenderApp.AssetModel.RA_Geometry
                 var Position = new List<Vector3>();
                 var Normal = new List<Vector3>();
                 var TexCoord = new List<Vector2>();
-                for (int j = 0; j < material.vertexArrayInfo.posIndex.Count / 3; j++)
+                for (int j = 0; j < material.posIndex.Count / 3; j++)
                 {
-                    Position.Add(objData.vertexInfo.Position[material.vertexArrayInfo.posIndex[3 * j]]);
-                    Position.Add(objData.vertexInfo.Position[material.vertexArrayInfo.posIndex[3 * j + 1]]);
-                    Position.Add(objData.vertexInfo.Position[material.vertexArrayInfo.posIndex[3 * j + 2]]);
+                    Position.Add(objData.vertexInfo.Position[material.posIndex[3 * j]]);
+                    Position.Add(objData.vertexInfo.Position[material.posIndex[3 * j + 1]]);
+                    Position.Add(objData.vertexInfo.Position[material.posIndex[3 * j + 2]]);
                     if (objData.vertexInfo.Normal.Count != 0)
                     {
-                        Normal.Add(objData.vertexInfo.Normal[material.vertexArrayInfo.norIndex[3 * j]]);
-                        Normal.Add(objData.vertexInfo.Normal[material.vertexArrayInfo.norIndex[3 * j + 1]]);
-                        Normal.Add(objData.vertexInfo.Normal[material.vertexArrayInfo.norIndex[3 * j + 2]]);
+                        Normal.Add(objData.vertexInfo.Normal[material.norIndex[3 * j]]);
+                        Normal.Add(objData.vertexInfo.Normal[material.norIndex[3 * j + 1]]);
+                        Normal.Add(objData.vertexInfo.Normal[material.norIndex[3 * j + 2]]);
                     }
                     if (objData.vertexInfo.TexCoord.Count != 0)
                     {
-                        TexCoord.Add(objData.vertexInfo.TexCoord[material.vertexArrayInfo.texIndex[3 * j]]);
-                        TexCoord.Add(objData.vertexInfo.TexCoord[material.vertexArrayInfo.texIndex[3 * j + 1]]);
-                        TexCoord.Add(objData.vertexInfo.TexCoord[material.vertexArrayInfo.texIndex[3 * j + 2]]);
+                        TexCoord.Add(objData.vertexInfo.TexCoord[material.texIndex[3 * j]]);
+                        TexCoord.Add(objData.vertexInfo.TexCoord[material.texIndex[3 * j + 1]]);
+                        TexCoord.Add(objData.vertexInfo.TexCoord[material.texIndex[3 * j + 2]]);
                     }
                 }
 

@@ -10,8 +10,8 @@ using RenderApp.ViewModel;
 using RenderApp.GLUtil.ShaderModel;
 using RenderApp.Utility;
 using KI.Foundation.Core;
-using KI.Gfx.KIAsset;
 using KI.Foundation.Tree;
+using KI.Gfx.KIAsset;
 
 namespace RenderApp
 {
