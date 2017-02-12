@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 using KI.Foundation.Utility;
-using KI.Gfx;
+using KI.Gfx.KIAsset;
 namespace KI.Gfx.Analyzer
 {
     public class HalfEdge : IAnalyzer

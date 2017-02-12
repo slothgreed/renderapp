@@ -10,7 +10,7 @@ using OpenTK.Graphics.OpenGL;
 using KI.Foundation.Utility;
 using KI.Foundation.Core;
 
-namespace KI.Gfx.KIGeometry
+namespace KI.Gfx.KIAsset
 {
     public class OBJMaterial
     {

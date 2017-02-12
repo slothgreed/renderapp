@@ -8,7 +8,7 @@ using System.Drawing;
 using KI.Foundation.Utility;
 using KI.Foundation.Core;
 
-namespace KI.Gfx.KIImage
+namespace KI.Gfx.KIAsset
 {
     public enum ImageKind
     {

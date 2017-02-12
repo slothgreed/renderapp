@@ -74,13 +74,13 @@
     <Compile Include="KIAsset\Light\SpotLight.cs" />
     <Compile Include="KIAsset\Texture.cs" />
     <Compile Include="KIAsset\TextureFactory.cs" />
-    <Compile Include="Loader\Geometry\OBJLoader.cs" />
-    <Compile Include="Loader\Geometry\STLLoader.cs" />
-    <Compile Include="Loader\Image\HDRImage.cs" />
-    <Compile Include="Loader\Image\TGAImage.cs" />
-    <Compile Include="KIImageInfo.cs" />
+    <Compile Include="KIAsset\Loader\Geometry\OBJLoader.cs" />
+    <Compile Include="KIAsset\Loader\Geometry\STLLoader.cs" />
+    <Compile Include="KIAsset\Loader\Image\HDRImage.cs" />
+    <Compile Include="KIAsset\Loader\Image\TGAImage.cs" />
+    <Compile Include="KIAsset\KIImageInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GeometryInfo.cs" />
+    <Compile Include="KIAsset\GeometryInfo.cs" />
     <Compile Include="Shader\ShaderProgram.cs" />
     <Compile Include="Shader\ShaderProgramInfo.cs" />
   </ItemGroup>

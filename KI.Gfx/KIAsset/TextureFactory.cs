@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KI.Foundation.Core;
-using KI.Gfx.KIImage;
 using KI.Gfx.KIAsset;
 namespace KI.Gfx.KIAsset
 {

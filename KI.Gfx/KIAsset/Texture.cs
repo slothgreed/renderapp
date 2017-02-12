@@ -8,7 +8,6 @@ using OpenTK.Graphics.OpenGL;
 using System.Drawing.Imaging;
 using KI.Foundation.Utility;
 using KI.Foundation.Core;
-using KI.Gfx.KIImage;
 using KI.Gfx.GLUtil;
 
 namespace KI.Gfx.KIAsset

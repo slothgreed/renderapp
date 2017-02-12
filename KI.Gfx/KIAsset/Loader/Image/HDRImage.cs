@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace KI.Gfx.KIImage
+namespace KI.Gfx.KIAsset
 {
     public class HDRImage : KIImageInfo
     {

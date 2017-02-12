@@ -9,6 +9,7 @@ using RenderApp.GLUtil;
 using KI.Foundation.Utility;
 using KI.Foundation.Core;
 using KI.Gfx;
+using KI.Gfx.KIAsset;
 using KI.Gfx.GLUtil;
 using KI.Gfx.Analyzer;
 namespace RenderApp.AssetModel

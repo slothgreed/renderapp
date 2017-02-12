@@ -11,7 +11,6 @@ using System.Windows.Forms;
 using RenderApp.GLUtil;
 using KI.Foundation.Utility;
 using KI.Foundation.Core;
-using KI.Gfx.KIGeometry;
 using KI.Gfx.KIAsset;
 namespace RenderApp.AssetModel.RA_Geometry
 {

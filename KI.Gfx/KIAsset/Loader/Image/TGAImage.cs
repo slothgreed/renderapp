@@ -7,7 +7,7 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
-namespace KI.Gfx.KIImage
+namespace KI.Gfx.KIAsset
 {
     public class TGAImage : KIImageInfo
     {

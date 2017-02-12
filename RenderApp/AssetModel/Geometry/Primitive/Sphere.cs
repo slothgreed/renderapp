@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using KI.Gfx;
-using KI.Gfx.KIGeometry;
+using KI.Gfx.KIAsset;
 namespace RenderApp.AssetModel.RA_Geometry
 {
     public class Sphere : GeometryInfo

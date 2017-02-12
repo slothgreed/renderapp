@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using KI.Gfx.GLUtil;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-namespace KI.Gfx
+namespace KI.Gfx.KIAsset
 {
     public enum GeometryType
     {

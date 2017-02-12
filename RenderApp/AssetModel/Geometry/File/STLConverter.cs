@@ -7,7 +7,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Windows.Forms;
 using KI.Foundation.Core;
-using KI.Gfx.KIGeometry;
+using KI.Gfx.KIAsset;
 namespace RenderApp.AssetModel.RA_Geometry
 {
     /// <summary>

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using KI.Foundation.Command;
 using KI.Gfx;
-
+using KI.Gfx.KIAsset;
 namespace KI.Gfx.Analyzer
 {
     public struct Node

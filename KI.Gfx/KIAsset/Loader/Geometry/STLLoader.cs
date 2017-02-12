@@ -8,7 +8,7 @@ using OpenTK.Graphics.OpenGL;
 using KI.Foundation.Utility;
 using KI.Foundation.Core;
 
-namespace KI.Gfx.KIGeometry
+namespace KI.Gfx.KIAsset
 {
     /// <summary>
     /// STLのローダ現在テキストファイルのみ
