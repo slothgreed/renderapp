@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms.Integration;
+using KI.Gfx.GLUtil;
 using RenderApp.GLUtil;
 namespace RenderApp.ViewModel
 {

@@ -42,6 +42,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -66,6 +67,7 @@
     <Compile Include="GLUtil\Buffer\SamplerBuffer.cs" />
     <Compile Include="GLUtil\Buffer\TextureBuffer.cs" />
     <Compile Include="GLUtil\DeviceContext.cs" />
+    <Compile Include="GLUtil\Viewport.cs" />
     <Compile Include="KIAsset\Camera.cs" />
     <Compile Include="KIAsset\EnvironmentProbe.cs" />
     <Compile Include="KIAsset\Light\DirectionLight.cs" />

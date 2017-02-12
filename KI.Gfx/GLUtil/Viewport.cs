@@ -6,18 +6,13 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using System.Diagnostics;
-using RenderApp.AssetModel;
-using RenderApp.Utility;
 using System.IO;
 using System.Windows.Forms;
 using System.Timers;
-using RenderApp.RA_Control;
-using RenderApp.Render_System;
 using KI.Foundation.Utility;
 using KI.Foundation.Core;
 using System.Drawing;
-using KI.Gfx.GLUtil;
-namespace RenderApp.GLUtil
+namespace KI.Gfx.GLUtil
 {
     public delegate void OnLoadedHandler(object sender,EventArgs e);
     public delegate void OnMouseDownHandler(object sender, MouseEventArgs e);

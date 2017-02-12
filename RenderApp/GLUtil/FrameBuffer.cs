@@ -13,6 +13,9 @@ namespace RenderApp.GLUtil
 {
     public class FrameBuffer : BufferObject
     {
+        /// <summary>
+        /// 名前
+        /// </summary>
         public string Name { get; private set; }
         /// <summary>
         /// 幅

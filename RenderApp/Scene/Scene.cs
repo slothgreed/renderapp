@@ -145,11 +145,11 @@ namespace RenderApp
         {
             RootNode = new KINode("ROOT");
 
-            List<RenderObject> sponzas = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/crytek-sponza/sponza.obj");
-            foreach (var sponza in sponzas)
-            {
-                AddObject(sponza);
-            }
+            //List<RenderObject> sponzas = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/crytek-sponza/sponza.obj");
+            //foreach (var sponza in sponzas)
+            //{
+            //    AddObject(sponza);
+            //}
             List<RenderObject> ducks = AssetFactory.Instance.CreateLoad3DModel("C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/duck/duck.obj");
             foreach (var duck in ducks)
             {
