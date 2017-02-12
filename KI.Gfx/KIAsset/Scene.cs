@@ -4,16 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
-using RenderApp.AssetModel;
-using RenderApp.GLUtil;
-using RenderApp.ViewModel;
-using RenderApp.GLUtil.ShaderModel;
-using RenderApp.Utility;
 using KI.Foundation.Core;
 using KI.Foundation.Tree;
-using KI.Gfx.KIAsset;
 
-namespace RenderApp
+namespace KI.Gfx.KIAsset
 {
     public class Scene : KIObject
     {
@@ -30,13 +24,14 @@ namespace RenderApp
         public Scene(string name)
             : base(name)
         {
-
+            RootNode = new KINode("ROOT");
         }
         #region [scene dictionary]
         /// <summary>
         /// ルートノード
         /// </summary>
         public KINode RootNode;
+
         /// <summary>
         /// 選択中のアセット
         /// </summary>
@@ -54,6 +49,7 @@ namespace RenderApp
         }
 
         #endregion
+
         #region [default property]
         /// <summary>
         /// カメラ
@@ -116,6 +112,12 @@ namespace RenderApp
             }
         }
 
+        public void DeleteNode(string key)
+        {
+            RootNode.RemoveRecursiveChild(key);
+        }
+        #endregion
+        #region [dispose]
         private string GetNewKey<T>(string key, Dictionary<string, T> AssetList) where T : KIFile
         {
             string newKey = key;
@@ -126,40 +128,13 @@ namespace RenderApp
                 serialNumber++;
                 newKey = key + serialNumber;
                 exist = AssetList.ContainsKey(newKey);
-                if(!exist)
+                if (!exist)
                 {
                     return newKey;
                 }
             }
         }
-        internal void DeleteNode(string key)
-        {
-            RootNode.RemoveRecursiveChild(key);
-        }
-        #endregion
-        #region [initialize]
-        /// <summary>
-        /// シーンの初期化
-        /// </summary>
-        public void Initialize()
-        {
-            RootNode = new KINode("ROOT");
-
-            //List<RenderObject> sponzas = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/crytek-sponza/sponza.obj");
-            //foreach (var sponza in sponzas)
-            //{
-            //    AddObject(sponza);
-            //}
-            List<RenderObject> ducks = AssetFactory.Instance.CreateLoad3DModel("C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/duck/duck.obj");
-            foreach (var duck in ducks)
-            {
-                duck.RotateX(-90);
-                duck.RotateY(0);
-                AddObject(duck);
-            }
-        }
-        #endregion
-        #region [dispose]
+        
         public override void Dispose()
         {
             RootNode.Dispose();

@@ -119,7 +119,6 @@ namespace RenderApp.ViewModel
         {
             SceneManager.Instance.RenderSystem.Initialize(DeviceContext.Instance.Width,DeviceContext.Instance.Height);
             SceneManager.Instance.Create("MainScene");
-            SceneManager.Instance.ActiveScene.Initialize();
             SceneManager.Instance.CreateMainCamera();
             SceneManager.Instance.CreateSceneLight();
             LeftUpDockPanel.Add(new RootNodeViewModel(SceneManager.Instance.ActiveScene.RootNode, "Scene"));

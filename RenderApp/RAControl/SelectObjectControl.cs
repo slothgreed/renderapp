@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RenderApp.GLUtil;
 using OpenTK;
 using KI.Foundation.Utility;
-using RenderApp.AssetModel;
-using RenderApp.Utility;
 using KI.Foundation.Tree;
 using KI.Gfx.GLUtil;
+using KI.Gfx.KIAsset;
+using RenderApp.AssetModel;
 
 namespace RenderApp.RA_Control
 {

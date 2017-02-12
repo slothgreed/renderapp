@@ -44,18 +44,33 @@ namespace RenderApp
         public void Create(string name)
         {
             var scene = new Scene(name);
-            scene.Initialize();
             SceneList.Add(scene);
             ActiveScene = scene;
+            Initialize();
+        }
+        public void Initialize()
+        {
+            List<RenderObject> sponzas = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/crytek-sponza/sponza.obj");
+            foreach (var sponza in sponzas)
+            {
+                ActiveScene.AddObject(sponza);
+            }
+            List<RenderObject> ducks = AssetFactory.Instance.CreateLoad3DModel("C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/duck/duck.obj");
+            foreach (var duck in ducks)
+            {
+                duck.RotateX(-90);
+                duck.RotateY(0);
+                ActiveScene.AddObject(duck);
+            }
         }
         public void CreateMainCamera()
         {
-            ActiveScene.MainCamera = AssetFactory.Instance.CreateMainCamera();
+            ActiveScene.MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
             SceneManager.Instance.ActiveScene.AddObject(ActiveScene.MainCamera);
         }
         public void CreateSceneLight()
         {
-            ActiveScene.SunLight = AssetFactory.Instance.CreateSunLight();
+            ActiveScene.SunLight = AssetFactory.Instance.CreateLight("SunLight");
             SceneManager.Instance.ActiveScene.AddObject(ActiveScene.SunLight);
         }
         public void AddObject(string filePath)

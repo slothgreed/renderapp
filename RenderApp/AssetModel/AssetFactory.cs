@@ -48,14 +48,14 @@ namespace RenderApp.AssetModel
             Project.ActiveProject.AddChild(material);
             return material;
         }
-        internal Camera CreateMainCamera()
+        internal Camera CreateCamera(string name)
         {
-            return new Camera("MainCamera");
+            return new Camera(name);
         }
 
-        internal Light CreateSunLight()
+        internal Light CreateLight(string name)
         {
-            return new PointLight("SunLight", new Vector3(10), Vector3.Zero);
+            return new PointLight(name, new Vector3(10), Vector3.Zero);
         }
         internal Geometry CreateGeometry(Geometry geometry)
         {

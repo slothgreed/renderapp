@@ -205,7 +205,6 @@
       <DependentUpon>MainWindowViewModelT4.tt</DependentUpon>
     </Compile>
     <Compile Include="Scene\Material\Material.cs" />
-    <Compile Include="Scene\Scene.cs" />
     <Compile Include="Globals\ProjectInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -238,7 +237,6 @@
     <Compile Include="Scene\Shader\NURBS\NURBS.cs" />
     <Compile Include="Scene\Shader\OffScreen\Bloom\CBloom.cs" />
     <Compile Include="Scene\Shader\MRT\OutLine\OutLine.cs" />
-    <Compile Include="GLUtil\FrameBuffer.cs" />
     <Compile Include="Scene\Shader\OffScreen\Result\CResult.cs" />
     <Compile Include="Scene\Shader\MRT\General\ConstantShader.cs" />
     <Compile Include="Scene\Shader\Diffuse\CDiffuse.cs" />

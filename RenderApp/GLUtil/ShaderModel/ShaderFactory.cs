@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RenderApp.GLUtil.ShaderModel;
-using RenderApp.AssetModel;
 using RenderApp.Globals;
 using KI.Foundation.Core;
 using KI.Gfx;

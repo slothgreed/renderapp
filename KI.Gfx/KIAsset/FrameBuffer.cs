@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
-using RenderApp.Utility;
 using KI.Gfx.GLUtil;
 using KI.Foundation.Utility;
-using RenderApp.GLUtil;
-using KI.Gfx.KIAsset;
-namespace RenderApp.GLUtil
+namespace KI.Gfx.KIAsset
 {
     public class FrameBuffer : BufferObject
     {
