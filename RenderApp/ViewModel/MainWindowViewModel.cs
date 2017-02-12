@@ -20,6 +20,7 @@ using KI.Foundation.ViewModel;
 using KI.Foundation.Tree;
 using KI.Gfx.GLUtil;
 using KI.Gfx;
+using KI.Gfx.KIAsset;
 namespace RenderApp.ViewModel
 {
     public partial class MainWindowViewModel : ViewModelBase
@@ -255,7 +256,8 @@ namespace RenderApp.ViewModel
             {
                 foreach (var filename in dlg.FileNames)
                 {
-                    TextureFactory.Instance.CreateTexture(filename);
+                    var texture = TextureFactory.Instance.CreateTexture(filename);
+                    Project.ActiveProject.AddChild(texture);
                 }
             }
         }

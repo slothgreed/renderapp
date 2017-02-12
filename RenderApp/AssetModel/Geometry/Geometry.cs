@@ -11,7 +11,6 @@ using KI.Foundation.Core;
 using KI.Gfx;
 using KI.Gfx.GLUtil;
 using KI.Gfx.Analyzer;
-using KI.Gfx.GLUtil.Buffer;
 namespace RenderApp.AssetModel
 {
     public abstract class Geometry : KIObject
@@ -20,21 +19,17 @@ namespace RenderApp.AssetModel
         public int ID { get; private set; }
         public PrimitiveType RenderType { get; set; }
         public GeometryInfo GeometryInfo { get; set; }
-        public ArrayBuffer PositionBuffer { get; protected set; }
-        public ArrayBuffer NormalBuffer { get; protected set; }
-        public ArrayBuffer ColorBuffer { get; protected set; }
-        public ArrayBuffer TexCoordBuffer { get; protected set; }
-        public ArrayBuffer IndexBuffer { get; protected set; }
-
         
         public List<int> Timer { get; protected set; }
         public Vector3 Min { get; protected set; }
         public Vector3 Max { get; protected set; }
+
         public Matrix4 ModelMatrix
         {
             get;
             private set;
         }
+
         private Vector3 _translate = Vector3.Zero;
         public Vector3 Translate
         {
@@ -128,7 +123,6 @@ namespace RenderApp.AssetModel
             Rotate = Vector3.Zero;
         }
         #endregion
-
         #region render
         public virtual void Render()
         {
@@ -147,7 +141,6 @@ namespace RenderApp.AssetModel
         }
 
         #endregion
-
         #region [modelmatrix]
         #region [translate]
         /// <summary>

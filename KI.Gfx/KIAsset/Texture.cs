@@ -8,8 +8,8 @@ using OpenTK.Graphics.OpenGL;
 using System.Drawing.Imaging;
 using KI.Foundation.Utility;
 using KI.Foundation.Core;
-using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIImage;
+using KI.Gfx.GLUtil;
 
 namespace KI.Gfx.KIAsset
 {
@@ -83,12 +83,12 @@ namespace KI.Gfx.KIAsset
         public static readonly Texture Empty;
         #region [constructor]
 
-        public Texture(string name, string path)
+        internal Texture(string name, string path)
             : base(name)
         {
             CreateTextureBuffer2D();
         }
-        public Texture(string name, int width, int height)
+        internal Texture(string name, int width, int height)
             : base(name)
         {
             CreateTextureBuffer2D();

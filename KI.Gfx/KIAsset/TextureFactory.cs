@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RenderApp.Globals;
-using RenderApp.Utility;
 using KI.Foundation.Core;
 using KI.Gfx.KIImage;
 using KI.Gfx.KIAsset;
-namespace RenderApp.GLUtil
+namespace KI.Gfx.KIAsset
 {
     public class TextureFactory
     {
@@ -21,13 +19,7 @@ namespace RenderApp.GLUtil
                 return _instance;
             }
         }
-        private string DummyTexturePath
-        {
-            get
-            {
-                return ProjectInfo.TextureDirectory + @"\Dummy.png";
-            }
-        }
+
         public Dictionary<string, Texture> TextureList = new Dictionary<string, Texture>();
         public Texture CreateTexture(string path)
         {
@@ -81,14 +73,11 @@ namespace RenderApp.GLUtil
             Texture texture = new Texture(KIFile.GetNameFromPath(path), path);
             TextureList.Add(path, texture);
             texture.LoadTexture(image);
-            Project.ActiveProject.AddChild(texture);
             return texture;
         }
-        public Texture CreateTexture(string name,int width,int height)
+        public Texture CreateTexture(string name, int width, int height)
         {
-            Texture text = new Texture(name, width,height);
-            Project.ActiveProject.AddChild(text);
-            return text;
+            return new Texture(name, width, height);
         }
 
     }

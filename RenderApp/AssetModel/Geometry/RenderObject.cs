@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using KI.Gfx.GLUtil;
-using KI.Gfx.GLUtil.Buffer;
 namespace RenderApp.AssetModel
 {
     /// <summary>
@@ -17,37 +16,7 @@ namespace RenderApp.AssetModel
         private void Initialize()
         {
             MaterialItem = Material.Constant;
-
-            if (GeometryInfo.Position.Count != 0)
-            {
-                PositionBuffer = new ArrayBuffer();
-                PositionBuffer.GenBuffer();
-                PositionBuffer.SetData(GeometryInfo.Position, EArrayType.Vec3Array);
-            }
-            if (GeometryInfo.Normal.Count != 0)
-            {
-                NormalBuffer = new ArrayBuffer();
-                NormalBuffer.GenBuffer();
-                NormalBuffer.SetData(GeometryInfo.Normal, EArrayType.Vec3Array);
-            }
-            if (GeometryInfo.Color.Count != 0)
-            {
-                ColorBuffer = new ArrayBuffer();
-                ColorBuffer.GenBuffer();
-                ColorBuffer.SetData(GeometryInfo.Color, EArrayType.Vec3Array);
-            }
-            if (GeometryInfo.TexCoord.Count != 0)
-            {
-                TexCoordBuffer = new ArrayBuffer();
-                TexCoordBuffer.GenBuffer();
-                TexCoordBuffer.SetData(GeometryInfo.TexCoord, EArrayType.Vec2Array);
-            }
-            if (GeometryInfo.Index.Count != 0)
-            {
-                IndexBuffer = new ArrayBuffer(BufferTarget.ElementArrayBuffer);
-                IndexBuffer.GenBuffer();
-                IndexBuffer.SetData(GeometryInfo.Index, EArrayType.IntArray);
-            }
+            GeometryInfo.GenBuffer();
         }
 
         /// <summary>

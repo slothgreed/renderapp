@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KI.Gfx.GLUtil;
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
 namespace KI.Gfx
 {
     public enum GeometryType
@@ -30,6 +32,12 @@ namespace KI.Gfx
         public List<Vector2> TexCoord = new List<Vector2>();
         public List<int> Index = new List<int>();
 
+        public ArrayBuffer PositionBuffer { get; set; }
+        public ArrayBuffer NormalBuffer { get; set; }
+        public ArrayBuffer ColorBuffer { get; set; }
+        public ArrayBuffer TexCoordBuffer { get; set; }
+        public ArrayBuffer IndexBuffer { get; set; }
+
         public void Dispose()
         {
             Position.Clear();
@@ -51,6 +59,40 @@ namespace KI.Gfx
                 {
                     return Index.Count / 3;
                 }
+            }
+        }
+
+        public void GenBuffer()
+        {
+            if (Position.Count != 0)
+            {
+                PositionBuffer = new ArrayBuffer();
+                PositionBuffer.GenBuffer();
+                PositionBuffer.SetData(Position, EArrayType.Vec3Array);
+            }
+            if (Normal.Count != 0)
+            {
+                NormalBuffer = new ArrayBuffer();
+                NormalBuffer.GenBuffer();
+                NormalBuffer.SetData(Normal, EArrayType.Vec3Array);
+            }
+            if (Color.Count != 0)
+            {
+                ColorBuffer = new ArrayBuffer();
+                ColorBuffer.GenBuffer();
+                ColorBuffer.SetData(Color, EArrayType.Vec3Array);
+            }
+            if (TexCoord.Count != 0)
+            {
+                TexCoordBuffer = new ArrayBuffer();
+                TexCoordBuffer.GenBuffer();
+                TexCoordBuffer.SetData(TexCoord, EArrayType.Vec2Array);
+            }
+            if (Index.Count != 0)
+            {
+                IndexBuffer = new ArrayBuffer(BufferTarget.ElementArrayBuffer);
+                IndexBuffer.GenBuffer();
+                IndexBuffer.SetData(Index, EArrayType.IntArray);
             }
         }
 

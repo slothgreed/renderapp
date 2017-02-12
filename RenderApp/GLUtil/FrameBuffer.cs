@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.Utility;
 using KI.Gfx.GLUtil;
-using KI.Gfx.GLUtil.Buffer;
 using KI.Foundation.Utility;
 using RenderApp.GLUtil;
 using KI.Gfx.KIAsset;
@@ -67,7 +66,9 @@ namespace RenderApp.GLUtil
             Height = height;
             for(int i = 0; i < textureName.Length; i++)
             {
-                TextureList.Add(TextureFactory.Instance.CreateTexture(textureName[i],width,height));
+                var texture = TextureFactory.Instance.CreateTexture(textureName[i], width, height);
+                TextureList.Add(texture);
+                RenderApp.Globals.Project.ActiveProject.AddChild(texture);
                 Attachment.Add(FramebufferAttachment.ColorAttachment0 + i);
                 OutputBuffers.Add(DrawBuffersEnum.ColorAttachment0 + i);
             }

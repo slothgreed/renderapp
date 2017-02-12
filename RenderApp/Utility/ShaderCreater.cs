@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using KI.Gfx.GLUtil;
+using KI.Gfx;
 namespace RenderApp.Utility
 {
     public class ShaderCreater
@@ -40,7 +41,7 @@ namespace RenderApp.Utility
         /// <summary>
         /// 汎用的な頂点シェーダの読み込み
         /// </summary>
-        public string GetVertexShader(Geometry geometry)
+        public string GetVertexShader(GeometryInfo geometry)
         {
             if (CheckBufferEnable(geometry.PositionBuffer) &&
                 CheckBufferEnable(geometry.NormalBuffer) &&
@@ -69,7 +70,7 @@ namespace RenderApp.Utility
         /// <summary>
         /// フラグシェーダの切り替え
         /// </summary>
-        public string GetConstantFragShader(Geometry geometry)
+        public string GetConstantFragShader(GeometryInfo geometry)
         {
             if (geometry.PositionBuffer.Enable && geometry.ColorBuffer.Enable && geometry.NormalBuffer.Enable)
             {

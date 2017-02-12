@@ -73,6 +73,7 @@
     <Compile Include="KIAsset\Light\PointLight.cs" />
     <Compile Include="KIAsset\Light\SpotLight.cs" />
     <Compile Include="KIAsset\Texture.cs" />
+    <Compile Include="KIAsset\TextureFactory.cs" />
     <Compile Include="Loader\Geometry\OBJLoader.cs" />
     <Compile Include="Loader\Geometry\STLLoader.cs" />
     <Compile Include="Loader\Image\HDRImage.cs" />
