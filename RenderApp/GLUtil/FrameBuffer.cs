@@ -50,28 +50,26 @@ namespace RenderApp.GLUtil
         {
             this.Name = FrameName;
         }
-        public FrameBuffer(string FrameName,int width, int height,string textureName)
+        public FrameBuffer(string FrameName,int width, int height,Texture texture)
         {
             this.Name = FrameName;
-            Initialize(width, height, new string[] { textureName });
+            Initialize(width, height, new Texture[] { texture });
         }
 
-        public FrameBuffer(string FrameName,int width,int height,string[] textureName)
+        public FrameBuffer(string FrameName, int width, int height, Texture[] texture)
         {
             this.Name = FrameName;
-            Initialize(width, height, textureName);
+            Initialize(width, height, texture);
         }
 
-        protected void Initialize(int width, int height, string[] textureName)
+        protected void Initialize(int width, int height, Texture[] texture)
         {
             RenderBuffer = new RenderBuffer();
             Width = width;
             Height = height;
-            for(int i = 0; i < textureName.Length; i++)
+            for(int i = 0; i < texture.Length; i++)
             {
-                var texture = TextureFactory.Instance.CreateTexture(textureName[i], width, height);
-                TextureList.Add(texture);
-                RenderApp.Globals.Project.ActiveProject.AddChild(texture);
+                TextureList.Add(texture[i]);
                 Attachment.Add(FramebufferAttachment.ColorAttachment0 + i);
                 OutputBuffers.Add(DrawBuffersEnum.ColorAttachment0 + i);
             }

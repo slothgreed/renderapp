@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
+using KI.Gfx.KIAsset;
 using RenderApp.GLUtil;
 namespace RenderApp.Render_System
 {
@@ -20,7 +21,10 @@ namespace RenderApp.Render_System
         private List<FrameBuffer> frameList = new List<FrameBuffer>();
         public FrameBuffer CreateDefaultLithingBuffer(int width,int height)
         {
-            FrameBuffer frame = new FrameBuffer("LightBuffer",width,height,"LightBuffer");
+            Texture texture = TextureFactory.Instance.CreateTexture("LightBuffer", width, height);
+            RenderApp.Globals.Project.ActiveProject.AddChild(texture);
+
+            FrameBuffer frame = new FrameBuffer("LightBuffer",width,height,texture);
             frameList.Add(frame);
             return frame;
         }
@@ -43,8 +47,10 @@ namespace RenderApp.Render_System
 
         internal FrameBuffer CreateSelectionBuffer(int width, int height)
         {
-            FrameBuffer frame = new FrameBuffer("SelectionBuffer", width, height, "SelectionBuffer");
+            Texture texture = TextureFactory.Instance.CreateTexture("SelectionBuffer", width, height);
+            FrameBuffer frame = new FrameBuffer("SelectionBuffer", width, height, texture);
             frameList.Add(frame);
+            RenderApp.Globals.Project.ActiveProject.AddChild(texture);
             return frame;
         }
     }

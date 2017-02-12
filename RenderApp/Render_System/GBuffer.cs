@@ -14,12 +14,18 @@ namespace RenderApp.Render_System
         public GBuffer(int width, int height)
             :base("GBuffer")
         {
-            string[] textureName = new string[4];
-            textureName[0] = "GPosit";
-            textureName[1] = "GNormal";
-            textureName[2] = "GColor";
-            textureName[3] = "GLight";
-            Initialize(width, height, textureName);
+            Texture[] texture = new Texture[4];
+            texture[0] = TextureFactory.Instance.CreateTexture("GPosit", width, height);
+            texture[1] = TextureFactory.Instance.CreateTexture("GNormal", width, height);
+            texture[2] = TextureFactory.Instance.CreateTexture("GColor", width, height);
+            texture[3] = TextureFactory.Instance.CreateTexture("GLight", width, height);
+            Initialize(width, height, texture);
+
+            RenderApp.Globals.Project.ActiveProject.AddChild(texture[0]);
+            RenderApp.Globals.Project.ActiveProject.AddChild(texture[1]);
+            RenderApp.Globals.Project.ActiveProject.AddChild(texture[2]);
+            RenderApp.Globals.Project.ActiveProject.AddChild(texture[3]);
+
             textureList.Add(TextureKind.World, TextureList[0]);
             textureList.Add(TextureKind.Normal, TextureList[1]);
             textureList.Add(TextureKind.Albedo, TextureList[2]);
