@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-namespace KI.Gfx.GLUtil.Buffer
+namespace KI.Gfx.GLUtil
 {
 
     public class ArrayBuffer : BufferObject

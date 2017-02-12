@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 using KI.Foundation.Utility;
-namespace KI.Gfx.GLUtil.Buffer
+namespace KI.Gfx.GLUtil
 {
     public class RenderBuffer : BufferObject
     {
