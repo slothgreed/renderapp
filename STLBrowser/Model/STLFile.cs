@@ -9,7 +9,7 @@ namespace STLBrowser.Model
 {
     public class STLFile
     {
-        public string FullPath
+        public string FilePath
         {
             get;
             private set;
@@ -35,7 +35,7 @@ namespace STLBrowser.Model
 
         public STLFile(string path)
         {
-            FullPath = path;
+            FilePath = path;
             FileName = path;
             Info = new STLInfo(path);
         }

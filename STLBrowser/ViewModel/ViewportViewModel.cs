@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms.Integration;
 using System.Windows.Forms;
+using System.Windows;
 using RenderApp;
 using RenderApp.GLUtil;
 using RenderApp.RA_Control;
 using KI.Foundation.ViewModel;
 using KI.Gfx.GLUtil;
+using KI.Foundation.Control;
 namespace STLBrowser.ViewModel
 {
     public class ViewportViewModel : ViewModelBase
@@ -30,6 +32,12 @@ namespace STLBrowser.ViewModel
             }
         }
 
+        private DropAcceptDescription _dropEvent;
+        public DropAcceptDescription DropEvent
+        {
+            get { return _dropEvent; }
+            set { SetValue(ref _dropEvent, value); }
+        }
         public Viewport Viewport
         {
             get
@@ -47,6 +55,20 @@ namespace STLBrowser.ViewModel
             Viewport.Instance.OnMouseUp += OnMouseMoveUpEvent;
             Viewport.Instance.OnMouseMove += OnMouseMoveEvent;
             Viewport.Instance.OnMouseDown += OnMouseDownEvent;
+
+            DropEvent = new DropAcceptDescription();
+            DropEvent.DragDrop += DropAccept_DragDrop;
+            DropEvent.DragOver += DropAccept_DragOver;
+        }
+
+        void DropAccept_DragOver(System.Windows.DragEventArgs obj)
+        {
+            int a = 0;
+        }
+
+        void DropAccept_DragDrop(System.Windows.DragEventArgs obj)
+        {
+            int a = 0;
         }
 
         public override void UpdateProperty()

@@ -2,7 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:v="clr-namespace:STLBrowser.View"
-        xmlns:vm="clr-namespace:STLBrowser.ViewModel">
+        xmlns:vm="clr-namespace:STLBrowser.ViewModel"
+    >
     <ScrollViewer>
         <ItemsControl ItemsSource="{Binding STLFiles}">
             <ItemsControl.Template>
