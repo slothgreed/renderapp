@@ -6,11 +6,7 @@
              mc:Ignorable="d" 
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:control="clr-namespace:KI.Foundation.Control;assembly=KI.Foundation"
+             xmlns:view="clr-namespace:KI.Foundation.View;assembly=KI.Foundation"
              d:DesignHeight="300" d:DesignWidth="300">
-
-    <ContentControl Content="{Binding GLContext}" AllowDrop="True" Height="180">
-        <i:Interaction.Behaviors>
-            <control:DropBehavior Description="{Binding DropEvent}"/>
-        </i:Interaction.Behaviors>
-    </ContentControl>
+        <ContentControl Content="{Binding GLContext}" AllowDrop="True"/>
 </UserControl>

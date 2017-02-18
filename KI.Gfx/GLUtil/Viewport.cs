@@ -21,6 +21,10 @@ namespace KI.Gfx.GLUtil
     public delegate void OnMouseWheelHandler(object sender, MouseEventArgs e);
     public delegate void OnRenderHandler(object sender, PaintEventArgs e);
     public delegate void OnResizeHandler(object sender,EventArgs e);
+    public delegate void OnDragDropHandler(object sender, DragEventArgs e);
+    public delegate void OnDragEnterHandler(object sender, DragEventArgs e);
+    public delegate void OnDragLeaveHandler(object sender, EventArgs e);
+    public delegate void OnDragOverHandler(object sender, DragEventArgs e);
 
     /// <summary>
     /// 描画用のGlobal変数を保持するクラス
@@ -69,7 +73,10 @@ namespace KI.Gfx.GLUtil
         public event OnMouseWheelHandler OnMouseWheel;
         public event OnRenderHandler OnRender;
         public event OnResizeHandler OnResize;
-        
+        public event OnDragEnterHandler OnDragEnter;
+        public event OnDragLeaveHandler OnDragLeave;
+        public event OnDragOverHandler OnDragOver;
+
         #endregion
         #region [initialize method]
         private Viewport()
@@ -102,8 +109,13 @@ namespace KI.Gfx.GLUtil
             m_glControl.MouseWheel += glControl_MouseWheel;
             m_glControl.Paint += glControl_Paint;
             m_glControl.Resize += glControl_Resize;
-
+            m_glControl.DragEnter += glControl_DragEnter;
+            m_glControl.DragLeave += glControl_DragLeave;
+            m_glControl.DragOver += glControl_DragOver;
+            m_glControl.AllowDrop = true;
         }
+
+
 
         #endregion
         #region [context event]
@@ -163,6 +175,34 @@ namespace KI.Gfx.GLUtil
         }
         #endregion
         #region [mouse event]
+
+        public void glControl_DragOver(object sender, DragEventArgs e)
+        {
+            if(OnDragOver != null)
+            {
+                OnDragOver(sender, e);
+            }
+            glControl_Paint(null, null);
+        }
+
+        public void glControl_DragLeave(object sender, EventArgs e)
+        {
+            if (OnDragLeave != null)
+            {
+                OnDragLeave(sender, e);
+            }
+            glControl_Paint(null, null);
+        }
+
+        public void glControl_DragEnter(object sender, DragEventArgs e)
+        {
+            if (OnDragEnter != null)
+            {
+                OnDragEnter(sender, e);
+            }
+            glControl_Paint(null, null);
+        }
+
         private void glControl_MouseWheel(object sender, MouseEventArgs e)
         {
             if(OnMouseWheel != null)

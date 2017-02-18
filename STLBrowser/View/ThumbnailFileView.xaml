@@ -10,7 +10,6 @@
         <TextBlock Text="{Binding Model.FileName}" Height="25" Margin="2" TextAlignment="Center" AllowDrop="True">
                     <i:Interaction.Behaviors>
                 <control:DragBehavior DragData="{Binding Model.FilePath}"/>
-                <control:DropBehavior Description="{Binding DropEvent}"/>
             </i:Interaction.Behaviors>
         </TextBlock>
     </StackPanel>
