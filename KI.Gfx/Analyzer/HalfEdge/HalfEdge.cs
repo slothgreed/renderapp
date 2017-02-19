@@ -669,12 +669,5 @@ namespace KI.Gfx.Analyzer
         }
         #endregion
         #endregion
-        #region [other method]
-        public static string ToString()
-        {
-            return "HalfEdge";
-        }
-        #endregion
-
     }
 }
