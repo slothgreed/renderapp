@@ -212,7 +212,7 @@ namespace RenderApp.GLUtil.ShaderModel
         #endregion
         #region [bind buffer]
         private int ActiveTextureCounter;
-        public void BindBuffer(Geometry geometry)
+        public void BindBuffer(GeometryInfo geometry)
         {
             GL.UseProgram(Program);
 
@@ -229,7 +229,7 @@ namespace RenderApp.GLUtil.ShaderModel
                 }
                 if (loop.shaderVariableType == EShaderVariableType.Attribute)
                 {
-                    BindAttributeState(geometry.GeometryInfo, loop);
+                    BindAttributeState(geometry, loop);
                 }
             }
         }
