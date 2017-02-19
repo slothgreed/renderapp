@@ -36,7 +36,7 @@ namespace RenderApp.AssetModel
         /// <returns></returns>
         public bool BindShader(Geometry geometry)
         {
-            CurrentShader.BindBuffer(geometry);
+            CurrentShader.BindBuffer(geometry.GeometryInfo);
             return true;
         }
 
