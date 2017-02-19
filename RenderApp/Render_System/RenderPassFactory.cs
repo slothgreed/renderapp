@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 using KI.Gfx.KIAsset;
 using RenderApp.GLUtil;
+using KI.Gfx.Render;
 namespace RenderApp.Render_System
 {
     public class RenderPassFactory
@@ -18,14 +19,14 @@ namespace RenderApp.Render_System
                 return _instance;
             }
         }
-        private List<FrameBuffer> frameList = new List<FrameBuffer>();
-        public FrameBuffer CreateDefaultLithingBuffer(int width,int height)
+        private List<RenderTarget> renderTargetList = new List<RenderTarget>();
+        public RenderTarget CreateDefaultLithingBuffer(int width, int height)
         {
             Texture texture = TextureFactory.Instance.CreateTexture("LightBuffer", width, height);
             RenderApp.Globals.Project.ActiveProject.AddChild(texture);
 
-            FrameBuffer frame = new FrameBuffer("LightBuffer",width,height,texture);
-            frameList.Add(frame);
+            RenderTarget frame = new RenderTarget("LightBuffer", width, height, texture);
+            renderTargetList.Add(frame);
             return frame;
         }
 
@@ -33,23 +34,23 @@ namespace RenderApp.Render_System
         internal GBuffer CreateGBuffer(int width, int height)
         {
             GBuffer gBuffer = new GBuffer(width,height);
-            frameList.Add(gBuffer);
+            renderTargetList.Add(gBuffer);
             return gBuffer;
         }
 
         internal void Dispose()
         {
-            foreach(var frame in frameList)
+            foreach(var frame in renderTargetList)
             {
                 frame.Dispose();
             }
         }
 
-        internal FrameBuffer CreateSelectionBuffer(int width, int height)
+        internal RenderTarget CreateSelectionBuffer(int width, int height)
         {
             Texture texture = TextureFactory.Instance.CreateTexture("SelectionBuffer", width, height);
-            FrameBuffer frame = new FrameBuffer("SelectionBuffer", width, height, texture);
-            frameList.Add(frame);
+            RenderTarget frame = new RenderTarget("SelectionBuffer", width, height, texture);
+            renderTargetList.Add(frame);
             RenderApp.Globals.Project.ActiveProject.AddChild(texture);
             return frame;
         }

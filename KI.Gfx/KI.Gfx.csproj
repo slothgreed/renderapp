@@ -70,11 +70,12 @@
     <Compile Include="GLUtil\Viewport.cs" />
     <Compile Include="KIAsset\Camera.cs" />
     <Compile Include="KIAsset\EnvironmentProbe.cs" />
-    <Compile Include="KIAsset\FrameBuffer.cs" />
+    <Compile Include="GLUtil\Buffer\FrameBuffer.cs" />
     <Compile Include="KIAsset\Light\DirectionLight.cs" />
     <Compile Include="KIAsset\Light\Light.cs" />
     <Compile Include="KIAsset\Light\PointLight.cs" />
     <Compile Include="KIAsset\Light\SpotLight.cs" />
+    <Compile Include="Render\RenderTarget.cs" />
     <Compile Include="KIAsset\Scene.cs" />
     <Compile Include="KIAsset\Texture.cs" />
     <Compile Include="KIAsset\TextureFactory.cs" />

@@ -72,7 +72,7 @@ namespace RenderApp.Render_System
         {
             foreach(var loop in list)
             {
-                loop.FrameBufferItem.ClearBuffer();
+                loop.RenderTarget.ClearBuffer();
             }
 
         }

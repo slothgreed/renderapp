@@ -7,19 +7,20 @@ using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using RenderApp.GLUtil.ShaderModel;
 using KI.Gfx.KIAsset;
+using KI.Gfx.Render;
 namespace RenderApp.Render_System
 {
     public class PostPlane
     {
         private Geometry Plane;
-        public FrameBuffer FrameBufferItem
+        public RenderTarget RenderTarget
         {
             get;
             set;
         }
-        public PostPlane(string name,Shader shader,FrameBuffer frame)
+        public PostPlane(string name, Shader shader, RenderTarget frame)
         {
-            FrameBufferItem = frame;
+            RenderTarget = frame;
             Plane = AssetFactory.Instance.CreatePlane(name, shader);
         }
         public PostPlane(string name,Shader shader)
@@ -37,11 +38,11 @@ namespace RenderApp.Render_System
         }
         public void Render()
         {
-            if(FrameBufferItem != null)
+            if(RenderTarget != null)
             {
-                FrameBufferItem.BindBuffer();
+                RenderTarget.BindRenderTarget();
                 Plane.Render();
-                FrameBufferItem.UnBindBuffer();
+                RenderTarget.UnBindRenderTarget();
             }
             else
             {
@@ -50,14 +51,14 @@ namespace RenderApp.Render_System
         }
         public void ClearBuffer()
         {
-            FrameBufferItem.ClearBuffer();
+            RenderTarget.ClearBuffer();
         }
 
         public void SizeChanged(int width,int height)
         {
-            if(FrameBufferItem != null)
+            if(RenderTarget != null)
             {
-                FrameBufferItem.SizeChanged(width, height);
+                RenderTarget.SizeChanged(width, height);
             }
         }
 

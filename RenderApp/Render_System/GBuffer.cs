@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using RenderApp.GLUtil;
 using KI.Gfx.KIAsset;
+using KI.Gfx.Render;
 namespace RenderApp.Render_System
 {
-    class GBuffer : FrameBuffer
+    class GBuffer : RenderTarget
     {
         Dictionary<TextureKind, Texture> textureList = new Dictionary<TextureKind, Texture>();
 
@@ -26,10 +27,10 @@ namespace RenderApp.Render_System
             RenderApp.Globals.Project.ActiveProject.AddChild(texture[2]);
             RenderApp.Globals.Project.ActiveProject.AddChild(texture[3]);
 
-            textureList.Add(TextureKind.World, TextureList[0]);
-            textureList.Add(TextureKind.Normal, TextureList[1]);
-            textureList.Add(TextureKind.Albedo, TextureList[2]);
-            textureList.Add(TextureKind.Lighting, TextureList[3]);
+            textureList.Add(TextureKind.World, Textures[0]);
+            textureList.Add(TextureKind.Normal, Textures[1]);
+            textureList.Add(TextureKind.Albedo, Textures[2]);
+            textureList.Add(TextureKind.Lighting, Textures[3]);
         }
         public Texture FindTexture(TextureKind kind)
         {

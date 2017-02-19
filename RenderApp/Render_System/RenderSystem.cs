@@ -7,6 +7,7 @@ using RenderApp.AssetModel;
 using RenderApp.GLUtil;
 using OpenTK.Graphics.OpenGL;
 using KI.Gfx.KIAsset;
+using KI.Gfx.Render;
 namespace RenderApp.Render_System
 {
     public class RenderSystem
@@ -72,12 +73,12 @@ namespace RenderApp.Render_System
             PostProcessMode = false;
             GBufferStage = RenderPassFactory.Instance.CreateGBuffer(Width, Height);
 
-            foreach (var textures in GBufferStage.TextureList)
+            foreach (var textures in GBufferStage.Textures)
             {
                 ProcessingTexture.Add(textures);
             }
 
-            FrameBuffer lightingFrame = RenderPassFactory.Instance.CreateDefaultLithingBuffer(Width, Height);
+            RenderTarget lightingFrame = RenderPassFactory.Instance.CreateDefaultLithingBuffer(Width, Height);
             LightingStage = new PostPlane("DefaultLight", ShaderFactory.Instance.DefaultLightShader, lightingFrame);
             LightingStage.SetPlaneTexture(TextureKind.Albedo, GBufferStage.FindTexture(TextureKind.Albedo));
             LightingStage.SetPlaneTexture(TextureKind.Normal, GBufferStage.FindTexture(TextureKind.Normal));
@@ -85,16 +86,16 @@ namespace RenderApp.Render_System
             LightingStage.SetPlaneTexture(TextureKind.Lighting, GBufferStage.FindTexture(TextureKind.Lighting));
 
 
-            ProcessingTexture.Add(lightingFrame.TextureList[0]);
+            ProcessingTexture.Add(lightingFrame.Textures[0]);
 
-            FrameBuffer selectionBuffer = RenderPassFactory.Instance.CreateSelectionBuffer(Width, Height);
+            RenderTarget selectionBuffer = RenderPassFactory.Instance.CreateSelectionBuffer(Width, Height);
             SelectionStage = new PostPlane("Selection", ShaderFactory.Instance.DefaultSelectionShader, selectionBuffer);
             SelectionStage.SetPlaneTexture(TextureKind.Albedo, GBufferStage.FindTexture(TextureKind.Normal));
-            ProcessingTexture.Add(selectionBuffer.TextureList[0]);
+            ProcessingTexture.Add(selectionBuffer.Textures[0]);
             
             OutputStage = new PostPlane("OutputShader", ShaderFactory.Instance.OutputShader);
-            OutputTexture = GBufferStage.TextureList[0];
-            OutputTexture = lightingFrame.TextureList[0];
+            OutputTexture = GBufferStage.Textures[0];
+            OutputTexture = lightingFrame.Textures[0];
 
             
         
@@ -110,14 +111,14 @@ namespace RenderApp.Render_System
         }
         public void Picking(int x, int y)
         {
-            GBufferStage.BindBuffer();
+            GBufferStage.BindRenderTarget();
 
             GL.ReadBuffer(ReadBufferMode.ColorAttachment1);
             IntPtr ptr = IntPtr.Zero;
             float[] pixels = new float[4];
             GL.ReadPixels(x, y, 1, 1, PixelFormat.Rgba, PixelType.Float, pixels);
             GL.ReadBuffer(ReadBufferMode.None);
-            GBufferStage.UnBindBuffer();
+            GBufferStage.UnBindRenderTarget();
 
             int id = (int)(pixels[3] * 255);
             foreach(var geometryNode in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
@@ -148,7 +149,7 @@ namespace RenderApp.Render_System
         public void Render()
         {
             GBufferStage.ClearBuffer();
-            GBufferStage.BindBuffer();
+            GBufferStage.BindRenderTarget();
             foreach (var asset in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
             {
                 if(asset._KIObject is Geometry)
@@ -157,7 +158,7 @@ namespace RenderApp.Render_System
                     geometry.Render();
                 }
             }
-            GBufferStage.UnBindBuffer();
+            GBufferStage.UnBindRenderTarget();
 
 
             LightingStage.ClearBuffer();
@@ -187,7 +188,7 @@ namespace RenderApp.Render_System
             {
                 PostStage.Render();
             }
-            OutputStage.SetValue("uSelectMap", SelectionStage.FrameBufferItem.TextureList[0].DeviceID);
+            OutputStage.SetValue("uSelectMap", SelectionStage.RenderTarget.Textures[0].DeviceID);
             OutputStage.SetPlaneTexture(TextureKind.Albedo, OutputTexture);
             OutputStage.Render();
         }
