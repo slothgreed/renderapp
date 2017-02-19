@@ -8,7 +8,7 @@ using KI.Gfx.KIAsset;
 using KI.Gfx.Render;
 namespace RenderApp.Render_System
 {
-    class GBuffer : RenderTarget
+    public class GBuffer : RenderTarget
     {
         Dictionary<TextureKind, Texture> textureList = new Dictionary<TextureKind, Texture>();
 

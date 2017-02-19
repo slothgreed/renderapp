@@ -147,19 +147,5 @@ namespace RenderApp.GLUtil
                 shadre.Dispose();
             }
         }
-
-        private Shader _selectionShader;
-        public Shader DefaultSelectionShader
-        {
-            get
-            {
-                if (_selectionShader == null)
-                {
-                    _selectionShader = CreateShaderVF(ProjectInfo.ShaderDirectory + @"\Selection");
-
-                }
-                return _selectionShader;
-            }
-        }
     }
 }

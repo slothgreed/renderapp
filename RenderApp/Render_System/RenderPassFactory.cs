@@ -45,15 +45,6 @@ namespace RenderApp.Render_System
                 frame.Dispose();
             }
         }
-
-        internal RenderTarget CreateSelectionBuffer(int width, int height)
-        {
-            Texture texture = TextureFactory.Instance.CreateTexture("SelectionBuffer", width, height);
-            RenderTarget frame = new RenderTarget("SelectionBuffer", width, height, texture);
-            renderTargetList.Add(frame);
-            RenderApp.Globals.Project.ActiveProject.AddChild(texture);
-            return frame;
-        }
     }
 
 }

@@ -11,69 +11,30 @@ using RenderApp.GLUtil.ShaderModel;
 using RenderApp.Utility;
 namespace RenderApp.Render_System.Post_Effect
 {
-    partial class Sobel : PostEffect
+    partial class Sobel : RenderTechnique
     {
-        private int _render2D;
-        private int uRender2D
-        {
-            get
-            {
-                return _render2D;
-            }
-            set
-            {
-                SetValue<int>(ref _render2D,value);
-            }
-        }
-        private int _uWidth;
-        public int uWidth
-        {
-            get
-            {
-                return _uWidth;
-            }
-            set
-            {
-                SetValue<int>(ref _uWidth, value);
-            }
-        }
-        private int _uHeight;
-        public int uHeight
-        {
-            get
-            {
-                return _uHeight;
-            }
-            set
-            {
-                SetValue<int>(ref _uHeight, value);
-            }
-        }
-
-        private float _threshold;
-        private float uThreshold
-        {
-            get
-            {
-                return _threshold;
-            }
-            set
-            {
-                SetValue<float>(ref _threshold, value);
-            }
-        }
+        private static string vertexShader = ProjectInfo.ShaderDirectory + @"sobel.vert";
+        private static string fragShader = ProjectInfo.ShaderDirectory + @"sobel.frag";
+        
         #region [Shaderの初期化関数]
         public override void Initialize()
         {
             uThreshold = 1.0f;
             uWidth = 1;
             uHeight = 1;
-            uRender2D = 1;
+            uTarget = null;
         }
         public Sobel(Shader shader)
-            :base(shader)
+            : base("Sobel",vertexShader,fragShader)
         {
 
+        }
+
+        public override void SizeChanged(int width, int height)
+        {
+            base.SizeChanged(width, height);
+            uWidth = width;
+            uHeight = height;
         }
         #endregion
 

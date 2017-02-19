@@ -8,6 +8,8 @@ using RenderApp.GLUtil;
 using OpenTK.Graphics.OpenGL;
 using KI.Gfx.KIAsset;
 using KI.Gfx.Render;
+using RenderApp.Render_System.Post_Effect;
+using RenderApp.AssetModel.RA_Geometry;
 namespace RenderApp.Render_System
 {
     public class RenderSystem
@@ -31,7 +33,11 @@ namespace RenderApp.Render_System
         /// <summary>
         /// defferdシェーディング用
         /// </summary>
-        private GBuffer GBufferStage;
+        public GBuffer GBufferStage
+        {
+            get;
+            private set;
+        }
         /// <summary>
         /// ライティングステージ
         /// </summary>
@@ -41,9 +47,13 @@ namespace RenderApp.Render_System
         /// </summary>
         private PostProcess PostStage;
         /// <summary>
+        /// ポストプロセス用の平面
+        /// </summary>
+        private Geometry PostProcessPlane;
+        /// <summary>
         /// 後処理のUtil（選択とか）
         /// </summary>
-        private PostPlane SelectionStage;
+        private Selection SelectionStage;
         /// <summary>
         /// 最終出力画像
         /// </summary>
@@ -68,7 +78,8 @@ namespace RenderApp.Render_System
         {
             Width = width;
             Height = height;
-            PostStage = new PostProcess("PostProcess");
+            PostProcessPlane = AssetFactory.Instance.CreatePostProcessPlane("PostProcess");
+            PostStage = new PostProcess(PostProcessPlane);
             ProcessingTexture = new List<Texture>();
             PostProcessMode = false;
             GBufferStage = RenderPassFactory.Instance.CreateGBuffer(Width, Height);
@@ -88,10 +99,8 @@ namespace RenderApp.Render_System
 
             ProcessingTexture.Add(lightingFrame.Textures[0]);
 
-            RenderTarget selectionBuffer = RenderPassFactory.Instance.CreateSelectionBuffer(Width, Height);
-            SelectionStage = new PostPlane("Selection", ShaderFactory.Instance.DefaultSelectionShader, selectionBuffer);
-            SelectionStage.SetPlaneTexture(TextureKind.Albedo, GBufferStage.FindTexture(TextureKind.Normal));
-            ProcessingTexture.Add(selectionBuffer.Textures[0]);
+            SelectionStage = new Selection(PostProcessPlane);
+            ProcessingTexture.Add(SelectionStage.RenderTarget.Textures[0]);
             
             OutputStage = new PostPlane("OutputShader", ShaderFactory.Instance.OutputShader);
             OutputTexture = GBufferStage.Textures[0];
@@ -164,30 +173,14 @@ namespace RenderApp.Render_System
             LightingStage.ClearBuffer();
             LightingStage.Render();
 
-            if (SceneManager.Instance.ActiveScene.SelectAsset != null)
+            if (PostProcessMode)
             {
-                if (SceneManager.Instance.ActiveScene.SelectAsset is Geometry)
-                {
-                    var geometry = SceneManager.Instance.ActiveScene.SelectAsset as Geometry;
-                    SelectionStage.SetValue("uID", geometry.ID);
-                }
-                else
-                {
-                    SelectionStage.SetValue("uID", 0);
-                }
-            }
-            else
-            {
-                SelectionStage.SetValue("uID", 0);
+                PostStage.Render();
             }
 
             SelectionStage.ClearBuffer();
             SelectionStage.Render();
             
-            if (PostProcessMode)
-            {
-                PostStage.Render();
-            }
             OutputStage.SetValue("uSelectMap", SelectionStage.RenderTarget.Textures[0].DeviceID);
             OutputStage.SetPlaneTexture(TextureKind.Albedo, OutputTexture);
             OutputStage.Render();

@@ -126,12 +126,12 @@
     <Compile Include="Render_System\PostProcess.cs" />
     <Compile Include="Render_System\Post_Effect\Bloom.cs" />
     <Compile Include="Render_System\Post_Effect\DOF.cs" />
-    <Compile Include="Render_System\Post_Effect\PostEffect.cs" />
     <Compile Include="Render_System\Post_Effect\PostEffectT4.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PostEffectT4.tt</DependentUpon>
     </Compile>
+    <Compile Include="Render_System\Post_Effect\RenderTechnique.cs" />
     <Compile Include="Render_System\Post_Effect\Selection.cs" />
     <Compile Include="Render_System\Post_Effect\Sobel.cs" />
     <Compile Include="Render_System\Post_Effect\SSAO.cs" />

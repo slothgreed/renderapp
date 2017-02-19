@@ -6,16 +6,27 @@
 	Tuple.Create(
 	"Selection",
 	new string[]{"int"},
-	new string[]{"uID"})
+	new string[]{"uID"}),
+	
+	Tuple.Create(
+	"Bloom",
+	new string[]{"int"		,"int"		,"Texture"},
+	new string[]{"uScale"	,"uWeight"	,"uTarget"}),
+	
+	Tuple.Create(
+	"Sobel",
+	new string[]{"Texture"	,"int"		,"int"		,"float"},
+	new string[]{"uTarget"	,"uWidth"	,"uHeight"	,"uThreshold"})
  };
 #>
 using System;
+using KI.Gfx.KIAsset;
 namespace RenderApp.Render_System.Post_Effect
 {
 <#
 	for(int classIndex = 0; classIndex < classProperty.Length; classIndex++){
 #>
-	public partial class <#=classProperty[classIndex].Item1#> : PostEffect
+	public partial class <#=classProperty[classIndex].Item1#> : RenderTechnique
 	{
 <#
 	for(int propetyIndex = 0; propetyIndex < classProperty[classIndex].Item2.Length; propetyIndex++){

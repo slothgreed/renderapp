@@ -25,7 +25,7 @@ namespace KI.Foundation.Utility
         {
             if(level <= outputLogLevel)
             {
-                Console.WriteLine(error);
+                //Console.WriteLine(error);
             }
         }
 

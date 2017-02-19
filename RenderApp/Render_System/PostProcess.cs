@@ -8,42 +8,43 @@ using RenderApp.GLUtil;
 using RenderApp.GLUtil.ShaderModel;
 using KI.Gfx.KIAsset;
 using KI.Gfx.Render;
+using RenderApp.Render_System.Post_Effect;
 namespace RenderApp.Render_System
 {
     class PostProcess
     {
         private Geometry Plane;
 
-        public List<KeyValuePair<Material, RenderTarget>> RenderTargets = new List<KeyValuePair<Material, RenderTarget>>();
+        public List<RenderTechnique> PostEffects = new List<RenderTechnique>();
 
-        public PostProcess(string name)
+        public PostProcess(Geometry plane)
         {
-            Plane = AssetFactory.Instance.CreatePostProcessPlane("PostProcess");
+            Plane = plane;
         }
 
         private void ClearBuffer()
         {
-            foreach(var render in RenderTargets)
+            foreach(var post in PostEffects)
             {
-                render.Value.ClearBuffer();
+                post.ClearBuffer();
             }
         }
 
         public void SizeChanged(int width, int height)
         {
-            foreach (var render in RenderTargets)
+            foreach (var post in PostEffects)
             {
-                render.Value.SizeChanged(width, height);
+                post.SizeChanged(width, height);
             }
         }
         public void Render()
         {
-           foreach(var render in RenderTargets)
+           foreach(var post in PostEffects)
            {
-               render.Value.BindRenderTarget();
-               Plane.MaterialItem = render.Key;
+               post.RenderTarget.BindRenderTarget();
+               Plane.MaterialItem = post.Material;
                Plane.Render();
-               render.Value.UnBindRenderTarget();
+               post.RenderTarget.UnBindRenderTarget();
            }
         }
 
