@@ -66,7 +66,10 @@ namespace KI.Foundation.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-        public abstract void UpdateProperty();
+        public virtual void UpdateProperty()
+        {
+
+        }
 
 
         #endregion
