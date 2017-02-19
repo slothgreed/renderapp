@@ -20,21 +20,10 @@ namespace RenderApp.AssetModel
         #endregion
 
         #region [shader]
-        private Shader _currentShader = null;
         public Shader CurrentShader
         {
-            get
-            {
-                return _currentShader;
-            }
-            private set
-            {
-                _currentShader = value;
-            }
-        }
-        public void SetShader(Shader shader)
-        {
-            CurrentShader = shader;
+            get;
+            set;
         }
         internal void InitializeState(Geometry geometry)
         {
@@ -69,7 +58,7 @@ namespace RenderApp.AssetModel
         {
             if (shader == null)
             {
-                SetShader(ShaderFactory.Instance.DefaultDefferredShader);
+                CurrentShader = (ShaderFactory.Instance.DefaultDefferredShader);
             }
 
             TextureItem = new Dictionary<TextureKind, Texture>();
@@ -137,7 +126,7 @@ namespace RenderApp.AssetModel
                 if(_default == null)
                 {
                     _default = AssetFactory.Instance.CreateMaterial("Default");
-                    _default.SetShader(ShaderFactory.Instance.DefaultDefferredShader);
+                    _default.CurrentShader = (ShaderFactory.Instance.DefaultDefferredShader);
                 }
                 return _default;
             }
@@ -153,7 +142,7 @@ namespace RenderApp.AssetModel
                 if(_constant == null)
                 {
                     _constant = AssetFactory.Instance.CreateMaterial("Analyze");
-                    _constant.SetShader(ShaderFactory.Instance.DefaultAnalyzeShader);
+                    _constant.CurrentShader = (ShaderFactory.Instance.DefaultAnalyzeShader);
                 }
                 return _constant;
             }

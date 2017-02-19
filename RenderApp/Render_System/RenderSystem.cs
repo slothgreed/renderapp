@@ -39,7 +39,7 @@ namespace RenderApp.Render_System
         /// <summary>
         /// ポストプロセス結果
         /// </summary>
-        private RenderQueue PostStage;
+        private PostProcess PostStage;
         /// <summary>
         /// 後処理のUtil（選択とか）
         /// </summary>
@@ -68,7 +68,7 @@ namespace RenderApp.Render_System
         {
             Width = width;
             Height = height;
-            PostStage = new RenderQueue();
+            PostStage = new PostProcess("PostProcess");
             ProcessingTexture = new List<Texture>();
             PostProcessMode = false;
             GBufferStage = RenderPassFactory.Instance.CreateGBuffer(Width, Height);

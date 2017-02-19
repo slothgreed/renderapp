@@ -123,6 +123,7 @@
     <Compile Include="AppSystem.cs" />
     <Compile Include="AssetModel\AssetFactory.cs" />
     <Compile Include="AssetModel\Geometry\IRenderObjectConverter.cs" />
+    <Compile Include="Render_System\PostProcess.cs" />
     <Compile Include="Render_System\Post_Effect\Bloom.cs" />
     <Compile Include="Render_System\Post_Effect\DOF.cs" />
     <Compile Include="Render_System\Post_Effect\PostEffect.cs" />

@@ -53,7 +53,7 @@ namespace RenderApp.AssetModel.RA_Geometry
             geometry.MaterialItem = mat;
             string vertex = Utility.ShaderCreater.Instance.GetVertexShader(geometry.GeometryInfo);
             string frag = Utility.ShaderCreater.Instance.GetOBJFragShader(geometry);
-            mat.SetShader(ShaderFactory.Instance.CreateShaderVF(vertex,frag));
+            mat.CurrentShader = (ShaderFactory.Instance.CreateShaderVF(vertex,frag));
         }
         public List<RenderObject> CreateRenderObject()
         {

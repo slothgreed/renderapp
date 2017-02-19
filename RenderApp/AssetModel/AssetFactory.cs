@@ -155,7 +155,17 @@ namespace RenderApp.AssetModel
             Geometry renderObject = plane.CreateRenderObject().First();
             renderObject.MaterialItem = CreateMaterial(name);
             Project.ActiveProject.AddChild(renderObject.MaterialItem);
-            renderObject.MaterialItem.SetShader(shader);
+            renderObject.MaterialItem.CurrentShader = shader;
+            return renderObject;
+        }
+
+        internal Geometry CreatePostProcessPlane(string name)
+        {
+            Plane plane;
+            plane = new Plane(name);
+            Geometry renderObject = plane.CreateRenderObject().First();
+            renderObject.MaterialItem = CreateMaterial(name);
+            Project.ActiveProject.AddChild(renderObject.MaterialItem);
             return renderObject;
         }
 
