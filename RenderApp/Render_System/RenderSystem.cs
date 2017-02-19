@@ -8,7 +8,6 @@ using RenderApp.GLUtil;
 using OpenTK.Graphics.OpenGL;
 using KI.Gfx.KIAsset;
 using KI.Gfx.Render;
-using RenderApp.Render_System.Post_Effect;
 using RenderApp.AssetModel.RA_Geometry;
 namespace RenderApp.Render_System
 {
@@ -82,9 +81,9 @@ namespace RenderApp.Render_System
             PostStage = new PostProcess(PostProcessPlane);
             ProcessingTexture = new List<Texture>();
             PostProcessMode = false;
-            GBufferStage = RenderPassFactory.Instance.CreateGBuffer(Width, Height);
+            GBufferStage = new GBuffer(Width, Height);
 
-            foreach (var textures in GBufferStage.Textures)
+            foreach (var textures in GBufferStage.RenderTarget.Textures)
             {
                 ProcessingTexture.Add(textures);
             }
@@ -103,7 +102,7 @@ namespace RenderApp.Render_System
             ProcessingTexture.Add(SelectionStage.RenderTarget.Textures[0]);
             
             OutputStage = new PostPlane("OutputShader", ShaderFactory.Instance.OutputShader);
-            OutputTexture = GBufferStage.Textures[0];
+            OutputTexture = GBufferStage.RenderTarget.Textures[0];
             OutputTexture = lightingFrame.Textures[0];
 
             
@@ -120,14 +119,14 @@ namespace RenderApp.Render_System
         }
         public void Picking(int x, int y)
         {
-            GBufferStage.BindRenderTarget();
+            GBufferStage.RenderTarget.BindRenderTarget();
 
             GL.ReadBuffer(ReadBufferMode.ColorAttachment1);
             IntPtr ptr = IntPtr.Zero;
             float[] pixels = new float[4];
             GL.ReadPixels(x, y, 1, 1, PixelFormat.Rgba, PixelType.Float, pixels);
             GL.ReadBuffer(ReadBufferMode.None);
-            GBufferStage.UnBindRenderTarget();
+            GBufferStage.RenderTarget.UnBindRenderTarget();
 
             int id = (int)(pixels[3] * 255);
             foreach(var geometryNode in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
@@ -158,7 +157,7 @@ namespace RenderApp.Render_System
         public void Render()
         {
             GBufferStage.ClearBuffer();
-            GBufferStage.BindRenderTarget();
+            GBufferStage.RenderTarget.BindRenderTarget();
             foreach (var asset in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
             {
                 if(asset._KIObject is Geometry)
@@ -167,7 +166,7 @@ namespace RenderApp.Render_System
                     geometry.Render();
                 }
             }
-            GBufferStage.UnBindRenderTarget();
+            GBufferStage.RenderTarget.UnBindRenderTarget();
 
 
             LightingStage.ClearBuffer();
