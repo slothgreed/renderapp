@@ -133,6 +133,19 @@ namespace RenderApp.Render_System
 			}
 		}
 
+		private Texture _uTarget;
+		public Texture uTarget
+		{
+			get
+			{
+				return _uTarget;
+			}
+			set
+			{
+				SetValue<Texture>(ref _uTarget, value); 
+			}
+		}
+
 
 	}
 }

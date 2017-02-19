@@ -19,7 +19,7 @@ namespace KI.Foundation.Utility
             Warning,
             Error,
         }
-        public static LogLevel outputLogLevel = LogLevel.Warning;
+        public static LogLevel outputLogLevel = LogLevel.Error;
         public static LogLevel glLogLevel = LogLevel.Error;
         public static void Log(LogLevel level, string error, [CallerMemberName]string methodName = "")
         {

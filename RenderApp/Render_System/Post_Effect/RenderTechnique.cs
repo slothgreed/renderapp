@@ -68,6 +68,7 @@ namespace RenderApp.Render_System
             }
             CreateRenderTarget(KI.Gfx.GLUtil.DeviceContext.Instance.Width, KI.Gfx.GLUtil.DeviceContext.Instance.Height);
             CreateMaterial();
+            Material.CurrentShader = Shader;
             Initialize();
         }
         public void ClearBuffer()

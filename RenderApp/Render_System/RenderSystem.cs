@@ -56,7 +56,7 @@ namespace RenderApp.Render_System
         /// <summary>
         /// 最終出力画像
         /// </summary>
-        private PostPlane OutputStage;
+        private OutputBuffer OutputStage;
         /// <summary>
         /// FrameBufferの横
         /// </summary>
@@ -101,7 +101,7 @@ namespace RenderApp.Render_System
             SelectionStage = new Selection(PostProcessPlane);
             ProcessingTexture.Add(SelectionStage.RenderTarget.Textures[0]);
             
-            OutputStage = new PostPlane("OutputShader", ShaderFactory.Instance.OutputShader);
+            OutputStage = new OutputBuffer(PostProcessPlane);
             OutputTexture = GBufferStage.RenderTarget.Textures[0];
             OutputTexture = lightingFrame.Textures[0];
 
@@ -179,9 +179,9 @@ namespace RenderApp.Render_System
 
             SelectionStage.ClearBuffer();
             SelectionStage.Render();
-            
-            OutputStage.SetValue("uSelectMap", SelectionStage.RenderTarget.Textures[0].DeviceID);
-            OutputStage.SetPlaneTexture(TextureKind.Albedo, OutputTexture);
+
+            OutputStage.uSelectMap = SelectionStage.RenderTarget.Textures[0];
+            OutputStage.uTarget = OutputTexture;
             OutputStage.Render();
         }
 

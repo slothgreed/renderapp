@@ -260,10 +260,11 @@ namespace RenderApp.GLUtil.ShaderModel
         {
             if (_shaderVariable.ContainsKey(key))
             {
-                if(value is Texture)
+                if (value is Texture)
                 {
                     var texture = value as Texture;
                     _shaderVariable[key].variable = texture.DeviceID;
+                    return true;
                 }
                 _shaderVariable[key].variable = value;
                 return true;

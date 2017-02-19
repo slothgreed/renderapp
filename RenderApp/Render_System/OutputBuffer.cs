@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KI.Gfx.KIAsset;
+using KI.Gfx.Render;
 namespace RenderApp.Render_System
 {
     public partial class OutputBuffer : RenderTechnique
@@ -30,13 +31,16 @@ namespace RenderApp.Render_System
         {
             Material.AddTexture(textureKind, OutputTexture);
         }
-
+        public override void CreateRenderTarget(int width, int height)
+        {
+            Texture texture = TextureFactory.Instance.CreateTexture("Texture:" + Name, width, height);
+            RenderTarget = new RenderTarget("RenderTarget:" + Name, width, height, texture);
+        }
         internal void Render()
         {
-            RenderTarget.BindRenderTarget();
+            //最終出力フレームバッファのバインドの必要なし
             Plane.MaterialItem = Material;
             Plane.Render();
-            RenderTarget.UnBindRenderTarget();
         }
     }
 }

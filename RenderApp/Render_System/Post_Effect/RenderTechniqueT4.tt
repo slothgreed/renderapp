@@ -20,8 +20,8 @@
 
 	Tuple.Create(
 	"OutputBuffer",
-	new string[]{"Texture"},
-	new string[]{"uSelectMap"})
+	new string[]{"Texture"	,"Texture"},
+	new string[]{"uSelectMap","uTarget"})
  };
 #>
 using System;
