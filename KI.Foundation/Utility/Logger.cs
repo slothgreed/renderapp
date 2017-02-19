@@ -25,7 +25,7 @@ namespace KI.Foundation.Utility
         {
             if(level >= outputLogLevel)
             {
-                Console.WriteLine(level +":"+ error);
+                Console.WriteLine(level +" : "+ error);
             }
         }
 
@@ -36,7 +36,7 @@ namespace KI.Foundation.Utility
                 ErrorCode error = GL.GetError();
                 if (error != ErrorCode.NoError)
                 {
-                    Console.WriteLine(methodName + ":" + error);
+                    Console.WriteLine(level + " : " +  methodName + ":" + error);
                 }
             }
         }
