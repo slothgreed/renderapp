@@ -75,11 +75,6 @@ namespace RenderApp.AssetModel
             get;
             private set;
         }
-        public Dictionary<string, Texture> FrameBufferItem
-        {
-            get;
-            private set;
-        }
         public void AddTexture(TextureKind kind,Texture texture)
         {
             TextureItem[kind] = texture;

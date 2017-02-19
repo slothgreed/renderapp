@@ -32,16 +32,21 @@ namespace RenderApp.Render_System
             protected set;
         }
 
+        public RenderTechnique(string name)
+            :base(name)
+        {
+            Init();
+        }
         public RenderTechnique(string name, string vertexShader, string fragShader)
             :base(name)
         {
-            Initialize(vertexShader, fragShader);
+            Init(vertexShader, fragShader);
         }
 
         public RenderTechnique(string name, Material material, string vertexShader, string fragShader)
             :base(name)
         {
-            Initialize(vertexShader,fragShader,material); 
+            Init(vertexShader,fragShader,material); 
         }
 
         protected void SetValue<T>(ref T member, T value, [CallerMemberName]string memberName = "")
@@ -55,9 +60,12 @@ namespace RenderApp.Render_System
                 Logger.Log(Logger.LogLevel.Error, "Set Shader Error " + memberName);
             }
         }
-        private void Initialize(string vertexShader,string fragShader,Material materail = null)
+        private void Init(string vertexShader = null,string fragShader = null,Material materail = null)
         {
-            CreateShader(vertexShader,fragShader);
+            if(vertexShader != null && fragShader != null)
+            {
+                CreateShader(vertexShader, fragShader);
+            }
             CreateRenderTarget(KI.Gfx.GLUtil.DeviceContext.Instance.Width, KI.Gfx.GLUtil.DeviceContext.Instance.Height);
             CreateMaterial();
             Initialize();

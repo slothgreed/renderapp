@@ -123,13 +123,14 @@
     <Compile Include="AppSystem.cs" />
     <Compile Include="AssetModel\AssetFactory.cs" />
     <Compile Include="AssetModel\Geometry\IRenderObjectConverter.cs" />
+    <Compile Include="Render_System\OutputBuffer.cs" />
     <Compile Include="Render_System\PostProcess.cs" />
     <Compile Include="Render_System\Post_Effect\Bloom.cs" />
     <Compile Include="Render_System\Post_Effect\DOF.cs" />
-    <Compile Include="Render_System\Post_Effect\PostEffectT4.cs">
+    <Compile Include="Render_System\Post_Effect\RenderTechniqueT4.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PostEffectT4.tt</DependentUpon>
+      <DependentUpon>RenderTechniqueT4.tt</DependentUpon>
     </Compile>
     <Compile Include="Render_System\Post_Effect\RenderTechnique.cs" />
     <Compile Include="Render_System\Post_Effect\Selection.cs" />
@@ -440,9 +441,9 @@
     <Folder Include="Scene\Shader\ShaderType\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Render_System\Post_Effect\PostEffectT4.tt">
+    <Content Include="Render_System\Post_Effect\RenderTechniqueT4.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>PostEffectT4.cs</LastGenOutput>
+      <LastGenOutput>RenderTechniqueT4.cs</LastGenOutput>
     </Content>
     <Content Include="ViewModel\Controller\ControllerViewModelT4.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

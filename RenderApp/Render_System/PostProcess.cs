@@ -8,7 +8,6 @@ using RenderApp.GLUtil;
 using RenderApp.GLUtil.ShaderModel;
 using KI.Gfx.KIAsset;
 using KI.Gfx.Render;
-using RenderApp.Render_System.Post_Effect;
 namespace RenderApp.Render_System
 {
     class PostProcess

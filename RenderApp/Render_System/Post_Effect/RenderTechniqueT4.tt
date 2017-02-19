@@ -16,12 +16,17 @@
 	Tuple.Create(
 	"Sobel",
 	new string[]{"Texture"	,"int"		,"int"		,"float"},
-	new string[]{"uTarget"	,"uWidth"	,"uHeight"	,"uThreshold"})
+	new string[]{"uTarget"	,"uWidth"	,"uHeight"	,"uThreshold"}),
+
+	Tuple.Create(
+	"OutputBuffer",
+	new string[]{"Texture"},
+	new string[]{"uSelectMap"})
  };
 #>
 using System;
 using KI.Gfx.KIAsset;
-namespace RenderApp.Render_System.Post_Effect
+namespace RenderApp.Render_System
 {
 <#
 	for(int classIndex = 0; classIndex < classProperty.Length; classIndex++){
@@ -40,7 +45,7 @@ namespace RenderApp.Render_System.Post_Effect
 			}
 			set
 			{
-				SetValue<<#=classProperty[classIndex].Item2[propetyIndex]#>>(ref _<#=classProperty[classIndex].Item3[propetyIndex]#>,value); 
+				SetValue<<#=classProperty[classIndex].Item2[propetyIndex]#>>(ref _<#=classProperty[classIndex].Item3[propetyIndex]#>, value); 
 			}
 		}
 

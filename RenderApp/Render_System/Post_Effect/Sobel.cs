@@ -9,7 +9,7 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.GLUtil.ShaderModel;
 using RenderApp.Utility;
-namespace RenderApp.Render_System.Post_Effect
+namespace RenderApp.Render_System
 {
     partial class Sobel : RenderTechnique
     {

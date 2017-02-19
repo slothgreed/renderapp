@@ -1,6 +1,6 @@
 ﻿using System;
 using KI.Gfx.KIAsset;
-namespace RenderApp.Render_System.Post_Effect
+namespace RenderApp.Render_System
 {
 	public partial class Selection : RenderTechnique
 	{
@@ -13,7 +13,7 @@ namespace RenderApp.Render_System.Post_Effect
 			}
 			set
 			{
-				SetValue<int>(ref _uID,value); 
+				SetValue<int>(ref _uID, value); 
 			}
 		}
 
@@ -30,7 +30,7 @@ namespace RenderApp.Render_System.Post_Effect
 			}
 			set
 			{
-				SetValue<int>(ref _uScale,value); 
+				SetValue<int>(ref _uScale, value); 
 			}
 		}
 
@@ -43,7 +43,7 @@ namespace RenderApp.Render_System.Post_Effect
 			}
 			set
 			{
-				SetValue<int>(ref _uWeight,value); 
+				SetValue<int>(ref _uWeight, value); 
 			}
 		}
 
@@ -56,7 +56,7 @@ namespace RenderApp.Render_System.Post_Effect
 			}
 			set
 			{
-				SetValue<Texture>(ref _uTarget,value); 
+				SetValue<Texture>(ref _uTarget, value); 
 			}
 		}
 
@@ -73,7 +73,7 @@ namespace RenderApp.Render_System.Post_Effect
 			}
 			set
 			{
-				SetValue<Texture>(ref _uTarget,value); 
+				SetValue<Texture>(ref _uTarget, value); 
 			}
 		}
 
@@ -86,7 +86,7 @@ namespace RenderApp.Render_System.Post_Effect
 			}
 			set
 			{
-				SetValue<int>(ref _uWidth,value); 
+				SetValue<int>(ref _uWidth, value); 
 			}
 		}
 
@@ -99,7 +99,7 @@ namespace RenderApp.Render_System.Post_Effect
 			}
 			set
 			{
-				SetValue<int>(ref _uHeight,value); 
+				SetValue<int>(ref _uHeight, value); 
 			}
 		}
 
@@ -112,7 +112,24 @@ namespace RenderApp.Render_System.Post_Effect
 			}
 			set
 			{
-				SetValue<float>(ref _uThreshold,value); 
+				SetValue<float>(ref _uThreshold, value); 
+			}
+		}
+
+
+	}
+	public partial class OutputBuffer : RenderTechnique
+	{
+		private Texture _uSelectMap;
+		public Texture uSelectMap
+		{
+			get
+			{
+				return _uSelectMap;
+			}
+			set
+			{
+				SetValue<Texture>(ref _uSelectMap, value); 
 			}
 		}
 

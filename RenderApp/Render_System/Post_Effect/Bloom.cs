@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 using OpenTK;
 using KI.Gfx.KIAsset;
-namespace RenderApp.Render_System.Post_Effect
+namespace RenderApp.Render_System
 {
     public partial class Bloom : RenderTechnique
     {

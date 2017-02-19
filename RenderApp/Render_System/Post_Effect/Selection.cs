@@ -8,7 +8,7 @@ using RenderApp.GLUtil.ShaderModel;
 using KI.Gfx.Render;
 using KI.Gfx.KIAsset;
 using RenderApp.AssetModel;
-namespace RenderApp.Render_System.Post_Effect
+namespace RenderApp.Render_System
 {
     public partial class Selection : RenderTechnique
     {

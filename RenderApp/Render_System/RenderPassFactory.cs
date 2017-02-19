@@ -30,14 +30,6 @@ namespace RenderApp.Render_System
             return frame;
         }
 
-
-        internal GBuffer CreateGBuffer(int width, int height)
-        {
-            GBuffer gBuffer = new GBuffer(width,height);
-            renderTargetList.Add(gBuffer);
-            return gBuffer;
-        }
-
         internal void Dispose()
         {
             foreach(var frame in renderTargetList)
