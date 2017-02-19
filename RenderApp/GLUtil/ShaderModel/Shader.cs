@@ -260,6 +260,11 @@ namespace RenderApp.GLUtil.ShaderModel
         {
             if (_shaderVariable.ContainsKey(key))
             {
+                if(value is Texture)
+                {
+                    var texture = value as Texture;
+                    _shaderVariable[key].variable = texture.DeviceID;
+                }
                 _shaderVariable[key].variable = value;
                 return true;
             }
@@ -273,7 +278,7 @@ namespace RenderApp.GLUtil.ShaderModel
         {
             if(uniform.variable == null)
             {
-                Logger.Log(Logger.LogLevel.Warning, "Shader Binding Error" + uniform.Name);
+                Logger.Log(Logger.LogLevel.Warning, "Shader Binding Error : " + uniform.Name);
                 return;
             }
             if (uniform.ShaderID == -1)

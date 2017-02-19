@@ -14,24 +14,24 @@ namespace KI.Foundation.Utility
     {
         public enum LogLevel
         {
-            NONE,
+            None,
             Debug,
             Warning,
             Error,
         }
-        public static LogLevel outputLogLevel = LogLevel.Error;
+        public static LogLevel outputLogLevel = LogLevel.Warning;
         public static LogLevel glLogLevel = LogLevel.Error;
         public static void Log(LogLevel level, string error, [CallerMemberName]string methodName = "")
         {
-            if(level <= outputLogLevel)
+            if(level >= outputLogLevel)
             {
-                //Console.WriteLine(error);
+                Console.WriteLine(level +":"+ error);
             }
         }
 
         public static void GLLog(LogLevel level, [CallerMemberName]string methodName = "")
         {
-            if (level <= glLogLevel)
+            if (level >= glLogLevel)
             {
                 ErrorCode error = GL.GetError();
                 if (error != ErrorCode.NoError)
