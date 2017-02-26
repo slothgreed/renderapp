@@ -103,9 +103,9 @@ namespace RenderApp.ViewModel
             if (ActiveNode.Model is KINode)
             {
                 var node = ActiveNode.Model as KINode;
-                if (node._KIObject is KIFile)
+                if (node.KIObject is KIFile)
                 {
-                    var asset = node._KIObject as KIFile;
+                    var asset = node.KIObject as KIFile;
                     if (File.Exists(asset.FilePath))
                     {
                         Process.Start("EXPLORER.exe", @"/select," + asset.FilePath);

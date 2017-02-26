@@ -15,6 +15,11 @@ namespace RenderApp.Render_System
 {
     public abstract class RenderTechnique : KIObject
     {
+        public static Geometry Plane
+        {
+            get;
+            set;
+        }
         public Shader Shader
         {
             get;
@@ -43,12 +48,9 @@ namespace RenderApp.Render_System
             Init(vertexShader, fragShader);
         }
 
-        public RenderTechnique(string name, Material material, string vertexShader, string fragShader)
-            :base(name)
-        {
-            Init(vertexShader,fragShader,material); 
-        }
-
+        /// <summary>
+        /// シェーダへ値のセット
+        /// </summary>
         protected void SetValue<T>(ref T member, T value, [CallerMemberName]string memberName = "")
         {
             if (Shader.SetValue(memberName, value))
@@ -60,17 +62,7 @@ namespace RenderApp.Render_System
                 Logger.Log(Logger.LogLevel.Error, "Set Shader Error " + memberName);
             }
         }
-        private void Init(string vertexShader = null,string fragShader = null,Material materail = null)
-        {
-            if(vertexShader != null && fragShader != null)
-            {
-                CreateShader(vertexShader, fragShader);
-            }
-            CreateRenderTarget(KI.Gfx.GLUtil.DeviceContext.Instance.Width, KI.Gfx.GLUtil.DeviceContext.Instance.Height);
-            CreateMaterial();
-            Material.CurrentShader = Shader;
-            Initialize();
-        }
+
         public void ClearBuffer()
         {
             RenderTarget.ClearBuffer();
@@ -81,13 +73,24 @@ namespace RenderApp.Render_System
             RenderTarget.SizeChanged(width, height);
         }
 
+        /// <summary>
+        /// 平面にレンダリング
+        /// </summary>
+        public virtual void PlaneRender()
+        {
+            RenderTarget.BindRenderTarget();
+            Plane.MaterialItem = Material;
+            Plane.Render();
+            RenderTarget.UnBindRenderTarget();
+        }
+        #region [initalize event]
         public abstract void Initialize();
 
         public virtual void CreateShader(string vertexShader, string fragShader)
         {
-           Shader = ShaderFactory.Instance.CreateShaderVF(vertexShader, fragShader);
+            Shader = ShaderFactory.Instance.CreateShaderVF(vertexShader, fragShader);
         }
-        public virtual void CreateRenderTarget(int width,int height)
+        public virtual void CreateRenderTarget(int width, int height)
         {
             Texture texture = TextureFactory.Instance.CreateTexture("Texture:" + Name, width, height);
             RenderTarget = new RenderTarget("RenderTarget:" + Name, width, height, texture);
@@ -96,5 +99,17 @@ namespace RenderApp.Render_System
         {
             Material = AssetFactory.Instance.CreateMaterial("Material : " + Name);
         }
+        private void Init(string vertexShader = null, string fragShader = null, Material materail = null)
+        {
+            if (vertexShader != null && fragShader != null)
+            {
+                CreateShader(vertexShader, fragShader);
+            }
+            CreateRenderTarget(KI.Gfx.GLUtil.DeviceContext.Instance.Width, KI.Gfx.GLUtil.DeviceContext.Instance.Height);
+            CreateMaterial();
+            Material.CurrentShader = Shader;
+            Initialize();
+        }
+        #endregion
     }
 }

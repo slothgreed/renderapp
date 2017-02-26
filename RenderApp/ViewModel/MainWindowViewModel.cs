@@ -421,23 +421,23 @@ namespace RenderApp.ViewModel
         #region [Update Method]
         public void UpdateSelectNode(KINode node)
         {
-            if(node._KIObject == null)
+            if(node.KIObject == null)
             {
                 return;
             }
             TabItemViewModel vm = null;
-            if(node._KIObject is Geometry)
+            if(node.KIObject is Geometry)
             {
-                vm = new GeometryViewModel((Geometry)node._KIObject);
-                SceneManager.Instance.ActiveScene.SelectAsset = (Geometry)node._KIObject;
+                vm = new GeometryViewModel((Geometry)node.KIObject);
+                SceneManager.Instance.ActiveScene.SelectAsset = (Geometry)node.KIObject;
             }
-            else if(node._KIObject is Material)
+            else if(node.KIObject is Material)
             {
-                vm = new MaterialViewModel((Material)node._KIObject);
+                vm = new MaterialViewModel((Material)node.KIObject);
             }
-            else if (node._KIObject is ShaderProgram)
+            else if (node.KIObject is ShaderProgram)
             {
-                vm = new ShaderProgramViewModel((ShaderProgram)node._KIObject);
+                vm = new ShaderProgramViewModel((ShaderProgram)node.KIObject);
             }
             ReplaceTabWindow(vm);
         }

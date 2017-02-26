@@ -51,13 +51,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command\ICommand.cs" />
-    <Compile Include="Control\DirectoryAccsessor.cs" />
+    <Compile Include="Control\DirectoryAccessor.cs" />
     <Compile Include="Control\DragBehavior.cs" />
     <Compile Include="Control\DropBehavior.cs" />
     <Compile Include="Core\KIObject.cs" />
     <Compile Include="Core\KIFile.cs" />
     <Compile Include="Core\KITimer.cs" />
     <Compile Include="Core\KIMouse.cs" />
+    <Compile Include="Control\ThumbnailFile.cs" />
     <Compile Include="Tree\KINode.cs" />
     <Compile Include="Tree\NotifyNodeChangedEventArgs.cs">
       <DependentUpon>NotifyNodeChangedEventArgs.tt</DependentUpon>
@@ -74,6 +75,7 @@
     <Compile Include="ViewModel\Math\Vector2ViewModel.cs" />
     <Compile Include="ViewModel\Math\Vector3ViewModel.cs" />
     <Compile Include="ViewModel\Math\Vector4ViewModel.cs" />
+    <Compile Include="ViewModel\ThumbnailFileViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\Math\Matrix3View.xaml.cs">
       <DependentUpon>Matrix3View.xaml</DependentUpon>
@@ -104,6 +106,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\DirectoryAccessorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\ThumbnailFileView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

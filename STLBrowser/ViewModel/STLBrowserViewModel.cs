@@ -26,10 +26,23 @@ namespace STLBrowser.ViewModel
 
         public STLBrowserViewModel(string path)
         {
+            path = @"C:\Users\ido\Documents\GitHub\renderapp\RenderApp\Resource\Model";
+
             STLFiles = new List<ThumbnailFileViewModel>();
-            STLFiles.Add(new ThumbnailFileViewModel(new STLFile("AAA")));
-            STLFiles.Add(new ThumbnailFileViewModel(new STLFile("BBB")));
-            STLFiles.Add(new ThumbnailFileViewModel(new STLFile("CCC")));
+
+
+            if (Directory.Exists(path))
+            {
+                string[] directory = System.IO.Directory.GetDirectories(path, "*");
+                string[] files = System.IO.Directory.GetFiles(path);
+                foreach (var file in files)
+                {
+                    if(Path.GetExtension(file) == ".stl")
+                    {
+                        STLFiles.Add(new ThumbnailFileViewModel(Path.GetFileName(file), file));
+                    }
+                }
+            }
         }
 
         private void OnSelectedSTLFile()

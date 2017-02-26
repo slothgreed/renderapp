@@ -106,7 +106,7 @@ namespace RenderApp.ViewModel
                 SetValue<string>(ref _displayName, value);
                 if(Model != null)
                 {
-                    Model._KIObject.Name = _displayName;
+                    Model.KIObject.Name = _displayName;
                 }
             }
         }

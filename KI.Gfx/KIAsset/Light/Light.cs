@@ -11,11 +11,18 @@ namespace KI.Gfx.KIAsset
     /// </summary>
     public abstract class Light : KIObject
     {
-        public Vector3 Position { get;private set; }
-        public Vector3 Direction { get; private set; }
-        public float Shiness { get; set; }
+        public Vector3 Position { get; protected set; }
+        
+        public Vector3 Direction { get; protected set; }
+        
+        public float Shiness { get; protected set; }
+        
+        public Vector3 Color { get; protected set; }
+        
         public Matrix4 Matrix { get; private set; }
 
+        public Texture ShadowMap { get; private set; }
+        
         private string _objectName = "Light";
         /// <summary>
         /// コンストラクタ

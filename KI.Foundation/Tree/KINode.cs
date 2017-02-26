@@ -26,19 +26,23 @@ namespace KI.Foundation.Tree
         {
             get
             {
-                if (_KIObject == null)
+                if (KIObject == null)
                 {
                     return emptyName;
                 }
-                return _KIObject.Name;
+                return KIObject.Name;
             }
         }
-        public KIObject _KIObject;
+        public KIObject KIObject
+        {
+            get;
+            private set;
+        }
         private KINode Parent;
 
         public KINode(KIObject _kiobject)
         {
-            _KIObject = _kiobject;
+            KIObject = _kiobject;
             Children = new List<KINode>();
         }
         public KINode(string name)
@@ -204,14 +208,14 @@ namespace KI.Foundation.Tree
         #endregion
         public override string ToString()
         {
-            if (_KIObject != null)
-                return _KIObject.Name;
+            if (KIObject != null)
+                return KIObject.Name;
             return emptyName;
         }
 
         public void Dispose()
         {
-            _KIObject.Dispose();
+            KIObject.Dispose();
             foreach(var child in Children)
             {
                 child.Dispose();
@@ -235,11 +239,11 @@ namespace KI.Foundation.Tree
         {
             foreach (var child in Children)
             {
-                yield return child._KIObject;
+                yield return child.KIObject;
 
                 foreach (var grand in child.Children)
                 {
-                    yield return grand._KIObject;
+                    yield return grand.KIObject;
                 }
             }
         }       

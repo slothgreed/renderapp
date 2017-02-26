@@ -46,13 +46,13 @@ namespace RenderApp.Render_System
         /// </summary>
         private PostProcess PostStage;
         /// <summary>
-        /// ポストプロセス用の平面
-        /// </summary>
-        private Geometry PostProcessPlane;
-        /// <summary>
         /// 後処理のUtil（選択とか）
         /// </summary>
         private Selection SelectionStage;
+        /// <summary>
+        /// postplaneの削除
+        /// </summary>
+        private Geometry PostPlane;
         /// <summary>
         /// 最終出力画像
         /// </summary>
@@ -77,8 +77,9 @@ namespace RenderApp.Render_System
         {
             Width = width;
             Height = height;
-            PostProcessPlane = AssetFactory.Instance.CreatePostProcessPlane("PostProcess");
-            PostStage = new PostProcess(PostProcessPlane);
+            PostPlane = AssetFactory.Instance.CreatePostProcessPlane("PostProcess");
+            RenderTechnique.Plane = PostPlane;
+            PostStage = new PostProcess(RenderTechnique.Plane);
             ProcessingTexture = new List<Texture>();
             PostProcessMode = false;
             GBufferStage = new GBuffer(Width, Height);
@@ -98,10 +99,10 @@ namespace RenderApp.Render_System
 
             ProcessingTexture.Add(lightingFrame.Textures[0]);
 
-            SelectionStage = new Selection(PostProcessPlane);
+            SelectionStage = new Selection();
             ProcessingTexture.Add(SelectionStage.RenderTarget.Textures[0]);
             
-            OutputStage = new OutputBuffer(PostProcessPlane);
+            OutputStage = new OutputBuffer();
             OutputTexture = GBufferStage.RenderTarget.Textures[0];
             OutputTexture = lightingFrame.Textures[0];
 
@@ -132,9 +133,9 @@ namespace RenderApp.Render_System
             foreach(var geometryNode in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
             {
                 Geometry geometry = null;
-                if(geometryNode._KIObject is Geometry)
+                if(geometryNode.KIObject is Geometry)
                 {
-                    geometry = geometryNode._KIObject as Geometry;
+                    geometry = geometryNode.KIObject as Geometry;
                 }
                 else
                 {
@@ -153,6 +154,7 @@ namespace RenderApp.Render_System
             LightingStage.Dispose();
             SelectionStage.Dispose();
             PostStage.Dispose();
+            PostPlane.Dispose();
         }
         public void Render()
         {
@@ -160,9 +162,9 @@ namespace RenderApp.Render_System
             GBufferStage.RenderTarget.BindRenderTarget();
             foreach (var asset in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
             {
-                if(asset._KIObject is Geometry)
+                if(asset.KIObject is Geometry)
                 {
-                    var geometry = asset._KIObject as Geometry;
+                    var geometry = asset.KIObject as Geometry;
                     geometry.Render();
                 }
             }
@@ -178,7 +180,7 @@ namespace RenderApp.Render_System
             }
 
             SelectionStage.ClearBuffer();
-            SelectionStage.Render();
+            SelectionStage.PlaneRender();
 
             OutputStage.uSelectMap = SelectionStage.RenderTarget.Textures[0];
             OutputStage.uTarget = OutputTexture;

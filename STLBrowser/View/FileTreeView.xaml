@@ -8,7 +8,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <controls:DirectoryAccsessor FolderPath="{Binding FolderPath}"/>
+        <controls:DirectoryAccessor FolderPath="{Binding FolderPath, Mode=TwoWay}"/>
         <ScrollViewer Grid.Row="1">
             <TreeView ItemsSource="{Binding Root.Directorys}">
                 <TreeView.ItemTemplate>

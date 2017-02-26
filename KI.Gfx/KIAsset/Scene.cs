@@ -96,7 +96,7 @@ namespace KI.Gfx.KIAsset
             }
             else
             {
-                return obj._KIObject;
+                return obj.KIObject;
             }
         }
 

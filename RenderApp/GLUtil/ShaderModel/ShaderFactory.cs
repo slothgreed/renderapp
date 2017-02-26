@@ -127,18 +127,6 @@ namespace RenderApp.GLUtil
                 return _defaultDefferredShader;
             }
         }
-        private Shader _outputShader;
-        public Shader OutputShader
-        {
-            get
-            {
-                if(_outputShader == null)
-                {
-                    _outputShader = CreateShaderVF(ProjectInfo.ShaderDirectory + @"\Output");
-                }
-                return _outputShader;
-            }
-        }
 
         public void Dispose()
         {

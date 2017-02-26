@@ -65,7 +65,6 @@
     <Compile Include="Model\STLInfo.cs" />
     <Compile Include="MyDirectory.cs" />
     <Compile Include="ViewModel\STLBrowserViewModel.cs" />
-    <Compile Include="ViewModel\ThumbnailFileViewModel.cs" />
     <Compile Include="ViewModel\ViewportViewModel.cs" />
     <Compile Include="View\STLBrowserView.xaml.cs">
       <DependentUpon>STLBrowserView.xaml</DependentUpon>
@@ -74,9 +73,6 @@
     <Compile Include="ViewModel\DirectoryViewModel.cs" />
     <Compile Include="View\FileTreeView.xaml.cs">
       <DependentUpon>FileTreeView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ThumbnailFileView.xaml.cs">
-      <DependentUpon>ThumbnailFileView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ViewportView.xaml.cs">
       <DependentUpon>ViewportView.xaml</DependentUpon>
@@ -99,10 +95,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\FileTreeView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ThumbnailFileView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

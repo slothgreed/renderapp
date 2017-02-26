@@ -22,12 +22,21 @@ namespace STLBrowser.ViewModel
             set
             {
                 SetValue(ref _FolderPath,value);
+                CreateDirectoryTree(value);
             }
         }
+
+        private DirectoryViewModel _root;
         public DirectoryViewModel Root
         {
-            get;
-            set;
+            get
+            {
+                return _root;
+            }
+            set
+            {
+                SetValue(ref _root, value);
+            }
         }
         private ICommand _OpenFolder;
         public ICommand OpenFolder
@@ -64,8 +73,11 @@ namespace STLBrowser.ViewModel
         }
         public FileTreeViewModel(string path)
         {
-            Root = new DirectoryViewModel(path);
             FolderPath = path;
+        }
+        public void CreateDirectoryTree(string path)
+        {
+            Root = new DirectoryViewModel(path);
         }
 
         public override void UpdateProperty()

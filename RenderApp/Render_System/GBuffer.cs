@@ -61,9 +61,9 @@ namespace RenderApp.Render_System
             RenderTarget.BindRenderTarget();
             foreach (var asset in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
             {
-                if (asset._KIObject is Geometry)
+                if (asset.KIObject is Geometry)
                 {
-                    var geometry = asset._KIObject as Geometry;
+                    var geometry = asset.KIObject as Geometry;
                     geometry.Render();
                 }
             }

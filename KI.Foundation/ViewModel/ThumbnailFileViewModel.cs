@@ -4,33 +4,44 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using KI.Foundation.ViewModel;
-using STLBrowser.Model;
-namespace STLBrowser.ViewModel
+namespace KI.Foundation.ViewModel
 {
     public class ThumbnailFileViewModel : ViewModelBase
     {
-        private STLFile _model;
-        public STLFile Model
+        private string _filePath;
+        public string FilePath
         {
             get
             {
-                return _model;
+                return _filePath;
             }
             set
             {
-                SetValue(ref _model, value);
+                SetValue(ref _filePath, value);
             }
         }
 
+        private string _imagePath;
+        public string ImagePath
+        {
+            get
+            {
+                return _imagePath;
+            }
+            set
+            {
+                SetValue(ref _imagePath, value);
+            }
+        }
 
         /// <summary>
         /// サムネイルファイルのパス
         /// </summary>
         /// <param name="path"></param>
-        public ThumbnailFileViewModel(STLFile stlFile)
+        public ThumbnailFileViewModel(string filePath, string imagePath)
         {
-            Model = stlFile;
+            FilePath = filePath;
+            ImagePath = imagePath;
         }
 
         public override void UpdateProperty()

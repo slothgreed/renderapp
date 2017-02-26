@@ -123,6 +123,7 @@
     <Compile Include="AppSystem.cs" />
     <Compile Include="AssetModel\AssetFactory.cs" />
     <Compile Include="AssetModel\Geometry\IRenderObjectConverter.cs" />
+    <Compile Include="Render_System\LighthingBuffer.cs" />
     <Compile Include="Render_System\OutputBuffer.cs" />
     <Compile Include="Render_System\PostProcess.cs" />
     <Compile Include="Render_System\Post_Effect\Bloom.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Render_System\Post_Effect\Selection.cs" />
     <Compile Include="Render_System\Post_Effect\Sobel.cs" />
     <Compile Include="Render_System\Post_Effect\SSAO.cs" />
+    <Compile Include="Render_System\ShadowMap.cs" />
     <Compile Include="Scene\SceneManager.cs" />
     <Compile Include="RAControl\CameraControl.cs" />
     <Compile Include="Utility\ShaderCreater.cs" />

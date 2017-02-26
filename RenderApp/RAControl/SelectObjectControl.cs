@@ -82,9 +82,9 @@ namespace RenderApp.RA_Control
             foreach (KINode geometryNode in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
             {
                 geometry = null;
-                if (geometryNode._KIObject is Geometry)
+                if (geometryNode.KIObject is Geometry)
                 {
-                    geometry = geometryNode._KIObject as Geometry;
+                    geometry = geometryNode.KIObject as Geometry;
                 }
                 else
                 {

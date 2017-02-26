@@ -22,11 +22,10 @@ namespace RenderApp.Render_System
             uID = -1;
         }
 
-        public Selection(Geometry plane)
+        public Selection()
             : base("SelectionBuffer", vertexShader, fragShader)
         {
             Material.AddTexture(TextureKind.Normal, SceneManager.Instance.RenderSystem.GBufferStage.FindTexture(TextureKind.Normal));
-            Plane = plane;
         }
 
         public void SelectObject()
@@ -49,12 +48,5 @@ namespace RenderApp.Render_System
             }
         }
 
-        public void Render()
-        {
-            RenderTarget.BindRenderTarget();
-            Plane.MaterialItem = Material;
-            Plane.Render();
-            RenderTarget.UnBindRenderTarget();
-        }
     }
 }

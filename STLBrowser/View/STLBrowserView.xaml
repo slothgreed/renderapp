@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:v="clr-namespace:STLBrowser.View"
         xmlns:vm="clr-namespace:STLBrowser.ViewModel"
+        xmlns:control="clr-namespace:KI.Foundation.Control;assembly=KI.Foundation"
     >
     <ScrollViewer>
         <ItemsControl ItemsSource="{Binding STLFiles}">
@@ -12,8 +13,8 @@
                 </ControlTemplate>
             </ItemsControl.Template>
             <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type vm:ThumbnailFileViewModel}">
-                    <v:ThumbnailFileView/>
+                <DataTemplate>
+                    <control:ThumbnailFile/> 
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
