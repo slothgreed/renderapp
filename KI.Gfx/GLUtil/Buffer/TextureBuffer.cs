@@ -8,6 +8,16 @@ namespace KI.Gfx.GLUtil
 {
     public class TextureBuffer : BufferObject
     {
+        public int Width
+        {
+            get;
+            private set;
+        }
+        public int Height
+        {
+            get;
+            private set;
+        }
         public TextureTarget Target
         {
             get;
@@ -51,6 +61,8 @@ namespace KI.Gfx.GLUtil
         public void SizeChanged(int width, int height)
         {
             BindBuffer();
+            Width = width;
+            Height = height;
             GL.TexImage2D(Target, 0, Format, width, height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.Byte, IntPtr.Zero);
             UnBindBuffer();
         }
@@ -58,6 +70,8 @@ namespace KI.Gfx.GLUtil
         {
             BindBuffer();
             GL.TexImage2D(Target, 0, Format, width, height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.Byte, IntPtr.Zero);
+            Width = width;
+            Height = height;
             UnBindBuffer();
         }
     }

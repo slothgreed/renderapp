@@ -16,6 +16,20 @@ namespace KI.Gfx.KIAsset
     public class Texture : KIObject
     {
         #region [member]
+        public int Width
+        {
+            get
+            {
+                return TextureBuffer.Width;
+            }
+        }
+        public int Height
+        {
+            get
+            {
+                return TextureBuffer.Height;
+            }
+        }
 
         private KIImageInfo _imageInfo;
         public KIImageInfo ImageInfo
