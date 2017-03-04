@@ -57,10 +57,6 @@ namespace RenderApp.Globals
             {
                 TextureRoot.AddChild(value);
             }
-            if (value is Material)
-            {
-                MaterialRoot.AddChild(value);
-            }
             if(value is ShaderProgram)
             {
                 ShaderProgramRoot.AddChild(value);

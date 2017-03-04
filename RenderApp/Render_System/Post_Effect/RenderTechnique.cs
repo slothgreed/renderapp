@@ -25,11 +25,6 @@ namespace RenderApp.Render_System
             get;
             protected set;
         }
-        public Material Material
-        {
-            get;
-            protected set;
-        }
 
         public RenderTarget RenderTarget
         {
@@ -79,7 +74,6 @@ namespace RenderApp.Render_System
         public virtual void PlaneRender()
         {
             RenderTarget.BindRenderTarget();
-            Plane.MaterialItem = Material;
             Plane.Render();
             RenderTarget.UnBindRenderTarget();
         }
@@ -95,19 +89,13 @@ namespace RenderApp.Render_System
             Texture texture = TextureFactory.Instance.CreateTexture("Texture:" + Name, width, height);
             RenderTarget = new RenderTarget("RenderTarget:" + Name, width, height, texture);
         }
-        public virtual void CreateMaterial()
-        {
-            Material = AssetFactory.Instance.CreateMaterial("Material : " + Name);
-        }
-        private void Init(string vertexShader = null, string fragShader = null, Material materail = null)
+        private void Init(string vertexShader = null, string fragShader = null)
         {
             if (vertexShader != null && fragShader != null)
             {
                 CreateShader(vertexShader, fragShader);
             }
             CreateRenderTarget(KI.Gfx.GLUtil.DeviceContext.Instance.Width, KI.Gfx.GLUtil.DeviceContext.Instance.Height);
-            CreateMaterial();
-            Material.CurrentShader = Shader;
             Initialize();
         }
         #endregion

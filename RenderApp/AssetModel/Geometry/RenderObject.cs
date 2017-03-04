@@ -15,7 +15,6 @@ namespace RenderApp.AssetModel
     {
         private void Initialize()
         {
-            MaterialItem = Material.Constant;
             GeometryInfo.GenBuffer();
         }
 

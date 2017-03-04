@@ -32,7 +32,7 @@ namespace RenderApp.Render_System
         internal void Render()
         {
             //最終出力フレームバッファのバインドの必要なし
-            Plane.MaterialItem = Material;
+            Plane.Shader = Shader;
             Plane.Render();
         }
     }

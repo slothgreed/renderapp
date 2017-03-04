@@ -41,7 +41,7 @@ namespace RenderApp.Render_System
            foreach(var post in PostEffects)
            {
                post.RenderTarget.BindRenderTarget();
-               Plane.MaterialItem = post.Material;
+               Plane.Shader = post.Shader;
                Plane.Render();
                post.RenderTarget.UnBindRenderTarget();
            }

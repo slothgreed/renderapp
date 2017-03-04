@@ -12,6 +12,7 @@ using KI.Gfx;
 using KI.Gfx.KIAsset;
 using KI.Gfx.GLUtil;
 using KI.Gfx.Analyzer;
+using RenderApp.GLUtil.ShaderModel;
 namespace RenderApp.AssetModel
 {
     public abstract class Geometry : KIObject
@@ -78,16 +79,16 @@ namespace RenderApp.AssetModel
                 return new Matrix3(norm);
             }
         }
-        private Material _materialItem = Material.Default;
-        public Material MaterialItem
+        private Shader _ShaderItem;
+        public Shader Shader
         {
             get
             {
-                return _materialItem;
+                return _ShaderItem;
             }
             set
             {
-                _materialItem = value;
+                _ShaderItem = value;
             }
         }
 
@@ -140,8 +141,8 @@ namespace RenderApp.AssetModel
             GeometryInfo = new GeometryInfo();
             Timer = new List<int>();
             ModelMatrix = Matrix4.Identity;
-            MaterialItem = Material.Default;
             TextureItem = new Dictionary<TextureKind, Texture>();
+            Shader = ShaderFactory.Instance.DefaultAnalyzeShader;
         }
 
         public override void Dispose()
@@ -157,8 +158,8 @@ namespace RenderApp.AssetModel
         #region render
         public virtual void Render()
         {
-            MaterialItem.CurrentShader.InitializeState(this, TextureItem);
-            MaterialItem.CurrentShader.BindBuffer(this.GeometryInfo);
+            Shader.InitializeState(this, TextureItem);
+            Shader.BindBuffer(this.GeometryInfo);
             if (GeometryInfo.Index.Count == 0)
             {
                 DeviceContext.Instance.DrawArrays(RenderType, 0, GeometryInfo.Position.Count);
@@ -167,7 +168,7 @@ namespace RenderApp.AssetModel
             {
                 DeviceContext.Instance.DrawElements(RenderType, GeometryInfo.Index.Count, DrawElementsType.UnsignedInt, 0);
             }
-            MaterialItem.CurrentShader.UnBindBuffer();
+            Shader.UnBindBuffer();
             Logger.GLLog(Logger.LogLevel.Error);
         }
 

@@ -29,7 +29,7 @@ namespace RenderApp.Render_System
         }
         public void SetValue(string key,object value)
         {
-            Plane.MaterialItem.CurrentShader.SetValue(key,value);
+            Plane.Shader.SetValue(key,value);
         }
 
         public void SetPlaneTexture(TextureKind kind,Texture texture)

@@ -26,10 +26,10 @@ namespace RenderApp.ViewModel
             get;
             set;
         }
-        public ShaderViewModel(Material material)
+        public ShaderViewModel(Shader shader)
         {
             PropertyItem = new Dictionary<string, object>();
-            foreach (ShaderProgramInfo loop in material.CurrentShader.GetShaderVariable())
+            foreach (ShaderProgramInfo loop in shader.GetShaderVariable())
             {
                 if (loop.variable is Vector2)
                 {

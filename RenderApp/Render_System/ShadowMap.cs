@@ -30,7 +30,7 @@ namespace RenderApp.Render_System
                 if (asset.KIObject is Light)
                 {
                     var light = asset.KIObject as Light;
-                    Plane.MaterialItem = Material;
+                    Plane.Shader = Shader;
                     Plane.Render();
                 }
             }

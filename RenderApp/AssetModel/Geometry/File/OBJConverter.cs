@@ -29,7 +29,6 @@ namespace RenderApp.AssetModel.RA_Geometry
 
         public void SetMaterial(Geometry geometry,OBJMaterial material)
         {
-            Material mat = AssetFactory.Instance.CreateMaterial(material.name);
             if(material.map_Kd != null)
             {
                 Texture albedo = TextureFactory.Instance.CreateTexture(material.map_Kd);
@@ -50,10 +49,9 @@ namespace RenderApp.AssetModel.RA_Geometry
                 geometry.AddTexture(TextureKind.Specular, spec);
                 RenderApp.Globals.Project.ActiveProject.AddChild(spec);
             }
-            geometry.MaterialItem = mat;
             string vertex = Utility.ShaderCreater.Instance.GetVertexShader(geometry.GeometryInfo);
             string frag = Utility.ShaderCreater.Instance.GetOBJFragShader(geometry);
-            mat.CurrentShader = (ShaderFactory.Instance.CreateShaderVF(vertex,frag));
+            geometry.Shader = (ShaderFactory.Instance.CreateShaderVF(vertex,frag));
         }
         public List<RenderObject> CreateRenderObject()
         {

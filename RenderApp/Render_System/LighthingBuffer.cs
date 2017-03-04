@@ -26,7 +26,7 @@ namespace RenderApp.Render_System
             {
                 if(light.KIObject is Light)
                 {
-                    Plane.MaterialItem = Material;
+                    Plane.Shader = Shader;
                     Plane.Render();
                 }
             }

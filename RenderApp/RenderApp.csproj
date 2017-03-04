@@ -202,7 +202,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MainWindowViewModelT4.tt</DependentUpon>
     </Compile>
-    <Compile Include="Scene\Material\Material.cs" />
     <Compile Include="Globals\ProjectInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -423,6 +422,7 @@
     <EmbeddedResource Include="Thumbnail\noimage.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Scene\Material\" />
     <Folder Include="Scene\Shader\ShaderType\" />
   </ItemGroup>
   <ItemGroup>
