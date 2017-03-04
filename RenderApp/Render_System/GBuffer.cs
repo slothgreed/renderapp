@@ -14,7 +14,7 @@ namespace RenderApp.Render_System
         Dictionary<TextureKind, Texture> textureList = new Dictionary<TextureKind, Texture>();
 
         public GBuffer(int width, int height)
-            :base("GBuffer")
+            : base("GBuffer", RenderType.Original)
         {
         
         
@@ -55,7 +55,7 @@ namespace RenderApp.Render_System
         {
         }
 
-        public void Render()
+        public override void Render()
         {
             ClearBuffer();
             RenderTarget.BindRenderTarget();

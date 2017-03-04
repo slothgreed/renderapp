@@ -150,10 +150,8 @@ namespace RenderApp.AssetModel
 
         internal Geometry CreatePostProcessPlane(string name)
         {
-            Plane plane;
-            plane = new Plane(name);
-            Geometry renderObject = plane.CreateRenderObject().First();
-            return renderObject;
+            Plane plane = new Plane(name);
+            return plane.CreateRenderObject().First();
         }
 
         internal List<RenderObject> CreateLoad3DModel(string filePath)

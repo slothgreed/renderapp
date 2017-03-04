@@ -21,7 +21,7 @@ namespace RenderApp.Render_System
         }
 
         public Selection()
-            : base("SelectionBuffer", vertexShader, fragShader)
+            : base("SelectionBuffer", vertexShader, fragShader,RenderType.OffScreen)
         {
             Plane.AddTexture(TextureKind.Normal, SceneManager.Instance.RenderSystem.GBufferStage.FindTexture(TextureKind.Normal));
         }

@@ -422,7 +422,6 @@
     <EmbeddedResource Include="Thumbnail\noimage.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Scene\Material\" />
     <Folder Include="Scene\Shader\ShaderType\" />
   </ItemGroup>
   <ItemGroup>

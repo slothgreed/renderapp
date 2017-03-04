@@ -14,12 +14,12 @@ namespace RenderApp.Render_System
         private static string fragShader = ProjectInfo.ShaderDirectory + @"\Defferd.frag";
 
         public LighthingBuffer(Geometry plane)
-            : base("LighthingBuffer", vertexShader, fragShader)
+            : base("LighthingBuffer", vertexShader, fragShader, RenderType.Original)
         {
             Plane = plane;
         }
 
-        public void Render()
+        public override void Render()
         {
             RenderTarget.BindRenderTarget();
             foreach(var light in SceneManager.Instance.ActiveScene.RootNode.AllChildren())

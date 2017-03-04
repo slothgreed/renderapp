@@ -42,17 +42,9 @@ namespace RenderApp.Render_System
         /// </summary>
         private PostPlane LightingStage;
         /// <summary>
-        /// ポストプロセス結果
-        /// </summary>
-        private PostProcess PostStage;
-        /// <summary>
         /// 後処理のUtil（選択とか）
         /// </summary>
         private Selection SelectionStage;
-        /// <summary>
-        /// postplaneの削除
-        /// </summary>
-        private Geometry PostPlane;
         /// <summary>
         /// 最終出力画像
         /// </summary>
@@ -77,9 +69,6 @@ namespace RenderApp.Render_System
         {
             Width = width;
             Height = height;
-            PostPlane = AssetFactory.Instance.CreatePostProcessPlane("PostProcess");
-            RenderTechnique.Plane = PostPlane;
-            PostStage = new PostProcess(RenderTechnique.Plane);
             ProcessingTexture = new List<Texture>();
             PostProcessMode = false;
             GBufferStage = new GBuffer(Width, Height);
@@ -114,7 +103,6 @@ namespace RenderApp.Render_System
         {
             GBufferStage.SizeChanged(width, height);
             LightingStage.SizeChanged(width, height);
-            PostStage.SizeChanged(width, height);
             SelectionStage.SizeChanged(width, height);
             OutputStage.SizeChanged(width, height);
         }
@@ -153,8 +141,6 @@ namespace RenderApp.Render_System
             GBufferStage.Dispose();
             LightingStage.Dispose();
             SelectionStage.Dispose();
-            PostStage.Dispose();
-            PostPlane.Dispose();
         }
         public void Render()
         {
@@ -174,13 +160,8 @@ namespace RenderApp.Render_System
             LightingStage.ClearBuffer();
             LightingStage.Render();
 
-            if (PostProcessMode)
-            {
-                PostStage.Render();
-            }
-
             SelectionStage.ClearBuffer();
-            SelectionStage.PlaneRender();
+            SelectionStage.Render();
 
             OutputStage.uSelectMap = SelectionStage.RenderTarget.Textures[0];
             OutputStage.uTarget = OutputTexture;

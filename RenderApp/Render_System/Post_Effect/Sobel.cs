@@ -25,7 +25,7 @@ namespace RenderApp.Render_System
             uTarget = null;
         }
         public Sobel(Shader shader)
-            : base("Sobel",vertexShader,fragShader)
+            : base("Sobel", vertexShader, fragShader, RenderType.OffScreen)
         {
 
         }

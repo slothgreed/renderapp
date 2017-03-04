@@ -49,7 +49,7 @@ namespace RenderApp.Render_System
         private float[] m_Weight = new float[5];
 
         public Bloom()
-            : base("Bloom", vertexShader, fragShader)
+            : base("Bloom", vertexShader, fragShader, RenderType.OffScreen)
         {
 
         }

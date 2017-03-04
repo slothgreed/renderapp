@@ -14,8 +14,9 @@ namespace RenderApp.Render_System
         private static string fragShader = ProjectInfo.ShaderDirectory + @"\Output.frag";
 
         public OutputBuffer()
-            : base("OutputBuffer", vertexShader, fragShader)
+            : base("OutputBuffer", vertexShader, fragShader, RenderType.Original)
         {
+            Plane = AssetFactory.Instance.CreatePostProcessPlane("OutputBuffer");
             Plane.AddTexture(TextureKind.Normal, SceneManager.Instance.RenderSystem.GBufferStage.FindTexture(TextureKind.Normal));
         }
 
@@ -29,7 +30,7 @@ namespace RenderApp.Render_System
             Plane.AddTexture(textureKind, OutputTexture);
         }
 
-        internal void Render()
+        public override void Render()
         {
             //最終出力フレームバッファのバインドの必要なし
             Plane.Shader = Shader;

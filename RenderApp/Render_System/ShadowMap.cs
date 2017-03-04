@@ -14,7 +14,7 @@ namespace RenderApp.Render_System
         private static string fragShader = ProjectInfo.ShaderDirectory + @"\ShadowMap.frag";
 
         public ShadowMap()
-            : base("ShadowMap")
+            : base("ShadowMap",RenderType.Original)
         {
 
         }
@@ -22,7 +22,7 @@ namespace RenderApp.Render_System
         {
         }
 
-        public void Render()
+        public override void Render()
         {
             RenderTarget.BindRenderTarget();
             foreach (var asset in SceneManager.Instance.ActiveScene.RootNode.AllChildren())

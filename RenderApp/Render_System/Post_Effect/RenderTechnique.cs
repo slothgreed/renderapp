@@ -15,12 +15,23 @@ namespace RenderApp.Render_System
 {
     public abstract class RenderTechnique : KIObject
     {
-        public static Geometry Plane
+        public enum RenderType
+        {
+            Original,
+            OffScreen
+        }
+        protected RenderType renderType
         {
             get;
             set;
         }
         public Shader Shader
+        {
+            get;
+            protected set;
+        }
+
+        public Geometry Plane
         {
             get;
             protected set;
@@ -32,14 +43,16 @@ namespace RenderApp.Render_System
             protected set;
         }
 
-        public RenderTechnique(string name)
+        public RenderTechnique(string name, RenderType type)
             :base(name)
         {
+            renderType = type;
             Init();
         }
-        public RenderTechnique(string name, string vertexShader, string fragShader)
+        public RenderTechnique(string name, string vertexShader, string fragShader, RenderType type)
             :base(name)
         {
+            renderType = type; 
             Init(vertexShader, fragShader);
         }
 
@@ -67,16 +80,23 @@ namespace RenderApp.Render_System
         {
             RenderTarget.SizeChanged(width, height);
         }
-
-        /// <summary>
-        /// 平面にレンダリング
-        /// </summary>
-        public virtual void PlaneRender()
+        public virtual void Render()
         {
-            RenderTarget.BindRenderTarget();
-            Plane.Render();
-            RenderTarget.UnBindRenderTarget();
+            if (renderType == RenderType.Original)
+            {
+                Logger.Log(Logger.LogLevel.Error, "RenderTechnique : Not Defined Original Render");
+            }
+            if(renderType == RenderType.OffScreen)
+            {
+                if(Plane != null)
+                {
+                    RenderTarget.BindRenderTarget();
+                    Plane.Render();
+                    RenderTarget.UnBindRenderTarget();
+                }
+            }
         }
+
         #region [initalize event]
         public abstract void Initialize();
 
@@ -94,6 +114,10 @@ namespace RenderApp.Render_System
             if (vertexShader != null && fragShader != null)
             {
                 CreateShader(vertexShader, fragShader);
+            }
+            if(renderType == RenderType.OffScreen)
+            {
+                Plane = AssetFactory.Instance.CreatePostProcessPlane(Name);
             }
             CreateRenderTarget(KI.Gfx.GLUtil.DeviceContext.Instance.Width, KI.Gfx.GLUtil.DeviceContext.Instance.Height);
             Initialize();
