@@ -28,9 +28,9 @@ namespace KI.Gfx.Render
         /// </summary>
         public RenderBuffer RenderBuffer { get; private set; }
         /// <summary>
-        /// テクスチャ
+        /// 出力テクスチャ
         /// </summary>
-        public List<Texture> Textures = new List<Texture>();
+        public List<Texture> OutputTextures = new List<Texture>();
         /// <summary>
         /// テクスチャのアタッチメント
         /// </summary>
@@ -66,7 +66,7 @@ namespace KI.Gfx.Render
             Height = height;
             for (int i = 0; i < texture.Length; i++)
             {
-                Textures.Add(texture[i]);
+                OutputTextures.Add(texture[i]);
                 Attachment.Add(FramebufferAttachment.ColorAttachment0 + i);
                 OutputBuffers.Add(DrawBuffersEnum.ColorAttachment0 + i);
             }
@@ -82,9 +82,9 @@ namespace KI.Gfx.Render
 
             GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, RenderBuffer.DeviceID);
 
-            for (int i = 0; i < Textures.Count; i++)
+            for (int i = 0; i < OutputTextures.Count; i++)
             {
-                GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, Attachment[i], TextureTarget.Texture2D, Textures[i].DeviceID, 0);
+                GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, Attachment[i], TextureTarget.Texture2D, OutputTextures[i].DeviceID, 0);
             }
 
             RenderBuffer.UnBindBuffer();
@@ -98,7 +98,7 @@ namespace KI.Gfx.Render
             Width = width;
             RenderBuffer.SizeChanged(width, height);
 
-            foreach(var texture in Textures)
+            foreach(var texture in OutputTextures)
             {
                 texture.TextureBuffer.SizeChanged(width, height);
             }
@@ -115,10 +115,6 @@ namespace KI.Gfx.Render
         {
             FrameBuffer.Dispose();
             RenderBuffer.Dispose();
-            foreach(var texture in Textures)
-            {
-                texture.Dispose();
-            }
         }
 
         public void BindRenderTarget()

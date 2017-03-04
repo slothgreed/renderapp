@@ -79,9 +79,6 @@ namespace RenderApp.Globals
         }
         internal void Dispose()
         {
-            GeometryRoot.Dispose();
-            TextureRoot.Dispose();
-            MaterialRoot.Dispose();
         }
     }
 }

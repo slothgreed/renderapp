@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KI.Foundation.Utility;
+using System.Diagnostics;
 
 namespace KI.Gfx.GLUtil
 {
@@ -27,6 +28,7 @@ namespace KI.Gfx.GLUtil
         public abstract void PreBindBuffer();
         public abstract void PreUnBindBuffer();
 
+        private static int CreateNum = 0;
         public bool Enable
         {
             get;
@@ -34,6 +36,7 @@ namespace KI.Gfx.GLUtil
         }
         public virtual void GenBuffer()
         {
+            CreateNum++;
             if (DeviceID != -1)
             {
                 Dispose();
@@ -59,6 +62,7 @@ namespace KI.Gfx.GLUtil
         }
         public virtual void Dispose()
         {
+            CreateNum--;
             PreDispose();
             DeviceID = -1;
         }

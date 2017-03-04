@@ -130,9 +130,9 @@ namespace RenderApp.GLUtil
 
         public void Dispose()
         {
-            foreach(var shadre in ShaderList.Values)
+            foreach(var shader in ShaderList.Values)
             {
-                shadre.Dispose();
+                shader.Dispose();
             }
         }
     }

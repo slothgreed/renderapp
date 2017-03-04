@@ -73,21 +73,21 @@ namespace RenderApp.Render_System
             PostProcessMode = false;
             GBufferStage = new GBuffer(Width, Height);
 
-            foreach (var textures in GBufferStage.RenderTarget.Textures)
+            foreach (var textures in GBufferStage.RenderTarget.OutputTextures)
             {
                 ProcessingTexture.Add(textures);
             }
 
             LightingStage = new LighthingBuffer();
 
-            ProcessingTexture.Add(LightingStage.RenderTarget.Textures[0]);
+            ProcessingTexture.Add(LightingStage.RenderTarget.OutputTextures[0]);
 
             SelectionStage = new Selection();
-            ProcessingTexture.Add(SelectionStage.RenderTarget.Textures[0]);
+            ProcessingTexture.Add(SelectionStage.RenderTarget.OutputTextures[0]);
             
             OutputStage = new OutputBuffer();
-            OutputTexture = GBufferStage.RenderTarget.Textures[0];
-            OutputTexture = LightingStage.RenderTarget.Textures[0];
+            OutputTexture = GBufferStage.RenderTarget.OutputTextures[0];
+            OutputTexture = LightingStage.RenderTarget.OutputTextures[0];
 
             
         
@@ -144,7 +144,7 @@ namespace RenderApp.Render_System
             SelectionStage.ClearBuffer();
             SelectionStage.Render();
 
-            OutputStage.uSelectMap = SelectionStage.RenderTarget.Textures[0];
+            OutputStage.uSelectMap = SelectionStage.RenderTarget.OutputTextures[0];
             OutputStage.uTarget = OutputTexture;
             OutputStage.Render();
         }

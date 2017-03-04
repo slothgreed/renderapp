@@ -137,7 +137,7 @@ namespace KI.Gfx.KIAsset
         
         public override void Dispose()
         {
-            RootNode.Dispose();
+
         }
         #endregion
 
