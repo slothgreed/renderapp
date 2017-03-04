@@ -21,6 +21,7 @@ using KI.Foundation.Tree;
 using KI.Gfx.GLUtil;
 using KI.Gfx;
 using KI.Gfx.KIAsset;
+using KI.Gfx.Render;
 namespace RenderApp.ViewModel
 {
     public partial class MainWindowViewModel : ViewModelBase
@@ -376,7 +377,7 @@ namespace RenderApp.ViewModel
             SceneManager.Instance.ActiveScene.Dispose();
             Project.ActiveProject.Dispose();
             ShaderFactory.Instance.Dispose();
-            RenderPassFactory.Instance.Dispose();
+            RenderTargetFactory.Instance.Dispose();
         }
         private void SizeChangedCommand()
         {

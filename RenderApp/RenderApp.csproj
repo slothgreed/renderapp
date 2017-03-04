@@ -208,7 +208,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Scene\Shader\Bezier\Bezier.cs" />
-    <Compile Include="Render_System\RenderPassFactory.cs" />
     <Compile Include="AssetModel\Geometry\RenderObject.cs" />
     <Compile Include="View\Controller\VoxelView.xaml.cs">
       <DependentUpon>VoxelView.xaml</DependentUpon>

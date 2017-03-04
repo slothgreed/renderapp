@@ -107,7 +107,7 @@ namespace RenderApp.Render_System
         public virtual void CreateRenderTarget(int width, int height)
         {
             Texture texture = TextureFactory.Instance.CreateTexture("Texture:" + Name, width, height);
-            RenderTarget = new RenderTarget("RenderTarget:" + Name, width, height, texture);
+            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget("RenderTarget:" + Name, width, height, texture);
         }
         private void Init(string vertexShader = null, string fragShader = null)
         {

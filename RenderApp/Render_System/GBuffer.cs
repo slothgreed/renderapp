@@ -38,7 +38,7 @@ namespace RenderApp.Render_System
             textureList.Add(TextureKind.Albedo, texture[2]);
             textureList.Add(TextureKind.Lighting, texture[3]);
 
-            RenderTarget = new RenderTarget(Name, width, height, texture);
+            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget(Name, width, height, texture);
         }
 
         public Texture FindTexture(TextureKind kind)

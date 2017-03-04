@@ -44,16 +44,16 @@ namespace KI.Gfx.Render
         /// </summary>
         public static DrawBufferMode DefaultOutBuffer = DrawBufferMode.Back;
 
-        public RenderTarget(string name)
+        internal RenderTarget(string name)
         {
             FrameBuffer = new FrameBuffer(name);
         }
-        public RenderTarget(string name, int width, int height, Texture[] texture)
+        internal RenderTarget(string name, int width, int height, Texture[] texture)
         {
             FrameBuffer = new FrameBuffer(name);
             Initialize(width, height, texture);
         }
-        public RenderTarget(string name, int width, int height, Texture texture)
+        internal RenderTarget(string name, int width, int height, Texture texture)
         {
             FrameBuffer = new FrameBuffer(name);
             Initialize(width, height, new Texture[] { texture });
