@@ -127,8 +127,8 @@ namespace RenderApp.AssetModel
         #region render
         public virtual void Render()
         {
-            MaterialItem.InitializeState(this);
-            MaterialItem.BindShader(this);
+            MaterialItem.CurrentShader.InitializeState(this, MaterialItem.TextureItem);
+            MaterialItem.CurrentShader.BindBuffer(this.GeometryInfo);
             if (GeometryInfo.Index.Count == 0)
             {
                 DeviceContext.Instance.DrawArrays(RenderType, 0, GeometryInfo.Position.Count);
@@ -137,7 +137,7 @@ namespace RenderApp.AssetModel
             {
                 DeviceContext.Instance.DrawElements(RenderType, GeometryInfo.Index.Count, DrawElementsType.UnsignedInt, 0);
             }
-            MaterialItem.UnBindShader();
+            MaterialItem.CurrentShader.UnBindBuffer();
             Logger.GLLog(Logger.LogLevel.Error);
         }
 

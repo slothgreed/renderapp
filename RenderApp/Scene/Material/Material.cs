@@ -29,23 +29,6 @@ namespace RenderApp.AssetModel
         {
             CurrentShader.InitializeState(geometry, TextureItem);
         }
-        /// <summary>
-        /// シェーダにBinding
-        /// </summary>
-        /// <param name="geometry"></param>
-        /// <returns></returns>
-        public bool BindShader(Geometry geometry)
-        {
-            CurrentShader.BindBuffer(geometry.GeometryInfo);
-            return true;
-        }
-
-        public bool UnBindShader()
-        {
-            CurrentShader.UnBindBuffer();
-            return true;
-        }
-
         #endregion
 
         #region [constructor]
@@ -96,13 +79,6 @@ namespace RenderApp.AssetModel
             else
             {
                 return null;
-            }
-        }
-        public IEnumerable<Texture> GetTexture()
-        {
-            foreach(var loop in TextureItem.Keys)
-            {
-                yield return TextureItem[loop];
             }
         }
         #endregion
