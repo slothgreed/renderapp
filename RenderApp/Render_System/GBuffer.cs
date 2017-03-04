@@ -11,7 +11,6 @@ namespace RenderApp.Render_System
 {
     public class GBuffer : RenderTechnique
     {
-        Dictionary<TextureKind, Texture> textureList = new Dictionary<TextureKind, Texture>();
 
         public GBuffer(int width, int height)
             : base("GBuffer", RenderType.Original)
@@ -33,23 +32,13 @@ namespace RenderApp.Render_System
             RenderApp.Globals.Project.ActiveProject.AddChild(texture[2]);
             RenderApp.Globals.Project.ActiveProject.AddChild(texture[3]);
 
-            textureList.Add(TextureKind.World, texture[0]);
-            textureList.Add(TextureKind.Normal, texture[1]);
-            textureList.Add(TextureKind.Albedo, texture[2]);
-            textureList.Add(TextureKind.Lighting, texture[3]);
+            OutputTexture.Add(texture[0]);
+            OutputTexture.Add(texture[1]);
+            OutputTexture.Add(texture[2]);
+            OutputTexture.Add(texture[3]);
 
-            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget(Name, width, height, texture);
+            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget(Name, width, height, OutputTexture.Count);
         }
-
-        public Texture FindTexture(TextureKind kind)
-        {
-            if(textureList.ContainsKey(kind))
-            {
-                return textureList[kind];
-            }
-            return null;
-        }
-
 
         public override void Initialize()
         {
@@ -58,7 +47,7 @@ namespace RenderApp.Render_System
         public override void Render()
         {
             ClearBuffer();
-            RenderTarget.BindRenderTarget();
+            RenderTarget.BindRenderTarget(OutputTexture.ToArray());
             foreach (var asset in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
             {
                 if (asset.KIObject is Geometry)

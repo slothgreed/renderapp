@@ -73,21 +73,21 @@ namespace RenderApp.Render_System
             PostProcessMode = false;
             GBufferStage = new GBuffer(Width, Height);
 
-            foreach (var textures in GBufferStage.RenderTarget.OutputTextures)
+            foreach (var textures in GBufferStage.OutputTexture)
             {
                 ProcessingTexture.Add(textures);
             }
 
             LightingStage = new LighthingBuffer();
 
-            ProcessingTexture.Add(LightingStage.RenderTarget.OutputTextures[0]);
+            ProcessingTexture.Add(LightingStage.OutputTexture[0]);
 
             SelectionStage = new Selection();
-            ProcessingTexture.Add(SelectionStage.RenderTarget.OutputTextures[0]);
+            ProcessingTexture.Add(SelectionStage.OutputTexture[0]);
             
             OutputStage = new OutputBuffer();
-            OutputTexture = GBufferStage.RenderTarget.OutputTextures[0];
-            OutputTexture = LightingStage.RenderTarget.OutputTextures[0];
+            OutputTexture = GBufferStage.OutputTexture[0];
+            OutputTexture = LightingStage.OutputTexture[0];
 
             
         
@@ -102,7 +102,7 @@ namespace RenderApp.Render_System
         }
         public void Picking(int x, int y)
         {
-            GBufferStage.RenderTarget.BindRenderTarget();
+            GBufferStage.RenderTarget.BindRenderTarget(GBufferStage.OutputTexture.ToArray());
 
             GL.ReadBuffer(ReadBufferMode.ColorAttachment1);
             IntPtr ptr = IntPtr.Zero;
@@ -144,7 +144,7 @@ namespace RenderApp.Render_System
             SelectionStage.ClearBuffer();
             SelectionStage.Render();
 
-            OutputStage.uSelectMap = SelectionStage.RenderTarget.OutputTextures[0];
+            OutputStage.uSelectMap = SelectionStage.OutputTexture[0];
             OutputStage.uTarget = OutputTexture;
             OutputStage.Render();
         }

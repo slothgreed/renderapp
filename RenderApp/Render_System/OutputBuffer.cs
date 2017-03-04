@@ -17,7 +17,7 @@ namespace RenderApp.Render_System
             : base("OutputBuffer", vertexShader, fragShader, RenderType.Original)
         {
             Plane = AssetFactory.Instance.CreatePostProcessPlane("OutputBuffer");
-            Plane.AddTexture(TextureKind.Normal, SceneManager.Instance.RenderSystem.GBufferStage.FindTexture(TextureKind.Normal));
+            Plane.AddTexture(TextureKind.Normal, SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[2]);
         }
 
         public override void Initialize()

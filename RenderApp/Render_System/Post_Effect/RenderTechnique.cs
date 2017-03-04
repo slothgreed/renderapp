@@ -43,6 +43,12 @@ namespace RenderApp.Render_System
             set;
         }
 
+        public List<Texture> OutputTexture
+        {
+            get;
+            set;
+        }
+
         public RenderTechnique(string name, RenderType type)
             :base(name)
         {
@@ -90,7 +96,7 @@ namespace RenderApp.Render_System
             {
                 if(Plane != null)
                 {
-                    RenderTarget.BindRenderTarget();
+                    RenderTarget.BindRenderTarget(OutputTexture.ToArray());
                     Plane.Render();
                     RenderTarget.UnBindRenderTarget();
                 }
@@ -106,8 +112,10 @@ namespace RenderApp.Render_System
         }
         public virtual void CreateRenderTarget(int width, int height)
         {
-            Texture texture = TextureFactory.Instance.CreateTexture("Texture:" + Name, width, height);
-            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget("RenderTarget:" + Name, width, height, texture);
+            OutputTexture.Add(TextureFactory.Instance.CreateTexture("Texture:" + Name, width, height));
+            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget("RenderTarget:" + Name, width, height, OutputTexture.Count);
+            //RenderTarget = RenderTargetFactory.Instance.Default;
+            RenderTarget.SizeChanged(width, height);
         }
         private void Init(string vertexShader = null, string fragShader = null)
         {
@@ -115,6 +123,7 @@ namespace RenderApp.Render_System
             {
                 CreateShader(vertexShader, fragShader);
             }
+            OutputTexture = new List<Texture>();
             Plane = AssetFactory.Instance.CreatePostProcessPlane(Name);
             CreateRenderTarget(KI.Gfx.GLUtil.DeviceContext.Instance.Width, KI.Gfx.GLUtil.DeviceContext.Instance.Height);
             Initialize();

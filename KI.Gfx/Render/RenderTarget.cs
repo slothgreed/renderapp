@@ -28,10 +28,6 @@ namespace KI.Gfx.Render
         /// </summary>
         public RenderBuffer RenderBuffer { get; private set; }
         /// <summary>
-        /// 出力テクスチャ
-        /// </summary>
-        public List<Texture> OutputTextures = new List<Texture>();
-        /// <summary>
         /// テクスチャのアタッチメント
         /// </summary>
         public List<FramebufferAttachment> Attachment = new List<FramebufferAttachment>();
@@ -48,25 +44,19 @@ namespace KI.Gfx.Render
         {
             FrameBuffer = new FrameBuffer(name);
         }
-        internal RenderTarget(string name, int width, int height, Texture[] texture)
+        internal RenderTarget(string name, int width, int height,int num)
         {
             FrameBuffer = new FrameBuffer(name);
-            Initialize(width, height, texture);
-        }
-        internal RenderTarget(string name, int width, int height, Texture texture)
-        {
-            FrameBuffer = new FrameBuffer(name);
-            Initialize(width, height, new Texture[] { texture });
+            Initialize(width, height, num);
         }
 
-        protected void Initialize(int width,int height,Texture[] texture)
+        private void Initialize(int width,int height,int num)
         {
             RenderBuffer = new RenderBuffer();
             Width = width;
             Height = height;
-            for (int i = 0; i < texture.Length; i++)
+            for (int i = 0; i < num; i++)
             {
-                OutputTextures.Add(texture[i]);
                 Attachment.Add(FramebufferAttachment.ColorAttachment0 + i);
                 OutputBuffers.Add(DrawBuffersEnum.ColorAttachment0 + i);
             }
@@ -76,32 +66,28 @@ namespace KI.Gfx.Render
         private void CreateFrameBuffer()
         {
             FrameBuffer.GenBuffer();
+            CreateRenderBuffer();
+        }
+        private void CreateRenderBuffer()
+        {
             FrameBuffer.BindBuffer();
             RenderBuffer.GenBuffer();
-            RenderBuffer.Storage(RenderbufferStorage.DepthComponent32, Width, Height);
-
+            RenderBuffer.Storage(RenderbufferStorage.DepthComponent, Width, Height);
             GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, RenderBuffer.DeviceID);
-
-            for (int i = 0; i < OutputTextures.Count; i++)
-            {
-                GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, Attachment[i], TextureTarget.Texture2D, OutputTextures[i].DeviceID, 0);
-            }
-
             RenderBuffer.UnBindBuffer();
             FrameBuffer.UnBindBuffer();
             Logger.GLLog(Logger.LogLevel.Error);
         }
-
         public void SizeChanged(int width, int height)
         {
+            if(width == Width && Height == height)
+            {
+                return;
+            }
             Height = height;
             Width = width;
             RenderBuffer.SizeChanged(width, height);
 
-            foreach(var texture in OutputTextures)
-            {
-                texture.TextureBuffer.SizeChanged(width, height);
-            }
         }
 
         public void ClearBuffer()
@@ -117,9 +103,23 @@ namespace KI.Gfx.Render
             RenderBuffer.Dispose();
         }
 
-        public void BindRenderTarget()
+        public void BindRenderTarget(Texture output)
+        {
+            BindRenderTarget(new Texture[] { output });
+        }
+
+        public void BindRenderTarget(Texture[] outputs)
         {
             FrameBuffer.BindBuffer();
+            for (int i = 0; i < outputs.Length; i++)
+            {
+                GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, Attachment[i], TextureTarget.Texture2D, outputs[i].DeviceID, 0);
+
+                if(outputs[i].Width != Width || outputs[i].Height != Height)
+                {
+                    outputs[i].TextureBuffer.SizeChanged(Width, Height);
+                }
+            }
             GL.DrawBuffers(OutputBuffers.Count, OutputBuffers.ToArray());
         }
         public void UnBindRenderTarget()

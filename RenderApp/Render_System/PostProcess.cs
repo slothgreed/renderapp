@@ -40,7 +40,7 @@ namespace RenderApp.Render_System
         {
            foreach(var post in PostEffects)
            {
-               post.RenderTarget.BindRenderTarget();
+               post.RenderTarget.BindRenderTarget(post.OutputTexture.ToArray());
                Plane.Shader = post.Shader;
                Plane.Render();
                post.RenderTarget.UnBindRenderTarget();

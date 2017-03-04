@@ -24,7 +24,7 @@ namespace RenderApp.Render_System
 
         public override void Render()
         {
-            RenderTarget.BindRenderTarget();
+            RenderTarget.BindRenderTarget(OutputTexture.ToArray());
             foreach (var asset in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
             {
                 if (asset.KIObject is Light)

@@ -21,18 +21,24 @@ namespace KI.Gfx.Render
         private List<RenderTarget> renderTargetList = new List<RenderTarget>();
 
 
-        public RenderTarget CreateRenderTarget(string name, int width, int height, Texture texture)
+        public RenderTarget CreateRenderTarget(string name, int width, int height, int outputNum)
         {
-            RenderTarget target = new RenderTarget(name, width, height, texture);
+            RenderTarget target = new RenderTarget(name, width, height, outputNum);
             renderTargetList.Add(target);
             return target;
         }
 
-        public RenderTarget CreateRenderTarget(string name, int width, int height, Texture[] texture)
+        private RenderTarget _default = null;
+        public RenderTarget Default
         {
-            RenderTarget target = new RenderTarget(name, width, height, texture);
-            renderTargetList.Add(target);
-            return target;
+            get
+            {
+                if (_default == null)
+                {
+                    _default = new RenderTarget("DefaultBuffer", 1, 1, 1);
+                }
+                return _default;
+            }
         }
 
         public void Dispose()
