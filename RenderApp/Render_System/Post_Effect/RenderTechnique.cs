@@ -28,19 +28,19 @@ namespace RenderApp.Render_System
         public Shader Shader
         {
             get;
-            protected set;
+            set;
         }
 
-        public Geometry Plane
+        protected Geometry Plane
         {
             get;
-            protected set;
+            set;
         }
 
         public RenderTarget RenderTarget
         {
             get;
-            protected set;
+            set;
         }
 
         public RenderTechnique(string name, RenderType type)
@@ -115,10 +115,7 @@ namespace RenderApp.Render_System
             {
                 CreateShader(vertexShader, fragShader);
             }
-            if(renderType == RenderType.OffScreen)
-            {
-                Plane = AssetFactory.Instance.CreatePostProcessPlane(Name);
-            }
+            Plane = AssetFactory.Instance.CreatePostProcessPlane(Name);
             CreateRenderTarget(KI.Gfx.GLUtil.DeviceContext.Instance.Width, KI.Gfx.GLUtil.DeviceContext.Instance.Height);
             Initialize();
         }

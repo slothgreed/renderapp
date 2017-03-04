@@ -13,23 +13,27 @@ namespace RenderApp.Render_System
         private static string vertexShader = ProjectInfo.ShaderDirectory + @"\Defferd.vert";
         private static string fragShader = ProjectInfo.ShaderDirectory + @"\Defferd.frag";
 
-        public LighthingBuffer(Geometry plane)
+        public LighthingBuffer()
             : base("LighthingBuffer", vertexShader, fragShader, RenderType.Original)
         {
-            Plane = plane;
+            Plane.AddTexture(TextureKind.Albedo, SceneManager.Instance.RenderSystem.GBufferStage.FindTexture(TextureKind.Albedo));
+            Plane.AddTexture(TextureKind.Normal, SceneManager.Instance.RenderSystem.GBufferStage.FindTexture(TextureKind.Normal));
+            Plane.AddTexture(TextureKind.World, SceneManager.Instance.RenderSystem.GBufferStage.FindTexture(TextureKind.World));
+            Plane.AddTexture(TextureKind.Lighting, SceneManager.Instance.RenderSystem.GBufferStage.FindTexture(TextureKind.Lighting));
         }
 
         public override void Render()
         {
+            RenderTarget.ClearBuffer();
             RenderTarget.BindRenderTarget();
-            foreach(var light in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
-            {
-                if(light.KIObject is Light)
-                {
+            //foreach(var light in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
+            //{
+            //    if(light.KIObject is Light)
+            //    {
                     Plane.Shader = Shader;
                     Plane.Render();
-                }
-            }
+            //    }
+            //}
             RenderTarget.UnBindRenderTarget();
         }
 

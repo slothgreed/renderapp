@@ -146,7 +146,6 @@
     <Compile Include="GLUtil\ShaderModel\ShaderFactory.cs" />
     <Compile Include="Globals\Enum.cs" />
     <Compile Include="Render_System\GBuffer.cs" />
-    <Compile Include="Render_System\PostPlane.cs" />
     <Compile Include="Render_System\RenderQueue.cs" />
     <Compile Include="Render_System\RenderSystem.cs" />
     <Compile Include="RAControl\DijkstraControl.cs" />

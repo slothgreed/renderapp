@@ -40,7 +40,7 @@ namespace RenderApp.Render_System
         /// <summary>
         /// ライティングステージ
         /// </summary>
-        private PostPlane LightingStage;
+        private LighthingBuffer LightingStage;
         /// <summary>
         /// 後処理のUtil（選択とか）
         /// </summary>
@@ -78,22 +78,16 @@ namespace RenderApp.Render_System
                 ProcessingTexture.Add(textures);
             }
 
-            RenderTarget lightingFrame = RenderPassFactory.Instance.CreateDefaultLithingBuffer(Width, Height);
-            LightingStage = new PostPlane("DefaultLight", ShaderFactory.Instance.DefaultLightShader, lightingFrame);
-            LightingStage.SetPlaneTexture(TextureKind.Albedo, GBufferStage.FindTexture(TextureKind.Albedo));
-            LightingStage.SetPlaneTexture(TextureKind.Normal, GBufferStage.FindTexture(TextureKind.Normal));
-            LightingStage.SetPlaneTexture(TextureKind.World, GBufferStage.FindTexture(TextureKind.World));
-            LightingStage.SetPlaneTexture(TextureKind.Lighting, GBufferStage.FindTexture(TextureKind.Lighting));
+            LightingStage = new LighthingBuffer();
 
-
-            ProcessingTexture.Add(lightingFrame.Textures[0]);
+            ProcessingTexture.Add(LightingStage.RenderTarget.Textures[0]);
 
             SelectionStage = new Selection();
             ProcessingTexture.Add(SelectionStage.RenderTarget.Textures[0]);
             
             OutputStage = new OutputBuffer();
             OutputTexture = GBufferStage.RenderTarget.Textures[0];
-            OutputTexture = lightingFrame.Textures[0];
+            OutputTexture = LightingStage.RenderTarget.Textures[0];
 
             
         
@@ -144,20 +138,7 @@ namespace RenderApp.Render_System
         }
         public void Render()
         {
-            GBufferStage.ClearBuffer();
-            GBufferStage.RenderTarget.BindRenderTarget();
-            foreach (var asset in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
-            {
-                if(asset.KIObject is Geometry)
-                {
-                    var geometry = asset.KIObject as Geometry;
-                    geometry.Render();
-                }
-            }
-            GBufferStage.RenderTarget.UnBindRenderTarget();
-
-
-            LightingStage.ClearBuffer();
+            GBufferStage.Render();
             LightingStage.Render();
 
             SelectionStage.ClearBuffer();
