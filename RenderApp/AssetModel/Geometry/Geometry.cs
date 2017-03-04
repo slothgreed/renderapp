@@ -91,6 +91,35 @@ namespace RenderApp.AssetModel
             }
         }
 
+        public Dictionary<TextureKind, Texture> TextureItem
+        {
+            get;
+            private set;
+        }
+        public void AddTexture(TextureKind kind, Texture texture)
+        {
+            TextureItem[kind] = texture;
+        }
+        public int TextureNum()
+        {
+            if (TextureItem == null)
+            {
+                return 0;
+            }
+            return TextureItem.Count;
+        }
+        public Texture GetTexture(TextureKind kind)
+        {
+            if (TextureItem.ContainsKey(kind))
+            {
+                return TextureItem[kind];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         #endregion
         #region Initializer disposer
         public Geometry(string name, PrimitiveType renderType)
@@ -112,6 +141,7 @@ namespace RenderApp.AssetModel
             Timer = new List<int>();
             ModelMatrix = Matrix4.Identity;
             MaterialItem = Material.Default;
+            TextureItem = new Dictionary<TextureKind, Texture>();
         }
 
         public override void Dispose()
@@ -127,7 +157,7 @@ namespace RenderApp.AssetModel
         #region render
         public virtual void Render()
         {
-            MaterialItem.CurrentShader.InitializeState(this, MaterialItem.TextureItem);
+            MaterialItem.CurrentShader.InitializeState(this, TextureItem);
             MaterialItem.CurrentShader.BindBuffer(this.GeometryInfo);
             if (GeometryInfo.Index.Count == 0)
             {

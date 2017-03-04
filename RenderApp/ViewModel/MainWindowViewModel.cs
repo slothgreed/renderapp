@@ -100,7 +100,6 @@ namespace RenderApp.ViewModel
             CenterDockPanel = new TabControlViewModel();
 
             LeftUpDockPanel.Add( new RootNodeViewModel(Project.ActiveProject.RootNode, "Project"));
-            RightUpDockPanel.Add( new MaterialViewModel());
             CenterDockPanel.Add( new ViewportViewModel());
             RightDownDockPanel = new TabControlViewModel();
             RightDownDockPanel.Add(new ShaderProgramViewModel(null));
@@ -431,10 +430,6 @@ namespace RenderApp.ViewModel
                 vm = new GeometryViewModel((Geometry)node.KIObject);
                 SceneManager.Instance.ActiveScene.SelectAsset = (Geometry)node.KIObject;
             }
-            else if(node.KIObject is Material)
-            {
-                vm = new MaterialViewModel((Material)node.KIObject);
-            }
             else if (node.KIObject is ShaderProgram)
             {
                 vm = new ShaderProgramViewModel((ShaderProgram)node.KIObject);
@@ -447,11 +442,6 @@ namespace RenderApp.ViewModel
             {
                 var oldItem = LeftDownDockPanel.FindVM<GeometryViewModel>();
                 LeftDownDockPanel.ReplaceVM(oldItem,window);
-            }
-            if(window is MaterialViewModel)
-            {
-                var oldItem = RightUpDockPanel.FindVM<MaterialViewModel>();
-                RightUpDockPanel.ReplaceVM(oldItem,window);
             }
             if (window is ShaderProgramViewModel)
             {

@@ -10,7 +10,6 @@ namespace RenderApp.Render_System
 
     public class LighthingBuffer : RenderTechnique
     {
-        private Geometry Plane;
         private static string vertexShader = ProjectInfo.ShaderDirectory + @"\Defferd.vert";
         private static string fragShader = ProjectInfo.ShaderDirectory + @"\Defferd.frag";
 

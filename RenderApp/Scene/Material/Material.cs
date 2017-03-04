@@ -25,10 +25,6 @@ namespace RenderApp.AssetModel
             get;
             set;
         }
-        internal void InitializeState(Geometry geometry)
-        {
-            CurrentShader.InitializeState(geometry, TextureItem);
-        }
         #endregion
 
         #region [constructor]
@@ -43,44 +39,9 @@ namespace RenderApp.AssetModel
             {
                 CurrentShader = (ShaderFactory.Instance.DefaultDefferredShader);
             }
-
-            TextureItem = new Dictionary<TextureKind, Texture>();
-            if (name == null)
-            {
-                Name = _name;
-            }
         }
         #endregion
         #region [texture]
-
-        public Dictionary<TextureKind, Texture> TextureItem
-        {
-            get;
-            private set;
-        }
-        public void AddTexture(TextureKind kind,Texture texture)
-        {
-            TextureItem[kind] = texture;
-        }
-        public int TextureNum()
-        {
-            if(TextureItem == null)
-            {
-                return 0;
-            }
-            return TextureItem.Count;
-        }
-        public Texture GetTexture(TextureKind kind)
-        {
-            if(TextureItem.ContainsKey(kind))
-            {
-                return TextureItem[kind];
-            }
-            else
-            {
-                return null;
-            }
-        }
         #endregion
         public override void Dispose()
         {

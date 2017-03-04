@@ -177,12 +177,6 @@
     <Compile Include="ViewModel\Dialog\DialogViewModelBase.cs" />
     <Compile Include="ViewModel\Controller\VoxelViewModel.cs" />
     <Compile Include="ViewModel\AssetVM\GeometryViewModel.cs" />
-    <Compile Include="ViewModel\MaterialItemSelector.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MaterialItemSelector.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ViewModel\AssetVM\MaterialViewModel.cs" />
     <Compile Include="ViewModel\PropertyVM\PropertyGridSelector.cs" />
     <Compile Include="ViewModel\RenderSystemViewModel.cs" />
     <Compile Include="ViewModel\AssetVM\ShaderViewModel.cs" />
@@ -256,9 +250,6 @@
     <Compile Include="Scene\Shader\OffScreen\Sobel\CSobel.cs" />
     <Compile Include="Scene\Shader\OffScreen\SSAO\SSAO.cs" />
     <Compile Include="ViewModel\AssetVM\TextureViewModel.cs" />
-    <Compile Include="View\MaterialView.xaml.cs">
-      <DependentUpon>MaterialView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\ShaderView.xaml.cs">
       <DependentUpon>ShaderView.xaml</DependentUpon>
     </Compile>
@@ -321,10 +312,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ShaderProgramView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\MaterialView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -425,10 +412,6 @@
     <None Include="Scene\Shader\OffScreen\Sobel\sobel.vert" />
     <None Include="Scene\Shader\OffScreen\SSAO\ssao.frag" />
     <None Include="Scene\Shader\OffScreen\SSAO\ssao.vert" />
-    <None Include="ViewModel\MaterialItemSelector.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MaterialItemSelector.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

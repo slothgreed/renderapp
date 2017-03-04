@@ -92,25 +92,23 @@ namespace RenderApp.Utility
         }
         public string GetOBJFragShader(Geometry geometry)
         {
-            Material material = geometry.MaterialItem;
-
-            if (material.GetTexture(TextureKind.Albedo) != null &&
-                material.GetTexture(TextureKind.Normal) != null &&
-                material.GetTexture(TextureKind.Specular) != null)
+            if (geometry.GetTexture(TextureKind.Albedo) != null &&
+                geometry.GetTexture(TextureKind.Normal) != null &&
+                geometry.GetTexture(TextureKind.Specular) != null)
             {
                 return Directory + "GeneralANS.frag";
             }
-            if (material.GetTexture(TextureKind.Albedo) != null &&
-                material.GetTexture(TextureKind.Normal) != null)
+            if (geometry.GetTexture(TextureKind.Albedo) != null &&
+                geometry.GetTexture(TextureKind.Normal) != null)
             {
                 return Directory + "GeneralAN.frag";
             }
-            if (material.GetTexture(TextureKind.Albedo) != null &&
-                material.GetTexture(TextureKind.Specular) != null)
+            if (geometry.GetTexture(TextureKind.Albedo) != null &&
+                geometry.GetTexture(TextureKind.Specular) != null)
             {
                 return Directory + "GeneralAS.frag";
             }
-            if (material.GetTexture(TextureKind.Albedo) != null)
+            if (geometry.GetTexture(TextureKind.Albedo) != null)
             {
                 return Directory + "GeneralA.frag";
             }

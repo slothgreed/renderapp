@@ -34,7 +34,7 @@ namespace RenderApp.Render_System
 
         public void SetPlaneTexture(TextureKind kind,Texture texture)
         {
-            Plane.MaterialItem.AddTexture(kind, texture);
+            Plane.AddTexture(kind, texture);
         }
         public void Render()
         {

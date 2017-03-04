@@ -24,7 +24,6 @@ namespace RenderApp.ViewModel
     }
     class DockPaneTemplateSelector: DataTemplateSelector
     {
-        public DataTemplate MaterialTemplate{get;set;}
         public DataTemplate AssetTemplate { get; set; }
         public DataTemplate ShaderProgramTemplate { get; set; }
         public DataTemplate TexureTemplate { get; set; }
@@ -38,10 +37,6 @@ namespace RenderApp.ViewModel
         public DataTemplate DijkstraTemplate { get; set; }
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            if (item is MaterialViewModel)
-            {
-                return MaterialTemplate;
-            }
             if (item is RootNodeViewModel)
             {
                 return AssetTemplate;

@@ -12,8 +12,6 @@ namespace RenderApp.Render_System
 {
     public partial class Selection : RenderTechnique
     {
-        private Geometry Plane;
-
         private static string vertexShader = ProjectInfo.ShaderDirectory + @"\Selection.vert";
         private static string fragShader = ProjectInfo.ShaderDirectory + @"\Selection.frag";
 
@@ -25,7 +23,7 @@ namespace RenderApp.Render_System
         public Selection()
             : base("SelectionBuffer", vertexShader, fragShader)
         {
-            Material.AddTexture(TextureKind.Normal, SceneManager.Instance.RenderSystem.GBufferStage.FindTexture(TextureKind.Normal));
+            Plane.AddTexture(TextureKind.Normal, SceneManager.Instance.RenderSystem.GBufferStage.FindTexture(TextureKind.Normal));
         }
 
         public void SelectObject()

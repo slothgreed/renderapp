@@ -16,7 +16,7 @@ namespace RenderApp.Render_System
         public OutputBuffer()
             : base("OutputBuffer", vertexShader, fragShader)
         {
-            Material.AddTexture(TextureKind.Normal, SceneManager.Instance.RenderSystem.GBufferStage.FindTexture(TextureKind.Normal));
+            Plane.AddTexture(TextureKind.Normal, SceneManager.Instance.RenderSystem.GBufferStage.FindTexture(TextureKind.Normal));
         }
 
         public override void Initialize()
@@ -26,7 +26,7 @@ namespace RenderApp.Render_System
 
         internal void SetOutputTarget(TextureKind textureKind, Texture OutputTexture)
         {
-            Material.AddTexture(textureKind, OutputTexture);
+            Plane.AddTexture(textureKind, OutputTexture);
         }
 
         internal void Render()

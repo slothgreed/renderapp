@@ -33,21 +33,21 @@ namespace RenderApp.AssetModel.RA_Geometry
             if(material.map_Kd != null)
             {
                 Texture albedo = TextureFactory.Instance.CreateTexture(material.map_Kd);
-                mat.AddTexture(TextureKind.Albedo, albedo);
+                geometry.AddTexture(TextureKind.Albedo, albedo);
                 RenderApp.Globals.Project.ActiveProject.AddChild(albedo);
             }
 
             if(material.map_bump != null)
             {
                 Texture bump = TextureFactory.Instance.CreateTexture(material.map_bump);
-                mat.AddTexture(TextureKind.Normal, bump);
+                geometry.AddTexture(TextureKind.Normal, bump);
                 RenderApp.Globals.Project.ActiveProject.AddChild(bump);
             }
             
             if(material.map_Ns != null)
             {
                 Texture spec = TextureFactory.Instance.CreateTexture(material.map_Ns);
-                mat.AddTexture(TextureKind.Specular, spec);
+                geometry.AddTexture(TextureKind.Specular, spec);
                 RenderApp.Globals.Project.ActiveProject.AddChild(spec);
             }
             geometry.MaterialItem = mat;
