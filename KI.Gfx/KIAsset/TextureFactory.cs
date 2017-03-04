@@ -76,7 +76,17 @@ namespace KI.Gfx.KIAsset
         }
         public Texture CreateTexture(string name, int width, int height)
         {
-            return new Texture(name, width, height);
+            Texture texture =  new Texture(name, width, height);
+            TextureList.Add(name, texture);
+            return texture;
+        }
+
+        public void Dispose()
+        {
+            foreach(Texture texture in TextureList.Values)
+            {
+                texture.Dispose();
+            }
         }
 
     }

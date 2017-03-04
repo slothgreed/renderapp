@@ -82,7 +82,7 @@ namespace RenderApp.AssetModel.RA_Geometry
                     }
                 }
 
-                geometry = new RenderObject(material.name);
+                geometry = AssetFactory.Instance.CreateRenderObject(material.name);
                 geometry.CreatePNT(Position, Normal, TexCoord, PrimitiveType.Triangles);
                 SetMaterial(geometry,material);
                 if (geometry != null)

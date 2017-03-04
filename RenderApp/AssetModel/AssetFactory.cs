@@ -27,6 +27,23 @@ namespace RenderApp.AssetModel
             }
         }
 
+        public List<RenderObject> RenderObjects = new List<RenderObject>();
+
+
+        public RenderObject CreateRenderObject(string name)
+        {
+            RenderObject renderObject = new RenderObject(name);
+            RenderObjects.Add(renderObject);
+            return renderObject;
+        }
+        public void Dispose()
+        {
+            foreach(var render in RenderObjects)
+            {
+                render.Dispose();
+            }
+        }
+
         public Geometry CreateEnvironmentMap()
         {
             return null;
@@ -92,7 +109,7 @@ namespace RenderApp.AssetModel
                 position.Add(geometry.GeometryInfo.Position[3 * i]);
 
             }
-            RenderObject wireframe = new RenderObject("WireFrame :" + geometry.Name);
+            RenderObject wireframe = AssetFactory.Instance.CreateRenderObject("WireFrame :" + geometry.Name);
             wireframe.CreatePC(position, KICalc.RandomColor(), PrimitiveType.Lines);
             CreateGeometry(wireframe);
 
@@ -107,7 +124,7 @@ namespace RenderApp.AssetModel
             Geometry geometry = asset as Geometry;
             List<Vector3> position = new List<Vector3>(geometry.GeometryInfo.Position);
             List<Vector3> normal = new List<Vector3>(geometry.GeometryInfo.Normal);
-            RenderObject polygon = new RenderObject("Polygon :" + geometry.Name);
+            RenderObject polygon = AssetFactory.Instance.CreateRenderObject("Polygon :" + geometry.Name);
             polygon.CreatePNC(position, normal, new Vector3(0.7f, 0.7f, 0.7f), PrimitiveType.Triangles);
             CreateGeometry(polygon);
 
@@ -121,7 +138,7 @@ namespace RenderApp.AssetModel
             }
             Geometry geometry = asset as Geometry;
             KI.Gfx.Analyzer.Voxel voxel = new KI.Gfx.Analyzer.Voxel(geometry.GeometryInfo.Position, geometry.GeometryInfo.Index, geometry.ModelMatrix, partition);
-            RenderObject wireframe = new RenderObject("Voxel :" + geometry.Name);
+            RenderObject wireframe = AssetFactory.Instance.CreateRenderObject("Voxel :" + geometry.Name);
             wireframe.CreatePNC(voxel.vPosition, voxel.vNormal, KICalc.RandomColor(), PrimitiveType.Quads);
             CreateGeometry(wireframe);
 

@@ -190,7 +190,7 @@ namespace RenderApp.AssetModel.RA_Geometry
                 }
             }
 
-            RenderObject geometry = new RenderObject("Sphere");
+            RenderObject geometry = AssetFactory.Instance.CreateRenderObject("Sphere");
             ConvertVertexArray();
             geometry.CreatePNT(Position, Normal, TexCoord, PrimitiveType.Triangles);
             

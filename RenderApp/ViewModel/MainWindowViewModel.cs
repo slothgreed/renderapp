@@ -378,6 +378,8 @@ namespace RenderApp.ViewModel
             Project.ActiveProject.Dispose();
             ShaderFactory.Instance.Dispose();
             RenderTargetFactory.Instance.Dispose();
+            TextureFactory.Instance.Dispose();
+            AssetFactory.Instance.Dispose();
         }
         private void SizeChangedCommand()
         {
@@ -393,6 +395,7 @@ namespace RenderApp.ViewModel
             {
                 m_Viewport.Dispose();
             }
+            WindowCloseCommand();
             GC.Collect();
         }
         #endregion

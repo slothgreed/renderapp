@@ -50,12 +50,12 @@ namespace RenderApp.AssetModel.RA_Geometry
                 Vector2.UnitY,
                 Vector2.UnitX + Vector2.UnitY
             };
-            var front = new RenderObject("Front");
-            var left = new RenderObject("Left");
-            var back = new RenderObject("Back");
-            var right = new RenderObject("Right");
-            var top = new RenderObject("Top");
-            var bottom = new RenderObject("Bottom");
+            var front = AssetFactory.Instance.CreateRenderObject("Front");
+            var left = AssetFactory.Instance.CreateRenderObject("Left");
+            var back = AssetFactory.Instance.CreateRenderObject("Back");
+            var right = AssetFactory.Instance.CreateRenderObject("Right");
+            var top = AssetFactory.Instance.CreateRenderObject("Top");
+            var bottom = AssetFactory.Instance.CreateRenderObject("Bottom");
 
             front.CreateP(new List<Vector3> { v0, v3, v2, v1 }, PrimitiveType.Quads);
             front.CreateP(new List<Vector3> { v0, v4, v7, v3 }, PrimitiveType.Quads);

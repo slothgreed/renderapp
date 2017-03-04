@@ -215,7 +215,10 @@ namespace KI.Foundation.Tree
 
         public void Dispose()
         {
-            KIObject.Dispose();
+            if(KIObject != null)
+            {
+                KIObject.Dispose();
+            }
             foreach(var child in Children)
             {
                 child.Dispose();

@@ -55,7 +55,7 @@ namespace RenderApp.AssetModel.RA_Geometry
             TexCoord.Add(Vector2.UnitX + Vector2.UnitY);
             TexCoord.Add(Vector2.UnitY);
 
-            RenderObject render = new RenderObject("quad");
+            RenderObject render = AssetFactory.Instance.CreateRenderObject("quad");
             render.CreatePNT(Position, Normal, TexCoord, PrimitiveType.Quads);
             _renderObject = new List<RenderObject>() { render };
             return _renderObject;

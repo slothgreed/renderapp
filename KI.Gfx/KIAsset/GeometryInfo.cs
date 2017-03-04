@@ -45,6 +45,27 @@ namespace KI.Gfx.KIAsset
             Normal.Clear();
             TexCoord.Clear();
             Index.Clear();
+
+            if(PositionBuffer != null)
+            {
+                PositionBuffer.Dispose();
+            }
+            if(NormalBuffer != null)
+            {
+                NormalBuffer.Dispose();
+            }
+            if (ColorBuffer != null)
+            {
+                ColorBuffer.Dispose();
+            }
+            if (TexCoordBuffer != null)
+            {
+                TexCoordBuffer.Dispose();
+            }
+            if (IndexBuffer != null)
+            {
+                IndexBuffer.Dispose();
+            }
         }
 
         public int TriangleNum

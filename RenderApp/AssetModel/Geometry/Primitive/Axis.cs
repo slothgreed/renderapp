@@ -43,7 +43,7 @@ namespace RenderApp.AssetModel.RA_Geometry
             Color.Add(new Vector3(0, 1, 0));
             Color.Add(new Vector3(0, 0, 1));
             Color.Add(new Vector3(0, 0, 1));
-            RenderObject render = new RenderObject("axis");
+            RenderObject render = AssetFactory.Instance.CreateRenderObject("axis");
             render.CreatePC(Position, Color, PrimitiveType.Lines);
             _renderObject = new List<RenderObject>() { render };
             return _renderObject;
