@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KI.Gfx.KIAsset;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -57,6 +58,39 @@ namespace RenderApp.Render_System
             }
             RenderTechniques.Add(new KeyValuePair<RenderTechniqueType, RenderTechnique>(type, technique));
             return technique;
+        }
+        public List<Texture> OutputTexture(RenderTechniqueType type)
+        {
+            foreach(var technique in RenderTechniques)
+            {
+                if(technique.Key == type)
+                {
+                    return technique.Value.OutputTexture;
+                }
+            }
+            return null;
+        }
+        public IEnumerable<Texture> OutputTextures()
+        {
+            foreach(var technique in RenderTechniques)
+            {
+                //出力用のは返さない
+                if(technique.Value is OutputBuffer)
+                {
+                    continue;
+                }
+                foreach(var texture in technique.Value.OutputTexture)
+                {
+                    yield return texture;
+                }
+            }
+        }
+        public void SizeChanged(int width, int height)
+        {
+            foreach (var technique in RenderTechniques)
+            {
+                technique.Value.SizeChanged(width, height);
+            }
         }
         public void Dispose()
         {

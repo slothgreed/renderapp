@@ -72,33 +72,20 @@ namespace RenderApp.Render_System
             ProcessingTexture = new List<Texture>();
             PostProcessMode = false;
             GBufferStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer);
-
-            foreach (var textures in GBufferStage.OutputTexture)
-            {
-                ProcessingTexture.Add(textures);
-            }
-
             LightingStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Lighting);
-
-            ProcessingTexture.Add(LightingStage.OutputTexture[0]);
-
             SelectionStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Selection);
-            ProcessingTexture.Add(SelectionStage.OutputTexture[0]);
-
             OutputStage = (OutputBuffer)RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output);
-            OutputTexture = GBufferStage.OutputTexture[0];
-            OutputTexture = LightingStage.OutputTexture[0];
+            OutputTexture = RenderTechniqueFactory.Instance.OutputTexture(RenderTechniqueType.GBuffer).First();
 
-            
-        
+            foreach (var texture in RenderTechniqueFactory.Instance.OutputTextures())
+            {
+                ProcessingTexture.Add(texture);
+            }
         }
 
         public void SizeChanged(int width, int height)
         {
-            GBufferStage.SizeChanged(width, height);
-            LightingStage.SizeChanged(width, height);
-            SelectionStage.SizeChanged(width, height);
-            OutputStage.SizeChanged(width, height);
+            RenderTechniqueFactory.Instance.SizeChanged(width, height);
         }
         public void Picking(int x, int y)
         {
@@ -138,8 +125,8 @@ namespace RenderApp.Render_System
         {
             GBufferStage.Render();
             LightingStage.Render();
-            SelectionStage.ClearBuffer();
-            SelectionStage.Render();
+            //SelectionStage.ClearBuffer();
+            //SelectionStage.Render();
 
             OutputStage.uSelectMap = SelectionStage.OutputTexture[0];
             OutputStage.uTarget = OutputTexture;
