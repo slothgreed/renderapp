@@ -32,7 +32,7 @@ namespace RenderApp.Render_System
         /// <summary>
         /// defferdシェーディング用
         /// </summary>
-        public GBuffer GBufferStage
+        public RenderTechnique GBufferStage
         {
             get;
             private set;
@@ -40,11 +40,11 @@ namespace RenderApp.Render_System
         /// <summary>
         /// ライティングステージ
         /// </summary>
-        private LighthingBuffer LightingStage;
+        private RenderTechnique LightingStage;
         /// <summary>
         /// 後処理のUtil（選択とか）
         /// </summary>
-        private Selection SelectionStage;
+        private RenderTechnique SelectionStage;
         /// <summary>
         /// 最終出力画像
         /// </summary>
@@ -71,21 +71,21 @@ namespace RenderApp.Render_System
             Height = height;
             ProcessingTexture = new List<Texture>();
             PostProcessMode = false;
-            GBufferStage = new GBuffer(Width, Height);
+            GBufferStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer);
 
             foreach (var textures in GBufferStage.OutputTexture)
             {
                 ProcessingTexture.Add(textures);
             }
 
-            LightingStage = new LighthingBuffer();
+            LightingStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Lighting);
 
             ProcessingTexture.Add(LightingStage.OutputTexture[0]);
 
-            SelectionStage = new Selection();
+            SelectionStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Selection);
             ProcessingTexture.Add(SelectionStage.OutputTexture[0]);
-            
-            OutputStage = new OutputBuffer();
+
+            OutputStage = (OutputBuffer)RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output);
             OutputTexture = GBufferStage.OutputTexture[0];
             OutputTexture = LightingStage.OutputTexture[0];
 
@@ -132,15 +132,12 @@ namespace RenderApp.Render_System
         }
         public void Dispose()
         {
-            GBufferStage.Dispose();
-            LightingStage.Dispose();
-            SelectionStage.Dispose();
+            RenderTechniqueFactory.Instance.Dispose();
         }
         public void Render()
         {
             GBufferStage.Render();
             LightingStage.Render();
-
             SelectionStage.ClearBuffer();
             SelectionStage.Render();
 

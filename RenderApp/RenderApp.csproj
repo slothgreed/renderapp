@@ -137,6 +137,7 @@
     <Compile Include="Render_System\Post_Effect\Selection.cs" />
     <Compile Include="Render_System\Post_Effect\Sobel.cs" />
     <Compile Include="Render_System\Post_Effect\SSAO.cs" />
+    <Compile Include="Render_System\RenderTechniqueFactory.cs" />
     <Compile Include="Render_System\ShadowMap.cs" />
     <Compile Include="Scene\SceneManager.cs" />
     <Compile Include="RAControl\CameraControl.cs" />

@@ -12,7 +12,7 @@ namespace RenderApp.Render_System
     public class GBuffer : RenderTechnique
     {
 
-        public GBuffer(int width, int height)
+        public GBuffer()
             : base("GBuffer", RenderType.Original)
         {
         

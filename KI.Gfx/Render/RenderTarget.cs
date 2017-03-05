@@ -40,26 +40,24 @@ namespace KI.Gfx.Render
         /// </summary>
         public static DrawBufferMode DefaultOutBuffer = DrawBufferMode.Back;
 
-        internal RenderTarget(string name)
-        {
-            FrameBuffer = new FrameBuffer(name);
-        }
         internal RenderTarget(string name, int width, int height,int num)
         {
             FrameBuffer = new FrameBuffer(name);
             Initialize(width, height, num);
         }
 
-        private void Initialize(int width,int height,int num)
+        private void Initialize(int width, int height, int num)
         {
             RenderBuffer = new RenderBuffer();
             Width = width;
             Height = height;
+
             for (int i = 0; i < num; i++)
             {
                 Attachment.Add(FramebufferAttachment.ColorAttachment0 + i);
                 OutputBuffers.Add(DrawBuffersEnum.ColorAttachment0 + i);
             }
+
             CreateFrameBuffer();
         }
 
@@ -99,8 +97,8 @@ namespace KI.Gfx.Render
 
         public void Dispose()
         {
-            FrameBuffer.Dispose();
             RenderBuffer.Dispose();
+            FrameBuffer.Dispose();
         }
 
         public void BindRenderTarget(Texture output)
