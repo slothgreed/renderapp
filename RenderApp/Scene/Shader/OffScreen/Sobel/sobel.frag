@@ -42,6 +42,6 @@ void main(void)
 		pixelColor = vec4(1);
 	}
 
-	gl_FragColor = pixelColor;
+	gl_FragColor = vec4(1,0,0,1);
 }
 

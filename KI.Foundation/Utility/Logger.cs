@@ -23,6 +23,10 @@ namespace KI.Foundation.Utility
         public static LogLevel glLogLevel = LogLevel.Error;
         public static void Log(LogLevel level, string error, [CallerMemberName]string methodName = "")
         {
+            if(outputLogLevel == LogLevel.None)
+            {
+                return;
+            }
             if(level >= outputLogLevel)
             {
                 Console.WriteLine(level +" : "+ error);
@@ -31,6 +35,11 @@ namespace KI.Foundation.Utility
 
         public static void GLLog(LogLevel level, [CallerMemberName]string methodName = "")
         {
+            if (glLogLevel == LogLevel.None)
+            {
+                return;
+            } 
+            
             if (level >= glLogLevel)
             {
                 ErrorCode error = GL.GetError();

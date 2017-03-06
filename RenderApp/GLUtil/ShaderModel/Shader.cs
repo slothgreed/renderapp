@@ -279,7 +279,7 @@ namespace RenderApp.GLUtil.ShaderModel
         {
             if(uniform.variable == null)
             {
-                Logger.Log(Logger.LogLevel.Warning, "Shader Binding Error : " + uniform.Name);
+                Logger.Log(Logger.LogLevel.Warning,this.ToString() +  " : Shader Binding Error : " + uniform.Name);
                 return;
             }
             if (uniform.ShaderID == -1)
@@ -308,6 +308,10 @@ namespace RenderApp.GLUtil.ShaderModel
             {
                 GL.Uniform1(uniform.ShaderID, (int)uniform.variable);
             }
+            else if (uniform.variableType == EVariableType.Float)
+            {
+                GL.Uniform1(uniform.ShaderID, (float)uniform.variable);
+            }
             else if (uniform.variableType == EVariableType.Texture2D)
             {
                 GL.ActiveTexture(TextureUnit.Texture0 + activeCount);
@@ -315,16 +319,20 @@ namespace RenderApp.GLUtil.ShaderModel
                 GL.Uniform1(uniform.ShaderID, activeCount);
                 activeCount++;
             }
-            else
+            else if (uniform.variableType == EVariableType.IntArray)
             {
-                if (uniform.variableType == EVariableType.Float)
-                {
-                    GL.Uniform1(uniform.ShaderID, (float)uniform.variable);
-                }
-                else
-                {
-                    GL.Uniform1(uniform.ShaderID, (int)uniform.variable);
-                }
+                GL.Uniform1(uniform.ShaderID, uniform.arrayNum, (int[])uniform.variable);
+            }
+            else if (uniform.variableType == EVariableType.FloatArray)
+            {
+                GL.Uniform1(uniform.ShaderID, uniform.arrayNum, (float[])uniform.variable);
+            }
+            else if (uniform.variableType == EVariableType.DoubleArray)
+            {
+                GL.Uniform1(uniform.ShaderID, uniform.arrayNum, (double[])uniform.variable);
+            }else
+            {
+                Logger.Log(Logger.LogLevel.Warning, "BindUniformState not identify");
             }
             Logger.GLLog(Logger.LogLevel.Error);
         }
@@ -503,7 +511,8 @@ namespace RenderApp.GLUtil.ShaderModel
         {
             _shaderVariable.Clear();
             GL.UseProgram(_program);
-            foreach(ShaderProgram loop in _activeShader)
+
+            foreach (ShaderProgram loop in _activeShader)
             {
                 AnalyzeShaderProgram(loop);
             }
@@ -584,41 +593,66 @@ namespace RenderApp.GLUtil.ShaderModel
         /// <param name="name"></param>
         private void GetUniformVariableCode(ShaderProgramInfo info,string variable, string name)
         {
+            //[]を含んでいたら配列
+            if (name.Contains("[") && name.Contains("]"))
+            {
+                switch (variable)
+                {
+                    case "vec2":
+                        info.variableType = EVariableType.Vec2Array;
+                        return;
+                    case "vec3":
+                        info.variableType = EVariableType.Vec3Array;
+                        return;
+                    case "vec4":
+                        info.variableType = EVariableType.Vec4Array;
+                        return;
+                    case "int":
+                        info.variableType = EVariableType.IntArray;
+                        return;
+                    case "float":
+                        info.variableType = EVariableType.FloatArray;
+                        return;
+                    case "double":
+                        info.variableType = EVariableType.DoubleArray;
+                        return;
+                }
+            }
             switch (variable)
             {
                 case "vec2":
                     info.variableType = EVariableType.Vec2;
-                    break;
+                    return;
                 case "vec3":
                     info.variableType = EVariableType.Vec3;
-                    break;
+                    return;
                 case "vec4":
                     info.variableType = EVariableType.Vec4;
-                    break;
+                    return;
                 case "int":
                     info.variableType = EVariableType.Int;
-                    break;
+                    return;
                 case "sampler2D":
                     info.variableType = EVariableType.Texture2D;
-                    break;
+                    return;
                 case "sampler3D":
                     info.variableType = EVariableType.Texture3D;
                     break;
                 case "float":
                     info.variableType = EVariableType.Float;
-                    break;
+                    return;
                 case "double":
                     info.variableType = EVariableType.Double;
-                    break;
+                    return;
                 case "mat3":
                     info.variableType = EVariableType.Mat3;
-                    break;
+                    return;
                 case "mat4":
                     info.variableType = EVariableType.Mat4;
-                    break;
+                    return;
                 default:
                     Logger.Log(Logger.LogLevel.Error,"Shader ReadError" + name);
-                    break;
+                    return;
             }
             return;
         }
@@ -635,6 +669,8 @@ namespace RenderApp.GLUtil.ShaderModel
             string[] lines = shaderCode.Split(new[] { "\r\n" }, StringSplitOptions.None);
             for (int i = 0; i < lines.Length; i++)
             {
+                Logger.GLLog(Logger.LogLevel.Error);
+
                 string line = lines[i];
 
                 if(line.Contains("gl_FragData"))
@@ -672,15 +708,25 @@ namespace RenderApp.GLUtil.ShaderModel
                             info.shaderVariableType = EShaderVariableType.Attribute;
                             _shaderVariable.Add(info.Name, info);
                         }
+                        Logger.GLLog(Logger.LogLevel.Error);
+
                         break;
                     case "uniform":
                         UniformParameter(info,code);
                         if (info.variableType != EVariableType.None && !_shaderVariable.ContainsKey(code[2]))
                         {
+                            if(code[2].Contains("["))
+                            {
+                                int index = code[2].IndexOf("[");
+                                info.arrayNum = int.Parse(code[2][index + 1].ToString());
+                                code[2] = code[2].Remove(code[2].IndexOf("["), 3);
+                            }
                             info.Name = code[2];
                             info.shaderVariableType = EShaderVariableType.Uniform;
                             _shaderVariable.Add(info.Name, info);
                         }
+                        Logger.GLLog(Logger.LogLevel.Error);
+
                         break;
                 }
             }
@@ -725,17 +771,17 @@ namespace RenderApp.GLUtil.ShaderModel
             }
             if (_frag != null)
             {
-                name += "\r\n[f]" + System.IO.Path.GetFileNameWithoutExtension(_frag.FileName);
+                name += "[f]" + System.IO.Path.GetFileNameWithoutExtension(_frag.FileName);
             }
             if (_geom != null)
             {
-                name += "\r\n[g]" + System.IO.Path.GetFileNameWithoutExtension(_geom.FileName);
+                name += "[g]" + System.IO.Path.GetFileNameWithoutExtension(_geom.FileName);
             } if (_tcs != null)
             {
-                name += "\r\n[tc]" + System.IO.Path.GetFileNameWithoutExtension(_tcs.FileName);
+                name += "[tc]" + System.IO.Path.GetFileNameWithoutExtension(_tcs.FileName);
             } if (_tes != null)
             {
-                name += "\r\n[te]" + System.IO.Path.GetFileNameWithoutExtension(_tes.FileName);
+                name += "[te]" + System.IO.Path.GetFileNameWithoutExtension(_tes.FileName);
             }
             return name;
         }
@@ -792,6 +838,17 @@ namespace RenderApp.GLUtil.ShaderModel
 
             GL.LinkProgram(program);
             Logger.GLLog(Logger.LogLevel.Error);
+
+            int status;
+            string info;
+            GL.GetProgramInfoLog(program, out info);
+            Logger.Log(Logger.LogLevel.Debug, info);
+            GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
+            if (status == 0)
+            {
+                Logger.Log(Logger.LogLevel.Error, GL.GetProgramInfoLog(program));
+            }
+
             return program;
 
         }

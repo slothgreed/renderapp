@@ -48,9 +48,12 @@ namespace RenderApp.ViewModel
             Owner = owner;
             Name = name;
             _items = new List<KIObject>();
-            foreach(var item in value)
+            if(value != null)
             {
-                Items.Add(item);
+                foreach (var item in value)
+                {
+                    Items.Add(item);
+                }
             }
             SelectedIndex = selectedIndex;
             action = new Action<int>(UpdateProperty);

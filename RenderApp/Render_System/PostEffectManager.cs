@@ -22,12 +22,13 @@ namespace RenderApp.Render_System
         private void CreatePostProcessFlow()
         {
             RenderTechnique bloom = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Bloom);
-            RenderTechnique sobel = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Sobel);
-
             Bloom b = bloom as Bloom;
-            b.uTarget = SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[2];
+            b.uTarget = SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[3];
+
+            RenderTechnique sobel = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Sobel);
             Sobel s = sobel as Sobel;
             s.uTarget = SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[3];
+
             PostEffects.Add(bloom);
             PostEffects.Add(sobel);
         }

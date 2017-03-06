@@ -27,7 +27,7 @@ namespace KI.Gfx
         Vec4Array,
         IntArray,
         FloatArray,
-        DoubleArra,
+        DoubleArray,
         Texture2D,
         Texture3D
     }
@@ -41,6 +41,7 @@ namespace KI.Gfx
         public int ShaderID { get; set; }
         public int VertexBufferId { get; set; }
         public object variable { get; set; }
+        public int arrayNum { get; set; }//配列のときの要素数
         public EShaderVariableType shaderVariableType { get; set; }
         public EVariableType variableType { get; set; }
     }

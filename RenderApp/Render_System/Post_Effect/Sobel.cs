@@ -19,7 +19,7 @@ namespace RenderApp.Render_System
         #region [Shaderの初期化関数]
         public override void Initialize()
         {
-            uThreshold = 1.0f;
+            uThreshold = 0.001f;
             uWidth = 1;
             uHeight = 1;
             uTarget = null;

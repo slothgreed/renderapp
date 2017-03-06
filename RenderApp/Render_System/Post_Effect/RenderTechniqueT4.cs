@@ -34,8 +34,8 @@ namespace RenderApp.Render_System
 			}
 		}
 
-		private int _uWeight;
-		public int uWeight
+		private float[] _uWeight;
+        public float[] uWeight
 		{
 			get
 			{
@@ -43,7 +43,7 @@ namespace RenderApp.Render_System
 			}
 			set
 			{
-				SetValue<int>(ref _uWeight, value); 
+                SetValue<float[]>(ref _uWeight, value); 
 			}
 		}
 

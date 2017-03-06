@@ -51,10 +51,11 @@ namespace RenderApp.Render_System
         public Bloom()
             : base("Bloom", vertexShader, fragShader, RenderType.OffScreen)
         {
-
         }
         public override void Initialize()
         {
+            uHorizon = 1;
+            uScale = 100;
             float sigma = 100;
             float kei = (float)(1.0f / (2 * Math.PI * sigma * sigma));
             float sum = 0;
@@ -72,6 +73,7 @@ namespace RenderApp.Render_System
             {
                 m_Weight[i] /= (sum);
             }
+            uWeight = m_Weight;
         }
     }
 }
