@@ -382,7 +382,7 @@ namespace RenderApp.GLUtil.ShaderModel
         /// <summary>
         /// 初期状態の設定
         /// </summary>
-        public void InitializeState(Geometry geometry,Dictionary<TextureKind,Texture> TextureItem)
+        public void InitializeState(Geometry geometry, Dictionary<TextureKind, Texture> TextureItem)
         {
             foreach (ShaderProgramInfo info in _shaderVariable.Values)
             {
@@ -450,7 +450,7 @@ namespace RenderApp.GLUtil.ShaderModel
                         }
                         break;
                     case "uSpecularMap":
-                        if(TextureItem.ContainsKey(TextureKind.Specular))
+                        if (TextureItem.ContainsKey(TextureKind.Specular))
                         {
                             info.variable = TextureItem[TextureKind.Specular].DeviceID;
                         }
@@ -687,7 +687,6 @@ namespace RenderApp.GLUtil.ShaderModel
             Logger.GLLog(Logger.LogLevel.Error);
         }
         #endregion
-        
 
         #region [virtual process]
         /// <summary>

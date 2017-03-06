@@ -96,6 +96,7 @@ namespace RenderApp.Render_System
             {
                 if(Plane != null)
                 {
+                    RenderTarget.ClearBuffer();
                     RenderTarget.BindRenderTarget(OutputTexture.ToArray());
                     Plane.Render();
                     RenderTarget.UnBindRenderTarget();

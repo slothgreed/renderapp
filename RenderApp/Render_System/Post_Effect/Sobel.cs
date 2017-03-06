@@ -13,8 +13,8 @@ namespace RenderApp.Render_System
 {
     partial class Sobel : RenderTechnique
     {
-        private static string vertexShader = ProjectInfo.ShaderDirectory + @"sobel.vert";
-        private static string fragShader = ProjectInfo.ShaderDirectory + @"sobel.frag";
+        private static string vertexShader = ProjectInfo.ShaderDirectory + @"\sobel.vert";
+        private static string fragShader = ProjectInfo.ShaderDirectory + @"\sobel.frag";
         
         #region [Shaderの初期化関数]
         public override void Initialize()
@@ -24,7 +24,7 @@ namespace RenderApp.Render_System
             uHeight = 1;
             uTarget = null;
         }
-        public Sobel(Shader shader)
+        public Sobel()
             : base("Sobel", vertexShader, fragShader, RenderType.OffScreen)
         {
 

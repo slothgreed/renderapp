@@ -42,6 +42,10 @@ namespace RenderApp.Render_System
         /// </summary>
         private RenderTechnique LightingStage;
         /// <summary>
+        /// ポストエフェクト
+        /// </summary>
+        private PostEffectManager PostEffect;
+        /// <summary>
         /// 後処理のUtil（選択とか）
         /// </summary>
         private RenderTechnique SelectionStage;
@@ -74,6 +78,7 @@ namespace RenderApp.Render_System
             GBufferStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer);
             LightingStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Lighting);
             SelectionStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Selection);
+            PostEffect = new PostEffectManager();
             OutputStage = (OutputBuffer)RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output);
             OutputTexture = RenderTechniqueFactory.Instance.OutputTexture(RenderTechniqueType.GBuffer).First();
 
@@ -81,6 +86,7 @@ namespace RenderApp.Render_System
             {
                 ProcessingTexture.Add(texture);
             }
+
         }
 
         public void SizeChanged(int width, int height)
@@ -128,6 +134,7 @@ namespace RenderApp.Render_System
             //SelectionStage.ClearBuffer();
             //SelectionStage.Render();
 
+            PostEffect.Render();
             OutputStage.uSelectMap = SelectionStage.OutputTexture[0];
             OutputStage.uTarget = OutputTexture;
             OutputStage.Render();

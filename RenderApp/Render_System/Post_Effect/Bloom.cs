@@ -10,8 +10,8 @@ namespace RenderApp.Render_System
 {
     public partial class Bloom : RenderTechnique
     {
-        private static string vertexShader = ProjectInfo.ShaderDirectory + @"bloom.vert";
-        private static string fragShader = ProjectInfo.ShaderDirectory + @"bloom.frag";
+        private static string vertexShader = ProjectInfo.ShaderDirectory + @"\bloom.vert";
+        private static string fragShader = ProjectInfo.ShaderDirectory + @"\bloom.frag";
         
         /// <summary>
         /// 縦か横か

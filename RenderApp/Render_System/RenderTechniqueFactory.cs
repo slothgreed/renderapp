@@ -11,8 +11,11 @@ namespace RenderApp.Render_System
     {
         GBuffer,
         Lighting,
+        Bloom,
+        Dof,
+        Sobel,
+        SSAO,
         Selection,
-        PostEffect,
         Output
     }
 
@@ -47,7 +50,11 @@ namespace RenderApp.Render_System
                 case RenderTechniqueType.Selection:
                     technique = new Selection();
                     break;
-                case RenderTechniqueType.PostEffect:
+                case RenderTechniqueType.Sobel:
+                    technique = new Sobel();
+                    break;
+                case RenderTechniqueType.Bloom:
+                    technique = new Bloom();
                     break;
                 case RenderTechniqueType.Output:
                     technique = new OutputBuffer();

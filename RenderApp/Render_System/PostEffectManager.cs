@@ -10,15 +10,26 @@ using KI.Gfx.KIAsset;
 using KI.Gfx.Render;
 namespace RenderApp.Render_System
 {
-    class PostProcess
+    class PostEffectManager
     {
-        private Geometry Plane;
-
         public List<RenderTechnique> PostEffects = new List<RenderTechnique>();
 
-        public PostProcess(Geometry plane)
+        public PostEffectManager()
         {
-            Plane = plane;
+            CreatePostProcessFlow();
+        }
+
+        private void CreatePostProcessFlow()
+        {
+            RenderTechnique bloom = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Bloom);
+            RenderTechnique sobel = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Sobel);
+
+            Bloom b = bloom as Bloom;
+            b.uTarget = SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[2];
+            Sobel s = sobel as Sobel;
+            s.uTarget = SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[3];
+            PostEffects.Add(bloom);
+            PostEffects.Add(sobel);
         }
 
         private void ClearBuffer()
@@ -40,16 +51,13 @@ namespace RenderApp.Render_System
         {
            foreach(var post in PostEffects)
            {
-               post.RenderTarget.BindRenderTarget(post.OutputTexture.ToArray());
-               Plane.Shader = post.Shader;
-               Plane.Render();
-               post.RenderTarget.UnBindRenderTarget();
+               post.Render();
            }
         }
 
         public void Dispose()
         {
-            Plane.Dispose();
+
         }
     }
 }
