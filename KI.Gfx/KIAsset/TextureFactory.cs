@@ -7,7 +7,7 @@ using KI.Foundation.Core;
 using KI.Gfx.KIAsset;
 namespace KI.Gfx.KIAsset
 {
-    public class TextureFactory
+    public class TextureFactory : FactoryBase<string,Texture>
     {
 
         private static TextureFactory _instance = new TextureFactory();
@@ -19,7 +19,6 @@ namespace KI.Gfx.KIAsset
             }
         }
 
-        public Dictionary<string, Texture> TextureList = new Dictionary<string, Texture>();
         public Texture CreateTexture(string path)
         {
             string extension = System.IO.Path.GetExtension(path);
@@ -48,10 +47,12 @@ namespace KI.Gfx.KIAsset
         }
         public Texture CreateTexture(string path, ImageKind kind)
         {
-            if(TextureList.ContainsKey(path))
+            Texture find = FindByKey(path);
+            if(find != null)
             {
-                return TextureList[path];
+                return find;
             }
+
             KIImageInfo image = null;
             switch (kind)
             {
@@ -70,24 +71,15 @@ namespace KI.Gfx.KIAsset
                     return null;
             }
             Texture texture = new Texture(KIFile.GetNameFromPath(path), path);
-            TextureList.Add(path, texture);
+            AddItem(path, texture);
             texture.LoadTexture(image);
             return texture;
         }
         public Texture CreateTexture(string name, int width, int height)
         {
             Texture texture =  new Texture(name, width, height);
-            TextureList.Add(name, texture);
+            AddItem(name, texture);
             return texture;
         }
-
-        public void Dispose()
-        {
-            foreach(Texture texture in TextureList.Values)
-            {
-                texture.Dispose();
-            }
-        }
-
     }
 }

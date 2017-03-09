@@ -13,10 +13,10 @@ using RenderApp.AssetModel.RA_Geometry;
 using KI.Foundation.Core;
 using KI.Gfx.KIAsset;
 using KI.Foundation.Utility;
-
+using KI.Foundation.Core;
 namespace RenderApp.AssetModel
 {
-    class AssetFactory
+    class AssetFactory : FactoryBase<string, RenderObject>
     {
         private static AssetFactory _instance = new AssetFactory();
         public static AssetFactory Instance
@@ -27,21 +27,12 @@ namespace RenderApp.AssetModel
             }
         }
 
-        public List<RenderObject> RenderObjects = new List<RenderObject>();
-
 
         public RenderObject CreateRenderObject(string name)
         {
             RenderObject renderObject = new RenderObject(name);
-            RenderObjects.Add(renderObject);
+            AddItem(name, renderObject);
             return renderObject;
-        }
-        public void Dispose()
-        {
-            foreach(var render in RenderObjects)
-            {
-                render.Dispose();
-            }
         }
 
         public Geometry CreateEnvironmentMap()

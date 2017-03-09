@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 using KI.Gfx.KIAsset;
-
+using KI.Foundation.Core;
 namespace KI.Gfx.Render
 {
-    public class RenderTargetFactory
+    public class RenderTargetFactory : FactoryBase<string,RenderTarget>
     {
         private static RenderTargetFactory _instance = new RenderTargetFactory();
         public static RenderTargetFactory Instance
@@ -18,13 +18,11 @@ namespace KI.Gfx.Render
                 return _instance;
             }
         }
-        private List<RenderTarget> renderTargetList = new List<RenderTarget>();
-
 
         public RenderTarget CreateRenderTarget(string name, int width, int height, int outputNum)
         {
             RenderTarget target = new RenderTarget(name, width, height, outputNum);
-            renderTargetList.Add(target);
+            AddItem(name,target);
             return target;
         }
 
@@ -41,13 +39,6 @@ namespace KI.Gfx.Render
             }
         }
 
-        public void Dispose()
-        {
-            foreach(var frame in renderTargetList)
-            {
-                frame.Dispose();
-            }
-        }
     }
 
 }
