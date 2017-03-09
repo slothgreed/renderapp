@@ -110,6 +110,7 @@ namespace RenderApp.AssetModel
             }
             RenderObject wireframe = AssetFactory.Instance.CreateRenderObject("WireFrame :" + geometry.Name);
             wireframe.CreatePC(position, KICalc.RandomColor(), PrimitiveType.Lines);
+            wireframe.ModelMatrix = geometry.ModelMatrix;
             CreateGeometry(wireframe);
 
             return true;

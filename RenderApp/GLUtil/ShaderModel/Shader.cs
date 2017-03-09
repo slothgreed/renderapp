@@ -367,10 +367,10 @@ namespace RenderApp.GLUtil.ShaderModel
             if (attribute.Name == "color" && geometry.ColorBuffer != null)
             {
                 GL.EnableVertexAttribArray(attribute.ShaderID);
-                geometry.NormalBuffer.SetData(geometry.Color, EArrayType.Vec3Array);
-                geometry.NormalBuffer.BindBuffer();
+                geometry.ColorBuffer.SetData(geometry.Color, EArrayType.Vec3Array);
+                geometry.ColorBuffer.BindBuffer();
                 GL.VertexAttribPointer(attribute.ShaderID, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
-                geometry.NormalBuffer.UnBindBuffer();
+                geometry.ColorBuffer.UnBindBuffer();
             }
             if (attribute.Name == "texcoord" && geometry.TexCoordBuffer != null)
             {

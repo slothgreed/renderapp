@@ -29,7 +29,7 @@ namespace RenderApp.AssetModel
         public Matrix4 ModelMatrix
         {
             get;
-            private set;
+            set;
         }
 
         private Vector3 _translate = Vector3.Zero;
