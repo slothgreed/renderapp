@@ -23,10 +23,6 @@ namespace RenderApp.Globals
         /// </summary>
         private KINode TextureRoot;
         /// <summary>
-        /// マテリアルオブジェクト
-        /// </summary>
-        private KINode MaterialRoot;
-        /// <summary>
         /// シェーダオブジェクト
         /// </summary>
         private KINode ShaderProgramRoot;
@@ -37,11 +33,9 @@ namespace RenderApp.Globals
             RootNode = new KINode("ROOT");
             GeometryRoot = new KINode("Geometry");
             TextureRoot = new KINode("Texture");
-            MaterialRoot = new KINode("Material");
             ShaderProgramRoot = new KINode("ShaderProgram");
             RootNode.AddChild(GeometryRoot);
             RootNode.AddChild(TextureRoot);
-            RootNode.AddChild(MaterialRoot);
             RootNode.AddChild(ShaderProgramRoot);
         
         }
@@ -70,8 +64,6 @@ namespace RenderApp.Globals
                     return GeometryRoot.AllChildrenObject();
                 case RAAsset.Texture:
                     return TextureRoot.AllChildrenObject();
-                case RAAsset.Material:
-                    return MaterialRoot.AllChildrenObject();
                 case RAAsset.ShaderProgram:
                     return ShaderProgramRoot.AllChildrenObject();
             }

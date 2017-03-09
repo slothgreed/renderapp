@@ -424,6 +424,11 @@ namespace RenderApp.GLUtil.ShaderModel
                         Matrix4 vp = SceneManager.Instance.ActiveScene.MainCamera.CameraProjMatrix;
                         info.variable = geometry.ModelMatrix * vp;
                         break;
+                    case "uSMVP":
+                        Matrix4 light = SceneManager.Instance.ActiveScene.SunLight.Matrix;
+                        Matrix4 proj = SceneManager.Instance.ActiveScene.MainCamera.ProjMatrix;
+                        info.variable = geometry.ModelMatrix * light * proj;
+                        break;
                     case "uModelMatrix":
                         info.variable = geometry.ModelMatrix;
                         break;

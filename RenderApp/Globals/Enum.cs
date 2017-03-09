@@ -60,7 +60,6 @@ namespace RenderApp
     {
         Model,
         Texture,
-        Material,
         ShaderProgram,
         Shader,
     }

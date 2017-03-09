@@ -49,7 +49,6 @@ namespace KI.Gfx.KIAsset
         }
 
         #endregion
-
         #region [default property]
         /// <summary>
         /// カメラ

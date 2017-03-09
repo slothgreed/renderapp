@@ -51,7 +51,6 @@ namespace RenderApp.AssetModel
             //string SphereMapVertexShader = ProjectInfo.ShaderDirectory + @"\sphereMap.vert";
             //string SphereMapFragmentShader = ProjectInfo.ShaderDirectory + @"\sphereMap.frag";
             //Sphere sphere = new Sphere("SphereMap",SceneManager.Instance.ActiveScene.WorldMax.X * 2, 20, 20, false, Vector3.UnitX);
-            //sphere.geometry.MaterialItem = new Material("SphereMaterial");
             //Texture texture = TextureFactory.Instance.CreateTexture(SphereMapAlbedo);
             //sphere.geometry.MaterialItem.AddTexture(TextureKind.Albedo, texture);
             //sphere.geometry.MaterialItem.AddTexture(TextureKind.Albedo, texture);
@@ -66,7 +65,7 @@ namespace RenderApp.AssetModel
 
         internal Light CreateLight(string name)
         {
-            return new PointLight(name, new Vector3(10), Vector3.Zero);
+            return new PointLight(name, new Vector3(-11, 300, -18), Vector3.Zero);
         }
         internal Geometry CreateGeometry(Geometry geometry)
         {

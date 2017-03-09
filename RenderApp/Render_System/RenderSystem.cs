@@ -30,6 +30,14 @@ namespace RenderApp.Render_System
             private set;
         }
         /// <summary>
+        /// GBuffer前
+        /// </summary>
+        public RenderTechnique PreRenderStage
+        {
+            get;
+            private set;
+        }
+        /// <summary>
         /// defferdシェーディング用
         /// </summary>
         public RenderTechnique GBufferStage
@@ -75,6 +83,7 @@ namespace RenderApp.Render_System
             Height = height;
             ProcessingTexture = new List<Texture>();
             PostProcessMode = false;
+            PreRenderStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Shadow);
             GBufferStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer);
             LightingStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Lighting);
             SelectionStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Selection);
@@ -129,6 +138,7 @@ namespace RenderApp.Render_System
         }
         public void Render()
         {
+            PreRenderStage.Render();
             GBufferStage.Render();
             LightingStage.Render();
             //SelectionStage.ClearBuffer();

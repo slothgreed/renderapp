@@ -10,11 +10,11 @@ namespace RenderApp.Render_System
 {
     public class ShadowMap : RenderTechnique
     {
-        private static string vertexShader = ProjectInfo.ShaderDirectory + @"\ShadowMap.vert";
-        private static string fragShader = ProjectInfo.ShaderDirectory + @"\ShadowMap.frag";
+        private static string vertexShader = ProjectInfo.ShaderDirectory + @"\shadow.vert";
+        private static string fragShader = ProjectInfo.ShaderDirectory + @"\shadow.frag";
 
         public ShadowMap()
-            : base("ShadowMap",RenderType.Original)
+            : base("ShadowMap", vertexShader, fragShader, RenderType.Original)
         {
 
         }
@@ -24,14 +24,17 @@ namespace RenderApp.Render_System
 
         public override void Render()
         {
+            ClearBuffer();
             RenderTarget.BindRenderTarget(OutputTexture.ToArray());
             foreach (var asset in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
             {
-                if (asset.KIObject is Light)
+                if(asset.KIObject is Geometry)
                 {
-                    var light = asset.KIObject as Light;
-                    Plane.Shader = Shader;
-                    Plane.Render();
+                    var geometry = asset.KIObject as Geometry;
+                    var old = geometry.Shader;
+                    geometry.Shader = ShaderItem;
+                    geometry.Render();
+                    geometry.Shader = old;
                 }
             }
             RenderTarget.UnBindRenderTarget();

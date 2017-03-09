@@ -33,7 +33,7 @@ namespace RenderApp.Render_System
         public override void Render()
         {
             //最終出力フレームバッファのバインドの必要なし
-            Plane.Shader = Shader;
+            Plane.Shader = ShaderItem;
             Plane.Render();
         }
     }

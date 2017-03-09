@@ -9,6 +9,7 @@ namespace RenderApp.Render_System
 {
     enum RenderTechniqueType
     {
+        Shadow,
         GBuffer,
         Lighting,
         Bloom,
@@ -41,6 +42,9 @@ namespace RenderApp.Render_System
             RenderTechnique technique = null;
             switch (type)
             {
+                case RenderTechniqueType.Shadow:
+                    technique = new ShadowMap();
+                    break;
                 case RenderTechniqueType.GBuffer:
                     technique = new GBuffer();
                     break;

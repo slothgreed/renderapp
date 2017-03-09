@@ -25,7 +25,7 @@ namespace RenderApp.Render_System
             get;
             set;
         }
-        public Shader Shader
+        public Shader ShaderItem
         {
             get;
             set;
@@ -67,7 +67,7 @@ namespace RenderApp.Render_System
         /// </summary>
         protected void SetValue<T>(ref T member, T value, [CallerMemberName]string memberName = "")
         {
-            if (Shader.SetValue(memberName, value))
+            if (ShaderItem.SetValue(memberName, value))
             {
                 member = value;
             }
@@ -98,7 +98,7 @@ namespace RenderApp.Render_System
                 {
                     RenderTarget.ClearBuffer();
                     RenderTarget.BindRenderTarget(OutputTexture.ToArray());
-                    Plane.Shader = Shader;
+                    Plane.Shader = ShaderItem;
                     Plane.Render();
                     RenderTarget.UnBindRenderTarget();
                 }
@@ -110,7 +110,7 @@ namespace RenderApp.Render_System
 
         public virtual void CreateShader(string vertexShader, string fragShader)
         {
-            Shader = ShaderFactory.Instance.CreateShaderVF(vertexShader, fragShader);
+            ShaderItem = ShaderFactory.Instance.CreateShaderVF(vertexShader, fragShader);
         }
         public virtual void CreateRenderTarget(int width, int height)
         {

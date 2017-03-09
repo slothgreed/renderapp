@@ -20,11 +20,6 @@
                     <v:ShaderProgramView/>
                 </DataTemplate>
             </vm:DockPaneTemplateSelector.ShaderProgramTemplate>
-            <vm:DockPaneTemplateSelector.MaterialTemplate>
-                <DataTemplate  DataType="{x:Type vm:MaterialViewModel}">
-                    <v:MaterialView/>
-                </DataTemplate>
-            </vm:DockPaneTemplateSelector.MaterialTemplate>
             <vm:DockPaneTemplateSelector.TexureTemplate>
                 <DataTemplate  DataType="{x:Type vm:TextureViewModel}">
                     <v:TextureView/>

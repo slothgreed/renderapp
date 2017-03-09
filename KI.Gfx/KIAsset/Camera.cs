@@ -99,7 +99,7 @@ namespace KI.Gfx.KIAsset
         /// <summary>
         /// projectionのfar
         /// </summary>
-        private float _far = 10000;
+        private float _far = 1000;
         public float Far
         {
             get
