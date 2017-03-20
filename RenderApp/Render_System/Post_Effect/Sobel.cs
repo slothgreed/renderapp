@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Drawing.Text;
-using RenderApp.GLUtil.ShaderModel;
 using RenderApp.Utility;
 namespace RenderApp.Render_System
 {

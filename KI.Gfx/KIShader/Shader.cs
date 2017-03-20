@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using KI.Foundation.Utility;
-using RenderApp.GLUtil;
-using RenderApp.AssetModel;
 using KI.Gfx.GLUtil;
 using KI.Gfx;
 using KI.Gfx.KIAsset;
-namespace RenderApp.GLUtil.ShaderModel
+namespace KI.Gfx.KIShader
 {
     public class Shader
     {
@@ -293,7 +288,7 @@ namespace RenderApp.GLUtil.ShaderModel
         }
 
 
-        internal bool SetValue(string key, object value)
+        public bool SetValue(string key, object value)
         {
             if (_shaderVariable.ContainsKey(key))
             {
@@ -301,6 +296,19 @@ namespace RenderApp.GLUtil.ShaderModel
                 {
                     var texture = value as Texture;
                     _shaderVariable[key].variable = texture.DeviceID;
+                    return true;
+                }
+                if(value is bool)
+                {
+                    var bValue = (bool)value;
+                    if(bValue)
+                    {
+                        _shaderVariable[key].variable = 1;
+                    }
+                    else
+                    {
+                        _shaderVariable[key].variable = 0;
+                    }
                     return true;
                 }
                 _shaderVariable[key].variable = value;

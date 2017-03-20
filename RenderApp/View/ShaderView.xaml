@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:v="clr-namespace:RenderApp.View"
              xmlns:vm="clr-namespace:RenderApp.ViewModel"
-             xmlns:model="clr-namespace:RenderApp.GLUtil"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <v:PropertyGridView DataContext="{Binding Property}"/>

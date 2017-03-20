@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RenderApp.GLUtil.ShaderModel;
-using RenderApp.GLUtil;
 using OpenTK;
 using RenderApp.Utility;
 using OpenTK.Graphics.OpenGL;
@@ -13,6 +11,9 @@ using RenderApp.AssetModel.RA_Geometry;
 using KI.Foundation.Core;
 using KI.Gfx.KIAsset;
 using KI.Foundation.Utility;
+using KI.Gfx;
+using KI.Gfx.KIShader;
+
 namespace RenderApp.AssetModel
 {
     class AssetFactory : KIFactoryBase< RenderObject>

@@ -60,6 +60,19 @@ namespace RenderApp.Render_System
 			}
 		}
 
+		private bool _uHorizon;
+		public bool uHorizon
+		{
+			get
+			{
+				return _uHorizon;
+			}
+			set
+			{
+				SetValue<bool>(ref _uHorizon, value); 
+			}
+		}
+
 
 	}
 	public partial class Sobel : RenderTechnique
@@ -118,49 +131,50 @@ namespace RenderApp.Render_System
 
 
 	}
-    public partial class SSAO : RenderTechnique
-    {
-        private Texture _uPosition;
-        public Texture uPosition
-        {
-            get
-            {
-                return _uPosition;
-            }
-            set
-            {
-                SetValue<Texture>(ref _uPosition, value);
-            }
-        }
+	public partial class SSAO : RenderTechnique
+	{
+		private Texture _uPosition;
+		public Texture uPosition
+		{
+			get
+			{
+				return _uPosition;
+			}
+			set
+			{
+				SetValue<Texture>(ref _uPosition, value); 
+			}
+		}
 
-        private Texture _uTarget;
-        public Texture uTarget
-        {
-            get
-            {
-                return _uTarget;
-            }
-            set
-            {
-                SetValue<Texture>(ref _uTarget, value);
-            }
-        }
+		private Texture _uTarget;
+		public Texture uTarget
+		{
+			get
+			{
+				return _uTarget;
+			}
+			set
+			{
+				SetValue<Texture>(ref _uTarget, value); 
+			}
+		}
 
-        private float[] _uSample;
-        public float[] uSample
-        {
-            get
-            {
-                return _uSample;
-            }
-            set
-            {
-                SetValue<float[]>(ref _uSample, value);
-            }
-        }
+		private float[] _uSample;
+		public float[] uSample
+		{
+			get
+			{
+				return _uSample;
+			}
+			set
+			{
+				SetValue<float[]>(ref _uSample, value); 
+			}
+		}
 
-    }
-    public partial class OutputBuffer : RenderTechnique
+
+	}
+	public partial class OutputBuffer : RenderTechnique
 	{
 		private Texture _uSelectMap;
 		public Texture uSelectMap

@@ -6,7 +6,6 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.Utility;
-using RenderApp.GLUtil;
 namespace RenderApp.AssetModel.RA_Geometry
 {
     public class Cube

@@ -8,7 +8,6 @@ using RenderApp;
 using RenderApp.Utility;
 using RenderApp.AssetModel;
 using RenderApp.AssetModel.RA_Geometry;
-using RenderApp.GLUtil;
 using RenderApp.Globals;
 using KI.Foundation.Core;
 using KI.Foundation.Utility;

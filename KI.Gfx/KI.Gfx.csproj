@@ -71,10 +71,13 @@
     <Compile Include="KIAsset\Camera.cs" />
     <Compile Include="KIAsset\EnvironmentProbe.cs" />
     <Compile Include="GLUtil\Buffer\FrameBuffer.cs" />
+    <Compile Include="KIShader\ShaderProgramFactory.cs" />
     <Compile Include="KIAsset\Light\DirectionLight.cs" />
     <Compile Include="KIAsset\Light\Light.cs" />
     <Compile Include="KIAsset\Light\PointLight.cs" />
     <Compile Include="KIAsset\Light\SpotLight.cs" />
+    <Compile Include="KIShader\Shader.cs" />
+    <Compile Include="KIShader\ShaderFactory.cs" />
     <Compile Include="Render\RenderTarget.cs" />
     <Compile Include="KIAsset\Scene.cs" />
     <Compile Include="KIAsset\Texture.cs" />

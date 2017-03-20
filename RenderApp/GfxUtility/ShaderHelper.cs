@@ -6,8 +6,9 @@ using KI.Gfx.GLUtil;
 using KI.Foundation.Utility;
 using RenderApp.AssetModel;
 using System.Collections.Generic;
+using KI.Gfx.KIShader;
 
-namespace RenderApp.GLUtil.ShaderModel
+namespace RenderApp.GfxUtility
 {
     public static class ShaderHelper
     {
@@ -123,6 +124,18 @@ namespace RenderApp.GLUtil.ShaderModel
                         }
                         break;
                 }
+            }
+        }
+        private static Shader _defaultAnalyzeShader;
+        public static Shader DefaultAnalyzeShader
+        {
+            get
+            {
+                if (_defaultAnalyzeShader == null)
+                {
+                    _defaultAnalyzeShader = ShaderFactory.Instance.CreateShaderVF(ProjectInfo.ShaderDirectory + @"\ConstantGeometry");
+                }
+                return _defaultAnalyzeShader;
             }
         }
     }

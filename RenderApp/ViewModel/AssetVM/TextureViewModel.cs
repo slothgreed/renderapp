@@ -7,7 +7,6 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.Utility;
 using RenderApp;
-using RenderApp.GLUtil;
 using KI.Gfx.KIAsset;
 namespace RenderApp.ViewModel
 {

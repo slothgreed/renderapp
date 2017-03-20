@@ -10,8 +10,8 @@
 	
 	Tuple.Create(
 	"Bloom",
-	new string[]{"int"		,"float[]"	,"Texture"},
-	new string[]{"uScale"	,"uWeight"	,"uTarget"}),
+	new string[]{"int"		,"float[]"	,"Texture"	,"bool"},
+	new string[]{"uScale"	,"uWeight"	,"uTarget"	,"uHorizon"}),
 	
 	Tuple.Create(
 	"Sobel",

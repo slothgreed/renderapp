@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RenderApp.Render_System;
-using RenderApp.GLUtil;
 using RenderApp.AssetModel;
 using KI.Gfx.KIAsset;
 using KI.Gfx.GLUtil;

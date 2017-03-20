@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using RenderApp.AssetModel;
 using System.Collections.ObjectModel;
-using RenderApp.GLUtil;
 using OpenTK;
 using KI.Foundation.ViewModel;
 

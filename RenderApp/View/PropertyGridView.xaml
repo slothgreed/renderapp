@@ -6,7 +6,6 @@
              xmlns:vm="clr-namespace:RenderApp.ViewModel"
              xmlns:vmath="clr-namespace:KI.Foundation.View;assembly=KI.Foundation"
              xmlns:v="clr-namespace:RenderApp.View"
-             xmlns:gl="clr-namespace:RenderApp.GLUtil"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:opentk="clr-namespace:OpenTK;assembly=OpenTK"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"

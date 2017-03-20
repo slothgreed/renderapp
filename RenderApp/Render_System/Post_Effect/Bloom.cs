@@ -13,39 +13,6 @@ namespace RenderApp.Render_System
         private static string vertexShader = ProjectInfo.ShaderDirectory + @"\bloom.vert";
         private static string fragShader = ProjectInfo.ShaderDirectory + @"\bloom.frag";
         
-        /// <summary>
-        /// 縦か横か
-        /// </summary>
-        private int _uHorizon;
-        public int uHorizon
-        {
-            get
-            {
-                return _uHorizon;
-            }
-            set
-            {
-                if(value == 1 || value == 0)
-                {
-                    SetValue<int>(ref _uHorizon, value);
-                }
-            }
-        }
-        /// <summary>
-        /// 縦か横か
-        /// </summary>
-        public void SetHorizon(bool horizon)
-        {
-            if (horizon)
-            {
-                uHorizon = 1;
-            }
-            else
-            {
-                uHorizon = 0;
-            }
-        }
-
         private float[] m_Weight = new float[5];
 
         public Bloom(RenderTechniqueType tech)
@@ -54,7 +21,7 @@ namespace RenderApp.Render_System
         }
         public override void Initialize()
         {
-            uHorizon = 1;
+            uHorizon = true;
             uScale = 100;
             float sigma = 100;
             float kei = (float)(1.0f / (2 * Math.PI * sigma * sigma));

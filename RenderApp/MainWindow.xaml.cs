@@ -18,7 +18,6 @@ using System.Windows.Forms.Integration;
 using RenderApp.Utility;
 using RenderApp.AssetModel;
 using System.IO;
-using RenderApp.GLUtil;
 namespace RenderApp
 {
 

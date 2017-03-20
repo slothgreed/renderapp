@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RenderApp.GLUtil.ShaderModel;
+﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using KI.Foundation.Utility;
-using RenderApp.GLUtil;
 using KI.Gfx.KIAsset;
 using RenderApp.AssetModel;
 using KI.Gfx.Render;
 using KI.Foundation.Core;
+using KI.Gfx;
+using KI.Gfx.KIShader;
+
 namespace RenderApp.Render_System
 {
     public abstract class RenderTechnique : KIObject

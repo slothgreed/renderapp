@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 using OpenTK;
-using RenderApp.GLUtil;
 using KI.Foundation.Utility;
 using KI.Foundation.Core;
 using KI.Gfx;
 using KI.Gfx.KIAsset;
 using KI.Gfx.GLUtil;
 using KI.Gfx.Analyzer;
-using RenderApp.GLUtil.ShaderModel;
+using KI.Gfx.KIShader;
+using RenderApp.GfxUtility;
 namespace RenderApp.AssetModel
 {
     public abstract class Geometry : KIObject
@@ -142,7 +142,7 @@ namespace RenderApp.AssetModel
             Timer = new List<int>();
             ModelMatrix = Matrix4.Identity;
             TextureItem = new Dictionary<TextureKind, Texture>();
-            Shader = ShaderFactory.Instance.DefaultAnalyzeShader;
+            Shader = ShaderHelper.DefaultAnalyzeShader;
         }
 
         public override void Dispose()

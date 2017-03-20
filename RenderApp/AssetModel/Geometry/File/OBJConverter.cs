@@ -8,10 +8,10 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using System.Windows.Forms;
-using RenderApp.GLUtil;
 using KI.Foundation.Utility;
 using KI.Foundation.Core;
 using KI.Gfx.KIAsset;
+using KI.Gfx.KIShader;
 namespace RenderApp.AssetModel.RA_Geometry
 {
     public class OBJConverter : IRenderObjectConverter
@@ -51,6 +51,10 @@ namespace RenderApp.AssetModel.RA_Geometry
             }
             string vertex = Utility.ShaderCreater.Instance.GetVertexShader(geometry.GeometryInfo);
             string frag = Utility.ShaderCreater.Instance.GetOBJFragShader(geometry);
+            if(vertex == null || frag == null)
+            {
+                return;
+            }
             geometry.Shader = (ShaderFactory.Instance.CreateShaderVF(vertex,frag));
         }
         public List<RenderObject> CreateRenderObject()

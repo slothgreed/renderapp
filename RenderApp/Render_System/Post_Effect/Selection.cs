@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RenderApp.GLUtil;
-using RenderApp.GLUtil.ShaderModel;
 using KI.Gfx.Render;
 using KI.Gfx.KIAsset;
 using RenderApp.AssetModel;

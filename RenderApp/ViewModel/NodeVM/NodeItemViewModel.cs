@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using RenderApp;
 using System.Collections.ObjectModel;
 using RenderApp.AssetModel;
-using RenderApp.GLUtil;
 using RenderApp.Utility;
 using KI.Foundation.ViewModel;
 using KI.Foundation.Utility;

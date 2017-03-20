@@ -9,9 +9,6 @@ using System.Collections.ObjectModel;
 using System.Windows.Forms;
 using RenderApp.AssetModel;
 using RenderApp.Globals;
-using RenderApp.GLUtil;
-using RenderApp.GLUtil.ShaderModel;
-using RenderApp.Utility;
 using RenderApp.ViewModel.Dialog;
 using RenderApp.RA_Control;
 using RenderApp.Render_System;
@@ -22,6 +19,7 @@ using KI.Gfx.GLUtil;
 using KI.Gfx;
 using KI.Gfx.KIAsset;
 using KI.Gfx.Render;
+using KI.Gfx.KIShader;
 namespace RenderApp.ViewModel
 {
     public partial class MainWindowViewModel : ViewModelBase

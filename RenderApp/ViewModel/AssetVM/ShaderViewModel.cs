@@ -5,11 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using RenderApp.AssetModel;
-using RenderApp.GLUtil;
-using RenderApp.GLUtil.ShaderModel;
 using OpenTK;
 using KI.Gfx;
 using KI.Gfx.KIAsset;
+using KI.Gfx.KIShader;
 namespace RenderApp.ViewModel
 {
     class ShaderViewModel : TabItemViewModel,IPropertyGridViewModel
