@@ -35,7 +35,7 @@ namespace RenderApp.Render_System
 		}
 
 		private float[] _uWeight;
-        public float[] uWeight
+		public float[] uWeight
 		{
 			get
 			{
@@ -43,7 +43,7 @@ namespace RenderApp.Render_System
 			}
 			set
 			{
-                SetValue<float[]>(ref _uWeight, value); 
+				SetValue<float[]>(ref _uWeight, value); 
 			}
 		}
 
@@ -118,7 +118,49 @@ namespace RenderApp.Render_System
 
 
 	}
-	public partial class OutputBuffer : RenderTechnique
+    public partial class SSAO : RenderTechnique
+    {
+        private Texture _uPosition;
+        public Texture uPosition
+        {
+            get
+            {
+                return _uPosition;
+            }
+            set
+            {
+                SetValue<Texture>(ref _uPosition, value);
+            }
+        }
+
+        private Texture _uTarget;
+        public Texture uTarget
+        {
+            get
+            {
+                return _uTarget;
+            }
+            set
+            {
+                SetValue<Texture>(ref _uTarget, value);
+            }
+        }
+
+        private float[] _uSample;
+        public float[] uSample
+        {
+            get
+            {
+                return _uSample;
+            }
+            set
+            {
+                SetValue<float[]>(ref _uSample, value);
+            }
+        }
+
+    }
+    public partial class OutputBuffer : RenderTechnique
 	{
 		private Texture _uSelectMap;
 		public Texture uSelectMap

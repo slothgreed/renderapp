@@ -48,7 +48,11 @@ namespace RenderApp.Render_System
         /// <summary>
         /// ライティングステージ
         /// </summary>
-        private RenderTechnique LightingStage;
+        public RenderTechnique LightingStage
+        {
+            get;
+            private set;
+        }
         /// <summary>
         /// ポストエフェクト
         /// </summary>

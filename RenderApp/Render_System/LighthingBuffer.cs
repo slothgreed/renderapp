@@ -13,8 +13,8 @@ namespace RenderApp.Render_System
         private static string vertexShader = ProjectInfo.ShaderDirectory + @"\Defferd.vert";
         private static string fragShader = ProjectInfo.ShaderDirectory + @"\Defferd.frag";
 
-        public LighthingBuffer()
-            : base("LighthingBuffer", vertexShader, fragShader, RenderType.Original)
+        public LighthingBuffer(RenderTechniqueType tech)
+            : base("LighthingBuffer", vertexShader, fragShader, tech, RenderType.Original)
         {
             Plane.AddTexture(TextureKind.Albedo, SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[0]);
             Plane.AddTexture(TextureKind.Normal, SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[1]);

@@ -13,10 +13,9 @@ using RenderApp.AssetModel.RA_Geometry;
 using KI.Foundation.Core;
 using KI.Gfx.KIAsset;
 using KI.Foundation.Utility;
-using KI.Foundation.Core;
 namespace RenderApp.AssetModel
 {
-    class AssetFactory : FactoryBase<string, RenderObject>
+    class AssetFactory : KIFactoryBase< RenderObject>
     {
         private static AssetFactory _instance = new AssetFactory();
         public static AssetFactory Instance
@@ -31,7 +30,7 @@ namespace RenderApp.AssetModel
         public RenderObject CreateRenderObject(string name)
         {
             RenderObject renderObject = new RenderObject(name);
-            AddItem(name, renderObject);
+            AddItem(renderObject);
             return renderObject;
         }
 

@@ -12,8 +12,8 @@ namespace RenderApp.Render_System
     public class GBuffer : RenderTechnique
     {
 
-        public GBuffer()
-            : base("GBuffer", RenderType.Original)
+        public GBuffer(RenderTechniqueType tech)
+            : base("GBuffer", tech, RenderType.Original)
         {
         
         

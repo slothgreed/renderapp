@@ -7,7 +7,7 @@ using KI.Foundation.Core;
 using KI.Gfx.KIAsset;
 namespace KI.Gfx.KIAsset
 {
-    public class TextureFactory : FactoryBase<string,Texture>
+    public class TextureFactory : KIFactoryBase<Texture>
     {
 
         private static TextureFactory _instance = new TextureFactory();
@@ -71,14 +71,14 @@ namespace KI.Gfx.KIAsset
                     return null;
             }
             Texture texture = new Texture(KIFile.GetNameFromPath(path), path);
-            AddItem(path, texture);
+            AddItem(texture);
             texture.LoadTexture(image);
             return texture;
         }
         public Texture CreateTexture(string name, int width, int height)
         {
             Texture texture =  new Texture(name, width, height);
-            AddItem(name, texture);
+            AddItem(texture);
             return texture;
         }
     }

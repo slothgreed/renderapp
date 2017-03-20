@@ -21,16 +21,20 @@ namespace RenderApp.Render_System
 
         private void CreatePostProcessFlow()
         {
-            RenderTechnique bloom = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Bloom);
-            Bloom b = bloom as Bloom;
-            b.uTarget = SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[3];
+            Bloom bloom = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Bloom) as Bloom;
+            bloom.uTarget = SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[3];
 
-            RenderTechnique sobel = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Sobel);
-            Sobel s = sobel as Sobel;
-            s.uTarget = SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[3];
+            Sobel sobel = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Sobel) as Sobel;
+            sobel.uTarget = SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[3];
+
+            //SSAO ssao = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.SSAO) as SSAO;
+            //ssao.uPosition = SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[0];
+            //ssao.uTarget = SceneManager.Instance.RenderSystem.LightingStage.OutputTexture[0];
 
             PostEffects.Add(bloom);
             PostEffects.Add(sobel);
+            //PostEffects.Add(ssao);
+
         }
 
         private void ClearBuffer()

@@ -4,9 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Drawing.Text;
-using OpenTK;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
 using RenderApp.GLUtil.ShaderModel;
 using RenderApp.Utility;
 namespace RenderApp.Render_System
@@ -24,8 +21,8 @@ namespace RenderApp.Render_System
             uHeight = 1;
             uTarget = null;
         }
-        public Sobel()
-            : base("Sobel", vertexShader, fragShader, RenderType.OffScreen)
+        public Sobel(RenderTechniqueType tech)
+            : base("Sobel", vertexShader, fragShader, tech, RenderType.OffScreen)
         {
 
         }

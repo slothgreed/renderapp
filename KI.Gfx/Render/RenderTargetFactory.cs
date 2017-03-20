@@ -8,7 +8,7 @@ using KI.Gfx.KIAsset;
 using KI.Foundation.Core;
 namespace KI.Gfx.Render
 {
-    public class RenderTargetFactory : FactoryBase<string,RenderTarget>
+    public class RenderTargetFactory : KIFactoryBase<RenderTarget>
     {
         private static RenderTargetFactory _instance = new RenderTargetFactory();
         public static RenderTargetFactory Instance
@@ -22,7 +22,7 @@ namespace KI.Gfx.Render
         public RenderTarget CreateRenderTarget(string name, int width, int height, int outputNum)
         {
             RenderTarget target = new RenderTarget(name, width, height, outputNum);
-            AddItem(name,target);
+            AddItem(target);
             return target;
         }
 

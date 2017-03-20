@@ -13,8 +13,8 @@ namespace RenderApp.Render_System
         private static string vertexShader = ProjectInfo.ShaderDirectory + @"\shadow.vert";
         private static string fragShader = ProjectInfo.ShaderDirectory + @"\shadow.frag";
 
-        public ShadowMap()
-            : base("ShadowMap", vertexShader, fragShader, RenderType.Original)
+        public ShadowMap(RenderTechniqueType tech)
+            : base("ShadowMap", vertexShader, fragShader, tech, RenderType.Original)
         {
 
         }

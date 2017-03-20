@@ -25,6 +25,11 @@ namespace RenderApp.Render_System
             get;
             set;
         }
+        public RenderTechniqueType Technique
+        {
+            get;
+            private set;
+        }
         public Shader ShaderItem
         {
             get;
@@ -49,17 +54,19 @@ namespace RenderApp.Render_System
             set;
         }
 
-        public RenderTechnique(string name, RenderType type)
+        public RenderTechnique(string name,RenderTechniqueType tech, RenderType type)
             :base(name)
         {
             renderType = type;
+            Technique = tech;
             Init();
         }
-        public RenderTechnique(string name, string vertexShader, string fragShader, RenderType type)
+        public RenderTechnique(string name, string vertexShader, string fragShader, RenderTechniqueType tech, RenderType type)
             :base(name)
         {
             renderType = type; 
             Init(vertexShader, fragShader);
+            Technique = tech;
         }
 
         /// <summary>

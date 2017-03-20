@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KI.Foundation.Core;
 using KI.Gfx.GLUtil;
 using KI.Gfx.KIAsset;
 using KI.Foundation.Utility;
 using OpenTK.Graphics.OpenGL;
 namespace KI.Gfx.Render
 {
-    public class RenderTarget
+    public class RenderTarget : KIObject 
     {
         /// <summary>
         /// 幅
@@ -41,6 +42,7 @@ namespace KI.Gfx.Render
         public static DrawBufferMode DefaultOutBuffer = DrawBufferMode.Back;
 
         internal RenderTarget(string name, int width, int height,int num)
+            :base(name)
         {
             FrameBuffer = new FrameBuffer(name);
             Initialize(width, height, num);
@@ -95,7 +97,7 @@ namespace KI.Gfx.Render
             FrameBuffer.UnBindBuffer();
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             RenderBuffer.Dispose();
             FrameBuffer.Dispose();

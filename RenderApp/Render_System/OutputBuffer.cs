@@ -13,8 +13,8 @@ namespace RenderApp.Render_System
         private static string vertexShader = ProjectInfo.ShaderDirectory + @"\Output.vert";
         private static string fragShader = ProjectInfo.ShaderDirectory + @"\Output.frag";
 
-        public OutputBuffer()
-            : base("OutputBuffer", vertexShader, fragShader, RenderType.Original)
+        public OutputBuffer(RenderTechniqueType tech)
+            : base("OutputBuffer", vertexShader, fragShader, tech, RenderType.Original)
         {
             Plane = AssetFactory.Instance.CreatePostProcessPlane("OutputBuffer");
             Plane.AddTexture(TextureKind.Normal, SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[2]);

@@ -158,8 +158,8 @@ namespace RenderApp.AssetModel
         #region render
         public virtual void Render()
         {
-            Shader.InitializeState(this, TextureItem);
-            Shader.BindBuffer(this.GeometryInfo);
+            ShaderHelper.InitializeState(Shader, this, TextureItem);
+            Shader.BindBuffer();
             if (GeometryInfo.Index.Count == 0)
             {
                 DeviceContext.Instance.DrawArrays(RenderType, 0, GeometryInfo.Position.Count);

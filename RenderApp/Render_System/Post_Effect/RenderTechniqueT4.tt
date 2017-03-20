@@ -10,13 +10,18 @@
 	
 	Tuple.Create(
 	"Bloom",
-	new string[]{"int"		,"int"		,"Texture"},
+	new string[]{"int"		,"float[]"	,"Texture"},
 	new string[]{"uScale"	,"uWeight"	,"uTarget"}),
 	
 	Tuple.Create(
 	"Sobel",
 	new string[]{"Texture"	,"int"		,"int"		,"float"},
 	new string[]{"uTarget"	,"uWidth"	,"uHeight"	,"uThreshold"}),
+
+	Tuple.Create(
+	"SSAO",
+	new string[]{"Texture"	,"Texture"	,"float[]"},
+	new string[]{"uPosition","uTarget"	,"uSample"}),
 
 	Tuple.Create(
 	"OutputBuffer",

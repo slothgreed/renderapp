@@ -28,22 +28,6 @@ namespace RenderApp.GLUtil.ShaderModel
                 return _program;
             }
         }
-        private string _code;
-        public string Code
-        {
-            get
-            {
-                if(_code == null)
-                {
-                    _code = "";
-                    foreach(var loop in _activeShader)
-                    {
-                        _code += _activeShader;
-                    }
-                }
-                return _code;
-            }
-        }
         
         /// <summary>
         /// 出力バッファ数
@@ -88,31 +72,32 @@ namespace RenderApp.GLUtil.ShaderModel
         }
         #endregion
 
-        public bool ExistShaderProgram(ShaderProgram prog,string path)
+        public bool ExistShaderProgram(ShaderProgram prog, string path)
         {
-            if(prog == null)
+            if (prog == null)
             {
                 return false;
             }
-            if(prog.FilePath == path)
+            if (prog.FilePath == path)
             {
                 return true;
             }
             return false;
         }
-        public bool FindShaderCombi(string vert,string frag)
+
+        public bool FindShaderCombi(string vert, string frag)
         {
-           if(ExistShaderProgram(VertexShader,vert) && 
-              ExistShaderProgram(FragShader,frag))
-           {
-               return true;
-           }
-           else
-           {
-               return false;
-           }
+            if (ExistShaderProgram(VertexShader, vert) &&
+               ExistShaderProgram(FragShader, frag))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
-        public bool FindShaderCombi(string vert, string frag,string geom)
+        public bool FindShaderCombi(string vert, string frag, string geom)
         {
             if (ExistShaderProgram(VertexShader, vert) &&
                ExistShaderProgram(FragShader, frag) &&
@@ -125,6 +110,7 @@ namespace RenderApp.GLUtil.ShaderModel
                 return false;
             }
         }
+
         public bool FindShaderCombi(string vert, string frag, string tes, string tcs)
         {
             if (ExistShaderProgram(VertexShader, vert) &&
@@ -139,7 +125,8 @@ namespace RenderApp.GLUtil.ShaderModel
                 return false;
             }
         }
-        public bool FindShaderCombi(string vert, string frag, string geom,string tes,string tcs)
+
+        public bool FindShaderCombi(string vert, string frag, string geom, string tes, string tcs)
         {
             if (ExistShaderProgram(VertexShader, vert) &&
                ExistShaderProgram(FragShader, frag) &&
@@ -154,6 +141,7 @@ namespace RenderApp.GLUtil.ShaderModel
                 return false;
             }
         }
+
         #region [constructor]
         public Shader(ShaderProgram vert, ShaderProgram frag)
         {
@@ -212,7 +200,7 @@ namespace RenderApp.GLUtil.ShaderModel
         #endregion
         #region [bind buffer]
         private int ActiveTextureCounter;
-        public void BindBuffer(GeometryInfo geometry)
+        public void BindBuffer()
         {
             GL.UseProgram(Program);
 
@@ -229,9 +217,58 @@ namespace RenderApp.GLUtil.ShaderModel
                 }
                 if (loop.shaderVariableType == EShaderVariableType.Attribute)
                 {
-                    BindAttributeState(geometry, loop);
+                    BindAttributeState(loop);
                 }
             }
+        }
+        /// <summary>
+        /// AttributeのBinding
+        /// </summary>
+        /// <param name="geometry"></param>
+        /// <param name="attribute"></param>
+        public static void BindAttributeState(ShaderProgramInfo attribute)
+        {
+            if (attribute.ShaderID == -1)
+            {
+                return;
+            }
+            if (attribute.variable is ArrayBuffer)
+            {
+                var array = attribute.variable as ArrayBuffer;
+                if (attribute.Name != "index")
+                {
+                    GL.EnableVertexAttribArray(attribute.ShaderID);
+                    array.BindBuffer();
+
+                    switch (array.ArrayType)
+                    {
+                        case EArrayType.None:
+                        case EArrayType.IntArray:
+                        case EArrayType.FloatArray:
+                        case EArrayType.DoubleArra:
+                            //GL.VertexAttribPointer(attribute.ShaderID, 2, VertexAttribPointerType.Float, false, Vector2.SizeInBytes, 0);
+                            break;
+                        case EArrayType.Vec2Array:
+                            GL.VertexAttribPointer(attribute.ShaderID, 2, VertexAttribPointerType.Float, false, Vector2.SizeInBytes, 0);
+                            break;
+                        case EArrayType.Vec3Array:
+                            GL.VertexAttribPointer(attribute.ShaderID, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
+                            break;
+                        case EArrayType.Vec4Array:
+                            GL.VertexAttribPointer(attribute.ShaderID, 4, VertexAttribPointerType.Float, false, Vector4.SizeInBytes, 0);
+                            break;
+                        default:
+                            break;
+                    }
+                    array.UnBindBuffer();
+                }
+                else
+                {
+                    array.BindBuffer();
+                }
+            }
+
+            Logger.GLLog(Logger.LogLevel.Error);
         }
         public void UnBindBuffer()
         {
@@ -336,173 +373,12 @@ namespace RenderApp.GLUtil.ShaderModel
             }
             Logger.GLLog(Logger.LogLevel.Error);
         }
-
-        /// <summary>
-        /// AttributeのBinding
-        /// </summary>
-        /// <param name="geometry"></param>
-        /// <param name="attribute"></param>
-        private void BindAttributeState(GeometryInfo geometry, ShaderProgramInfo attribute)
-        {
-            if (attribute.ShaderID == -1)
-            {
-                return;
-            }
-
-            if (attribute.Name == "position" && geometry.PositionBuffer != null)
-            {
-                GL.EnableVertexAttribArray(attribute.ShaderID);
-                geometry.PositionBuffer.BindBuffer();
-                GL.VertexAttribPointer(attribute.ShaderID, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
-                geometry.PositionBuffer.UnBindBuffer();
-            }
-            if (attribute.Name == "normal" && geometry.NormalBuffer != null)
-            {
-                GL.EnableVertexAttribArray(attribute.ShaderID);
-                geometry.NormalBuffer.SetData(geometry.Normal, EArrayType.Vec3Array);
-                geometry.NormalBuffer.BindBuffer();
-                GL.VertexAttribPointer(attribute.ShaderID, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
-                geometry.NormalBuffer.UnBindBuffer();
-            }
-            if (attribute.Name == "color" && geometry.ColorBuffer != null)
-            {
-                GL.EnableVertexAttribArray(attribute.ShaderID);
-                geometry.ColorBuffer.SetData(geometry.Color, EArrayType.Vec3Array);
-                geometry.ColorBuffer.BindBuffer();
-                GL.VertexAttribPointer(attribute.ShaderID, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
-                geometry.ColorBuffer.UnBindBuffer();
-            }
-            if (attribute.Name == "texcoord" && geometry.TexCoordBuffer != null)
-            {
-                GL.EnableVertexAttribArray(attribute.ShaderID);
-                geometry.TexCoordBuffer.SetData(geometry.TexCoord, EArrayType.Vec2Array);
-                geometry.TexCoordBuffer.BindBuffer();
-                GL.VertexAttribPointer(attribute.ShaderID, 2, VertexAttribPointerType.Float, false, Vector2.SizeInBytes, 0);
-                geometry.TexCoordBuffer.UnBindBuffer();
-            }
-            if(attribute.Name == "index" && geometry.IndexBuffer != null)
-            {
-                geometry.IndexBuffer.BindBuffer();
-            }
-            Logger.GLLog(Logger.LogLevel.Error);
-        }
         #endregion
-        /// <summary>
-        /// 初期状態の設定
-        /// </summary>
-        public void InitializeState(Geometry geometry, Dictionary<TextureKind, Texture> TextureItem)
-        {
-            foreach (ShaderProgramInfo info in _shaderVariable.Values)
-            {
-                switch (info.Name)
-                {
-                    case "position":
-                        info.variable = geometry.GeometryInfo.Position;
-                        break;
-                    case "normal":
-                        info.variable = geometry.GeometryInfo.Normal;
-                        break;
-                    case "color":
-                        info.variable = geometry.GeometryInfo.Color;
-                        break;
-                    case "texcoord":
-                        info.variable = geometry.GeometryInfo.TexCoord;
-                        break;
-                    case "index":
-                        info.variable = geometry.GeometryInfo.Index;
-                        break;
-                    case "uGeometryID":
-                        info.variable = geometry.ID;
-                        break;
-                    case "uWidth":
-                        info.variable = DeviceContext.Instance.Width;
-                        break;
-                    case "uHeight":
-                        info.variable = DeviceContext.Instance.Height;
-                        break;
-                    case "uMVP":
-                        Matrix4 vp = SceneManager.Instance.ActiveScene.MainCamera.CameraProjMatrix;
-                        info.variable = geometry.ModelMatrix * vp;
-                        break;
-                    case "uSMVP":
-                        Matrix4 light = SceneManager.Instance.ActiveScene.SunLight.Matrix;
-                        Matrix4 proj = SceneManager.Instance.ActiveScene.MainCamera.ProjMatrix;
-                        info.variable = geometry.ModelMatrix * light * proj;
-                        break;
-                    case "uModelMatrix":
-                        info.variable = geometry.ModelMatrix;
-                        break;
-                    case "uNormalMatrix":
-                        info.variable = geometry.NormalMatrix;
-                        break;
-                    case "uProjectMatrix":
-                        info.variable = SceneManager.Instance.ActiveScene.MainCamera.ProjMatrix;
-                        break;
-                    case "uUnProjectMatrix":
-                        info.variable = SceneManager.Instance.ActiveScene.MainCamera.UnProject;
-                        break;
-                    case "uCameraPosition":
-                        info.variable = SceneManager.Instance.ActiveScene.MainCamera.Position;
-                        break;
-                    case "uCameraMatrix":
-                        info.variable = SceneManager.Instance.ActiveScene.MainCamera.Matrix;
-                        break;
-                    case "uLightPosition":
-                        info.variable = SceneManager.Instance.ActiveScene.SunLight.Position;
-                        break;
-                    case "uLightDirection":
-                        info.variable = SceneManager.Instance.ActiveScene.SunLight.Direction;
-                        break;
-                    case "uLightMatrix":
-                        info.variable = SceneManager.Instance.ActiveScene.SunLight.Matrix;
-                        break;
-                    case "uAlbedoMap":
-                        if (TextureItem.ContainsKey(TextureKind.Albedo))
-                        {
-                            info.variable = TextureItem[TextureKind.Albedo].DeviceID;
-                        }
-                        break;
-                    case "uSpecularMap":
-                        if (TextureItem.ContainsKey(TextureKind.Specular))
-                        {
-                            info.variable = TextureItem[TextureKind.Specular].DeviceID;
-                        }
-                        break;
-                    case "uWorldMap":
-                        if (TextureItem.ContainsKey(TextureKind.World))
-                        {
-                            info.variable = TextureItem[TextureKind.World].DeviceID;
-                        }
-                        break;
-                    case "uLightingMap":
-                        if (TextureItem.ContainsKey(TextureKind.Lighting))
-                        {
-                            info.variable = TextureItem[TextureKind.Lighting].DeviceID;
-                        }
-                        break;
-                    case "uNormalMap":
-                        if (TextureItem.ContainsKey(TextureKind.Normal))
-                        {
-                            info.variable = TextureItem[TextureKind.Normal].DeviceID;
-                        }
-                        break;
-                    case "uHeightMap":
-                        if (TextureItem.ContainsKey(TextureKind.Height))
-                        {
-                            info.variable = TextureItem[TextureKind.Height].DeviceID;
-                        }
-                        break;
-                    case "uEmissiveMap":
-                        if (TextureItem.ContainsKey(TextureKind.Emissive))
-                        {
-                            info.variable = TextureItem[TextureKind.Emissive].DeviceID;
-                        }
-                        break;
-                }
-            }
-        }
+
+
 
         private Dictionary<string, ShaderProgramInfo> _shaderVariable = new Dictionary<string, ShaderProgramInfo>();
+
         public IEnumerable<object> GetShaderVariable()
         {
             foreach (var loop in _shaderVariable)
@@ -511,233 +387,7 @@ namespace RenderApp.GLUtil.ShaderModel
             }
         }
 
-        #region [analyze shader code]
-        public void AnalyzeShaderProgram()
-        {
-            _shaderVariable.Clear();
-            GL.UseProgram(_program);
-
-            foreach (ShaderProgram loop in _activeShader)
-            {
-                AnalyzeShaderProgram(loop);
-            }
-            SetShaderVariableID();
-
-            // index buffer
-            ShaderProgramInfo info = new ShaderProgramInfo();
-            info.Name = "index";
-            info.variable = new List<int>();
-            info.shaderVariableType = EShaderVariableType.Attribute;
-            _shaderVariable.Add(info.Name, info);
-
-        }
-        /// <summary>
-        /// attributeをDictionaryに追加
-        /// </summary>
-        /// <param name="code"></param>
-        private void AttributeParameter(ShaderProgramInfo info, string[] code)
-        {
-            if (code[0] == "attribute" || code[0] == "in")
-            {
-
-            }
-            else
-            {
-                return;
-            }
-            GetAttributeVariableCode(info, code[1], code[2]);
-        }
-        /// <summary>
-        /// uniformをDictionaryに追加
-        /// </summary>
-        /// <param name="code"></param>
-        private void UniformParameter(ShaderProgramInfo info, string[] code)
-        {
-            if (code[0] != "uniform")
-            {
-                return;
-            }
-            GetUniformVariableCode(info, code[1], code[2]);
-        }
-        /// <summary>
-        /// シェーダ解析
-        /// </summary>
-        /// <param name="variable"></param>
-        /// <param name="name"></param>
-        private void GetAttributeVariableCode(ShaderProgramInfo info,string variable, string name)
-        {
-            switch (variable)
-            {
-                case "vec2":
-                    info.variableType = EVariableType.Vec2Array;
-                    break;
-                case "vec3":
-                    info.variableType = EVariableType.Vec3Array;
-                    break;
-                case "vec4":
-                    info.variableType = EVariableType.Vec4Array;
-                    break;
-                case "int":
-                    info.variableType = EVariableType.IntArray;
-                    break;
-                case "float":
-                case "double":
-                    info.variableType = EVariableType.FloatArray;
-                    break;
-                default:
-                    Logger.Log(Logger.LogLevel.Error,"Shader ReadError" + name);
-                    break;
-            }
-            return;
-        }
-
-        /// <summary>
-        /// シェーダ解析
-        /// </summary>
-        /// <param name="variable"></param>
-        /// <param name="name"></param>
-        private void GetUniformVariableCode(ShaderProgramInfo info,string variable, string name)
-        {
-            //[]を含んでいたら配列
-            if (name.Contains("[") && name.Contains("]"))
-            {
-                switch (variable)
-                {
-                    case "vec2":
-                        info.variableType = EVariableType.Vec2Array;
-                        return;
-                    case "vec3":
-                        info.variableType = EVariableType.Vec3Array;
-                        return;
-                    case "vec4":
-                        info.variableType = EVariableType.Vec4Array;
-                        return;
-                    case "int":
-                        info.variableType = EVariableType.IntArray;
-                        return;
-                    case "float":
-                        info.variableType = EVariableType.FloatArray;
-                        return;
-                    case "double":
-                        info.variableType = EVariableType.DoubleArray;
-                        return;
-                }
-            }
-            switch (variable)
-            {
-                case "vec2":
-                    info.variableType = EVariableType.Vec2;
-                    return;
-                case "vec3":
-                    info.variableType = EVariableType.Vec3;
-                    return;
-                case "vec4":
-                    info.variableType = EVariableType.Vec4;
-                    return;
-                case "int":
-                    info.variableType = EVariableType.Int;
-                    return;
-                case "sampler2D":
-                    info.variableType = EVariableType.Texture2D;
-                    return;
-                case "sampler3D":
-                    info.variableType = EVariableType.Texture3D;
-                    break;
-                case "float":
-                    info.variableType = EVariableType.Float;
-                    return;
-                case "double":
-                    info.variableType = EVariableType.Double;
-                    return;
-                case "mat3":
-                    info.variableType = EVariableType.Mat3;
-                    return;
-                case "mat4":
-                    info.variableType = EVariableType.Mat4;
-                    return;
-                default:
-                    Logger.Log(Logger.LogLevel.Error,"Shader ReadError" + name);
-                    return;
-            }
-            return;
-        }
-        /// <summary>
-        /// UniformとAttributeの指定
-        /// </summary>
-        private void AnalyzeShaderProgram(ShaderProgram shader)
-        {
-            if (shader == null)
-            {
-                return;
-            }
-            string shaderCode = shader.ShaderCode;
-            string[] lines = shaderCode.Split(new[] { "\r\n" }, StringSplitOptions.None);
-            for (int i = 0; i < lines.Length; i++)
-            {
-                Logger.GLLog(Logger.LogLevel.Error);
-
-                string line = lines[i];
-
-                if(line.Contains("gl_FragData"))
-                {
-                    OutputBufferNum++;
-                }
-                if(line.Contains("gl_FragColor"))
-                {
-                    OutputBufferNum++;
-                }
-                //セミコロン以降削除
-                int colon = line.IndexOf(";");
-                if (colon == 0 || colon == -1)
-                {
-                    continue;
-                }
-                line = line.Remove(colon);
-
-                string[] derim = line.Split(' ');
-                if (derim.Length < 3)
-                {
-                    continue;
-                }
-                //後半3つが信頼性高いため
-                string[] code = { derim[derim.Length - 3], derim[derim.Length - 2], derim[derim.Length - 1] };
-                ShaderProgramInfo info = new ShaderProgramInfo();
-                switch (code[0])
-                {
-                    case "attribute":
-                    case "in":
-                        AttributeParameter(info, code);
-                        if (info.variableType != EVariableType.None && !_shaderVariable.ContainsKey(code[2]))
-                        {
-                            info.Name = code[2];
-                            info.shaderVariableType = EShaderVariableType.Attribute;
-                            _shaderVariable.Add(info.Name, info);
-                        }
-                        Logger.GLLog(Logger.LogLevel.Error);
-
-                        break;
-                    case "uniform":
-                        UniformParameter(info,code);
-                        if (info.variableType != EVariableType.None && !_shaderVariable.ContainsKey(code[2]))
-                        {
-                            if(code[2].Contains("["))
-                            {
-                                int index = code[2].IndexOf("[");
-                                info.arrayNum = int.Parse(code[2][index + 1].ToString());
-                                code[2] = code[2].Remove(code[2].IndexOf("["), 3);
-                            }
-                            info.Name = code[2];
-                            info.shaderVariableType = EShaderVariableType.Uniform;
-                            _shaderVariable.Add(info.Name, info);
-                        }
-                        Logger.GLLog(Logger.LogLevel.Error);
-
-                        break;
-                }
-            }
-            Logger.GLLog(Logger.LogLevel.Error);
-        }
-        #endregion
+ 
 
         #region [virtual process]
         /// <summary>
@@ -813,7 +463,235 @@ namespace RenderApp.GLUtil.ShaderModel
         }
 
         #endregion
-        
+
+        #region [analyze shader code]
+        public void AnalyzeShaderProgram()
+        {
+            _shaderVariable.Clear();
+            GL.UseProgram(_program);
+
+            foreach (ShaderProgram loop in _activeShader)
+            {
+                AnalyzeShaderProgram(loop);
+            }
+            SetShaderVariableID();
+
+            // index buffer
+            ShaderProgramInfo info = new ShaderProgramInfo();
+            info.Name = "index";
+            info.variable = new List<int>();
+            info.shaderVariableType = EShaderVariableType.Attribute;
+            _shaderVariable.Add(info.Name, info);
+
+        }
+        /// <summary>
+        /// attributeをDictionaryに追加
+        /// </summary>
+        /// <param name="code"></param>
+        private void AttributeParameter(ShaderProgramInfo info, string[] code)
+        {
+            if (code[0] == "attribute" || code[0] == "in")
+            {
+
+            }
+            else
+            {
+                return;
+            }
+            GetAttributeVariableCode(info, code[1], code[2]);
+        }
+        /// <summary>
+        /// uniformをDictionaryに追加
+        /// </summary>
+        /// <param name="code"></param>
+        private void UniformParameter(ShaderProgramInfo info, string[] code)
+        {
+            if (code[0] != "uniform")
+            {
+                return;
+            }
+            GetUniformVariableCode(info, code[1], code[2]);
+        }
+        /// <summary>
+        /// シェーダ解析
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="name"></param>
+        private void GetAttributeVariableCode(ShaderProgramInfo info, string variable, string name)
+        {
+            switch (variable)
+            {
+                case "vec2":
+                    info.variableType = EVariableType.Vec2Array;
+                    break;
+                case "vec3":
+                    info.variableType = EVariableType.Vec3Array;
+                    break;
+                case "vec4":
+                    info.variableType = EVariableType.Vec4Array;
+                    break;
+                case "int":
+                    info.variableType = EVariableType.IntArray;
+                    break;
+                case "float":
+                case "double":
+                    info.variableType = EVariableType.FloatArray;
+                    break;
+                default:
+                    Logger.Log(Logger.LogLevel.Error, "Shader ReadError" + name);
+                    break;
+            }
+            return;
+        }
+
+        /// <summary>
+        /// シェーダ解析
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="name"></param>
+        private void GetUniformVariableCode(ShaderProgramInfo info, string variable, string name)
+        {
+            //[]を含んでいたら配列
+            if (name.Contains("[") && name.Contains("]"))
+            {
+                switch (variable)
+                {
+                    case "vec2":
+                        info.variableType = EVariableType.Vec2Array;
+                        return;
+                    case "vec3":
+                        info.variableType = EVariableType.Vec3Array;
+                        return;
+                    case "vec4":
+                        info.variableType = EVariableType.Vec4Array;
+                        return;
+                    case "int":
+                        info.variableType = EVariableType.IntArray;
+                        return;
+                    case "float":
+                        info.variableType = EVariableType.FloatArray;
+                        return;
+                    case "double":
+                        info.variableType = EVariableType.DoubleArray;
+                        return;
+                }
+            }
+            switch (variable)
+            {
+                case "vec2":
+                    info.variableType = EVariableType.Vec2;
+                    return;
+                case "vec3":
+                    info.variableType = EVariableType.Vec3;
+                    return;
+                case "vec4":
+                    info.variableType = EVariableType.Vec4;
+                    return;
+                case "int":
+                    info.variableType = EVariableType.Int;
+                    return;
+                case "sampler2D":
+                    info.variableType = EVariableType.Texture2D;
+                    return;
+                case "sampler3D":
+                    info.variableType = EVariableType.Texture3D;
+                    break;
+                case "float":
+                    info.variableType = EVariableType.Float;
+                    return;
+                case "double":
+                    info.variableType = EVariableType.Double;
+                    return;
+                case "mat3":
+                    info.variableType = EVariableType.Mat3;
+                    return;
+                case "mat4":
+                    info.variableType = EVariableType.Mat4;
+                    return;
+                default:
+                    Logger.Log(Logger.LogLevel.Error, "Shader ReadError" + name);
+                    return;
+            }
+            return;
+        }
+        /// <summary>
+        /// UniformとAttributeの指定
+        /// </summary>
+        private void AnalyzeShaderProgram(ShaderProgram shader)
+        {
+            if (shader == null)
+            {
+                return;
+            }
+            string shaderCode = shader.ShaderCode;
+            string[] lines = shaderCode.Split(new[] { "\r\n" }, StringSplitOptions.None);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                Logger.GLLog(Logger.LogLevel.Error);
+
+                string line = lines[i];
+
+                if (line.Contains("gl_FragData"))
+                {
+                    OutputBufferNum++;
+                }
+                if (line.Contains("gl_FragColor"))
+                {
+                    OutputBufferNum++;
+                }
+                //セミコロン以降削除
+                int colon = line.IndexOf(";");
+                if (colon == 0 || colon == -1)
+                {
+                    continue;
+                }
+                line = line.Remove(colon);
+
+                string[] derim = line.Split(' ');
+                if (derim.Length < 3)
+                {
+                    continue;
+                }
+                //後半3つが信頼性高いため
+                string[] code = { derim[derim.Length - 3], derim[derim.Length - 2], derim[derim.Length - 1] };
+                ShaderProgramInfo info = new ShaderProgramInfo();
+                switch (code[0])
+                {
+                    case "attribute":
+                    case "in":
+                        AttributeParameter(info, code);
+                        if (info.variableType != EVariableType.None && !_shaderVariable.ContainsKey(code[2]))
+                        {
+                            info.Name = code[2];
+                            info.shaderVariableType = EShaderVariableType.Attribute;
+                            _shaderVariable.Add(info.Name, info);
+                        }
+                        Logger.GLLog(Logger.LogLevel.Error);
+
+                        break;
+                    case "uniform":
+                        UniformParameter(info, code);
+                        if (info.variableType != EVariableType.None && !_shaderVariable.ContainsKey(code[2]))
+                        {
+                            if (code[2].Contains("["))
+                            {
+                                int index = code[2].IndexOf("[");
+                                info.arrayNum = int.Parse(code[2][index + 1].ToString());
+                                code[2] = code[2].Remove(code[2].IndexOf("["), 3);
+                            }
+                            info.Name = code[2];
+                            info.shaderVariableType = EShaderVariableType.Uniform;
+                            _shaderVariable.Add(info.Name, info);
+                        }
+                        Logger.GLLog(Logger.LogLevel.Error);
+
+                        break;
+                }
+            }
+            Logger.GLLog(Logger.LogLevel.Error);
+        }
+        #endregion
+
         #region [fin process]
         /// <summary>
         /// 解放
@@ -851,7 +729,7 @@ namespace RenderApp.GLUtil.ShaderModel
             GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
             if (status == 0)
             {
-                Logger.Log(Logger.LogLevel.Error, GL.GetProgramInfoLog(program));
+                Logger.GLLog(Logger.LogLevel.Error, GL.GetProgramInfoLog(program));
             }
 
             return program;
@@ -890,7 +768,7 @@ namespace RenderApp.GLUtil.ShaderModel
             GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
             if (status == 0)
             {
-                Logger.Log(Logger.LogLevel.Error, GL.GetProgramInfoLog(program));
+                Logger.GLLog(Logger.LogLevel.Error, GL.GetProgramInfoLog(program));
             }
             Logger.GLLog(Logger.LogLevel.Error);
             return program;

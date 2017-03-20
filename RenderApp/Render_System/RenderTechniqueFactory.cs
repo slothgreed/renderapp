@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using KI.Foundation.Core;
 namespace RenderApp.Render_System
 {
-    enum RenderTechniqueType
+    public enum RenderTechniqueType
     {
         Shadow,
         GBuffer,
@@ -20,9 +20,8 @@ namespace RenderApp.Render_System
         Output
     }
 
-    class RenderTechniqueFactory
+    class RenderTechniqueFactory : KIFactoryBase<RenderTechnique>
     {
-        List<KeyValuePair<RenderTechniqueType, RenderTechnique>> RenderTechniques = new List<KeyValuePair<RenderTechniqueType, RenderTechnique>>();
         private static RenderTechniqueFactory _instance = null;
 
         public static RenderTechniqueFactory Instance
@@ -43,54 +42,57 @@ namespace RenderApp.Render_System
             switch (type)
             {
                 case RenderTechniqueType.Shadow:
-                    technique = new ShadowMap();
+                    technique = new ShadowMap(RenderTechniqueType.Shadow);
                     break;
                 case RenderTechniqueType.GBuffer:
-                    technique = new GBuffer();
+                    technique = new GBuffer(RenderTechniqueType.GBuffer);
                     break;
                 case RenderTechniqueType.Lighting:
-                    technique = new LighthingBuffer();
+                    technique = new LighthingBuffer(RenderTechniqueType.Lighting);
                     break;
                 case RenderTechniqueType.Selection:
-                    technique = new Selection();
+                    technique = new Selection(RenderTechniqueType.Selection);
                     break;
                 case RenderTechniqueType.Sobel:
-                    technique = new Sobel();
+                    technique = new Sobel(RenderTechniqueType.Sobel);
                     break;
                 case RenderTechniqueType.Bloom:
-                    technique = new Bloom();
+                    technique = new Bloom(RenderTechniqueType.Bloom);
                     break;
                 case RenderTechniqueType.Output:
-                    technique = new OutputBuffer();
+                    technique = new OutputBuffer(RenderTechniqueType.Output);
+                    break;
+                case RenderTechniqueType.SSAO:
+                    technique = new SSAO(RenderTechniqueType.SSAO);
                     break;
                 default:
                     technique = null;
                     break;
             }
-            RenderTechniques.Add(new KeyValuePair<RenderTechniqueType, RenderTechnique>(type, technique));
+            AddItem(technique);
             return technique;
         }
         public List<Texture> OutputTexture(RenderTechniqueType type)
         {
-            foreach(var technique in RenderTechniques)
+            foreach(var technique in AllItem)
             {
-                if(technique.Key == type)
+                if(technique.Technique == type)
                 {
-                    return technique.Value.OutputTexture;
+                    return technique.OutputTexture;
                 }
             }
             return null;
         }
         public IEnumerable<Texture> OutputTextures()
         {
-            foreach(var technique in RenderTechniques)
+            foreach (var technique in AllItem)
             {
                 //出力用のは返さない
-                if(technique.Value is OutputBuffer)
+                if(technique is OutputBuffer)
                 {
                     continue;
                 }
-                foreach(var texture in technique.Value.OutputTexture)
+                foreach(var texture in technique.OutputTexture)
                 {
                     yield return texture;
                 }
@@ -98,18 +100,10 @@ namespace RenderApp.Render_System
         }
         public void SizeChanged(int width, int height)
         {
-            foreach (var technique in RenderTechniques)
+            foreach (var technique in AllItem)
             {
-                technique.Value.SizeChanged(width, height);
+                technique.SizeChanged(width, height);
             }
-        }
-        public void Dispose()
-        {
-            foreach(var technique in RenderTechniques)
-            {
-                technique.Value.Dispose();
-            }
-            RenderTechniques.Clear();
         }
     }
 }
