@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using KI.Gfx.Render;
-using KI.Gfx.KIAsset;
-using RenderApp.AssetModel;
+﻿using RenderApp.AssetModel;
 namespace RenderApp.Render_System
 {
     public partial class Selection : RenderTechnique

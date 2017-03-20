@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using OpenTK.Graphics.OpenGL;
 using OpenTK;
 using KI.Foundation.Utility;
 using KI.Foundation.Core;
-using KI.Gfx;
 using KI.Gfx.KIAsset;
 using KI.Gfx.GLUtil;
-using KI.Gfx.Analyzer;
 using KI.Gfx.KIShader;
 using RenderApp.GfxUtility;
 namespace RenderApp.AssetModel
@@ -173,7 +167,6 @@ namespace RenderApp.AssetModel
         }
 
         #endregion
-
         #region [modelmatrix]
         #region [translate]
         /// <summary>

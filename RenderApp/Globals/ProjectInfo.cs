@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using RenderApp.AssetModel;
+﻿using System.IO;
 namespace RenderApp
 {
-    
+
     class ProjectInfo
     {
         public static bool IsOpen

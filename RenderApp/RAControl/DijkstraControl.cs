@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using OpenTK;
-using RenderApp;
-using RenderApp.Utility;
 using RenderApp.AssetModel;
-using RenderApp.AssetModel.RA_Geometry;
-using RenderApp.Globals;
 using KI.Foundation.Core;
 using KI.Foundation.Utility;
 using KI.Gfx.Analyzer;

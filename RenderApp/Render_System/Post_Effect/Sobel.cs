@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Text;
-using RenderApp.Utility;
-namespace RenderApp.Render_System
+﻿namespace RenderApp.Render_System
 {
     partial class Sobel : RenderTechnique
     {

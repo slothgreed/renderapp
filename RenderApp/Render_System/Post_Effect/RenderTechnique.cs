@@ -5,7 +5,6 @@ using KI.Gfx.KIAsset;
 using RenderApp.AssetModel;
 using KI.Gfx.Render;
 using KI.Foundation.Core;
-using KI.Gfx;
 using KI.Gfx.KIShader;
 
 namespace RenderApp.Render_System

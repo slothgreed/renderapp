@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RenderApp.AssetModel;
-using KI.Gfx.KIAsset;
-using KI.Gfx.Render;
+﻿using System.Collections.Generic;
 namespace RenderApp.Render_System
 {
     class PostEffectManager

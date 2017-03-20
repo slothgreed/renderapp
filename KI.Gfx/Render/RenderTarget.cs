@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using KI.Foundation.Core;
 using KI.Gfx.GLUtil;
 using KI.Gfx.KIAsset;

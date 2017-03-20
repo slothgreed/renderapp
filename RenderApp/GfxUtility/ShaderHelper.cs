@@ -1,9 +1,7 @@
 ﻿using OpenTK;
-using OpenTK.Graphics.OpenGL;
 using KI.Gfx.KIAsset;
 using KI.Gfx;
 using KI.Gfx.GLUtil;
-using KI.Foundation.Utility;
 using RenderApp.AssetModel;
 using System.Collections.Generic;
 using KI.Gfx.KIShader;
