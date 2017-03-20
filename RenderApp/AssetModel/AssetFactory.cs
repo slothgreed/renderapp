@@ -4,15 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
-using RenderApp.Utility;
 using OpenTK.Graphics.OpenGL;
-using RenderApp.Globals;
-using RenderApp.AssetModel.RA_Geometry;
 using KI.Foundation.Core;
 using KI.Gfx.KIAsset;
 using KI.Foundation.Utility;
 using KI.Gfx;
 using KI.Gfx.KIShader;
+using RenderApp.AssetModel.RA_Geometry;
 
 namespace RenderApp.AssetModel
 {

@@ -12,6 +12,7 @@ using KI.Foundation.Utility;
 using KI.Foundation.Core;
 using KI.Gfx.KIAsset;
 using KI.Gfx.KIShader;
+using RenderApp.GfxUtility;
 namespace RenderApp.AssetModel.RA_Geometry
 {
     public class OBJConverter : IRenderObjectConverter
@@ -49,8 +50,8 @@ namespace RenderApp.AssetModel.RA_Geometry
                 geometry.AddTexture(TextureKind.Specular, spec);
                 RenderApp.Globals.Project.ActiveProject.AddChild(spec);
             }
-            string vertex = Utility.ShaderCreater.Instance.GetVertexShader(geometry.GeometryInfo);
-            string frag = Utility.ShaderCreater.Instance.GetOBJFragShader(geometry);
+            string vertex = ShaderCreater.Instance.GetVertexShader(geometry.GeometryInfo);
+            string frag = ShaderCreater.Instance.GetOBJFragShader(geometry);
             if(vertex == null || frag == null)
             {
                 return;

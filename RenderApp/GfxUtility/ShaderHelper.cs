@@ -126,17 +126,6 @@ namespace RenderApp.GfxUtility
                 }
             }
         }
-        private static Shader _defaultAnalyzeShader;
-        public static Shader DefaultAnalyzeShader
-        {
-            get
-            {
-                if (_defaultAnalyzeShader == null)
-                {
-                    _defaultAnalyzeShader = ShaderFactory.Instance.CreateShaderVF(ProjectInfo.ShaderDirectory + @"\ConstantGeometry");
-                }
-                return _defaultAnalyzeShader;
-            }
-        }
+
     }
 }

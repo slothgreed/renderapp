@@ -142,7 +142,7 @@ namespace RenderApp.AssetModel
             Timer = new List<int>();
             ModelMatrix = Matrix4.Identity;
             TextureItem = new Dictionary<TextureKind, Texture>();
-            Shader = ShaderHelper.DefaultAnalyzeShader;
+            Shader = ShaderCreater.Instance.DefaultAnalyzeShader;
         }
 
         public override void Dispose()
@@ -173,6 +173,7 @@ namespace RenderApp.AssetModel
         }
 
         #endregion
+
         #region [modelmatrix]
         #region [translate]
         /// <summary>

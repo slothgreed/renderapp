@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using RenderApp.AssetModel;
 using KI.Gfx.GLUtil;
 using KI.Gfx.KIAsset;
-namespace RenderApp.Utility
+using KI.Gfx.KIShader;
+namespace RenderApp.GfxUtility
 {
     public class ShaderCreater
     {
@@ -112,6 +113,19 @@ namespace RenderApp.Utility
                 return Directory + "GeneralA.frag";
             }
             return null;
+        }
+
+        private Shader _defaultAnalyzeShader;
+        public Shader DefaultAnalyzeShader
+        {
+            get
+            {
+                if (_defaultAnalyzeShader == null)
+                {
+                    _defaultAnalyzeShader = ShaderFactory.Instance.CreateShaderVF(ProjectInfo.ShaderDirectory + @"\ConstantGeometry");
+                }
+                return _defaultAnalyzeShader;
+            }
         }
     }
 }

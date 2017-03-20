@@ -159,7 +159,7 @@
     <Compile Include="Render_System\ShadowMap.cs" />
     <Compile Include="Scene\SceneManager.cs" />
     <Compile Include="RAControl\CameraControl.cs" />
-    <Compile Include="Utility\ShaderCreater.cs" />
+    <Compile Include="GfxUtility\ShaderCreater.cs" />
     <Compile Include="ViewModel\Converter\EnumConverter.cs" />
     <Compile Include="Globals\Project.cs" />
     <Compile Include="Globals\Enum.cs" />
