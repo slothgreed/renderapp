@@ -11,7 +11,7 @@
                 <ControlTemplate TargetType="{x:Type control:ThumbnailFile}">
                     <StackPanel Margin="3">
                         <Button Content="ここには画像が入る" Width="128" Height="128"/>
-                        <!--<Image Source="{Binding ImagePath}" Width="128" Height="128"/>-->
+                        <Image Source="{Binding ImagePath}" Width="128" Height="128"/>
                         <TextBlock Text="{Binding FilePath}" x:Name="PART_FilePath" TextAlignment="Center"/>
                     </StackPanel>
                 </ControlTemplate>

@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Runtime.CompilerServices;
-using System.Diagnostics;
 
 namespace KI.Foundation.Utility
 {
@@ -45,7 +39,7 @@ namespace KI.Foundation.Utility
                 ErrorCode error = GL.GetError();
                 if (error != ErrorCode.NoError)
                 {
-                    Console.WriteLine(level + " : " +  methodName + ":" + error);
+                    Console.WriteLine(level + "GL: " +  methodName + ":" + error);
                 }
             }
         }

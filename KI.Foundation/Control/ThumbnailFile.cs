@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 
 namespace KI.Foundation.Control
 {
@@ -36,6 +30,7 @@ namespace KI.Foundation.Control
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+            //ImagePath = @"C:\Users\ido\Documents\GitHub\renderapp\RenderApp\Resource\Texture\floor.bmp";
         }
     }
 }
