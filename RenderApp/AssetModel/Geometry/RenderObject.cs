@@ -10,7 +10,7 @@ namespace RenderApp.AssetModel
     {
         private void Initialize()
         {
-            GeometryInfo.GenBuffer();
+            GenBuffer();
         }
 
         /// <summary>

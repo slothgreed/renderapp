@@ -34,23 +34,23 @@ namespace RenderApp.AssetModel.RA_Geometry
             {
                 Texture albedo = TextureFactory.Instance.CreateTexture(material.map_Kd);
                 geometry.AddTexture(TextureKind.Albedo, albedo);
-                RenderApp.Globals.Project.ActiveProject.AddChild(albedo);
+                Globals.Project.ActiveProject.AddChild(albedo);
             }
 
             if(material.map_bump != null)
             {
                 Texture bump = TextureFactory.Instance.CreateTexture(material.map_bump);
                 geometry.AddTexture(TextureKind.Normal, bump);
-                RenderApp.Globals.Project.ActiveProject.AddChild(bump);
+                Globals.Project.ActiveProject.AddChild(bump);
             }
             
             if(material.map_Ns != null)
             {
                 Texture spec = TextureFactory.Instance.CreateTexture(material.map_Ns);
                 geometry.AddTexture(TextureKind.Specular, spec);
-                RenderApp.Globals.Project.ActiveProject.AddChild(spec);
+                Globals.Project.ActiveProject.AddChild(spec);
             }
-            string vertex = ShaderCreater.Instance.GetVertexShader(geometry.GeometryInfo);
+            string vertex = ShaderCreater.Instance.GetVertexShader(geometry);
             string frag = ShaderCreater.Instance.GetOBJFragShader(geometry);
             if(vertex == null || frag == null)
             {

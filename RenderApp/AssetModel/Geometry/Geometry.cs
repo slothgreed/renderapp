@@ -15,7 +15,13 @@ namespace RenderApp.AssetModel
         public int ID { get; private set; }
         public PrimitiveType RenderType { get; set; }
         public GeometryInfo GeometryInfo { get; set; }
-        
+
+        public ArrayBuffer PositionBuffer { get; set; }
+        public ArrayBuffer NormalBuffer { get; set; }
+        public ArrayBuffer ColorBuffer { get; set; }
+        public ArrayBuffer TexCoordBuffer { get; set; }
+        public ArrayBuffer IndexBuffer { get; set; }
+
         public List<int> Timer { get; protected set; }
         public Vector3 Min { get; protected set; }
         public Vector3 Max { get; protected set; }
@@ -147,6 +153,27 @@ namespace RenderApp.AssetModel
             Translate = Vector3.Zero;
             Scale = Vector3.One;
             Rotate = Vector3.Zero;
+
+            if (PositionBuffer != null)
+            {
+                PositionBuffer.Dispose();
+            }
+            if (NormalBuffer != null)
+            {
+                NormalBuffer.Dispose();
+            }
+            if (ColorBuffer != null)
+            {
+                ColorBuffer.Dispose();
+            }
+            if (TexCoordBuffer != null)
+            {
+                TexCoordBuffer.Dispose();
+            }
+            if (IndexBuffer != null)
+            {
+                IndexBuffer.Dispose();
+            }
         }
         #endregion
         #region render
@@ -303,6 +330,40 @@ namespace RenderApp.AssetModel
         }
         #endregion
         #endregion
+
+        public void GenBuffer()
+        {
+            if (GeometryInfo.Position.Count != 0)
+            {
+                PositionBuffer = new ArrayBuffer();
+                PositionBuffer.GenBuffer();
+                PositionBuffer.SetData(GeometryInfo.Position, EArrayType.Vec3Array);
+            }
+            if (GeometryInfo.Normal.Count != 0)
+            {
+                NormalBuffer = new ArrayBuffer();
+                NormalBuffer.GenBuffer();
+                NormalBuffer.SetData(GeometryInfo.Normal, EArrayType.Vec3Array);
+            }
+            if (GeometryInfo.Color.Count != 0)
+            {
+                ColorBuffer = new ArrayBuffer();
+                ColorBuffer.GenBuffer();
+                ColorBuffer.SetData(GeometryInfo.Color, EArrayType.Vec3Array);
+            }
+            if (GeometryInfo.TexCoord.Count != 0)
+            {
+                TexCoordBuffer = new ArrayBuffer();
+                TexCoordBuffer.GenBuffer();
+                TexCoordBuffer.SetData(GeometryInfo.TexCoord, EArrayType.Vec2Array);
+            }
+            if (GeometryInfo.Index.Count != 0)
+            {
+                IndexBuffer = new ArrayBuffer(BufferTarget.ElementArrayBuffer);
+                IndexBuffer.GenBuffer();
+                IndexBuffer.SetData(GeometryInfo.Index, EArrayType.IntArray);
+            }
+        }
 
     }
 }

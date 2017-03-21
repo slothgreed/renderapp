@@ -20,19 +20,19 @@ namespace RenderApp.GfxUtility
                 switch (info.Name)
                 {
                     case "position":
-                        info.variable = geometry.GeometryInfo.PositionBuffer;
+                        info.variable = geometry.PositionBuffer;
                         break;
                     case "normal":
-                        info.variable = geometry.GeometryInfo.NormalBuffer;
+                        info.variable = geometry.NormalBuffer;
                         break;
                     case "color":
-                        info.variable = geometry.GeometryInfo.ColorBuffer;
+                        info.variable = geometry.ColorBuffer;
                         break;
                     case "texcoord":
-                        info.variable = geometry.GeometryInfo.TexCoordBuffer;
+                        info.variable = geometry.TexCoordBuffer;
                         break;
                     case "index":
-                        info.variable = geometry.GeometryInfo.IndexBuffer;
+                        info.variable = geometry.IndexBuffer;
                         break;
                     case "uGeometryID":
                         info.variable = geometry.ID;

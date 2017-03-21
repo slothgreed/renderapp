@@ -36,7 +36,7 @@ namespace RenderApp.GfxUtility
         /// <summary>
         /// 汎用的な頂点シェーダの読み込み
         /// </summary>
-        public string GetVertexShader(GeometryInfo geometry)
+        public string GetVertexShader(Geometry geometry)
         {
             if (CheckBufferEnable(geometry.PositionBuffer) &&
                 CheckBufferEnable(geometry.NormalBuffer) &&
@@ -65,7 +65,7 @@ namespace RenderApp.GfxUtility
         /// <summary>
         /// フラグシェーダの切り替え
         /// </summary>
-        public string GetConstantFragShader(GeometryInfo geometry)
+        public string GetConstantFragShader(Geometry geometry)
         {
             if (geometry.PositionBuffer.Enable && geometry.ColorBuffer.Enable && geometry.NormalBuffer.Enable)
             {
