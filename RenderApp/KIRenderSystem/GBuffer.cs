@@ -1,7 +1,7 @@
 ﻿using KI.Gfx.KIAsset;
 using KI.Gfx.Render;
 using RenderApp.AssetModel;
-namespace RenderApp.Render_System
+namespace RenderApp.KIRenderSystem
 {
     public class GBuffer : RenderTechnique
     {

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-namespace RenderApp.Render_System
+namespace RenderApp.KIRenderSystem
 {
     class PostEffectManager
     {

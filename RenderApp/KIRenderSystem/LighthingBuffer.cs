@@ -1,4 +1,4 @@
-﻿namespace RenderApp.Render_System
+﻿namespace RenderApp.KIRenderSystem
 {
 
     public class LighthingBuffer : RenderTechnique

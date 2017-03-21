@@ -178,10 +178,5 @@ namespace RenderApp.AssetModel
                 GeometryInfo.Color.Add(_color);
             }
         }
-
-
-
-
-
     }
 }

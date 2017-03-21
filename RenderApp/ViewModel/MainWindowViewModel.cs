@@ -11,7 +11,7 @@ using RenderApp.AssetModel;
 using RenderApp.Globals;
 using RenderApp.ViewModel.Dialog;
 using RenderApp.RA_Control;
-using RenderApp.Render_System;
+using RenderApp.KIRenderSystem;
 using RenderApp.AssetModel.RA_Geometry;
 using KI.Foundation.ViewModel;
 using KI.Foundation.Tree;
@@ -117,8 +117,7 @@ namespace RenderApp.ViewModel
         {
             SceneManager.Instance.RenderSystem.Initialize(DeviceContext.Instance.Width,DeviceContext.Instance.Height);
             SceneManager.Instance.Create("MainScene");
-            SceneManager.Instance.CreateMainCamera();
-            SceneManager.Instance.CreateSceneLight();
+
             LeftUpDockPanel.Add(new RootNodeViewModel(SceneManager.Instance.ActiveScene.RootNode, "Scene"));
             LeftDownDockPanel.Add(new RenderSystemViewModel(SceneManager.Instance.RenderSystem));
         }

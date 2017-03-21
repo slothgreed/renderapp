@@ -7,7 +7,7 @@ using KI.Gfx.Render;
 using KI.Foundation.Core;
 using KI.Gfx.KIShader;
 
-namespace RenderApp.Render_System
+namespace RenderApp.KIRenderSystem
 {
     public abstract class RenderTechnique : KIObject
     {
@@ -50,8 +50,8 @@ namespace RenderApp.Render_System
             set;
         }
 
-        public RenderTechnique(string name,RenderTechniqueType tech, RenderType type)
-            :base(name)
+        public RenderTechnique(string name, RenderTechniqueType tech, RenderType type)
+            : base(name)
         {
             renderType = type;
             Technique = tech;

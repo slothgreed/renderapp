@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RenderApp.Render_System;
+using RenderApp.KIRenderSystem;
 using RenderApp.AssetModel;
 using KI.Gfx.KIAsset;
 using KI.Gfx.GLUtil;
@@ -46,6 +46,8 @@ namespace RenderApp
             SceneList.Add(scene);
             ActiveScene = scene;
             Initialize();
+            CreateMainCamera();
+            CreateSceneLight();
         }
         public void Initialize()
         {
@@ -65,17 +67,18 @@ namespace RenderApp
         public void CreateMainCamera()
         {
             ActiveScene.MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
-            SceneManager.Instance.ActiveScene.AddObject(ActiveScene.MainCamera);
+            ActiveScene.AddObject(ActiveScene.MainCamera);
         }
         public void CreateSceneLight()
         {
             ActiveScene.SunLight = AssetFactory.Instance.CreateLight("SunLight");
-            SceneManager.Instance.ActiveScene.AddObject(ActiveScene.SunLight);
+            ActiveScene.AddObject(ActiveScene.SunLight);
         }
         public void AddObject(string filePath)
         {
             var model = AssetFactory.Instance.CreateLoad3DModel(filePath);
             ActiveScene.AddObject(model.FirstOrDefault());
         }
+
     }
 }

@@ -1,5 +1,5 @@
 ﻿using RenderApp.AssetModel;
-namespace RenderApp.Render_System
+namespace RenderApp.KIRenderSystem
 {
     public partial class Selection : RenderTechnique
     {

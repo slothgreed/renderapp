@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RenderApp.Render_System
+namespace RenderApp.KIRenderSystem
 {
     public partial class SSAO : RenderTechnique
     {

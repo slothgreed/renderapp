@@ -141,31 +141,31 @@
     <Compile Include="AssetModel\AssetFactory.cs" />
     <Compile Include="AssetModel\Geometry\IRenderObjectConverter.cs" />
     <Compile Include="GfxUtility\ShaderHelper.cs" />
-    <Compile Include="Render_System\LighthingBuffer.cs" />
-    <Compile Include="Render_System\OutputBuffer.cs" />
-    <Compile Include="Render_System\PostEffectManager.cs" />
-    <Compile Include="Render_System\Post_Effect\Bloom.cs" />
-    <Compile Include="Render_System\Post_Effect\DOF.cs" />
-    <Compile Include="Render_System\Post_Effect\RenderTechniqueT4.cs">
+    <Compile Include="KIRenderSystem\LighthingBuffer.cs" />
+    <Compile Include="KIRenderSystem\OutputBuffer.cs" />
+    <Compile Include="KIRenderSystem\PostEffectManager.cs" />
+    <Compile Include="KIRenderSystem\Post_Effect\Bloom.cs" />
+    <Compile Include="KIRenderSystem\Post_Effect\DOF.cs" />
+    <Compile Include="KIRenderSystem\Post_Effect\RenderTechniqueT4.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RenderTechniqueT4.tt</DependentUpon>
     </Compile>
-    <Compile Include="Render_System\Post_Effect\RenderTechnique.cs" />
-    <Compile Include="Render_System\Post_Effect\Selection.cs" />
-    <Compile Include="Render_System\Post_Effect\Sobel.cs" />
-    <Compile Include="Render_System\Post_Effect\SSAO.cs" />
-    <Compile Include="Render_System\RenderTechniqueFactory.cs" />
-    <Compile Include="Render_System\ShadowMap.cs" />
+    <Compile Include="KIRenderSystem\Post_Effect\RenderTechnique.cs" />
+    <Compile Include="KIRenderSystem\Post_Effect\Selection.cs" />
+    <Compile Include="KIRenderSystem\Post_Effect\Sobel.cs" />
+    <Compile Include="KIRenderSystem\Post_Effect\SSAO.cs" />
+    <Compile Include="KIRenderSystem\RenderTechniqueFactory.cs" />
+    <Compile Include="KIRenderSystem\ShadowMap.cs" />
     <Compile Include="Scene\SceneManager.cs" />
     <Compile Include="RAControl\CameraControl.cs" />
     <Compile Include="GfxUtility\ShaderCreater.cs" />
     <Compile Include="ViewModel\Converter\EnumConverter.cs" />
     <Compile Include="Globals\Project.cs" />
     <Compile Include="Globals\Enum.cs" />
-    <Compile Include="Render_System\GBuffer.cs" />
-    <Compile Include="Render_System\RenderQueue.cs" />
-    <Compile Include="Render_System\RenderSystem.cs" />
+    <Compile Include="KIRenderSystem\GBuffer.cs" />
+    <Compile Include="KIRenderSystem\RenderQueue.cs" />
+    <Compile Include="KIRenderSystem\RenderSystem.cs" />
     <Compile Include="RAControl\DijkstraControl.cs" />
     <Compile Include="RAControl\IControl.cs" />
     <Compile Include="RAControl\SelectObjectControl.cs" />
@@ -440,7 +440,7 @@
     <Folder Include="Scene\Shader\ShaderType\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Render_System\Post_Effect\RenderTechniqueT4.tt">
+    <Content Include="KIRenderSystem\Post_Effect\RenderTechniqueT4.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RenderTechniqueT4.cs</LastGenOutput>
     </Content>

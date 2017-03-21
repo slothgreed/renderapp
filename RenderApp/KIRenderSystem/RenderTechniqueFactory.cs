@@ -1,7 +1,7 @@
 ﻿using KI.Gfx.KIAsset;
 using System.Collections.Generic;
 using KI.Foundation.Core;
-namespace RenderApp.Render_System
+namespace RenderApp.KIRenderSystem
 {
     public enum RenderTechniqueType
     {
