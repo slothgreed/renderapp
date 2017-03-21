@@ -4,8 +4,17 @@ using KI.Gfx.KIAsset;
 using KI.Gfx.KIShader;
 namespace RenderApp.GfxUtility
 {
+    public enum ShaderType
+    {
+        Bezier,
+        Displacement,
+        EffectLine,
+        NURBS,
+        Fur
+    }
     public class ShaderCreater
     {
+
         private static ShaderCreater _Instance;
         public static ShaderCreater Instance
         {
@@ -110,6 +119,23 @@ namespace RenderApp.GfxUtility
             return null;
         }
 
+        public Shader CreateShader(ShaderType type)
+        {
+            switch (type)
+            {
+                case ShaderType.Bezier:
+                    return ShaderFactory.Instance.CreateShaderVF(Directory + "bezier");
+                case ShaderType.Displacement:
+                    return ShaderFactory.Instance.CreateShaderVF(Directory + "disp");
+                case ShaderType.EffectLine:
+                    return ShaderFactory.Instance.CreateShaderVF(Directory + "effectline");
+                case ShaderType.NURBS:
+                    return ShaderFactory.Instance.CreateShaderVF(Directory + "nurbs");
+                case ShaderType.Fur:
+                    return ShaderFactory.Instance.CreateShaderVF(Directory + "fur");
+            }
+            return null;
+        }
         private Shader _defaultAnalyzeShader;
         public Shader DefaultAnalyzeShader
         {

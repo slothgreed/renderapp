@@ -139,6 +139,7 @@
     </ApplicationDefinition>
     <Compile Include="AppSystem.cs" />
     <Compile Include="AssetModel\AssetFactory.cs" />
+    <Compile Include="AssetModel\Geometry\Geometry.cs" />
     <Compile Include="AssetModel\Geometry\IRenderObjectConverter.cs" />
     <Compile Include="GfxUtility\ShaderHelper.cs" />
     <Compile Include="KIRenderSystem\LighthingBuffer.cs" />
@@ -187,7 +188,6 @@
       <DependentUpon>RootNodeViewModelT4.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\DockTabVM\DockPaneSelector.cs" />
-    <Compile Include="AssetModel\Geometry\Geometry.cs" />
     <Compile Include="ViewModel\DockTabVM\DockWindowViewModel.cs" />
     <Compile Include="ViewModel\ComboItemViewModel.cs" />
     <Compile Include="ViewModel\DefaultViewModel.cs" />
@@ -254,10 +254,7 @@
     <Compile Include="Scene\Shader\Diffuse\CDiffuse.cs" />
     <Compile Include="Scene\Shader\DisplaceMent\DisplaceMentMap.cs" />
     <Compile Include="Scene\Shader\ColorRender\CColorShader.cs" />
-    <Compile Include="AssetModel\Geometry\Primitive\Sphere.cs" />
-    <Compile Include="AssetModel\Geometry\Primitive\Axis.cs" />
     <Compile Include="AssetModel\Geometry\Primitive\Cube.cs" />
-    <Compile Include="AssetModel\Geometry\Primitive\Plane.cs" />
     <Compile Include="AssetModel\Geometry\Primitive\GridPlane.cs" />
     <Compile Include="Scene\Shader\OffScreen\DOF\DOF.cs" />
     <Compile Include="Scene\Shader\Luminous\Luminous.cs" />

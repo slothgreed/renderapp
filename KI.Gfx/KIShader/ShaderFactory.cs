@@ -32,6 +32,7 @@ namespace KI.Gfx.KIShader
             return null;
 
         }
+
         /// <summary>
         /// vert,frag専用ファイル名は同一のもの
         /// </summary>
@@ -39,18 +40,7 @@ namespace KI.Gfx.KIShader
         /// <returns></returns>
         public Shader CreateShaderVF(string path)
         {
-            Shader shader = FindShader(path + ".vert", path + ".frag");
-            if (shader != null)
-            {
-                return shader;
-            }
-            string name = KIFile.GetNameFromPath(path);
-            ShaderProgram vert = ShaderProgramFactory.Instance.CreateShaderProgram(path, path + ".vert");
-            ShaderProgram frag = ShaderProgramFactory.Instance.CreateShaderProgram(path, path + ".frag");
-            shader = new Shader(vert, frag);
-            ShaderList.Add(name, shader);
-            return shader;
-
+           return CreateShaderVF(path + ".vert", path + ".frag");
         }
         /// <summary>
         /// vert,frag専用ファイル名は同一のもの
