@@ -20,6 +20,17 @@ namespace KI.Gfx.KIAsset
         HDR,
         Num
     }
+    public enum TextureKind
+    {
+        None = -1,
+        Albedo,
+        Normal,
+        Specular,
+        Height,
+        Emissive,
+        World,
+        Lighting
+    }
     /// <summary>
     /// BMPで保持
     /// </summary>

@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using KI.Gfx.KIAsset;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
+﻿using OpenTK;
 using KI.Foundation.Core;
-namespace RenderApp.AssetModel.RA_Geometry
+namespace KI.Gfx.KIAsset
 {
     class Axis : KIObject, IPrimitive
     {

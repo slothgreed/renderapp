@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
+﻿using OpenTK;
 using KI.Foundation.Utility;
 using KI.Foundation.Core;
 

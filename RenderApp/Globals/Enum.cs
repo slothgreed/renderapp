@@ -57,17 +57,7 @@
         ShaderProgram,
         Shader,
     }
-    public enum TextureKind
-    {
-        None = -1,
-        Albedo,
-        Normal,
-        Specular,
-        Height,
-        Emissive,
-        World,
-        Lighting
-    }
+
     public enum RAController
     {
         Default,
