@@ -12,7 +12,7 @@ namespace KI.Gfx.KIAsset
         /// </summary>
         private Vector4 surface = new Vector4();
 
-        public GeometryInfo _Geometry;
+        private GeometryInfo _Geometry = new GeometryInfo();
         public GeometryInfo Geometry
         {
             get
@@ -28,19 +28,18 @@ namespace KI.Gfx.KIAsset
         public Plane(string name, Vector3 q0, Vector3 q1, Vector3 q2, Vector3 q3)
             : base(name)
         {
-            _Geometry.Position.Add(q0);
-            _Geometry.Position.Add(q1);
-            _Geometry.Position.Add(q2);
-            _Geometry.Position.Add(q3);
-
+            CreateObject(q0, q1, q2, q3);
         }
+
         public Plane(string name)
             : base(name)
         {
-            _Geometry.Position.Add(new Vector3(-1, -1, 0));
-            _Geometry.Position.Add(new Vector3(1, -1, 0));
-            _Geometry.Position.Add(new Vector3(1, 1, 0));
-            _Geometry.Position.Add(new Vector3(-1, 1, 0));
+            Vector3 q0 = new Vector3(-1, -1, 0);
+            Vector3 q1 = new Vector3(1, -1, 0);
+            Vector3 q2 = new Vector3(1, 1, 0);
+            Vector3 q3 = new Vector3(-1, 1, 0);
+            CreateObject(q0, q1, q2, q3);
+
         }
         #region [形状の作成]
         /// <summary>
@@ -54,8 +53,6 @@ namespace KI.Gfx.KIAsset
             _Geometry.Position.Add(q3);
 
             surface = KICalc.GetPlaneFormula(q0, q1, q2);
-
-
 
             _Geometry.Normal.Add(new Vector3(surface));
             _Geometry.Normal.Add(_Geometry.Normal[0]);

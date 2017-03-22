@@ -1,4 +1,6 @@
-﻿namespace RenderApp.KIRenderSystem
+﻿using KI.Gfx.KIAsset;
+
+namespace RenderApp.KIRenderSystem
 {
 
     public class LighthingBuffer : RenderTechnique

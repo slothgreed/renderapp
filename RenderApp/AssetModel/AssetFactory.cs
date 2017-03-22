@@ -145,7 +145,8 @@ namespace RenderApp.AssetModel
         {
             Plane plane;
             plane = new Plane(name);
-            Geometry renderObject = plane.CreateRenderObject().First();
+            RenderObject renderObject = new RenderObject(name);
+            renderObject.CreatePT(plane.Geometry.Position, plane.Geometry.TexCoord, PrimitiveType.Quads);
             renderObject.Shader = shader;
             return renderObject;
         }
@@ -153,7 +154,9 @@ namespace RenderApp.AssetModel
         internal Geometry CreatePostProcessPlane(string name)
         {
             Plane plane = new Plane(name);
-            return plane.CreateRenderObject().First();
+            RenderObject renderObject = new RenderObject(name);
+            renderObject.CreatePT(plane.Geometry.Position, plane.Geometry.TexCoord, PrimitiveType.Quads);
+            return renderObject;
         }
 
         internal List<RenderObject> CreateLoad3DModel(string filePath)

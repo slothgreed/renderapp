@@ -1,4 +1,5 @@
-﻿using RenderApp.AssetModel;
+﻿using KI.Gfx.KIAsset;
+using RenderApp.AssetModel;
 namespace RenderApp.KIRenderSystem
 {
     public partial class Selection : RenderTechnique

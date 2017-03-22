@@ -123,6 +123,7 @@ namespace RenderApp.AssetModel
         {
             GeometryInfo.Position = position;
             GeometryInfo.TexCoord = texcoord;
+            RenderType = prim;
             CalcNormal(position, prim);
             Initialize();
         }
