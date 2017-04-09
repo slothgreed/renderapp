@@ -683,9 +683,16 @@ namespace KI.Gfx.KIShader
                         {
                             if (code[2].Contains("["))
                             {
-                                int index = code[2].IndexOf("[");
-                                info.arrayNum = int.Parse(code[2][index + 1].ToString());
-                                code[2] = code[2].Remove(code[2].IndexOf("["), 3);
+                                string arrName = code[2];
+                                int arrNum = 0;
+                                string arrNumStr = "";
+                                int startIndex = arrName.IndexOf("[");
+                                int endIndex = arrName.IndexOf("]");
+                                arrNumStr = arrName.Substring(startIndex + 1, endIndex - (startIndex + 1));
+                                arrNum = int.Parse(arrNumStr);
+                                arrName = arrName.Substring(0,startIndex);
+                                code[2] = arrName;
+                                info.arrayNum = arrNum;
                             }
                             info.Name = code[2];
                             info.shaderVariableType = EShaderVariableType.Uniform;
