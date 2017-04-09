@@ -29,7 +29,8 @@ namespace KI.Gfx.KIAsset
         Height,
         Emissive,
         World,
-        Lighting
+        Lighting,
+        Cubemap
     }
     /// <summary>
     /// BMPで保持

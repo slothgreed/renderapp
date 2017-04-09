@@ -5,7 +5,9 @@ using System.Text;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using KI.Gfx.KIShader;
 using RenderApp.Utility;
+using RenderApp.GfxUtility;
 namespace RenderApp.AssetModel.RA_Geometry
 {
     public class Cube
@@ -29,9 +31,10 @@ namespace RenderApp.AssetModel.RA_Geometry
             Max = max;
             //手前
         }
-        public List<Geometry> ConvertGeometry()
+
+        public List<RenderObject> ConvertGeometrys(bool reverse = false)
         {
-            List<Geometry> geometry = new List<Geometry>();
+            List<RenderObject> geometry = new List<RenderObject>();
 
             Vector3 v0 = new Vector3(Min.X, Min.Y, Min.Z);
             Vector3 v1 = new Vector3(Max.X, Min.Y, Min.Z);
@@ -45,9 +48,9 @@ namespace RenderApp.AssetModel.RA_Geometry
             List<Vector2> TexCoord = new List<Vector2>()
             {
                 Vector2.Zero,
-                Vector2.UnitX,
                 Vector2.UnitY,
-                Vector2.UnitX + Vector2.UnitY
+                Vector2.UnitX + Vector2.UnitY,
+                Vector2.UnitX
             };
             var front = AssetFactory.Instance.CreateRenderObject("Front");
             var left = AssetFactory.Instance.CreateRenderObject("Left");
@@ -56,12 +59,24 @@ namespace RenderApp.AssetModel.RA_Geometry
             var top = AssetFactory.Instance.CreateRenderObject("Top");
             var bottom = AssetFactory.Instance.CreateRenderObject("Bottom");
 
-            front.CreateP(new List<Vector3> { v0, v3, v2, v1 }, PrimitiveType.Quads);
-            front.CreateP(new List<Vector3> { v0, v4, v7, v3 }, PrimitiveType.Quads);
-            front.CreateP(new List<Vector3> { v4, v5, v6, v7 }, PrimitiveType.Quads);
-            front.CreateP(new List<Vector3> { v1, v2, v6, v5 }, PrimitiveType.Quads);
-            front.CreateP(new List<Vector3> { v2, v3, v7, v6 }, PrimitiveType.Quads);
-            front.CreateP(new List<Vector3> { v1, v5, v4, v0 }, PrimitiveType.Quads);
+            if(reverse == false)
+            {
+                front.CreatePT(  new List<Vector3> { v0, v3, v2, v1 },TexCoord, PrimitiveType.Quads);
+                left.CreatePT(new List<Vector3> { v0, v4, v7, v3 }, TexCoord, PrimitiveType.Quads);
+                back.CreatePT(new List<Vector3> { v4, v5, v6, v7 }, TexCoord, PrimitiveType.Quads);
+                right.CreatePT(new List<Vector3> { v1, v2, v6, v5 }, TexCoord, PrimitiveType.Quads);
+                top.CreatePT(new List<Vector3> { v2, v3, v7, v6 }, TexCoord, PrimitiveType.Quads);
+                bottom.CreatePT(new List<Vector3> { v1, v5, v4, v0 }, TexCoord, PrimitiveType.Quads);
+            }
+            else
+            {
+                front.CreatePT(new List<Vector3> { v0, v1, v2, v3 }, TexCoord, PrimitiveType.Quads);
+                left.CreatePT(new List<Vector3> { v0, v3, v7, v4 }, TexCoord, PrimitiveType.Quads);
+                back.CreatePT(new List<Vector3> { v4, v7, v6, v5 }, TexCoord, PrimitiveType.Quads);
+                right.CreatePT(new List<Vector3> { v1, v5, v6, v2 }, TexCoord, PrimitiveType.Quads);
+                top.CreatePT(new List<Vector3> { v2, v6, v7, v3 }, TexCoord, PrimitiveType.Quads);
+                bottom.CreatePT(new List<Vector3> { v1, v0, v4, v5 }, TexCoord, PrimitiveType.Quads);
+            }
 
             geometry.Add(front);
             geometry.Add(left);
@@ -69,6 +84,15 @@ namespace RenderApp.AssetModel.RA_Geometry
             geometry.Add(right);
             geometry.Add(top);
             geometry.Add(bottom);
+
+            string vert = ShaderCreater.Instance.GetVertexShader(front);
+            string frag = ShaderCreater.Instance.GetConstantFragShader(front);
+            Shader shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
+
+            foreach(var geom in geometry)
+            {
+                geom.Shader = shader;
+            }
 
             return geometry;
         }

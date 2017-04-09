@@ -6,17 +6,25 @@ using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 namespace KI.Gfx.GLUtil
 {
+    public enum TextureType
+    {
+        Texture1D,
+        Texture2D,
+        Texture3D,
+        Cubemap
+    }
+    
     public class TextureBuffer : BufferObject
     {
         public int Width
         {
             get;
-            private set;
+            set;
         }
         public int Height
         {
             get;
-            private set;
+            set;
         }
         public TextureTarget Target
         {
@@ -28,15 +36,33 @@ namespace KI.Gfx.GLUtil
             get;
             private set;
         }
-        public TextureBuffer()
+        public void SetTextureTargte(TextureType type)
         {
-            Target = TextureTarget.Texture2D;
-            Format = PixelInternalFormat.Rgba8;
-        }
-        public TextureBuffer(TextureTarget target)
-        {
-            Target = target;
+            switch (type)
+            {
+                case TextureType.Texture1D:
+                    Target = TextureTarget.Texture1D;
+                    break;
+                case TextureType.Texture2D:
+                    Target = TextureTarget.Texture2D;
+                    break;
+                case TextureType.Texture3D:
+                    Target = TextureTarget.Texture3D;
+                    break;
+                case TextureType.Cubemap:
+                    Target = TextureTarget.TextureCubeMap;
+                    break;
+                default:
+                    Target = TextureTarget.Texture2D;
+                    break;
+            }
 
+
+        }
+        public TextureBuffer(TextureType type)
+        {
+            SetTextureTargte(type);
+            Format = PixelInternalFormat.Rgba8;
         }
         public override void PreGenBuffer()
         {

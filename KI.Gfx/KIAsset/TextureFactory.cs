@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KI.Foundation.Utility;
 using KI.Foundation.Core;
+using KI.Gfx.GLUtil;
 using KI.Gfx.KIAsset;
 namespace KI.Gfx.KIAsset
 {
@@ -21,63 +23,81 @@ namespace KI.Gfx.KIAsset
 
         public Texture CreateTexture(string path)
         {
+            return CreateTexture(path, SelectImageKind(path));
+        }
+
+        public ImageKind SelectImageKind(string path)
+        {
             string extension = System.IO.Path.GetExtension(path);
             extension = extension.ToLower();
-            ImageKind kind = ImageKind.None;
             switch (extension)
             {
                 case ".bmp":
-                    kind = ImageKind.BMP;
-                    break;
+                    return ImageKind.BMP;
                 case ".png":
-                    kind = ImageKind.PNG;
-                    break;
+                    return ImageKind.PNG;
                 case ".jpg":
-                    kind = ImageKind.JPG;
-                    break;
+                    return ImageKind.JPG;
                 case ".tga":
-                    kind = ImageKind.TGA;
-                    break;
+                    return ImageKind.TGA;
                 case ".hdr":
-                    kind = ImageKind.HDR;
-                    break;
+                    return ImageKind.HDR;
             }
-
-            return CreateTexture(path, kind);
+            Logger.Log(Logger.LogLevel.Error, "not support texture"); 
+            return ImageKind.None;
         }
-        public Texture CreateTexture(string path, ImageKind kind)
-        {
-            Texture find = FindByKey(path);
-            if(find != null)
-            {
-                return find;
-            }
 
-            KIImageInfo image = null;
+        private KIImageInfo CreateImageInfo(string path, ImageKind kind)
+        {
             switch (kind)
             {
                 case ImageKind.PNG:
                 case ImageKind.JPG:
                 case ImageKind.BMP:
-                    image = new KIImageInfo(path);
-                    break;
+                    return new KIImageInfo(path);
                 case ImageKind.TGA:
-                    image = new TGAImage(path);
-                    break;
+                    return new TGAImage(path);
                 case ImageKind.HDR:
-                    image = new HDRImage(path);
-                    break;
+                    return new HDRImage(path);
                 default:
+                    Logger.Log(Logger.LogLevel.Error, "not support texture");
                     return null;
             }
-            Texture texture = new Texture(KIFile.GetNameFromPath(path), path);
+        }
+
+        public Texture CreateTexture(string path, ImageKind kind)
+        {
+            Texture find = FindByKey(path);
+            if (find != null)
+            {
+                return find;
+            }
+            KIImageInfo image = CreateImageInfo(path, kind);
+            Texture texture = new Texture(KIFile.GetNameFromPath(path), TextureType.Texture2D);
             AddItem(texture);
-            texture.LoadTexture(image);
+            texture.GenTexture(image);
             return texture;
         }
+
+        public Texture CreateCubemapTexture(string px, string py, string pz, string nx, string ny, string nz)
+        {
+            List<KIImageInfo> images = new List<KIImageInfo>();
+
+            images.Add(CreateImageInfo(px, SelectImageKind(px)));
+            images.Add(CreateImageInfo(py, SelectImageKind(py)));
+            images.Add(CreateImageInfo(pz, SelectImageKind(pz)));
+            images.Add(CreateImageInfo(nx, SelectImageKind(nx)));
+            images.Add(CreateImageInfo(ny, SelectImageKind(ny)));
+            images.Add(CreateImageInfo(nz, SelectImageKind(nz)));
+            Texture texture = new Texture("Cubemap" + KIFile.GetNameFromPath(px), TextureType.Cubemap);
+            AddItem(texture);
+            texture.GenCubemapTexture(images);
+            return texture;        
+        }
+
         public Texture CreateTexture(string name, int width, int height)
         {
-            Texture texture =  new Texture(name, width, height);
+            Texture texture = new Texture(name, TextureType.Texture2D, width, height);
             AddItem(texture);
             return texture;
         }

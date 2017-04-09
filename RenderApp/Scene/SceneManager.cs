@@ -51,17 +51,41 @@ namespace RenderApp
         }
         public void Initialize()
         {
-            List<RenderObject> sponzas = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/crytek-sponza/sponza.obj");
-            foreach (var sponza in sponzas)
+            //List<RenderObject> sponzas = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/crytek-sponza/sponza.obj");
+            //foreach (var sponza in sponzas)
+            //{
+            //    ActiveScene.AddObject(sponza);
+            //}
+            //List<RenderObject> ducks = AssetFactory.Instance.CreateLoad3DModel("C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/duck/duck.obj");
+            //foreach (var duck in ducks)
+            //{
+            //    duck.RotateX(-90);
+            //    duck.RotateY(0);
+            //    ActiveScene.AddObject(duck);
+            //}
+
+            List<RenderObject> worlds = AssetFactory.Instance.CreateWorld("World",ActiveScene.WorldMin, ActiveScene.WorldMax);
+            string[] paths = new string[]{
+                    ProjectInfo.TextureDirectory + @"\Red.png",
+                    ProjectInfo.TextureDirectory + @"\Green.png",
+                    ProjectInfo.TextureDirectory + @"\Blue.png",
+                    ProjectInfo.TextureDirectory + @"\Yellow.png",
+                    ProjectInfo.TextureDirectory + @"\Purple.png",
+                    ProjectInfo.TextureDirectory + @"\Gray.png"
+            };
+            for (int i = 0; i < 6; i++)
             {
-                ActiveScene.AddObject(sponza);
+                var texture = TextureFactory.Instance.CreateTexture(paths[i]);
+                worlds[i].AddTexture(TextureKind.Albedo, texture);
+                ActiveScene.AddObject(worlds[i]);
             }
-            List<RenderObject> ducks = AssetFactory.Instance.CreateLoad3DModel("C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/duck/duck.obj");
-            foreach (var duck in ducks)
+            
+
+            List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/StanfordBunny.stl");
+            foreach(var b in bunny)
             {
-                duck.RotateX(-90);
-                duck.RotateY(0);
-                ActiveScene.AddObject(duck);
+                b.RotateX(-90);
+                ActiveScene.AddObject(b);
             }
         }
         public void CreateMainCamera()

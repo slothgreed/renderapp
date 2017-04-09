@@ -76,21 +76,43 @@ namespace RenderApp.GfxUtility
         /// </summary>
         public string GetConstantFragShader(Geometry geometry)
         {
-            if (geometry.PositionBuffer.Enable && geometry.ColorBuffer.Enable && geometry.NormalBuffer.Enable)
+            if (geometry.PositionBuffer != null && geometry.TexCoordBuffer != null && geometry.NormalBuffer != null)
             {
-                return Directory + "ConstantPCN.vert";
+                if (geometry.PositionBuffer.Enable && geometry.TexCoordBuffer.Enable && geometry.NormalBuffer.Enable)
+                {
+                    return Directory + "ConstantPNT.frag";
+                }
             }
-            if (geometry.PositionBuffer.Enable && geometry.ColorBuffer.Enable)
+
+            if(geometry.PositionBuffer != null && geometry.ColorBuffer != null && geometry.NormalBuffer != null)
             {
-                return Directory + "ConstantPC.frag";
-            } 
-            if (geometry.PositionBuffer.Enable && geometry.NormalBuffer.Enable)
-            {
-                return Directory + "ConstantPN.vert";
+                if (geometry.PositionBuffer.Enable && geometry.ColorBuffer.Enable && geometry.NormalBuffer.Enable)
+                {
+                    return Directory + "ConstantPCN.frag";
+                }
             }
-            if (geometry.PositionBuffer.Enable)
+            if (geometry.PositionBuffer != null && geometry.ColorBuffer != null)
             {
-                return Directory + "ConstantP.frag";
+                if (geometry.PositionBuffer.Enable && geometry.ColorBuffer.Enable)
+                {
+                    return Directory + "ConstantPC.frag";
+                }
+            }
+            if (geometry.PositionBuffer != null && geometry.NormalBuffer != null)
+            {
+
+                if (geometry.PositionBuffer.Enable && geometry.NormalBuffer.Enable)
+                {
+                    return Directory + "ConstantPN.frag";
+                }
+
+            }
+            if (geometry.PositionBuffer != null)
+            {
+                if (geometry.PositionBuffer.Enable)
+                {
+                    return Directory + "ConstantP.frag";
+                }
             }
             return null;
         }

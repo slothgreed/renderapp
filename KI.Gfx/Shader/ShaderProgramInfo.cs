@@ -29,7 +29,8 @@ namespace KI.Gfx
         FloatArray,
         DoubleArray,
         Texture2D,
-        Texture3D
+        Texture3D,
+        Cubemap
     }
 
     /// <summary>

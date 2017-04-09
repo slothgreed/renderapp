@@ -159,6 +159,12 @@ namespace RenderApp.AssetModel
             return renderObject;
         }
 
+        internal List<RenderObject> CreateWorld(string name, Vector3 min, Vector3 max)
+        {
+            Cube cube = new Cube("World", min, max);
+            return cube.ConvertGeometrys(true);
+        }
+
         internal List<RenderObject> CreateLoad3DModel(string filePath)
         {
             string extension = System.IO.Path.GetExtension(filePath);
@@ -174,5 +180,6 @@ namespace RenderApp.AssetModel
             }
             return null;
         }
+
     }
 }

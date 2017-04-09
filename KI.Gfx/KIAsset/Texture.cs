@@ -31,22 +31,28 @@ namespace KI.Gfx.KIAsset
             }
         }
 
-        private KIImageInfo _imageInfo;
-        public KIImageInfo ImageInfo
-        {
-            get
-            {
-                return _imageInfo;
-            }
-            set
-            {
-                _imageInfo = value;
-            }
-        }
         public TextureBuffer TextureBuffer
         {
             get;
             set;
+        }
+
+        public List<KIImageInfo> ImageInfos
+        {
+            get;
+            private set;
+        }
+
+        public KIImageInfo ImageInfo
+        {
+            get
+            {
+                if(ImageInfos == null)
+                {
+                    return null;
+                }
+                return ImageInfos.FirstOrDefault();
+            }
         }
         
         /// <summary>
@@ -96,15 +102,17 @@ namespace KI.Gfx.KIAsset
         public static readonly Texture Empty;
         #region [constructor]
 
-        internal Texture(string name, string path)
+        internal Texture(string name,TextureType type)
             : base(name)
         {
-            CreateTextureBuffer2D();
+            ImageInfos = new List<KIImageInfo>();
+            CreateTextureBuffer(type);
         }
-        internal Texture(string name, int width, int height)
+        internal Texture(string name, TextureType type, int width, int height)
             : base(name)
         {
-            CreateTextureBuffer2D();
+            ImageInfos = new List<KIImageInfo>();
+            CreateTextureBuffer(type);
             TextureBuffer.SetEmpty(width, height);
         }
 
@@ -131,36 +139,70 @@ namespace KI.Gfx.KIAsset
             TextureBuffer.Dispose();
         }
         #region [テクスチャ周り]
-        public void LoadTexture(KIImageInfo image)
+
+        private void SetupTexImage2D(TextureTarget target, KIImageInfo image)
         {
-            ImageInfo = image;
-
-            if (!ImageInfo.Loaded)
+            if (image.Format == System.Drawing.Imaging.PixelFormat.Format24bppRgb)
             {
-                ImageInfo.LoadImageData();
+                GL.TexImage2D(target, 0, PixelInternalFormat.Rgba, image.Width, image.Height,
+                                0, OpenTK.Graphics.OpenGL.PixelFormat.Bgr, PixelType.UnsignedByte, image.Scan0);
             }
-
-            TextureBuffer.BindBuffer();
-
-            ImageInfo.Lock();
-
-            if(ImageInfo.Format == System.Drawing.Imaging.PixelFormat.Format24bppRgb)
+            else if (image.Format == System.Drawing.Imaging.PixelFormat.Format32bppArgb)
             {
-                GL.TexImage2D(TextureBuffer.Target, 0, PixelInternalFormat.Rgba, ImageInfo.Width, ImageInfo.Height,
-                                0, OpenTK.Graphics.OpenGL.PixelFormat.Bgr, PixelType.UnsignedByte, ImageInfo.Scan0);
-            }
-            else if(ImageInfo.Format == System.Drawing.Imaging.PixelFormat.Format32bppArgb)
-            {
-                GL.TexImage2D(TextureBuffer.Target, 0, PixelInternalFormat.Rgba, ImageInfo.Width, ImageInfo.Height,
-                                0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, ImageInfo.Scan0);
+                GL.TexImage2D(target, 0, PixelInternalFormat.Rgba, image.Width, image.Height,
+                                0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, image.Scan0);
             }
             else
             {
-                GL.TexImage2D(TextureBuffer.Target, 0, PixelInternalFormat.Rgba, ImageInfo.Width, ImageInfo.Height,
-                                0, OpenTK.Graphics.OpenGL.PixelFormat.ColorIndex, PixelType.UnsignedByte, ImageInfo.Scan0);
+                GL.TexImage2D(target, 0, PixelInternalFormat.Rgba, image.Width, image.Height,
+                                0, OpenTK.Graphics.OpenGL.PixelFormat.ColorIndex, PixelType.UnsignedByte, image.Scan0);
+            }
+        }
+
+        public void GenCubemapTexture(List<KIImageInfo> images)
+        {
+            if (images == null)
+            {
+                Logger.Log(Logger.LogLevel.Error, "not set image");
+            }
+            if (images.Count != 6)
+            {
+                Logger.Log(Logger.LogLevel.Error, "can not set up cubemap texture");
+            }
+            for (int i = 0; i < 6; i++)
+            {
+                KIImageInfo image = images[i];
+                if (!image.Loaded)
+                {
+                    image.LoadImageData();
+                }
+                TextureBuffer.BindBuffer();
+                image.Lock();
+                SetupTexImage2D(TextureBuffer.Target + i, image);
+                image.UnLock();
+                ImageInfos.Add(image);
             }
 
-            ImageInfo.UnLock();
+
+            TextureBuffer.UnBindBuffer();
+        }
+
+        public void GenTexture(KIImageInfo image)
+        {
+            if (!image.Loaded)
+            {
+                image.LoadImageData();
+            }
+            TextureBuffer.BindBuffer();
+            TextureBuffer.Width = image.Width;
+            TextureBuffer.Height = image.Height;
+
+            image.Lock();
+
+
+            ImageInfos.Add(image);
+
+            image.UnLock();
             TextureBuffer.UnBindBuffer();
         }
     
@@ -169,9 +211,9 @@ namespace KI.Gfx.KIAsset
         /// </summary>
         /// <param name="filename"></param>
         /// <rereturns>バインドしたテクスチャID</rereturns>
-        public void CreateTextureBuffer2D()
+        public void CreateTextureBuffer(TextureType type)
         {
-            TextureBuffer = new TextureBuffer();
+            TextureBuffer = new TextureBuffer(type);
             TextureBuffer.GenBuffer();
             TextureBuffer.BindBuffer();
             GL.TexParameter(TextureBuffer.Target, TextureParameterName.TextureWrapS, Convert.ToInt32(this.WrapMode));

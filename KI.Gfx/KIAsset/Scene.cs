@@ -15,11 +15,11 @@ namespace KI.Gfx.KIAsset
         /// <summary>
         /// 空間の最大値
         /// </summary>
-        public readonly Vector3 WorldMax = new Vector3(50, 75, 50);
+        public readonly Vector3 WorldMax = new Vector3(100, 125, 100);
         /// <summary>
         /// 空間の最小値
         /// </summary>
-        public readonly Vector3 WorldMin = new Vector3(-50, 0, -50);
+        public readonly Vector3 WorldMin = new Vector3(-100, -75, -100);
 
         public Scene(string name)
             : base(name)
@@ -103,11 +103,19 @@ namespace KI.Gfx.KIAsset
         {
             if (parent == null)
             {
-                RootNode.AddChild(value);
+                parent = RootNode;
             }
-            else
+            parent.AddChild(value);
+        }
+        public void AddObject(List<KIObject> value, KINode parent = null)
+        {
+            if (parent == null)
             {
-                parent.AddChild(value);
+                parent = RootNode;
+            }
+            foreach (var obj in value)
+            {
+                parent.AddChild(obj);
             }
         }
 
@@ -139,6 +147,8 @@ namespace KI.Gfx.KIAsset
 
         }
         #endregion
+
+
 
     }
 }

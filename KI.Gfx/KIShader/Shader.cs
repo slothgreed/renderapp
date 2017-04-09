@@ -601,6 +601,9 @@ namespace KI.Gfx.KIShader
                 case "sampler2D":
                     info.variableType = EVariableType.Texture2D;
                     return;
+                case "samplerCube":
+                    info.variableType = EVariableType.Cubemap;
+                    return;
                 case "sampler3D":
                     info.variableType = EVariableType.Texture3D;
                     break;
@@ -740,7 +743,10 @@ namespace KI.Gfx.KIShader
             int status;
             string info;
             GL.GetProgramInfoLog(program, out info);
-            Logger.Log(Logger.LogLevel.Debug, info);
+            if(!string.IsNullOrWhiteSpace(info))
+            {
+                Logger.Log(Logger.LogLevel.Error, info);
+            }
             GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
             if (status == 0)
             {
@@ -779,7 +785,10 @@ namespace KI.Gfx.KIShader
             int status;
             string info;
             GL.GetProgramInfoLog(program, out info);
-            Logger.Log(Logger.LogLevel.Debug, info);
+            if (!string.IsNullOrWhiteSpace(info))
+            {
+                Logger.Log(Logger.LogLevel.Error, info);
+            } 
             GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
             if (status == 0)
             {
@@ -867,7 +876,10 @@ namespace KI.Gfx.KIShader
             int status;
             string info;
             GL.GetProgramInfoLog(program, out info);
-            Logger.Log(Logger.LogLevel.Debug, info);
+            if (!string.IsNullOrWhiteSpace(info))
+            {
+                Logger.Log(Logger.LogLevel.Error, info);
+            } 
             GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
             if (status == 0)
             {
@@ -904,7 +916,10 @@ namespace KI.Gfx.KIShader
             int status;
             string info;
             GL.GetProgramInfoLog(program, out info);
-            Logger.Log(Logger.LogLevel.Debug, info);
+            if (!string.IsNullOrWhiteSpace(info))
+            {
+                Logger.Log(Logger.LogLevel.Error, info);
+            } 
             GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
             if (status == 0)
             {

@@ -21,14 +21,14 @@ namespace RenderApp.KIRenderSystem
         {
             RenderTarget.ClearBuffer();
             RenderTarget.BindRenderTarget(OutputTexture.ToArray());
-            //foreach(var light in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
-            //{
-            //    if(light.KIObject is Light)
-            //    {
+            foreach (var light in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
+            {
+                if (light.KIObject is Light)
+                {
                     Plane.Shader = ShaderItem;
                     Plane.Render();
-            //    }
-            //}
+                }
+            }
             RenderTarget.UnBindRenderTarget();
         }
 
