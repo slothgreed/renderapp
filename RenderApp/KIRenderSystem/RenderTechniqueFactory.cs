@@ -38,28 +38,28 @@ namespace RenderApp.KIRenderSystem
             switch (type)
             {
                 case RenderTechniqueType.Shadow:
-                    technique = new ShadowMap(RenderTechniqueType.Shadow);
+                    technique = new ShadowMap(type);
                     break;
                 case RenderTechniqueType.GBuffer:
-                    technique = new GBuffer(RenderTechniqueType.GBuffer);
+                    technique = new GBuffer(type);
                     break;
                 case RenderTechniqueType.Lighting:
-                    technique = new LighthingBuffer(RenderTechniqueType.Lighting);
+                    technique = new LighthingBuffer(type);
                     break;
                 case RenderTechniqueType.Selection:
-                    technique = new Selection(RenderTechniqueType.Selection);
+                    technique = new Selection(type);
                     break;
                 case RenderTechniqueType.Sobel:
-                    technique = new Sobel(RenderTechniqueType.Sobel);
+                    technique = new Sobel(type);
                     break;
                 case RenderTechniqueType.Bloom:
-                    technique = new Bloom(RenderTechniqueType.Bloom);
+                    technique = new Bloom(type);
                     break;
                 case RenderTechniqueType.Output:
-                    technique = new OutputBuffer(RenderTechniqueType.Output);
+                    technique = new OutputBuffer(type);
                     break;
                 case RenderTechniqueType.SSAO:
-                    technique = new SSAO(RenderTechniqueType.SSAO);
+                    technique = new SSAO(type);
                     break;
                 default:
                     technique = null;
