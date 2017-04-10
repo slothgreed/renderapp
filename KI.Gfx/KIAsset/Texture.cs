@@ -198,10 +198,8 @@ namespace KI.Gfx.KIAsset
             TextureBuffer.Height = image.Height;
 
             image.Lock();
-
-
+            SetupTexImage2D(TextureBuffer.Target, image);
             ImageInfos.Add(image);
-
             image.UnLock();
             TextureBuffer.UnBindBuffer();
         }
