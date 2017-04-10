@@ -142,7 +142,7 @@ namespace RenderApp.AssetModel
             Timer = new List<int>();
             ModelMatrix = Matrix4.Identity;
             TextureItem = new Dictionary<TextureKind, Texture>();
-            Shader = ShaderCreater.Instance.DefaultAnalyzeShader;
+            //Shader = ShaderCreater.Instance.DefaultShader;
         }
 
         public override void Dispose()
@@ -179,6 +179,11 @@ namespace RenderApp.AssetModel
         #region render
         public virtual void Render()
         {
+            if(Shader == null)
+            {
+                Logger.Log(Logger.LogLevel.Error, "not set shader");
+                return;
+            }
             ShaderHelper.InitializeState(Shader, this, TextureItem);
             Shader.BindBuffer();
             if (GeometryInfo.Index.Count == 0)

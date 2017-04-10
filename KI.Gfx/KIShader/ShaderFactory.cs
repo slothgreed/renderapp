@@ -57,7 +57,7 @@ namespace KI.Gfx.KIShader
                 ShaderProgram vert = ShaderProgramFactory.Instance.CreateShaderProgram(vPath, vPath);
                 ShaderProgram frag = ShaderProgramFactory.Instance.CreateShaderProgram(fPath, fPath);
                 shader = new Shader(vert, frag);
-                ShaderList.Add(vname+fname, shader);
+                ShaderList.Add(vname + fname, shader);
             }
             return shader;
         }

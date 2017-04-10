@@ -28,23 +28,23 @@ namespace RenderApp.AssetModel.RA_Geometry
             objData = new OBJLoader(name, filePath);
         }
 
-        public void SetMaterial(Geometry geometry,OBJMaterial material)
+        public void SetMaterial(Geometry geometry, OBJMaterial material)
         {
-            if(material.map_Kd != null)
+            if (material.map_Kd != null)
             {
                 Texture albedo = TextureFactory.Instance.CreateTexture(material.map_Kd);
                 geometry.AddTexture(TextureKind.Albedo, albedo);
                 Globals.Project.ActiveProject.AddChild(albedo);
             }
 
-            if(material.map_bump != null)
+            if (material.map_bump != null)
             {
                 Texture bump = TextureFactory.Instance.CreateTexture(material.map_bump);
                 geometry.AddTexture(TextureKind.Normal, bump);
                 Globals.Project.ActiveProject.AddChild(bump);
             }
-            
-            if(material.map_Ns != null)
+
+            if (material.map_Ns != null)
             {
                 Texture spec = TextureFactory.Instance.CreateTexture(material.map_Ns);
                 geometry.AddTexture(TextureKind.Specular, spec);
@@ -52,17 +52,18 @@ namespace RenderApp.AssetModel.RA_Geometry
             }
             string vertex = ShaderCreater.Instance.GetVertexShader(geometry);
             string frag = ShaderCreater.Instance.GetOBJFragShader(geometry);
-            if(vertex == null || frag == null)
+            if (vertex == null || frag == null)
             {
                 return;
             }
-            geometry.Shader = (ShaderFactory.Instance.CreateShaderVF(vertex,frag));
+            geometry.Shader = ShaderFactory.Instance.CreateShaderVF(vertex, frag);
         }
+
         public List<RenderObject> CreateRenderObject()
         {
             List<RenderObject> geometrys = new List<RenderObject>();
 
-            foreach(var material in objData.mtlList.Values)
+            foreach (var material in objData.mtlList.Values)
             {
                 RenderObject geometry = null;
                 var Position = new List<Vector3>();
@@ -89,7 +90,7 @@ namespace RenderApp.AssetModel.RA_Geometry
 
                 geometry = AssetFactory.Instance.CreateRenderObject(material.name);
                 geometry.CreatePNT(Position, Normal, TexCoord, PrimitiveType.Triangles);
-                SetMaterial(geometry,material);
+                SetMaterial(geometry, material);
                 if (geometry != null)
                 {
                     geometrys.Add(geometry);
@@ -98,6 +99,7 @@ namespace RenderApp.AssetModel.RA_Geometry
             _renderObject = geometrys;
             return geometrys;
         }
+
         private List<RenderObject> _renderObject;
         public List<RenderObject> RenderObject
         {
