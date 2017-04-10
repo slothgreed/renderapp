@@ -7,7 +7,8 @@ namespace RenderApp.KIRenderSystem
     {
         Shadow,
         GBuffer,
-        Lighting,
+        IBL,
+        Deferred,
         Bloom,
         Dof,
         Sobel,
@@ -43,8 +44,11 @@ namespace RenderApp.KIRenderSystem
                 case RenderTechniqueType.GBuffer:
                     technique = new GBuffer(type);
                     break;
-                case RenderTechniqueType.Lighting:
-                    technique = new LighthingBuffer(type);
+                case RenderTechniqueType.Deferred:
+                    technique = new DeferredBuffer(type);
+                    break;
+                case RenderTechniqueType.IBL:
+                    technique = new ImageBasedLighting(type);
                     break;
                 case RenderTechniqueType.Selection:
                     technique = new Selection(type);

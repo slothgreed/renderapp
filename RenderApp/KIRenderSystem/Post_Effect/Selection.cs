@@ -4,8 +4,8 @@ namespace RenderApp.KIRenderSystem
 {
     public partial class Selection : RenderTechnique
     {
-        private static string vertexShader = ProjectInfo.ShaderDirectory + @"\Selection.vert";
-        private static string fragShader = ProjectInfo.ShaderDirectory + @"\Selection.frag";
+        private static string vertexShader = ProjectInfo.ShaderDirectory + @"\PostEffect\Selection.vert";
+        private static string fragShader = ProjectInfo.ShaderDirectory + @"\PostEffect\Selection.frag";
 
         public override void Initialize()
         {

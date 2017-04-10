@@ -10,8 +10,8 @@ namespace RenderApp.KIRenderSystem
 {
     public partial class Bloom : RenderTechnique
     {
-        private static string vertexShader = ProjectInfo.ShaderDirectory + @"\bloom.vert";
-        private static string fragShader = ProjectInfo.ShaderDirectory + @"\bloom.frag";
+        private static string vertexShader = ProjectInfo.ShaderDirectory + @"\PostEffect\bloom.vert";
+        private static string fragShader = ProjectInfo.ShaderDirectory + @"\PostEffect\bloom.frag";
         
         private float[] m_Weight = new float[5];
 

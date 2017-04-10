@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using RenderApp.GfxUtility;
+using KI.Gfx.KIShader;
 namespace RenderApp.AssetModel
 {
     /// <summary>
@@ -11,6 +13,10 @@ namespace RenderApp.AssetModel
         private void Initialize()
         {
             GenBuffer();
+
+            string vert = ShaderCreater.Instance.GetVertexShader(this);
+            string frag = ShaderCreater.Instance.GetFragShader(this);
+            this.Shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
         }
 
         /// <summary>

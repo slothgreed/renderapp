@@ -40,10 +40,15 @@ namespace RenderApp.KIRenderSystem
             get;
             private set;
         }
+        public RenderTechnique IBLStage
+        {
+            get;
+            private set;
+        }
         /// <summary>
         /// ライティングステージ
         /// </summary>
-        public RenderTechnique LightingStage
+        public RenderTechnique DeferredStage
         {
             get;
             private set;
@@ -82,13 +87,14 @@ namespace RenderApp.KIRenderSystem
             Height = height;
             ProcessingTexture = new List<Texture>();
             PostProcessMode = false;
-            PreRenderStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Shadow);
-            GBufferStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer);
-            LightingStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Lighting);
-            SelectionStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Selection);
-            PostEffect = new PostEffectManager();
-            OutputStage = (OutputBuffer)RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output);
-            OutputTexture = RenderTechniqueFactory.Instance.OutputTexture(RenderTechniqueType.GBuffer).First();
+            PreRenderStage  = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Shadow);
+            GBufferStage    = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer);
+            IBLStage        = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.IBL);
+            DeferredStage   = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Deferred);
+            SelectionStage  = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Selection);
+            PostEffect      = new PostEffectManager();
+            OutputStage     = (OutputBuffer)RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output);
+            OutputTexture   = RenderTechniqueFactory.Instance.OutputTexture(RenderTechniqueType.GBuffer).First();
 
             foreach (var texture in RenderTechniqueFactory.Instance.OutputTextures())
             {
@@ -137,9 +143,10 @@ namespace RenderApp.KIRenderSystem
         }
         public void Render()
         {
-            PreRenderStage.Render();
+            //PreRenderStage.Render();
             GBufferStage.Render();
-            LightingStage.Render();
+            IBLStage.Render();
+            DeferredStage.Render();
             //SelectionStage.ClearBuffer();
             //SelectionStage.Render();
 

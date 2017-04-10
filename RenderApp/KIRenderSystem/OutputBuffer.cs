@@ -10,8 +10,8 @@ namespace RenderApp.KIRenderSystem
 {
     public partial class OutputBuffer : RenderTechnique
     {
-        private static string vertexShader = ProjectInfo.ShaderDirectory + @"\Output.vert";
-        private static string fragShader = ProjectInfo.ShaderDirectory + @"\Output.frag";
+        private static string vertexShader = ProjectInfo.ShaderDirectory + @"\PostEffect\Output.vert";
+        private static string fragShader = ProjectInfo.ShaderDirectory + @"\PostEffect\Output.frag";
 
         public OutputBuffer(RenderTechniqueType tech)
             : base("OutputBuffer", vertexShader, fragShader, tech, RenderType.Original)

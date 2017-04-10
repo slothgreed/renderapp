@@ -69,7 +69,7 @@ namespace RenderApp
                     ProjectInfo.TextureDirectory + @"\Red.png",
                     ProjectInfo.TextureDirectory + @"\Green.png",
                     ProjectInfo.TextureDirectory + @"\Blue.png",
-                    ProjectInfo.TextureDirectory + @"\Yellow.png",
+                    ProjectInfo.TextureDirectory + @"\orange.png",
                     ProjectInfo.TextureDirectory + @"\Purple.png",
                     ProjectInfo.TextureDirectory + @"\Gray.png"
             };

@@ -2,8 +2,8 @@
 {
     partial class Sobel : RenderTechnique
     {
-        private static string vertexShader = ProjectInfo.ShaderDirectory + @"\sobel.vert";
-        private static string fragShader = ProjectInfo.ShaderDirectory + @"\sobel.frag";
+        private static string vertexShader = ProjectInfo.ShaderDirectory + @"\PostEffect\sobel.vert";
+        private static string fragShader = ProjectInfo.ShaderDirectory + @"\PostEffect\sobel.frag";
         
         #region [Shaderの初期化関数]
         public override void Initialize()

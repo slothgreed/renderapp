@@ -52,35 +52,42 @@ namespace RenderApp.GfxUtility
                 CheckBufferEnable(geometry.ColorBuffer) &&
                 CheckBufferEnable(geometry.TexCoordBuffer))
             {
-                return Directory + "GeneralPNCT.vert";
+                return Directory + @"GBuffer\GeneralPNCT.vert";
             }
             if (CheckBufferEnable(geometry.PositionBuffer) &&
                 CheckBufferEnable(geometry.NormalBuffer) &&
                 CheckBufferEnable(geometry.TexCoordBuffer))
             {
-                return Directory + "GeneralPNT.vert";
+                return Directory + @"GBuffer\GeneralPNT.vert";
             }
+            if (CheckBufferEnable(geometry.PositionBuffer) &&
+                CheckBufferEnable(geometry.NormalBuffer) &&
+                CheckBufferEnable(geometry.ColorBuffer))
+            {
+                return Directory + @"GBuffer\GeneralPCN.vert";
+            }
+            
             if (CheckBufferEnable(geometry.PositionBuffer) &&
                 CheckBufferEnable(geometry.TexCoordBuffer))
             {
-                return Directory + "GeneralPT.vert";
+                return Directory + @"GBuffer\GeneralPT.vert";
             }
             if (CheckBufferEnable(geometry.PositionBuffer))
             {
-                return Directory + "GeneralP.vert";
+                return Directory + @"GBuffer\GeneralP.vert";
             }
             return null;
         }
         /// <summary>
         /// フラグシェーダの切り替え
         /// </summary>
-        public string GetConstantFragShader(Geometry geometry)
+        public string GetFragShader(Geometry geometry)
         {
             if (geometry.PositionBuffer != null && geometry.TexCoordBuffer != null && geometry.NormalBuffer != null)
             {
                 if (geometry.PositionBuffer.Enable && geometry.TexCoordBuffer.Enable && geometry.NormalBuffer.Enable)
                 {
-                    return Directory + "ConstantPNT.frag";
+                    return Directory + @"GBuffer\GeneralPNT.frag";
                 }
             }
 
@@ -88,14 +95,14 @@ namespace RenderApp.GfxUtility
             {
                 if (geometry.PositionBuffer.Enable && geometry.ColorBuffer.Enable && geometry.NormalBuffer.Enable)
                 {
-                    return Directory + "ConstantPCN.frag";
+                    return Directory + @"GBuffer\GeneralPCN.frag";
                 }
             }
             if (geometry.PositionBuffer != null && geometry.ColorBuffer != null)
             {
                 if (geometry.PositionBuffer.Enable && geometry.ColorBuffer.Enable)
                 {
-                    return Directory + "ConstantPC.frag";
+                    return Directory + @"GBuffer\GeneralPC.frag";
                 }
             }
             if (geometry.PositionBuffer != null && geometry.NormalBuffer != null)
@@ -103,7 +110,7 @@ namespace RenderApp.GfxUtility
 
                 if (geometry.PositionBuffer.Enable && geometry.NormalBuffer.Enable)
                 {
-                    return Directory + "ConstantPN.frag";
+                    return Directory + @"GBuffer\GeneralPN.frag";
                 }
 
             }
@@ -111,7 +118,7 @@ namespace RenderApp.GfxUtility
             {
                 if (geometry.PositionBuffer.Enable)
                 {
-                    return Directory + "ConstantP.frag";
+                    return Directory + @"GBuffer\GeneralP.frag";
                 }
             }
             return null;
@@ -122,21 +129,21 @@ namespace RenderApp.GfxUtility
                 geometry.GetTexture(TextureKind.Normal) != null &&
                 geometry.GetTexture(TextureKind.Specular) != null)
             {
-                return Directory + "GeneralANS.frag";
+                return Directory + @"GBuffer\GeneralANS.frag";
             }
             if (geometry.GetTexture(TextureKind.Albedo) != null &&
                 geometry.GetTexture(TextureKind.Normal) != null)
             {
-                return Directory + "GeneralAN.frag";
+                return Directory + @"GBuffer\GeneralAN.frag";
             }
             if (geometry.GetTexture(TextureKind.Albedo) != null &&
                 geometry.GetTexture(TextureKind.Specular) != null)
             {
-                return Directory + "GeneralAS.frag";
+                return Directory + @"GBuffer\GeneralAS.frag";
             }
             if (geometry.GetTexture(TextureKind.Albedo) != null)
             {
-                return Directory + "GeneralA.frag";
+                return Directory + @"GBuffer\GeneralA.frag";
             }
             return null;
         }
@@ -146,29 +153,29 @@ namespace RenderApp.GfxUtility
             switch (type)
             {
                 case ShaderType.Bezier:
-                    return ShaderFactory.Instance.CreateShaderVF(Directory + "bezier");
+                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"GBuffer\bezier");
                 case ShaderType.Displacement:
-                    return ShaderFactory.Instance.CreateShaderVF(Directory + "disp");
+                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"GBuffer\disp");
                 case ShaderType.EffectLine:
-                    return ShaderFactory.Instance.CreateShaderVF(Directory + "effectline");
+                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"GBuffer\effectline");
                 case ShaderType.NURBS:
-                    return ShaderFactory.Instance.CreateShaderVF(Directory + "nurbs");
+                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"GBuffer\nurbs");
                 case ShaderType.Fur:
-                    return ShaderFactory.Instance.CreateShaderVF(Directory + "fur");
+                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"GBuffer\fur");
             }
             return null;
         }
-        private Shader _defaultAnalyzeShader;
-        public Shader DefaultAnalyzeShader
-        {
-            get
-            {
-                if (_defaultAnalyzeShader == null)
-                {
-                    _defaultAnalyzeShader = ShaderFactory.Instance.CreateShaderVF(ProjectInfo.ShaderDirectory + @"\ConstantGeometry");
-                }
-                return _defaultAnalyzeShader;
-            }
-        }
+        //private Shader _defaultShader;
+        //public Shader DefaultShader
+        //{
+        //    get
+        //    {
+        //        if (_defaultShader == null)
+        //        {
+        //            _defaultShader = ShaderFactory.Instance.CreateShaderVF(ProjectInfo.ShaderDirectory + @"\GBuffer\ConstantGeometry");
+        //        }
+        //        return _defaultShader;
+        //    }
+        //}
     }
 }
