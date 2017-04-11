@@ -65,9 +65,9 @@ namespace KI.Gfx.Analyzer
             Vector3 vIndex = new Vector3();
             for (int i = 0; i < position.Count / 3; i++)
             {
-                Vector3 tri1 = KICalc.Multiply(modelMatrix, position[3 * i]);
-                Vector3 tri2 = KICalc.Multiply(modelMatrix, position[3 * i + 1]);
-                Vector3 tri3 = KICalc.Multiply(modelMatrix, position[3 * i + 2]);
+                Vector3 tri1 = position[3 * i]; //KICalc.Multiply(modelMatrix, position[3 * i]);
+                Vector3 tri2 = position[3 * i + 1]; //KICalc.Multiply(modelMatrix, position[3 * i + 1]);
+                Vector3 tri3 = position[3 * i + 2]; //KICalc.Multiply(modelMatrix, position[3 * i + 2]);
 
                 //triを包括する部分のボクセルの最小値と最大値のインデックス
                 Vector3 minIndex = MinVector(tri1, tri2);

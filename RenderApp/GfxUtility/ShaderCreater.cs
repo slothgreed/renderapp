@@ -66,6 +66,12 @@ namespace RenderApp.GfxUtility
             {
                 return Directory + @"GBuffer\GeneralPCN.vert";
             }
+
+            if (CheckBufferEnable(geometry.PositionBuffer) &&
+                CheckBufferEnable(geometry.ColorBuffer))
+            {
+                return Directory + @"GBuffer\GeneralPC.vert";
+            }
             
             if (CheckBufferEnable(geometry.PositionBuffer) &&
                 CheckBufferEnable(geometry.TexCoordBuffer))

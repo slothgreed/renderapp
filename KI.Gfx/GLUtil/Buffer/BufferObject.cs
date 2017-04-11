@@ -21,8 +21,8 @@ namespace KI.Gfx.GLUtil
    
     public abstract class BufferObject
     {
-        public bool NowBind;
-        public int DeviceID { get; set; }
+        protected bool NowBind;
+        public int DeviceID { get; protected set; }
         public abstract void PreGenBuffer();
         public abstract void PreDispose();
         public abstract void PreBindBuffer();
