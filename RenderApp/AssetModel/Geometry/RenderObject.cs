@@ -31,12 +31,14 @@ namespace RenderApp.AssetModel
             GeometryInfo.Position = new List<Vector3>(position);
             GeometryInfo.Normal = new List<Vector3>(normal);
             GeometryInfo.Color = new List<Vector3>(color);
+            RenderType = prim;
             Initialize();
         }
         internal void CreatePNC(List<Vector3> position, List<Vector3> normal, Vector3 color, PrimitiveType prim)
         {
             GeometryInfo.Position = new List<Vector3>(position);
             GeometryInfo.Normal = new List<Vector3>(normal);
+            RenderType = prim;
             for (int i = 0; i < GeometryInfo.Position.Count; i++)
             {
                 GeometryInfo.Color.Add(Vector3.UnitY);

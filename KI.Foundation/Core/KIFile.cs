@@ -29,7 +29,7 @@ namespace KI.Foundation.Core
             private set;
         }
         /// <summary>
-        /// テクスチャ名
+        /// ファイル名
         /// </summary>
         public string FileName
         {
