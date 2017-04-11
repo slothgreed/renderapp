@@ -29,19 +29,9 @@ namespace RenderApp.AssetModel
             return renderObject;
         }
 
-        public Geometry CreateEnvironmentMap()
+        public EnvironmentProbe CreateEnvironmentMap(string name)
         {
-            return null;
-            //string SphereMapAlbedo = ProjectInfo.TextureDirectory + @"\SphreMap.jpg";
-            //string SphereMapVertexShader = ProjectInfo.ShaderDirectory + @"\sphereMap.vert";
-            //string SphereMapFragmentShader = ProjectInfo.ShaderDirectory + @"\sphereMap.frag";
-            //Sphere sphere = new Sphere("SphereMap",SceneManager.Instance.ActiveScene.WorldMax.X * 2, 20, 20, false, Vector3.UnitX);
-            //Texture texture = TextureFactory.Instance.CreateTexture(SphereMapAlbedo);
-            //sphere.geometry.MaterialItem.AddTexture(TextureKind.Albedo, texture);
-            //sphere.geometry.MaterialItem.AddTexture(TextureKind.Albedo, texture);
-            //Project.ActiveProject.AddChild(sphere.geometry.MaterialItem);
-            //Project.ActiveProject.AddChild(texture);
-            //return sphere.geometry;
+            return new EnvironmentProbe(name);
         }
         internal Camera CreateCamera(string name)
         {
@@ -125,6 +115,7 @@ namespace RenderApp.AssetModel
             KI.Gfx.Analyzer.Voxel voxel = new KI.Gfx.Analyzer.Voxel(geometry.GeometryInfo.Position, geometry.GeometryInfo.Index, geometry.ModelMatrix, partition);
             RenderObject wireframe = AssetFactory.Instance.CreateRenderObject("Voxel :" + geometry.Name);
             wireframe.CreatePNC(voxel.vPosition, voxel.vNormal, KICalc.RandomColor(), PrimitiveType.Quads);
+            wireframe.Transformation(geometry.ModelMatrix);
             CreateGeometry(wireframe);
 
             return true;

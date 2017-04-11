@@ -79,7 +79,9 @@ namespace RenderApp
                 worlds[i].AddTexture(TextureKind.Albedo, texture);
                 ActiveScene.AddObject(worlds[i]);
             }
-            
+            EnvironmentProbe cubeMap = AssetFactory.Instance.CreateEnvironmentMap("world");
+            cubeMap.GenCubemap(paths);
+            ActiveScene.AddObject(cubeMap);
 
             List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/StanfordBunny.stl");
             foreach(var b in bunny)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
+using KI.Foundation.Utility;
 namespace KI.Gfx.GLUtil
 {
     public enum TextureType
@@ -11,7 +12,14 @@ namespace KI.Gfx.GLUtil
         Texture1D,
         Texture2D,
         Texture3D,
-        Cubemap
+        Cubemap,    //Can't Create Buffer
+        CubemapPX,
+        CubemapPY,
+        CubemapPZ,
+        CubemapNX,
+        CubemapNY,
+        CubemapNZ,
+
     }
     
     public class TextureBuffer : BufferObject
@@ -26,34 +34,63 @@ namespace KI.Gfx.GLUtil
             get;
             set;
         }
-        public TextureTarget Target
+        public List<TextureTarget> Targets
         {
             get;
             private set;
+        }
+        public TextureTarget Target
+        {
+            get
+            {
+                return Targets.FirstOrDefault();
+            }
         }
         public PixelInternalFormat Format
         {
             get;
             private set;
         }
-        public void SetTextureTargte(TextureType type)
+        private void SetTextureTargte(TextureType type)
         {
+            if(Targets == null)
+            {
+                Targets = new List<TextureTarget>();
+            }
             switch (type)
             {
                 case TextureType.Texture1D:
-                    Target = TextureTarget.Texture1D;
+                    Targets.Add(TextureTarget.Texture1D);
                     break;
                 case TextureType.Texture2D:
-                    Target = TextureTarget.Texture2D;
+                    Targets.Add(TextureTarget.Texture2D);
                     break;
                 case TextureType.Texture3D:
-                    Target = TextureTarget.Texture3D;
+                    Targets.Add(TextureTarget.Texture3D);
                     break;
                 case TextureType.Cubemap:
-                    Target = TextureTarget.TextureCubeMap;
+                    Targets.Add(TextureTarget.TextureCubeMap);
+                    break;
+                case TextureType.CubemapPX:
+                    Targets.Add(TextureTarget.TextureCubeMapPositiveX);
+                    break;
+                case TextureType.CubemapPY:
+                    Targets.Add(TextureTarget.TextureCubeMapPositiveY);
+                    break;
+                case TextureType.CubemapPZ:
+                    Targets.Add(TextureTarget.TextureCubeMapPositiveZ);
+                    break;
+                case TextureType.CubemapNX:
+                    Targets.Add(TextureTarget.TextureCubeMapNegativeX);
+                    break;
+                case TextureType.CubemapNY:
+                    Targets.Add(TextureTarget.TextureCubeMapNegativeY);
+                    break;
+                case TextureType.CubemapNZ:
+                    Targets.Add(TextureTarget.TextureCubeMapNegativeX);
                     break;
                 default:
-                    Target = TextureTarget.Texture2D;
+                    Targets.Add(TextureTarget.Texture1D);
                     break;
             }
 
@@ -61,7 +98,20 @@ namespace KI.Gfx.GLUtil
         }
         public TextureBuffer(TextureType type)
         {
-            SetTextureTargte(type);
+            if(type != TextureType.Cubemap)
+            {
+                SetTextureTargte(type);
+            }
+            else
+            {
+                SetTextureTargte(type);
+                SetTextureTargte(TextureType.CubemapPX);
+                SetTextureTargte(TextureType.CubemapPY);
+                SetTextureTargte(TextureType.CubemapPZ);
+                SetTextureTargte(TextureType.CubemapNX);
+                SetTextureTargte(TextureType.CubemapNY);
+                SetTextureTargte(TextureType.CubemapNZ);
+            }
             Format = PixelInternalFormat.Rgba8;
         }
         public override void PreGenBuffer()
@@ -71,6 +121,16 @@ namespace KI.Gfx.GLUtil
         public void SetData()
         {
 
+        }
+        public void BindBuffer(int i)
+        {
+            GL.BindTexture(Targets[i], DeviceID);
+            if (NowBind)
+            {
+                Logger.Log(Logger.LogLevel.Warning, "Duplicate Bind Error");
+            }
+            NowBind = true;
+            Logger.GLLog(Logger.LogLevel.Error);
         }
         public override void PreBindBuffer()
         {

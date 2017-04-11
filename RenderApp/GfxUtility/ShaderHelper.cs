@@ -85,6 +85,12 @@ namespace RenderApp.GfxUtility
                             info.variable = TextureItem[TextureKind.Albedo].DeviceID;
                         }
                         break;
+                    case "uCubeMap":
+                        if(TextureItem.ContainsKey(TextureKind.Cubemap))
+                        {
+                            info.variable = TextureItem[TextureKind.Cubemap].DeviceID;
+                        }
+                        break;
                     case "uSpecularMap":
                         if (TextureItem.ContainsKey(TextureKind.Specular))
                         {

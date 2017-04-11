@@ -63,10 +63,6 @@ namespace KI.Gfx.KIAsset
             {
                 return TextureBuffer.DeviceID;
             }
-            set
-            {
-                TextureBuffer.DeviceID = value;
-            }
         }
         /// <summary>
         /// MinMag兼ねたフィルタ
@@ -169,6 +165,8 @@ namespace KI.Gfx.KIAsset
             {
                 Logger.Log(Logger.LogLevel.Error, "can not set up cubemap texture");
             }
+            TextureBuffer.BindBuffer();
+
             for (int i = 0; i < 6; i++)
             {
                 KIImageInfo image = images[i];
@@ -176,15 +174,14 @@ namespace KI.Gfx.KIAsset
                 {
                     image.LoadImageData();
                 }
-                TextureBuffer.BindBuffer();
                 image.Lock();
-                SetupTexImage2D(TextureBuffer.Target + i, image);
+                //targetのPX～は、cubemapの2つ目以降から
+                SetupTexImage2D((TextureTarget)(TextureBuffer.Target + i + 2), image);
                 image.UnLock();
                 ImageInfos.Add(image);
             }
-
-
             TextureBuffer.UnBindBuffer();
+
         }
 
         public void GenTexture(KIImageInfo image)

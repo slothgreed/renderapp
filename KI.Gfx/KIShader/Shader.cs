@@ -364,6 +364,13 @@ namespace KI.Gfx.KIShader
                 GL.Uniform1(uniform.ShaderID, activeCount);
                 activeCount++;
             }
+            else if(uniform.variableType == EVariableType.Cubemap)
+            {
+                GL.ActiveTexture(TextureUnit.Texture0 + activeCount);
+                GL.BindTexture(TextureTarget.TextureCubeMap, (int)uniform.variable);
+                GL.Uniform1(uniform.ShaderID, activeCount);
+                activeCount++;
+            }
             else if (uniform.variableType == EVariableType.IntArray)
             {
                 GL.Uniform1(uniform.ShaderID, uniform.arrayNum, (int[])uniform.variable);
@@ -750,7 +757,7 @@ namespace KI.Gfx.KIShader
             GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
             if (status == 0)
             {
-                Logger.GLLog(Logger.LogLevel.Error, GL.GetProgramInfoLog(program));
+                Logger.GLLog(Logger.LogLevel.Error, GL.GetProgramInfoLog(program) + VertexShader.FileName);
             }
 
             return program;
@@ -811,24 +818,24 @@ namespace KI.Gfx.KIShader
                 switch (shaderType)
                 {
                     case ShaderType.FragmentShader:
-                        Logger.Log(Logger.LogLevel.Debug,FragShader.FileName);
+                        Logger.Log(Logger.LogLevel.Error,FragShader.FileName);
                         break;
                     case ShaderType.GeometryShader:
-                        Logger.Log(Logger.LogLevel.Debug, GeomShader.FileName);
+                        Logger.Log(Logger.LogLevel.Error, GeomShader.FileName);
                         break;
                     case ShaderType.TessControlShader:
-                        Logger.Log(Logger.LogLevel.Debug, TesShader.FileName);
+                        Logger.Log(Logger.LogLevel.Error, TesShader.FileName);
                         break;
                     case ShaderType.TessEvaluationShader:
-                        Logger.Log(Logger.LogLevel.Debug, TcsShader.FileName);
+                        Logger.Log(Logger.LogLevel.Error, TcsShader.FileName);
                         break;
                     case ShaderType.VertexShader:
-                        Logger.Log(Logger.LogLevel.Debug, VertexShader.FileName);
+                        Logger.Log(Logger.LogLevel.Error, VertexShader.FileName);
                         break;
                     default:
                         break;
                 }
-                Logger.Log(Logger.LogLevel.Debug, info);
+                Logger.Log(Logger.LogLevel.Error, info);
             }
             Logger.GLLog(Logger.LogLevel.Error);
             return shader;
