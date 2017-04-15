@@ -66,21 +66,21 @@ namespace KI.Gfx.Analyzer
             return true;
         }
 
-        public bool CanExecute()
+        public string CanExecute(string commandArg)
         {
             if (Geometry == null)
-                return false;
+                return "geometry null error";
 
             if (StartIndex < 0 ||
                 EndIndex < 0 ||
                 StartIndex > _halfEdge.m_Vertex.Count ||
                 EndIndex > _halfEdge.m_Vertex.Count)
             {
-                return false;
+                return "init value error";
             }
-            return true;
+            return "";
         }
-        public bool Execute()
+        public string Execute(string commandArg)
         {
             //var analyze = Geometry.FindAnalyze(HalfEdge.ToString());
             //if (analyze != null)
@@ -94,7 +94,7 @@ namespace KI.Gfx.Analyzer
             //    _halfEdge = half;
             //}
             //return DistanceDijkstra(StartIndex, EndIndex);
-            return true;
+            return "";
         }
 
         private void CalcDijkstra(Node[] nodes,int start,int end)
@@ -129,7 +129,7 @@ namespace KI.Gfx.Analyzer
             return true;
         }
 
-        public bool Undo()
+        public bool Undo(string arg)
         {
             return false;
         }

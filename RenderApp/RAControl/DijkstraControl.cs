@@ -60,7 +60,7 @@ namespace RenderApp.RA_Control
                         else
                         {
                             picking.AddVertex(new List<Vector3>() { tri1, tri2, tri3 }, KICalc.RandomColor());
-                            Dijkstra.Execute();
+                            //Dijkstra.Execute();
 
                         }
                     }
@@ -75,11 +75,12 @@ namespace RenderApp.RA_Control
         }
         public override bool Execute()
         {
-            if(Dijkstra.CanExecute())
-            {
-                return Dijkstra.Execute();
-            }
-            return false;   
+            //if(Dijkstra.CanExecute())
+            //{
+            //    return Dijkstra.Execute();
+            //}
+            //return false;
+            return false;
         }
         public override bool Reset()
         {
