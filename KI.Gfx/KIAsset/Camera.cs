@@ -200,7 +200,7 @@ namespace KI.Gfx.KIAsset
             LookAt = Vector3.Zero;
             Up = Vector3.UnitY;
             m_ZoomLength = m_ZoomMax;
-            m_theta = 180.0f;
+            m_theta = 90.0f;
             m_phi = 0.0f;
             UpdateCamera();
         }
