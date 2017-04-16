@@ -49,6 +49,10 @@ namespace KI.Gfx.KIShader
         /// <returns></returns>
         public Shader CreateShaderVF(string vPath, string fPath)
         {
+            if(vPath == null || fPath == null)
+            {
+                return null;
+            }
             Shader shader = FindShader(vPath, fPath);
             if (shader == null)
             {
