@@ -69,6 +69,10 @@
                 <MenuItem Header="Voxelize" Command="{Binding Voxelize}"/>
                 <MenuItem Header="Octree" Command="{Binding Octree}"/>
             </MenuItem>
+            
+            <MenuItem Header="Help">
+                <MenuItem Header="Resource Directory" Command="{Binding OpenExplorer}" CommandParameter="{x:Static local:ProjectInfo.ProjectDirectory}" />
+            </MenuItem>
         </Menu>
 
         <Grid x:Name="mainGrid" Grid.Row="1">

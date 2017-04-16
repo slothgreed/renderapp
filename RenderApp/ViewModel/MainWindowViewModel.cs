@@ -418,6 +418,21 @@ namespace RenderApp.ViewModel
         }
         #endregion
 
+        private void OpenExplorerCommand(object directoryPath)
+        {
+            string path = "";
+            if (directoryPath is string)
+            {
+                path = directoryPath as string;
+            }
+
+            if (string.IsNullOrEmpty(path) || string.IsNullOrWhiteSpace(path) || !Directory.Exists(path))
+            {
+                return;
+            }
+
+            System.Diagnostics.Process.Start(path);
+        }
         #region [Update Method]
         public void UpdateSelectNode(KINode node)
         {

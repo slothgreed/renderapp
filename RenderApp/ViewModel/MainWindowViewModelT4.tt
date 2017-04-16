@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using RenderApp.ViewModel.DockTab;
 
 <# 
 	string[] _property =
@@ -34,6 +33,7 @@ using RenderApp.ViewModel.DockTab;
 		"TogglePostProcess",
 		"Voxelize",
 		"Octree",
+		"OpenExplorer"
 	};
 
 #>

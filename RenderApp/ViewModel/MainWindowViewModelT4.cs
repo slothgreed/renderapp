@@ -154,6 +154,18 @@ namespace RenderApp.ViewModel
 					return _Octree;
 				}
 			}
+			private ICommand _OpenExplorer;
+			public ICommand OpenExplorer
+			{
+				get
+				{
+					if(_OpenExplorer == null)
+					{
+						return _OpenExplorer = CreateCommand(OpenExplorerCommand);						
+					}
+					return _OpenExplorer;
+				}
+			}
 
 			private TabControlViewModel _LeftUpDockPanel;
 			public TabControlViewModel LeftUpDockPanel
