@@ -87,13 +87,15 @@ namespace RenderApp.AssetModel.RA_Geometry
                         TexCoord.Add(objData.vertexInfo.TexCoord[material.texIndex[3 * j + 2]]);
                     }
                 }
-
-                geometry = AssetFactory.Instance.CreateRenderObject(material.name);
-                geometry.CreatePNT(Position, Normal, TexCoord, PrimitiveType.Triangles);
-                SetMaterial(geometry, material);
-                if (geometry != null)
+                if (Position.Count != 0)
                 {
-                    geometrys.Add(geometry);
+                    geometry = AssetFactory.Instance.CreateRenderObject(material.name);
+                    geometry.CreatePNT(Position, Normal, TexCoord, PrimitiveType.Triangles);
+                    SetMaterial(geometry, material);
+                    if (geometry != null)
+                    {
+                        geometrys.Add(geometry);
+                    }
                 }
             }
             _renderObject = geometrys;
