@@ -70,20 +70,20 @@ namespace RenderApp.AssetModel.RA_Geometry
             }
             else
             {
-                front.CreatePT( new List<Vector3> { v0, v1, v2, v3 }, TexCoord, PrimitiveType.Quads);
-                left.CreatePT(  new List<Vector3> { v0, v3, v7, v4 }, TexCoord, PrimitiveType.Quads);
-                back.CreatePT(  new List<Vector3> { v4, v7, v6, v5 }, TexCoord, PrimitiveType.Quads);
-                right.CreatePT( new List<Vector3> { v1, v5, v6, v2 }, TexCoord, PrimitiveType.Quads);
+                front.CreatePT( new List<Vector3> { v3, v0, v1, v2 }, TexCoord, PrimitiveType.Quads);
+                left.CreatePT(  new List<Vector3> { v7, v4, v0, v3 }, TexCoord, PrimitiveType.Quads);
+                back.CreatePT(  new List<Vector3> { v6, v5, v4, v7 }, TexCoord, PrimitiveType.Quads);
+                right.CreatePT( new List<Vector3> { v2, v1, v5, v6 }, TexCoord, PrimitiveType.Quads);
                 top.CreatePT(   new List<Vector3> { v2, v6, v7, v3 }, TexCoord, PrimitiveType.Quads);
                 bot.CreatePT(   new List<Vector3> { v1, v0, v4, v5 }, TexCoord, PrimitiveType.Quads);
             }
 
-            geometry.Add(front);
-            geometry.Add(left);
-            geometry.Add(back);
-            geometry.Add(right);
-            geometry.Add(top);
-            geometry.Add(bot);
+            geometry.Add(right);    ///< posx
+            geometry.Add(top);      ///< posy
+            geometry.Add(back);     ///< posz
+            geometry.Add(left);    ///< negx
+            geometry.Add(bot);      ///< negy
+            geometry.Add(front);      ///< negz
 
             string vert = ShaderCreater.Instance.GetVertexShader(front);
             string frag = ShaderCreater.Instance.GetFragShader(front);
