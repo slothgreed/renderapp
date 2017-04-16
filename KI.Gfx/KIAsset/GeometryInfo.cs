@@ -57,8 +57,6 @@ namespace KI.Gfx.KIAsset
             }
         }
 
-        
-
         #region [convert mesh]
         /// <summary>
         /// Triangle毎に変換
@@ -165,7 +163,6 @@ namespace KI.Gfx.KIAsset
                 {
                     newPosition.Add(Position[i]);
                     Index.Add(newPosition.Count - 1);
-
 
                     if (texArray)
                     {

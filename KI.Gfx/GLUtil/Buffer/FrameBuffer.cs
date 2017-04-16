@@ -19,7 +19,7 @@ namespace KI.Gfx.GLUtil
         /// コンストラクタ
         /// </summary>
         /// <param name="FrameName"></param>
-        public FrameBuffer(string FrameName)
+        internal FrameBuffer(string FrameName)
         {
             this.Name = FrameName;
         }

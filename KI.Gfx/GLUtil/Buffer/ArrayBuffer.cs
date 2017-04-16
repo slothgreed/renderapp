@@ -32,13 +32,13 @@ namespace KI.Gfx.GLUtil
             set;
         }
 
-        public ArrayBuffer()
+        internal ArrayBuffer()
         {
             Target = BufferTarget.ArrayBuffer;
             UsageHint = BufferUsageHint.StaticDraw;
             Enable = true;
         }
-        public ArrayBuffer(BufferTarget target)
+        internal ArrayBuffer(BufferTarget target)
         {
             Target = target;
             Enable = true;

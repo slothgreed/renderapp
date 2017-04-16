@@ -7,6 +7,7 @@ using KI.Gfx.KIAsset;
 using KI.Gfx.GLUtil;
 using KI.Gfx.KIShader;
 using RenderApp.GfxUtility;
+using KI.Gfx.GLUtil.Buffer;
 namespace RenderApp.AssetModel
 {
     public abstract class Geometry : KIObject
@@ -122,7 +123,7 @@ namespace RenderApp.AssetModel
         }
 
         #endregion
-        #region Initializer disposer
+        #region [Initializer disposer]
         public Geometry(string name, PrimitiveType renderType)
             : base(name)
         {
@@ -176,7 +177,7 @@ namespace RenderApp.AssetModel
             }
         }
         #endregion
-        #region render
+        #region [render]
         public virtual void Render()
         {
             if(Shader == null)
@@ -335,39 +336,62 @@ namespace RenderApp.AssetModel
         }
         #endregion
         #endregion
+        #region [buffer proccess]
+
+        #endregion
+        public void SetupBuffer()
+        {
+            if (PositionBuffer != null)
+            {
+                PositionBuffer.SetData(GeometryInfo.Position, EArrayType.Vec3Array);
+            }
+
+            if (GeometryInfo.Normal.Count != 0)
+            {
+                NormalBuffer.SetData(GeometryInfo.Normal, EArrayType.Vec3Array);
+            }
+            if (GeometryInfo.Color.Count != 0)
+            {
+                ColorBuffer.SetData(GeometryInfo.Color, EArrayType.Vec3Array);
+            }
+            if (GeometryInfo.TexCoord.Count != 0)
+            {
+                TexCoordBuffer.SetData(GeometryInfo.TexCoord, EArrayType.Vec2Array);
+            }
+            if (GeometryInfo.Index.Count != 0)
+            {
+                IndexBuffer.SetData(GeometryInfo.Index, EArrayType.IntArray);
+            }
+        }
 
         public void GenBuffer()
         {
             if (GeometryInfo.Position.Count != 0)
             {
-                PositionBuffer = new ArrayBuffer();
+                PositionBuffer = BufferFactory.Instance.CreateArrayBuffer();
                 PositionBuffer.GenBuffer();
-                PositionBuffer.SetData(GeometryInfo.Position, EArrayType.Vec3Array);
             }
             if (GeometryInfo.Normal.Count != 0)
             {
-                NormalBuffer = new ArrayBuffer();
+                NormalBuffer = BufferFactory.Instance.CreateArrayBuffer();
                 NormalBuffer.GenBuffer();
-                NormalBuffer.SetData(GeometryInfo.Normal, EArrayType.Vec3Array);
             }
             if (GeometryInfo.Color.Count != 0)
             {
-                ColorBuffer = new ArrayBuffer();
+                ColorBuffer = BufferFactory.Instance.CreateArrayBuffer();
                 ColorBuffer.GenBuffer();
-                ColorBuffer.SetData(GeometryInfo.Color, EArrayType.Vec3Array);
             }
             if (GeometryInfo.TexCoord.Count != 0)
             {
-                TexCoordBuffer = new ArrayBuffer();
+                TexCoordBuffer = BufferFactory.Instance.CreateArrayBuffer();
                 TexCoordBuffer.GenBuffer();
-                TexCoordBuffer.SetData(GeometryInfo.TexCoord, EArrayType.Vec2Array);
             }
             if (GeometryInfo.Index.Count != 0)
             {
-                IndexBuffer = new ArrayBuffer(BufferTarget.ElementArrayBuffer);
+                IndexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
                 IndexBuffer.GenBuffer();
-                IndexBuffer.SetData(GeometryInfo.Index, EArrayType.IntArray);
             }
+            SetupBuffer();
         }
 
     }

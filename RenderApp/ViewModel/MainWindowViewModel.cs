@@ -20,6 +20,7 @@ using KI.Gfx;
 using KI.Gfx.KIAsset;
 using KI.Gfx.Render;
 using KI.Gfx.KIShader;
+using KI.Gfx.GLUtil.Buffer;
 namespace RenderApp.ViewModel
 {
     public partial class MainWindowViewModel : ViewModelBase
@@ -376,6 +377,7 @@ namespace RenderApp.ViewModel
             ShaderFactory.Instance.Dispose();
             RenderTargetFactory.Instance.Dispose();
             TextureFactory.Instance.Dispose();
+            BufferFactory.Instance.Dispose();
             AssetFactory.Instance.Dispose();
         }
         private void SizeChangedCommand()

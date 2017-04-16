@@ -50,13 +50,6 @@ namespace RenderApp.AssetModel.RA_Geometry
                 geometry.AddTexture(TextureKind.Specular, spec);
                 Globals.Project.ActiveProject.AddChild(spec);
             }
-            string vertex = ShaderCreater.Instance.GetVertexShader(geometry);
-            string frag = ShaderCreater.Instance.GetOBJFragShader(geometry);
-            if (vertex == null || frag == null)
-            {
-                return;
-            }
-            geometry.Shader = ShaderFactory.Instance.CreateShaderVF(vertex, frag);
         }
 
         public List<RenderObject> CreateRenderObject()

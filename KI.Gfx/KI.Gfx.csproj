@@ -62,6 +62,7 @@
     <Compile Include="Analyzer\Tree\Octree.cs" />
     <Compile Include="Analyzer\Tree\Voxel.cs" />
     <Compile Include="GLUtil\Buffer\ArrayBuffer.cs" />
+    <Compile Include="GLUtil\Buffer\BufferFactory.cs" />
     <Compile Include="GLUtil\Buffer\BufferObject.cs" />
     <Compile Include="GLUtil\Buffer\RenderBuffer.cs" />
     <Compile Include="GLUtil\Buffer\SamplerBuffer.cs" />

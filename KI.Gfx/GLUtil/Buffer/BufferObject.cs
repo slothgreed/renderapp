@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using KI.Foundation.Utility;
 using System.Diagnostics;
+using KI.Foundation.Core;
 
 namespace KI.Gfx.GLUtil
 {
@@ -18,8 +19,17 @@ namespace KI.Gfx.GLUtil
         Vec3Array,
         Vec4Array,
     }
+
+    public enum BufferType
+    {
+        Array,
+        Frame,
+        Render,
+        Sampler,
+        Texture
+    }
    
-    public abstract class BufferObject
+    public abstract class BufferObject : KIObject
     {
         protected bool NowBind;
         public int DeviceID { get; protected set; }
@@ -67,6 +77,7 @@ namespace KI.Gfx.GLUtil
             DeviceID = -1;
         }
         public BufferObject()
+            : base("BufferObject")
         {
             DeviceID = -1;
         }

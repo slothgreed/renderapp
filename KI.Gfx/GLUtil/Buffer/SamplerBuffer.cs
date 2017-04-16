@@ -6,12 +6,17 @@ using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 namespace KI.Gfx.GLUtil
 {
-    class SamplerBuffer : BufferObject
+    public class SamplerBuffer : BufferObject
     {
         public int ActiveTexture
         {
             get;
             set;
+        }
+
+        internal SamplerBuffer()
+        {
+
         }
 
         public override void PreGenBuffer()

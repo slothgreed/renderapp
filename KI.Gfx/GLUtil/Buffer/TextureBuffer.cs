@@ -96,7 +96,7 @@ namespace KI.Gfx.GLUtil
 
 
         }
-        public TextureBuffer(TextureType type)
+        internal TextureBuffer(TextureType type)
         {
             if(type != TextureType.Cubemap)
             {

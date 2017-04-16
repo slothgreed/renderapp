@@ -4,6 +4,7 @@ using KI.Gfx.GLUtil;
 using KI.Gfx.KIAsset;
 using KI.Foundation.Utility;
 using OpenTK.Graphics.OpenGL;
+using KI.Gfx.GLUtil.Buffer;
 namespace KI.Gfx.Render
 {
     public class RenderTarget : KIObject 
@@ -40,7 +41,7 @@ namespace KI.Gfx.Render
         internal RenderTarget(string name, int width, int height,int num)
             :base(name)
         {
-            FrameBuffer = new FrameBuffer(name);
+            FrameBuffer = BufferFactory.Instance.CreateFrameBuffer(name);
             Initialize(width, height, num);
         }
 

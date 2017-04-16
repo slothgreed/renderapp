@@ -9,6 +9,7 @@ using System.Drawing.Imaging;
 using KI.Foundation.Utility;
 using KI.Foundation.Core;
 using KI.Gfx.GLUtil;
+using KI.Gfx.GLUtil.Buffer;
 
 namespace KI.Gfx.KIAsset
 {
@@ -215,7 +216,7 @@ namespace KI.Gfx.KIAsset
         /// <rereturns>バインドしたテクスチャID</rereturns>
         public void CreateTextureBuffer(TextureType type)
         {
-            TextureBuffer = new TextureBuffer(type);
+            TextureBuffer = BufferFactory.Instance.CreateTextureBuffer(type);
             TextureBuffer.GenBuffer();
             TextureBuffer.BindBuffer();
             GL.TexParameter(TextureBuffer.Target, TextureParameterName.TextureWrapS, Convert.ToInt32(this.WrapMode));

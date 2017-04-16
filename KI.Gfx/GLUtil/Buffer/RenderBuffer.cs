@@ -14,6 +14,10 @@ namespace KI.Gfx.GLUtil
             get;
             set;
         }
+        internal RenderBuffer()
+        {
+
+        }
         public override void PreGenBuffer()
         {
             DeviceID = GL.GenRenderbuffer();

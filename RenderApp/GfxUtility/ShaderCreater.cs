@@ -34,7 +34,7 @@ namespace RenderApp.GfxUtility
                 return ProjectInfo.ShaderDirectory + @"\";
             }
         }
-        public bool CheckBufferEnable(BufferObject buffer)
+        private bool CheckBufferEnable(BufferObject buffer)
         {
             if(buffer == null)
             {
@@ -47,6 +47,11 @@ namespace RenderApp.GfxUtility
         /// </summary>
         public string GetVertexShader(Geometry geometry)
         {
+            string shaderPath = GetTextureFragShader(geometry);
+            if(shaderPath != null)
+            {
+                return shaderPath;
+            }
             if (CheckBufferEnable(geometry.PositionBuffer) &&
                 CheckBufferEnable(geometry.NormalBuffer) &&
                 CheckBufferEnable(geometry.ColorBuffer) &&
@@ -89,47 +94,39 @@ namespace RenderApp.GfxUtility
         /// </summary>
         public string GetFragShader(Geometry geometry)
         {
-            if (geometry.PositionBuffer != null && geometry.TexCoordBuffer != null && geometry.NormalBuffer != null)
+            if (CheckBufferEnable(geometry.PositionBuffer) &&
+                CheckBufferEnable(geometry.TexCoordBuffer) &&
+                CheckBufferEnable(geometry.NormalBuffer))
             {
-                if (geometry.PositionBuffer.Enable && geometry.TexCoordBuffer.Enable && geometry.NormalBuffer.Enable)
-                {
                     return Directory + @"GBuffer\GeneralPNT.frag";
-                }
             }
 
-            if(geometry.PositionBuffer != null && geometry.ColorBuffer != null && geometry.NormalBuffer != null)
+            if (CheckBufferEnable(geometry.PositionBuffer) &&
+                CheckBufferEnable(geometry.ColorBuffer) &&
+                CheckBufferEnable(geometry.NormalBuffer))
             {
-                if (geometry.PositionBuffer.Enable && geometry.ColorBuffer.Enable && geometry.NormalBuffer.Enable)
-                {
-                    return Directory + @"GBuffer\GeneralPCN.frag";
-                }
+                return Directory + @"GBuffer\GeneralPCN.frag";
             }
-            if (geometry.PositionBuffer != null && geometry.ColorBuffer != null)
-            {
-                if (geometry.PositionBuffer.Enable && geometry.ColorBuffer.Enable)
-                {
-                    return Directory + @"GBuffer\GeneralPC.frag";
-                }
-            }
-            if (geometry.PositionBuffer != null && geometry.NormalBuffer != null)
-            {
 
-                if (geometry.PositionBuffer.Enable && geometry.NormalBuffer.Enable)
-                {
-                    return Directory + @"GBuffer\GeneralPN.frag";
-                }
-
-            }
-            if (geometry.PositionBuffer != null)
+            if (CheckBufferEnable(geometry.PositionBuffer) &&
+                CheckBufferEnable(geometry.ColorBuffer))
             {
-                if (geometry.PositionBuffer.Enable)
-                {
-                    return Directory + @"GBuffer\GeneralP.frag";
-                }
+                return Directory + @"GBuffer\GeneralPC.frag";
+            }
+            
+            if (CheckBufferEnable(geometry.PositionBuffer) &&
+                CheckBufferEnable(geometry.NormalBuffer))
+            {
+                return Directory + @"GBuffer\GeneralPN.frag";
+            }
+            
+            if (CheckBufferEnable(geometry.PositionBuffer))
+            {
+                return Directory + @"GBuffer\GeneralPN.frag";
             }
             return null;
         }
-        public string GetOBJFragShader(Geometry geometry)
+        public string GetTextureFragShader(Geometry geometry)
         {
             if (geometry.GetTexture(TextureKind.Albedo) != null &&
                 geometry.GetTexture(TextureKind.Normal) != null &&
