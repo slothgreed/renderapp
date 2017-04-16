@@ -166,6 +166,13 @@ namespace KI.Gfx.KIAsset
                 Logger.Log(Logger.LogLevel.Error, "can not set up cubemap texture");
             }
             TextureBuffer.BindBuffer();
+            TextureTarget[] target = new TextureTarget[6];
+            target[0] = TextureTarget.TextureCubeMapPositiveX;
+            target[1] = TextureTarget.TextureCubeMapPositiveY;
+            target[2] = TextureTarget.TextureCubeMapPositiveZ;
+            target[3] = TextureTarget.TextureCubeMapNegativeX;
+            target[4] = TextureTarget.TextureCubeMapNegativeY;
+            target[5] = TextureTarget.TextureCubeMapNegativeZ;
 
             for (int i = 0; i < 6; i++)
             {
@@ -176,7 +183,7 @@ namespace KI.Gfx.KIAsset
                 }
                 image.Lock();
                 //targetのPX～は、cubemapの2つ目以降から
-                SetupTexImage2D((TextureTarget)(TextureBuffer.Target + i + 2), image);
+                SetupTexImage2D((target[i], image);
                 image.UnLock();
                 ImageInfos.Add(image);
             }
