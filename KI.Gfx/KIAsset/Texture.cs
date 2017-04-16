@@ -183,7 +183,7 @@ namespace KI.Gfx.KIAsset
                 }
                 image.Lock();
                 //targetのPX～は、cubemapの2つ目以降から
-                SetupTexImage2D((target[i], image);
+                SetupTexImage2D(target[i], image);
                 image.UnLock();
                 ImageInfos.Add(image);
             }
