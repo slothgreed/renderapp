@@ -23,8 +23,8 @@ namespace KI.Gfx.Analyzer
             get
             {
                 return KICalc.Normal(
-                    m_Edge[1].Start.GetPosition() - m_Edge[0].Start.GetPosition(),
-                    m_Edge[2].Start.GetPosition() - m_Edge[0].Start.GetPosition()
+                    m_Edge[1].Start.Position - m_Edge[0].Start.Position,
+                    m_Edge[2].Start.Position - m_Edge[0].Start.Position
                     );
             }
         }
@@ -39,15 +39,21 @@ namespace KI.Gfx.Analyzer
             m_Edge.Add(edge2);
             m_Edge.Add(edge3);
         }
-        public IEnumerable<Edge> GetAroundEdge()
+        public IEnumerable<Edge> AroundEdge
         {
-            return m_Edge;
-        }
-        public IEnumerable<Vertex> GetAroundVertex()
-        {
-            foreach(var edge in m_Edge)
+            get
             {
-                yield return edge.Start;
+                return m_Edge;
+            }
+        }
+        public IEnumerable<Vertex> AroundVertex
+        {
+            get
+            {
+                foreach (var edge in m_Edge)
+                {
+                    yield return edge.Start;
+                }
             }
         }
         public void Dispose()

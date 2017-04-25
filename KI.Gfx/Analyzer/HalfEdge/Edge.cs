@@ -95,13 +95,14 @@ namespace KI.Gfx.Analyzer
                 return (Start - End).Length;
             }
         }
-        public Edge(Mesh mesh, Vertex start, Vertex end,int index)
+        public Edge(Mesh mesh, Vertex start, Vertex end, int index)
         {
             Mesh = mesh;
             Start = start;
             End = end;
             Index = index;
         }
+
         public void Dispose()
         {
             DeleteFlg = true;

@@ -4,10 +4,10 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using KI.Foundation.Core;
 using KI.Gfx.KIAsset;
+using KI.Gfx.Analyzer;
 using KI.Foundation.Utility;
 using KI.Gfx.KIShader;
 using RenderApp.AssetModel.RA_Geometry;
-
 namespace RenderApp.AssetModel
 {
     class AssetFactory : KIFactoryBase< RenderObject>
@@ -69,27 +69,46 @@ namespace RenderApp.AssetModel
             {
                 return false;
             }
+            //Geometry geometry = asset as Geometry;
+            //List<Vector3> position = new List<Vector3>();
+            //for (int i = 0; i < geometry.GeometryInfo.Position.Count / 3; i++)
+            //{
+            //    position.Add(geometry.GeometryInfo.Position[3 * i]);
+            //    position.Add(geometry.GeometryInfo.Position[3 * i + 1]);
+
+            //    position.Add(geometry.GeometryInfo.Position[3 * i + 1]);
+            //    position.Add(geometry.GeometryInfo.Position[3 * i + 2]);
+
+            //    position.Add(geometry.GeometryInfo.Position[3 * i + 2]);
+            //    position.Add(geometry.GeometryInfo.Position[3 * i]);
+
+            //}
+            //RenderObject wireframe = AssetFactory.Instance.CreateRenderObject("WireFrame :" + geometry.Name);
+            //wireframe.CreatePC(position, KICalc.RandomColor(), PrimitiveType.Lines);
+            //wireframe.ModelMatrix = geometry.ModelMatrix;
+            //CreateGeometry(wireframe);
+
             Geometry geometry = asset as Geometry;
-            List<Vector3> position = new List<Vector3>();
-            for (int i = 0; i < geometry.GeometryInfo.Position.Count / 3; i++)
-            {
-                position.Add(geometry.GeometryInfo.Position[3 * i]);
-                position.Add(geometry.GeometryInfo.Position[3 * i + 1]);
 
-                position.Add(geometry.GeometryInfo.Position[3 * i + 1]);
-                position.Add(geometry.GeometryInfo.Position[3 * i + 2]);
-
-                position.Add(geometry.GeometryInfo.Position[3 * i + 2]);
-                position.Add(geometry.GeometryInfo.Position[3 * i]);
-
-            }
-            RenderObject wireframe = AssetFactory.Instance.CreateRenderObject("WireFrame :" + geometry.Name);
-            wireframe.CreatePC(position, KICalc.RandomColor(), PrimitiveType.Lines);
-            wireframe.ModelMatrix = geometry.ModelMatrix;
-            CreateGeometry(wireframe);
+            HalfEdge half = new HalfEdge(geometry.geometryInfo);
+            GeometryInfo info = half.CreateGeometryInfo();
+            RenderObject halfEdge = AssetFactory.Instance.CreateRenderObject("HalfEdge :" + geometry.Name);
+            halfEdge.CreateGeometryInfo(info, PrimitiveType.Triangles);
+            halfEdge.ModelMatrix = geometry.ModelMatrix;
+            CreateGeometry(halfEdge);
 
             return true;
         }
+
+        internal bool CreateHalfEdge(KIObject asset)
+        {
+            if (!CanCreateGeometry(asset))
+            {
+                return false;
+            }
+            return true;
+        }
+
         internal bool CreatePolygon(KIObject asset)
         {
             if (!CanCreateGeometry(asset))
@@ -97,11 +116,13 @@ namespace RenderApp.AssetModel
                 return false;
             }
             Geometry geometry = asset as Geometry;
-            List<Vector3> position = new List<Vector3>(geometry.GeometryInfo.Position);
-            List<Vector3> normal = new List<Vector3>(geometry.GeometryInfo.Normal);
-            RenderObject polygon = AssetFactory.Instance.CreateRenderObject("Polygon :" + geometry.Name);
-            polygon.CreatePNC(position, normal, new Vector3(0.7f, 0.7f, 0.7f), PrimitiveType.Triangles);
-            CreateGeometry(polygon);
+            geometry.geometryInfo.ConvertVertexArray();
+            geometry.SetupBuffer();
+            //List<Vector3> position = new List<Vector3>(geometry.GeometryInfo.Position);
+            //List<Vector3> normal = new List<Vector3>(geometry.GeometryInfo.Normal);
+            //RenderObject polygon = AssetFactory.Instance.CreateRenderObject("Polygon :" + geometry.Name);
+            //polygon.CreatePNC(position, normal, new Vector3(0.7f, 0.7f, 0.7f), PrimitiveType.Triangles);
+            //CreateGeometry(polygon);
 
             return true;
         }
@@ -112,7 +133,7 @@ namespace RenderApp.AssetModel
                 return false;
             }
             Geometry geometry = asset as Geometry;
-            KI.Gfx.Analyzer.Voxel voxel = new KI.Gfx.Analyzer.Voxel(geometry.GeometryInfo.Position, geometry.GeometryInfo.Index, geometry.ModelMatrix, partition);
+            KI.Gfx.Analyzer.Voxel voxel = new KI.Gfx.Analyzer.Voxel(geometry.geometryInfo.Position, geometry.geometryInfo.Index, geometry.ModelMatrix, partition);
             RenderObject wireframe = AssetFactory.Instance.CreateRenderObject("Voxel :" + geometry.Name);
             wireframe.CreatePNC(voxel.vPosition, voxel.vNormal, KICalc.RandomColor(), PrimitiveType.Quads);
             wireframe.Transformation(geometry.ModelMatrix);

@@ -105,7 +105,7 @@ namespace KI.Gfx.Analyzer
             current.cost = 0;
 
             //calc start
-            foreach(var aroundVertex in nodes[start].vertex.GetAroundVertex())
+            foreach(var aroundVertex in nodes[start].vertex.AroundVertex)
             {
                 Node around = nodes[aroundVertex.Index];
 

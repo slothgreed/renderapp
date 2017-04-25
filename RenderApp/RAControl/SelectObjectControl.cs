@@ -29,17 +29,17 @@ namespace RenderApp.RA_Control
         {
             bool select = false;
             //頂点配列の時
-            if (geometry.GeometryInfo.Index.Count != 0)
+            if (geometry.geometryInfo.Index.Count != 0)
             {
 
             }
             else
             {
-                for (int i = 0; i < geometry.GeometryInfo.Position.Count / 3; i++)
+                for (int i = 0; i < geometry.geometryInfo.Position.Count / 3; i++)
                 {
-                    Vector3 vertex1 = KICalc.Multiply(geometry.ModelMatrix, geometry.GeometryInfo.Position[3 * i]);
-                    Vector3 vertex2 = KICalc.Multiply(geometry.ModelMatrix, geometry.GeometryInfo.Position[3 * i + 1]);
-                    Vector3 vertex3 = KICalc.Multiply(geometry.ModelMatrix, geometry.GeometryInfo.Position[3 * i + 2]);
+                    Vector3 vertex1 = KICalc.Multiply(geometry.ModelMatrix, geometry.geometryInfo.Position[3 * i]);
+                    Vector3 vertex2 = KICalc.Multiply(geometry.ModelMatrix, geometry.geometryInfo.Position[3 * i + 1]);
+                    Vector3 vertex3 = KICalc.Multiply(geometry.ModelMatrix, geometry.geometryInfo.Position[3 * i + 2]);
                     Vector3 result = Vector3.Zero;
                     if (KICalc.CrossPlanetoLinePos(vertex1, vertex2, vertex3, near, far, ref minLength, out result))
                     {

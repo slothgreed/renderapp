@@ -14,6 +14,7 @@ namespace KI.Gfx.Analyzer
         public List<Edge> m_Edge = new List<Edge>();
         private int m_EdgeCount = 0;
         public List<Vertex> m_Vertex = new List<Vertex>();
+        public List<int> m_Index = new List<int>();
         public Parameter GaussCurvature = new Parameter();
         public Parameter MeanCurvature = new Parameter();
         public Parameter MaxCurvature = new Parameter();
@@ -39,11 +40,12 @@ namespace KI.Gfx.Analyzer
             if (poly_Index == null || poly_Index.Count == 0)
             {
                 CreateHalfEdgeData(position);
+                CreateVertexIndex();
             }
             else
             {
-                MakeVertexListForVertexIndex(position);
-                MakeEdgeListForVertexIndex(poly_Index);
+                MakeVertexListByVertexIndex(position);
+                MakeEdgeListByVertexIndex(poly_Index);
             }
             SetOppositeEdge();
 
@@ -61,6 +63,7 @@ namespace KI.Gfx.Analyzer
                 Logger.Log(Logger.LogLevel.Debug, "Create Half Edge OK!");
             }
         }
+
         /// <summary>
         /// ハーフエッジがエラーを持つかチェック
         /// </summary>
@@ -120,7 +123,7 @@ namespace KI.Gfx.Analyzer
 
 
             //頂点が削除対象なら、残す方に移動
-            foreach (var edge in delV.GetAroundEdge())
+            foreach (var edge in delV.AroundEdge)
             {
                 if (edge.Start == delV)
                 {
@@ -173,7 +176,7 @@ namespace KI.Gfx.Analyzer
         /// </summary>
         /// <param name="vertex_List"></param>
         /// <param name="checkOverlap">重複チェック</param>
-        private void MakeVertexListForVertexIndex(List<Vector3> vertex_List)
+        private void MakeVertexListByVertexIndex(List<Vector3> vertex_List)
         {
             for (int i = 0; i < vertex_List.Count; i++)
             {
@@ -181,56 +184,71 @@ namespace KI.Gfx.Analyzer
                 m_Vertex.Add(vertex);
             }
         }
+
+        public GeometryInfo CreateGeometryInfo()
+        {
+            var geometry = new GeometryInfo();
+            foreach (var vertex in m_Vertex)
+            {
+                geometry.Position.Add(vertex.Position);
+                geometry.Normal.Add(vertex.Normal);
+            }
+            geometry.Index = m_Index;
+            return geometry;
+
+        }
+        /// <summary>
+        /// 頂点インデックスの作成
+        /// </summary>
+        private void CreateVertexIndex()
+        {
+            foreach (var mesh in m_Mesh)
+            {
+                foreach (var index in mesh.AroundVertex)
+                {
+                    m_Index.Add(index.Index);
+                }
+            }
+        }
+
+        /// <summary>
+        /// ハーフエッジデータ構造のために、重複する頂点情報を一つに.メッシュ情報も生成
+        /// </summary>
+        /// <param name="vertex_List"></param>
         private void CreateHalfEdgeData(List<Vector3> vertex_List)
         {
-            bool contain = false;
-            Vertex v1 = null,v2 = null,v3 = null;
+            Vertex v1 = null, v2 = null, v3 = null;
             //最終的にポリゴンに格納する頂点
-            Vertex polyVertex;
             for (int i = 0; i < vertex_List.Count; i++)
             {
-                polyVertex = null;
-                contain = false;
-                Vertex vertex = new Vertex(vertex_List[i], i);
-                foreach (var vList in m_Vertex)
+                //ないVertexを調査
+                Vertex vertex = m_Vertex.Find(p => p.Position == vertex_List[i]);
+                if (vertex == null)
                 {
-                    if (vList == vertex)
-                    {
-                        contain = true;
-                        polyVertex = vList;
-                        break;
-                    }
-                }
-                if (!contain)
-                {
-                    vertex.Index = m_Vertex.Count;
+                    vertex = new Vertex(vertex_List[i], m_Vertex.Count);
                     m_Vertex.Add(vertex);
-                    polyVertex = vertex;
                 }
 
-                if(v1 == null)
+                if (v1 == null)
                 {
-                    v1 = polyVertex;
-                }else if(v2 == null)
+                    v1 = vertex;
+                }
+                else if (v2 == null)
                 {
-                    v2 = polyVertex;
+                    v2 = vertex;
                 }
                 else
                 {
-                    v3 = polyVertex;
-                }
-
-                //すべての頂点ができたとき。
-                if(v3 != null)
-                {
-                    CreateMesh(v1,v2,v3);
+                    v3 = vertex;
+                    CreateMesh(v1, v2, v3);
                     v1 = null;
                     v2 = null;
                     v3 = null;
                 }
             }
         }
-        private void CreateMesh(Vertex v1,Vertex v2,Vertex v3)
+
+        private void CreateMesh(Vertex v1, Vertex v2, Vertex v3)
         {
             Mesh mesh = new Mesh();
 
@@ -243,11 +261,11 @@ namespace KI.Gfx.Analyzer
             edge2.Next = edge3;
             edge3.Next = edge1;
 
-            
+
             edge1.Before = edge3;
             edge2.Before = edge1;
             edge3.Before = edge2;
-            
+
             //頂点にエッジを持たせる
             v1.AddEdge(edge1);
             v2.AddEdge(edge2);
@@ -262,9 +280,9 @@ namespace KI.Gfx.Analyzer
             m_Edge.Add(edge3);
         }
         /// <summary>
-        /// 頂点番号を持つエッジを生成
+        /// 頂点番号を持つエッジと面を生成
         /// </summary>
-        private void MakeEdgeListForVertexIndex(List<int> poly_Index)
+        private void MakeEdgeListByVertexIndex(List<int> poly_Index)
         {
             int poly_Num = poly_Index.Count / 3;
             for (int num = 0; num < poly_Num; num++)
@@ -283,7 +301,7 @@ namespace KI.Gfx.Analyzer
         {
             foreach(var vertex in m_Vertex)
             {
-                foreach(var edge in vertex.GetAroundEdge())
+                foreach(var edge in vertex.AroundEdge)
                 {
                     SetOppositeEdge2(edge);
                 }
@@ -307,7 +325,7 @@ namespace KI.Gfx.Analyzer
             Vertex start = edge.Start;
             Vertex end = edge.End;
             //反対の頂点のエッジループ
-            foreach (var opposite in end.GetAroundEdge())
+            foreach (var opposite in end.AroundEdge)
             {
                 if (opposite.Start == end && opposite.End == start)
                 {
@@ -343,7 +361,7 @@ namespace KI.Gfx.Analyzer
         #region [getter method]
         public Edge GetEdge(Vertex start, Vertex end)
         {
-            foreach (var edge in start.GetAroundEdge())
+            foreach (var edge in start.AroundEdge)
             {
                 if (edge.Start == start && edge.End == end)
                 {
@@ -365,7 +383,7 @@ namespace KI.Gfx.Analyzer
 
         public IEnumerable<Edge> GetAroundEdge(int vertex_Index)
         {
-            foreach(var edge in m_Vertex[vertex_Index].GetAroundEdge())
+            foreach(var edge in m_Vertex[vertex_Index].AroundEdge)
             {
                 yield return edge;
             }
@@ -378,7 +396,7 @@ namespace KI.Gfx.Analyzer
         /// <returns></returns>
         public IEnumerable<Mesh> GetAroundMesh(int vertex_Index)
         {
-            foreach(var mesh in m_Vertex[vertex_Index].GetAroundMesh())
+            foreach (var mesh in m_Vertex[vertex_Index].AroundMesh)
             {
                 yield return mesh;
             }
@@ -388,7 +406,7 @@ namespace KI.Gfx.Analyzer
         /// </summary>
         public IEnumerable<int> GetAroundVertexIndex(int vertex_Index)
         {
-            foreach(var edge in m_Vertex[vertex_Index].GetAroundEdge())
+            foreach (var edge in m_Vertex[vertex_Index].AroundEdge)
             {
                 yield return edge.End.Index;
             }
@@ -417,17 +435,17 @@ namespace KI.Gfx.Analyzer
         /// </summary>
         /// <param name="vertex"></param>
         /// <param name="distance"></param>
-        private void RecursiveAroundPosition(List<Vertex> vertex_list, Vertex vertex,Vertex startVertex,float distance)
+        private void RecursiveAroundPosition(List<Vertex> vertex_list, Vertex vertex, Vertex startVertex, float distance)
         {
             float length;
-            foreach (var aroundEdge in vertex.GetAroundEdge())
+            foreach (var aroundEdge in vertex.AroundEdge)
             {
-                length = (startVertex - aroundEdge.End).Length; 
-                if ( length < distance && aroundEdge.End.calcFrag == false)
+                length = (startVertex - aroundEdge.End).Length;
+                if (length < distance && aroundEdge.End.calcFrag == false)
                 {
                     aroundEdge.End.calcFrag = true;
                     vertex_list.Add(aroundEdge.End);
-                    RecursiveAroundPosition(vertex_list,aroundEdge.End,startVertex, distance);
+                    RecursiveAroundPosition(vertex_list, aroundEdge.End, startVertex, distance);
                 }
             }
         }

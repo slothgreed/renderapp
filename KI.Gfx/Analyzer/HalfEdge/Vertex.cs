@@ -43,17 +43,17 @@ namespace KI.Gfx.Analyzer
         {
             return new Vector3(v1.Position + v2.Position);
         }
-        public static Vector3 operator -(Vertex v1,Vertex v2)
+        public static Vector3 operator -(Vertex v1, Vertex v2)
         {
             return new Vector3(v1.Position - v2.Position);
         }
-        public static Vector3 operator *(Vertex v1,Vertex v2)
+        public static Vector3 operator *(Vertex v1, Vertex v2)
         {
             return new Vector3(v1.Position * v2.Position);
         }
-        public static bool operator ==(Vertex v1,Vertex v2)
+        public static bool operator ==(Vertex v1, Vertex v2)
         {
-            if(object.ReferenceEquals(v1,v2))
+            if (object.ReferenceEquals(v1, v2))
             {
                 return true;
             }
@@ -62,7 +62,7 @@ namespace KI.Gfx.Analyzer
                 return false;
             }
 
-            if(Math.Abs(v1.Position.X - v2.Position.X) > KICalc.THRESHOLD05)
+            if (Math.Abs(v1.Position.X - v2.Position.X) > KICalc.THRESHOLD05)
             {
                 return false;
             }
@@ -76,7 +76,7 @@ namespace KI.Gfx.Analyzer
             }
             return true;
         }
-        public static bool operator !=(Vertex v1,Vertex v2)
+        public static bool operator !=(Vertex v1, Vertex v2)
         {
             return !(v1 == v2);
         }
@@ -111,47 +111,49 @@ namespace KI.Gfx.Analyzer
             m_AroundEdge = null;
         }
 
-        public IEnumerable<Edge> GetAroundEdge()
+        public IEnumerable<Edge> AroundEdge
         {
-            //opposite計算後は削除されている。
-            if(m_AroundEdge != null)
+            get
             {
-                foreach (var edge in m_AroundEdge)
+                //opposite計算後は削除されている。
+                if (m_AroundEdge != null)
                 {
-                    yield return edge;
+                    foreach (var edge in m_AroundEdge)
+                    {
+                        yield return edge;
+                    }
                 }
-            }else
-            {
-                yield return m_Edge;
-                Edge loop = m_Edge.Opposite.Next;
-                while (loop != m_Edge)
+                else
                 {
-                    yield return loop;
-                    loop = loop.Opposite.Next;
+                    yield return m_Edge;
+                    Edge loop = m_Edge.Opposite.Next;
+                    while (loop != m_Edge)
+                    {
+                        yield return loop;
+                        loop = loop.Opposite.Next;
+                    }
                 }
             }
         }
-        public IEnumerable<Mesh> GetAroundMesh()
+        public IEnumerable<Mesh> AroundMesh
         {
-            foreach(var edge in GetAroundEdge())
+            get
             {
-                yield return edge.Mesh;
+                foreach (var edge in AroundEdge)
+                {
+                    yield return edge.Mesh;
+                }
             }
         }
-        public IEnumerable<Vertex> GetAroundVertex()
+        public IEnumerable<Vertex> AroundVertex
         {
-            foreach (var edge in GetAroundEdge())
+            get
             {
-                yield return edge.End;
+                foreach (var edge in AroundEdge)
+                {
+                    yield return edge.End;
+                }
             }
-        }
-        /// <summary>
-        /// 頂点座標
-        /// </summary>
-        /// <returns></returns>
-        public Vector3 GetPosition()
-        {
-            return Position;
         }
 
         private Vector3 _normal = Vector3.Zero;
@@ -162,8 +164,8 @@ namespace KI.Gfx.Analyzer
                 if (_normal == Vector3.Zero)
                 {
                     Vector3 sum = Vector3.Zero;
-                    int count = GetAroundMesh().Count();
-                    foreach (var mesh in GetAroundMesh())
+                    int count = AroundMesh.Count();
+                    foreach (var mesh in AroundMesh)
                     {
                         sum += mesh.Normal;
                     }
