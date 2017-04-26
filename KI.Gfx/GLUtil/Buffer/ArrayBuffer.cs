@@ -41,6 +41,7 @@ namespace KI.Gfx.GLUtil
         internal ArrayBuffer(BufferTarget target)
         {
             Target = target;
+            UsageHint = BufferUsageHint.StaticDraw;
             Enable = true;
         }
         public override void PreGenBuffer()

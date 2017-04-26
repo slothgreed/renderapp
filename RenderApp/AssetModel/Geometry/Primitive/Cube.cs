@@ -8,6 +8,7 @@ using OpenTK.Graphics.OpenGL;
 using KI.Gfx.KIShader;
 using RenderApp.Utility;
 using RenderApp.GfxUtility;
+using KI.Gfx.KIAsset;
 namespace RenderApp.AssetModel.RA_Geometry
 {
     public class Cube
@@ -61,21 +62,21 @@ namespace RenderApp.AssetModel.RA_Geometry
 
             if(reverse == false)
             {
-                front.CreatePT( new List<Vector3> { v0, v3, v2, v1 }, TexCoord, PrimitiveType.Quads);
-                left.CreatePT(  new List<Vector3> { v0, v4, v7, v3 }, TexCoord, PrimitiveType.Quads);
-                back.CreatePT(  new List<Vector3> { v4, v5, v6, v7 }, TexCoord, PrimitiveType.Quads);
-                right.CreatePT( new List<Vector3> { v1, v2, v6, v5 }, TexCoord, PrimitiveType.Quads);
-                top.CreatePT(   new List<Vector3> { v2, v3, v7, v6 }, TexCoord, PrimitiveType.Quads);
-                bot.CreatePT(   new List<Vector3> { v1, v5, v4, v0 }, TexCoord, PrimitiveType.Quads);
+                front.CreateGeometryInfo(   new GeometryInfo(new List<Vector3> { v0, v3, v2, v1 }, null, null, TexCoord, null), PrimitiveType.Quads);
+                left.CreateGeometryInfo(    new GeometryInfo(new List<Vector3> { v0, v4, v7, v3 }, null, null, TexCoord, null), PrimitiveType.Quads);
+                back.CreateGeometryInfo(    new GeometryInfo(new List<Vector3> { v4, v5, v6, v7 }, null, null, TexCoord, null), PrimitiveType.Quads);
+                right.CreateGeometryInfo(   new GeometryInfo(new List<Vector3> { v1, v2, v6, v5 }, null, null, TexCoord, null), PrimitiveType.Quads);
+                top.CreateGeometryInfo(     new GeometryInfo(new List<Vector3> { v2, v3, v7, v6 }, null, null, TexCoord, null), PrimitiveType.Quads);
+                bot.CreateGeometryInfo(     new GeometryInfo(new List<Vector3> { v1, v5, v4, v0 }, null, null, TexCoord, null), PrimitiveType.Quads);
             }
             else
             {
-                front.CreatePT( new List<Vector3> { v3, v0, v1, v2 }, TexCoord, PrimitiveType.Quads);
-                left.CreatePT(  new List<Vector3> { v7, v4, v0, v3 }, TexCoord, PrimitiveType.Quads);
-                back.CreatePT(  new List<Vector3> { v6, v5, v4, v7 }, TexCoord, PrimitiveType.Quads);
-                right.CreatePT( new List<Vector3> { v2, v1, v5, v6 }, TexCoord, PrimitiveType.Quads);
-                top.CreatePT(   new List<Vector3> { v2, v6, v7, v3 }, TexCoord, PrimitiveType.Quads);
-                bot.CreatePT(   new List<Vector3> { v1, v0, v4, v5 }, TexCoord, PrimitiveType.Quads);
+                front.CreateGeometryInfo(new GeometryInfo(new List<Vector3> { v3, v0, v1, v2 }, null, null, TexCoord, null), PrimitiveType.Quads);
+                left.CreateGeometryInfo(new GeometryInfo(new List<Vector3> { v7, v4, v0, v3 }, null, null, TexCoord, null), PrimitiveType.Quads);
+                back.CreateGeometryInfo(new GeometryInfo(new List<Vector3> { v6, v5, v4, v7 }, null, null, TexCoord, null), PrimitiveType.Quads);
+                right.CreateGeometryInfo(new GeometryInfo(new List<Vector3> { v2, v1, v5, v6 }, null, null, TexCoord, null), PrimitiveType.Quads);
+                top.CreateGeometryInfo(new GeometryInfo(new List<Vector3> { v2, v6, v7, v3 }, null, null, TexCoord, null), PrimitiveType.Quads);
+                bot.CreateGeometryInfo(new GeometryInfo(new List<Vector3> { v1, v0, v4, v5 }, null, null, TexCoord, null), PrimitiveType.Quads);
             }
 
             geometry.Add(right);    ///< posx

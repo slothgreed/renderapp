@@ -56,6 +56,7 @@ namespace KI.Gfx.KIAsset
                 while (parser.Length != counter)
                 {
                     line = parser[counter].Split(' ');
+                    line = line.Where(p => !(String.IsNullOrWhiteSpace(p) || String.IsNullOrEmpty(p))).ToArray();
                     for (int i = 0; i < line.Length; i++)
                     {                        
                         if (line[i] == "outer" && line[i + 1] == "loop") break;
@@ -71,12 +72,7 @@ namespace KI.Gfx.KIAsset
                         }
                         if (line[i] == "vertex")
                         {
-                            while(line[i + offset] != "")
-                            {
-                                offset++;
-                            }
-
-                            pos = new Vector3(float.Parse(line[i + offset + 1]), float.Parse(line[i + offset + 2]), float.Parse(line[i + offset + 3]));
+                            pos = new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3]));
 
                             data.Position.Add(pos);                        
                             offset = 0;

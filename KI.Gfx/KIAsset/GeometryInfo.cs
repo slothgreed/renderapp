@@ -39,7 +39,59 @@ namespace KI.Gfx.KIAsset
             Normal.Clear();
             TexCoord.Clear();
             Index.Clear();
+        }
+        public GeometryInfo()
+        {
 
+        }
+        public GeometryInfo(List<Vector3> pos, List<Vector3> nor, List<Vector3> col, List<Vector2> tex, List<int> idx)
+        {
+            if (pos != null)
+            {
+                Position = pos;
+            }
+            if (nor != null)
+            {
+                Normal = nor;
+            }
+            if (col != null)
+            {
+                Color = col;
+            }
+            if (tex != null)
+            {
+                TexCoord = tex;
+            }
+            if (idx != null)
+            {
+                Index = idx;
+            }
+        }
+        public GeometryInfo(List<Vector3> pos, List<Vector3> nor, Vector3 col, List<Vector2> tex, List<int> idx)
+        {
+            if (pos != null)
+            {
+                Position = pos;
+            }
+            if (nor != null)
+            {
+                Normal = nor;
+            }
+            if (col != null)
+            {
+                for (int i = 0; i < Position.Count; i++ )
+                {
+                    Color.Add(col);
+                }
+            }
+            if (tex != null)
+            {
+                TexCoord = tex;
+            }
+            if (idx != null)
+            {
+                Index = idx;
+            }
         }
 
         public int TriangleNum

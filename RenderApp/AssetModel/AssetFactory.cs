@@ -89,7 +89,6 @@ namespace RenderApp.AssetModel
             //CreateGeometry(wireframe);
 
             Geometry geometry = asset as Geometry;
-
             HalfEdge half = new HalfEdge(geometry.geometryInfo);
             GeometryInfo info = half.CreateGeometryInfo();
             RenderObject halfEdge = AssetFactory.Instance.CreateRenderObject("HalfEdge :" + geometry.Name);
@@ -135,7 +134,8 @@ namespace RenderApp.AssetModel
             Geometry geometry = asset as Geometry;
             KI.Gfx.Analyzer.Voxel voxel = new KI.Gfx.Analyzer.Voxel(geometry.geometryInfo.Position, geometry.geometryInfo.Index, geometry.ModelMatrix, partition);
             RenderObject wireframe = AssetFactory.Instance.CreateRenderObject("Voxel :" + geometry.Name);
-            wireframe.CreatePNC(voxel.vPosition, voxel.vNormal, KICalc.RandomColor(), PrimitiveType.Quads);
+            GeometryInfo info = new GeometryInfo(voxel.vPosition, voxel.vNormal, KICalc.RandomColor(), null, null);
+            wireframe.CreateGeometryInfo(info, PrimitiveType.Quads);
             wireframe.Transformation(geometry.ModelMatrix);
             CreateGeometry(wireframe);
 
@@ -158,7 +158,8 @@ namespace RenderApp.AssetModel
             Plane plane;
             plane = new Plane(name);
             RenderObject renderObject = new RenderObject(name);
-            renderObject.CreatePT(plane.Geometry.Position, plane.Geometry.TexCoord, PrimitiveType.Quads);
+            GeometryInfo info = new GeometryInfo(plane.Geometry.Position, null, null, plane.Geometry.TexCoord, null);
+            renderObject.CreateGeometryInfo(info, PrimitiveType.Quads);
             renderObject.Shader = shader;
             return renderObject;
         }
@@ -167,7 +168,8 @@ namespace RenderApp.AssetModel
         {
             Plane plane = new Plane(name);
             RenderObject renderObject = new RenderObject(name);
-            renderObject.CreatePT(plane.Geometry.Position, plane.Geometry.TexCoord, PrimitiveType.Quads);
+            GeometryInfo info = new GeometryInfo(plane.Geometry.Position, null, null, plane.Geometry.TexCoord, null);
+            renderObject.CreateGeometryInfo(info, PrimitiveType.Quads);
             return renderObject;
         }
 

@@ -6,6 +6,7 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.Utility;
+using KI.Gfx.KIAsset;
 namespace RenderApp.AssetModel.RA_Geometry
 {
     class GridPlane : IRenderObjectConverter
@@ -68,7 +69,8 @@ namespace RenderApp.AssetModel.RA_Geometry
                 }
             }
             RenderObject geometry = AssetFactory.Instance.CreateRenderObject("gridPlane");
-            geometry.CreatePC(Position, Color, PrimitiveType.Triangles);
+            GeometryInfo info = new GeometryInfo(Position, null, Color, null, null);
+            geometry.CreateGeometryInfo(info, PrimitiveType.Triangles);
             _renderObject = new List<RenderObject>() { geometry };
             return _renderObject;
         }

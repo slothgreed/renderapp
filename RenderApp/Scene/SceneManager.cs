@@ -56,13 +56,13 @@ namespace RenderApp
             //{
             //    ActiveScene.AddObject(sponza);
             //}
-            List<RenderObject> ducks = AssetFactory.Instance.CreateLoad3DModel("C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/duck/duck.obj");
-            foreach (var duck in ducks)
-            {
-                duck.RotateX(-90);
-                duck.RotateY(0);
-                ActiveScene.AddObject(duck);
-            }
+            //List<RenderObject> ducks = AssetFactory.Instance.CreateLoad3DModel("C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/duck/duck.obj");
+            //foreach (var duck in ducks)
+            //{
+            //    duck.RotateX(-90);
+            //    duck.RotateY(0);
+            //    ActiveScene.AddObject(duck);
+            //}
 
             List<RenderObject> worlds = AssetFactory.Instance.CreateWorld("World",ActiveScene.WorldMin, ActiveScene.WorldMax);
             string[] paths = new string[]{
@@ -73,6 +73,7 @@ namespace RenderApp
                     ProjectInfo.TextureDirectory + @"\cubemap\negy.jpg",
                     ProjectInfo.TextureDirectory + @"\cubemap\negz.jpg"
             };
+
             for (int i = 0; i < 6; i++)
             {
                 var texture = TextureFactory.Instance.CreateTexture(paths[i]);
@@ -84,11 +85,12 @@ namespace RenderApp
             ActiveScene.AddObject(cubeMap);
 
             //List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/StanfordBunny.stl");
-            //foreach(var b in bunny)
-            //{
-            //    b.RotateX(-90);
-            //    ActiveScene.AddObject(b);
-            //}
+            List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/Sphere.stl");
+            foreach (var b in bunny)
+            {
+                b.RotateX(-90);
+                ActiveScene.AddObject(b);
+            }
         }
         public void CreateMainCamera()
         {

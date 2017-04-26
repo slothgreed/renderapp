@@ -4,6 +4,7 @@ using RenderApp.AssetModel;
 using KI.Foundation.Core;
 using KI.Foundation.Utility;
 using KI.Gfx.Analyzer;
+using KI.Gfx.KIAsset;
 
 namespace RenderApp.RA_Control
 {
@@ -49,7 +50,8 @@ namespace RenderApp.RA_Control
                         if (picking == null)
                         {
                             RenderObject triangle = AssetFactory.Instance.CreateRenderObject("Picking");
-                            triangle.CreatePC(new List<Vector3>() { tri1, tri2, tri3 }, KICalc.RandomColor(), OpenTK.Graphics.OpenGL.PrimitiveType.Triangles);
+                            GeometryInfo info = new GeometryInfo(new List<Vector3>() { tri1, tri2, tri3 },null,KICalc.RandomColor(),null,null);
+                            triangle.CreateGeometryInfo(info, OpenTK.Graphics.OpenGL.PrimitiveType.Triangles);
                             AssetFactory.Instance.CreateGeometry(triangle);
                         }
                         else if (picking.geometryInfo.TriangleNum == 2)

@@ -35,135 +35,29 @@ namespace RenderApp.AssetModel
             geometryInfo.Color = info.Color;
             geometryInfo.TexCoord = info.TexCoord;
             geometryInfo.Index = info.Index;
+            RenderType = prim;
 
             for (int i = 0; i < geometryInfo.Position.Count; i++)
             {
                 geometryInfo.Color.Add(Vector3.UnitY);
             }
-            if (geometryInfo.Normal != null)
+            if(geometryInfo.Index.Count == 0)
             {
-                if (geometryInfo.Normal.Count == 0)
+                if (geometryInfo.Normal != null)
                 {
-                    CalcNormal(geometryInfo.Position, RenderType);
+                    if (geometryInfo.Normal.Count == 0)
+                    {
+                        CalcNormal(geometryInfo.Position, RenderType);
+                    }
                 }
             }
 
-            RenderType = prim;
             Initialize();
         }
 
-        public void CreatePNC(List<Vector3> position, List<Vector3> normal, List<Vector3> color, PrimitiveType prim)
-        {
-            geometryInfo.Position = new List<Vector3>(position);
-            geometryInfo.Normal = new List<Vector3>(normal);
-            geometryInfo.Color = new List<Vector3>(color);
-            RenderType = prim;
-            Initialize();
-        }
-        internal void CreatePNC(List<Vector3> position, List<Vector3> normal, Vector3 color, PrimitiveType prim)
-        {
-            geometryInfo.Position = new List<Vector3>(position);
-            geometryInfo.Normal = new List<Vector3>(normal);
-            RenderType = prim;
-            for (int i = 0; i < geometryInfo.Position.Count; i++)
-            {
-                geometryInfo.Color.Add(Vector3.UnitY);
-            } 
-            Initialize();
-        }
-
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        public void CreateP(List<Vector3> position, PrimitiveType prim)
-        {
-            geometryInfo.Position = new List<Vector3>(position);
-            RenderType = prim;
-            CalcNormal(geometryInfo.Position, prim);
-            Initialize();
-        }
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        public void CreatePN(List<Vector3> position, List<Vector3> normal, PrimitiveType prim)
-        {
-            geometryInfo.Position = new List<Vector3>(position);
-            geometryInfo.Normal = new List<Vector3>(normal);
-            RenderType = prim;
-            for (int i = 0; i < geometryInfo.Position.Count; i++)
-            {
-                geometryInfo.Color.Add(Vector3.UnitY);
-            }
-            Initialize();
-        }
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        public void CreatePNC(string name, List<Vector3> position, List<Vector3> normal, Vector3 color, PrimitiveType prim)
-        {
-            geometryInfo.Position = new List<Vector3>(position);
-            geometryInfo.Normal = new List<Vector3>(normal);
-            RenderType = prim;
-            for (int i = 0; i < geometryInfo.Position.Count; i++)
-            {
-                geometryInfo.Color.Add(color);
-            }
-            Initialize();
-        }
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        public void CreatePNC(string name, List<Vector3> position, List<Vector3> normal, List<Vector3> color, PrimitiveType prim)
-        {
-            geometryInfo.Position = new List<Vector3>(position);
-            geometryInfo.Normal = new List<Vector3>(normal);
-            geometryInfo.Color = new List<Vector3>(color);
-            RenderType = prim;
-            Initialize();
-        }
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        public void CreatePC(List<Vector3> position, Vector3 color, PrimitiveType prim)
-        {
-            geometryInfo.Position = position;
-            RenderType = prim;
-            for (int i = 0; i < geometryInfo.Position.Count; i++)
-            {
-                geometryInfo.Color.Add(color);
-            }
-            Initialize();
-        }
-        internal void CreatePC(List<Vector3> position, List<Vector3> color, PrimitiveType prim)
-        {
-            geometryInfo.Position = new List<Vector3>(position);
-            geometryInfo.Color = new List<Vector3>(color);
-            RenderType = prim;
-            Initialize();
-        }
-        public void CreatePNT(List<Vector3> position, List<Vector3> normal,List<Vector2> texcoord,PrimitiveType prim)
-        {
-            geometryInfo.Position = position;
-            geometryInfo.Normal = normal;
-            if (geometryInfo.Normal.Count == 0)
-            {
-                CalcNormal(position, prim);
-            }
-            RenderType = prim;
-            geometryInfo.TexCoord = texcoord;
-            Initialize();
-        }
-
-        public void CreatePT(List<Vector3> position, List<Vector2> texcoord, PrimitiveType prim)
-        {
-            geometryInfo.Position = position;
-            geometryInfo.TexCoord = texcoord;
-            RenderType = prim;
-            CalcNormal(position, prim);
-            Initialize();
-        }
         private void CalcNormal(List<Vector3> position, PrimitiveType prim)
         {
+
             if (PrimitiveType.Triangles == prim)
             {
                 for (int i = 0; i < position.Count; i += 3)
