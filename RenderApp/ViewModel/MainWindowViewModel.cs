@@ -167,7 +167,7 @@ namespace RenderApp.ViewModel
                 ProjectInfo.IsOpen = true;
             }
 
-            List<RenderObject> geometrys = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/StanfordBunny.stl");
+            List<RenderObject> geometrys = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/KIProject/renderapp/RenderApp/Resource/Model/StanfordBunny.stl");
             foreach (var geometry in geometrys)
             {
                 geometry.RotateX(-90);

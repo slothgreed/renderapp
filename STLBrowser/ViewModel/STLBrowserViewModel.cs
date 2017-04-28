@@ -26,7 +26,7 @@ namespace STLBrowser.ViewModel
 
         public STLBrowserViewModel(string path)
         {
-            path = @"C:\Users\ido\Documents\GitHub\renderapp\RenderApp\Resource\Model";
+            path = @"C:\Users\ido\Documents\KIProject\renderapp\RenderApp\Resource\Model";
 
             STLFiles = new List<ThumbnailFileViewModel>();
 
@@ -50,7 +50,7 @@ namespace STLBrowser.ViewModel
         }
         public override void UpdateProperty()
         {
-            SceneManager.Instance.AddObject(@"C:\Users\ido\Documents\GitHub\renderapp\STLBrowser\TestFolder\StanfordBunny.stl");
+            SceneManager.Instance.AddObject(@"C:\Users\ido\Documents\KIProject\renderapp\STLBrowser\TestFolder\StanfordBunny.stl");
         }
     }
 }

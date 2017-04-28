@@ -46,8 +46,8 @@ namespace STLBrowser.ViewModel
         }
         public MainWindowViewModel()
         {
-            FileTreeViewModel = new FileTreeViewModel(@"C:\Users\ido\Documents\GitHub\RenderApp");
-            STLBrowserViewModel = new STLBrowserViewModel(@"C:\Users\ido\Documents\GitHub\RenderApp");
+            FileTreeViewModel = new FileTreeViewModel(@"C:\Users\ido\Documents\KIProject\RenderApp");
+            STLBrowserViewModel = new STLBrowserViewModel(@"C:\Users\ido\Documents\KIProject\RenderApp");
             ViewportViewModel = new ViewportViewModel();
         }
 

@@ -50,7 +50,6 @@ namespace KI.Gfx.KIAsset
             try
             {
                 int counter = 0;
-                int offset = 0;
                 String[] line;
                 Vector3 pos;
                 while (parser.Length != counter)
@@ -75,7 +74,6 @@ namespace KI.Gfx.KIAsset
                             pos = new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3]));
 
                             data.Position.Add(pos);                        
-                            offset = 0;
                             break;
                         }
 

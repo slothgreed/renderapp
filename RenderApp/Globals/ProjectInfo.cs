@@ -15,7 +15,7 @@ namespace RenderApp
             get
             {
                 //return _projectPath;
-                return @"C:\Users\ido\Documents\GitHub\renderapp\RenderApp\Resource";
+                return @"C:\Users\ido\Documents\KIProject\renderapp\RenderApp\Resource";
             }
             set
             {

@@ -51,12 +51,12 @@ namespace RenderApp
         }
         public void Initialize()
         {
-            //List<RenderObject> sponzas = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/crytek-sponza/sponza.obj");
+            //List<RenderObject> sponzas = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/KIProject/renderapp/RenderApp/Resource/Model/crytek-sponza/sponza.obj");
             //foreach (var sponza in sponzas)
             //{
             //    ActiveScene.AddObject(sponza);
             //}
-            //List<RenderObject> ducks = AssetFactory.Instance.CreateLoad3DModel("C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/duck/duck.obj");
+            //List<RenderObject> ducks = AssetFactory.Instance.CreateLoad3DModel("C:/Users/ido/Documents/KIProject/renderapp/RenderApp/Resource/Model/duck/duck.obj");
             //foreach (var duck in ducks)
             //{
             //    duck.RotateX(-90);
@@ -84,8 +84,8 @@ namespace RenderApp
             cubeMap.GenCubemap(paths);
             ActiveScene.AddObject(cubeMap);
 
-            //List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/StanfordBunny.stl");
-            List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/GitHub/renderapp/RenderApp/Resource/Model/Sphere.stl");
+            List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/KIProject/renderapp/RenderApp/Resource/Model/StanfordBunny.stl");
+            //List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/KIProject/renderapp/RenderApp/Resource/Model/Sphere.stl");
             foreach (var b in bunny)
             {
                 b.RotateX(-90);

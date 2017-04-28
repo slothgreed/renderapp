@@ -30,7 +30,7 @@ namespace KI.Foundation.Control
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            //ImagePath = @"C:\Users\ido\Documents\GitHub\renderapp\RenderApp\Resource\Texture\floor.bmp";
+            //ImagePath = @"C:\Users\ido\Documents\KIProject\renderapp\RenderApp\Resource\Texture\floor.bmp";
         }
     }
 }
