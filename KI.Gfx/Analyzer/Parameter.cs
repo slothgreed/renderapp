@@ -81,7 +81,8 @@ namespace KI.Gfx.Analyzer
         {
             if(m_Mean == 0)
             {
-                Logger.Log(Logger.LogLevel.Warning, "don't calc mean value");
+                Logger.Log(Logger.LogLevel.Debug, "call calc max min mean");
+                SetMaxMinMean();
                 return;
             }
             for(int i = 0; i < m_value.Count; i++)
@@ -98,7 +99,8 @@ namespace KI.Gfx.Analyzer
         {
             if(m_Valiance == 0)
             {
-                Logger.Log(Logger.LogLevel.Warning, "don't calc valiace value");
+                Logger.Log(Logger.LogLevel.Debug, "call calc valiace ");
+                SetValiance();
                 return 0;
             }
             float k = 1/(float)Math.Sqrt((double)(2 * Math.PI * m_Valiance));

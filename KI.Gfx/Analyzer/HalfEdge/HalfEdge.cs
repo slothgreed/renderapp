@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using OpenTK;
 using KI.Foundation.Utility;
 using KI.Gfx.KIAsset;
+using System.IO;
 namespace KI.Gfx.Analyzer
 {
-    public class HalfEdge : IAnalyzer
+    public class HalfEdge
     {
         public List<Mesh> m_Mesh = new List<Mesh>();
         public List<Edge> m_Edge = new List<Edge>();
-        private int m_EdgeCount = 0;
         public List<Vertex> m_Vertex = new List<Vertex>();
         public List<int> m_Index = new List<int>();
         public Parameter GaussCurvature = new Parameter();
@@ -21,6 +21,11 @@ namespace KI.Gfx.Analyzer
         public Parameter MinCurvature = new Parameter();
         public Parameter Voronoi = new Parameter();
         public Parameter Saliency = new Parameter();
+
+        public HalfEdge()
+        {
+
+        }
         /// <summary>
         /// メッシュのインデックスと、頂点を受け取る
         /// </summary>
@@ -79,6 +84,148 @@ namespace KI.Gfx.Analyzer
             }
             return false;
         }
+
+
+        /// <summary>
+        /// 読み込み
+        /// </summary>
+        /// <param name="inputFile"></param>
+        public bool ReadFile(string inputFile)
+        {
+            if (!File.Exists(inputFile))
+            {
+                return false;
+            }
+            if (Path.GetExtension(inputFile).ToLower() != ".half")
+            {
+                return false;
+            }
+
+            try
+            {
+                m_Vertex.Clear();
+                m_Edge.Clear();
+                m_Mesh.Clear();
+
+                String[] fileData = File.ReadAllLines(inputFile, System.Text.Encoding.GetEncoding("Shift_JIS"));
+                ReadHalfEdgeData(fileData);
+                return true;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("読み込み失敗 : " + inputFile);
+                return false;
+            }
+                    
+        }
+
+        private void ReadHalfEdgeData(String[] fileData)
+        {
+            int lineNumber = 0;
+            String line;
+            int EdgeInfoCounter = 0;
+            while (fileData.Length != lineNumber)
+            {
+                line = fileData[lineNumber];
+                lineNumber++;
+                if (line.Contains("HalfEdge Data Strucure")) continue;
+                if (line.Contains("Vertex :")) continue;
+                if (line.Contains("Edge :")) continue;
+                if (line.Contains("Mesh :")) continue;
+                if (line.Contains("Edge Info :")) continue;
+
+                string[] lineInfos = line.Split(' ');
+                lineInfos = lineInfos.Where(p => !(String.IsNullOrWhiteSpace(p) || String.IsNullOrEmpty(p))).ToArray();
+
+                if (lineInfos[0] == "v")
+                {
+                    var position = new Vector3(float.Parse(lineInfos[1]), float.Parse(lineInfos[2]), float.Parse(lineInfos[3]));
+                    var vertex = new Vertex(position, m_Vertex.Count);
+                    m_Vertex.Add(vertex);
+                }
+
+                if (lineInfos[0] == "e")
+                {
+                    int startIndex = int.Parse(lineInfos[1]);
+                    int endIndex = int.Parse(lineInfos[2]);
+                    var edge = new Edge(m_Vertex[startIndex], m_Vertex[endIndex], m_Edge.Count);
+                    m_Edge.Add(edge);
+                    m_Vertex[startIndex].AddEdge(edge);
+                }
+
+                if (lineInfos[0] == "m")
+                {
+                    int edge1 = int.Parse(lineInfos[1]);
+                    int edge2 = int.Parse(lineInfos[2]);
+                    int edge3 = int.Parse(lineInfos[3]);
+                    var mesh = new Mesh(m_Mesh.Count);
+                    mesh.SetEdge(m_Edge[edge1], m_Edge[edge2], m_Edge[edge3]);
+                    m_Mesh.Add(mesh);
+                }
+
+                if (lineInfos[0] == "ei")
+                {
+                    int nextIndex       = int.Parse(lineInfos[1]);
+                    int beforeIndex     = int.Parse(lineInfos[2]);
+                    int oppositeIndex   = int.Parse(lineInfos[3]);
+                    int meshIndex       = int.Parse(lineInfos[4]);
+                    var edge = m_Edge[EdgeInfoCounter];
+
+                    edge.Next       = m_Edge[nextIndex];
+                    edge.Before     = m_Edge[beforeIndex];
+                    edge.Opposite   = m_Edge[oppositeIndex];
+                    edge.Mesh       = m_Mesh[meshIndex];
+                    EdgeInfoCounter++;
+                }
+            }
+        }
+        /// <summary>
+        /// 書き込み
+        /// </summary>
+        /// <param name="outputFile"></param>
+        public void WriteFile(string outputFile)
+        {
+            StreamWriter write = new StreamWriter(outputFile);
+
+            write.WriteLine("HalfEdge Data Structure");
+            write.WriteLine("Vertex : Position");
+            foreach (var vertex in m_Vertex)
+            {
+                write.WriteLine("v" + " " + vertex.Position.X + " " + vertex.Position.Y + " " + vertex.Position.Z);
+            }
+            write.WriteLine("Edge : Start Vetex Index, End Vertex Index");
+            foreach (var edge in m_Edge)
+            {
+                write.WriteLine("e" + " " + edge.Start.Index + " " + edge.End.Index);
+            }
+
+            write.WriteLine("Mesh : Vertex Index");
+            foreach (var mesh in m_Mesh)
+            {
+                string edgeIdx = "";
+                foreach (var edge in mesh.AroundEdge)
+                {
+                    if (edge == mesh.AroundEdge.Last())
+                    {
+                        edgeIdx += edge.Index.ToString();
+                    }
+                    else
+                    {
+                        edgeIdx += edge.Index.ToString() + " ";
+                    }
+                }
+                write.WriteLine("m" + " " + edgeIdx);
+            }
+
+            write.WriteLine("Edge Info : Next Edge Index,Before Edge, Opposite Edge Index, Incident Face ");
+            foreach (var edge in m_Edge)
+            {
+                write.WriteLine("ei" + " " + edge.Next.Index + " " + edge.Before.Index + " " + edge.Opposite.Index + " " + edge.Mesh.Index);
+            }
+            write.WriteLine("end");
+            write.Close();
+        }
+
         #region [edit method]
         /// <summary>
         /// マージによる頂点削除削除後、頂点位置移動
@@ -192,8 +339,15 @@ namespace KI.Gfx.Analyzer
             {
                 geometry.Position.Add(vertex.Position);
                 geometry.Normal.Add(vertex.Normal);
+
             }
-            geometry.Index = m_Index;
+            foreach (var mesh in m_Mesh)
+            {
+                foreach (var vertex in mesh.AroundVertex)
+                {
+                    geometry.Index.Add(vertex.Index);
+                }
+            }
             return geometry;
 
         }
@@ -250,11 +404,10 @@ namespace KI.Gfx.Analyzer
 
         private void CreateMesh(Vertex v1, Vertex v2, Vertex v3)
         {
-            Mesh mesh = new Mesh();
-
-            Edge edge1 = new Edge(mesh, v1, v2, m_EdgeCount++);
-            Edge edge2 = new Edge(mesh, v2, v3, m_EdgeCount++);
-            Edge edge3 = new Edge(mesh, v3, v1, m_EdgeCount++);
+            Mesh mesh = new Mesh(m_Mesh.Count);
+            Edge edge1 = new Edge(mesh, v1, v2, m_Edge.Count);
+            Edge edge2 = new Edge(mesh, v2, v3, m_Edge.Count + 1);
+            Edge edge3 = new Edge(mesh, v3, v1, m_Edge.Count + 2);
 
             //次のエッジの格納
             edge1.Next = edge2;
@@ -273,8 +426,8 @@ namespace KI.Gfx.Analyzer
 
             //メッシュにエッジを格納
             mesh.SetEdge(edge1, edge2, edge3);
-
             m_Mesh.Add(mesh);
+
             m_Edge.Add(edge1);
             m_Edge.Add(edge2);
             m_Edge.Add(edge3);

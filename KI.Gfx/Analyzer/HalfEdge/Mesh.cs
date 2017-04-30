@@ -13,11 +13,19 @@ namespace KI.Gfx.Analyzer
         /// エッジ
         /// </summary>
         private List<Edge> m_Edge = new List<Edge>();
+
+        public int Index
+        {
+            get;
+            private set;
+        }
+
         /// <summary>
         /// 削除フラグ。Updateが走ると必ず削除するべきもの
         /// </summary>
         public bool DeleteFlg { get; set; }
 
+        
         public Vector3 Normal
         {
             get
@@ -29,10 +37,16 @@ namespace KI.Gfx.Analyzer
             }
         }
 
-        public Mesh()
+        public Mesh(int index)
         {
-            
+            Index = index;
         }
+        public Mesh(Edge edge1, Edge edge2, Edge edge3, int index)
+        {
+            SetEdge(edge1, edge2, edge3);
+            Index = index;
+        }
+
         public void SetEdge(Edge edge1, Edge edge2, Edge edge3)
         {
             m_Edge.Add(edge1);

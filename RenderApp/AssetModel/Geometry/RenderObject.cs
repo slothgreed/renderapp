@@ -57,7 +57,10 @@ namespace RenderApp.AssetModel
 
         private void CalcNormal(List<Vector3> position, PrimitiveType prim)
         {
-
+            if (PrimitiveType.Lines == prim)
+            {
+                return;
+            }
             if (PrimitiveType.Triangles == prim)
             {
                 for (int i = 0; i < position.Count; i += 3)

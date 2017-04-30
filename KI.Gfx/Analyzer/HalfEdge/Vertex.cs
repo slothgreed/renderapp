@@ -101,15 +101,6 @@ namespace KI.Gfx.Analyzer
                 m_AroundEdge.Add(edge);
             }
         }
-        /// <summary>
-        /// 頂点の持つエッジの削除
-        /// </summary>
-        /// <param name="edge"></param>
-        public void ClearEdge()
-        {
-            m_AroundEdge.Clear();
-            m_AroundEdge = null;
-        }
 
         public IEnumerable<Edge> AroundEdge
         {
@@ -163,16 +154,19 @@ namespace KI.Gfx.Analyzer
             {
                 if (_normal == Vector3.Zero)
                 {
-                    Vector3 sum = Vector3.Zero;
-                    int count = AroundMesh.Count();
-                    foreach (var mesh in AroundMesh)
+                    if(AroundMesh.Count() != 0)
                     {
-                        sum += mesh.Normal;
+                        Vector3 sum = Vector3.Zero;
+                        int count = AroundMesh.Count();
+                        foreach (var mesh in AroundMesh)
+                        {
+                            sum += mesh.Normal;
+                        }
+                        sum.X /= count;
+                        sum.Y /= count;
+                        sum.Z /= count;
+                        _normal = sum.Normalized();
                     }
-                    sum.X /= count;
-                    sum.Y /= count;
-                    sum.Z /= count;
-                    _normal = sum.Normalized();
                 }
                 return _normal;
             }
