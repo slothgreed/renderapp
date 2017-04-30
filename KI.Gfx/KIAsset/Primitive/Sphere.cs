@@ -4,7 +4,7 @@ using KI.Foundation.Core;
 
 namespace KI.Gfx.KIAsset
 {
-    public class Sphere : KIObject,IPrimitive
+    public class Sphere : KIObject, IPrimitive
     {
         public GeometryInfo _Geometry;
         public GeometryInfo Geometry
@@ -18,15 +18,15 @@ namespace KI.Gfx.KIAsset
         /// <param name="hpartition">高さ分割数</param>
         /// <param name="wpartition">横分割数</param>
         /// <param name="orient">面の方向true=外向きfalse=内向き</param>
-        public Sphere(string name,float radial, int hpartition, int wpartition,bool orient,Vector3 color)
+        public Sphere(string name, float radial, int hpartition, int wpartition, bool orient, Vector3 color)
             : base(name)
         {
-            SetObjectData(radial, hpartition, wpartition,orient,color);
+            SetObjectData(radial, hpartition, wpartition, orient, color);
         }
         /// <summary>
         /// 球面座標の取得
         /// </summary>
-        private Vector3 GetSphericalPolarCoordinates(float radial,float theta,float phi)
+        private Vector3 GetSphericalPolarCoordinates(float radial, float theta, float phi)
         {
             Vector3 pos = new Vector3();
             pos.X = (float)(radial * Math.Sin(theta) * Math.Cos(phi));
@@ -124,7 +124,7 @@ namespace KI.Gfx.KIAsset
 
             Vector2 max = Vector2.Zero;
             Vector2 min = Vector2.One;
-            for(int i = 0; i < _Geometry.TexCoord.Count; i++)
+            for (int i = 0; i < _Geometry.TexCoord.Count; i++)
             {
                 if (max.X < _Geometry.TexCoord[i].X) { max.X = _Geometry.TexCoord[i].X; }
                 if (max.Y < _Geometry.TexCoord[i].Y) { max.Y = _Geometry.TexCoord[i].Y; }
@@ -157,7 +157,7 @@ namespace KI.Gfx.KIAsset
             }
 
             Geometry.ConvertVertexArray();
-            
+
         }
     }
 }

@@ -11,6 +11,7 @@ namespace KI.Gfx.KIAsset
     public enum GeometryType
     {
         None,
+        Line,
         Triangle,
         Quad,
         Mix
@@ -31,7 +32,7 @@ namespace KI.Gfx.KIAsset
         public List<Vector3> Color = new List<Vector3>();
         public List<Vector2> TexCoord = new List<Vector2>();
         public List<int> Index = new List<int>();
-
+        public GeometryType GeometryType;
         public void Dispose()
         {
             Position.Clear();
@@ -42,9 +43,9 @@ namespace KI.Gfx.KIAsset
         }
         public GeometryInfo()
         {
-
+            GeometryType = GeometryType.None;
         }
-        public GeometryInfo(List<Vector3> pos, List<Vector3> nor, List<Vector3> col, List<Vector2> tex, List<int> idx)
+        public GeometryInfo(List<Vector3> pos, List<Vector3> nor, List<Vector3> col, List<Vector2> tex, List<int> idx, GeometryType type)
         {
             if (pos != null)
             {
@@ -67,7 +68,7 @@ namespace KI.Gfx.KIAsset
                 Index = idx;
             }
         }
-        public GeometryInfo(List<Vector3> pos, List<Vector3> nor, Vector3 col, List<Vector2> tex, List<int> idx)
+        public GeometryInfo(List<Vector3> pos, List<Vector3> nor, Vector3 col, List<Vector2> tex, List<int> idx, GeometryType type)
         {
             if (pos != null)
             {
@@ -92,6 +93,7 @@ namespace KI.Gfx.KIAsset
             {
                 Index = idx;
             }
+            GeometryType = type;
         }
 
         public int TriangleNum

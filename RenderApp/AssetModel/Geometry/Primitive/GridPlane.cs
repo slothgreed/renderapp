@@ -7,9 +7,9 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.Utility;
 using KI.Gfx.KIAsset;
-namespace RenderApp.AssetModel.RA_Geometry
+namespace RenderApp.AssetModel
 {
-    class GridPlane : IRenderObjectConverter
+    class GridPlane : IPrimitive
     {
         /// <summary>
         /// グリッドの範囲
@@ -68,19 +68,8 @@ namespace RenderApp.AssetModel.RA_Geometry
                     Color.Add(Vector3.One);
                 }
             }
-            RenderObject geometry = AssetFactory.Instance.CreateRenderObject("gridPlane");
-            GeometryInfo info = new GeometryInfo(Position, null, Color, null, null);
+            GeometryInfo info = new GeometryInfo(Position, null, Color, null, null, GeometryType.Line);
             geometry.CreateGeometryInfo(info, PrimitiveType.Triangles);
-            _renderObject = new List<RenderObject>() { geometry };
-            return _renderObject;
-        }
-        private List<RenderObject> _renderObject;
-        public List<RenderObject> RenderObject
-        {
-            get
-            {
-                return _renderObject;
-            }
         }
     }
 }
