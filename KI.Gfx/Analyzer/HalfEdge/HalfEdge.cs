@@ -15,13 +15,7 @@ namespace KI.Gfx.Analyzer
         public List<Edge> m_Edge = new List<Edge>();
         public List<Vertex> m_Vertex = new List<Vertex>();
         public List<int> m_Index = new List<int>();
-        public Parameter GaussCurvature = new Parameter();
-        public Parameter MeanCurvature = new Parameter();
-        public Parameter MaxCurvature = new Parameter();
-        public Parameter MinCurvature = new Parameter();
-        public Parameter Voronoi = new Parameter();
-        public Parameter Saliency = new Parameter();
-
+        
         public HalfEdge()
         {
 
@@ -53,10 +47,6 @@ namespace KI.Gfx.Analyzer
                 MakeEdgeListByVertexIndex(poly_Index);
             }
             SetOppositeEdge();
-
-            SetVertexParameter();
-
-            SetNormalizeParameter();
 
             //for (int i = 0; i < m_Vertex.Count; i++ )
             //{
@@ -267,7 +257,6 @@ namespace KI.Gfx.Analyzer
             deleteEdge.Add(commonEdge.Opposite.Next.Next);
             deleteMesh.Add(commonEdge.Opposite.Mesh);
             #endregion
-
 
             //頂点が削除対象なら、残す方に移動
             foreach (var edge in delV.AroundEdge)
@@ -523,48 +512,6 @@ namespace KI.Gfx.Analyzer
             }
             return null;
         }
-
-        /// <summary>
-        /// 頂点のindex（頂点配列用の）
-        /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        public Vector3 GetNormal(int index)
-        {
-            return m_Vertex[index].Normal;
-        }
-
-        public IEnumerable<Edge> GetAroundEdge(int vertex_Index)
-        {
-            foreach(var edge in m_Vertex[vertex_Index].AroundEdge)
-            {
-                yield return edge;
-            }
-        }
-
-        /// <summary>
-        /// 頂点周りのメッシュの取得
-        /// </summary>
-        /// <param name="vert_Index"></param>
-        /// <returns></returns>
-        public IEnumerable<Mesh> GetAroundMesh(int vertex_Index)
-        {
-            foreach (var mesh in m_Vertex[vertex_Index].AroundMesh)
-            {
-                yield return mesh;
-            }
-        }
-        /// <summary>
-        /// 1-ringの周辺頂点インデックス
-        /// </summary>
-        public IEnumerable<int> GetAroundVertexIndex(int vertex_Index)
-        {
-            foreach (var edge in m_Vertex[vertex_Index].AroundEdge)
-            {
-                yield return edge.End.Index;
-            }
-        }
-
         /// <summary>
         /// 一定距離内の頂点の取得
         /// </summary>
@@ -602,243 +549,6 @@ namespace KI.Gfx.Analyzer
                 }
             }
         }
-        #endregion
-        #region [パラメータの格納]
-        /// <summary>
-        /// 頂点から計算されるパラメータの格納
-        /// </summary>
-        private void SetVertexParameter()
-        {
-            for (int i = 0; i < m_Vertex.Count; i++)
-            {
-                SetVoronoiRagion(i);
-                SetGaussianParameter(i);
-                SetMeanCurvature(i);
-                SetMaxMinCurvature(i);
-                
-            }
-            for (int i = 0; i < m_Vertex.Count; i++)
-            {
-                SetPrincipalCurvature(i);
-            }
-        }
-
-        /// <summary>
-        /// 曲率パラメータ格納
-        /// </summary>
-        private void SetNormalizeParameter()
-        {
-            Voronoi.SetMaxMinMean();
-            Voronoi.SetValiance();
-
-
-            GaussCurvature.SetMaxMinMean();
-            GaussCurvature.SetValiance();
-
-            MeanCurvature.SetMaxMinMean();
-            MeanCurvature.SetValiance();
-
-            MaxCurvature.SetMaxMinMean();
-            MaxCurvature.SetValiance();
-
-            MinCurvature.SetMaxMinMean();
-            MinCurvature.SetValiance();
-        }
-        
-        #endregion
-        #region [パラメータの計算]
-        #region [頂点パラメータ]
-        /// <summary>
-        /// ガウス曲率
-        /// </summary>
-        /// <param name="v_index"></param>
-        private void SetGaussianParameter(int v_index)
-        {
-            float angle;
-
-            angle = 0;
-
-            foreach(var edge in GetAroundEdge(v_index))
-            {
-                angle += edge.Angle;
-            }
-            
-            m_Vertex[v_index].GaussCurvature = (2 * MathHelper.Pi - angle) / m_Vertex[v_index].VoronoiRagion;
-            GaussCurvature.AddValue(m_Vertex[v_index].GaussCurvature);
-        }
-        /// <summary>
-        /// 平均曲率
-        /// </summary>
-        /// <param name="v_index"></param>
-        private void SetMeanCurvature(int v_index)
-        {
-            float angle;
-            Edge opposite;
-            float alpha;
-            float beta;
-            float length;
-            angle = 0;
-            foreach(var edge in GetAroundEdge(v_index))
-            {
-
-                length = edge.Length;
-                opposite = edge.Opposite;
-                alpha = edge.Next.Next.Angle;
-                beta = opposite.Next.Next.Angle;
-                angle += (float)((1 / Math.Cos(alpha)) + (1 / Math.Cos(beta))) * length;
-            }
-            m_Vertex[v_index].MeanCurvature =  angle / ( m_Vertex[v_index].VoronoiRagion * 2);
-            MeanCurvature.AddValue(m_Vertex[v_index].MeanCurvature);
-
-        }
-        /// <summary>
-        /// ボロノイ領域
-        /// </summary>
-        /// <param name="v_index"></param>
-        private void SetVoronoiRagion(int v_index)
-        {
-            float angle;
-            Edge opposite;
-            float alpha;
-            float beta;
-            float length;
-            angle = 0;
-
-            foreach (var edge in GetAroundEdge(v_index))
-            {
-                length = edge.Length;
-                opposite = edge.Opposite;
-                alpha = edge.Next.Next.Angle;
-                beta = opposite.Next.Next.Angle;
-                angle += (float)((1 / Math.Cos(alpha)) + (1 / Math.Cos(beta))) * length;
-
-            }
-            m_Vertex[v_index].VoronoiRagion = angle/8;
-            Voronoi.AddValue(m_Vertex[v_index].VoronoiRagion);
-
-        }
-        /// <summary>
-        /// 最小主曲率
-        /// </summary>
-        /// <param name="v_index"></param>
-        private void SetMaxMinCurvature(int v_index)
-        {
-            Vertex vertex = m_Vertex[v_index];
-            
-            float delta = (vertex.MeanCurvature * vertex.MeanCurvature) - vertex.GaussCurvature;
-            if(delta > 0)
-            {
-                delta = (float)Math.Sqrt((double)delta);
-            }else{
-                delta = 0;
-            }
-            vertex.MaxCurvature = vertex.MeanCurvature + delta;
-            vertex.MinCurvature = vertex.MeanCurvature - delta;
-            MaxCurvature.AddValue(vertex.MaxCurvature);
-            MinCurvature.AddValue(vertex.MinCurvature);
-
-        }
-        #endregion
-
-        #region [エッジパラメータ]
-        /// <summary>
-        /// 接平面に投影した時のベクトル
-        /// </summary>
-        /// <param name="v_index"></param>
-        private void SetPrincipalCurvature(int v_index)
-        {
-            //List<Edge> around = GetAroundEdge(v_index);
-            //Vector3 edge;
-            //Vector3 numer;
-            //Vector3 denom;
-            //Vector3 tangent;
-            //Vector2 TangentUV;
-            //Matrix3 ellipse = new Matrix3();
-            //Vector3 kapper = new Vector3();
-            //edge = around[0].End.GetPosition() - around[0].Start.GetPosition();
-            //numer = edge - (Vector3.Dot(edge, m_Vertex[v_index].Normal) * m_Vertex[v_index].Normal);
-            //denom = new Vector3(numer.Length);
-            //float edge_Kapper;
-            ////基底Z方向ベクトル
-            //Vector3 Normal = m_Vertex[v_index].Normal;
-            ////基底U方向ベクトル
-            //Vector3 baseU = new Vector3(numer.X / denom.X, numer.Y / denom.Y, numer.Z / denom.Z);
-            //baseU.Normalize();
-
-            //float inner = Vector3.Dot(baseU, Normal);
-            ////基底V方向ベクトル
-            //Vector3 baseV = Vector3.Cross(baseU, Normal);
-            //baseV.Normalize();
-
-
-            //for (int i = 0; i < around.Count; i++)
-            //{
-            //    edge = around[i].End.GetPosition() - around[i].Start.GetPosition();
-            //    numer = edge - (Vector3.Dot(edge, Normal) * Normal);
-            //    denom = new Vector3(numer.Length);
-            //    tangent = new Vector3(numer.X / denom.X, numer.Y / denom.Y, numer.Z / denom.Z);
-            //    TangentUV = new Vector2(Vector3.Dot(baseU, tangent), Vector3.Dot(baseV, tangent));
-            //    edge_Kapper = 2 * Vector3.Dot(-edge, Normal) / (edge).Length * (edge).Length;
-               
-
-            //    ellipse.M11 += (TangentUV.X * TangentUV.X * TangentUV.X * TangentUV.X);
-            //    ellipse.M12 += (TangentUV.X * TangentUV.X * TangentUV.X * TangentUV.Y);
-            //    ellipse.M13 += (TangentUV.X * TangentUV.X * TangentUV.Y * TangentUV.Y);
-
-            //    ellipse.M21 += (TangentUV.X * TangentUV.X * TangentUV.X * TangentUV.Y);
-            //    ellipse.M22 += (TangentUV.X * TangentUV.X * TangentUV.Y * TangentUV.Y);
-            //    ellipse.M23 += (TangentUV.X * TangentUV.Y * TangentUV.Y * TangentUV.Y);
-
-            //    ellipse.M31 += (TangentUV.X * TangentUV.X * TangentUV.Y * TangentUV.Y);
-            //    ellipse.M32 += (TangentUV.X * TangentUV.Y * TangentUV.Y * TangentUV.Y);
-            //    ellipse.M33 += (TangentUV.Y * TangentUV.Y * TangentUV.Y * TangentUV.Y);
-
-            //    kapper.X += edge_Kapper * TangentUV.X * TangentUV.X;
-            //    kapper.Y += edge_Kapper * TangentUV.X * TangentUV.Y;
-            //    kapper.Z += edge_Kapper * TangentUV.Y * TangentUV.Y;
-
-            //}
-
-            //ellipse.Invert();
-            //Vector3 result = CCalc.Multiply(ellipse, kapper);
-            //float a = result.X;
-            //float b = result.Y / 2;
-            //float c = result.Z;
-            //CvMat eigenVector;
-            //CvMat eigenValue;
-            //CvMat matEplise = Cv.CreateMat(2, 2, MatrixType.F32C1);
-            //matEplise.Set2D(0, 0, a);
-            //matEplise.Set2D(0, 1, b);
-            //matEplise.Set2D(1, 0, b);
-            //matEplise.Set2D(1, 1, c);
-            //eigenVector = Cv.CreateMat(2, 2, MatrixType.F32C1);
-            //eigenValue = Cv.CreateMat(1, 2, MatrixType.F32C1);
-            //Cv.Zero(eigenVector);
-            //Cv.Zero(eigenValue);
-            //Cv.EigenVV(matEplise, eigenVector, eigenValue);
-
-
-            //float max1 = (float)eigenVector.Get2D(0, 0).Val0;
-            //float max2 = (float)eigenVector.Get2D(0, 1).Val0;
-            //float min1 = (float)eigenVector.Get2D(1, 0).Val0;
-            //float min2 = (float)eigenVector.Get2D(1, 1).Val0;
-            
-
-            //m_Vertex[v_index].MaxVector = new Vector3(
-            //    baseU.X * max1 + baseV.X * max2,
-            //    baseU.Y * max1 + baseV.Y * max2,
-            //    baseU.Z * max1 + baseV.Z * max2
-            //    ).Normalized();
-            //m_Vertex[v_index].MinVector = new Vector3(
-            //   baseU.X * min1 + baseV.X * min2,
-            //   baseU.Y * min1 + baseV.Y * min2,
-            //   baseU.Z * min1 + baseV.Z * min2
-            //   ).Normalized();
-            //float in1 = Vector3.Dot(m_Vertex[v_index].Normal, m_Vertex[v_index].MaxVector);
-            //float in2 = Vector3.Dot(m_Vertex[v_index].Normal, m_Vertex[v_index].MaxVector);
-            
-        }
-        #endregion
         #endregion
     }
 }

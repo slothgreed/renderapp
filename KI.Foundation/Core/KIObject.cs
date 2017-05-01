@@ -3,10 +3,16 @@ namespace KI.Foundation.Core
 {
     public abstract class KIObject
     {
+        public KIObject()
+        {
+            Name = this.GetType().ToString();
+            Logger.Log(Logger.LogLevel.Debug, "create kiobject " + Name + ":");
+
+        }
         public KIObject(string name)
         {
             Name = name;
-            Logger.Log(Logger.LogLevel.Debug, "create kiobject " + name + ":");
+            Logger.Log(Logger.LogLevel.Debug, "create kiobject " + Name + ":");
         }
         private string _name = null;
         public string Name

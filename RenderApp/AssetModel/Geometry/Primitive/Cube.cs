@@ -62,21 +62,21 @@ namespace RenderApp.AssetModel.RA_Geometry
 
             if(reverse == false)
             {
-                front.CreateGeometryInfo(   new GeometryInfo(new List<Vector3> { v0, v3, v2, v1 }, null, null, TexCoord, null), PrimitiveType.Quads);
-                left.CreateGeometryInfo(    new GeometryInfo(new List<Vector3> { v0, v4, v7, v3 }, null, null, TexCoord, null), PrimitiveType.Quads);
-                back.CreateGeometryInfo(    new GeometryInfo(new List<Vector3> { v4, v5, v6, v7 }, null, null, TexCoord, null), PrimitiveType.Quads);
-                right.CreateGeometryInfo(   new GeometryInfo(new List<Vector3> { v1, v2, v6, v5 }, null, null, TexCoord, null), PrimitiveType.Quads);
-                top.CreateGeometryInfo(     new GeometryInfo(new List<Vector3> { v2, v3, v7, v6 }, null, null, TexCoord, null), PrimitiveType.Quads);
-                bot.CreateGeometryInfo(     new GeometryInfo(new List<Vector3> { v1, v5, v4, v0 }, null, null, TexCoord, null), PrimitiveType.Quads);
+                front.CreateGeometryInfo(   new GeometryInfo(new List<Vector3> { v0, v3, v2, v1 }, null, null, TexCoord, null, GeometryType.Quad), PrimitiveType.Quads);
+                left.CreateGeometryInfo(    new GeometryInfo(new List<Vector3> { v0, v4, v7, v3 }, null, null, TexCoord, null, GeometryType.Quad), PrimitiveType.Quads);
+                back.CreateGeometryInfo(    new GeometryInfo(new List<Vector3> { v4, v5, v6, v7 }, null, null, TexCoord, null, GeometryType.Quad), PrimitiveType.Quads);
+                right.CreateGeometryInfo(   new GeometryInfo(new List<Vector3> { v1, v2, v6, v5 }, null, null, TexCoord, null, GeometryType.Quad), PrimitiveType.Quads);
+                top.CreateGeometryInfo(     new GeometryInfo(new List<Vector3> { v2, v3, v7, v6 }, null, null, TexCoord, null, GeometryType.Quad), PrimitiveType.Quads);
+                bot.CreateGeometryInfo(     new GeometryInfo(new List<Vector3> { v1, v5, v4, v0 }, null, null, TexCoord, null, GeometryType.Quad), PrimitiveType.Quads);
             }
             else
             {
-                front.CreateGeometryInfo(new GeometryInfo(new List<Vector3> { v3, v0, v1, v2 }, null, null, TexCoord, null), PrimitiveType.Quads);
-                left.CreateGeometryInfo(new GeometryInfo(new List<Vector3> { v7, v4, v0, v3 }, null, null, TexCoord, null), PrimitiveType.Quads);
-                back.CreateGeometryInfo(new GeometryInfo(new List<Vector3> { v6, v5, v4, v7 }, null, null, TexCoord, null), PrimitiveType.Quads);
-                right.CreateGeometryInfo(new GeometryInfo(new List<Vector3> { v2, v1, v5, v6 }, null, null, TexCoord, null), PrimitiveType.Quads);
-                top.CreateGeometryInfo(new GeometryInfo(new List<Vector3> { v2, v6, v7, v3 }, null, null, TexCoord, null), PrimitiveType.Quads);
-                bot.CreateGeometryInfo(new GeometryInfo(new List<Vector3> { v1, v0, v4, v5 }, null, null, TexCoord, null), PrimitiveType.Quads);
+                front.CreateGeometryInfo(new GeometryInfo(new List<Vector3> { v3, v0, v1, v2 }, null, null, TexCoord, null, GeometryType.Quad), PrimitiveType.Quads);
+                left.CreateGeometryInfo(new GeometryInfo(new List<Vector3> { v7, v4, v0, v3 }, null, null, TexCoord, null, GeometryType.Quad), PrimitiveType.Quads);
+                back.CreateGeometryInfo(new GeometryInfo(new List<Vector3> { v6, v5, v4, v7 }, null, null, TexCoord, null, GeometryType.Quad), PrimitiveType.Quads);
+                right.CreateGeometryInfo(new GeometryInfo(new List<Vector3> { v2, v1, v5, v6 }, null, null, TexCoord, null, GeometryType.Quad), PrimitiveType.Quads);
+                top.CreateGeometryInfo(new GeometryInfo(new List<Vector3> { v2, v6, v7, v3 }, null, null, TexCoord, null, GeometryType.Quad), PrimitiveType.Quads);
+                bot.CreateGeometryInfo(new GeometryInfo(new List<Vector3> { v1, v0, v4, v5 }, null, null, TexCoord, null, GeometryType.Quad), PrimitiveType.Quads);
             }
 
             geometry.Add(right);    ///< posx

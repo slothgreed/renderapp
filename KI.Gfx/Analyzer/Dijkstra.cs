@@ -20,7 +20,7 @@ namespace KI.Gfx.Analyzer
             vertex = _v;
         }
     }
-    public class Dijkstra : ICommand, IAnalyzer
+    public class Dijkstra : ICommand
     {
         public GeometryInfo Geometry
         {

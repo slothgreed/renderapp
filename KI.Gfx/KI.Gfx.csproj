@@ -50,17 +50,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analyzer\Algorithm\VertexNormalAlgorithm.cs" />
     <Compile Include="Analyzer\Dijkstra.cs" />
     <Compile Include="Analyzer\HalfEdge\Edge.cs" />
     <Compile Include="Analyzer\HalfEdge\HalfEdge.cs" />
     <Compile Include="Analyzer\HalfEdge\Mesh.cs" />
     <Compile Include="Analyzer\HalfEdge\Vertex.cs" />
     <Compile Include="Analyzer\IAnalyzer.cs" />
-    <Compile Include="Analyzer\Parameter.cs" />
+    <Compile Include="Analyzer\IParameter.cs" />
+    <Compile Include="Analyzer\ScalarParameter.cs" />
+    <Compile Include="Analyzer\GeometryAnalyzer.cs" />
     <Compile Include="Analyzer\Tree\BDB.cs" />
     <Compile Include="Analyzer\Tree\Kdtree.cs" />
     <Compile Include="Analyzer\Tree\Octree.cs" />
     <Compile Include="Analyzer\Tree\Voxel.cs" />
+    <Compile Include="Analyzer\Algorithm\VertexCurvatureAlgorithm.cs" />
+    <Compile Include="Analyzer\Algorithm\VertexSaliencyAlgorithm.cs" />
+    <Compile Include="Analyzer\VectorParameter.cs" />
     <Compile Include="GLUtil\Buffer\ArrayBuffer.cs" />
     <Compile Include="GLUtil\Buffer\BufferFactory.cs" />
     <Compile Include="GLUtil\Buffer\BufferObject.cs" />

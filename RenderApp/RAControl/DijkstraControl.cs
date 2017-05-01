@@ -50,7 +50,7 @@ namespace RenderApp.RA_Control
                         if (picking == null)
                         {
                             RenderObject triangle = AssetFactory.Instance.CreateRenderObject("Picking");
-                            GeometryInfo info = new GeometryInfo(new List<Vector3>() { tri1, tri2, tri3 },null,KICalc.RandomColor(),null,null);
+                            GeometryInfo info = new GeometryInfo(new List<Vector3>() { tri1, tri2, tri3 },null,KICalc.RandomColor(),null,null,GeometryType.Triangle);
                             triangle.CreateGeometryInfo(info, OpenTK.Graphics.OpenGL.PrimitiveType.Triangles);
                             AssetFactory.Instance.CreateGeometry(triangle);
                         }

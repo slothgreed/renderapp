@@ -83,7 +83,7 @@ namespace RenderApp.AssetModel.RA_Geometry
                 if (Position.Count != 0)
                 {
                     geometry = AssetFactory.Instance.CreateRenderObject(material.name);
-                    GeometryInfo info = new GeometryInfo(Position, Normal, null, TexCoord, null);
+                    GeometryInfo info = new GeometryInfo(Position, Normal, null, TexCoord, null,GeometryType.Triangle);
                     //geometry.CreateGeometryInfo(objData.vertexInfo, PrimitiveType.Triangles);
                     SetMaterial(geometry, material);
                     if (geometry != null)

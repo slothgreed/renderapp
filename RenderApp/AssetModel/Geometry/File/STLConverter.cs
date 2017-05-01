@@ -30,7 +30,7 @@ namespace RenderApp.AssetModel.RA_Geometry
         public List<RenderObject> CreateRenderObject()
         {
             RenderObject geometry = AssetFactory.Instance.CreateRenderObject(stlData.FileName);
-            GeometryInfo info = new GeometryInfo(stlData.vertexInfo.Position, stlData.vertexInfo.Normal, null, null, null);
+            GeometryInfo info = new GeometryInfo(stlData.vertexInfo.Position, stlData.vertexInfo.Normal, null, null, null,GeometryType.Triangle);
             geometry.CreateGeometryInfo(info, PrimitiveType.Triangles);
             _renderObject = new List<RenderObject>() { geometry };
             return _renderObject;

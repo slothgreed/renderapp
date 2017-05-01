@@ -69,32 +69,52 @@ namespace RenderApp.AssetModel
             {
                 return false;
             }
-            //Geometry geometry = asset as Geometry;
-            //List<Vector3> position = new List<Vector3>();
-            //for (int i = 0; i < geometry.GeometryInfo.Position.Count / 3; i++)
-            //{
-            //    position.Add(geometry.GeometryInfo.Position[3 * i]);
-            //    position.Add(geometry.GeometryInfo.Position[3 * i + 1]);
-
-            //    position.Add(geometry.GeometryInfo.Position[3 * i + 1]);
-            //    position.Add(geometry.GeometryInfo.Position[3 * i + 2]);
-
-            //    position.Add(geometry.GeometryInfo.Position[3 * i + 2]);
-            //    position.Add(geometry.GeometryInfo.Position[3 * i]);
-
-            //}
-            //RenderObject wireframe = AssetFactory.Instance.CreateRenderObject("WireFrame :" + geometry.Name);
-            //wireframe.CreatePC(position, KICalc.RandomColor(), PrimitiveType.Lines);
-            //wireframe.ModelMatrix = geometry.ModelMatrix;
-            //CreateGeometry(wireframe);
-
             Geometry geometry = asset as Geometry;
-            HalfEdge half = new HalfEdge(geometry.geometryInfo);
-            GeometryInfo info = half.CreateGeometryInfo();
-            RenderObject halfEdge = AssetFactory.Instance.CreateRenderObject("HalfEdge :" + geometry.Name);
-            halfEdge.CreateGeometryInfo(info, PrimitiveType.Triangles);
-            halfEdge.ModelMatrix = geometry.ModelMatrix;
-            CreateGeometry(halfEdge);
+            List<Vector3> position = new List<Vector3>();
+            if (geometry.geometryInfo.Index.Count != 0)
+            {
+                for (int i = 0; i < geometry.geometryInfo.Index.Count / 3; i++)
+                {
+                    position.Add(geometry.geometryInfo.Position[geometry.geometryInfo.Index[3 * i]]);
+                    position.Add(geometry.geometryInfo.Position[geometry.geometryInfo.Index[3 * i + 1]]);
+
+                    position.Add(geometry.geometryInfo.Position[geometry.geometryInfo.Index[3 * i + 1]]);
+                    position.Add(geometry.geometryInfo.Position[geometry.geometryInfo.Index[3 * i + 2]]);
+
+                    position.Add(geometry.geometryInfo.Position[geometry.geometryInfo.Index[3 * i + 2]]);
+                    position.Add(geometry.geometryInfo.Position[geometry.geometryInfo.Index[3 * i]]);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < geometry.geometryInfo.Position.Count / 3; i++)
+                {
+                    position.Add(geometry.geometryInfo.Position[3 * i]);
+                    position.Add(geometry.geometryInfo.Position[3 * i + 1]);
+
+                    position.Add(geometry.geometryInfo.Position[3 * i + 1]);
+                    position.Add(geometry.geometryInfo.Position[3 * i + 2]);
+
+                    position.Add(geometry.geometryInfo.Position[3 * i + 2]);
+                    position.Add(geometry.geometryInfo.Position[3 * i]);
+
+                }
+            }
+            RenderObject wireframe = AssetFactory.Instance.CreateRenderObject("WireFrame :" + geometry.Name);
+            wireframe.CreateGeometryInfo(new GeometryInfo(position, null, KICalc.RandomColor(), null, null,GeometryType.Line), PrimitiveType.Lines);
+            wireframe.ModelMatrix = geometry.ModelMatrix;
+            CreateGeometry(wireframe);
+
+            //Geometry geometry = asset as Geometry;
+            //HalfEdge half = new HalfEdge(geometry.geometryInfo);
+            //half.WriteFile(@"C:/Users/ido/Documents/KIProject/renderapp/RenderApp/Resource/Model/cube.half");
+            //half.ReadFile(@"C:/Users/ido/Documents/KIProject/renderapp/RenderApp/Resource/Model/cube.half");
+
+            //GeometryInfo info = half.CreateGeometryInfo();
+            //RenderObject halfEdge = AssetFactory.Instance.CreateRenderObject("HalfEdge :" + geometry.Name);
+            //halfEdge.CreateGeometryInfo(info, PrimitiveType.Triangles);
+            //halfEdge.ModelMatrix = geometry.ModelMatrix;
+            //CreateGeometry(halfEdge);
 
             return true;
         }
@@ -133,11 +153,11 @@ namespace RenderApp.AssetModel
             }
             Geometry geometry = asset as Geometry;
             KI.Gfx.Analyzer.Voxel voxel = new KI.Gfx.Analyzer.Voxel(geometry.geometryInfo.Position, geometry.geometryInfo.Index, geometry.ModelMatrix, partition);
-            RenderObject wireframe = AssetFactory.Instance.CreateRenderObject("Voxel :" + geometry.Name);
-            GeometryInfo info = new GeometryInfo(voxel.vPosition, voxel.vNormal, KICalc.RandomColor(), null, null);
-            wireframe.CreateGeometryInfo(info, PrimitiveType.Quads);
-            wireframe.Transformation(geometry.ModelMatrix);
-            CreateGeometry(wireframe);
+            RenderObject voxelObject = AssetFactory.Instance.CreateRenderObject("Voxel :" + geometry.Name);
+            GeometryInfo info = new GeometryInfo(voxel.vPosition, voxel.vNormal, KICalc.RandomColor(), null, null,GeometryType.Quad);
+            voxelObject.CreateGeometryInfo(info, PrimitiveType.Quads);
+            voxelObject.Transformation(geometry.ModelMatrix);
+            CreateGeometry(voxelObject);
 
             return true;
         }
@@ -158,7 +178,7 @@ namespace RenderApp.AssetModel
             Plane plane;
             plane = new Plane(name);
             RenderObject renderObject = new RenderObject(name);
-            GeometryInfo info = new GeometryInfo(plane.Geometry.Position, null, null, plane.Geometry.TexCoord, null);
+            GeometryInfo info = new GeometryInfo(plane.Geometry.Position, null, null, plane.Geometry.TexCoord, null,GeometryType.Quad);
             renderObject.CreateGeometryInfo(info, PrimitiveType.Quads);
             renderObject.Shader = shader;
             return renderObject;
@@ -168,7 +188,7 @@ namespace RenderApp.AssetModel
         {
             Plane plane = new Plane(name);
             RenderObject renderObject = new RenderObject(name);
-            GeometryInfo info = new GeometryInfo(plane.Geometry.Position, null, null, plane.Geometry.TexCoord, null);
+            GeometryInfo info = new GeometryInfo(plane.Geometry.Position, null, null, plane.Geometry.TexCoord, null, GeometryType.Quad);
             renderObject.CreateGeometryInfo(info, PrimitiveType.Quads);
             return renderObject;
         }
@@ -191,6 +211,33 @@ namespace RenderApp.AssetModel
                 case ".stl":
                     var stl = new STLConverter(fileName, filePath);
                     return stl.CreateRenderObject();
+                case ".half":
+                    var half = new HalfEdge();
+                    half.ReadFile(filePath);
+                    var renderObject = new RenderObject(fileName);
+                    GeometryInfo info = half.CreateGeometryInfo();
+                    int r = 100;
+                    List<Vector3> Color = new List<Vector3>();
+                    foreach (var vertex in half.m_Vertex)
+                    {
+                        Color.Add(Vector3.UnitX);
+                    }
+                    for (int i = 0; i < half.m_Vertex.Count; i++)
+                    {
+                        if (i % r == 0)
+                        {
+                            var color = KICalc.RandomColor();
+                            Color[half.m_Vertex[i].Index] = color;
+                            foreach (var vertex in half.m_Vertex[i].AroundVertex)
+                            {
+                                Color[vertex.Index] = color;
+                            }
+                        }
+                    }
+
+                    info.Color = Color;
+                    renderObject.CreateGeometryInfo(info, PrimitiveType.Triangles);
+                    return new List<RenderObject> { renderObject };
             }
             return null;
         }

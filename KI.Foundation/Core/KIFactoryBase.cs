@@ -13,7 +13,10 @@ namespace KI.Foundation.Core
 
         public void AddItem(T value)
         {
-            Items.Add(value);
+            if(value != null)
+            {
+                Items.Add(value);
+            }
         }
 
         /// <summary>

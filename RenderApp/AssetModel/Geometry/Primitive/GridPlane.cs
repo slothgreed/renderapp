@@ -30,14 +30,13 @@ namespace RenderApp.AssetModel
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public GridPlane(string name,float area,float space)
+        public GridPlane(string name, float area, float space)
         {
             Area = area;
             Space = space;
+            Create();
         }
-
-
-        public List<RenderObject> CreateRenderObject()
+        public void Create()
         {
             List<Vector3> Position = new List<Vector3>();
             List<Vector3> Color = new List<Vector3>();
@@ -48,7 +47,7 @@ namespace RenderApp.AssetModel
             Vector3 line_fin2 = new Vector3();
             float world = Area;
 
-            for (float i = -world; i < world; i+=Space)
+            for (float i = -world; i < world; i += Space)
             {
                 if (i != 0)
                 {
@@ -68,8 +67,16 @@ namespace RenderApp.AssetModel
                     Color.Add(Vector3.One);
                 }
             }
-            GeometryInfo info = new GeometryInfo(Position, null, Color, null, null, GeometryType.Line);
-            geometry.CreateGeometryInfo(info, PrimitiveType.Triangles);
+            _geometry = new GeometryInfo(Position, null, Color, null, null, GeometryType.Line);
+        }
+
+        private GeometryInfo _geometry;
+        public GeometryInfo Geometry
+        {
+            get
+            {
+                return _geometry;
+            }
         }
     }
 }

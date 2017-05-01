@@ -1,6 +1,6 @@
 ﻿namespace KI.Gfx.KIAsset
 {
-    interface IPrimitive
+    public interface IPrimitive
     {
         GeometryInfo Geometry { get;}
     }

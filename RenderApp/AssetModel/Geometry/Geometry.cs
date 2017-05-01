@@ -16,6 +16,7 @@ namespace RenderApp.AssetModel
         public int ID { get; private set; }
         public PrimitiveType RenderType { get; set; }
         public GeometryInfo geometryInfo { get; set; }
+        public bool Visible { get; set; }
 
         public ArrayBuffer PositionBuffer { get; set; }
         public ArrayBuffer NormalBuffer { get; set; }
@@ -364,7 +365,6 @@ namespace RenderApp.AssetModel
                 IndexBuffer.SetData(geometryInfo.Index, EArrayType.IntArray);
             }
         }
-
         public void GenBuffer()
         {
             if (geometryInfo.Position.Count != 0)

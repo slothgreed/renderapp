@@ -103,7 +103,6 @@ namespace KI.Gfx.Analyzer
 
             }
         }
-        
 
         #region [utility]
         /// <summary>
@@ -189,7 +188,6 @@ namespace KI.Gfx.Analyzer
         }
         #endregion
 
-
         /// <summary>
         /// ボクセルを作るかチェック
         /// </summary>
@@ -260,14 +258,9 @@ namespace KI.Gfx.Analyzer
             if (KICalc.CrossPlanetoLinePos(v0, v4, v5, v1, tri1, tri2, ref maxValue, out tmp)) { return true; }
             if (KICalc.CrossPlanetoLinePos(v0, v4, v5, v1, tri2, tri3, ref maxValue, out tmp)) { return true; }
             if (KICalc.CrossPlanetoLinePos(v0, v4, v5, v1, tri3, tri1, ref maxValue, out tmp)) { return true; }
-
-
-
-
             
             return false;
         }
-
 
         #region [voxel object]
         /// <summary>
