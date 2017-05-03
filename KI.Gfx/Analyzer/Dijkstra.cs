@@ -66,7 +66,7 @@ namespace KI.Gfx.Analyzer
             return true;
         }
 
-        public string CanExecute(string commandArg)
+        public string CanExecute()
         {
             if (Geometry == null)
                 return "geometry null error";
@@ -80,7 +80,7 @@ namespace KI.Gfx.Analyzer
             }
             return "";
         }
-        public string Execute(string commandArg)
+        public string Execute()
         {
             //var analyze = Geometry.FindAnalyze(HalfEdge.ToString());
             //if (analyze != null)
@@ -129,9 +129,9 @@ namespace KI.Gfx.Analyzer
             return true;
         }
 
-        public bool Undo(string arg)
+        public string Undo()
         {
-            return false;
+            return "Failed";
         }
     }
 }

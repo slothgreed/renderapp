@@ -50,6 +50,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CommandResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Command\CommandManager.cs" />
     <Compile Include="Command\CommandStack.cs" />
     <Compile Include="Command\ICommand.cs" />
@@ -149,6 +154,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CommandResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CommandResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

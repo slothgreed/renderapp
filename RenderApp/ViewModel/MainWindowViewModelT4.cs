@@ -166,6 +166,30 @@ namespace RenderApp.ViewModel
 					return _OpenExplorer;
 				}
 			}
+			private ICommand _Undo;
+			public ICommand Undo
+			{
+				get
+				{
+					if(_Undo == null)
+					{
+						return _Undo = CreateCommand(UndoCommand);						
+					}
+					return _Undo;
+				}
+			}
+			private ICommand _Redo;
+			public ICommand Redo
+			{
+				get
+				{
+					if(_Redo == null)
+					{
+						return _Redo = CreateCommand(RedoCommand);						
+					}
+					return _Redo;
+				}
+			}
 
 			private TabControlViewModel _LeftUpDockPanel;
 			public TabControlViewModel LeftUpDockPanel

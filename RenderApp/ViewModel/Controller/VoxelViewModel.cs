@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using RenderApp.AssetModel;
 using System.Windows;
+using KI.Foundation.Command;
+using RenderApp.RACommand;
 namespace RenderApp.ViewModel
 {
     public partial class VoxelViewModel : TabItemViewModel, IControllerViewModelBase
@@ -33,11 +35,10 @@ namespace RenderApp.ViewModel
         }
         private void ExecuteCommand()
         {
-            if (!AssetFactory.Instance.CreateVoxel(SceneManager.Instance.ActiveScene.SelectAsset, PartitionNum))
-            {
-                MessageBox.Show("Trianglesのポリゴンモデルのみで作成できます。");
-            }
+            ICommand command = new CreateVoxelCommand(SceneManager.Instance.ActiveScene.SelectAsset, PartitionNum);
+            CommandManager.Instance.Execute(command, true);
         }
+
 
         public override void UpdateProperty()
         {

@@ -52,7 +52,7 @@ namespace RenderApp.RA_Control
                             RenderObject triangle = AssetFactory.Instance.CreateRenderObject("Picking");
                             GeometryInfo info = new GeometryInfo(new List<Vector3>() { tri1, tri2, tri3 },null,KICalc.RandomColor(),null,null,GeometryType.Triangle);
                             triangle.CreateGeometryInfo(info, OpenTK.Graphics.OpenGL.PrimitiveType.Triangles);
-                            AssetFactory.Instance.CreateGeometry(triangle);
+                            SceneManager.Instance.ActiveScene.AddObject(triangle);
                         }
                         else if (picking.geometryInfo.TriangleNum == 2)
                         {
@@ -94,7 +94,7 @@ namespace RenderApp.RA_Control
         /// <returns></returns>
         public override bool UnBinding()
         {
-            SceneManager.Instance.ActiveScene.DeleteNode("Picking");
+            SceneManager.Instance.ActiveScene.DeleteObject("Picking");
             return true;
         }
         private void SelectObject(KIObject select)

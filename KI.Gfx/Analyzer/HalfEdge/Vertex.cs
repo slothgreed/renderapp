@@ -25,14 +25,9 @@ namespace KI.Gfx.Analyzer
         /// HalfEdgeでもつm_VertexのIndex番号
         /// </summary>
         public int Index { get; set; }
-        public float GaussCurvature;
-        public float MeanCurvature;
-        public float MinCurvature;
-        public float MaxCurvature;
-        public float VoronoiRagion;
-        public bool calcFrag = false;
         public Vector3 MaxVector { get; set; }
         public Vector3 MinVector { get; set; }
+        public bool calcFlag { get; set; }
         /// <summary>
         /// 削除フラグ。Updateが走ると必ず削除するべきもの
         /// </summary>
@@ -114,16 +109,6 @@ namespace KI.Gfx.Analyzer
                         yield return edge;
                     }
                 }
-                else
-                {
-                    yield return m_Edge;
-                    Edge loop = m_Edge.Opposite.Next;
-                    while (loop != m_Edge)
-                    {
-                        yield return loop;
-                        loop = loop.Opposite.Next;
-                    }
-                }
             }
         }
         public IEnumerable<Mesh> AroundMesh
@@ -174,6 +159,7 @@ namespace KI.Gfx.Analyzer
         public void Dispose()
         {
             DeleteFlg = true;
+            m_AroundEdge = null;
             m_Edge = null;
         }
         public bool ErrorVertex()

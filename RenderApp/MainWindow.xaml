@@ -24,7 +24,9 @@
             <ei:CallMethodAction MethodName="ClosedCommand" TargetObject="{Binding}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-            
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding Undo}" Key="Z" Modifiers="Control"/>
+    </Window.InputBindings>    
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
@@ -65,6 +67,7 @@
             <MenuItem Header="Analyze">
                 <MenuItem Header="WireFrame" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.WireFrame}"/>
                 <MenuItem Header="Polygon" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.Polygon}"/>
+                <MenuItem Header="HalfEdge" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.HalfEdge}"/>
                 <Separator/>
                 <MenuItem Header="Voxelize" Command="{Binding Voxelize}"/>
                 <MenuItem Header="Octree" Command="{Binding Octree}"/>

@@ -141,6 +141,11 @@
     <Compile Include="AssetModel\AssetFactory.cs" />
     <Compile Include="AssetModel\Geometry\Geometry.cs" />
     <Compile Include="AssetModel\Geometry\IRenderObjectConverter.cs" />
+    <Compile Include="RACommand\CreateHalfEdgeCommand.cs" />
+    <Compile Include="RACommand\CreateModelCommandBase.cs" />
+    <Compile Include="RACommand\CreatePolygonCommand.cs" />
+    <Compile Include="RACommand\CreateVoxelCommand.cs" />
+    <Compile Include="RACommand\CreateWireFrameCommand.cs" />
     <Compile Include="GfxUtility\ShaderHelper.cs" />
     <Compile Include="KIRenderSystem\ImageBasedLighting.cs" />
     <Compile Include="KIRenderSystem\DeferredBuffer.cs" />
@@ -159,6 +164,11 @@
     <Compile Include="KIRenderSystem\Post_Effect\SSAO.cs" />
     <Compile Include="KIRenderSystem\RenderTechniqueFactory.cs" />
     <Compile Include="KIRenderSystem\ShadowMap.cs" />
+    <Compile Include="RACommand\RACommandResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RACommandResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Scene\SceneManager.cs" />
     <Compile Include="RAControl\CameraControl.cs" />
     <Compile Include="GfxUtility\ShaderCreater.cs" />
@@ -432,6 +442,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="RACommand\RACommandResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>RACommandResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Thumbnail\noimage.png" />
   </ItemGroup>
   <ItemGroup>

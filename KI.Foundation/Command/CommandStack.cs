@@ -6,36 +6,20 @@ using System.Threading.Tasks;
 
 namespace KI.Foundation.Command
 {
-    public class CommandInfo
-    {
-        public CommandInfo()
-        {
-
-        }
-        public CommandInfo(ICommand com,string str)
-        {
-            Command = com;
-            CommandArg = str;
-        }
-        public ICommand Command;
-        public string CommandArg;
-    }
-
     public class CommandStack
     {
-        public Stack<CommandInfo> Commands;
+        public Stack<ICommand> Commands;
 
-        public void Push(ICommand command, string commandStr)
+        public CommandStack()
         {
-            Commands.Push(new CommandInfo(command, commandStr));
+            Commands = new Stack<ICommand>();
         }
-
-        public void Push(CommandInfo command)
+        public void Push(ICommand command)
         {
             Commands.Push(command);
         }
-        
-        public CommandInfo Pop()
+
+        public ICommand Pop()
         {
             return Commands.Pop();
         }

@@ -520,12 +520,12 @@ namespace KI.Gfx.Analyzer
         public List<Vertex> GetAroundVertex(Vertex vertex, float distance)
         {
             List<Vertex> vertex_list = new List<Vertex>();
-            vertex.calcFrag = true;
+            vertex.calcFlag = true;
             vertex_list.Add(vertex);
             RecursiveAroundPosition(vertex_list, vertex, vertex, distance);
             for (int i = 0; i < vertex_list.Count; i++)
             {
-                vertex_list[i].calcFrag = false;
+                vertex_list[i].calcFlag = false;
             }
             return vertex_list;
         }
@@ -541,9 +541,9 @@ namespace KI.Gfx.Analyzer
             foreach (var aroundEdge in vertex.AroundEdge)
             {
                 length = (startVertex - aroundEdge.End).Length;
-                if (length < distance && aroundEdge.End.calcFrag == false)
+                if (length < distance && aroundEdge.End.calcFlag == false)
                 {
-                    aroundEdge.End.calcFrag = true;
+                    aroundEdge.End.calcFlag = true;
                     vertex_list.Add(aroundEdge.End);
                     RecursiveAroundPosition(vertex_list, aroundEdge.End, startVertex, distance);
                 }

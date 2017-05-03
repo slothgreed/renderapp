@@ -99,7 +99,11 @@ namespace KI.Gfx.Analyzer.Algorithm
         /// <param name="v_index"></param>
         private void SetMaxMinCurvature(Vertex vertex)
         {
-            float delta = (vertex.MeanCurvature * vertex.MeanCurvature) - vertex.GaussCurvature;
+            float mean = (float)Parameters["Mean"].GetValue(vertex.Index);
+            float gauss = (float)Parameters["Gauss"].GetValue(vertex.Index);
+
+            
+            float delta = (mean * mean) - gauss;
             if (delta > 0)
             {
                 delta = (float)Math.Sqrt((double)delta);
@@ -108,8 +112,8 @@ namespace KI.Gfx.Analyzer.Algorithm
             {
                 delta = 0;
             }
-            Parameters["Max"].AddValue(vertex.MeanCurvature + delta);
-            Parameters["Min"].AddValue(vertex.MeanCurvature - delta);
+            Parameters["Max"].AddValue(mean + delta);
+            Parameters["Min"].AddValue(mean - delta);
         }
 
         /// <summary>

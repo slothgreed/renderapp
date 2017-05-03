@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using System.IO;
 using System.Collections.ObjectModel;
 using System.Windows.Forms;
@@ -21,6 +20,8 @@ using KI.Gfx.KIAsset;
 using KI.Gfx.Render;
 using KI.Gfx.KIShader;
 using KI.Gfx.GLUtil.Buffer;
+using RenderApp.RACommand;
+using KI.Foundation.Command;
 namespace RenderApp.ViewModel
 {
     public partial class MainWindowViewModel : ViewModelBase
@@ -172,7 +173,8 @@ namespace RenderApp.ViewModel
             {
                 geometry.RotateX(-90);
                 geometry.RotateY(0);
-                Project.ActiveProject.AddChild(AssetFactory.Instance.CreateGeometry(geometry));
+                SceneManager.Instance.ActiveScene.AddObject(geometry);
+                Project.ActiveProject.AddChild(geometry);
             }
         }
         private void OpenProjectCommand()
@@ -237,7 +239,8 @@ namespace RenderApp.ViewModel
                     List<RenderObject> geometrys = AssetFactory.Instance.CreateLoad3DModel(filename);
                     foreach(var geometry in geometrys)
                     {
-                        Project.ActiveProject.AddChild(AssetFactory.Instance.CreateGeometry(geometry));
+                        SceneManager.Instance.ActiveScene.AddObject(geometry);
+                        Project.ActiveProject.AddChild(geometry);
                     }
                 }
             }
@@ -291,7 +294,7 @@ namespace RenderApp.ViewModel
         private void CreateObjectCommand(object createObjectMenu)
         {
             RAGeometry menuParam = (RAGeometry)createObjectMenu;
-
+            ICommand command = null;
             switch (menuParam)
             {
                 case RAGeometry.Cube:
@@ -304,10 +307,16 @@ namespace RenderApp.ViewModel
                     CreatePlaneCommand();
                     break;
                 case RAGeometry.WireFrame:
-                    CreateWireFrameCommand();
+                    command = new CreateWireFrameCommand(SceneManager.Instance.ActiveScene.SelectAsset);
+                    CommandManager.Instance.Execute(command, true);
                     break;
                 case RAGeometry.Polygon:
-                    CreatePolygonCommand();
+                    command = new CreatePolygonCommand(SceneManager.Instance.ActiveScene.SelectAsset);
+                    CommandManager.Instance.Execute(command, true);
+                    break;
+                case RAGeometry.HalfEdge:
+                    command = new CreateHalfEdgeCommand(SceneManager.Instance.ActiveScene.SelectAsset);
+                    CommandManager.Instance.Execute(command, true); 
                     break;
                 default:
                     break;
@@ -327,20 +336,6 @@ namespace RenderApp.ViewModel
         {
             //Plane plane = new Plane(KIFile.GetNameFromType(EAssetType.Geometry));
             //AssetFactory.Instance.CreateGeometry(plane.CreateRenderObject().First());
-        }
-        private void CreateWireFrameCommand()
-        {
-            if (!AssetFactory.Instance.CreateWireFrame(SceneManager.Instance.ActiveScene.SelectAsset))
-            {
-                MessageBox.Show("Trianglesのポリゴンモデルのみで作成できます。");
-            }
-        }
-        private void CreatePolygonCommand()
-        {
-            if (!AssetFactory.Instance.CreatePolygon(SceneManager.Instance.ActiveScene.SelectAsset))
-            {
-                MessageBox.Show("Trianglesのポリゴンモデルのみで作成できます。");
-            }
         }
         #endregion
 
@@ -413,10 +408,7 @@ namespace RenderApp.ViewModel
         }
         private void OctreeCommand()
         {
-            if (!AssetFactory.Instance.CreateOctree(SceneManager.Instance.ActiveScene.SelectAsset))
-            {
-                MessageBox.Show("Trianglesのポリゴンモデルのみで作成できます。");
-            }
+
         }
         #endregion
 
@@ -434,6 +426,16 @@ namespace RenderApp.ViewModel
             }
 
             System.Diagnostics.Process.Start(path);
+        }
+
+        private void UndoCommand()
+        {
+            CommandManager.Instance.Undo();
+        }
+
+        private void RedoCommand()
+        {
+            CommandManager.Instance.Redo();
         }
         #region [Update Method]
         public void UpdateSelectNode(KINode node)

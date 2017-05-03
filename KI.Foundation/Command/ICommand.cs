@@ -7,21 +7,16 @@ namespace KI.Foundation.Command
         /// 処理できるか？
         /// </summary>
         /// <returns></returns>
-        string CanExecute(string commandArg);
+        string CanExecute();
         /// <summary>
         /// 処理の実行
         /// </summary>
         /// <returns></returns>
-        string Execute(string commandArg);
-        /// <summary>
-        /// 処理のリセット
-        /// </summary>
-        /// <returns></returns>
-        bool Reset();
+        string Execute();
         /// <summary>
         /// Undo
         /// </summary>
         /// <returns></returns>
-        bool Undo(string commandArg);
+        string Undo();
     }
 }

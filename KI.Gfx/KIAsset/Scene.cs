@@ -119,7 +119,7 @@ namespace KI.Gfx.KIAsset
             }
         }
 
-        public void DeleteNode(string key)
+        public void DeleteObject(string key)
         {
             RootNode.RemoveRecursiveChild(key);
         }

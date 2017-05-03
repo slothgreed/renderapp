@@ -25,15 +25,20 @@ namespace KI.Gfx.Analyzer
         /// </summary>
         public bool DeleteFlg { get; set; }
 
-        
+        private Vector3 _normal = Vector3.Zero;
         public Vector3 Normal
         {
             get
             {
-                return KICalc.Normal(
-                    m_Edge[1].Start.Position - m_Edge[0].Start.Position,
-                    m_Edge[2].Start.Position - m_Edge[0].Start.Position
+                if(_normal == Vector3.Zero)
+                {
+                    _normal = KICalc.Normal(
+                        m_Edge[1].Start.Position - m_Edge[0].Start.Position,
+                        m_Edge[2].Start.Position - m_Edge[0].Start.Position
                     );
+
+                }
+                return _normal; 
             }
         }
 
