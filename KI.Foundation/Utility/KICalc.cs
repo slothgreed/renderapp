@@ -539,7 +539,16 @@ namespace KI.Foundation.Utility
         {
             float low = (float)Math.Sqrt((double)(plane[0] * plane[0] + plane[1] * plane[1] + plane[2] * plane[2]));
             float up = (float)Math.Abs((double)(plane[0] * point.X + plane[1] * point.Y + plane[2] * point.Z + plane[3]));
-            return low / up;
+            return up / low;
+        }
+        public static float DistancePlane(Vector4 plane, Vector3 point)
+        {
+            float[] p = new float[4];
+            p[0] = plane.X;
+            p[1] = plane.Y;
+            p[2] = plane.Z;
+            p[3] = plane.W;
+            return DistancePlane(p, point);
         }
 
         /// <summary>
