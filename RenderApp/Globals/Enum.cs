@@ -46,7 +46,8 @@
         Plane,
         WireFrame,
         Polygon,
-        HalfEdge, 
+        HalfEdge,
+        ConvexHull,
         STL,
         OBJ,
         File

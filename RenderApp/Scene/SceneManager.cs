@@ -84,7 +84,7 @@ namespace RenderApp
             cubeMap.GenCubemap(paths);
             ActiveScene.AddObject(cubeMap);
 
-            List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/KIProject/renderapp/RenderApp/Resource/Model/cube.stl");
+            List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/KIProject/renderapp/RenderApp/Resource/Model/bunny.half");
             //List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/KIProject/renderapp/RenderApp/Resource/Model/Sphere.stl");
             foreach (var b in bunny)
             {

@@ -11,6 +11,7 @@ namespace KI.Gfx.KIAsset
     public enum GeometryType
     {
         None,
+        Point,
         Line,
         Triangle,
         Quad,
@@ -47,6 +48,14 @@ namespace KI.Gfx.KIAsset
         }
         public GeometryInfo(List<Vector3> pos, List<Vector3> nor, List<Vector3> col, List<Vector2> tex, List<int> idx, GeometryType type)
         {
+            Update(pos, nor, col, tex, idx, type);
+        }
+        public GeometryInfo(List<Vector3> pos, List<Vector3> nor, Vector3 col, List<Vector2> tex, List<int> idx, GeometryType type)
+        {
+            Update(pos, nor, col, tex, idx, type);
+        }
+        public void Update(List<Vector3> pos, List<Vector3> nor, List<Vector3> col, List<Vector2> tex, List<int> idx, GeometryType type)
+        {
             if (pos != null)
             {
                 Position = pos;
@@ -68,7 +77,8 @@ namespace KI.Gfx.KIAsset
                 Index = idx;
             }
         }
-        public GeometryInfo(List<Vector3> pos, List<Vector3> nor, Vector3 col, List<Vector2> tex, List<int> idx, GeometryType type)
+        
+        public void Update(List<Vector3> pos, List<Vector3> nor, Vector3 col, List<Vector2> tex, List<int> idx, GeometryType type)
         {
             if (pos != null)
             {
@@ -80,7 +90,8 @@ namespace KI.Gfx.KIAsset
             }
             if (col != null)
             {
-                for (int i = 0; i < Position.Count; i++ )
+                Color.Clear();
+                for (int i = 0; i < Position.Count; i++)
                 {
                     Color.Add(col);
                 }
@@ -95,7 +106,7 @@ namespace KI.Gfx.KIAsset
             }
             GeometryType = type;
         }
-
+        
         public int TriangleNum
         {
             get

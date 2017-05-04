@@ -27,7 +27,15 @@ namespace KI.Gfx.Analyzer
         public int Index { get; set; }
         public Vector3 MaxVector { get; set; }
         public Vector3 MinVector { get; set; }
-        public bool calcFlag { get; set; }
+
+        /// <summary>
+        /// テンポラリ計算用フラグ
+        /// </summary>
+        public object CalcFlag
+        {
+            get;
+            set;
+        }
         /// <summary>
         /// 削除フラグ。Updateが走ると必ず削除するべきもの
         /// </summary>
@@ -78,11 +86,10 @@ namespace KI.Gfx.Analyzer
         
         #endregion
 
-
-        public Vertex(Vector3 pos,int number)
+        public Vertex(Vector3 pos,int index = -1)
         {
             Position = pos;
-            Index = number;
+            Index = index;
         }
         /// <summary>
         /// エッジのセッタ

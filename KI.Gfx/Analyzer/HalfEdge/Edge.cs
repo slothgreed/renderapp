@@ -46,6 +46,16 @@ namespace KI.Gfx.Analyzer
         /// 初期のIndex
         /// </summary>
         public int Index { get; set; }
+
+        /// <summary>
+        /// テンポラリ計算用フラグ
+        /// </summary>
+        public object CalcFlag
+        {
+            get;
+            set;
+        }
+
         public static bool operator ==(Edge edge1, Edge edge2)
         {
             //参照が同じならTrue
@@ -96,13 +106,14 @@ namespace KI.Gfx.Analyzer
             }
         }
 
-        public Edge(Vertex start, Vertex end, int index)
+        public Edge(Vertex start, Vertex end, int index = -1)
         {
             Start = start;
             End = end;
             Index = index;
         }
-        public Edge(Mesh mesh, Vertex start, Vertex end, int index)
+
+        public Edge(Mesh mesh, Vertex start, Vertex end, int index = -1)
         {
             Mesh = mesh;
             Start = start;
@@ -124,6 +135,23 @@ namespace KI.Gfx.Analyzer
         public bool ErrorEdge()
         {
             return DeleteFlg;
+        }
+
+        public static void SetupNextBefore(Edge edge1, Edge edge2, Edge edge3)
+        {
+            edge1.Next = edge2;
+            edge2.Next = edge3;
+            edge3.Next = edge1;
+
+            edge1.Before = edge3;
+            edge2.Before = edge2;
+            edge3.Before = edge1;
+        }
+
+        public static void SetupOpposite(Edge edge, Edge oppo)
+        {
+            edge.Opposite = oppo;
+            oppo.Opposite = edge;
         }
     }
 }

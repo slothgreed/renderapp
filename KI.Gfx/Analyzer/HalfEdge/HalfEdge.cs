@@ -398,16 +398,6 @@ namespace KI.Gfx.Analyzer
             Edge edge2 = new Edge(mesh, v2, v3, m_Edge.Count + 1);
             Edge edge3 = new Edge(mesh, v3, v1, m_Edge.Count + 2);
 
-            //次のエッジの格納
-            edge1.Next = edge2;
-            edge2.Next = edge3;
-            edge3.Next = edge1;
-
-
-            edge1.Before = edge3;
-            edge2.Before = edge1;
-            edge3.Before = edge2;
-
             //頂点にエッジを持たせる
             v1.AddEdge(edge1);
             v2.AddEdge(edge2);
@@ -471,8 +461,7 @@ namespace KI.Gfx.Analyzer
             {
                 if (opposite.Start == end && opposite.End == start)
                 {
-                    opposite.Opposite = edge;
-                    edge.Opposite = opposite;
+                    Edge.SetupOpposite(opposite, edge);
                     break;
                 }
             }
@@ -520,12 +509,12 @@ namespace KI.Gfx.Analyzer
         public List<Vertex> GetAroundVertex(Vertex vertex, float distance)
         {
             List<Vertex> vertex_list = new List<Vertex>();
-            vertex.calcFlag = true;
+            vertex.CalcFlag = true;
             vertex_list.Add(vertex);
             RecursiveAroundPosition(vertex_list, vertex, vertex, distance);
             for (int i = 0; i < vertex_list.Count; i++)
             {
-                vertex_list[i].calcFlag = false;
+                vertex_list[i].CalcFlag = false;
             }
             return vertex_list;
         }
@@ -541,9 +530,9 @@ namespace KI.Gfx.Analyzer
             foreach (var aroundEdge in vertex.AroundEdge)
             {
                 length = (startVertex - aroundEdge.End).Length;
-                if (length < distance && aroundEdge.End.calcFlag == false)
+                if (length < distance && (bool)aroundEdge.End.CalcFlag == false)
                 {
-                    aroundEdge.End.calcFlag = true;
+                    aroundEdge.End.CalcFlag = true;
                     vertex_list.Add(aroundEdge.End);
                     RecursiveAroundPosition(vertex_list, aroundEdge.End, startVertex, distance);
                 }

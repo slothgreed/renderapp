@@ -167,15 +167,7 @@ namespace RenderApp.ViewModel
             {
                 ProjectInfo.IsOpen = true;
             }
-
-            List<RenderObject> geometrys = AssetFactory.Instance.CreateLoad3DModel(@"C:/Users/ido/Documents/KIProject/renderapp/RenderApp/Resource/Model/StanfordBunny.stl");
-            foreach (var geometry in geometrys)
-            {
-                geometry.RotateX(-90);
-                geometry.RotateY(0);
-                SceneManager.Instance.ActiveScene.AddObject(geometry);
-                Project.ActiveProject.AddChild(geometry);
-            }
+            CreateConvexHullCommand.Update();
         }
         private void OpenProjectCommand()
         {
@@ -317,6 +309,10 @@ namespace RenderApp.ViewModel
                 case RAGeometry.HalfEdge:
                     command = new CreateHalfEdgeCommand(SceneManager.Instance.ActiveScene.SelectAsset);
                     CommandManager.Instance.Execute(command, true); 
+                    break;
+                case RAGeometry.ConvexHull:
+                    command = new CreateConvexHullCommand(SceneManager.Instance.ActiveScene.SelectAsset);
+                    CommandManager.Instance.Execute(command, true);
                     break;
                 default:
                     break;

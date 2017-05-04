@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analyzer\Algorithm\ConvexHullAlgorithm.cs" />
     <Compile Include="Analyzer\Algorithm\VertexNormalAlgorithm.cs" />
     <Compile Include="Analyzer\Dijkstra.cs" />
     <Compile Include="Analyzer\HalfEdge\Edge.cs" />
