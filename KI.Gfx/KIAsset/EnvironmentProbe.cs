@@ -9,7 +9,6 @@ namespace KI.Gfx.KIAsset
 {
     public class EnvironmentProbe : KIObject
     {
-        private Texture _cubemap;
         public Texture Cubemap
         {
             get;

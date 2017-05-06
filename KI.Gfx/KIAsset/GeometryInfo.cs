@@ -15,6 +15,7 @@ namespace KI.Gfx.KIAsset
         Line,
         Triangle,
         Quad,
+        Patch,
         Mix
     }
     public enum VertexStoreType
@@ -76,6 +77,8 @@ namespace KI.Gfx.KIAsset
             {
                 Index = idx;
             }
+            GeometryType = type;
+
         }
         
         public void Update(List<Vector3> pos, List<Vector3> nor, Vector3 col, List<Vector2> tex, List<int> idx, GeometryType type)

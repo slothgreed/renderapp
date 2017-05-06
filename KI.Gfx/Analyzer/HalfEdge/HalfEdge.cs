@@ -337,6 +337,7 @@ namespace KI.Gfx.Analyzer
                     geometry.Index.Add(vertex.Index);
                 }
             }
+            geometry.GeometryType = GeometryType.Triangle;
             return geometry;
 
         }

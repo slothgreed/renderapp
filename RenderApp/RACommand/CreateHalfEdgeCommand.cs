@@ -2,7 +2,6 @@
 using KI.Foundation.Core;
 using KI.Gfx.Analyzer;
 using KI.Gfx.KIAsset;
-using OpenTK.Graphics.OpenGL;
 using RenderApp.AssetModel;
 using System;
 using System.Collections.Generic;
@@ -19,24 +18,24 @@ namespace RenderApp.RACommand
         {
             geometry = asset as Geometry;
         }
-        public string CanExecute()
+        public string CanExecute(string commandArg)
         {
             return CanCreateGeometry(geometry);
         }
 
-        public string Execute()
+        public string Execute(string commandArg)
         {
             HalfEdge half = new HalfEdge(geometry.geometryInfo);
             GeometryInfo info = half.CreateGeometryInfo();
             RenderObject halfEdge = AssetFactory.Instance.CreateRenderObject("HalfEdge :" + geometry.Name);
-            halfEdge.CreateGeometryInfo(info, PrimitiveType.Triangles);
+            halfEdge.SetGeometryInfo(info);
             halfEdge.ModelMatrix = geometry.ModelMatrix;
             SceneManager.Instance.ActiveScene.AddObject(halfEdge);
 
             return RACommandResource.Success;
         }
 
-        public string Undo()
+        public string Undo(string commandArg)
         {
             throw new NotImplementedException();
         }

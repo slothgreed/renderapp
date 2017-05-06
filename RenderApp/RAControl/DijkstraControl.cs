@@ -6,7 +6,7 @@ using KI.Foundation.Utility;
 using KI.Gfx.Analyzer;
 using KI.Gfx.KIAsset;
 
-namespace RenderApp.RA_Control
+namespace RenderApp.RAControl
 {
     class DijkstraControl : IControl
     {
@@ -21,8 +21,8 @@ namespace RenderApp.RA_Control
             Geometry geometry = null;
             if (mouse.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                var SelectObjectController = ControlManager.Instance.Controllers[ControlManager.CONTROL_MODE.SelectObject] as SelectObjectControl;
-                if (SelectObjectController.Picking(LeftMouse.Click, ref geometry, ref vertex_Index))
+                var SelectObjectController = ControlManager.Instance.Controllers[ControlManager.CONTROL_MODE.SelectTriangle] as SelectTriangleControl;
+                if (SelectObjectController.PickTriangle(LeftMouse.Click, ref geometry, ref vertex_Index))
                 {
                     if(Dijkstra.Geometry == null)
                     {
@@ -51,7 +51,7 @@ namespace RenderApp.RA_Control
                         {
                             RenderObject triangle = AssetFactory.Instance.CreateRenderObject("Picking");
                             GeometryInfo info = new GeometryInfo(new List<Vector3>() { tri1, tri2, tri3 },null,KICalc.RandomColor(),null,null,GeometryType.Triangle);
-                            triangle.CreateGeometryInfo(info, OpenTK.Graphics.OpenGL.PrimitiveType.Triangles);
+                            triangle.SetGeometryInfo(info);
                             SceneManager.Instance.ActiveScene.AddObject(triangle);
                         }
                         else if (picking.geometryInfo.TriangleNum == 2)

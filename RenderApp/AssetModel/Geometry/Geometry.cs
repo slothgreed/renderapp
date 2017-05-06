@@ -14,7 +14,6 @@ namespace RenderApp.AssetModel
     {
         #region Propety
         public int ID { get; private set; }
-        public PrimitiveType RenderType { get; set; }
         public GeometryInfo geometryInfo { get; set; }
         public bool Visible { get; set; }
 
@@ -125,21 +124,15 @@ namespace RenderApp.AssetModel
 
         #endregion
         #region [Initializer disposer]
-        public Geometry(string name, PrimitiveType renderType)
-            : base(name)
-        {
-            Initialize(name, renderType);
-
-        }
         public Geometry(string name)
             : base(name)
         {
-            Initialize(name, PrimitiveType.Triangles);
+            Initialize(name);
+
         }
 
-        private void Initialize(string name = null, PrimitiveType renderType = PrimitiveType.Triangles)
+        private void Initialize(string name = null)
         {
-            RenderType = renderType;
             geometryInfo = new GeometryInfo();
             Timer = new List<int>();
             ModelMatrix = Matrix4.Identity;
@@ -190,11 +183,11 @@ namespace RenderApp.AssetModel
             Shader.BindBuffer();
             if (geometryInfo.Index.Count == 0)
             {
-                DeviceContext.Instance.DrawArrays(RenderType, 0, geometryInfo.Position.Count);
+                DeviceContext.Instance.DrawArrays(geometryInfo.GeometryType, 0, geometryInfo.Position.Count);
             }
             else
             {
-                DeviceContext.Instance.DrawElements(RenderType, geometryInfo.Index.Count, DrawElementsType.UnsignedInt, 0);
+                DeviceContext.Instance.DrawElements(geometryInfo.GeometryType, geometryInfo.Index.Count, DrawElementsType.UnsignedInt, 0);
             }
             Shader.UnBindBuffer();
             Logger.GLLog(Logger.LogLevel.Error);

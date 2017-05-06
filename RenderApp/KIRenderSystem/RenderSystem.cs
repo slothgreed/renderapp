@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenTK.Graphics.OpenGL;
 using KI.Gfx.KIAsset;
 using RenderApp.AssetModel;
+using OpenTK.Graphics.OpenGL;
 namespace RenderApp.KIRenderSystem
 {
     public class RenderSystem
@@ -106,36 +106,6 @@ namespace RenderApp.KIRenderSystem
         public void SizeChanged(int width, int height)
         {
             RenderTechniqueFactory.Instance.SizeChanged(width, height);
-        }
-        public void Picking(int x, int y)
-        {
-            GBufferStage.RenderTarget.BindRenderTarget(GBufferStage.OutputTexture.ToArray());
-
-            GL.ReadBuffer(ReadBufferMode.ColorAttachment1);
-            IntPtr ptr = IntPtr.Zero;
-            float[] pixels = new float[4];
-            GL.ReadPixels(x, y, 1, 1, PixelFormat.Rgba, PixelType.Float, pixels);
-            GL.ReadBuffer(ReadBufferMode.None);
-            GBufferStage.RenderTarget.UnBindRenderTarget();
-
-            int id = (int)(pixels[3] * 255);
-            foreach(var geometryNode in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
-            {
-                Geometry geometry = null;
-                if(geometryNode.KIObject is Geometry)
-                {
-                    geometry = geometryNode.KIObject as Geometry;
-                }
-                else
-                {
-                    continue;
-                }
-                if(geometry.ID == id)
-                {
-                    SceneManager.Instance.ActiveScene.SelectAsset = geometry;
-                    break;
-                }
-            }
         }
         public void Dispose()
         {

@@ -70,7 +70,7 @@ namespace KI.Gfx.GLUtil
             NowBind = false;
             Logger.GLLog(Logger.LogLevel.Error);
         }
-        public virtual void Dispose()
+        public override void Dispose()
         {
             CreateNum--;
             PreDispose();

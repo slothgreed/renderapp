@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 using System.Windows.Forms.Integration;
 using RenderApp.Utility;
 using RenderApp.AssetModel;

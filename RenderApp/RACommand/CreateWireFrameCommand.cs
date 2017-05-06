@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 namespace RenderApp.RACommand
 {
     class CreateWireFrameCommand : CreateModelCommandBase, ICommand
@@ -21,12 +20,12 @@ namespace RenderApp.RACommand
             geometry = asset as Geometry;
 
         }
-        public string CanExecute()
+        public string CanExecute(string commandArg)
         {
             return CanCreateGeometry(geometry);
         }
 
-        public string Execute()
+        public string Execute(string commandArg)
         {
             List<Vector3> position = new List<Vector3>();
             if (geometry.geometryInfo.Index.Count != 0)
@@ -59,14 +58,14 @@ namespace RenderApp.RACommand
                 }
             }
             RenderObject wireframe = AssetFactory.Instance.CreateRenderObject("WireFrame :" + geometry.Name);
-            wireframe.CreateGeometryInfo(new GeometryInfo(position, null, KICalc.RandomColor(), null, null, GeometryType.Line), PrimitiveType.Lines);
+            wireframe.SetGeometryInfo(new GeometryInfo(position, null, KICalc.RandomColor(), null, null, GeometryType.Line));
             wireframe.ModelMatrix = geometry.ModelMatrix;
             SceneManager.Instance.ActiveScene.AddObject(wireframe);
 
             return RACommandResource.Success;
         }
 
-        public string Undo()
+        public string Undo(string commandArg)
         {
             return RACommand.RACommandResource.Failed;
         }

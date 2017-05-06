@@ -1,4 +1,5 @@
 ﻿using KI.Foundation.Core;
+using KI.Gfx.KIAsset;
 using RenderApp.AssetModel;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace RenderApp.RACommand
                 return RACommandResource.Failed;
             }
             Geometry geometry = asset as Geometry;
-            if (geometry.RenderType != OpenTK.Graphics.OpenGL.PrimitiveType.Triangles)
+            if (geometry.geometryInfo.GeometryType != GeometryType.Triangle)
             {
                 return RACommandResource.Failed;
             }

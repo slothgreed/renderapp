@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 using KI.Foundation.Core;
-namespace RenderApp.RA_Control
+namespace RenderApp.RAControl
 {
     public abstract class IControl
     {

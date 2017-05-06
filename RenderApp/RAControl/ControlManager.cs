@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
-namespace RenderApp.RA_Control
+namespace RenderApp.RAControl
 {
     public class ControlManager : IControl
     {
@@ -9,8 +9,9 @@ namespace RenderApp.RA_Control
         private IControl CameraController = new CameraControl();
         public enum CONTROL_MODE
         {
-            SelectObject,
-            Dijkstra
+            SelectTriangle,
+            Dijkstra,
+            SelectPoint
         }
         public enum MOUSE_STATE
         {
@@ -21,7 +22,7 @@ namespace RenderApp.RA_Control
             WHEEL,
         }
 
-        CONTROL_MODE _mode = CONTROL_MODE.SelectObject;
+        CONTROL_MODE _mode = CONTROL_MODE.SelectTriangle;
         public CONTROL_MODE Mode
         {
             get
@@ -46,8 +47,9 @@ namespace RenderApp.RA_Control
         }
         private ControlManager()
         {
-            Controllers.Add(CONTROL_MODE.SelectObject,new SelectObjectControl());
+            Controllers.Add(CONTROL_MODE.SelectTriangle, new SelectTriangleControl());
             Controllers.Add(CONTROL_MODE.Dijkstra,new DijkstraControl());
+            Controllers.Add(CONTROL_MODE.SelectPoint, new SelectPointControl());
             CameraController = new CameraControl();
         }
 

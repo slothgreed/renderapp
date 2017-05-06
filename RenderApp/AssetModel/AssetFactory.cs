@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 using KI.Foundation.Core;
 using KI.Gfx.KIAsset;
 using KI.Gfx.Analyzer;
@@ -49,7 +48,7 @@ namespace RenderApp.AssetModel
             plane = new Plane(name);
             RenderObject renderObject = new RenderObject(name);
             GeometryInfo info = new GeometryInfo(plane.Geometry.Position, null, null, plane.Geometry.TexCoord, null,GeometryType.Quad);
-            renderObject.CreateGeometryInfo(info, PrimitiveType.Quads);
+            renderObject.SetGeometryInfo(info);
             renderObject.Shader = shader;
             return renderObject;
         }
@@ -59,7 +58,7 @@ namespace RenderApp.AssetModel
             Plane plane = new Plane(name);
             RenderObject renderObject = new RenderObject(name);
             GeometryInfo info = new GeometryInfo(plane.Geometry.Position, null, null, plane.Geometry.TexCoord, null, GeometryType.Quad);
-            renderObject.CreateGeometryInfo(info, PrimitiveType.Quads);
+            renderObject.SetGeometryInfo(info);
             return renderObject;
         }
 
@@ -85,7 +84,7 @@ namespace RenderApp.AssetModel
                     var half = new HalfEdge();
                     half.ReadFile(filePath);
                     var renderObject = new RenderObject(fileName);
-                    renderObject.CreateGeometryInfo(half.CreateGeometryInfo(), PrimitiveType.Triangles);
+                    renderObject.SetGeometryInfo(half.CreateGeometryInfo());
                     return new List<RenderObject> { renderObject };
             }
             return null;

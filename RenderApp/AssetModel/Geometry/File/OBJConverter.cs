@@ -5,8 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using OpenTK;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
 using System.Windows.Forms;
 using KI.Foundation.Utility;
 using KI.Foundation.Core;

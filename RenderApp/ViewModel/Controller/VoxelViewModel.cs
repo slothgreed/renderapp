@@ -36,7 +36,7 @@ namespace RenderApp.ViewModel
         private void ExecuteCommand()
         {
             ICommand command = new CreateVoxelCommand(SceneManager.Instance.ActiveScene.SelectAsset, PartitionNum);
-            CommandManager.Instance.Execute(command, true);
+            CommandManager.Instance.Execute(command, null, true);
         }
 
 

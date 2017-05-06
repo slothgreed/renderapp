@@ -12,10 +12,6 @@ namespace KI.Gfx.GLUtil
     public class FrameBuffer : BufferObject
     {
         /// <summary>
-        /// 名前
-        /// </summary>
-        public string Name { get; private set; }
-        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="FrameName"></param>

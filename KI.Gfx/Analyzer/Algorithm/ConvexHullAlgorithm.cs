@@ -46,8 +46,8 @@ namespace KI.Gfx.Analyzer.Algorithm
                 PointList.Add(pos);
             }
             QuickHullAlgorithm();
-            Console.WriteLine("MeshList" + MeshList.Count.ToString());
-            Console.WriteLine("Point" + PointList.Count.ToString());
+            Logger.Log(Logger.LogLevel.Debug, "MeshList :" + MeshList.Count.ToString());
+            Logger.Log(Logger.LogLevel.Debug, "Point :" + PointList.Count.ToString());
         }
 
         /// <summary>
@@ -62,6 +62,7 @@ namespace KI.Gfx.Analyzer.Algorithm
             }
             CreateInitMesh();
             QuickHullCore();
+            DeleteInsideVertex();
         }
 
         /// <summary>
@@ -69,48 +70,32 @@ namespace KI.Gfx.Analyzer.Algorithm
         /// </summary>
         private void QuickHullCore()
         {
-            Mesh calcMesh = null;
-            for (int i = 0; i < MeshList.Count; i++)
+            while(true)
             {
-                if ((bool)MeshList[i].CalcFlag == false)
-                {
-                    calcMesh = MeshList[i];
-                    break;
-                }
-            }
-            //すべて計算し終わったら終了
-            if (calcMesh == null)
-            {
-                return;
-            }
-            Vector3 FarPoint;
-            if (FindFarPoint(calcMesh, out FarPoint))
-            {
-                CreateQuickHullMesh(FarPoint);
-                RemoveMesh();
-                PointList.Remove(FarPoint);
-                DeleteInsideVertex();
-            }
-            else
-            {
-                //最も遠い頂点が見つからない場合は終了
-                calcMesh.CalcFlag = true;
-            }
+                Mesh calcMesh = MeshList.FirstOrDefault(p => (bool)p.CalcFlag == false);
 
-            QuickHullCore();
-        }
-        /// <summary>
-        /// 不要な点と面を削除
-        /// </summary>
-        private void RemoveMesh()
-        {
-            //削除フラグが立ったメッシュを削除
-            for (int i = 0; i < MeshList.Count; i++)
-            {
-                if (MeshList[i].DeleteFlag)
+                //すべて計算し終わったら終了
+                if (calcMesh == null)
                 {
-                    MeshList.RemoveAt(i);
-                    i--;
+                    return;
+                }
+                Vector3 FarPoint;
+                if (FindFarPoint(calcMesh, out FarPoint))
+                {
+                    CreateQuickHullMesh(FarPoint);
+                    MeshList.RemoveAll(mesh => mesh.DeleteFlag);
+                    PointList.Remove(FarPoint);
+
+                    //簡単な高速化この処理が重い。
+                    if (PointList.Count > 5000)
+                    {
+                        DeleteInsideVertex();
+                    }
+                }
+                else
+                {
+                    //最も遠い頂点が見つからない場合は終了
+                    calcMesh.CalcFlag = true;
                 }
             }
         }
@@ -123,12 +108,7 @@ namespace KI.Gfx.Analyzer.Algorithm
             var visibleMesh = FindVisibleMesh(MeshList, farPoint);
             var boundaryList = FindBoundaryEdge(visibleMesh);
             CreateMesh(boundaryList, new Vertex(farPoint));
-
-            foreach (var mesh in visibleMesh)
-            {
-                mesh.Dispose();
-            }
-
+            visibleMesh.All(p => { p.Dispose(); return true; });
         }
 
         /// <summary>
@@ -136,21 +116,10 @@ namespace KI.Gfx.Analyzer.Algorithm
         /// </summary>
         private void DeleteInsideVertex()
         {
-            bool deleteFlag = false;
             for (int i = 0; i < PointList.Count; i++)
             {
-                deleteFlag = true;
-                foreach (var mesh in MeshList)
-                {
-                    //1つでも負の値があるなら、凸包の中にない
-                    if (Vector3.Dot(mesh.Normal, mesh.Gravity - PointList[i]) < 0)
-                    {
-                        deleteFlag = false;
-                        break;
-                    }
-                }
-
-                if (deleteFlag)
+                //1つでも負の値があるなら、凸包の中にないので残す
+                if (!MeshList.Any(mesh => Vector3.Dot(mesh.Normal, mesh.Gravity - PointList[i]) < 0))
                 {
                     PointList.RemoveAt(i);
                     i--;
@@ -166,15 +135,7 @@ namespace KI.Gfx.Analyzer.Algorithm
         /// <returns>可視面</returns>
         private List<Mesh> FindVisibleMesh(List<Mesh> meshList, Vector3 point)
         {
-            List<Mesh> visibleMesh = new List<Mesh>();
-            foreach(var mesh in meshList)
-            {
-                if(Vector3.Dot(mesh.Normal,point - mesh.Gravity) > 0)
-                {
-                    visibleMesh.Add(mesh);
-                }
-            }
-            return visibleMesh;
+            return meshList.Where(mesh => Vector3.Dot(mesh.Normal, point - mesh.Gravity) > 0).ToList();
         }
 
         /// <summary>
@@ -189,16 +150,8 @@ namespace KI.Gfx.Analyzer.Algorithm
             {
                 foreach (var edge in mesh.AroundEdge)
                 {
-                    bool isExist = false;
-                    foreach (var checkMesh in visibleMesh)
-                    {
-                        //反対側のメッシュが可視面でない場合は境界エッジ
-                        if (edge.Opposite.Mesh == checkMesh)
-                        {
-                            isExist = true;
-                        }
-                    }
-                    if (isExist == false)
+                    //エッジの反対面が、可視面に含まれていない場合は、境界面
+                    if (visibleMesh.Any(checkMesh => checkMesh == edge.Opposite.Mesh) == false)
                     {
                         boundaryList.Add(edge);
                     }
@@ -221,13 +174,14 @@ namespace KI.Gfx.Analyzer.Algorithm
             }
 
             //境界エッジがループでできていないとエラー
-            for (int i = 0; i < boundaryList.Count - 1; i++)
-            {
-               if(boundaryList[i].End != boundaryList[i + 1].Start)
-               {
-                   Console.WriteLine("Error");
-               }
-            }
+            //check method
+            //for (int i = 0; i < boundaryList.Count - 1; i++)
+            //{
+            //   if(boundaryList[i].End != boundaryList[i + 1].Start)
+            //   {
+            //       Console.WriteLine("Error");
+            //   }
+            //}
             return boundaryList;
         }
 
@@ -353,21 +307,8 @@ namespace KI.Gfx.Analyzer.Algorithm
             MeshList.Add(mesh1);
             MeshList.Add(mesh2);
 
-            for (int i = 0; i < PointList.Count; i++)
-            {
-                if (vertex1.Position == PointList[i] ||
-                   vertex2.Position == PointList[i] ||
-                   vertex3.Position == PointList[i])
-                {
-                    PointList.RemoveAt(i);
-                    i--;
-                }
-            }
-        }
-
-        public void Update()
-        {
-            QuickHullCore();
+            //triangleを作った頂点の削除
+            PointList.RemoveAll(p => (p == vertex1.Position || p == vertex2.Position || p == vertex3.Position));
         }
     }
 }

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using RenderApp.AssetModel;
 using RenderApp.Globals;
 using RenderApp.ViewModel.Dialog;
-using RenderApp.RA_Control;
+using RenderApp.RAControl;
 using RenderApp.KIRenderSystem;
 using RenderApp.AssetModel.RA_Geometry;
 using KI.Foundation.ViewModel;
@@ -167,7 +167,6 @@ namespace RenderApp.ViewModel
             {
                 ProjectInfo.IsOpen = true;
             }
-            CreateConvexHullCommand.Update();
         }
         private void OpenProjectCommand()
         {
@@ -300,19 +299,19 @@ namespace RenderApp.ViewModel
                     break;
                 case RAGeometry.WireFrame:
                     command = new CreateWireFrameCommand(SceneManager.Instance.ActiveScene.SelectAsset);
-                    CommandManager.Instance.Execute(command, true);
+                    CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.Polygon:
                     command = new CreatePolygonCommand(SceneManager.Instance.ActiveScene.SelectAsset);
-                    CommandManager.Instance.Execute(command, true);
+                    CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.HalfEdge:
                     command = new CreateHalfEdgeCommand(SceneManager.Instance.ActiveScene.SelectAsset);
-                    CommandManager.Instance.Execute(command, true); 
+                    CommandManager.Instance.Execute(command, null, true); 
                     break;
                 case RAGeometry.ConvexHull:
                     command = new CreateConvexHullCommand(SceneManager.Instance.ActiveScene.SelectAsset);
-                    CommandManager.Instance.Execute(command, true);
+                    CommandManager.Instance.Execute(command, null, true);
                     break;
                 default:
                     break;
@@ -350,10 +349,13 @@ namespace RenderApp.ViewModel
             switch(menuParam)
             {
                 case RAController.Default:
-                    ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.SelectObject;
+                    ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.SelectTriangle;
                     break;
                 case RAController.Dijkstra:
                     ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.Dijkstra;
+                    break;
+                case RAController.SelectPoint:
+                    ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.SelectPoint;
                     break;
             }
             OnPropertyChanged("ControlMode");

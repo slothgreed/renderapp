@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using KI.Gfx.Analyzer.Algorithm;
 using KI.Gfx.KIAsset;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 namespace RenderApp.RACommand
 {
     class CreateConvexHullCommand : CreateModelCommandBase, ICommand
@@ -19,15 +18,14 @@ namespace RenderApp.RACommand
         {
             geometry = asset as Geometry;
         }
-        public string CanExecute()
+        public string CanExecute(string commandArg)
         {
             return CanCreateGeometry(geometry);
         }
 
-        public string Execute()
+        public string Execute(string commandArg)
         {
             ConvexHullAlgorithm convexHull = new ConvexHullAlgorithm(geometry.geometryInfo.Position);
-            algorithm = convexHull;
             List<Vector3> position = new List<Vector3>();
             foreach(var mesh in convexHull.Meshs)
             {
@@ -65,59 +63,19 @@ namespace RenderApp.RACommand
             
             GeometryInfo info = new GeometryInfo(position,null,Vector3.UnitZ,null,null,GeometryType.Line);
             RenderObject convex = AssetFactory.Instance.CreateRenderObject("ConvexHull :" + geometry.Name);
-            convex.CreateGeometryInfo(info, PrimitiveType.Lines);
+            convex.SetGeometryInfo(info);
             convex.ModelMatrix = geometry.ModelMatrix;
             SceneManager.Instance.ActiveScene.AddObject(convex);
-            renderObject = convex;
-
 
             RenderObject point = AssetFactory.Instance.CreateRenderObject("ConvexHull : Points" + geometry.Name);
             GeometryInfo info2 = new GeometryInfo(convexHull.Points, null, null, null, null, GeometryType.Point);
-            point.CreateGeometryInfo(info2, PrimitiveType.Points);
+            point.SetGeometryInfo(info2);
             point.ModelMatrix = geometry.ModelMatrix;
             SceneManager.Instance.ActiveScene.AddObject(point);
-            pointObject = point;
 
             return RACommandResource.Success;
         }
-        static RenderObject pointObject;
-        static RenderObject renderObject;
-        static ConvexHullAlgorithm algorithm;
-
-        public static void Update()
-        {
-            algorithm.Update();
-            List<Vector3> position = new List<Vector3>();
-            List<Vector3> normal = new List<Vector3>();
-            List<Vector3> color = new List<Vector3>();
-            bool First = true;
-            foreach (var mesh in algorithm.Meshs)
-            {
-                foreach (var vertex in mesh.AroundVertex)
-                {
-                    position.Add(vertex.Position);
-                    normal.Add(mesh.Normal);
-            
-                    if(First && !(bool)mesh.CalcFlag)
-                    {
-                        First = false;
-                        color.Add(Vector3.UnitY);
-                    }
-                    else
-                    {
-                        color.Add(Vector3.UnitZ);
-
-                    }
-                }
-            }
-
-            renderObject.geometryInfo.Update(position, normal, color, null, null, GeometryType.Triangle);
-            renderObject.SetupBuffer();
-
-            pointObject.geometryInfo.Update(algorithm.Points, null, null, null, null, GeometryType.Point);
-            pointObject.SetupBuffer();
-        }
-        public string Undo()
+        public string Undo(string commandArg)
         {
             throw new NotImplementedException();
         }

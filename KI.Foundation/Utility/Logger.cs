@@ -12,18 +12,24 @@ namespace KI.Foundation.Utility
             Debug,
             Warning,
             Error,
+            Descript
         }
         public static LogLevel outputLogLevel = LogLevel.Error;
         public static LogLevel glLogLevel = LogLevel.Error;
-        public static void Log(LogLevel level, string error, [CallerMemberName]string methodName = "")
+        public static void Log(LogLevel level, string message, [CallerMemberName]string methodName = "")
         {
+            if (level == LogLevel.Descript)
+            {
+                Console.WriteLine(level + ": " + message);
+                return;
+            }
             if(outputLogLevel == LogLevel.None)
             {
                 return;
             }
             if(level >= outputLogLevel)
             {
-                Console.WriteLine(level +" : "+ error);
+                Console.WriteLine(level +" : "+ message);
             }
         }
 

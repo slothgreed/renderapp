@@ -2,7 +2,6 @@
 using KI.Foundation.Core;
 using KI.Gfx.KIAsset;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 using RenderApp.AssetModel;
 using System;
 using System.Collections.Generic;
@@ -19,23 +18,24 @@ namespace RenderApp.RACommand
         {
             geometry = asset as Geometry;
         }
-        public string CanExecute()
+        public string CanExecute(string commandArg)
         {
             return CanCreateGeometry(geometry);
         }
 
-        public string Execute()
+        public string Execute(string commandArg)
         {
             List<Vector3> position = new List<Vector3>(geometry.geometryInfo.Position);
             List<Vector3> normal = new List<Vector3>(geometry.geometryInfo.Normal);
+            List<int> index = new List<int>(geometry.geometryInfo.Index);
             RenderObject polygon = AssetFactory.Instance.CreateRenderObject("Polygon :" + geometry.Name);
-            polygon.CreateGeometryInfo(new GeometryInfo(position, normal, new Vector3(0.7f, 0.7f, 0.7f), null, null, GeometryType.Triangle), PrimitiveType.Triangles);
+            polygon.SetGeometryInfo(new GeometryInfo(position, normal, new Vector3(0.7f, 0.7f, 0.7f), null, index, GeometryType.Triangle));
             SceneManager.Instance.ActiveScene.AddObject(polygon);
 
             return RACommandResource.Success;
         }
 
-        public string Undo()
+        public string Undo(string commandArg)
         {
             throw new NotImplementedException();
         }

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace RenderApp.RA_Control
+namespace RenderApp.RAControl
 {
     class CameraControl : IControl
     {

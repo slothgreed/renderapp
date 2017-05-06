@@ -170,6 +170,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RACommandResource.resx</DependentUpon>
     </Compile>
+    <Compile Include="RAControl\SelectPointControl.cs" />
     <Compile Include="Scene\SceneManager.cs" />
     <Compile Include="RAControl\CameraControl.cs" />
     <Compile Include="GfxUtility\ShaderCreater.cs" />
@@ -181,7 +182,7 @@
     <Compile Include="KIRenderSystem\RenderSystem.cs" />
     <Compile Include="RAControl\DijkstraControl.cs" />
     <Compile Include="RAControl\IControl.cs" />
-    <Compile Include="RAControl\SelectObjectControl.cs" />
+    <Compile Include="RAControl\SelectTriangleControl.cs" />
     <Compile Include="RAControl\ControlManager.cs" />
     <Compile Include="Utility\ActiveItems.cs" />
     <Compile Include="ViewModel\Controller\ControllerViewModelT4.cs">

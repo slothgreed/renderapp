@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
+using KI.Gfx.KIAsset;
 namespace KI.Gfx.GLUtil
 {
     public class DeviceContext
@@ -47,6 +48,7 @@ namespace KI.Gfx.GLUtil
             Enable(EnableCap.PolygonOffsetFill);
             Enable(EnableCap.Texture2D);
             Enable(EnableCap.TextureCubeMap);
+            GL.PointSize(10.0f);
             PolygonOffset(1.0f, 1.0f);
             FrontFace(FrontFaceDirection.Ccw);
 
@@ -69,13 +71,35 @@ namespace KI.Gfx.GLUtil
         {
             GL.Enable(enable);
         }
-        public void DrawArrays(PrimitiveType type,int first,int count)
+        private PrimitiveType ConvertToPrimitiveType(GeometryType type)
         {
-            GL.DrawArrays(type,first,count);
+            switch (type)
+            {
+                case GeometryType.None:
+                case GeometryType.Point:
+                    return PrimitiveType.Points;
+                case GeometryType.Line:
+                    return PrimitiveType.Lines;
+                case GeometryType.Triangle:
+                    return PrimitiveType.Triangles;
+                case GeometryType.Quad:
+                    return PrimitiveType.Quads;
+                case GeometryType.Mix:
+                    break;
+                case GeometryType.Patch:
+                    return PrimitiveType.Patches;
+                default:
+                    break;
+            }
+            return PrimitiveType.Points;
         }
-        public void DrawElements(PrimitiveType type,int count,DrawElementsType elementType,int indices)
+        public void DrawArrays(GeometryType type, int first, int count)
         {
-            GL.DrawElements(type, count, elementType, indices);
+            GL.DrawArrays(ConvertToPrimitiveType(type), first, count);
+        }
+        public void DrawElements(GeometryType type,int count,DrawElementsType elementType,int indices)
+        {
+            GL.DrawElements(ConvertToPrimitiveType(type), count, elementType, indices);
         }
 
         public void SizeChanged(int width, int height)

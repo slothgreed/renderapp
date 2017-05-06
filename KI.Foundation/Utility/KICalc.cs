@@ -560,10 +560,7 @@ namespace KI.Foundation.Utility
         /// <param name="fin">エッジの終点</param>
         /// <returns></returns>
         /// http://okwave.jp/qa/q3994535.html
-        //>（１）線分ABに対して点Pから垂線を下ろすことが出来るかどうかの判定をするには？
-        //>（２）垂線と線分との交点の座標を求めるには？
-
-        //両方とも同じですね。ベクトルで考えて見ます。
+        //>線分ABに対して点Pから垂線を下ろすことが出来るかどうかの判定をするには？
         //ベクトル↑AP=(xp-xa,yp-ya,zp-za),ベクトル↑AB=(xb-xa,yb-ya,zb-za)となります。
         //垂線の足をHとするとベクトル↑AH=k↑AB,↑AB・↑HP=0が成立します。
         //↑HP=↑AP-↑AH=↑AP-k↑AB
@@ -576,7 +573,7 @@ namespace KI.Foundation.Utility
         //ということです。また、kが求まればHの座標は
 
         //H:(k*xb+(1-k)xa,k*yb+(1-k)ya,k*zb+(1-k)za)
-        public static bool PerpendicularPoint(out Vector3 result, Vector3 point, Vector3 start, Vector3 fin)
+        public static bool PerpendicularPoint(Vector3 point, Vector3 start, Vector3 fin, out Vector3 result)
         {
             result = new Vector3();
             Vector3 SP = new Vector3(point - start);
@@ -588,7 +585,7 @@ namespace KI.Foundation.Utility
                 result = (inner * SF) + start;
                 return true;
             }
-           return false;
+            return false;
         }
 
         /// <summary>
@@ -624,9 +621,9 @@ namespace KI.Foundation.Utility
         }
 
         /// <summary>
-        /// クリップNear面Far面の取得
+        /// Near面Far面からクリックした線分の取得
         /// </summary>
-        public static void GetClipPos(Matrix4 cameraMatrix, Matrix4 projMatrix, int[] viewport, Vector2 mouse, out Vector3 near, out Vector3 far)
+        public static void GetClickPos(Matrix4 cameraMatrix, Matrix4 projMatrix, int[] viewport, Vector2 mouse, out Vector3 near, out Vector3 far)
         {
             near = UnProject(new Vector3(mouse.X, mouse.Y, 0.0f), cameraMatrix, projMatrix, viewport);
             far = UnProject(new Vector3(mouse.X,mouse.Y,1.0f),cameraMatrix,projMatrix,viewport);
@@ -642,7 +639,9 @@ namespace KI.Foundation.Utility
 
             return color;
         }
- 
-        
+
+
+
+
     }
 }

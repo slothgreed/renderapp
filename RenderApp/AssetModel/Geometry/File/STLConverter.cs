@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 using System.Windows.Forms;
 using KI.Foundation.Core;
 using KI.Gfx.KIAsset;
@@ -31,7 +30,7 @@ namespace RenderApp.AssetModel.RA_Geometry
         {
             RenderObject geometry = AssetFactory.Instance.CreateRenderObject(stlData.FileName);
             GeometryInfo info = new GeometryInfo(stlData.vertexInfo.Position, stlData.vertexInfo.Normal, null, null, null,GeometryType.Triangle);
-            geometry.CreateGeometryInfo(info, PrimitiveType.Triangles);
+            geometry.SetGeometryInfo(info);
             _renderObject = new List<RenderObject>() { geometry };
             return _renderObject;
         }

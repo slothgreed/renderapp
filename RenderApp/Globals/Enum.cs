@@ -63,7 +63,8 @@
     public enum RAController
     {
         Default,
-        Dijkstra
+        Dijkstra,
+        SelectPoint
     }
 
 }

@@ -7,7 +7,7 @@ using System.Windows.Forms.Integration;
 using System.Windows.Forms;
 using System.Windows;
 using RenderApp;
-using RenderApp.RA_Control;
+using RenderApp.RAControl;
 using KI.Foundation.ViewModel;
 using KI.Gfx.GLUtil;
 using KI.Foundation.Control;

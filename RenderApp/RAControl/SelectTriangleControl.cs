@@ -5,15 +5,14 @@ using KI.Gfx.GLUtil;
 using KI.Gfx.KIAsset;
 using RenderApp.AssetModel;
 
-namespace RenderApp.RA_Control
+namespace RenderApp.RAControl
 {
-    class SelectObjectControl : IControl
+    class SelectTriangleControl : IControl
     {
         public override bool Down(System.Windows.Forms.MouseEventArgs mouse)
         {
             if(mouse.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                SceneManager.Instance.RenderSystem.Picking((int)LeftMouse.Click.X, (int)LeftMouse.Click.Y);
             }
             return true;
         }
@@ -25,7 +24,7 @@ namespace RenderApp.RA_Control
         /// <param name="minLength">この数値以下のポリゴンを取得</param>
         /// <param name="selectIndex">選択したデータの頂点番号</param>
         /// <returns></returns>
-        public bool Picking(Vector3 near, Vector3 far, Geometry geometry, ref float minLength, ref int selectIndex)
+        private bool PickTriangleCore(Vector3 near, Vector3 far, Geometry geometry, ref float minLength, ref int selectIndex)
         {
             bool select = false;
             //頂点配列の時
@@ -54,11 +53,10 @@ namespace RenderApp.RA_Control
         /// ポリゴンごとに行うので、CPUベースで頂点番号を取得
         /// </summary>
         /// <param name="mouse"></param>
-        public bool Picking(Vector2 mouse, ref Geometry selectGeometry, ref int selectIndex)
+        public bool PickTriangle(Vector2 mouse, ref Geometry selectGeometry, ref int selectIndex)
         {
             selectIndex = -1;
             float minLength = float.MaxValue;
-            int[] a = new int[3];
             Vector3 near = Vector3.Zero;
             Vector3 far = Vector3.Zero;
             int[] viewport = new int[4];
@@ -68,13 +66,13 @@ namespace RenderApp.RA_Control
             viewport[3] = DeviceContext.Instance.Height;
 
             Scene activeScene = SceneManager.Instance.ActiveScene;
-            KICalc.GetClipPos(
-                activeScene.MainCamera.Matrix, 
+            KICalc.GetClickPos(
+                activeScene.MainCamera.Matrix,
                 activeScene.MainCamera.ProjMatrix,
                 viewport, mouse, out near, out far);
 
             Geometry geometry;
-            foreach (KINode geometryNode in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
+            foreach (KINode geometryNode in activeScene.RootNode.AllChildren())
             {
                 geometry = null;
                 if (geometryNode.KIObject is Geometry)
@@ -85,7 +83,7 @@ namespace RenderApp.RA_Control
                 {
                     continue;
                 }
-                if (Picking(near, far, geometry, ref minLength, ref selectIndex))
+                if (PickTriangleCore(near, far, geometry, ref minLength, ref selectIndex))
                 {
                     selectGeometry = geometry;
                 }
@@ -95,7 +93,6 @@ namespace RenderApp.RA_Control
                 return false;
             }
             return true;
-
         }
 
     }

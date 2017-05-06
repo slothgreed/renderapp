@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 using RenderApp.GfxUtility;
 using KI.Gfx.KIShader;
 using KI.Gfx.KIAsset;
@@ -28,14 +27,9 @@ namespace RenderApp.AssetModel
         {
         }
 
-        public void CreateGeometryInfo(GeometryInfo info, PrimitiveType prim)
+        public void SetGeometryInfo(GeometryInfo info)
         {
-            geometryInfo.Position = info.Position;
-            geometryInfo.Normal = info.Normal;
-            geometryInfo.Color = info.Color;
-            geometryInfo.TexCoord = info.TexCoord;
-            geometryInfo.Index = info.Index;
-            RenderType = prim;
+            geometryInfo = info;
 
             for (int i = 0; i < geometryInfo.Position.Count; i++)
             {
@@ -47,7 +41,7 @@ namespace RenderApp.AssetModel
                 {
                     if (geometryInfo.Normal.Count == 0)
                     {
-                        CalcNormal(geometryInfo.Position, RenderType);
+                        CalcNormal(geometryInfo.Position, info.GeometryType);
                     }
                 }
             }
@@ -55,52 +49,56 @@ namespace RenderApp.AssetModel
             Initialize();
         }
 
-        private void CalcNormal(List<Vector3> position, PrimitiveType prim)
+        private void CalcNormal(List<Vector3> position, GeometryType type)
         {
-            if (PrimitiveType.Lines == prim || PrimitiveType.Points == prim)
+            switch (type)
             {
-                return;
-            }
-            if (PrimitiveType.Triangles == prim)
-            {
-                for (int i = 0; i < position.Count; i += 3)
-                {
-                    Vector3 normal = Vector3.Cross(position[i + 2] - position[i + 1], position[i] - position[i + 1]).Normalized();
-                    geometryInfo.Normal.Add(normal);
-                    geometryInfo.Normal.Add(normal);
-                    geometryInfo.Normal.Add(normal);
-                }
-            }
-            else
-            {
-                for (int i = 0; i < position.Count; i += 4)
-                {
-                    Vector3 normal = Vector3.Cross(position[i + 2] - position[i + 1], position[i] - position[i + 1]).Normalized();
-                    geometryInfo.Normal.Add(normal);
-                    geometryInfo.Normal.Add(normal);
-                    geometryInfo.Normal.Add(normal);
-                    geometryInfo.Normal.Add(normal);
-                }
+                case GeometryType.None:
+                case GeometryType.Point:
+                case GeometryType.Line:
+                case GeometryType.Mix:
+                    return;
+                case GeometryType.Triangle:
+                    for (int i = 0; i < position.Count; i += 3)
+                    {
+                        Vector3 normal = Vector3.Cross(position[i + 2] - position[i + 1], position[i] - position[i + 1]).Normalized();
+                        geometryInfo.Normal.Add(normal);
+                        geometryInfo.Normal.Add(normal);
+                        geometryInfo.Normal.Add(normal);
+                    }
+                    break;
+                case GeometryType.Quad:
+                    for (int i = 0; i < position.Count; i += 4)
+                    {
+                        Vector3 normal = Vector3.Cross(position[i + 2] - position[i + 1], position[i] - position[i + 1]).Normalized();
+                        geometryInfo.Normal.Add(normal);
+                        geometryInfo.Normal.Add(normal);
+                        geometryInfo.Normal.Add(normal);
+                        geometryInfo.Normal.Add(normal);
+                    }
+                    break;
+                default:
+                    break;
             }
         }
 
         public void AddVertex(List<Vector3> addVertex, Vector3 _color)
         {
-            switch(RenderType)
+            switch(geometryInfo.GeometryType)
             {
-                case PrimitiveType.Triangles:
+                case GeometryType.Triangle:
                     if(addVertex.Count % 3 != 0)
                     {
                         return;
                     }
                     break;
-                case PrimitiveType.Quads:
+                case GeometryType.Quad:
                     if (addVertex.Count % 4 != 0)
                     {
                         return;
                     }
                     break;
-                case PrimitiveType.Lines:
+                case GeometryType.Line:
                     if (addVertex.Count % 2 != 0)
                     {
                         return;
@@ -108,7 +106,7 @@ namespace RenderApp.AssetModel
                     break;
             }
             geometryInfo.Position.AddRange(addVertex);
-            CalcNormal(addVertex,RenderType);
+            CalcNormal(addVertex,geometryInfo.GeometryType);
             foreach(var position in addVertex)
             {
                 geometryInfo.Color.Add(_color);
