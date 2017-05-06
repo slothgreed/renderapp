@@ -64,7 +64,7 @@ namespace RenderApp
             //    ActiveScene.AddObject(duck);
             //}
 
-            List<RenderObject> worlds = AssetFactory.Instance.CreateWorld("World",ActiveScene.WorldMin, ActiveScene.WorldMax);
+            List<RenderObject> worlds = AssetFactory.Instance.CreateWorld("World", ActiveScene.WorldMin, ActiveScene.WorldMax);
             string[] paths = new string[]{
                     ProjectInfo.TextureDirectory + @"\cubemap\posx.jpg",
                     ProjectInfo.TextureDirectory + @"\cubemap\posy.jpg",

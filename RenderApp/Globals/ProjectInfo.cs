@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 namespace RenderApp
 {
 
@@ -9,38 +10,53 @@ namespace RenderApp
             get;
             set;
         }
-        private static string _projectDirectory;
+        private static string kiDirectory = null;
+        public static string KIDirectory
+        {
+            get
+            {
+                if(kiDirectory == null)
+                {
+                    kiDirectory = Environment.GetEnvironmentVariable("KIProject");
+                }
+                return kiDirectory;
+            }
+        }
+
         public static string ProjectDirectory
         {
             get
             {
-                //return _projectPath;
-                return @"C:\Users\ido\Documents\KIProject\renderapp\RenderApp\Resource";
+                return KIDirectory + @"\renderapp";
             }
-            set
+        }
+        public static string ResourceDirectory
+        {
+            get
             {
-                _projectDirectory = value;
+                //return _projectPath;
+                return ProjectDirectory + @"\RenderApp\Resource";
             }
         }
         public static string ShaderDirectory
         {
             get
             {
-                return ProjectDirectory + @"\Shader";
+                return ResourceDirectory + @"\Shader";
             }
         }
         public static string TextureDirectory
         {
             get
             {
-                return ProjectDirectory + @"\Texture";
+                return ResourceDirectory + @"\Texture";
             }
         }
         public static string ModelDirectory
         {
             get
             {
-                return ProjectDirectory + @"\Model";
+                return ResourceDirectory + @"\Model";
             }
         }
         public ProjectInfo()
@@ -54,14 +70,13 @@ namespace RenderApp
                 throw new FileFormatException("extention error");
             }
 
-            _projectDirectory = filePath;
             return true;
         }
         public bool Save()
         {
-            if (!Directory.Exists(ProjectDirectory))
+            if (!Directory.Exists(ResourceDirectory))
             {
-                Directory.CreateDirectory(ProjectDirectory);
+                Directory.CreateDirectory(ResourceDirectory);
             }
             
             //ToDo: models;
@@ -80,7 +95,6 @@ namespace RenderApp
         }
         public bool SaveAs(string filePath)
         {
-            _projectDirectory = filePath;
             return Save();
         }
         

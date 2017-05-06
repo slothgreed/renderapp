@@ -172,7 +172,7 @@ namespace RenderApp.ViewModel
         {
             ProjectInfo.IsOpen = true;
             System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
-            dlg.InitialDirectory = ProjectInfo.ProjectDirectory;
+            dlg.InitialDirectory = ProjectInfo.ResourceDirectory;
             dlg.Filter = "projファイル(*.@proj)|*.proj;";
             dlg.FilterIndex = 1;
             dlg.Title = "開くファイルを選択してください。";
@@ -187,7 +187,7 @@ namespace RenderApp.ViewModel
         private void SaveAsProjectCommand()
         {
             System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
-            dlg.InitialDirectory = ProjectInfo.ProjectDirectory;
+            dlg.InitialDirectory = ProjectInfo.ResourceDirectory;
             dlg.Filter = "projファイル(*.@proj)|*.proj;";
             dlg.FilterIndex = 1;
             dlg.Title = "開くファイルを選択してください。";
@@ -219,7 +219,7 @@ namespace RenderApp.ViewModel
         private void Load3DModelCommand()
         {
             System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
-            dlg.InitialDirectory = ProjectInfo.ProjectDirectory;
+            dlg.InitialDirectory = ProjectInfo.ResourceDirectory;
             dlg.Filter = "objファイル(*.obj)|*.obj;|stlファイル(*.stl)|*.stl;|halfファイル(*.half)|*.half;|すべてのファイル(*.*)|*.*";
             dlg.Multiselect = true;
             dlg.Title = "開くファイルを選択してください。";
@@ -239,7 +239,7 @@ namespace RenderApp.ViewModel
         private void LoadTextureCommand()
         {
             System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
-            dlg.InitialDirectory = ProjectInfo.ProjectDirectory;
+            dlg.InitialDirectory = ProjectInfo.ResourceDirectory;
             dlg.Filter = "画像ファイル(*.bmp;*.jpg;*png;tga;*.hdr)|*.bmp;*.jpg;*.png;*.tga;*.hdr;";
             dlg.Title = "開くファイルを選択してください。";
             dlg.Multiselect = true;

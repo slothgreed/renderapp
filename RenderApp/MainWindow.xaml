@@ -76,7 +76,7 @@
             </MenuItem>
             
             <MenuItem Header="Help">
-                <MenuItem Header="Resource Directory" Command="{Binding OpenExplorer}" CommandParameter="{x:Static local:ProjectInfo.ProjectDirectory}" />
+                <MenuItem Header="Resource Directory" Command="{Binding OpenExplorer}" CommandParameter="{x:Static local:ProjectInfo.ResourceDirectory}" />
             </MenuItem>
         </Menu>
 
