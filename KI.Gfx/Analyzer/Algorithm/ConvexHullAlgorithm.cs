@@ -46,8 +46,9 @@ namespace KI.Gfx.Analyzer.Algorithm
                 PointList.Add(pos);
             }
             QuickHullAlgorithm();
-            Logger.Log(Logger.LogLevel.Debug, "MeshList :" + MeshList.Count.ToString());
-            Logger.Log(Logger.LogLevel.Debug, "Point :" + PointList.Count.ToString());
+            
+            Logger.Log(Logger.LogLevel.Descript, "MeshList :" + MeshList.Count.ToString());
+            Logger.Log(Logger.LogLevel.Descript, "Point :" + PointList.Count.ToString());
         }
 
         /// <summary>

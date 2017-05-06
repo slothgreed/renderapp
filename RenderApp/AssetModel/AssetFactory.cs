@@ -9,7 +9,7 @@ using KI.Gfx.KIShader;
 using RenderApp.AssetModel.RA_Geometry;
 namespace RenderApp.AssetModel
 {
-    class AssetFactory : KIFactoryBase< RenderObject>
+    class AssetFactory : KIFactoryBase<RenderObject>
     {
         private static AssetFactory _instance = new AssetFactory();
         public static AssetFactory Instance
