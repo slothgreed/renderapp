@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using OpenTK;
 using KI.Gfx.KIShader;
-using RenderApp.Utility;
 using RenderApp.GfxUtility;
 using KI.Gfx.KIAsset;
 namespace RenderApp.AssetModel.RA_Geometry

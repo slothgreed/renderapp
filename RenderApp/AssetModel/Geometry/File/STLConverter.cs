@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using OpenTK;
-using System.Windows.Forms;
-using KI.Foundation.Core;
+﻿using System.Collections.Generic;
 using KI.Gfx.KIAsset;
 namespace RenderApp.AssetModel.RA_Geometry
 {

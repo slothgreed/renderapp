@@ -3,12 +3,9 @@ using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System;
 using OpenTK.Graphics.OpenGL;
-using System.IO;
-using System.Drawing.Text;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using OpenTK;
-using OpenTK.Graphics;
 
 namespace RenderApp.Utility
 {

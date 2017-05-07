@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+﻿using System.Collections.Generic;
 using OpenTK;
-using System.Windows.Forms;
-using KI.Foundation.Utility;
-using KI.Foundation.Core;
 using KI.Gfx.KIAsset;
-using KI.Gfx.KIShader;
-using RenderApp.GfxUtility;
 namespace RenderApp.AssetModel.RA_Geometry
 {
     public class OBJConverter : IRenderObjectConverter

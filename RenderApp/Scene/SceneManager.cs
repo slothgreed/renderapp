@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RenderApp.KIRenderSystem;
 using RenderApp.AssetModel;
 using KI.Gfx.KIAsset;
-using KI.Gfx.GLUtil;
 namespace RenderApp
 {
     public class SceneManager

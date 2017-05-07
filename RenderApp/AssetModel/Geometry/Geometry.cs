@@ -6,8 +6,8 @@ using KI.Foundation.Core;
 using KI.Gfx.KIAsset;
 using KI.Gfx.GLUtil;
 using KI.Gfx.KIShader;
-using RenderApp.GfxUtility;
 using KI.Gfx.GLUtil.Buffer;
+using RenderApp.GfxUtility;
 namespace RenderApp.AssetModel
 {
     public abstract class Geometry : KIObject

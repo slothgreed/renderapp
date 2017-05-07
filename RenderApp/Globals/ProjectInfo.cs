@@ -2,7 +2,6 @@
 using System.IO;
 namespace RenderApp
 {
-
     class ProjectInfo
     {
         public static bool IsOpen
@@ -10,24 +9,12 @@ namespace RenderApp
             get;
             set;
         }
-        private static string kiDirectory = null;
-        public static string KIDirectory
-        {
-            get
-            {
-                if(kiDirectory == null)
-                {
-                    kiDirectory = Environment.GetEnvironmentVariable("KIProject");
-                }
-                return kiDirectory;
-            }
-        }
 
         public static string ProjectDirectory
         {
             get
             {
-                return KIDirectory + @"\renderapp";
+                return AppSystem.KIDirectory + @"\renderapp";
             }
         }
         public static string ResourceDirectory

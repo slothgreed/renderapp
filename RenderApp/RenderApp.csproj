@@ -228,7 +228,6 @@
       <DependentUpon>RootNodeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\NodeVM\RootNodeViewModel.cs" />
-    <Compile Include="Globals\Global.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModelT4.cs">
       <AutoGen>True</AutoGen>
