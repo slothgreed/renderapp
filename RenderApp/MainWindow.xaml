@@ -69,6 +69,7 @@
                 <MenuItem Header="WireFrame" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.WireFrame}"/>
                 <MenuItem Header="Polygon" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.Polygon}"/>
                 <MenuItem Header="HalfEdge" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.HalfEdge}"/>
+                <MenuItem Header="HalfEdgeWireFrame" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.HalfEdgeWireFrame}"/>
                 <MenuItem Header="ConvexHull" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.ConvexHull}"/>
                 <Separator/>
                 <MenuItem Header="Voxelize" Command="{Binding Voxelize}"/>

@@ -8,6 +8,8 @@ using KI.Gfx.GLUtil;
 using KI.Gfx.KIShader;
 using KI.Gfx.GLUtil.Buffer;
 using RenderApp.GfxUtility;
+using KI.Gfx.Analyzer;
+
 namespace RenderApp.AssetModel
 {
     public abstract class Geometry : KIObject
@@ -330,6 +332,12 @@ namespace RenderApp.AssetModel
         }
         #endregion
         #endregion
+
+        public HalfEdge HalfEdge
+        {
+            get;
+            set;
+        }
         public void SetupBuffer()
         {
             if (PositionBuffer != null)

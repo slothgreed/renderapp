@@ -313,6 +313,10 @@ namespace RenderApp.ViewModel
                     command = new CreateConvexHullCommand(SceneManager.Instance.ActiveScene.SelectAsset);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
+                case RAGeometry.HalfEdgeWireFrame:
+                    command = new CreateHalfEdgeWireFrameCommand(SceneManager.Instance.ActiveScene.SelectAsset);
+                    CommandManager.Instance.Execute(command, null, true);
+                    break;
                 default:
                     break;
             }

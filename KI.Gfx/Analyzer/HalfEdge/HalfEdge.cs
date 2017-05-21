@@ -246,10 +246,12 @@ namespace KI.Gfx.Analyzer
         public GeometryInfo CreateGeometryInfo()
         {
             var geometry = new GeometryInfo();
+            var gray = new Vector3(0.8f);
             foreach (var vertex in m_Vertex)
             {
                 geometry.Position.Add(vertex.Position);
                 geometry.Normal.Add(vertex.Normal);
+                geometry.Color.Add(gray);
 
             }
             foreach (var mesh in m_Mesh)

@@ -82,9 +82,10 @@ namespace RenderApp.AssetModel
                     return stl.CreateRenderObject();
                 case ".half":
                     var half = new HalfEdge();
-                    HalfEdgeIO.ReadFile(filePath,half);
+                    HalfEdgeIO.ReadFile(filePath, half);
                     var renderObject = new RenderObject(fileName);
                     renderObject.SetGeometryInfo(half.CreateGeometryInfo());
+                    renderObject.HalfEdge = half;
                     return new List<RenderObject> { renderObject };
             }
             return null;

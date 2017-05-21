@@ -47,6 +47,7 @@
         WireFrame,
         Polygon,
         HalfEdge,
+        HalfEdgeWireFrame,
         ConvexHull,
         STL,
         OBJ,
