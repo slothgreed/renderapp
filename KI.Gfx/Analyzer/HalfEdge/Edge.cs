@@ -105,6 +105,28 @@ namespace KI.Gfx.Analyzer
                 return (Start - End).Length;
             }
         }
+        public bool ErrorEdge
+        {
+            get
+            {
+                return DeleteFlg;
+
+            }
+        }
+
+        public bool HasError
+        {
+            get
+            {
+                return Start.ErrorVertex &&
+                End.ErrorVertex &&
+                Mesh.ErrorMesh &&
+                Next.ErrorEdge &&
+                Opposite.ErrorEdge &&
+                Before.ErrorEdge && true;
+            }
+        }
+
 
         public Edge(Vertex start, Vertex end, int index = -1)
         {
@@ -132,10 +154,6 @@ namespace KI.Gfx.Analyzer
             Opposite = null;
         }
 
-        public bool ErrorEdge()
-        {
-            return DeleteFlg;
-        }
 
         public static void SetupNextBefore(Edge edge1, Edge edge2, Edge edge3)
         {

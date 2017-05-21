@@ -41,6 +41,20 @@ namespace KI.Gfx.Analyzer
         /// </summary>
         public bool DeleteFlg { get; set; }
 
+        public bool ErrorVertex
+        {
+            get
+            {
+                return DeleteFlg;
+            }
+        }
+        public bool HasError
+        {
+            get
+            {
+                return AroundEdge.Any(p => p.ErrorEdge);
+            }
+        }
         #region [operator]
         public static Vector3 operator +(Vertex v1, Vertex v2)
         {
@@ -97,7 +111,6 @@ namespace KI.Gfx.Analyzer
         /// <param name="edge"></param>
         public void AddEdge(Edge edge)
         {
-            m_Edge = edge;
             if(!m_AroundEdge.Contains(edge))
             {
                 m_AroundEdge.Add(edge);
@@ -167,11 +180,7 @@ namespace KI.Gfx.Analyzer
         {
             DeleteFlg = true;
             m_AroundEdge = null;
-            m_Edge = null;
         }
-        public bool ErrorVertex()
-        {
-            return DeleteFlg;
-        }
+        
     }
 }

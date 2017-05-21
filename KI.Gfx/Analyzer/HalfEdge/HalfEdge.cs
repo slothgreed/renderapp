@@ -67,7 +67,7 @@ namespace KI.Gfx.Analyzer
         {
             foreach(var vertex in m_Vertex)
             {
-                if(vertex.ErrorVertex())
+                if(vertex.ErrorVertex)
                 {
                     return true;
                 }

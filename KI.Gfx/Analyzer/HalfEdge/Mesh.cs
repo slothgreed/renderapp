@@ -158,9 +158,23 @@ namespace KI.Gfx.Analyzer
             m_Edge.Clear();
             m_Edge = null;
         }
-        public bool ErrorMesh()
+
+        /// <summary>
+        /// エラーを持っているか
+        /// </summary>
+        public bool HasError
         {
-            return DeleteFlag;
+            get
+            {
+                return AroundEdge.Any(p => p.ErrorEdge);
+            }
+        }
+        public bool ErrorMesh
+        {
+            get
+            {
+                return DeleteFlag;
+            }
         }
     }
 }
