@@ -139,22 +139,63 @@ namespace KI.Gfx.Analyzer
         }
         #endregion
 
+        public void EdgeSplit(Edge edge)
+        {
+            var opposite = edge.Opposite;
+            var delMesh1 = edge.Mesh;
+            var delMesh2 = opposite.Mesh;
+
+            var vertex = new Vertex((edge.Start.Position + edge.End.Position) / 2, m_Vertex.Count);
+
+            var right = new Edge(vertex, edge.End, m_Edge.Count);
+            var oppoRight = new Edge(edge.End, vertex, m_Edge.Count + 1);
+            Edge.SetupOpposite(right, oppoRight);
+
+            var left = new Edge(edge.Start, vertex, m_Edge.Count + 2);
+            var oppoLeft = new Edge(vertex, edge.Start, m_Edge.Count + 3);
+            Edge.SetupOpposite(left, oppoLeft);
+
+            var up = new Edge(vertex, edge.Next.End, m_Edge.Count + 4);
+            var oppoup = new Edge(edge.Next.End, vertex, m_Edge.Count + 5);
+            Edge.SetupOpposite(up, oppoup);
+
+            var down = new Edge(vertex, opposite.Next.End, m_Edge.Count + 6);
+            var oppodown = new Edge(opposite.Next.End, vertex, m_Edge.Count + 7);
+            Edge.SetupOpposite(down, oppodown);
+
+            var rightUp = new Mesh(right,edge.Next,oppoup);
+            var leftUp = new Mesh(up, edge.Before, left);
+            var rightDown = new Mesh(down, opposite.Before, oppoRight);
+            var leftDown = new Mesh(oppoLeft, opposite.Next, oppodown);
+
+            m_Edge.Add(right); m_Edge.Add(oppoRight);
+            m_Edge.Add(left); m_Edge.Add(oppoLeft);
+            m_Edge.Add(up); m_Edge.Add(oppoup);
+            m_Edge.Add(down); m_Edge.Add(oppodown);
+
+            m_Mesh.Add(rightUp);
+            m_Mesh.Add(leftUp);
+            m_Mesh.Add(rightDown);
+            m_Mesh.Add(leftDown);
+
+            DeleteEdge(new List<Edge>() { edge, opposite });
+            DeleteMesh(new List<Mesh>() { delMesh1, delMesh2 });
+# if CHECKHALFEDGE
+            HasError();
+#endif
+        }
         public void EdgeFlips(Edge edge)
         {
             // delete edge & mesh
             var opposite = edge.Opposite;
             var delMesh1 = edge.Mesh;
             var delMesh2 = opposite.Mesh;
-            edge.DeleteFlg = true;
-            opposite.DeleteFlg = true;
-            delMesh1.DeleteFlag = true;
-            delMesh2.DeleteFlag = true;
 
             var startPos = edge.Next.End;
             var endPos = opposite.Next.End;
 
             var createEdge = new Edge(startPos, endPos, edge.Index);
-            var createEdgeOpposite = new Edge(endPos, startPos,opposite.Index);
+            var createEdgeOpposite = new Edge(endPos, startPos, opposite.Index);
             var createMesh = new Mesh(createEdge, opposite.Before, edge.Next, delMesh1.Index);
             var createMeshOpposite = new Mesh(createEdgeOpposite, edge.Before, opposite.Next, delMesh2.Index);
             Edge.SetupOpposite(createEdge, createEdgeOpposite);
@@ -176,7 +217,7 @@ namespace KI.Gfx.Analyzer
         {
             foreach(var edge in m_Edge)
             {
-                if(edge.HasError)
+                if(edge.ErrorEdge)
                 {
                     Logger.Log(Logger.LogLevel.Error, "Edge : HasError");
                     return true;
@@ -184,7 +225,7 @@ namespace KI.Gfx.Analyzer
             }
             foreach (var mesh in m_Mesh)
             {
-                if (mesh.HasError)
+                if (mesh.ErrorMesh)
                 {
                     Logger.Log(Logger.LogLevel.Error, "Mesh : HasError");
                     return true;
@@ -192,7 +233,7 @@ namespace KI.Gfx.Analyzer
             }
             foreach (var vertex in m_Vertex)
             {
-                if (vertex.HasError)
+                if (vertex.ErrorVertex)
                 {
                     Logger.Log(Logger.LogLevel.Error, "Vertex : HasError");
                     return true;

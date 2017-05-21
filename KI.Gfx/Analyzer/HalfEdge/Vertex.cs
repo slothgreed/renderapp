@@ -13,7 +13,7 @@ namespace KI.Gfx.Analyzer
         /// <summary>
         /// temporaryEdgeforopposite
         /// </summary>
-        private List<Edge> m_AroundEdge = new List<Edge>();
+        public List<Edge> m_AroundEdge = new List<Edge>();
         public Vector3 Position
         {
             get;
@@ -37,23 +37,15 @@ namespace KI.Gfx.Analyzer
         /// <summary>
         /// 削除フラグ。Updateが走ると必ず削除するべきもの
         /// </summary>
-        public bool DeleteFlg { get; set; }
+        public bool DeleteFlag { get; set; }
 
         public bool ErrorVertex
         {
             get
             {
-                return DeleteFlg;
+                return AroundEdge.Any(p => p.DeleteFlag) || DeleteFlag;
             }
         }
-        public bool HasError
-        {
-            get
-            {
-                return AroundEdge.Any(p => p.ErrorEdge);
-            }
-        }
-        
 
         public Vertex(Vector3 pos,int index = -1)
         {
@@ -107,7 +99,7 @@ namespace KI.Gfx.Analyzer
             }
         }
 
-        public void DeleteEdge(Edge edge)
+        public void RemoveAroundEdge(Edge edge)
         {
             m_AroundEdge.Remove(edge);
         }
@@ -138,7 +130,7 @@ namespace KI.Gfx.Analyzer
         }
         public void Dispose()
         {
-            DeleteFlg = true;
+            DeleteFlag = true;
             m_AroundEdge = null;
         }
         #region [operator]

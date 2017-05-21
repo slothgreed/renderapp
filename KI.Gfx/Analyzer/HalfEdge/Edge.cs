@@ -37,7 +37,7 @@ namespace KI.Gfx.Analyzer
         /// <summary>
         /// 削除フラグ。Updateが走ると必ず削除するべきもの
         /// </summary>
-        public bool DeleteFlg { get; set; }
+        public bool DeleteFlag { get; set; }
         /// <summary>
         /// 三角形を構成するエッジの角度thisと前のエッジの反対の角度
         /// </summary>
@@ -109,24 +109,17 @@ namespace KI.Gfx.Analyzer
         {
             get
             {
-                return DeleteFlg;
-
+                return Start.DeleteFlag ||
+                End.DeleteFlag ||
+                Mesh.DeleteFlag ||
+                Next.DeleteFlag ||
+                Opposite.DeleteFlag ||
+                Before.DeleteFlag || 
+                Mesh == Opposite.Mesh ||
+                Next == Before ||
+                DeleteFlag;
             }
         }
-
-        public bool HasError
-        {
-            get
-            {
-                return Start.ErrorVertex &&
-                End.ErrorVertex &&
-                Mesh.ErrorMesh &&
-                Next.ErrorEdge &&
-                Opposite.ErrorEdge &&
-                Before.ErrorEdge && true;
-            }
-        }
-
 
         public Edge(Vertex start, Vertex end, int index = -1)
         {
@@ -147,8 +140,8 @@ namespace KI.Gfx.Analyzer
 
         public void Dispose()
         {
-            Start.DeleteEdge(this);
-            DeleteFlg = true;
+            Start.RemoveAroundEdge(this);
+            DeleteFlag = true;
             Start = null;
             End = null;
             Next = null;
