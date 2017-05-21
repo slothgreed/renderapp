@@ -133,6 +133,7 @@ namespace KI.Gfx.Analyzer
             Start = start;
             End = end;
             Index = index;
+            Start.AddEdge(this);
         }
 
         public Edge(Mesh mesh, Vertex start, Vertex end, int index = -1)
@@ -141,10 +142,12 @@ namespace KI.Gfx.Analyzer
             Start = start;
             End = end;
             Index = index;
+            Start.AddEdge(this);
         }
 
         public void Dispose()
         {
+            Start.DeleteEdge(this);
             DeleteFlg = true;
             Start = null;
             End = null;
@@ -162,8 +165,8 @@ namespace KI.Gfx.Analyzer
             edge3.Next = edge1;
 
             edge1.Before = edge3;
-            edge2.Before = edge2;
-            edge3.Before = edge1;
+            edge2.Before = edge1;
+            edge3.Before = edge2;
         }
 
         public static void SetupOpposite(Edge edge, Edge oppo)

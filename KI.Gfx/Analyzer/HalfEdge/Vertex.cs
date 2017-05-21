@@ -10,8 +10,6 @@ namespace KI.Gfx.Analyzer
 {
     public class Vertex
     {
-        //あとの管理がめんどくさくなるので、vertexは1つだけエッジを持つようにする。
-        public Edge m_Edge { get; set; }
         /// <summary>
         /// temporaryEdgeforopposite
         /// </summary>
@@ -55,50 +53,7 @@ namespace KI.Gfx.Analyzer
                 return AroundEdge.Any(p => p.ErrorEdge);
             }
         }
-        #region [operator]
-        public static Vector3 operator +(Vertex v1, Vertex v2)
-        {
-            return new Vector3(v1.Position + v2.Position);
-        }
-        public static Vector3 operator -(Vertex v1, Vertex v2)
-        {
-            return new Vector3(v1.Position - v2.Position);
-        }
-        public static Vector3 operator *(Vertex v1, Vertex v2)
-        {
-            return new Vector3(v1.Position * v2.Position);
-        }
-        public static bool operator ==(Vertex v1, Vertex v2)
-        {
-            if (object.ReferenceEquals(v1, v2))
-            {
-                return true;
-            }
-            if ((object)v1 == null || (object)v2 == null)
-            {
-                return false;
-            }
-
-            if (Math.Abs(v1.Position.X - v2.Position.X) > KICalc.THRESHOLD05)
-            {
-                return false;
-            }
-            if (Math.Abs(v1.Position.Y - v2.Position.Y) > KICalc.THRESHOLD05)
-            {
-                return false;
-            }
-            if (Math.Abs(v1.Position.Z - v2.Position.Z) > KICalc.THRESHOLD05)
-            {
-                return false;
-            }
-            return true;
-        }
-        public static bool operator !=(Vertex v1, Vertex v2)
-        {
-            return !(v1 == v2);
-        }
         
-        #endregion
 
         public Vertex(Vector3 pos,int index = -1)
         {
@@ -152,6 +107,11 @@ namespace KI.Gfx.Analyzer
             }
         }
 
+        public void DeleteEdge(Edge edge)
+        {
+            m_AroundEdge.Remove(edge);
+        }
+
         private Vector3 _normal = Vector3.Zero;
         public Vector3 Normal
         {
@@ -181,6 +141,49 @@ namespace KI.Gfx.Analyzer
             DeleteFlg = true;
             m_AroundEdge = null;
         }
-        
+        #region [operator]
+        public static Vector3 operator +(Vertex v1, Vertex v2)
+        {
+            return new Vector3(v1.Position + v2.Position);
+        }
+        public static Vector3 operator -(Vertex v1, Vertex v2)
+        {
+            return new Vector3(v1.Position - v2.Position);
+        }
+        public static Vector3 operator *(Vertex v1, Vertex v2)
+        {
+            return new Vector3(v1.Position * v2.Position);
+        }
+        public static bool operator ==(Vertex v1, Vertex v2)
+        {
+            if (object.ReferenceEquals(v1, v2))
+            {
+                return true;
+            }
+            if ((object)v1 == null || (object)v2 == null)
+            {
+                return false;
+            }
+
+            if (Math.Abs(v1.Position.X - v2.Position.X) > KICalc.THRESHOLD05)
+            {
+                return false;
+            }
+            if (Math.Abs(v1.Position.Y - v2.Position.Y) > KICalc.THRESHOLD05)
+            {
+                return false;
+            }
+            if (Math.Abs(v1.Position.Z - v2.Position.Z) > KICalc.THRESHOLD05)
+            {
+                return false;
+            }
+            return true;
+        }
+        public static bool operator !=(Vertex v1, Vertex v2)
+        {
+            return !(v1 == v2);
+        }
+
+        #endregion
     }
 }

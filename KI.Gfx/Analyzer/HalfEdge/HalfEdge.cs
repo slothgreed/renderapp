@@ -1,12 +1,9 @@
-﻿using System;
+﻿#define  CHECKHALFEDGE
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenTK;
 using KI.Foundation.Utility;
 using KI.Gfx.KIAsset;
-using System.IO;
 namespace KI.Gfx.Analyzer
 {
     public class HalfEdge
@@ -76,165 +73,26 @@ namespace KI.Gfx.Analyzer
         }
 
 
-        /// <summary>
-        /// 読み込み
-        /// </summary>
-        /// <param name="inputFile"></param>
-        public bool ReadFile(string inputFile)
-        {
-            if (!File.Exists(inputFile))
-            {
-                return false;
-            }
-            if (Path.GetExtension(inputFile).ToLower() != ".half")
-            {
-                return false;
-            }
-
-            try
-            {
-                m_Vertex.Clear();
-                m_Edge.Clear();
-                m_Mesh.Clear();
-
-                String[] fileData = File.ReadAllLines(inputFile, System.Text.Encoding.GetEncoding("Shift_JIS"));
-                ReadHalfEdgeData(fileData);
-                return true;
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("読み込み失敗 : " + inputFile);
-                return false;
-            }
-                    
-        }
-
-        private void ReadHalfEdgeData(String[] fileData)
-        {
-            int lineNumber = 0;
-            String line;
-            int EdgeInfoCounter = 0;
-            while (fileData.Length != lineNumber)
-            {
-                line = fileData[lineNumber];
-                lineNumber++;
-                if (line.Contains("HalfEdge Data Strucure")) continue;
-                if (line.Contains("Vertex :")) continue;
-                if (line.Contains("Edge :")) continue;
-                if (line.Contains("Mesh :")) continue;
-                if (line.Contains("Edge Info :")) continue;
-
-                string[] lineInfos = line.Split(' ');
-                lineInfos = lineInfos.Where(p => !(String.IsNullOrWhiteSpace(p) || String.IsNullOrEmpty(p))).ToArray();
-
-                if (lineInfos[0] == "v")
-                {
-                    var position = new Vector3(float.Parse(lineInfos[1]), float.Parse(lineInfos[2]), float.Parse(lineInfos[3]));
-                    var vertex = new Vertex(position, m_Vertex.Count);
-                    m_Vertex.Add(vertex);
-                }
-
-                if (lineInfos[0] == "e")
-                {
-                    int startIndex = int.Parse(lineInfos[1]);
-                    int endIndex = int.Parse(lineInfos[2]);
-                    var edge = new Edge(m_Vertex[startIndex], m_Vertex[endIndex], m_Edge.Count);
-                    m_Edge.Add(edge);
-                    m_Vertex[startIndex].AddEdge(edge);
-                }
-
-                if (lineInfos[0] == "m")
-                {
-                    int edge1 = int.Parse(lineInfos[1]);
-                    int edge2 = int.Parse(lineInfos[2]);
-                    int edge3 = int.Parse(lineInfos[3]);
-                    var mesh = new Mesh(m_Mesh.Count);
-                    mesh.SetEdge(m_Edge[edge1], m_Edge[edge2], m_Edge[edge3]);
-                    m_Mesh.Add(mesh);
-                }
-
-                if (lineInfos[0] == "ei")
-                {
-                    int nextIndex       = int.Parse(lineInfos[1]);
-                    int beforeIndex     = int.Parse(lineInfos[2]);
-                    int oppositeIndex   = int.Parse(lineInfos[3]);
-                    int meshIndex       = int.Parse(lineInfos[4]);
-                    var edge = m_Edge[EdgeInfoCounter];
-
-                    edge.Next       = m_Edge[nextIndex];
-                    edge.Before     = m_Edge[beforeIndex];
-                    edge.Opposite   = m_Edge[oppositeIndex];
-                    edge.Mesh       = m_Mesh[meshIndex];
-                    EdgeInfoCounter++;
-                }
-            }
-        }
-        /// <summary>
-        /// 書き込み
-        /// </summary>
-        /// <param name="outputFile"></param>
-        public void WriteFile(string outputFile)
-        {
-            StreamWriter write = new StreamWriter(outputFile);
-
-            write.WriteLine("HalfEdge Data Structure");
-            write.WriteLine("Vertex : Position");
-            foreach (var vertex in m_Vertex)
-            {
-                write.WriteLine("v" + " " + vertex.Position.X + " " + vertex.Position.Y + " " + vertex.Position.Z);
-            }
-            write.WriteLine("Edge : Start Vetex Index, End Vertex Index");
-            foreach (var edge in m_Edge)
-            {
-                write.WriteLine("e" + " " + edge.Start.Index + " " + edge.End.Index);
-            }
-
-            write.WriteLine("Mesh : Vertex Index");
-            foreach (var mesh in m_Mesh)
-            {
-                string edgeIdx = "";
-                foreach (var edge in mesh.AroundEdge)
-                {
-                    if (edge == mesh.AroundEdge.Last())
-                    {
-                        edgeIdx += edge.Index.ToString();
-                    }
-                    else
-                    {
-                        edgeIdx += edge.Index.ToString() + " ";
-                    }
-                }
-                write.WriteLine("m" + " " + edgeIdx);
-            }
-
-            write.WriteLine("Edge Info : Next Edge Index,Before Edge, Opposite Edge Index, Incident Face ");
-            foreach (var edge in m_Edge)
-            {
-                write.WriteLine("ei" + " " + edge.Next.Index + " " + edge.Before.Index + " " + edge.Opposite.Index + " " + edge.Mesh.Index);
-            }
-            write.WriteLine("end");
-            write.Close();
-        }
-
         #region [edit method]
+        #region [vertex decimation]
         /// <summary>
         /// マージによる頂点削除削除後、頂点位置移動
         /// </summary>
         /// <param name="removeIndex">削除するほう</param>
         /// <param name="remainIndex">残すほう</param>
-        public void VertexDecimation(Vertex delV,Vertex remV)
+        public void VertexDecimation(Vertex delV, Vertex remV)
         {
-            if(delV == null || remV == null)
+            if (delV == null || remV == null)
             {
                 return;
             }
             //2点を端点とするエッジ
             Edge commonEdge = GetEdge(delV, remV);
-            if(commonEdge == null)
+            if (commonEdge == null)
             {
                 return;
             }
-            
+
             #region [create delete list]
             //削除するメッシュ
             var deleteMesh = new List<Mesh>();
@@ -242,9 +100,9 @@ namespace KI.Gfx.Analyzer
             var deleteEdge = new List<Edge>();
             //削除する頂点
             var deleteVertex = new List<Vertex>();
-            
+
             deleteVertex.Add(delV);
-            
+
 
             //頂点とエッジの格納
             deleteEdge.Add(commonEdge);
@@ -275,12 +133,74 @@ namespace KI.Gfx.Analyzer
             commonEdge.Opposite.Next.Opposite.Opposite = commonEdge.Opposite.Before.Opposite;
             commonEdge.Opposite.Before.Opposite.Opposite = commonEdge.Opposite.Next.Opposite;
 
-            remV.m_Edge = commonEdge.Opposite.Before.Opposite;
             DeleteMesh(deleteMesh);
             DeleteEdge(deleteEdge);
             DeleteVertex(deleteVertex);
         }
         #endregion
+
+        public void EdgeFlips(Edge edge)
+        {
+            // delete edge & mesh
+            var opposite = edge.Opposite;
+            var delMesh1 = edge.Mesh;
+            var delMesh2 = opposite.Mesh;
+            edge.DeleteFlg = true;
+            opposite.DeleteFlg = true;
+            delMesh1.DeleteFlag = true;
+            delMesh2.DeleteFlag = true;
+
+            var startPos = edge.Next.End;
+            var endPos = opposite.Next.End;
+
+            var createEdge = new Edge(startPos, endPos, edge.Index);
+            var createEdgeOpposite = new Edge(endPos, startPos,opposite.Index);
+            var createMesh = new Mesh(createEdge, opposite.Before, edge.Next, delMesh1.Index);
+            var createMeshOpposite = new Mesh(createEdgeOpposite, edge.Before, opposite.Next, delMesh2.Index);
+            Edge.SetupOpposite(createEdge, createEdgeOpposite);
+
+            m_Mesh.Add(createMesh);
+            m_Mesh.Add(createMeshOpposite);
+            m_Edge.Add(createEdge);
+            m_Edge.Add(createEdgeOpposite);
+
+            DeleteEdge(new List<Edge>() { edge, opposite });
+            DeleteMesh(new List<Mesh>() { delMesh1, delMesh2 });
+
+# if CHECKHALFEDGE
+            HasError();
+#endif
+        }
+        #endregion
+        public bool HasError()
+        {
+            foreach(var edge in m_Edge)
+            {
+                if(edge.HasError)
+                {
+                    Logger.Log(Logger.LogLevel.Error, "Edge : HasError");
+                    return true;
+                }
+            }
+            foreach (var mesh in m_Mesh)
+            {
+                if (mesh.HasError)
+                {
+                    Logger.Log(Logger.LogLevel.Error, "Mesh : HasError");
+                    return true;
+                }
+            }
+            foreach (var vertex in m_Vertex)
+            {
+                if (vertex.HasError)
+                {
+                    Logger.Log(Logger.LogLevel.Error, "Vertex : HasError");
+                    return true;
+                }
+            }
+            return false;
+        }
+        #region [delete object]
         private void DeleteMesh(List<Mesh> deleteMesh)
         {
             foreach (var mesh in deleteMesh)
@@ -291,7 +211,7 @@ namespace KI.Gfx.Analyzer
         }
         private void DeleteEdge(List<Edge> deleteEdge)
         {
-            foreach(var edge in deleteEdge)
+            foreach (var edge in deleteEdge)
             {
                 edge.Dispose();
                 m_Edge.Remove(edge);
@@ -306,6 +226,8 @@ namespace KI.Gfx.Analyzer
                 m_Vertex.Remove(vertex);
             }
         }
+        #endregion
+
         #region [make halfedge data structure]
         /// <summary>
         /// ハーフエッジ用のリストに頂点を格納
@@ -398,11 +320,6 @@ namespace KI.Gfx.Analyzer
             Edge edge1 = new Edge(mesh, v1, v2, m_Edge.Count);
             Edge edge2 = new Edge(mesh, v2, v3, m_Edge.Count + 1);
             Edge edge3 = new Edge(mesh, v3, v1, m_Edge.Count + 2);
-
-            //頂点にエッジを持たせる
-            v1.AddEdge(edge1);
-            v2.AddEdge(edge2);
-            v3.AddEdge(edge3);
 
             //メッシュにエッジを格納
             mesh.SetEdge(edge1, edge2, edge3);

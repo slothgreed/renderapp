@@ -55,6 +55,7 @@
     <Compile Include="Analyzer\Dijkstra.cs" />
     <Compile Include="Analyzer\HalfEdge\Edge.cs" />
     <Compile Include="Analyzer\HalfEdge\HalfEdge.cs" />
+    <Compile Include="Analyzer\HalfEdge\HalfEdgeIO.cs" />
     <Compile Include="Analyzer\HalfEdge\Mesh.cs" />
     <Compile Include="Analyzer\HalfEdge\Vertex.cs" />
     <Compile Include="Analyzer\IAnalyzer.cs" />
