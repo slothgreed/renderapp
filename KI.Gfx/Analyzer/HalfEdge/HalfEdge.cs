@@ -163,10 +163,12 @@ namespace KI.Gfx.Analyzer
             var oppodown = new Edge(opposite.Next.End, vertex, m_Edge.Count + 7);
             Edge.SetupOpposite(down, oppodown);
 
-            var rightUp = new Mesh(right,edge.Next,oppoup);
-            var leftUp = new Mesh(up, edge.Before, left);
-            var rightDown = new Mesh(down, opposite.Before, oppoRight);
-            var leftDown = new Mesh(oppoLeft, opposite.Next, oppodown);
+            var rightUp = new Mesh(right, edge.Next, oppoup, delMesh1.Index);
+            var leftUp = new Mesh(up, edge.Before, left, delMesh2.Index);
+            var rightDown = new Mesh(down, opposite.Before, oppoRight, m_Mesh.Count);
+            var leftDown = new Mesh(oppoLeft, opposite.Next, oppodown, m_Mesh.Count + 1);
+
+            m_Vertex.Add(vertex);
 
             m_Edge.Add(right); m_Edge.Add(oppoRight);
             m_Edge.Add(left); m_Edge.Add(oppoLeft);
@@ -181,7 +183,7 @@ namespace KI.Gfx.Analyzer
             DeleteEdge(new List<Edge>() { edge, opposite });
             DeleteMesh(new List<Mesh>() { delMesh1, delMesh2 });
 # if CHECKHALFEDGE
-            HasError();
+            //HasError();
 #endif
         }
         public void EdgeFlips(Edge edge)
