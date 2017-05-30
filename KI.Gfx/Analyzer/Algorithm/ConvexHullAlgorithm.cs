@@ -273,16 +273,19 @@ namespace KI.Gfx.Analyzer.Algorithm
                 if (max.X < pos.X && max.Y < pos.X && max.Z < pos.X)
                 {
                     max = pos;
+                    continue;
                 }
 
                 if (min.X > pos.X && min.Y > pos.Y && min.Z > pos.Z)
                 {
                     min = pos;
+                    continue;
                 }
 
                 if (xyMinzMax.X > pos.X && xyMinzMax.Y > pos.Y && xyMinzMax.Z < pos.Z)
                 {
                     xyMinzMax = pos;
+                    continue;
                 }
             }
 
