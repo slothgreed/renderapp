@@ -94,12 +94,13 @@ namespace RenderApp.KIRenderSystem
             SelectionStage  = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Selection);
             PostEffect      = new PostEffectManager();
             OutputStage     = (OutputBuffer)RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output);
-            OutputTexture   = RenderTechniqueFactory.Instance.OutputTexture(RenderTechniqueType.GBuffer).First();
+            OutputTexture   = ((GBuffer)GBufferStage).GetOutputTexture(GBuffer.GBufferOutputType.Color);
 
             foreach (var texture in RenderTechniqueFactory.Instance.OutputTextures())
             {
                 ProcessingTexture.Add(texture);
             }
+            
 
         }
 

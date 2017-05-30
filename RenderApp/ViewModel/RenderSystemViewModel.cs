@@ -31,6 +31,7 @@ namespace RenderApp.ViewModel
         public RenderSystemViewModel(RenderSystem _model)
         {
             Model = _model;
+            TextureIndex = Model.ProcessingTexture.IndexOf(Model.OutputTexture);
         }
 
         public override string Title

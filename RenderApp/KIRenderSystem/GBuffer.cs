@@ -5,14 +5,24 @@ namespace RenderApp.KIRenderSystem
 {
     public class GBuffer : RenderTechnique
     {
+        public enum GBufferOutputType
+        {
+            Posit = 0,
+            Normal,
+            Color,
+            Light
+        }
 
         public GBuffer(RenderTechniqueType tech)
             : base("GBuffer", tech, RenderType.Original)
         {
         
-        
         }
 
+        public Texture GetOutputTexture(GBufferOutputType target)
+        {
+            return OutputTexture[(int)target];
+        }
         public override void CreateRenderTarget(int width, int height)
         {
             Texture[] texture = new Texture[4];
