@@ -225,6 +225,9 @@
     <Compile Include="View\Controller\SelectView.xaml.cs">
       <DependentUpon>SelectView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\DebugWindow.xaml.cs">
+      <DependentUpon>DebugWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\RootNodeView.xaml.cs">
       <DependentUpon>RootNodeView.xaml</DependentUpon>
     </Compile>
@@ -303,6 +306,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controller\SelectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DebugWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

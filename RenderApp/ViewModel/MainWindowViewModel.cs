@@ -22,6 +22,7 @@ using KI.Gfx.KIShader;
 using KI.Gfx.GLUtil.Buffer;
 using RenderApp.RACommand;
 using KI.Foundation.Command;
+using KI.Foundation.Core;
 namespace RenderApp.ViewModel
 {
     public partial class MainWindowViewModel : ViewModelBase
@@ -316,11 +317,13 @@ namespace RenderApp.ViewModel
                 case RAGeometry.HalfEdgeWireFrame:
                     command = new CreateHalfEdgeWireFrameCommand(SceneManager.Instance.ActiveScene.SelectAsset);
                     CommandManager.Instance.Execute(command, null, true);
+                    //select = SceneManager.Instance.ActiveScene.SelectAsset;
                     break;
                 default:
                     break;
             }
         }
+        //private static KIObject select;
         private void CreateCubeCommand()
         {
             //Cube cube = new Cube(RAFile.GetNameFromType(EAssetType.Geometry), SceneManager.Instance.ActiveScene.WorldMin, SceneManager.Instance.ActiveScene.WorldMax);
@@ -430,6 +433,12 @@ namespace RenderApp.ViewModel
             System.Diagnostics.Process.Start(path);
         }
 
+        private void OpenDebugWindowCommand()
+        {
+            View.DebugWindow window = new View.DebugWindow();
+            window.Show();
+        }
+
         private void UndoCommand()
         {
             CommandManager.Instance.Undo();
@@ -439,6 +448,16 @@ namespace RenderApp.ViewModel
         {
             CommandManager.Instance.Redo();
         }
+
+        //private void DebugKeyCommand()
+        //{
+        //    if(select == null)
+        //    {
+        //        select = SceneManager.Instance.ActiveScene.SelectAsset;
+        //    }
+        //    var command = new CreateHalfEdgeWireFrameCommand(select);
+        //    CommandManager.Instance.Execute(command, null, true);
+        //}
         #region [Update Method]
         public void UpdateSelectNode(KINode node)
         {

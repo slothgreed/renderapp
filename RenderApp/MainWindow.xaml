@@ -78,6 +78,7 @@
             
             <MenuItem Header="Help">
                 <MenuItem Header="Resource Directory" Command="{Binding OpenExplorer}" CommandParameter="{x:Static local:ProjectInfo.ResourceDirectory}" />
+                <MenuItem Header="DebugWindow" Command="{Binding OpenDebugWindow}"/>
             </MenuItem>
         </Menu>
 
@@ -97,8 +98,8 @@
             <v:TabControlView Grid.Column="2" Grid.Row="1" DataContext="{Binding RightDownDockPanel}"/>
             <v:TabControlView Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" DataContext="{Binding CenterDockPanel}"/>
         </Grid>
-        
-        <TextBlock Grid.Row="2" Text="{Binding TaskBarText}"></TextBlock>
+
+        <TextBlock Grid.Row="2" Text="{Binding TaskBarText}"/>
     </Grid>
     
 </Window>

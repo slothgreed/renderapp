@@ -166,6 +166,18 @@ namespace RenderApp.ViewModel
 					return _OpenExplorer;
 				}
 			}
+			private ICommand _OpenDebugWindow;
+			public ICommand OpenDebugWindow
+			{
+				get
+				{
+					if(_OpenDebugWindow == null)
+					{
+						return _OpenDebugWindow = CreateCommand(OpenDebugWindowCommand);						
+					}
+					return _OpenDebugWindow;
+				}
+			}
 			private ICommand _Undo;
 			public ICommand Undo
 			{
