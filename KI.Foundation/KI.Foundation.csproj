@@ -76,6 +76,7 @@
     <Compile Include="Utility\KICalc.cs" />
     <Compile Include="Utility\Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\CommandBase.cs" />
     <Compile Include="ViewModel\Math\MathViewModel.cs" />
     <Compile Include="ViewModel\Math\Matrix3ViewModel.cs" />
     <Compile Include="ViewModel\Math\Matrix4ViewModel.cs" />

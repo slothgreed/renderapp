@@ -97,7 +97,32 @@ namespace KI.Gfx.Analyzer
                     EdgeInfoCounter++;
                 }
             }
+            int count = halfEdge.m_Edge.Count;
 
+            //for(int i = 0; i < 3;i++)
+            //{
+            //    halfEdge.EdgeFlips(halfEdge.m_Edge[i]);
+            //}
+
+            //for (int i = 0; i < 1; i++)
+            //{
+            //    halfEdge.VertexDecimation(halfEdge.m_Edge[i]);
+            //}
+
+            //int counter = 0;
+            //try
+            //{
+            //    for (int i = 0; i < 3; i++)
+            //    {
+            //        halfEdge.EdgeFlips(halfEdge.m_Edge[i]);
+            //        counter++;
+            //    }
+            //}
+            //catch (Exception)
+            //{
+            //    throw;
+            //}
+            //halfEdge.HasError();
         }
         /// <summary>
         /// 書き込み

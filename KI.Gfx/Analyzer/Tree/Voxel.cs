@@ -11,33 +11,42 @@ namespace KI.Gfx.Analyzer
 {
     public class Voxel : IAnalyzer
     {
-        Vector3 m_Min;
-        Vector3 m_Max;
-        float m_Length;
-        int m_Partition;
-        bool[, ,] voxel_Index;
+        public Vector3 Min;
+        public Vector3 Max;
+        public float Interval;
+
+        public int Partition
+        {
+            get;
+            private set;
+        }
+        public bool[, ,] Exist
+        {
+            get;
+            private set;
+        }
         public List<Vector3> vPosition = new List<Vector3>();
         public List<Vector3> vNormal = new List<Vector3>();
-        public Voxel(List<Vector3> position, List<int> posIndex, Matrix4 modelMatrix, int partition)
+        public Voxel(List<Vector3> position, List<int> posIndex,int partition)
         {
 
-            m_Partition = partition;
+            Partition = partition;
             CalcMinMax(position);
-            SetLength(partition);
-            voxel_Index = new bool[partition, partition, partition];
+            SetInterval(partition);
+            Exist = new bool[partition, partition, partition];
             for (int i = 0; i < partition; i++)
             {
                 for (int j = 0; j < partition; j++)
                 {
                     for (int k = 0; k < partition; k++)
                     {
-                        voxel_Index[i, j, k] = false;
+                        Exist[i, j, k] = false;
                     }
                 }
             }
             if (posIndex.Count == 0)
             {
-                MakeVoxels(position, modelMatrix);
+                MakeVoxels(position);
             }
             else
             {
@@ -48,9 +57,8 @@ namespace KI.Gfx.Analyzer
                     posStream.Add(position[posIndex[3 * i + 1]]);
                     posStream.Add(position[posIndex[3 * i + 2]]);
                 }
-                MakeVoxels(posStream, modelMatrix);
+                MakeVoxels(posStream);
             }
-            voxel_Index = null;
         }
       
       
@@ -59,15 +67,15 @@ namespace KI.Gfx.Analyzer
         /// </summary>
         /// <param name="m_position"></param>
         /// <param name="posIndex"></param>
-        private void MakeVoxels(List<Vector3> position,Matrix4 modelMatrix)
+        private void MakeVoxels(List<Vector3> position)
         {
             //ボクセルのインデックス番号
             Vector3 vIndex = new Vector3();
             for (int i = 0; i < position.Count / 3; i++)
             {
-                Vector3 tri1 = position[3 * i]; //KICalc.Multiply(modelMatrix, position[3 * i]);
-                Vector3 tri2 = position[3 * i + 1]; //KICalc.Multiply(modelMatrix, position[3 * i + 1]);
-                Vector3 tri3 = position[3 * i + 2]; //KICalc.Multiply(modelMatrix, position[3 * i + 2]);
+                Vector3 tri1 = position[3 * i]; 
+                Vector3 tri2 = position[3 * i + 1]; 
+                Vector3 tri3 = position[3 * i + 2]; 
 
                 //triを包括する部分のボクセルの最小値と最大値のインデックス
                 Vector3 minIndex = MinVector(tri1, tri2);
@@ -76,10 +84,10 @@ namespace KI.Gfx.Analyzer
                 Vector3 maxIndex = MaxVector(tri1, tri2);
                 maxIndex = MaxVector(maxIndex, tri3);
 
-                minIndex -= m_Min;
-                maxIndex -= m_Min;
-                minIndex /= m_Length;
-                maxIndex /= m_Length;
+                minIndex -= Min;
+                maxIndex -= Min;
+                minIndex /= Interval;
+                maxIndex /= Interval;
 
                 for (vIndex.X = (int)minIndex.X; vIndex.X < maxIndex.X; vIndex.X++)
                 {
@@ -87,13 +95,13 @@ namespace KI.Gfx.Analyzer
                     {
                         for (vIndex.Z = (int)minIndex.Z; vIndex.Z < maxIndex.Z; vIndex.Z++)
                         {
-                            if (voxel_Index[(int)vIndex.X, (int)vIndex.Y, (int)vIndex.Z])
+                            if (Exist[(int)vIndex.X, (int)vIndex.Y, (int)vIndex.Z])
                             {
                                 continue;
                             }
                             if (CheckVoxel(tri1, tri2, tri3, vIndex))
                             {
-                                voxel_Index[(int)vIndex.X, (int)vIndex.Y, (int)vIndex.Z] = true;
+                                Exist[(int)vIndex.X, (int)vIndex.Y, (int)vIndex.Z] = true;
                                 SetVoxel(vIndex);
 
                             }
@@ -112,44 +120,40 @@ namespace KI.Gfx.Analyzer
         /// <returns></returns>
         private Vector3 GetVoxelPosition(Vector3 index)
         {
-            Vector3 minVoxel = m_Min;
-            minVoxel += index * new Vector3(m_Length);
+            Vector3 minVoxel = Min;
+            minVoxel += index * new Vector3(Interval);
             return minVoxel;
         }
         /// <summary>
         /// 分割数から長さを計算
         /// </summary>
         /// <param name="partition"></param>
-        private void SetLength(int partition)
+        private void SetInterval(int partition)
         {
             float tmpmax, tmpmin;
-            tmpmax = m_Max.X;
-            if (tmpmax < m_Max.Y) { tmpmax = m_Max.Y; }
-            if (tmpmax < m_Max.Z) { tmpmax = m_Max.Z; }
+            tmpmax = Max.X; tmpmin = Min.X;
 
-            tmpmin = m_Min.X;
-            if (tmpmin > m_Min.Y) { tmpmin = m_Min.Y; }
-            if (tmpmin > m_Min.Z) { tmpmin = m_Min.Z; }
+            if (tmpmax - tmpmin < Max.Y - Min.Y) { tmpmax = Max.Y; tmpmin = Min.Y; }
+            if (tmpmax - tmpmin < Max.Z - Min.Z) { tmpmax = Max.Z; tmpmin = Min.Z; }
 
-            m_Length = (tmpmax - tmpmin) / partition;
+            Interval = (tmpmax - tmpmin) / partition;
         }
 
         private void CalcMinMax(List<Vector3> position)
         {
-            m_Min = position[0];
-            m_Max = position[0];
+            Min = position[0];
+            Max = position[0];
             for (int i = 0; i < position.Count; i++)
             {
-                if (m_Min.X > position[i].X) { m_Min.X = position[i].X; }
-                if (m_Min.Y > position[i].Y) { m_Min.Y = position[i].Y; }
-                if (m_Min.Z > position[i].Z) { m_Min.Z = position[i].Z; }
+                if (Min.X > position[i].X) { Min.X = position[i].X; }
+                if (Min.Y > position[i].Y) { Min.Y = position[i].Y; }
+                if (Min.Z > position[i].Z) { Min.Z = position[i].Z; }
 
-                if (m_Max.X < position[i].X) { m_Max.X = position[i].X; }
-                if (m_Max.Y < position[i].Y) { m_Max.Y = position[i].Y; }
-                if (m_Max.Z < position[i].Z) { m_Max.Z = position[i].Z; }
+                if (Max.X < position[i].X) { Max.X = position[i].X; }
+                if (Max.Y < position[i].Y) { Max.Y = position[i].Y; }
+                if (Max.Z < position[i].Z) { Max.Z = position[i].Z; }
 
             }
-
         }
        
 
@@ -195,7 +199,7 @@ namespace KI.Gfx.Analyzer
         private bool CheckVoxel(Vector3 tri1, Vector3 tri2, Vector3 tri3, Vector3 voxelIndex)
         {
             Vector3 minVoxel = GetVoxelPosition(voxelIndex);
-            Vector3 maxVoxel = minVoxel + new Vector3(m_Length);
+            Vector3 maxVoxel = minVoxel + new Vector3(Interval);
 
             //点によるチェック
             if (InBox(tri1, minVoxel, maxVoxel)) { return true; }
@@ -208,14 +212,14 @@ namespace KI.Gfx.Analyzer
             Vector3 tmp = new Vector3();
             //左下手前から反時計周り
             Vector3 v0 = minVoxel;
-            Vector3 v1 = new Vector3(minVoxel.X + m_Length, minVoxel.Y, minVoxel.Z);
-            Vector3 v2 = new Vector3(minVoxel.X + m_Length, minVoxel.Y + m_Length, minVoxel.Z);
-            Vector3 v3 = new Vector3(minVoxel.X, minVoxel.Y + m_Length, minVoxel.Z);
+            Vector3 v1 = new Vector3(minVoxel.X + Interval, minVoxel.Y, minVoxel.Z);
+            Vector3 v2 = new Vector3(minVoxel.X + Interval, minVoxel.Y + Interval, minVoxel.Z);
+            Vector3 v3 = new Vector3(minVoxel.X, minVoxel.Y + Interval, minVoxel.Z);
 
-            Vector3 v4 = new Vector3(minVoxel.X, minVoxel.Y, maxVoxel.Z + m_Length);
-            Vector3 v5 = new Vector3(minVoxel.X + m_Length, minVoxel.Y, minVoxel.Z + m_Length);
-            Vector3 v6 = new Vector3(minVoxel.X + m_Length, minVoxel.Y + m_Length, minVoxel.Z + m_Length);
-            Vector3 v7 = new Vector3(minVoxel.X, minVoxel.Y + m_Length, minVoxel.Z + m_Length);
+            Vector3 v4 = new Vector3(minVoxel.X, minVoxel.Y, maxVoxel.Z + Interval);
+            Vector3 v5 = new Vector3(minVoxel.X + Interval, minVoxel.Y, minVoxel.Z + Interval);
+            Vector3 v6 = new Vector3(minVoxel.X + Interval, minVoxel.Y + Interval, minVoxel.Z + Interval);
+            Vector3 v7 = new Vector3(minVoxel.X, minVoxel.Y + Interval, minVoxel.Z + Interval);
 
             //手前
             if (KICalc.CrossPlanetoLinePos(tri1, tri2, tri3, v0, v1, ref maxValue, out tmp)) { return true; }
@@ -269,7 +273,7 @@ namespace KI.Gfx.Analyzer
         private void SetVoxel(Vector3 voxelIndex)
         {
             Vector3 minVoxel = GetVoxelPosition(voxelIndex);
-            Vector3 maxVoxel = minVoxel + new Vector3(m_Length);
+            Vector3 maxVoxel = minVoxel + new Vector3(Interval);
             //minVoxel += new Vector3(m_Length * 0.1f);
             //maxVoxel -= new Vector3(m_Length * 0.1f);
             Vector3 v0 = new Vector3(minVoxel.X, minVoxel.Y, minVoxel.Z);
@@ -303,7 +307,6 @@ namespace KI.Gfx.Analyzer
             vNormal.Add(normal);
             vNormal.Add(normal);
             vNormal.Add(normal);
-
         }
         
         #endregion

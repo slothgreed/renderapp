@@ -60,34 +60,44 @@ namespace RenderApp
             //    ActiveScene.AddObject(duck);
             //}
 
-            List<RenderObject> worlds = AssetFactory.Instance.CreateWorld("World", ActiveScene.WorldMin, ActiveScene.WorldMax);
-            string[] paths = new string[]{
-                    ProjectInfo.TextureDirectory + @"\cubemap\posx.jpg",
-                    ProjectInfo.TextureDirectory + @"\cubemap\posy.jpg",
-                    ProjectInfo.TextureDirectory + @"\cubemap\posz.jpg",
-                    ProjectInfo.TextureDirectory + @"\cubemap\negx.jpg",
-                    ProjectInfo.TextureDirectory + @"\cubemap\negy.jpg",
-                    ProjectInfo.TextureDirectory + @"\cubemap\negz.jpg"
-            };
+            //List<RenderObject> worlds = AssetFactory.Instance.CreateWorld("World", ActiveScene.WorldMin, ActiveScene.WorldMax);
+            //string[] paths = new string[]{
+            //        ProjectInfo.TextureDirectory + @"\cubemap\posx.jpg",
+            //        ProjectInfo.TextureDirectory + @"\cubemap\posy.jpg",
+            //        ProjectInfo.TextureDirectory + @"\cubemap\posz.jpg",
+            //        ProjectInfo.TextureDirectory + @"\cubemap\negx.jpg",
+            //        ProjectInfo.TextureDirectory + @"\cubemap\negy.jpg",
+            //        ProjectInfo.TextureDirectory + @"\cubemap\negz.jpg"
+            //};
 
-            for (int i = 0; i < 6; i++)
-            {
-                var texture = TextureFactory.Instance.CreateTexture(paths[i]);
-                worlds[i].AddTexture(TextureKind.Albedo, texture);
-                ActiveScene.AddObject(worlds[i]);
-            }
-            EnvironmentProbe cubeMap = AssetFactory.Instance.CreateEnvironmentMap("world");
-            cubeMap.GenCubemap(paths);
-            ActiveScene.AddObject(cubeMap);
+            //for (int i = 0; i < 6; i++)
+            //{
+            //    var texture = TextureFactory.Instance.CreateTexture(paths[i]);
+            //    worlds[i].AddTexture(TextureKind.Albedo, texture);
+            //    ActiveScene.AddObject(worlds[i]);
+            //}
+            //EnvironmentProbe cubeMap = AssetFactory.Instance.CreateEnvironmentMap("world");
+            //cubeMap.GenCubemap(paths);
+            //ActiveScene.AddObject(cubeMap);
 
-            List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/bunny.half");
+            List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/duck.half");
             //List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/Sphere.stl");
             foreach (var b in bunny)
             {
                 b.RotateX(-90);
                 ActiveScene.AddObject(b);
             }
+
+            //List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/test.half");
+            ////List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/Sphere.stl");
+            //foreach (var b in bunny)
+            //{
+            //    b.Scale = new OpenTK.Vector3(50);
+            //    ActiveScene.AddObject(b);
+            //}
+
         }
+
         public void CreateMainCamera()
         {
             ActiveScene.MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");

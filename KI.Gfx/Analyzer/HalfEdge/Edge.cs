@@ -114,7 +114,7 @@ namespace KI.Gfx.Analyzer
                 Mesh.DeleteFlag ||
                 Next.DeleteFlag ||
                 Opposite.DeleteFlag ||
-                Before.DeleteFlag || 
+                Before.DeleteFlag ||
                 Mesh == Opposite.Mesh ||
                 Next == Before ||
                 DeleteFlag;

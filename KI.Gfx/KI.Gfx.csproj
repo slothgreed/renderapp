@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Analyzer\Algorithm\ConvexHullAlgorithm.cs" />
+    <Compile Include="Analyzer\Algorithm\MarchingCubesAlgorithm.cs" />
     <Compile Include="Analyzer\Algorithm\VertexNormalAlgorithm.cs" />
     <Compile Include="Analyzer\Dijkstra.cs" />
     <Compile Include="Analyzer\HalfEdge\Edge.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Analyzer\HalfEdge\Vertex.cs" />
     <Compile Include="Analyzer\IAnalyzer.cs" />
     <Compile Include="Analyzer\IParameter.cs" />
+    <Compile Include="Analyzer\MarchingCubeTable.cs" />
     <Compile Include="Analyzer\ScalarParameter.cs" />
     <Compile Include="Analyzer\GeometryAnalyzer.cs" />
     <Compile Include="Analyzer\Tree\BDB.cs" />

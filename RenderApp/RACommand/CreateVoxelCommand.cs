@@ -28,7 +28,7 @@ namespace RenderApp.RACommand
 
         public string Execute(string commandArg)
         {
-            Voxel voxel = new KI.Gfx.Analyzer.Voxel(geometry.geometryInfo.Position, geometry.geometryInfo.Index, geometry.ModelMatrix, Partition);
+            Voxel voxel = new KI.Gfx.Analyzer.Voxel(geometry.geometryInfo.Position, geometry.geometryInfo.Index, Partition);
             RenderObject voxelObject = AssetFactory.Instance.CreateRenderObject("Voxel :" + geometry.Name);
             GeometryInfo info = new GeometryInfo(voxel.vPosition, voxel.vNormal, KICalc.RandomColor(), null, null, GeometryType.Quad);
             voxelObject.SetGeometryInfo(info);

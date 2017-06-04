@@ -78,20 +78,10 @@ namespace KI.Gfx.Analyzer
         /// <summary>
         /// マージによる頂点削除削除後、頂点位置移動
         /// </summary>
-        /// <param name="removeIndex">削除するほう</param>
-        /// <param name="remainIndex">残すほう</param>
-        public void VertexDecimation(Vertex delV, Vertex remV)
+        public void VertexDecimation(Edge edge)
         {
-            if (delV == null || remV == null)
-            {
-                return;
-            }
-            //2点を端点とするエッジ
-            Edge commonEdge = GetEdge(delV, remV);
-            if (commonEdge == null)
-            {
-                return;
-            }
+            Vertex delV = edge.Start;
+            Vertex remV = edge.End;
 
             #region [create delete list]
             //削除するメッシュ
@@ -105,37 +95,51 @@ namespace KI.Gfx.Analyzer
 
 
             //頂点とエッジの格納
-            deleteEdge.Add(commonEdge);
-            deleteEdge.Add(commonEdge.Next);
-            deleteEdge.Add(commonEdge.Next.Next);
-            deleteMesh.Add(commonEdge.Mesh);
+            deleteEdge.Add(edge);
+            deleteEdge.Add(edge.Next);
+            deleteEdge.Add(edge.Next.Next);
+            deleteMesh.Add(edge.Mesh);
             //頂点とエッジの格納
-            deleteEdge.Add(commonEdge.Opposite);
-            deleteEdge.Add(commonEdge.Opposite.Next);
-            deleteEdge.Add(commonEdge.Opposite.Next.Next);
-            deleteMesh.Add(commonEdge.Opposite.Mesh);
+            deleteEdge.Add(edge.Opposite);
+            deleteEdge.Add(edge.Opposite.Next);
+            deleteEdge.Add(edge.Opposite.Next.Next);
+            deleteMesh.Add(edge.Opposite.Mesh);
             #endregion
 
             //頂点が削除対象なら、残す方に移動
-            foreach (var edge in delV.AroundEdge)
+            foreach (var around in delV.AroundEdge)
             {
-                if (edge.Start == delV)
+                if (around.Start == delV)
                 {
-                    edge.Start = remV;
-                    edge.Opposite.End = remV;
+                    around.Start = remV;
+                    around.Opposite.End = remV;
                 }
             }
 
+            //remV.Position = (remV.Position + delV.Position) / 2;
             //エッジ情報の切り替え
-            commonEdge.Next.Opposite.Opposite = commonEdge.Before.Opposite;
-            commonEdge.Before.Opposite.Opposite = commonEdge.Next.Opposite;
-
-            commonEdge.Opposite.Next.Opposite.Opposite = commonEdge.Opposite.Before.Opposite;
-            commonEdge.Opposite.Before.Opposite.Opposite = commonEdge.Opposite.Next.Opposite;
+            Edge.SetupOpposite(edge.Next.Opposite, edge.Before.Opposite);
+            Edge.SetupOpposite(edge.Opposite.Next.Opposite, edge.Opposite.Before.Opposite);
 
             DeleteMesh(deleteMesh);
             DeleteEdge(deleteEdge);
             DeleteVertex(deleteVertex);
+
+            for (int i = 0; i < m_Mesh.Count; i++)
+            {
+                m_Mesh[i].Index = i;
+            }
+            for (int i = 0; i < m_Edge.Count; i++)
+            {
+                m_Edge[i].Index = i;
+            }
+            for (int i = 0; i < m_Vertex.Count; i++)
+            {
+                m_Vertex[i].Index = i;
+            }
+# if CHECKHALFEDGE
+            HasError();
+#endif
         }
         #endregion
 
@@ -159,8 +163,8 @@ namespace KI.Gfx.Analyzer
             var oppoup = new Edge(edge.Next.End, vertex, m_Edge.Count + 5);
             Edge.SetupOpposite(up, oppoup);
 
-            var down = new Edge(vertex, opposite.Next.End, m_Edge.Count + 6);
-            var oppodown = new Edge(opposite.Next.End, vertex, m_Edge.Count + 7);
+            var down = new Edge(vertex, opposite.Next.End, edge.Index);
+            var oppodown = new Edge(opposite.Next.End, vertex, opposite.Index);
             Edge.SetupOpposite(down, oppodown);
 
             var rightUp = new Mesh(right, edge.Next, oppoup, delMesh1.Index);

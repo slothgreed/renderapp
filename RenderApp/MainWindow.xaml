@@ -71,6 +71,7 @@
                 <MenuItem Header="HalfEdge" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.HalfEdge}"/>
                 <MenuItem Header="HalfEdgeWireFrame" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.HalfEdgeWireFrame}"/>
                 <MenuItem Header="ConvexHull" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.ConvexHull}"/>
+                <MenuItem Header="MarchingCube" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.MarchingCube}"/>
                 <Separator/>
                 <MenuItem Header="Voxelize" Command="{Binding Voxelize}"/>
                 <MenuItem Header="Octree" Command="{Binding Octree}"/>

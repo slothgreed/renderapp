@@ -17,7 +17,7 @@ namespace KI.Gfx.Analyzer
         public Vector3 Position
         {
             get;
-            private set;
+            set;
         }
         /// <summary>
         /// HalfEdgeでもつm_VertexのIndex番号

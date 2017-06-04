@@ -147,6 +147,7 @@
     <Compile Include="RACommand\CreateConvexHullCommand.cs" />
     <Compile Include="RACommand\CreateHalfEdgeCommand.cs" />
     <Compile Include="RACommand\CreateHalfEdgeWireFrameCommand.cs" />
+    <Compile Include="RACommand\CreateMarchingCubeCommand.cs" />
     <Compile Include="RACommand\CreateModelCommandBase.cs" />
     <Compile Include="RACommand\CreatePolygonCommand.cs" />
     <Compile Include="RACommand\CreateVoxelCommand.cs" />

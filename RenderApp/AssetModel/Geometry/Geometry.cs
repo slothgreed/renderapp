@@ -15,19 +15,14 @@ namespace RenderApp.AssetModel
     public abstract class Geometry : KIObject
     {
         #region Propety
-        public int ID { get; private set; }
+        public int ID { get; set; }
         public GeometryInfo geometryInfo { get; set; }
-        public bool Visible { get; set; }
-
         public ArrayBuffer PositionBuffer { get; set; }
         public ArrayBuffer NormalBuffer { get; set; }
         public ArrayBuffer ColorBuffer { get; set; }
         public ArrayBuffer TexCoordBuffer { get; set; }
         public ArrayBuffer IndexBuffer { get; set; }
-
-        public List<int> Timer { get; protected set; }
-        public Vector3 Min { get; protected set; }
-        public Vector3 Max { get; protected set; }
+        public bool Visible { get; set; }
 
         public Matrix4 ModelMatrix
         {
@@ -126,6 +121,10 @@ namespace RenderApp.AssetModel
 
         #endregion
         #region [Initializer disposer]
+        public Geometry()
+        {
+
+        }
         public Geometry(string name)
             : base(name)
         {
@@ -136,41 +135,39 @@ namespace RenderApp.AssetModel
         private void Initialize(string name = null)
         {
             geometryInfo = new GeometryInfo();
-            Timer = new List<int>();
             ModelMatrix = Matrix4.Identity;
-            TextureItem = new Dictionary<TextureKind, Texture>();
+            TextureItem = new Dictionary<TextureKind,Texture>();
             //Shader = ShaderCreater.Instance.DefaultShader;
         }
 
         public override void Dispose()
         {
             geometryInfo.Dispose();
-            Timer.Clear();
             ModelMatrix = Matrix4.Identity;
             Translate = Vector3.Zero;
             Scale = Vector3.One;
             Rotate = Vector3.Zero;
 
-            if (PositionBuffer != null)
-            {
-                PositionBuffer.Dispose();
-            }
-            if (NormalBuffer != null)
-            {
-                NormalBuffer.Dispose();
-            }
-            if (ColorBuffer != null)
-            {
-                ColorBuffer.Dispose();
-            }
-            if (TexCoordBuffer != null)
-            {
-                TexCoordBuffer.Dispose();
-            }
-            if (IndexBuffer != null)
-            {
-                IndexBuffer.Dispose();
-            }
+            //if (PositionBuffer != null)
+            //{
+            //    PositionBuffer.Dispose();
+            //}
+            //if (NormalBuffer != null)
+            //{
+            //    NormalBuffer.Dispose();
+            //}
+            //if (ColorBuffer != null)
+            //{
+            //    ColorBuffer.Dispose();
+            //}
+            //if (TexCoordBuffer != null)
+            //{
+            //    TexCoordBuffer.Dispose();
+            //}
+            //if (IndexBuffer != null)
+            //{
+            //    IndexBuffer.Dispose();
+            //}
         }
         #endregion
         #region [render]
@@ -395,6 +392,7 @@ namespace RenderApp.AssetModel
             }
             SetupBuffer();
         }
+
 
     }
 }

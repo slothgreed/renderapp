@@ -17,7 +17,7 @@ namespace KI.Gfx.Analyzer
         public int Index
         {
             get;
-            private set;
+            set;
         }
 
         /// <summary>

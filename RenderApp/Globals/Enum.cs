@@ -49,6 +49,7 @@
         HalfEdge,
         HalfEdgeWireFrame,
         ConvexHull,
+        MarchingCube,
         STL,
         OBJ,
         File

@@ -68,7 +68,7 @@ namespace KI.Gfx.KIAsset
         /// <summary>
         /// 注視点の平行移動量
         /// </summary>
-        private Vector3 m_Pan = new Vector3(0.0f, 5.0f, 0.0f);
+        private Vector3 m_Pan = new Vector3(0.0f, 5.0f, 10.0f);
         /// <summary>
         /// 平行移動の最小値
         /// </summary>
