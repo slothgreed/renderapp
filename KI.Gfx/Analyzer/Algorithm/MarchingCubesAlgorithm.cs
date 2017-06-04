@@ -46,6 +46,13 @@ namespace KI.Gfx.Analyzer.Algorithm
         /// </summary>
         public int State;
 
+        public float NeightNum
+        {
+            get;
+            set;
+        }
+
+
         public Dictionary<CubeVertex, float> Neight;
     }
 
@@ -76,7 +83,7 @@ namespace KI.Gfx.Analyzer.Algorithm
         {
             get
             {
-                return Interval / 2;
+                return SphereSize;
             }
         }
 
@@ -87,7 +94,7 @@ namespace KI.Gfx.Analyzer.Algorithm
         {
             get
             {
-                return Size / 2;
+                return Size / 5;
             }
         }
 
@@ -175,21 +182,23 @@ namespace KI.Gfx.Analyzer.Algorithm
 
         public Vector3 VertexCreatePosition(int x, int y, int z, int v0, int v1)
         {
+
             var marching = MarchingSpace[x, y, z];
+
             CubeVertex ver0 = (CubeVertex)v0;
             CubeVertex ver1 = (CubeVertex)v1;
-            if (Math.Abs(Threshold - marching.Neight[ver0]) < KICalc.THRESHOLD05)
-            {
-                return GetPosition(x, y, z, ver0);
-            }
-            if (Math.Abs(Threshold - marching.Neight[ver1]) < KICalc.THRESHOLD05)
-            {
-                return GetPosition(x, y, z, ver1);
-            }
+
             var pos0 = GetPosition(x, y, z, ver0);
             var pos1 = GetPosition(x, y, z, ver1);
             return (pos0 + pos1) / 2;
-
+            if (Math.Abs(Threshold - marching.Neight[ver0]) < KICalc.THRESHOLD05)
+            {
+                return pos0;
+            }
+            if (Math.Abs(Threshold - marching.Neight[ver1]) < KICalc.THRESHOLD05)
+            {
+                return pos1;
+            }
 
             var mu = (Threshold - marching.Neight[ver0]) / (marching.Neight[ver1] - marching.Neight[ver0]);
 
@@ -208,7 +217,7 @@ namespace KI.Gfx.Analyzer.Algorithm
                 {
                     for (int k = 0; k < Partition; k++)
                     {
-                        if (MarchingSpace[i, j, k] == null)
+                        if (MarchingSpace[i, j, k].State == 0)
                         {
                             continue;
                         }
@@ -217,53 +226,29 @@ namespace KI.Gfx.Analyzer.Algorithm
                         var marching = MarchingSpace[i, j, k];
 
                         if ((MarchingTable.EdgeTable[marching.State] & 1) != 0)
-                        {
                             vertexList[0] = VertexCreatePosition(i, j, k, 0, 1);
-                        }
                         if ((MarchingTable.EdgeTable[marching.State] & 2) != 0)
-                        {
                             vertexList[1] = VertexCreatePosition(i, j, k, 1, 2);
-                        }
                         if ((MarchingTable.EdgeTable[marching.State] & 4) != 0)
-                        {
                             vertexList[2] = VertexCreatePosition(i, j, k, 2, 3);
-                        }
                         if ((MarchingTable.EdgeTable[marching.State] & 8) != 0)
-                        {
                             vertexList[3] = VertexCreatePosition(i, j, k, 3, 0);
-                        }
                         if ((MarchingTable.EdgeTable[marching.State] & 16) != 0)
-                        {
                             vertexList[4] = VertexCreatePosition(i, j, k, 4, 5);
-                        }
                         if ((MarchingTable.EdgeTable[marching.State] & 32) != 0)
-                        {
                             vertexList[5] = VertexCreatePosition(i, j, k, 5, 6);
-                        }
                         if ((MarchingTable.EdgeTable[marching.State] & 64) != 0)
-                        {
                             vertexList[6] = VertexCreatePosition(i, j, k, 6, 7);
-                        }
                         if ((MarchingTable.EdgeTable[marching.State] & 128) != 0)
-                        {
                             vertexList[7] = VertexCreatePosition(i, j, k, 7, 4);
-                        }
                         if ((MarchingTable.EdgeTable[marching.State] & 256) != 0)
-                        {
                             vertexList[8] = VertexCreatePosition(i, j, k, 0, 4);
-                        }
                         if ((MarchingTable.EdgeTable[marching.State] & 512) != 0)
-                        {
                             vertexList[9] = VertexCreatePosition(i, j, k, 1, 5);
-                        }
                         if ((MarchingTable.EdgeTable[marching.State] & 1024) != 0)
-                        {
                             vertexList[10] = VertexCreatePosition(i, j, k, 2, 6);
-                        }
                         if ((MarchingTable.EdgeTable[marching.State] & 2048) != 0)
-                        {
                             vertexList[11] = VertexCreatePosition(i, j, k, 3, 7);
-                        }
 
                         for (int l = 0; MarchingTable.TriIndexTable[marching.State, l] != -1; l += 3)
                         {
@@ -271,8 +256,8 @@ namespace KI.Gfx.Analyzer.Algorithm
                             ColorList.Add(new Vector3(0.7f));
                             ColorList.Add(new Vector3(0.7f));
                             PositionList.Add(vertexList[MarchingTable.TriIndexTable[marching.State, l]]);
-                            PositionList.Add(vertexList[MarchingTable.TriIndexTable[marching.State, l + 1]]);
                             PositionList.Add(vertexList[MarchingTable.TriIndexTable[marching.State, l + 2]]);
+                            PositionList.Add(vertexList[MarchingTable.TriIndexTable[marching.State, l + 1]]);
                         }
                     }
                 }
@@ -292,25 +277,112 @@ namespace KI.Gfx.Analyzer.Algorithm
                 {
                     for (int k = 0; k < Partition; k++)
                     {
+                        MarchingSpace[i, j, k] = new MarchingVoxel();
+
                         for (int l = 0; l < (int)CubeVertex.Num; l++)
                         {
                             var pos = GetPosition(i, j, k, (CubeVertex)l);
-                            var value = Math.Abs((pos - SphereCenter).Length - SphereSize);
-                            if (value < Threshold)
+                            var value = (pos - SphereCenter).Length - SphereSize;
+                            var marching = MarchingSpace[i, j, k];
+                            marching.Neight[(CubeVertex)l] = value;
+                            if (value < SphereSize)
                             {
-                                if (MarchingSpace[i, j, k] == null)
-                                {
-                                    MarchingSpace[i, j, k] = new MarchingVoxel();
-                                }
-                                var marching = MarchingSpace[i, j, k];
-
-                                marching.Neight[(CubeVertex)l] = value;
                                 marching.State |= (int)Math.Pow(2, l);
+                                marching.NeightNum++;
                             }
                         }
+
                     }
                 }
             }
+        }
+
+        private void CreateQuad(int i,int j, int k)
+        {
+            var marching = MarchingSpace[i, j, k];
+
+            var color = new Vector3();
+
+            switch (marching.NeightNum)
+            {
+                case 1:
+                    color = Vector3.UnitX;
+                    return;
+                case 2:
+                    color = Vector3.UnitY;
+                    return;
+                case 3:
+                    color = Vector3.UnitZ;
+                    break;
+                case 4:
+                    color = Vector3.UnitX + Vector3.UnitY;
+                    break;
+                case 5:
+                    color = Vector3.UnitX + Vector3.UnitZ;
+                    break;
+                case 6:
+                    color = Vector3.UnitY + Vector3.UnitZ;
+                    break;
+                case 7:
+                    color = Vector3.UnitX + Vector3.UnitY + Vector3.UnitZ;
+                    break;
+                default:
+                    return;
+            }
+            return;
+            for (int x = 0; x < 36; x++)
+            {
+                ColorList.Add(color);
+            }
+
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)4));
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)5));
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)6));
+
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)4));
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)6));
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)7));
+
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)5));
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)1));
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)2));
+
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)5));
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)2));
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)6));
+
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)6));
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)2));
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)3));
+
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)6));
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)3));
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)7));
+
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)7));
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)3));
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)0));
+
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)7));
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)0));
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)4));
+
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)4));
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)0));
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)1));
+
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)4));
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)1));
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)5));
+
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)0));
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)3));
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)2));
+
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)0));
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)2));
+            PositionList.Add(GetPosition(i, j, k, (CubeVertex)1));
+
         }
     }
 }

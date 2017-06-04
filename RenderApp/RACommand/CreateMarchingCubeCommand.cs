@@ -27,9 +27,9 @@ namespace RenderApp.RACommand
 
         public string Execute(string commandArg)
         {
-            var marching = new MarchingCubesAlgorithm(100, 64);
+            var marching = new MarchingCubesAlgorithm(200, 50);
             RenderObject marchingObject = AssetFactory.Instance.CreateRenderObject("Marching Sphere");
-            GeometryInfo info = new GeometryInfo(marching.PositionList, null, null, null, null, GeometryType.Triangle);
+            GeometryInfo info = new GeometryInfo(marching.PositionList, null, marching.ColorList, null, null, GeometryType.Triangle);
             marchingObject.SetGeometryInfo(info);
             SceneManager.Instance.ActiveScene.AddObject(marchingObject);
             return RACommandResource.Success;

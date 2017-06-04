@@ -80,13 +80,13 @@ namespace RenderApp
             //cubeMap.GenCubemap(paths);
             //ActiveScene.AddObject(cubeMap);
 
-            List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/duck.half");
+            //List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/duck.half");
             //List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/Sphere.stl");
-            foreach (var b in bunny)
-            {
-                b.RotateX(-90);
-                ActiveScene.AddObject(b);
-            }
+            //foreach (var b in bunny)
+            //{
+            //    b.RotateX(-90);
+            //    ActiveScene.AddObject(b);
+            //}
 
             //List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/test.half");
             ////List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/Sphere.stl");
