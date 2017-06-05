@@ -17,6 +17,7 @@ namespace RenderApp.ViewModel
         public DataTemplate Vector4Template { get; set; }
         public DataTemplate Matrix3Template { get; set; }
         public DataTemplate Matrix4Template { get; set; }
+        public DataTemplate CheckBoxTemplate { get; set; }
         public DataTemplate ComboItemTemplate { get; set; }
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -34,6 +35,8 @@ namespace RenderApp.ViewModel
                     return Matrix3Template;
                 if (key.Value is Matrix4ViewModel)
                     return Matrix4Template;
+                if (key.Value is CheckBoxViewModel)
+                    return CheckBoxTemplate;
                 if (key.Value is ComboItemViewModel)
                     return ComboItemTemplate;
             }

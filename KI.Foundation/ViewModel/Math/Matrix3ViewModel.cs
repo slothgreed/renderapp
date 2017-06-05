@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using OpenTK;
 namespace KI.Foundation.ViewModel
 {
-    public class Matrix3ViewModel : MathViewModel
+    public class Matrix3ViewModel : PropertyViewModelBase
     {
         Func<Matrix3, bool> updateFunc;
         private Matrix3 Model;

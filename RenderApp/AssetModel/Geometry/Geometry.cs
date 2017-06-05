@@ -22,7 +22,7 @@ namespace RenderApp.AssetModel
         public ArrayBuffer ColorBuffer { get; set; }
         public ArrayBuffer TexCoordBuffer { get; set; }
         public ArrayBuffer IndexBuffer { get; set; }
-        public bool Visible { get; set; }
+        public bool Visible { get; set; } = true;
 
         public Matrix4 ModelMatrix
         {
@@ -95,6 +95,8 @@ namespace RenderApp.AssetModel
             get;
             private set;
         }
+        #endregion
+
         public void AddTexture(TextureKind kind, Texture texture)
         {
             TextureItem[kind] = texture;
@@ -119,7 +121,6 @@ namespace RenderApp.AssetModel
             }
         }
 
-        #endregion
         #region [Initializer disposer]
         public Geometry()
         {
@@ -173,7 +174,12 @@ namespace RenderApp.AssetModel
         #region [render]
         public virtual void Render()
         {
-            if(Shader == null)
+            if (!Visible)
+            {
+                return;
+            }
+
+            if (Shader == null)
             {
                 Logger.Log(Logger.LogLevel.Error, "not set shader");
                 return;

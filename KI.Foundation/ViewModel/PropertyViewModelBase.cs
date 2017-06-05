@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OpenTK;
+
 namespace KI.Foundation.ViewModel
 {
-    public abstract class MathViewModel : ViewModelBase
+    public abstract class PropertyViewModelBase : ViewModelBase
     {
         private string _name;
         public string Name
@@ -25,6 +25,5 @@ namespace KI.Foundation.ViewModel
             get;
             set;
         }
-
     }
 }

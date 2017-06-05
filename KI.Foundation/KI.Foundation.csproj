@@ -23,7 +23,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -76,14 +76,15 @@
     <Compile Include="Utility\KICalc.cs" />
     <Compile Include="Utility\Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\CheckBoxViewModel.cs" />
     <Compile Include="ViewModel\CommandBase.cs" />
-    <Compile Include="ViewModel\Math\MathViewModel.cs" />
     <Compile Include="ViewModel\Math\Matrix3ViewModel.cs" />
     <Compile Include="ViewModel\Math\Matrix4ViewModel.cs" />
     <Compile Include="ViewModel\Math\NumericViewModel.cs" />
     <Compile Include="ViewModel\Math\Vector2ViewModel.cs" />
     <Compile Include="ViewModel\Math\Vector3ViewModel.cs" />
     <Compile Include="ViewModel\Math\Vector4ViewModel.cs" />
+    <Compile Include="ViewModel\PropertyViewModelBase.cs" />
     <Compile Include="ViewModel\ThumbnailFileViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\Math\Matrix3View.xaml.cs">
@@ -94,6 +95,9 @@
     </Compile>
     <Compile Include="View\Math\NumericView.xaml.cs">
       <DependentUpon>NumericView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Math\CheckBoxView.xaml.cs">
+      <DependentUpon>CheckBoxView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Math\Vector2View.xaml.cs">
       <DependentUpon>Vector2View.xaml</DependentUpon>
@@ -133,6 +137,10 @@
     <Page Include="View\Math\NumericView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Math\CheckBoxView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Math\Vector2View.xaml">
       <Generator>MSBuild:Compile</Generator>

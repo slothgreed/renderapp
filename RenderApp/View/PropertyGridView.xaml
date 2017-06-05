@@ -40,7 +40,11 @@
                                 <vmath:Vector4View/>
                             </DataTemplate>
                         </vm:PropertyGridTemplate.Vector4Template>
-
+                        <vm:PropertyGridTemplate.CheckBoxTemplate>
+                            <DataTemplate>
+                                <vmath:CheckBoxView/>
+                            </DataTemplate>
+                        </vm:PropertyGridTemplate.CheckBoxTemplate>
                         <vm:PropertyGridTemplate.Matrix3Template>
                             <DataTemplate>
                                 <vmath:Matrix3View/>

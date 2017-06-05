@@ -94,7 +94,7 @@ namespace KI.Gfx.Analyzer.Algorithm
         {
             get
             {
-                return Size / 5;
+                return Size / 7;
             }
         }
 
@@ -191,6 +191,7 @@ namespace KI.Gfx.Analyzer.Algorithm
             var pos0 = GetPosition(x, y, z, ver0);
             var pos1 = GetPosition(x, y, z, ver1);
             return (pos0 + pos1) / 2;
+
             if (Math.Abs(Threshold - marching.Neight[ver0]) < KICalc.THRESHOLD05)
             {
                 return pos0;
@@ -271,6 +272,8 @@ namespace KI.Gfx.Analyzer.Algorithm
         {
             MarchingSpace = new MarchingVoxel[Partition, Partition, Partition];
 
+            var inter = Size / 4;
+            var value = new float[8];            
             for (int i = 0; i < Partition; i++)
             {
                 for (int j = 0; j < Partition; j++)
@@ -278,14 +281,29 @@ namespace KI.Gfx.Analyzer.Algorithm
                     for (int k = 0; k < Partition; k++)
                     {
                         MarchingSpace[i, j, k] = new MarchingVoxel();
+                        
 
                         for (int l = 0; l < (int)CubeVertex.Num; l++)
                         {
                             var pos = GetPosition(i, j, k, (CubeVertex)l);
-                            var value = (pos - SphereCenter).Length - SphereSize;
+
+                            value[0] = (pos - new Vector3(inter, inter, inter)).Length - SphereSize;
+                            value[1] = (pos - new Vector3(inter, inter * 3, inter)).Length - SphereSize;
+                            value[2] = (pos - new Vector3(inter * 3, inter, inter)).Length - SphereSize;
+                            value[3] = (pos - new Vector3(inter * 3, inter * 3, inter)).Length - SphereSize;
+
+                            value[4] = (pos - new Vector3(inter, inter, inter * 3)).Length - SphereSize;
+                            value[5] = (pos - new Vector3(inter, inter * 3, inter * 3)).Length - SphereSize;
+                            value[6] = (pos - new Vector3(inter * 3, inter, inter * 3)).Length - SphereSize;
+                            value[7] = (pos - new Vector3(inter * 3, inter * 3, inter * 3)).Length - SphereSize;
+
                             var marching = MarchingSpace[i, j, k];
-                            marching.Neight[(CubeVertex)l] = value;
-                            if (value < SphereSize)
+                            for (int x = 0; x < value.Length; x++)
+                            {
+                                marching.Neight[(CubeVertex)l] = Math.Min(marching.Neight[(CubeVertex)l],value[x]);
+                            }
+
+                            if (marching.Neight[(CubeVertex)l] < SphereSize)
                             {
                                 marching.State |= (int)Math.Pow(2, l);
                                 marching.NeightNum++;

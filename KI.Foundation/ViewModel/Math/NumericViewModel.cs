@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KI.Foundation.ViewModel
 {
-    public class NumericViewModel : MathViewModel
+    public class NumericViewModel : PropertyViewModelBase
     {
         public float Model;
         public NumericViewModel(string name, float value)

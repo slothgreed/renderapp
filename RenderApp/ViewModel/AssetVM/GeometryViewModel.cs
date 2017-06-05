@@ -51,6 +51,7 @@ namespace RenderApp.ViewModel
             PropertyItem.Add("Scale", new Vector3ViewModel(Model, "Scale", model.Scale));
             PropertyItem.Add("Rotate", new Vector3ViewModel(Model, "Rotate", model.Rotate));
             PropertyItem.Add("Shader", new ComboItemViewModel(Model, "Shader", RenderApp.Globals.Project.ActiveProject.GetObject(RAAsset.Shader), 0));
+            PropertyItem.Add("Visible", new CheckBoxViewModel(Model, "Visible", model.Visible));
         }
 
         public GeometryViewModel()
