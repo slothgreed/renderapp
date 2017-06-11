@@ -11,6 +11,45 @@ namespace KI.Gfx.Analyzer
 {
     public class Voxel : IAnalyzer
     {
+        /// <summary>
+        /// ボクセルの状態
+        /// </summary>
+        public enum CellState
+        {
+            /// <summary>
+            /// 未定
+            /// </summary>
+            None,
+            /// <summary>
+            /// 内側
+            /// </summary>
+            Inner,
+            /// <summary>
+            /// 外側
+            /// </summary>
+            Exterior,
+            /// <summary>
+            /// 境界
+            /// </summary>
+            Border,
+        }
+
+        private class Cell
+        {
+            public CellState State = CellState.None;
+            public int i;
+            public int j;
+            public int k;
+            public Cell(int _i, int _j, int _k, CellState state)
+            {
+                i = _i;
+                j = _j;
+                k = _k;
+                State = state;
+            }
+        }
+
+
         public Vector3 Min;
         public Vector3 Max;
         public float Interval;
@@ -20,30 +59,35 @@ namespace KI.Gfx.Analyzer
             get;
             private set;
         }
-        public bool[, ,] Exist
+
+        private Cell[, ,] Cells
         {
             get;
-            private set;
+            set;
         }
         public List<Vector3> vPosition = new List<Vector3>();
+
         public List<Vector3> vNormal = new List<Vector3>();
+
         public Voxel(List<Vector3> position, List<int> posIndex,int partition)
         {
 
             Partition = partition;
             CalcMinMax(position);
             SetInterval(partition);
-            Exist = new bool[partition, partition, partition];
-            for (int i = 0; i < partition; i++)
+            Cells = new Cell[partition, partition, partition];
+
+            for (int i = 0; i < Partition; i++)
             {
-                for (int j = 0; j < partition; j++)
+                for (int j = 0; j < Partition; j++)
                 {
-                    for (int k = 0; k < partition; k++)
+                    for (int k = 0; k < Partition; k++)
                     {
-                        Exist[i, j, k] = false;
+                        Cells[i, j, k] = new Cell(i, j, k, CellState.None);
                     }
                 }
             }
+
             if (posIndex.Count == 0)
             {
                 MakeVoxels(position);
@@ -95,24 +139,56 @@ namespace KI.Gfx.Analyzer
                     {
                         for (vIndex.Z = (int)minIndex.Z; vIndex.Z < maxIndex.Z; vIndex.Z++)
                         {
-                            if (Exist[(int)vIndex.X, (int)vIndex.Y, (int)vIndex.Z])
+                            if (Cells[(int)vIndex.X, (int)vIndex.Y, (int)vIndex.Z].State == CellState.Border)
                             {
                                 continue;
                             }
+
                             if (CheckVoxel(tri1, tri2, tri3, vIndex))
                             {
-                                Exist[(int)vIndex.X, (int)vIndex.Y, (int)vIndex.Z] = true;
+                                Cells[(int)vIndex.X, (int)vIndex.Y, (int)vIndex.Z].State = CellState.Border;
                                 SetVoxel(vIndex);
-
                             }
                         }
                     }
                 }
-
             }
+            CalcInOut();
+        }
+
+        public List<Vector3> GetPoint(CellState state)
+        {
+            List<Vector3> point = new List<Vector3>();
+            var index = Vector3.Zero;
+            var mid = Interval / 2;
+            for (int i = 0; i < Partition; i++)
+            {
+                for (int j = 0; j < Partition; j++)
+                {
+                    for (int k = 0; k < Partition; k++)
+                    {
+                        if (Cells[i, j, k].State == state)
+                        {
+                            index.X = i;
+                            index.Y = j;
+                            index.Z = k;
+                            var position = GetVoxelPosition(index);
+                            position.X += mid;
+                            position.Y += mid;
+                            position.Z += mid;
+                            point.Add(position);
+                        }
+                    }
+                }
+            }
+            return point;
         }
 
         #region [utility]
+        public Vector3 GetVoxelPosition(int i, int j, int k)
+        {
+            return GetVoxelPosition(new Vector3(i, j, k)) + (new Vector3(Interval / 2));
+        }
         /// <summary>
         /// ボクセルの最小値を返却
         /// </summary>
@@ -265,6 +341,190 @@ namespace KI.Gfx.Analyzer
             
             return false;
         }
+
+        /// <summary>
+        /// ボクセルの内外判定
+        /// </summary>
+        private void CalcInOut()
+        {
+            for (int i = 0; i < Partition; i++)
+            {
+                for (int j = 0; j < Partition; j++)
+                {
+                    var max = Partition - 1;
+                    CheckOutStack(Cells[0, i, j]);
+                    CheckOutStack(Cells[i, 0, j]);
+                    CheckOutStack(Cells[i, j, 0]);
+                    CheckOutStack(Cells[max, i, j]);
+                    CheckOutStack(Cells[i, max, j]);
+                    CheckOutStack(Cells[i, j, max]);
+
+                }
+            }
+
+            for (int i = 0; i < Partition; i++)
+            {
+                for (int j = 0; j < Partition; j++)
+                {
+                    for (int k = 0; k < Partition; k++)
+                    {
+                        if (Cells[i, j, k].State == CellState.None)
+                        {
+                            Cells[i, j, k].State = CellState.Inner;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// ボクセルの外判定(RegionGrowing)
+        /// </summary>
+        /// <param name="i">要素番号</param>
+        /// <param name="j">要素番号</param>
+        /// <param name="k">要素番号</param>
+        /// <param name="plus">プラス方向かマイナス方向か</param>
+        private void CheckOutRecursive(int i, int j, int k, bool plus)
+        {
+            Cells[i, j, k].State = CellState.Exterior;
+
+            CheckOutRecursiveCall(i + 1, j, k, plus);
+            CheckOutRecursiveCall(i, j + 1, k, plus);
+            CheckOutRecursiveCall(i, j, k + 1, plus);
+            CheckOutRecursiveCall(i - 1, j, k, plus);
+            CheckOutRecursiveCall(i, j - 1, k, plus);
+            CheckOutRecursiveCall(i, j, k - 1, plus);
+        }
+
+        private Cell GetCell(int i, int j, int k)
+        {
+            if (i < 0 || j < 0 || k < 0 ||
+                i >= Partition ||
+                j >= Partition ||
+                k >= Partition)
+            {
+                return null;
+            }
+            else
+            {
+                return Cells[i, j, k];
+            }
+        }
+        private void CheckOutStack(Cell seed)
+        {
+            var stack = new Stack<Cell>();
+            if (seed.State == CellState.None)
+            {
+                seed.State = CellState.Exterior;
+                stack.Push(seed);
+            }
+            else
+            {
+                return;
+            }
+            Cell curerntCell = stack.Pop();
+            Cell cell = null;
+            while (true)
+            {
+                cell = GetCell(curerntCell.i + 1, curerntCell.j, curerntCell.k);
+                if (cell?.State == CellState.None)
+                {
+                    cell.State = CellState.Exterior;
+                    stack.Push(cell);
+                    curerntCell = cell;
+                    continue;
+                }
+                else
+                {
+                    cell = GetCell(curerntCell.i, curerntCell.j + 1, curerntCell.k);
+                    if (cell?.State == CellState.None)
+                    {
+                        cell.State = CellState.Exterior;
+                        stack.Push(cell);
+                        curerntCell = cell;
+                        continue;
+                    }
+                    else
+                    {
+                        cell = GetCell(curerntCell.i, curerntCell.j, curerntCell.k + 1);
+                        if (cell?.State == CellState.None)
+                        {
+                            cell.State = CellState.Exterior;
+                            stack.Push(cell);
+                            curerntCell = cell;
+                            continue;
+                        }
+                        else
+                        {
+                            cell = GetCell(curerntCell.i - 1, curerntCell.j, curerntCell.k);
+                            if (cell?.State == CellState.None)
+                            {
+                                cell.State = CellState.Exterior;
+                                stack.Push(cell);
+                                curerntCell = cell;
+                                continue;
+                            }
+                            else
+                            {
+                                cell = GetCell(curerntCell.i, curerntCell.j - 1, curerntCell.k);
+                                if (cell?.State == CellState.None)
+                                {
+                                    cell.State = CellState.Exterior;
+                                    stack.Push(cell);
+                                    curerntCell = cell;
+                                    continue;
+                                }
+                                else
+                                {
+                                    cell = GetCell(curerntCell.i, curerntCell.j, curerntCell.k - 1);
+                                    if (cell?.State == CellState.None)
+                                    {
+                                        cell.State = CellState.Exterior;
+                                        stack.Push(cell);
+                                        curerntCell = cell;
+                                        continue;
+                                    }
+                                    else
+                                    {
+                                        if (stack.Count > 0)
+                                        {
+                                            curerntCell = stack.Pop();
+                                        }
+                                        else
+                                        {
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+
+        private void CheckOutRecursiveCall(int i, int j, int k, bool plus)
+        {
+            if (i == -1 || j == -1 || k == -1 ||
+                i == Partition ||
+                j == Partition ||
+                k == Partition)
+            {
+                return;
+            }
+
+            if (Cells[i, j, k].State == CellState.Border)
+            {
+                return;
+            }
+
+            if (Cells[i, j, k].State == CellState.None)
+            {
+                CheckOutRecursive(i, j, k, plus);
+            }
+        }
+
 
         #region [voxel object]
         /// <summary>
