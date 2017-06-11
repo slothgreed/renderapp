@@ -67,7 +67,14 @@ namespace RenderApp.AssetModel
             Cube cube = new Cube("World", min, max);
             return cube.ConvertGeometrys(true);
         }
-
+        internal List<RenderObject> CreateAxis(string name, Vector3 min, Vector3 max)
+        {
+            Axis axis = new Axis(name, min, max);
+            RenderObject renderObject = new RenderObject(name);
+            GeometryInfo info = new GeometryInfo(axis.Geometry.Position, null, axis.Geometry.Color, axis.Geometry.TexCoord, null, GeometryType.Line);
+            renderObject.SetGeometryInfo(info);
+            return new List<RenderObject> { renderObject };
+        }
         internal List<RenderObject> CreateLoad3DModel(string filePath)
         {
             string extension = System.IO.Path.GetExtension(filePath);

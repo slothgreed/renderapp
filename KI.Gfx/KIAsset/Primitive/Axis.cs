@@ -2,7 +2,7 @@
 using KI.Foundation.Core;
 namespace KI.Gfx.KIAsset
 {
-    class Axis : KIObject, IPrimitive
+    public class Axis : KIObject, IPrimitive
     {
         public Vector3 Min
         {

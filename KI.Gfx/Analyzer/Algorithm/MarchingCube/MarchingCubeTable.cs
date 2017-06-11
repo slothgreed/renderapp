@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KI.Gfx.Analyzer
+namespace KI.Gfx.Analyzer.Algorithm.MarchingCube
 {
     public static class MarchingTable
     {

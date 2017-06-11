@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using KI.Gfx.Analyzer;
 using KI.Foundation.Utility;
 
-namespace KI.Gfx.Analyzer.Algorithm
+namespace KI.Gfx.Analyzer.Algorithm.MarchingCube
 {
     /// <summary>
     /// 頂点位置小文字は最小値大文字は最大値のほう

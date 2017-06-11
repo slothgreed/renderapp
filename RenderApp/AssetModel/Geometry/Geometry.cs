@@ -77,17 +77,10 @@ namespace RenderApp.AssetModel
                 return new Matrix3(norm);
             }
         }
-        private Shader _ShaderItem;
         public Shader Shader
         {
-            get
-            {
-                return _ShaderItem;
-            }
-            set
-            {
-                _ShaderItem = value;
-            }
+            get;
+            set;
         }
 
         public Dictionary<TextureKind, Texture> TextureItem

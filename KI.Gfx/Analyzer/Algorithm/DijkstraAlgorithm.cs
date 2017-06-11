@@ -20,7 +20,7 @@ namespace KI.Gfx.Analyzer
             vertex = _v;
         }
     }
-    public class Dijkstra : ICommand
+    public class DijkstraAlgorithm : ICommand
     {
         public GeometryInfo Geometry
         {
@@ -50,7 +50,7 @@ namespace KI.Gfx.Analyzer
             }
         }
         private HalfEdge _halfEdge = null;
-        public Dijkstra()
+        public DijkstraAlgorithm()
         {
             Reset();
         }

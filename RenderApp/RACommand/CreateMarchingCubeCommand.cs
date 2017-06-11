@@ -1,15 +1,9 @@
 ﻿using KI.Foundation.Command;
 using KI.Foundation.Core;
-using KI.Foundation.Utility;
-using KI.Gfx.Analyzer;
 using KI.Gfx.KIAsset;
+using KI.Gfx.Analyzer.Algorithm.MarchingCube;
 using RenderApp.AssetModel;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using KI.Gfx.Analyzer.Algorithm;
 
 namespace RenderApp.RACommand
 {
