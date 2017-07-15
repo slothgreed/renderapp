@@ -142,6 +142,7 @@
     </ApplicationDefinition>
     <Compile Include="AppSystem.cs" />
     <Compile Include="AssetModel\AssetFactory.cs" />
+    <Compile Include="AssetModel\Geometry\File\PLYConverter.cs" />
     <Compile Include="AssetModel\Geometry\Geometry.cs" />
     <Compile Include="AssetModel\Geometry\IRenderObjectConverter.cs" />
     <Compile Include="RACommand\CreateConvexHullCommand.cs" />

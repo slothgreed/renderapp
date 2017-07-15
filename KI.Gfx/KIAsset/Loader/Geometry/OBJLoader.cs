@@ -48,8 +48,8 @@ namespace KI.Gfx.KIAsset
         /// </summary>
         /// <param name="name"></param>
         /// <param name="filePath"></param>
-        public OBJLoader(string name,string filePath)
-            :base(filePath)
+        public OBJLoader(string name, string filePath)
+            : base(filePath)
         {
             try
             {
@@ -63,7 +63,6 @@ namespace KI.Gfx.KIAsset
             }
         }
 
-        #region [ファイルのロード処理]
         #region [データのロード]
         /// <summary>
         /// OBJデータのロード
@@ -348,7 +347,6 @@ namespace KI.Gfx.KIAsset
         }
         #endregion
         
-        #endregion
         #endregion
     }
 }

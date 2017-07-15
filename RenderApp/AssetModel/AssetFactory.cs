@@ -94,6 +94,9 @@ namespace RenderApp.AssetModel
                     renderObject.SetGeometryInfo(half.CreateGeometryInfo());
                     renderObject.HalfEdge = half;
                     return new List<RenderObject> { renderObject };
+                case ".ply":
+                    var ply = new PLYConverter(fileName, filePath);
+                    return ply.CreateRenderObject();
             }
             return null;
         }

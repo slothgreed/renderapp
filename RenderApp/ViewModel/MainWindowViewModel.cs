@@ -221,7 +221,7 @@ namespace RenderApp.ViewModel
         {
             System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
             dlg.InitialDirectory = ProjectInfo.ResourceDirectory;
-            dlg.Filter = "objファイル(*.obj)|*.obj;|stlファイル(*.stl)|*.stl;|halfファイル(*.half)|*.half;|すべてのファイル(*.*)|*.*";
+            dlg.Filter = "objファイル(*.obj)|*.obj;|stlファイル(*.stl)|*.stl;|halfファイル(*.half)|*.half;|plyファイル(*.ply)|*.ply;|すべてのファイル(*.*)|*.*";
             dlg.Multiselect = true;
             dlg.Title = "開くファイルを選択してください。";
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)

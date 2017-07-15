@@ -82,6 +82,7 @@
     <Compile Include="KIAsset\Camera.cs" />
     <Compile Include="KIAsset\EnvironmentProbe.cs" />
     <Compile Include="GLUtil\Buffer\FrameBuffer.cs" />
+    <Compile Include="KIAsset\Loader\Geometry\PLYLoader.cs" />
     <Compile Include="KIAsset\Primitive\Axis.cs" />
     <Compile Include="KIAsset\Primitive\IPrimitive.cs" />
     <Compile Include="KIAsset\Primitive\Plane.cs" />
