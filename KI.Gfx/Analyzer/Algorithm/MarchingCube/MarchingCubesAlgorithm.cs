@@ -321,7 +321,7 @@ namespace KI.Gfx.Analyzer.Algorithm.MarchingCube
 
             var color = new Vector3();
 
-            switch (marching.NeightNum)
+            switch ((int)marching.NeightNum)
             {
                 case 1:
                     color = Vector3.UnitX;

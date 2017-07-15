@@ -67,7 +67,7 @@
     <Compile Include="Analyzer\Tree\BDB.cs" />
     <Compile Include="Analyzer\Tree\Kdtree.cs" />
     <Compile Include="Analyzer\Tree\Octree.cs" />
-    <Compile Include="Analyzer\Tree\Voxel.cs" />
+    <Compile Include="Analyzer\Tree\VoxelSpace.cs" />
     <Compile Include="Analyzer\Algorithm\VertexCurvatureAlgorithm.cs" />
     <Compile Include="Analyzer\Algorithm\VertexSaliencyAlgorithm.cs" />
     <Compile Include="Analyzer\VectorParameter.cs" />

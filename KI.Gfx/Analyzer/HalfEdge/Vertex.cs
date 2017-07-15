@@ -8,6 +8,15 @@ using KI.Foundation.Utility;
 
 namespace KI.Gfx.Analyzer
 {
+    public enum VertexParam
+    {
+        MinCurvature,
+        MaxCurvature,
+        MeanCurvature,
+        GaussCurvature,
+        Voronoi
+    }
+
     public class Vertex
     {
         /// <summary>
@@ -19,13 +28,26 @@ namespace KI.Gfx.Analyzer
             get;
             set;
         }
+
+
+
         /// <summary>
         /// HalfEdgeでもつm_VertexのIndex番号
         /// </summary>
         public int Index { get; set; }
         public Vector3 MaxVector { get; set; }
         public Vector3 MinVector { get; set; }
+        private Dictionary<VertexParam, object> Parameter;
 
+
+        public void AddParameter(VertexParam param, float value)
+        {
+            Parameter.Add(param, value);
+        }
+        public object GetParameter(VertexParam param)
+        {
+            return Parameter[param];
+        }
         /// <summary>
         /// テンポラリ計算用フラグ
         /// </summary>
@@ -34,6 +56,7 @@ namespace KI.Gfx.Analyzer
             get;
             set;
         }
+
         /// <summary>
         /// 削除フラグ。Updateが走ると必ず削除するべきもの
         /// </summary>
@@ -49,6 +72,7 @@ namespace KI.Gfx.Analyzer
 
         public Vertex(Vector3 pos,int index = -1)
         {
+            Parameter = new Dictionary<VertexParam, object>();
             Position = pos;
             Index = index;
         }
@@ -133,6 +157,7 @@ namespace KI.Gfx.Analyzer
             DeleteFlag = true;
             m_AroundEdge = null;
         }
+
         #region [operator]
         public static Vector3 operator +(Vertex v1, Vertex v2)
         {

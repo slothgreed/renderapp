@@ -8,6 +8,6 @@ namespace KI.Gfx.Analyzer
 {
     public abstract class IAnalyzer : KIObject
     {
-        public Dictionary<string, IParameter> Parameters = new Dictionary<string, IParameter>();
+        public Dictionary<Enum, IParameter> Parameters = new Dictionary<Enum, IParameter>();
     }
 }

@@ -13,7 +13,6 @@ namespace KI.Gfx.Analyzer
             throw new NotImplementedException();
         }
 
-
         public object GetValue(int index)
         {
             throw new NotImplementedException();

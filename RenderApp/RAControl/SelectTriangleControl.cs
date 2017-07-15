@@ -30,7 +30,21 @@ namespace RenderApp.RAControl
             //頂点配列の時
             if (geometry.geometryInfo.Index.Count != 0)
             {
-
+                for (int i = 0; i < geometry.geometryInfo.Index.Count; i+=3)
+                {
+                    Vector3 vertex1 = geometry.geometryInfo.Position[geometry.geometryInfo.Index[i]];
+                    Vector3 vertex2 = geometry.geometryInfo.Position[geometry.geometryInfo.Index[i + 1]];
+                    Vector3 vertex3 = geometry.geometryInfo.Position[geometry.geometryInfo.Index[i + 2]];
+                    vertex1 = KICalc.Multiply(geometry.ModelMatrix, vertex1);
+                    vertex2 = KICalc.Multiply(geometry.ModelMatrix, vertex2);
+                    vertex3 = KICalc.Multiply(geometry.ModelMatrix, vertex3);
+                    Vector3 result = Vector3.Zero;
+                    if (KICalc.CrossPlanetoLinePos(vertex1, vertex2, vertex3, near, far, ref minLength, out result))
+                    {
+                        selectIndex = geometry.geometryInfo.Index[i];
+                        select = true;
+                    }
+                }
             }
             else
             {

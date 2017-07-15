@@ -63,6 +63,7 @@ namespace KI.Gfx.Analyzer
                 nodeArray[i] = new Node(false, -1, _halfEdge.m_Vertex[i]);
             }
 
+            CalcDijkstra(nodeArray, index1, index2);
             return true;
         }
 
@@ -80,20 +81,18 @@ namespace KI.Gfx.Analyzer
             }
             return "";
         }
+        public void SetGeometry(HalfEdge halfEdge)
+        {
+            _halfEdge = halfEdge;
+        }
+
         public string Execute(string commandArg = null)
         {
-            //var analyze = Geometry.FindAnalyze(HalfEdge.ToString());
-            //if (analyze != null)
-            //{
-            //    _halfEdge = analyze as HalfEdge;
-            //}
-            //else
-            //{
-            //    HalfEdge half = new HalfEdge(Geometry);
-            //    Geometry.AddAnalayzer(half);
-            //    _halfEdge = half;
-            //}
-            //return DistanceDijkstra(StartIndex, EndIndex);
+            if(_halfEdge == null)
+            {
+                return "";
+            }
+            DistanceDijkstra(StartIndex, EndIndex);
             return "";
         }
 

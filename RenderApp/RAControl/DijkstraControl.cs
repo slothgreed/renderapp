@@ -10,7 +10,7 @@ namespace RenderApp.RAControl
 {
     class DijkstraControl : IControl
     {
-        private Dijkstra Dijkstra;
+        private DijkstraAlgorithm Dijkstra;
         private KIObject SelectGeometry;
         public override bool Down(System.Windows.Forms.MouseEventArgs mouse)
         {
@@ -24,7 +24,9 @@ namespace RenderApp.RAControl
                 var SelectObjectController = ControlManager.Instance.Controllers[ControlManager.CONTROL_MODE.SelectTriangle] as SelectTriangleControl;
                 if (SelectObjectController.PickTriangle(LeftMouse.Click, ref geometry, ref vertex_Index))
                 {
-                    if(Dijkstra.Geometry == null)
+                    Dijkstra.SetGeometry(geometry.HalfEdge);
+
+                    if (Dijkstra.Geometry == null)
                     {
                         Dijkstra.Geometry = geometry.geometryInfo;
                     }
@@ -62,7 +64,7 @@ namespace RenderApp.RAControl
                         else
                         {
                             picking.AddVertex(new List<Vector3>() { tri1, tri2, tri3 }, KICalc.RandomColor());
-                            //Dijkstra.Execute();
+                            Dijkstra.Execute();
 
                         }
                     }
@@ -72,7 +74,7 @@ namespace RenderApp.RAControl
         }
         public override bool Binding()
         {
-            Dijkstra = new Dijkstra();
+            Dijkstra = new DijkstraAlgorithm();
             return true;
         }
         public override bool Execute()

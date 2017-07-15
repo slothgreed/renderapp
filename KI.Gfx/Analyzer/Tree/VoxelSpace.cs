@@ -9,12 +9,12 @@ using KI.Foundation.Utility;
 
 namespace KI.Gfx.Analyzer
 {
-    public class Voxel : IAnalyzer
+    public class VoxelSpace : IAnalyzer
     {
         /// <summary>
         /// ボクセルの状態
         /// </summary>
-        public enum CellState
+        public enum VoxelState
         {
             /// <summary>
             /// 未定
@@ -34,14 +34,27 @@ namespace KI.Gfx.Analyzer
             Border,
         }
 
-        public class Cell
+        public enum NeightType
         {
-            public CellState State = CellState.None;
+            /// <summary>
+            /// 6近傍
+            /// </summary>
+            Ortho,
+
+            /// <summary>
+            /// 全て
+            /// </summary>
+            All
+        }
+
+        public class Voxel
+        {
+            public VoxelState State = VoxelState.None;
             public int i;
             public int j;
             public int k;
             public float Value;
-            public Cell(int _i, int _j, int _k, CellState state)
+            public Voxel(int _i, int _j, int _k, VoxelState state)
             {
                 i = _i;
                 j = _j;
@@ -62,7 +75,7 @@ namespace KI.Gfx.Analyzer
             private set;
         }
 
-        private Cell[, ,] Cells
+        private Voxel[, ,] Voxels
         {
             get;
             set;
@@ -71,19 +84,19 @@ namespace KI.Gfx.Analyzer
 
         public List<Vector3> vNormal = new List<Vector3>();
 
-        public Voxel(List<Vector3> position, List<int> posIndex, int partition)
+        public VoxelSpace(List<Vector3> position, List<int> posIndex, int partition)
         {
 
             Partition = partition;
             CalcMinMax(position);
             SetInterval(partition);
-            Cells = new Cell[partition, partition, partition];
-            Action<int, int, int> initializeCells = (int i, int j, int k) =>
+            Voxels = new Voxel[partition, partition, partition];
+            Action<int, int, int> initializeVoxels = (int i, int j, int k) =>
               {
-                  Cells[i, j, k] = new Cell(i, j, k, CellState.None);
+                  Voxels[i, j, k] = new Voxel(i, j, k, VoxelState.None);
               };
 
-            AllCellAction(initializeCells);
+            AllVoxelAction(initializeVoxels);
 
             if (posIndex.Count == 0)
             {
@@ -137,14 +150,14 @@ namespace KI.Gfx.Analyzer
                     {
                         for (vIndex.Z = (int)minIndex.Z; vIndex.Z < maxIndex.Z; vIndex.Z++)
                         {
-                            if (Cells[(int)vIndex.X, (int)vIndex.Y, (int)vIndex.Z].State == CellState.Border)
+                            if (Voxels[(int)vIndex.X, (int)vIndex.Y, (int)vIndex.Z].State == VoxelState.Border)
                             {
                                 continue;
                             }
 
                             if (CheckVoxel(tri1, tri2, tri3, vIndex))
                             {
-                                Cells[(int)vIndex.X, (int)vIndex.Y, (int)vIndex.Z].State = CellState.Border;
+                                Voxels[(int)vIndex.X, (int)vIndex.Y, (int)vIndex.Z].State = VoxelState.Border;
                                 SetVoxel(vIndex);
                             }
                         }
@@ -153,69 +166,18 @@ namespace KI.Gfx.Analyzer
             }
         }
 
-        public List<Vector3> GetPoint(CellState state)
-        {
-            List<Vector3> point = new List<Vector3>();
-            var index = Vector3.Zero;
-            var mid = Interval / 2;
-
-            for (int i = 0; i < Partition; i++)
-            {
-                for (int j = 0; j < Partition; j++)
-                {
-                    for (int k = 0; k < Partition; k++)
-                    {
-                        if (Cells[i, j, k].State == state)
-                        {
-                            index.X = i;
-                            index.Y = j;
-                            index.Z = k;
-                            var position = GetVoxelPosition(index);
-                            position.X += mid;
-                            position.Y += mid;
-                            position.Z += mid;
-                            point.Add(position);
-                        }
-                    }
-                }
-            }
-            return point;
-        }
-
-        public List<Cell> GetCell(CellState state)
-        {
-            List<Cell> cells = new List<Cell>();
-            var index = Vector3.Zero;
-            var mid = Interval / 2;
-
-            for (int i = 0; i < Partition; i++)
-            {
-                for (int j = 0; j < Partition; j++)
-                {
-                    for (int k = 0; k < Partition; k++)
-                    {
-                        if (Cells[i, j, k].State == state)
-                        {
-                            cells.Add(Cells[i, j, k]);
-                        }
-                    }
-                }
-            }
-            return cells;
-        }
-
         #region [utility]
         /// <summary>
         /// ボクセルの最小値を返却
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        private Vector3 GetCellPosition(Cell cell)
+        private Vector3 GetVoxelPosition(Voxel voxel)
         {
             Vector3 minVoxel = Min;
-            minVoxel.X += cell.i * Interval;
-            minVoxel.Y += cell.j * Interval;
-            minVoxel.Z += cell.k * Interval;
+            minVoxel.X += voxel.i * Interval;
+            minVoxel.Y += voxel.j * Interval;
+            minVoxel.Z += voxel.k * Interval;
             return minVoxel;
         }
 
@@ -230,6 +192,7 @@ namespace KI.Gfx.Analyzer
             minVoxel += index * new Vector3(Interval);
             return minVoxel;
         }
+
         /// <summary>
         /// 分割数から長さを計算
         /// </summary>
@@ -372,36 +335,63 @@ namespace KI.Gfx.Analyzer
             return false;
         }
 
-        private Cell SerchNeightCell(Cell cell, Func<int, int, int, bool> condition)
+        /// <summary>
+        /// 隣接ボクセルの条件に合うボクセルを取得する。
+        /// </summary>
+        /// <param name="voxel">ボクセル</param>
+        /// <param name="condition">条件</param>
+        /// <returns>ボクセル</returns>
+        private IEnumerable<Voxel> SearchNeightVoxel(Voxel voxel, Func<int, int, int, bool> condition, NeightType type)
         {
-            if (condition(cell.i + 1, cell.j, cell.k))
+            var search = new List<Voxel>();
+
+            if (type == NeightType.Ortho)
             {
-                return Cells[cell.i + 1, cell.j, cell.k];
+                if (condition(voxel.i + 1, voxel.j, voxel.k))
+                    search.Add(GetVoxel(voxel.i + 1, voxel.j, voxel.k));
+                if (condition(voxel.i, voxel.j + 1, voxel.k))
+                    search.Add(GetVoxel(voxel.i, voxel.j + 1, voxel.k));
+                if (condition(voxel.i, voxel.j, voxel.k + 1))
+                    search.Add(GetVoxel(voxel.i, voxel.j, voxel.k + 1));
+                if (condition(voxel.i - 1, voxel.j, voxel.k))
+                    search.Add(GetVoxel(voxel.i - 1, voxel.j, voxel.k));
+                if (condition(voxel.i, voxel.j - 1, voxel.k))
+                    search.Add(GetVoxel(voxel.i, voxel.j - 1, voxel.k));
+                if (condition(voxel.i, voxel.j, voxel.k - 1))
+                    search.Add(GetVoxel(voxel.i, voxel.j, voxel.k - 1));
             }
-            if (condition(cell.i, cell.j + 1, cell.k))
+            else if (type == NeightType.All)
             {
-                return Cells[cell.i, cell.j + 1, cell.k];
+                for (int x = -1; x <= 1; x++)
+                {
+                    for (int y = -1; y <= 1; y++)
+                    {
+                        for (int z = -1; z <= 1; z++)
+                        {
+                            if (x == 0 && y == 0 && z == 0)
+                            {
+                                continue;
+                            }
+
+                            if (condition(voxel.i + x, voxel.j + y, voxel.k + z))
+                            {
+                                search.Add(GetVoxel(voxel.i + x, voxel.j + y, voxel.k + z));
+                            }
+                        }
+                    }
+                }
+
             }
-            if (condition(cell.i, cell.j, cell.k + 1))
-            {
-                return Cells[cell.i, cell.j, cell.k + 1];
-            }
-            if (condition(cell.i - 1, cell.j, cell.k))
-            {
-                return Cells[cell.i - 1, cell.j, cell.k];
-            }
-            if (condition(cell.i, cell.j - 1, cell.k))
-            {
-                return Cells[cell.i, cell.j - 1, cell.k];
-            }
-            if (condition(cell.i, cell.j, cell.k - 1))
-            {
-                return Cells[cell.i, cell.j, cell.k - 1];
-            }
-            return null;
+
+            return search;
         }
 
-        private Cell SearchAllVoxel(Func<int, int, int, Cell> condition)
+        /// <summary>
+        /// すべてのボクセルから、ボクセルを検索
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <returns></returns>
+        private Voxel SearchAllVoxel(Func<int, int, int, Voxel> condition)
         {
             for (int i = 0; i < Partition; i++)
             {
@@ -409,7 +399,7 @@ namespace KI.Gfx.Analyzer
                 {
                     for (int k = 0; k < Partition; k++)
                     {
-                        Cell value = condition(i, j, k);
+                        Voxel value = condition(i, j, k);
                         if(value != null)
                         {
                             return value;
@@ -420,7 +410,11 @@ namespace KI.Gfx.Analyzer
             return null;
         }
 
-        private void AllCellAction(Action<int, int, int> action)
+        /// <summary>
+        /// 全てのボクセルに対する処理
+        /// </summary>
+        /// <param name="action">処理</param>
+        private void AllVoxelAction(Action<int, int, int> action)
         {
             for (int i = 0; i < Partition; i++)
             {
@@ -434,13 +428,13 @@ namespace KI.Gfx.Analyzer
             }
         }
 
-        private Cell StartDistanceFieldCell()
+        private Voxel StartDistanceFieldVoxel()
         {
             Func<int, int, int, bool> checkInner = (i, j, k) =>
             {
-                var cell = GetCell(i, j, k);
-                if (cell?.State == CellState.Inner &&
-                cell?.Value == float.MaxValue)
+                var voxel = GetVoxel(i, j, k);
+                if (voxel?.State == VoxelState.Inner &&
+                voxel?.Value == float.MaxValue)
                 {
                     return true;
                 }
@@ -450,14 +444,14 @@ namespace KI.Gfx.Analyzer
                 }
             };
 
-            Func<int, int, int, Cell> neightInner = (int i, int j, int k) =>
+            Func<int, int, int, Voxel> neightInner = (int i, int j, int k) =>
              {
-                 if (Cells[i, j, k].State == CellState.Border)
+                 if (Voxels[i, j, k].State == VoxelState.Border)
                  {
-                     Cell hit = SerchNeightCell(Cells[i, j, k], checkInner);
-                     if (hit != null)
+                     var hit = SearchNeightVoxel(Voxels[i, j, k], checkInner, NeightType.All);
+                     if (hit.Any())
                      {
-                         return hit;
+                         return hit.FirstOrDefault();
                      }
                  }
                  return null;
@@ -466,36 +460,43 @@ namespace KI.Gfx.Analyzer
             return SearchAllVoxel(neightInner);
         }
         /// <summary>
-        /// 距離場の算出
+        /// 距離場の算出duckでやるとバグる
+        /// 周囲がInnerで未決定の場合、事前に決まった値の加算値になる。
+        /// 境界から、Closingして求めるほうがましになる。
         /// </summary>
         private void CalcDistanceField()
         {
             CalcInOut();
+
+            var Inners = new List<Voxel>();
             Action<int, int, int> initializeField = (int i, int j, int k) =>
             {
-                if (Cells[i, j, k].State == CellState.Inner)
+                if (Voxels[i, j, k].State == VoxelState.Inner)
                 {
-                    Cells[i, j, k].Value = float.MaxValue;
+                    Voxels[i, j, k].Value = float.MaxValue;
+                    Inners.Add(Voxels[i, j, k]);
                 }
                 else
                 {
-                    Cells[i, j, k].Value = 0;
+                    Voxels[i, j, k].Value = 0;
                 }
             };
-            AllCellAction(initializeField);
+
+            AllVoxelAction(initializeField);
+
 
             while (true)
             {
-                Cell start = StartDistanceFieldCell();
+                Voxel start = StartDistanceFieldVoxel();
                 if (start == null)
                 {
                     return;
                 }
 
-                Func<Cell, bool> condition = (cell) =>
+                Func<Voxel, bool> condition = (voxel) =>
                 {
-                    if (cell.State == CellState.Inner &&
-                        cell.Value == float.MaxValue)
+                    if (voxel.State == VoxelState.Inner &&
+                        voxel.Value == float.MaxValue)
                     {
                         return true;
                     }
@@ -505,76 +506,76 @@ namespace KI.Gfx.Analyzer
                     }
                 };
 
-                Func<int, int, int, Cell> minValue = (i, j, k) =>
+                Func<int, int, int, Voxel> minValue = (i, j, k) =>
                 {
                     return null;
                 };
-                Action<Cell> action = (cell) =>
+                Action<Voxel> action = (voxel) =>
                 {
                     float min = float.MaxValue;
-                    Cell minCell = null;
-                    var neight = GetCell(cell.i + 1, cell.j, cell.k);
+                    Voxel minVoxel = null;
+                    var neight = GetVoxel(voxel.i + 1, voxel.j, voxel.k);
                     if (neight?.Value < min)
                     {
                         min = neight.Value;
-                        minCell = neight;
+                        minVoxel = neight;
                     }
-                    neight = GetCell(cell.i, cell.j + 1, cell.k);
+                    neight = GetVoxel(voxel.i, voxel.j + 1, voxel.k);
                     if (neight?.Value < min)
                     {
                         min = neight.Value;
-                        minCell = neight;
+                        minVoxel = neight;
                     }
-                    neight = GetCell(cell.i, cell.j, cell.k + 1);
+                    neight = GetVoxel(voxel.i, voxel.j, voxel.k + 1);
                     if (neight?.Value < min)
                     {
                         min = neight.Value;
-                        minCell = neight;
+                        minVoxel = neight;
                     }
-                    neight = GetCell(cell.i - 1, cell.j, cell.k);
+                    neight = GetVoxel(voxel.i - 1, voxel.j, voxel.k);
                     if (neight?.Value < min)
                     {
                         min = neight.Value;
-                        minCell = neight;
+                        minVoxel = neight;
                     }
-                    neight = GetCell(cell.i, cell.j - 1, cell.k);
+                    neight = GetVoxel(voxel.i, voxel.j - 1, voxel.k);
                     if (neight?.Value < min)
                     {
                         min = neight.Value;
-                        minCell = neight;
+                        minVoxel = neight;
                     }
-                    neight = GetCell(cell.i, cell.j, cell.k - 1);
+                    neight = GetVoxel(voxel.i, voxel.j, voxel.k - 1);
                     if (neight?.Value < min)
                     {
                         min = neight.Value;
-                        minCell = neight;
+                        minVoxel = neight;
                     }
 
-                    if (minCell != null)
+                    if (minVoxel != null)
                     {
-                        cell.Value = (GetCellPosition(cell) - GetCellPosition(minCell)).Length + minCell.Value;
-
-                        if (cell.Value > maxDistance)
-                        {
-                            maxDistance = cell.Value;
-                        }
+                        voxel.Value = (GetVoxelPosition(voxel) - GetVoxelPosition(minVoxel)).Length + minVoxel.Value;
                     }
                 };
 
                 RegionGrowing(start, condition, action);
             }
         }
-        public static float maxDistance = 0;
 
-        private void RegionGrowing(Cell seed, Func<Cell, bool> condition, Action<Cell> action)
+        /// <summary>
+        /// 領域拡張
+        /// </summary>
+        /// <param name="seed">一つ目のセル</param>
+        /// <param name="condition">条件</param>
+        /// <param name="action">処理</param>
+        private void RegionGrowing(Voxel seed, Func<Voxel, bool> condition, Action<Voxel> action)
         {
-            var stack = new Stack<Cell>();
-            Cell curerntCell = null;
-            Cell cell = null;
+            var stack = new Stack<Voxel>();
+            Voxel curerntVoxel = null;
+            Voxel voxel = null;
             if (condition(seed))
             {
                 action(seed);
-                curerntCell = seed;
+                curerntVoxel = seed;
             }
             else
             {
@@ -584,69 +585,69 @@ namespace KI.Gfx.Analyzer
             
             while (true)
             {
-                cell = GetCell(curerntCell.i + 1, curerntCell.j, curerntCell.k);
-                if (condition(cell))
+                voxel = GetVoxel(curerntVoxel.i + 1, curerntVoxel.j, curerntVoxel.k);
+                if (condition(voxel))
                 {
-                    action(cell);
-                    stack.Push(cell);
-                    curerntCell = cell;
+                    action(voxel);
+                    stack.Push(voxel);
+                    curerntVoxel = voxel;
                     continue;
                 }
                 else
                 {
-                    cell = GetCell(curerntCell.i, curerntCell.j + 1, curerntCell.k);
-                    if (condition(cell))
+                    voxel = GetVoxel(curerntVoxel.i, curerntVoxel.j + 1, curerntVoxel.k);
+                    if (condition(voxel))
                     {
-                        action(cell);
-                        stack.Push(cell);
-                        curerntCell = cell;
+                        action(voxel);
+                        stack.Push(voxel);
+                        curerntVoxel = voxel;
                         continue;
                     }
                     else
                     {
-                        cell = GetCell(curerntCell.i, curerntCell.j, curerntCell.k + 1);
-                        if (condition(cell))
+                        voxel = GetVoxel(curerntVoxel.i, curerntVoxel.j, curerntVoxel.k + 1);
+                        if (condition(voxel))
                         {
-                            action(cell);
-                            stack.Push(cell);
-                            curerntCell = cell;
+                            action(voxel);
+                            stack.Push(voxel);
+                            curerntVoxel = voxel;
                             continue;
                         }
                         else
                         {
-                            cell = GetCell(curerntCell.i - 1, curerntCell.j, curerntCell.k);
-                            if (condition(cell))
+                            voxel = GetVoxel(curerntVoxel.i - 1, curerntVoxel.j, curerntVoxel.k);
+                            if (condition(voxel))
                             {
-                                action(cell);
-                                stack.Push(cell);
-                                curerntCell = cell;
+                                action(voxel);
+                                stack.Push(voxel);
+                                curerntVoxel = voxel;
                                 continue;
                             }
                             else
                             {
-                                cell = GetCell(curerntCell.i, curerntCell.j - 1, curerntCell.k);
-                                if (condition(cell))
+                                voxel = GetVoxel(curerntVoxel.i, curerntVoxel.j - 1, curerntVoxel.k);
+                                if (condition(voxel))
                                 {
-                                    action(cell);
-                                    stack.Push(cell);
-                                    curerntCell = cell;
+                                    action(voxel);
+                                    stack.Push(voxel);
+                                    curerntVoxel = voxel;
                                     continue;
                                 }
                                 else
                                 {
-                                    cell = GetCell(curerntCell.i, curerntCell.j, curerntCell.k - 1);
-                                    if (condition(cell))
+                                    voxel = GetVoxel(curerntVoxel.i, curerntVoxel.j, curerntVoxel.k - 1);
+                                    if (condition(voxel))
                                     {
-                                        action(cell);
-                                        stack.Push(cell);
-                                        curerntCell = cell;
+                                        action(voxel);
+                                        stack.Push(voxel);
+                                        curerntVoxel = voxel;
                                         continue;
                                     }
                                     else
                                     {
                                         if (stack.Count > 0)
                                         {
-                                            curerntCell = stack.Pop();
+                                            curerntVoxel = stack.Pop();
                                         }
                                         else
                                         {
@@ -666,13 +667,13 @@ namespace KI.Gfx.Analyzer
         /// </summary>
         private void CalcInOut()
         {
-            Func<Cell, bool> condition = (cell) =>
+            Func<Voxel, bool> condition = (voxel) =>
                  {
-                     return cell?.State == CellState.None;
+                     return voxel?.State == VoxelState.None;
                  };
-            Action<Cell> action = (cell) =>
+            Action<Voxel> action = (voxel) =>
             {
-                cell.State = CellState.Exterior;
+                voxel.State = VoxelState.Exterior;
             };
 
             for (int i = 0; i < Partition; i++)
@@ -680,27 +681,27 @@ namespace KI.Gfx.Analyzer
                 for (int j = 0; j < Partition; j++)
                 {
                     var max = Partition - 1;
-                    RegionGrowing(Cells[0, i, j], condition, action);
-                    RegionGrowing(Cells[i, 0, j], condition, action);
-                    RegionGrowing(Cells[i, j, 0], condition, action);
-                    RegionGrowing(Cells[max, i, j], condition, action);
-                    RegionGrowing(Cells[i, max, j], condition, action);
-                    RegionGrowing(Cells[i, j, max], condition, action);
+                    RegionGrowing(Voxels[0, i, j], condition, action);
+                    RegionGrowing(Voxels[i, 0, j], condition, action);
+                    RegionGrowing(Voxels[i, j, 0], condition, action);
+                    RegionGrowing(Voxels[max, i, j], condition, action);
+                    RegionGrowing(Voxels[i, max, j], condition, action);
+                    RegionGrowing(Voxels[i, j, max], condition, action);
                 }
             }
 
             Action<int, int, int> setInner = (int i, int j, int k) =>
               {
-                  if (Cells[i, j, k].State == CellState.None)
+                  if (Voxels[i, j, k].State == VoxelState.None)
                   {
-                      Cells[i, j, k].State = CellState.Inner;
+                      Voxels[i, j, k].State = VoxelState.Inner;
                   }
               };
 
-            AllCellAction(setInner);
+            AllVoxelAction(setInner);
         }
 
-        private Cell GetCell(int i, int j, int k)
+        private Voxel GetVoxel(int i, int j, int k)
         {
             if (i < 0 || j < 0 || k < 0 ||
                 i >= Partition ||
@@ -711,106 +712,9 @@ namespace KI.Gfx.Analyzer
             }
             else
             {
-                return Cells[i, j, k];
+                return Voxels[i, j, k];
             }
         }
-
-        /// <summary>
-        /// Region Growing Loopに置き換え
-        /// </summary>
-        /// <param name="seed"></param>
-        //private void CheckOutStack(Cell seed)
-        //{
-        //    var stack = new Stack<Cell>();
-        //    if (seed?.State == CellState.None)
-        //    {
-        //        seed.State = CellState.Exterior;
-        //        stack.Push(seed);
-        //    }
-        //    else
-        //    {
-        //        return;
-        //    }
-        //    Cell curerntCell = stack.Pop();
-        //    Cell cell = null;
-        //    while (true)
-        //    {
-        //        cell = GetCell(curerntCell.i + 1, curerntCell.j, curerntCell.k);
-        //        if (cell?.State == CellState.None)
-        //        {
-        //            cell.State = CellState.Exterior;
-        //            stack.Push(cell);
-        //            curerntCell = cell;
-        //            continue;
-        //        }
-        //        else
-        //        {
-        //            cell = GetCell(curerntCell.i, curerntCell.j + 1, curerntCell.k);
-        //            if (cell?.State == CellState.None)
-        //            {
-        //                cell.State = CellState.Exterior;
-        //                stack.Push(cell);
-        //                curerntCell = cell;
-        //                continue;
-        //            }
-        //            else
-        //            {
-        //                cell = GetCell(curerntCell.i, curerntCell.j, curerntCell.k + 1);
-        //                if (cell?.State == CellState.None)
-        //                {
-        //                    cell.State = CellState.Exterior;
-        //                    stack.Push(cell);
-        //                    curerntCell = cell;
-        //                    continue;
-        //                }
-        //                else
-        //                {
-        //                    cell = GetCell(curerntCell.i - 1, curerntCell.j, curerntCell.k);
-        //                    if (cell?.State == CellState.None)
-        //                    {
-        //                        cell.State = CellState.Exterior;
-        //                        stack.Push(cell);
-        //                        curerntCell = cell;
-        //                        continue;
-        //                    }
-        //                    else
-        //                    {
-        //                        cell = GetCell(curerntCell.i, curerntCell.j - 1, curerntCell.k);
-        //                        if (cell?.State == CellState.None)
-        //                        {
-        //                            cell.State = CellState.Exterior;
-        //                            stack.Push(cell);
-        //                            curerntCell = cell;
-        //                            continue;
-        //                        }
-        //                        else
-        //                        {
-        //                            cell = GetCell(curerntCell.i, curerntCell.j, curerntCell.k - 1);
-        //                            if (cell?.State == CellState.None)
-        //                            {
-        //                                cell.State = CellState.Exterior;
-        //                                stack.Push(cell);
-        //                                curerntCell = cell;
-        //                                continue;
-        //                            }
-        //                            else
-        //                            {
-        //                                if (stack.Count > 0)
-        //                                {
-        //                                    curerntCell = stack.Pop();
-        //                                }
-        //                                else
-        //                                {
-        //                                    break;
-        //                                }
-        //                            }
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
 
         #region [voxel object]
         /// <summary>
@@ -861,6 +765,52 @@ namespace KI.Gfx.Analyzer
         {
             position = vPosition;
             normal = vNormal;
+        }
+
+
+        public List<Vector3> GetPoint(VoxelState state)
+        {
+            List<Vector3> point = new List<Vector3>();
+            var index = Vector3.Zero;
+            var mid = Interval / 2;
+
+            Action<int, int, int> addPoint = (int i, int j, int k) =>
+            {
+                if (Voxels[i, j, k].State == state)
+                {
+                    index.X = i;
+                    index.Y = j;
+                    index.Z = k;
+                    var position = GetVoxelPosition(index);
+                    position.X += mid;
+                    position.Y += mid;
+                    position.Z += mid;
+                    point.Add(position);
+                }
+            };
+
+            AllVoxelAction(addPoint);
+
+            return point;
+        }
+
+        public List<Voxel> GetVoxel(VoxelState state)
+        {
+            List<Voxel> voxels = new List<Voxel>();
+            var index = Vector3.Zero;
+            var mid = Interval / 2;
+
+            Action<int, int, int> addList = (int i, int j, int k) =>
+            {
+                if (Voxels[i, j, k].State == state)
+                {
+                    voxels.Add(Voxels[i, j, k]);
+                }
+            };
+
+            AllVoxelAction(addList);
+
+            return voxels;
         }
     }
 }

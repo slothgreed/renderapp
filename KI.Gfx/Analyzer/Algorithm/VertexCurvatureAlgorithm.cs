@@ -12,11 +12,11 @@ namespace KI.Gfx.Analyzer.Algorithm
         {
             Calculate(half);
             ScalarParameter param = new ScalarParameter();
-            Parameters.Add("Voronoi", new ScalarParameter());
-            Parameters.Add("Gaussian", new ScalarParameter());
-            Parameters.Add("Mean", new ScalarParameter());
-            Parameters.Add("Max", new ScalarParameter());
-            Parameters.Add("Min", new ScalarParameter());
+            Parameters.Add(VertexParam.Voronoi, new ScalarParameter());
+            Parameters.Add(VertexParam.GaussCurvature, new ScalarParameter());
+            Parameters.Add(VertexParam.MeanCurvature, new ScalarParameter());
+            Parameters.Add(VertexParam.MaxCurvature, new ScalarParameter());
+            Parameters.Add(VertexParam.MinCurvature, new ScalarParameter());
         }
 
         private void Calculate(HalfEdge half)
@@ -52,7 +52,8 @@ namespace KI.Gfx.Analyzer.Algorithm
                 angle += (float)((1 / Math.Cos(alpha)) + (1 / Math.Cos(beta))) * length;
 
             }
-            Parameters["Voronoi"].AddValue(angle / 8);
+            Parameters[VertexParam.Voronoi].AddValue(angle / 8);
+            vertex.AddParameter(VertexParam.Voronoi, angle / 8);
         }
 
         /// <summary>
@@ -66,7 +67,9 @@ namespace KI.Gfx.Analyzer.Algorithm
             {
                 angle += edge.Angle;
             }
-            Parameters["Gaussian"].AddValue((2 * MathHelper.Pi - angle) / (float)Parameters["Voronoi"].GetValue(vertex.Index));
+            float value = (2 * MathHelper.Pi - angle) / (float)vertex.GetParameter(VertexParam.Voronoi);
+            Parameters[VertexParam.GaussCurvature].AddValue(value);
+            vertex.AddParameter(VertexParam.GaussCurvature, value);
         }
 
         /// <summary>
@@ -90,7 +93,9 @@ namespace KI.Gfx.Analyzer.Algorithm
                 beta = opposite.Next.Next.Angle;
                 angle += (float)((1 / Math.Cos(alpha)) + (1 / Math.Cos(beta))) * length;
             }
-            Parameters["Mean"].AddValue(angle / (float)Parameters["Voronoi"].GetValue(vertex.Index) * 2);
+            float value = (angle / (float)vertex.GetParameter(VertexParam.Voronoi) * 2);
+            Parameters[VertexParam.Voronoi].AddValue(value);
+            vertex.AddParameter(VertexParam.Voronoi, value);
         }
 
         /// <summary>
@@ -99,8 +104,8 @@ namespace KI.Gfx.Analyzer.Algorithm
         /// <param name="v_index"></param>
         private void SetMaxMinCurvature(Vertex vertex)
         {
-            float mean = (float)Parameters["Mean"].GetValue(vertex.Index);
-            float gauss = (float)Parameters["Gauss"].GetValue(vertex.Index);
+            float mean = (float)vertex.GetParameter(VertexParam.MeanCurvature);
+            float gauss = (float)vertex.GetParameter(VertexParam.GaussCurvature);
 
             
             float delta = (mean * mean) - gauss;
@@ -112,8 +117,11 @@ namespace KI.Gfx.Analyzer.Algorithm
             {
                 delta = 0;
             }
-            Parameters["Max"].AddValue(mean + delta);
-            Parameters["Min"].AddValue(mean - delta);
+
+            Parameters[VertexParam.MaxCurvature].AddValue(mean + delta);
+            Parameters[VertexParam.MinCurvature].AddValue(mean - delta);
+            vertex.AddParameter(VertexParam.MaxCurvature, mean + delta);
+            vertex.AddParameter(VertexParam.MinCurvature, mean - delta);
         }
 
         /// <summary>
