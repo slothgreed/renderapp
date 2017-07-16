@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 using KI.Gfx.KIAsset;
-namespace RenderApp.KIRenderSystem
+namespace RenderApp.RARenderSystem
 {
     public partial class Bloom : RenderTechnique
     {

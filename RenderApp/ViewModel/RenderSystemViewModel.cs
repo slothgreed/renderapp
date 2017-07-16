@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RenderApp.KIRenderSystem;
+using RenderApp.RARenderSystem;
 using System.Collections.ObjectModel;
 
 namespace RenderApp.ViewModel

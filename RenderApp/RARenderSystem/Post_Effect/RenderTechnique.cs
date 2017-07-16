@@ -7,7 +7,7 @@ using KI.Gfx.Render;
 using KI.Foundation.Core;
 using KI.Gfx.KIShader;
 
-namespace RenderApp.KIRenderSystem
+namespace RenderApp.RARenderSystem
 {
     public abstract class RenderTechnique : KIObject
     {

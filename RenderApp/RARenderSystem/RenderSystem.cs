@@ -4,7 +4,7 @@ using System.Linq;
 using KI.Gfx.KIAsset;
 using RenderApp.AssetModel;
 using OpenTK.Graphics.OpenGL;
-namespace RenderApp.KIRenderSystem
+namespace RenderApp.RARenderSystem
 {
     public class RenderSystem
     {

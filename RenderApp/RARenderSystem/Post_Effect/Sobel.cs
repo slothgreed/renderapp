@@ -1,4 +1,4 @@
-﻿namespace RenderApp.KIRenderSystem
+﻿namespace RenderApp.RARenderSystem
 {
     partial class Sobel : RenderTechnique
     {

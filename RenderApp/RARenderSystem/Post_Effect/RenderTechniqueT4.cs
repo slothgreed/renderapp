@@ -1,6 +1,6 @@
 ﻿using System;
 using KI.Gfx.KIAsset;
-namespace RenderApp.KIRenderSystem
+namespace RenderApp.RARenderSystem
 {
 	public partial class Selection : RenderTechnique
 	{

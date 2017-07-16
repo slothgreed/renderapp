@@ -31,7 +31,7 @@
 #>
 using System;
 using KI.Gfx.KIAsset;
-namespace RenderApp.KIRenderSystem
+namespace RenderApp.RARenderSystem
 {
 <#
 	for(int classIndex = 0; classIndex < classProperty.Length; classIndex++){

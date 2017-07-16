@@ -1,27 +1,32 @@
-﻿using KI.Gfx.KIAsset;
-
-namespace RenderApp.KIRenderSystem
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using KI.Gfx.KIAsset;
+namespace RenderApp.RARenderSystem
 {
-
-    public class DeferredBuffer : RenderTechnique
+    class ImageBasedLighting : RenderTechnique
     {
-        private static string vertexShader = ProjectInfo.ShaderDirectory + @"\Lighthing\Defferd.vert";
-        private static string fragShader = ProjectInfo.ShaderDirectory + @"\Lighthing\Defferd.frag";
+        private static string vertexShader = ProjectInfo.ShaderDirectory + @"\Lighthing\ibl.vert";
+        private static string fragShader = ProjectInfo.ShaderDirectory + @"\Lighthing\ibl.frag";
 
-        public DeferredBuffer(RenderTechniqueType tech)
-            : base("Deferred", vertexShader, fragShader, tech, RenderType.Original)
+        public ImageBasedLighting(RenderTechniqueType tech)
+            : base("IBL", vertexShader, fragShader, tech, RenderType.Original)
         {
-
+            
         }
 
         public override void Render()
         {
             RenderTarget.ClearBuffer();
             RenderTarget.BindRenderTarget(OutputTexture.ToArray());
-            foreach (var light in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
+            foreach (var probe in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
             {
-                if (light.KIObject is Light)
+                if (probe.KIObject is EnvironmentProbe)
                 {
+                    EnvironmentProbe env = probe.KIObject as EnvironmentProbe;
+                    Plane.AddTexture(TextureKind.Cubemap, env.Cubemap);
                     Plane.Shader = ShaderItem;
                     Plane.Render();
                 }

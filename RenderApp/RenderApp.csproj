@@ -143,7 +143,6 @@
     <Compile Include="AppSystem.cs" />
     <Compile Include="AssetModel\AssetFactory.cs" />
     <Compile Include="AssetModel\Geometry\File\PLYConverter.cs" />
-    <Compile Include="AssetModel\Geometry\Geometry.cs" />
     <Compile Include="AssetModel\Geometry\IRenderObjectConverter.cs" />
     <Compile Include="RACommand\CreateConvexHullCommand.cs" />
     <Compile Include="RACommand\CreateHalfEdgeCommand.cs" />
@@ -154,23 +153,23 @@
     <Compile Include="RACommand\CreateVoxelCommand.cs" />
     <Compile Include="RACommand\CreateWireFrameCommand.cs" />
     <Compile Include="GfxUtility\ShaderHelper.cs" />
-    <Compile Include="KIRenderSystem\ImageBasedLighting.cs" />
-    <Compile Include="KIRenderSystem\DeferredBuffer.cs" />
-    <Compile Include="KIRenderSystem\OutputBuffer.cs" />
-    <Compile Include="KIRenderSystem\PostEffectManager.cs" />
-    <Compile Include="KIRenderSystem\Post_Effect\Bloom.cs" />
-    <Compile Include="KIRenderSystem\Post_Effect\DOF.cs" />
-    <Compile Include="KIRenderSystem\Post_Effect\RenderTechniqueT4.cs">
+    <Compile Include="RARenderSystem\ImageBasedLighting.cs" />
+    <Compile Include="RARenderSystem\DeferredBuffer.cs" />
+    <Compile Include="RARenderSystem\OutputBuffer.cs" />
+    <Compile Include="RARenderSystem\PostEffectManager.cs" />
+    <Compile Include="RARenderSystem\Post_Effect\Bloom.cs" />
+    <Compile Include="RARenderSystem\Post_Effect\DOF.cs" />
+    <Compile Include="RARenderSystem\Post_Effect\RenderTechniqueT4.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RenderTechniqueT4.tt</DependentUpon>
     </Compile>
-    <Compile Include="KIRenderSystem\Post_Effect\RenderTechnique.cs" />
-    <Compile Include="KIRenderSystem\Post_Effect\Selection.cs" />
-    <Compile Include="KIRenderSystem\Post_Effect\Sobel.cs" />
-    <Compile Include="KIRenderSystem\Post_Effect\SSAO.cs" />
-    <Compile Include="KIRenderSystem\RenderTechniqueFactory.cs" />
-    <Compile Include="KIRenderSystem\ShadowMap.cs" />
+    <Compile Include="RARenderSystem\Post_Effect\RenderTechnique.cs" />
+    <Compile Include="RARenderSystem\Post_Effect\Selection.cs" />
+    <Compile Include="RARenderSystem\Post_Effect\Sobel.cs" />
+    <Compile Include="RARenderSystem\Post_Effect\SSAO.cs" />
+    <Compile Include="RARenderSystem\RenderTechniqueFactory.cs" />
+    <Compile Include="RARenderSystem\ShadowMap.cs" />
     <Compile Include="RACommand\RACommandResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -183,9 +182,9 @@
     <Compile Include="ViewModel\Converter\EnumConverter.cs" />
     <Compile Include="Globals\Project.cs" />
     <Compile Include="Globals\Enum.cs" />
-    <Compile Include="KIRenderSystem\GBuffer.cs" />
-    <Compile Include="KIRenderSystem\RenderQueue.cs" />
-    <Compile Include="KIRenderSystem\RenderSystem.cs" />
+    <Compile Include="RARenderSystem\GBuffer.cs" />
+    <Compile Include="RARenderSystem\RenderQueue.cs" />
+    <Compile Include="RARenderSystem\RenderSystem.cs" />
     <Compile Include="RAControl\DijkstraControl.cs" />
     <Compile Include="RAControl\IControl.cs" />
     <Compile Include="RAControl\SelectTriangleControl.cs" />
@@ -466,7 +465,7 @@
     <Folder Include="Scene\Shader\ShaderType\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="KIRenderSystem\Post_Effect\RenderTechniqueT4.tt">
+    <Content Include="RARenderSystem\Post_Effect\RenderTechniqueT4.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RenderTechniqueT4.cs</LastGenOutput>
     </Content>

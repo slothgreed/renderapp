@@ -86,7 +86,7 @@ namespace KI.Gfx.KIAsset
 
             BinaryReader stream = new BinaryReader(new MemoryStream(Encoding.Unicode.GetBytes(reader.ReadToEnd())));
 
-
+            //TODO: 実装
 
             reader.Close();
 

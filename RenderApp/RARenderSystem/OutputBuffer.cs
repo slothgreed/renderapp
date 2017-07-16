@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using KI.Gfx.KIAsset;
 using KI.Gfx.Render;
-namespace RenderApp.KIRenderSystem
+namespace RenderApp.RARenderSystem
 {
     public partial class OutputBuffer : RenderTechnique
     {
