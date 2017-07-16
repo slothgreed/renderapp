@@ -1,16 +1,12 @@
 ﻿using System.Collections.Generic;
-using OpenTK.Graphics.OpenGL;
 using OpenTK;
 using KI.Foundation.Utility;
 using KI.Foundation.Core;
-using KI.Gfx.KIAsset;
 using KI.Gfx.GLUtil;
 using KI.Gfx.KIShader;
-using KI.Gfx.GLUtil.Buffer;
-using RenderApp.GfxUtility;
 using KI.Gfx.Analyzer;
 
-namespace RenderApp.AssetModel
+namespace KI.Gfx.KIAsset
 {
     public abstract class Geometry : KIObject
     {
@@ -90,30 +86,6 @@ namespace RenderApp.AssetModel
         }
         #endregion
 
-        public void AddTexture(TextureKind kind, Texture texture)
-        {
-            TextureItem[kind] = texture;
-        }
-        public int TextureNum()
-        {
-            if (TextureItem == null)
-            {
-                return 0;
-            }
-            return TextureItem.Count;
-        }
-        public Texture GetTexture(TextureKind kind)
-        {
-            if (TextureItem.ContainsKey(kind))
-            {
-                return TextureItem[kind];
-            }
-            else
-            {
-                return null;
-            }
-        }
-
         #region [Initializer disposer]
         public Geometry()
         {
@@ -164,34 +136,30 @@ namespace RenderApp.AssetModel
             //}
         }
         #endregion
-        #region [render]
-        public virtual void Render()
-        {
-            if (!Visible)
-            {
-                return;
-            }
 
-            if (Shader == null)
+        public void AddTexture(TextureKind kind, Texture texture)
+        {
+            TextureItem[kind] = texture;
+        }
+        public int TextureNum()
+        {
+            if (TextureItem == null)
             {
-                Logger.Log(Logger.LogLevel.Error, "not set shader");
-                return;
+                return 0;
             }
-            ShaderHelper.InitializeState(Shader, this, TextureItem);
-            Shader.BindBuffer();
-            if (geometryInfo.Index.Count == 0)
+            return TextureItem.Count;
+        }
+        public Texture GetTexture(TextureKind kind)
+        {
+            if (TextureItem.ContainsKey(kind))
             {
-                DeviceContext.Instance.DrawArrays(geometryInfo.GeometryType, 0, geometryInfo.Position.Count);
+                return TextureItem[kind];
             }
             else
             {
-                DeviceContext.Instance.DrawElements(geometryInfo.GeometryType, geometryInfo.Index.Count, DrawElementsType.UnsignedInt, 0);
+                return null;
             }
-            Shader.UnBindBuffer();
-            Logger.GLLog(Logger.LogLevel.Error);
         }
-
-        #endregion
         #region [modelmatrix]
         #region [translate]
         /// <summary>
@@ -334,64 +302,5 @@ namespace RenderApp.AssetModel
             get;
             set;
         }
-        public void SetupBuffer()
-        {
-            if (PositionBuffer != null)
-            {
-                PositionBuffer.SetData(geometryInfo.Position, EArrayType.Vec3Array);
-            }
-            if (geometryInfo.Normal.Count != 0)
-            {
-                NormalBuffer.SetData(geometryInfo.Normal, EArrayType.Vec3Array);
-            }
-            if (geometryInfo.Color.Count != 0)
-            {
-                ColorBuffer.SetData(geometryInfo.Color, EArrayType.Vec3Array);
-            }
-            if (geometryInfo.TexCoord.Count != 0)
-            {
-                TexCoordBuffer.SetData(geometryInfo.TexCoord, EArrayType.Vec2Array);
-            }
-            if (geometryInfo.Index.Count != 0)
-            {
-                if(IndexBuffer == null)
-                {
-                    IndexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
-                    IndexBuffer.GenBuffer();
-                }
-                IndexBuffer.SetData(geometryInfo.Index, EArrayType.IntArray);
-            }
-        }
-        public void GenBuffer()
-        {
-            if (geometryInfo.Position.Count != 0)
-            {
-                PositionBuffer = BufferFactory.Instance.CreateArrayBuffer();
-                PositionBuffer.GenBuffer();
-            }
-            if (geometryInfo.Normal.Count != 0)
-            {
-                NormalBuffer = BufferFactory.Instance.CreateArrayBuffer();
-                NormalBuffer.GenBuffer();
-            }
-            if (geometryInfo.Color.Count != 0)
-            {
-                ColorBuffer = BufferFactory.Instance.CreateArrayBuffer();
-                ColorBuffer.GenBuffer();
-            }
-            if (geometryInfo.TexCoord.Count != 0)
-            {
-                TexCoordBuffer = BufferFactory.Instance.CreateArrayBuffer();
-                TexCoordBuffer.GenBuffer();
-            }
-            if (geometryInfo.Index.Count != 0)
-            {
-                IndexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
-                IndexBuffer.GenBuffer();
-            }
-            SetupBuffer();
-        }
-
-
     }
 }

@@ -113,7 +113,7 @@ namespace RenderApp.RACommand
 
                 var update = geometry.HalfEdge.CreateGeometryInfo();
                 geometry.geometryInfo.Update(update.Position, update.Normal, update.Color, null, update.Index, GeometryType.Triangle);
-                geometry.SetupBuffer();
+                ((RenderObject)geometry).SetupBuffer();
 
 
                 return RACommandResource.Success;

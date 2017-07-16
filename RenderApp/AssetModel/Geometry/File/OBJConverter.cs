@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using OpenTK;
 using KI.Gfx.KIAsset;
+using KI.Gfx.KIAsset.Loader;
+
 namespace RenderApp.AssetModel.RA_Geometry
 {
     public class OBJConverter : IRenderObjectConverter

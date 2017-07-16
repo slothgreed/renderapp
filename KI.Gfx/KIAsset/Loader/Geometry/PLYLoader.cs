@@ -7,7 +7,7 @@ using KI.Foundation.Core;
 using KI.Foundation.Utility;
 using System.IO;
 
-namespace KI.Gfx.KIAsset.Loader.Geometry
+namespace KI.Gfx.KIAsset.Loader.Loader
 {
     public class PLYLoader : KIFile
     {

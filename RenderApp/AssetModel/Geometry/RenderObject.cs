@@ -3,6 +3,11 @@ using OpenTK;
 using RenderApp.GfxUtility;
 using KI.Gfx.KIShader;
 using KI.Gfx.KIAsset;
+using KI.Gfx.GLUtil.Buffer;
+using OpenTK.Graphics.OpenGL;
+using KI.Gfx.GLUtil;
+using KI.Foundation.Utility;
+
 namespace RenderApp.AssetModel
 {
     /// <summary>
@@ -111,6 +116,94 @@ namespace RenderApp.AssetModel
             {
                 geometryInfo.Color.Add(_color);
             }
+        }
+
+        #region [render]
+        public virtual void Render()
+        {
+            if (!Visible)
+            {
+                return;
+            }
+
+            if (Shader == null)
+            {
+                Logger.Log(Logger.LogLevel.Error, "not set shader");
+                return;
+            }
+            ShaderHelper.InitializeState(Shader, this, TextureItem);
+            Shader.BindBuffer();
+            if (geometryInfo.Index.Count == 0)
+            {
+                DeviceContext.Instance.DrawArrays(geometryInfo.GeometryType, 0, geometryInfo.Position.Count);
+            }
+            else
+            {
+                DeviceContext.Instance.DrawElements(geometryInfo.GeometryType, geometryInfo.Index.Count, DrawElementsType.UnsignedInt, 0);
+            }
+            Shader.UnBindBuffer();
+            Logger.GLLog(Logger.LogLevel.Error);
+        }
+        #endregion
+
+
+        public void SetupBuffer()
+        {
+            if (PositionBuffer != null)
+            {
+                PositionBuffer.SetData(geometryInfo.Position, EArrayType.Vec3Array);
+            }
+            if (geometryInfo.Normal.Count != 0)
+            {
+                NormalBuffer.SetData(geometryInfo.Normal, EArrayType.Vec3Array);
+            }
+            if (geometryInfo.Color.Count != 0)
+            {
+                ColorBuffer.SetData(geometryInfo.Color, EArrayType.Vec3Array);
+            }
+            if (geometryInfo.TexCoord.Count != 0)
+            {
+                TexCoordBuffer.SetData(geometryInfo.TexCoord, EArrayType.Vec2Array);
+            }
+            if (geometryInfo.Index.Count != 0)
+            {
+                if (IndexBuffer == null)
+                {
+                    IndexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
+                    IndexBuffer.GenBuffer();
+                }
+                IndexBuffer.SetData(geometryInfo.Index, EArrayType.IntArray);
+            }
+        }
+
+        private void GenBuffer()
+        {
+            if (geometryInfo.Position.Count != 0)
+            {
+                PositionBuffer = BufferFactory.Instance.CreateArrayBuffer();
+                PositionBuffer.GenBuffer();
+            }
+            if (geometryInfo.Normal.Count != 0)
+            {
+                NormalBuffer = BufferFactory.Instance.CreateArrayBuffer();
+                NormalBuffer.GenBuffer();
+            }
+            if (geometryInfo.Color.Count != 0)
+            {
+                ColorBuffer = BufferFactory.Instance.CreateArrayBuffer();
+                ColorBuffer.GenBuffer();
+            }
+            if (geometryInfo.TexCoord.Count != 0)
+            {
+                TexCoordBuffer = BufferFactory.Instance.CreateArrayBuffer();
+                TexCoordBuffer.GenBuffer();
+            }
+            if (geometryInfo.Index.Count != 0)
+            {
+                IndexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
+                IndexBuffer.GenBuffer();
+            }
+            SetupBuffer();
         }
     }
 }

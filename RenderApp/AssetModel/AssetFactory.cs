@@ -42,7 +42,7 @@ namespace RenderApp.AssetModel
             return new PointLight(name, new Vector3(-11, 300, -18), Vector3.Zero);
         }
 
-        internal Geometry CreatePlane(string name, Shader shader)
+        internal RenderObject CreatePlane(string name, Shader shader)
         {
             Plane plane;
             plane = new Plane(name);
@@ -53,7 +53,7 @@ namespace RenderApp.AssetModel
             return renderObject;
         }
 
-        internal Geometry CreatePostProcessPlane(string name)
+        internal RenderObject CreatePostProcessPlane(string name)
         {
             Plane plane = new Plane(name);
             RenderObject renderObject = new RenderObject(name);

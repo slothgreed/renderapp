@@ -54,9 +54,9 @@ namespace RenderApp.KIRenderSystem
             RenderTarget.BindRenderTarget(OutputTexture.ToArray());
             foreach (var asset in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
             {
-                if (asset.KIObject is Geometry)
+                if (asset.KIObject is RenderObject)
                 {
-                    var geometry = asset.KIObject as Geometry;
+                    var geometry = asset.KIObject as RenderObject;
                     geometry.Render();
                 }
             }

@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using OpenTK;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
 using KI.Foundation.Utility;
 using KI.Foundation.Core;
 
-namespace KI.Gfx.KIAsset
+namespace KI.Gfx.KIAsset.Loader
 {
     public class OBJMaterial
     {

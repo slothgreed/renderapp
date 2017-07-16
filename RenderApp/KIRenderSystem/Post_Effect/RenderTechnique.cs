@@ -32,7 +32,7 @@ namespace RenderApp.KIRenderSystem
             set;
         }
 
-        protected Geometry Plane
+        protected RenderObject Plane
         {
             get;
             set;

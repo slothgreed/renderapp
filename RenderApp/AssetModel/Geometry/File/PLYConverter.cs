@@ -1,5 +1,5 @@
 ﻿using KI.Gfx.KIAsset;
-using KI.Gfx.KIAsset.Loader.Geometry;
+using KI.Gfx.KIAsset.Loader.Loader;
 using OpenTK;
 using System;
 using System.Collections.Generic;
