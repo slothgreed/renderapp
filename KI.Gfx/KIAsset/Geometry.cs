@@ -13,11 +13,6 @@ namespace KI.Gfx.KIAsset
         #region Propety
         public int ID { get; set; }
         public GeometryInfo geometryInfo { get; set; }
-        public ArrayBuffer PositionBuffer { get; set; }
-        public ArrayBuffer NormalBuffer { get; set; }
-        public ArrayBuffer ColorBuffer { get; set; }
-        public ArrayBuffer TexCoordBuffer { get; set; }
-        public ArrayBuffer IndexBuffer { get; set; }
         public bool Visible { get; set; } = true;
 
         public Matrix4 ModelMatrix
@@ -113,27 +108,6 @@ namespace KI.Gfx.KIAsset
             Translate = Vector3.Zero;
             Scale = Vector3.One;
             Rotate = Vector3.Zero;
-
-            //if (PositionBuffer != null)
-            //{
-            //    PositionBuffer.Dispose();
-            //}
-            //if (NormalBuffer != null)
-            //{
-            //    NormalBuffer.Dispose();
-            //}
-            //if (ColorBuffer != null)
-            //{
-            //    ColorBuffer.Dispose();
-            //}
-            //if (TexCoordBuffer != null)
-            //{
-            //    TexCoordBuffer.Dispose();
-            //}
-            //if (IndexBuffer != null)
-            //{
-            //    IndexBuffer.Dispose();
-            //}
         }
         #endregion
 

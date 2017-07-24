@@ -176,6 +176,7 @@
       <DependentUpon>RACommandResource.resx</DependentUpon>
     </Compile>
     <Compile Include="RAControl\SelectPointControl.cs" />
+    <Compile Include="RARenderSystem\SSLIC.cs" />
     <Compile Include="Scene\SceneManager.cs" />
     <Compile Include="RAControl\CameraControl.cs" />
     <Compile Include="GfxUtility\ShaderCreater.cs" />

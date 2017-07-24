@@ -13,6 +13,7 @@ namespace RenderApp.RARenderSystem
         Dof,
         Sobel,
         SSAO,
+        SSLIC,
         Selection,
         Output
     }
@@ -64,6 +65,9 @@ namespace RenderApp.RARenderSystem
                     break;
                 case RenderTechniqueType.SSAO:
                     technique = new SSAO(type);
+                    break;
+                case RenderTechniqueType.SSLIC:
+                    technique = new SSLIC(type);
                     break;
                 default:
                     technique = null;

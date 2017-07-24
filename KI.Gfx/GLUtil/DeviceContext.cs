@@ -40,7 +40,7 @@ namespace KI.Gfx.GLUtil
         }
         public void Initialize(int width,int height)
         {
-            GL.ClearColor(0, 0, 0, 1);
+            GL.ClearColor(1, 1, 1, 1);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             Enable(EnableCap.DepthTest);
             Enable(EnableCap.CullFace);
@@ -111,7 +111,7 @@ namespace KI.Gfx.GLUtil
 
         public void ReadPixel(System.Drawing.Imaging.BitmapData data)
         {
-            GL.ReadPixels(0, 0, Width, Height, OpenTK.Graphics.OpenGL.PixelFormat.Bgr, PixelType.UnsignedByte, data.Scan0);
+            GL.ReadPixels(0, 0, Width, Height, PixelFormat.Bgr, PixelType.UnsignedByte, data.Scan0);
         }
 
         public void Clear()

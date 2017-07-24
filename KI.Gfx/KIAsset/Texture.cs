@@ -105,6 +105,14 @@ namespace KI.Gfx.KIAsset
             ImageInfos = new List<KIImageInfo>();
             CreateTextureBuffer(type);
         }
+
+        /// <summary>
+        /// 空のテクスチャの作成
+        /// </summary>
+        /// <param name="name">テクスチャ名</param>
+        /// <param name="type">テクスチャタイプ</param>
+        /// <param name="width">横<param>
+        /// <param name="height">縦</param>
         internal Texture(string name, TextureType type, int width, int height)
             : base(name)
         {
@@ -156,6 +164,11 @@ namespace KI.Gfx.KIAsset
             }
         }
 
+        private void SetupTexImage2D(TextureTarget target,PixelInternalFormat pixelFormat, float[,,] rgba)
+        {
+            GL.TexImage2D(target, 0, pixelFormat, Width, Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.Float, rgba);
+        }
+
         public void GenCubemapTexture(List<KIImageInfo> images)
         {
             if (images == null)
@@ -192,6 +205,10 @@ namespace KI.Gfx.KIAsset
 
         }
 
+        /// <summary>
+        /// ファイルからのテクスチャ生成
+        /// </summary>
+        /// <param name="image"></param>
         public void GenTexture(KIImageInfo image)
         {
             if (!image.Loaded)
@@ -208,13 +225,25 @@ namespace KI.Gfx.KIAsset
             image.UnLock();
             TextureBuffer.UnBindBuffer();
         }
+
+        /// <summary>
+        /// 配列からのテクスチャ生成
+        /// </summary>
+        /// <param name=""></param>
+        public void GenTexture(float[,,] rgba)
+        {
+            TextureBuffer.BindBuffer();
+
+            SetupTexImage2D(TextureBuffer.Target,PixelInternalFormat.Four, rgba);
+
+            TextureBuffer.UnBindBuffer();
+        }
     
         /// <summary>
         /// テクスチャの読み込み
         /// </summary>
-        /// <param name="filename"></param>
-        /// <rereturns>バインドしたテクスチャID</rereturns>
-        public void CreateTextureBuffer(TextureType type)
+        /// <rereturns>テクスチャ種類</rereturns>
+        private void CreateTextureBuffer(TextureType type)
         {
             TextureBuffer = BufferFactory.Instance.CreateTextureBuffer(type);
             TextureBuffer.GenBuffer();

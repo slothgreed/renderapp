@@ -15,6 +15,12 @@ namespace RenderApp.AssetModel
     /// </summary>
     public class RenderObject : Geometry
     {
+        public ArrayBuffer PositionBuffer { get;private set; }
+        public ArrayBuffer NormalBuffer { get; private set; }
+        public ArrayBuffer ColorBuffer { get; private set; }
+        public ArrayBuffer TexCoordBuffer { get; private set; }
+        public ArrayBuffer IndexBuffer { get; private set; }
+
         private void Initialize()
         {
             GenBuffer();
@@ -36,10 +42,6 @@ namespace RenderApp.AssetModel
         {
             geometryInfo = info;
 
-            for (int i = 0; i < geometryInfo.Position.Count; i++)
-            {
-                geometryInfo.Color.Add(Vector3.UnitY);
-            }
             if(geometryInfo.Index.Count == 0)
             {
                 if (geometryInfo.Normal != null)

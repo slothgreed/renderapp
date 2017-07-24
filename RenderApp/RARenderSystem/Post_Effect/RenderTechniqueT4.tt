@@ -24,9 +24,16 @@
 	new string[]{"uPosition","uTarget"	,"uSample"}),
 
 	Tuple.Create(
+	"SSLIC",
+	new string[]{"Texture"	,"Texture"	,"Texture"	,"Texture"	,"Texture"},
+	new string[]{"uPosit"	,"uNormal"	,"uVector"	,"uNoize"	,"uTexCoord"}),
+
+	Tuple.Create(
 	"OutputBuffer",
 	new string[]{"Texture"	,"Texture"},
 	new string[]{"uSelectMap","uTarget"})
+
+
  };
 #>
 using System;

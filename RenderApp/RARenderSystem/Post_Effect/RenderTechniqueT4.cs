@@ -174,6 +174,75 @@ namespace RenderApp.RARenderSystem
 
 
 	}
+	public partial class SSLIC : RenderTechnique
+	{
+		private Texture _uPosit;
+		public Texture uPosit
+		{
+			get
+			{
+				return _uPosit;
+			}
+			set
+			{
+				SetValue<Texture>(ref _uPosit, value); 
+			}
+		}
+
+		private Texture _uNormal;
+		public Texture uNormal
+		{
+			get
+			{
+				return _uNormal;
+			}
+			set
+			{
+				SetValue<Texture>(ref _uNormal, value); 
+			}
+		}
+
+		private Texture _uVector;
+		public Texture uVector
+		{
+			get
+			{
+				return _uVector;
+			}
+			set
+			{
+				SetValue<Texture>(ref _uVector, value); 
+			}
+		}
+
+		private Texture _uNoize;
+		public Texture uNoize
+		{
+			get
+			{
+				return _uNoize;
+			}
+			set
+			{
+				SetValue<Texture>(ref _uNoize, value); 
+			}
+		}
+
+		private Texture _uTexCoord;
+		public Texture uTexCoord
+		{
+			get
+			{
+				return _uTexCoord;
+			}
+			set
+			{
+				SetValue<Texture>(ref _uTexCoord, value); 
+			}
+		}
+
+
+	}
 	public partial class OutputBuffer : RenderTechnique
 	{
 		private Texture _uSelectMap;

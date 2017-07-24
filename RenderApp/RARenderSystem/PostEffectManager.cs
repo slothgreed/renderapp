@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 namespace RenderApp.RARenderSystem
 {
-    class PostEffectManager
+    public class PostEffectManager
     {
         public List<RenderTechnique> PostEffects = new List<RenderTechnique>();
 
@@ -12,19 +12,23 @@ namespace RenderApp.RARenderSystem
 
         private void CreatePostProcessFlow()
         {
-            Bloom bloom = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Bloom) as Bloom;
-            bloom.uTarget = SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[3];
+            //Bloom bloom = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Bloom) as Bloom;
+            //bloom.uTarget = SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[3];
 
-            Sobel sobel = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Sobel) as Sobel;
-            sobel.uTarget = SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[3];
+            //Sobel sobel = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Sobel) as Sobel;
+            //sobel.uTarget = SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[3];
 
             //SSAO ssao = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.SSAO) as SSAO;
             //ssao.uPosition = SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[0];
             //ssao.uTarget = SceneManager.Instance.RenderSystem.LightingStage.OutputTexture[0];
 
-            PostEffects.Add(bloom);
-            PostEffects.Add(sobel);
+            SSLIC sslic = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.SSLIC) as SSLIC;
+            sslic.uVector = SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[2];
+
+            //PostEffects.Add(bloom);
+            //PostEffects.Add(sobel);
             //PostEffects.Add(ssao);
+            PostEffects.Add(sslic);
 
         }
 

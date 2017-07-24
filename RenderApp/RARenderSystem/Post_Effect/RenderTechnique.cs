@@ -19,13 +19,14 @@ namespace RenderApp.RARenderSystem
         protected RenderType renderType
         {
             get;
-            set;
+            private set;
         }
         public RenderTechniqueType Technique
         {
             get;
             private set;
         }
+
         public Shader ShaderItem
         {
             get;

@@ -1,11 +1,5 @@
 ﻿using RenderApp.AssetModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using KI.Gfx.KIAsset;
-using KI.Gfx.Render;
 namespace RenderApp.RARenderSystem
 {
     public partial class OutputBuffer : RenderTechnique

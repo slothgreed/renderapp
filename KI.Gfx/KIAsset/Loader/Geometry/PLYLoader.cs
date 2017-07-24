@@ -48,7 +48,6 @@ namespace KI.Gfx.KIAsset.Loader.Loader
                 propertyNames = new List<string>();
                 propertys = new List<List<float>>();
 
-                GeometryInfo vertexInfo = new GeometryInfo();
                 string[] fileStream = File.ReadAllLines(filePath, System.Text.Encoding.GetEncoding("Shift_JIS"));
                 ReadData(fileStream);
             }

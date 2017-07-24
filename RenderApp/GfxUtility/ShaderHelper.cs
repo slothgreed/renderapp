@@ -13,7 +13,7 @@ namespace RenderApp.GfxUtility
         /// <summary>
         /// 初期状態の設定
         /// </summary>
-        public static void InitializeState(Shader shader,Geometry geometry, Dictionary<TextureKind, Texture> TextureItem)
+        public static void InitializeState(Shader shader, RenderObject geometry, Dictionary<TextureKind, Texture> TextureItem)
         {
             foreach (ShaderProgramInfo info in shader.GetShaderVariable())
             {
@@ -86,7 +86,7 @@ namespace RenderApp.GfxUtility
                         }
                         break;
                     case "uCubeMap":
-                        if(TextureItem.ContainsKey(TextureKind.Cubemap))
+                        if (TextureItem.ContainsKey(TextureKind.Cubemap))
                         {
                             info.variable = TextureItem[TextureKind.Cubemap].DeviceID;
                         }
@@ -130,6 +130,5 @@ namespace RenderApp.GfxUtility
                 }
             }
         }
-
     }
 }
