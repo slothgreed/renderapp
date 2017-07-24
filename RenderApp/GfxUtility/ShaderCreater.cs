@@ -45,51 +45,51 @@ namespace RenderApp.GfxUtility
         /// <summary>
         /// 汎用的な頂点シェーダの読み込み
         /// </summary>
-        public string GetVertexShader(RenderObject renderObj)
+        public string GetVertexShader(RenderObject renderObject)
         {
-            string shaderPath = GetTextureFragShader(renderObj);
+            string shaderPath = GetTextureFragShader(renderObject);
             if(shaderPath != null)
             {
                 return shaderPath;
             }
 
-            if (renderObj.Name.Contains("ply"))
+            if (renderObject.Name.Contains("ply"))
             {
                 return Directory + @"GBuffer\PLYGeometry.vert";
             }
 
-            if (CheckBufferEnable(renderObj.PositionBuffer) &&
-                CheckBufferEnable(renderObj.NormalBuffer) &&
-                CheckBufferEnable(renderObj.ColorBuffer) &&
-                CheckBufferEnable(renderObj.TexCoordBuffer))
+            if (CheckBufferEnable(renderObject.PositionBuffer) &&
+                CheckBufferEnable(renderObject.NormalBuffer) &&
+                CheckBufferEnable(renderObject.ColorBuffer) &&
+                CheckBufferEnable(renderObject.TexCoordBuffer))
             {
                 return Directory + @"GBuffer\GeneralPNCT.vert";
             }
-            if (CheckBufferEnable(renderObj.PositionBuffer) &&
-                CheckBufferEnable(renderObj.NormalBuffer) &&
-                CheckBufferEnable(renderObj.TexCoordBuffer))
+            if (CheckBufferEnable(renderObject.PositionBuffer) &&
+                CheckBufferEnable(renderObject.NormalBuffer) &&
+                CheckBufferEnable(renderObject.TexCoordBuffer))
             {
                 return Directory + @"GBuffer\GeneralPNT.vert";
             }
-            if (CheckBufferEnable(renderObj.PositionBuffer) &&
-                CheckBufferEnable(renderObj.NormalBuffer) &&
-                CheckBufferEnable(renderObj.ColorBuffer))
+            if (CheckBufferEnable(renderObject.PositionBuffer) &&
+                CheckBufferEnable(renderObject.NormalBuffer) &&
+                CheckBufferEnable(renderObject.ColorBuffer))
             {
                 return Directory + @"GBuffer\GeneralPCN.vert";
             }
 
-            if (CheckBufferEnable(renderObj.PositionBuffer) &&
-                CheckBufferEnable(renderObj.ColorBuffer))
+            if (CheckBufferEnable(renderObject.PositionBuffer) &&
+                CheckBufferEnable(renderObject.ColorBuffer))
             {
                 return Directory + @"GBuffer\GeneralPC.vert";
             }
             
-            if (CheckBufferEnable(renderObj.PositionBuffer) &&
-                CheckBufferEnable(renderObj.TexCoordBuffer))
+            if (CheckBufferEnable(renderObject.PositionBuffer) &&
+                CheckBufferEnable(renderObject.TexCoordBuffer))
             {
                 return Directory + @"GBuffer\GeneralPT.vert";
             }
-            if (CheckBufferEnable(renderObj.PositionBuffer))
+            if (CheckBufferEnable(renderObject.PositionBuffer))
             {
                 return Directory + @"GBuffer\GeneralP.vert";
             }
@@ -98,40 +98,40 @@ namespace RenderApp.GfxUtility
         /// <summary>
         /// フラグシェーダの切り替え
         /// </summary>
-        public string GetFragShader(RenderObject renderObj)
+        public string GetFragShader(RenderObject renderObject)
         {
-            if (renderObj.Name.Contains("ply"))
+            if (renderObject.Name.Contains("ply"))
             {
                 return Directory + @"GBuffer\PLYGeometry.frag";
             }
 
-            if (CheckBufferEnable(renderObj.PositionBuffer) &&
-                CheckBufferEnable(renderObj.TexCoordBuffer) &&
-                CheckBufferEnable(renderObj.NormalBuffer))
+            if (CheckBufferEnable(renderObject.PositionBuffer) &&
+                CheckBufferEnable(renderObject.TexCoordBuffer) &&
+                CheckBufferEnable(renderObject.NormalBuffer))
             {
                     return Directory + @"GBuffer\GeneralPNT.frag";
             }
 
-            if (CheckBufferEnable(renderObj.PositionBuffer) &&
-                CheckBufferEnable(renderObj.ColorBuffer) &&
-                CheckBufferEnable(renderObj.NormalBuffer))
+            if (CheckBufferEnable(renderObject.PositionBuffer) &&
+                CheckBufferEnable(renderObject.ColorBuffer) &&
+                CheckBufferEnable(renderObject.NormalBuffer))
             {
                 return Directory + @"GBuffer\GeneralPCN.frag";
             }
 
-            if (CheckBufferEnable(renderObj.PositionBuffer) &&
-                CheckBufferEnable(renderObj.ColorBuffer))
+            if (CheckBufferEnable(renderObject.PositionBuffer) &&
+                CheckBufferEnable(renderObject.ColorBuffer))
             {
                 return Directory + @"GBuffer\GeneralPC.frag";
             }
             
-            if (CheckBufferEnable(renderObj.PositionBuffer) &&
-                CheckBufferEnable(renderObj.NormalBuffer))
+            if (CheckBufferEnable(renderObject.PositionBuffer) &&
+                CheckBufferEnable(renderObject.NormalBuffer))
             {
                 return Directory + @"GBuffer\GeneralPN.frag";
             }
             
-            if (CheckBufferEnable(renderObj.PositionBuffer))
+            if (CheckBufferEnable(renderObject.PositionBuffer))
             {
                 return Directory + @"GBuffer\GeneralPN.frag";
             }
