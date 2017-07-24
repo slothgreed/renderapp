@@ -45,45 +45,45 @@ namespace RenderApp.GfxUtility
         /// <summary>
         /// 汎用的な頂点シェーダの読み込み
         /// </summary>
-        public string GetVertexShader(Geometry geometry)
+        public string GetVertexShader(RenderObject renderObject)
         {
-            string shaderPath = GetTextureFragShader(geometry);
+            string shaderPath = GetTextureFragShader(renderObject);
             if(shaderPath != null)
             {
                 return shaderPath;
             }
-            if (CheckBufferEnable(geometry.PositionBuffer) &&
-                CheckBufferEnable(geometry.NormalBuffer) &&
-                CheckBufferEnable(geometry.ColorBuffer) &&
-                CheckBufferEnable(geometry.TexCoordBuffer))
+            if (CheckBufferEnable(renderObject.PositionBuffer) &&
+                CheckBufferEnable(renderObject.NormalBuffer) &&
+                CheckBufferEnable(renderObject.ColorBuffer) &&
+                CheckBufferEnable(renderObject.TexCoordBuffer))
             {
                 return Directory + @"GBuffer\GeneralPNCT.vert";
             }
-            if (CheckBufferEnable(geometry.PositionBuffer) &&
-                CheckBufferEnable(geometry.NormalBuffer) &&
-                CheckBufferEnable(geometry.TexCoordBuffer))
+            if (CheckBufferEnable(renderObject.PositionBuffer) &&
+                CheckBufferEnable(renderObject.NormalBuffer) &&
+                CheckBufferEnable(renderObject.TexCoordBuffer))
             {
                 return Directory + @"GBuffer\GeneralPNT.vert";
             }
-            if (CheckBufferEnable(geometry.PositionBuffer) &&
-                CheckBufferEnable(geometry.NormalBuffer) &&
-                CheckBufferEnable(geometry.ColorBuffer))
+            if (CheckBufferEnable(renderObject.PositionBuffer) &&
+                CheckBufferEnable(renderObject.NormalBuffer) &&
+                CheckBufferEnable(renderObject.ColorBuffer))
             {
                 return Directory + @"GBuffer\GeneralPCN.vert";
             }
 
-            if (CheckBufferEnable(geometry.PositionBuffer) &&
-                CheckBufferEnable(geometry.ColorBuffer))
+            if (CheckBufferEnable(renderObject.PositionBuffer) &&
+                CheckBufferEnable(renderObject.ColorBuffer))
             {
                 return Directory + @"GBuffer\GeneralPC.vert";
             }
             
-            if (CheckBufferEnable(geometry.PositionBuffer) &&
-                CheckBufferEnable(geometry.TexCoordBuffer))
+            if (CheckBufferEnable(renderObject.PositionBuffer) &&
+                CheckBufferEnable(renderObject.TexCoordBuffer))
             {
                 return Directory + @"GBuffer\GeneralPT.vert";
             }
-            if (CheckBufferEnable(geometry.PositionBuffer))
+            if (CheckBufferEnable(renderObject.PositionBuffer))
             {
                 return Directory + @"GBuffer\GeneralP.vert";
             }
@@ -92,35 +92,35 @@ namespace RenderApp.GfxUtility
         /// <summary>
         /// フラグシェーダの切り替え
         /// </summary>
-        public string GetFragShader(Geometry geometry)
+        public string GetFragShader(RenderObject renderObject)
         {
-            if (CheckBufferEnable(geometry.PositionBuffer) &&
-                CheckBufferEnable(geometry.TexCoordBuffer) &&
-                CheckBufferEnable(geometry.NormalBuffer))
+            if (CheckBufferEnable(renderObject.PositionBuffer) &&
+                CheckBufferEnable(renderObject.TexCoordBuffer) &&
+                CheckBufferEnable(renderObject.NormalBuffer))
             {
                     return Directory + @"GBuffer\GeneralPNT.frag";
             }
 
-            if (CheckBufferEnable(geometry.PositionBuffer) &&
-                CheckBufferEnable(geometry.ColorBuffer) &&
-                CheckBufferEnable(geometry.NormalBuffer))
+            if (CheckBufferEnable(renderObject.PositionBuffer) &&
+                CheckBufferEnable(renderObject.ColorBuffer) &&
+                CheckBufferEnable(renderObject.NormalBuffer))
             {
                 return Directory + @"GBuffer\GeneralPCN.frag";
             }
 
-            if (CheckBufferEnable(geometry.PositionBuffer) &&
-                CheckBufferEnable(geometry.ColorBuffer))
+            if (CheckBufferEnable(renderObject.PositionBuffer) &&
+                CheckBufferEnable(renderObject.ColorBuffer))
             {
                 return Directory + @"GBuffer\GeneralPC.frag";
             }
             
-            if (CheckBufferEnable(geometry.PositionBuffer) &&
-                CheckBufferEnable(geometry.NormalBuffer))
+            if (CheckBufferEnable(renderObject.PositionBuffer) &&
+                CheckBufferEnable(renderObject.NormalBuffer))
             {
                 return Directory + @"GBuffer\GeneralPN.frag";
             }
             
-            if (CheckBufferEnable(geometry.PositionBuffer))
+            if (CheckBufferEnable(renderObject.PositionBuffer))
             {
                 return Directory + @"GBuffer\GeneralPN.frag";
             }
