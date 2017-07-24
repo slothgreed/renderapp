@@ -43,9 +43,9 @@ namespace RenderApp
             var scene = new Scene(name);
             SceneList.Add(scene);
             ActiveScene = scene;
-            Initialize();
             CreateMainCamera();
             CreateSceneLight();
+            Initialize();
         }
         public void Initialize()
         {
@@ -88,10 +88,17 @@ namespace RenderApp
             //ActiveScene.AddObject(cubeMap);
 
             //List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/bunny.half");
-            List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/duck.half");
+            //List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/duck.half");
+            //foreach (var b in bunny)
+            //{
+            //    b.RotateX(-90);
+            //    ActiveScene.AddObject(b);
+            //}
+
+            List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/sphere1.ply");
             foreach (var b in bunny)
             {
-                b.RotateX(-90);
+                //b.Scale = new Vector3(100);
                 ActiveScene.AddObject(b);
             }
 

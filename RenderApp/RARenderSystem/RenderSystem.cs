@@ -56,7 +56,7 @@ namespace RenderApp.RARenderSystem
         /// <summary>
         /// ポストエフェクト
         /// </summary>
-        private PostEffectManager PostEffect;
+        public PostEffectManager PostEffect;
         /// <summary>
         /// 後処理のUtil（選択とか）
         /// </summary>
@@ -114,17 +114,20 @@ namespace RenderApp.RARenderSystem
         }
         public void Render()
         {
-            //PreRenderStage.Render();
-            GBufferStage.Render();
-            IBLStage.Render();
-            DeferredStage.Render();
-            //SelectionStage.ClearBuffer();
-            //SelectionStage.Render();
+            //for (int i = 0; i < 2; i++)
+            {
+                //PreRenderStage.Render();
+                GBufferStage.Render();
+                //IBLStage.Render();
+                //DeferredStage.Render();
+                //SelectionStage.ClearBuffer();
+                //SelectionStage.Render();
 
-            PostEffect.Render();
-            OutputStage.uSelectMap = SelectionStage.OutputTexture[0];
-            OutputStage.uTarget = OutputTexture;
-            OutputStage.Render();
+                PostEffect.Render();
+                OutputStage.uSelectMap = SelectionStage.OutputTexture[0];
+                OutputStage.uTarget = OutputTexture;
+                OutputStage.Render();
+            }
         }
 
         internal void TogglePostProcess()

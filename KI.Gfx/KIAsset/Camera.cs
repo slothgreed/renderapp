@@ -39,6 +39,7 @@ namespace KI.Gfx.KIAsset
         public void SetProjMatrix(float aspect)
         {
             ProjMatrix = Matrix4.CreatePerspectiveFieldOfView((float)System.Math.PI / 4.0f, aspect, Near, Far);
+            ProjMatrix = Matrix4.CreateOrthographicOffCenter(0, 1, 0, 1, -1000, 4000);
         }
 
         #endregion
@@ -226,6 +227,7 @@ namespace KI.Gfx.KIAsset
             Position = m_Pan + (q_Move * m_ZoomLength);
             LookAt = m_Pan;
             Matrix = Matrix4.LookAt(Position, LookAt, Up);
+            Matrix = Matrix4.Identity;
         }
         #endregion
         #region [カメラの平行移動]

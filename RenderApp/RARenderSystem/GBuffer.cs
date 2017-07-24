@@ -1,6 +1,9 @@
-﻿using KI.Gfx.KIAsset;
+﻿using KI.Gfx.GLUtil;
+using KI.Gfx.KIAsset;
 using KI.Gfx.Render;
 using RenderApp.AssetModel;
+using System.Linq;
+
 namespace RenderApp.RARenderSystem
 {
     public class GBuffer : RenderTechnique
@@ -52,15 +55,29 @@ namespace RenderApp.RARenderSystem
         {
             ClearBuffer();
             RenderTarget.BindRenderTarget(OutputTexture.ToArray());
+            var sslic = SceneManager.Instance.RenderSystem.PostEffect.PostEffects[0];
             foreach (var asset in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
             {
                 if (asset.KIObject is RenderObject)
                 {
                     var geometry = asset.KIObject as RenderObject;
+                    geometry.Shader.SetValue("uFrameBuffer", sslic.OutputTexture.FirstOrDefault());
                     geometry.Render();
                 }
             }
             RenderTarget.UnBindRenderTarget();
+
+            //ClearBuffer();
+            //RenderTarget.BindRenderTarget(OutputTexture.ToArray());
+            //foreach (var asset in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
+            //{
+            //    if (asset.KIObject is RenderObject)
+            //    {
+            //        var geometry = asset.KIObject as RenderObject;
+            //        geometry.Render();
+            //    }
+            //}
+            //RenderTarget.UnBindRenderTarget();
         }
     }
 }

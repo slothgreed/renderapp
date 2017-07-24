@@ -173,6 +173,10 @@ namespace KI.Gfx.GLUtil
             m_NowRender = false;
 
         }
+        public void SwapBuffer()
+        {
+            m_glControl.SwapBuffers();
+        }
         #endregion
         #region [mouse event]
 
@@ -268,7 +272,7 @@ namespace KI.Gfx.GLUtil
             if (GraphicsContext.CurrentContext == null)
                 throw new GraphicsContextMissingException();
 
-            System.Drawing.Rectangle r = new System.Drawing.Rectangle(glControl.Location, glControl.Size);
+            Rectangle r = new Rectangle(glControl.Location, glControl.Size);
             Bitmap bmp = new Bitmap(glControl.Width, glControl.Height);
             System.Drawing.Imaging.BitmapData data = bmp.LockBits(r, System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
             DeviceContext.Instance.ReadPixel(data);
