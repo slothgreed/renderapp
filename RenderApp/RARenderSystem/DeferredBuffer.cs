@@ -1,4 +1,5 @@
-﻿using KI.Gfx.KIAsset;
+﻿using KI.Asset;
+using KI.Gfx.KITexture;
 
 namespace RenderApp.RARenderSystem
 {

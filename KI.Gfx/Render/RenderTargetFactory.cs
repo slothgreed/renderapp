@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK.Graphics.OpenGL;
-using KI.Gfx.KIAsset;
-using KI.Foundation.Core;
+﻿using KI.Foundation.Core;
 namespace KI.Gfx.Render
 {
     public class RenderTargetFactory : KIFactoryBase<RenderTarget>

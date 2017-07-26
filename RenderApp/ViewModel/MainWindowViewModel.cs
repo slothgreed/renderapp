@@ -1,28 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-using System.Collections.ObjectModel;
 using System.Windows.Forms;
 using RenderApp.AssetModel;
 using RenderApp.Globals;
-using RenderApp.ViewModel.Dialog;
 using RenderApp.RAControl;
-using RenderApp.RARenderSystem;
-using RenderApp.AssetModel.RA_Geometry;
 using KI.Foundation.ViewModel;
 using KI.Foundation.Tree;
 using KI.Gfx.GLUtil;
 using KI.Gfx;
-using KI.Gfx.KIAsset;
 using KI.Gfx.Render;
 using KI.Gfx.KIShader;
 using KI.Gfx.GLUtil.Buffer;
 using RenderApp.RACommand;
 using KI.Foundation.Command;
-using KI.Foundation.Core;
+using KI.Asset;
+
 namespace RenderApp.ViewModel
 {
     public partial class MainWindowViewModel : ViewModelBase

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using KI.Gfx.KIAsset;
-using RenderApp.AssetModel;
-using OpenTK.Graphics.OpenGL;
+﻿using System.Collections.Generic;
+using KI.Gfx.KITexture;
+
 namespace RenderApp.RARenderSystem
 {
     public class RenderSystem

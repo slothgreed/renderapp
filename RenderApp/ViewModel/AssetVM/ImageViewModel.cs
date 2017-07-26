@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using System.Windows.Media;
+﻿using System.Collections.Generic;
 using KI.Foundation.ViewModel;
-using KI.Gfx.KIAsset;
+using KI.Gfx.KITexture;
 
 namespace RenderApp.ViewModel
 {

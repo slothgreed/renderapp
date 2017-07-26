@@ -1,21 +1,17 @@
 ﻿<Window
-        x:Class="RenderApp.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:RenderApp"
-        xmlns:vm="clr-namespace:RenderApp.ViewModel"
-        xmlns:v="clr-namespace:RenderApp.View"
-        xmlns:vc="clr-namespace:RenderApp.View.Controller"
-        xmlns:asset="clr-namespace:RenderApp.AssetModel"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
-        mc:Ignorable="d"
-        Title="RenderingApplication" MinHeight="600" MinWidth="1200"
-        Height="600" Width="1200"
-        xmlns:tree="clr-namespace:System.Windows.Controls;assembly=MultiSelectTreeView"
-        >
+    x:Class="RenderApp.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:RenderApp"
+    xmlns:vm="clr-namespace:RenderApp.ViewModel"
+    xmlns:v="clr-namespace:RenderApp.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+    mc:Ignorable="d"
+    Title="RenderingApplication" MinHeight="600" MinWidth="1200"
+    Height="600" Width="1200">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <ei:CallMethodAction MethodName="LoadedCommand" TargetObject="{Binding}"/>

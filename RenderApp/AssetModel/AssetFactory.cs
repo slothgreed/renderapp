@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using OpenTK;
 using KI.Foundation.Core;
-using KI.Gfx.KIAsset;
-using KI.Gfx.Analyzer;
-using KI.Foundation.Utility;
 using KI.Gfx.KIShader;
 using RenderApp.AssetModel.RA_Geometry;
+using KI.Analyzer;
+using KI.Asset;
+using KI.Gfx.GLUtil;
+
 namespace RenderApp.AssetModel
 {
     class AssetFactory : KIFactoryBase<RenderObject>

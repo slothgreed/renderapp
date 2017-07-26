@@ -1,11 +1,9 @@
-﻿using KI.Gfx.KIAsset;
-using KI.Gfx.KIAsset.Loader.Loader;
-using OpenTK;
-using System;
+﻿using OpenTK;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using KI.Asset.Loader.Loader;
+using KI.Asset;
+using KI.Gfx.GLUtil;
 
 namespace RenderApp.AssetModel.RA_Geometry
 {

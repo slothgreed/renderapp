@@ -2,8 +2,8 @@
 using System.Linq;
 using RenderApp.RARenderSystem;
 using RenderApp.AssetModel;
-using KI.Gfx.KIAsset;
 using OpenTK;
+using KI.Asset;
 
 namespace RenderApp
 {

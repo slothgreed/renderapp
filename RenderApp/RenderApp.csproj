@@ -476,6 +476,14 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KI.Analyzer\KI.Analyzer.csproj">
+      <Project>{e8959545-0813-4d45-8c9f-1ade07f3a21f}</Project>
+      <Name>KI.Analyzer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KI.Asset\KI.Asset.csproj">
+      <Project>{197a747a-9d2b-4273-bdc6-02941c876cb2}</Project>
+      <Name>KI.Asset</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KI.Foundation\KI.Foundation.csproj">
       <Project>{cfc71ace-112a-467f-96ec-6566d4a6dfc6}</Project>
       <Name>KI.Foundation</Name>

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using RenderApp.AssetModel;
+using KI.Asset;
 using KI.Foundation.Core;
 using KI.Foundation.Tree;
 using KI.Gfx;
-using KI.Gfx.KIAsset;
+using KI.Gfx.KITexture;
 
 namespace RenderApp.Globals
 {

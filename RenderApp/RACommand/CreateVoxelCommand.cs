@@ -1,15 +1,13 @@
 ﻿using KI.Foundation.Command;
 using KI.Foundation.Core;
 using KI.Foundation.Utility;
-using KI.Gfx.Analyzer;
-using KI.Gfx.KIAsset;
 using OpenTK;
 using RenderApp.AssetModel;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using KI.Asset;
+using KI.Analyzer;
+using KI.Gfx.GLUtil;
 
 namespace RenderApp.RACommand
 {
@@ -29,7 +27,7 @@ namespace RenderApp.RACommand
 
         public string Execute(string commandArg)
         {
-            VoxelSpace voxel = new KI.Gfx.Analyzer.VoxelSpace(geometry.geometryInfo.Position, geometry.geometryInfo.Index, Partition);
+            VoxelSpace voxel = new VoxelSpace(geometry.geometryInfo.Position, geometry.geometryInfo.Index, Partition);
             RenderObject voxelObject = AssetFactory.Instance.CreateRenderObject("Voxel :" + geometry.Name);
             GeometryInfo info = new GeometryInfo(voxel.vPosition, voxel.vNormal, KICalc.RandomColor(), null, null, GeometryType.Quad);
             voxelObject.SetGeometryInfo(info);

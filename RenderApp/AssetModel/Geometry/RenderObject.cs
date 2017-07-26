@@ -2,11 +2,11 @@
 using OpenTK;
 using RenderApp.GfxUtility;
 using KI.Gfx.KIShader;
-using KI.Gfx.KIAsset;
 using KI.Gfx.GLUtil.Buffer;
 using OpenTK.Graphics.OpenGL;
 using KI.Gfx.GLUtil;
 using KI.Foundation.Utility;
+using KI.Asset;
 
 namespace RenderApp.AssetModel
 {

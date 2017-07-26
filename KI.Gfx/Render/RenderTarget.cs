@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using KI.Foundation.Core;
 using KI.Gfx.GLUtil;
-using KI.Gfx.KIAsset;
 using KI.Foundation.Utility;
 using OpenTK.Graphics.OpenGL;
 using KI.Gfx.GLUtil.Buffer;
+using KI.Gfx.KITexture;
+
 namespace KI.Gfx.Render
 {
     public class RenderTarget : KIObject 

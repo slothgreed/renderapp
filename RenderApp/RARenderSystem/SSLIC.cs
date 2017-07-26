@@ -1,8 +1,7 @@
 ﻿using System;
-using KI.Gfx.KIAsset;
 using KI.Gfx.GLUtil;
 using OpenTK.Graphics.OpenGL;
-using RenderApp.AssetModel;
+using KI.Asset;
 
 namespace RenderApp.RARenderSystem
 {

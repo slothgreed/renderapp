@@ -4,8 +4,8 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
-using KI.Gfx;
-using KI.Gfx.KIAsset;
+using KI.Gfx.KITexture;
+
 namespace KI.Gfx.KIShader
 {
     public class Shader

@@ -1,14 +1,13 @@
 ﻿using KI.Foundation.Command;
 using KI.Foundation.Core;
 using KI.Foundation.Utility;
-using KI.Gfx.KIAsset;
 using RenderApp.AssetModel;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenTK;
+using KI.Asset;
+using KI.Gfx.GLUtil;
+
 namespace RenderApp.RACommand
 {
     class CreateWireFrameCommand : CreateModelCommandBase, ICommand

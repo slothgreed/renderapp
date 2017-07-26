@@ -3,12 +3,11 @@ using KI.Foundation.Core;
 using RenderApp.AssetModel;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using KI.Gfx.Analyzer.Algorithm;
-using KI.Gfx.KIAsset;
 using OpenTK;
+using KI.Asset;
+using KI.Analyzer.Algorithm;
+using KI.Gfx.GLUtil;
+
 namespace RenderApp.RACommand
 {
     class CreateConvexHullCommand : CreateModelCommandBase, ICommand
@@ -60,8 +59,8 @@ namespace RenderApp.RACommand
                 position.Add(pos0);
 
             }
-            
-            GeometryInfo info = new GeometryInfo(position,null,Vector3.UnitZ,null,null,GeometryType.Line);
+
+            GeometryInfo info = new GeometryInfo(position, null, Vector3.UnitZ, null, null, GeometryType.Line);
             RenderObject convex = AssetFactory.Instance.CreateRenderObject("ConvexHull :" + geometry.Name);
             convex.SetGeometryInfo(info);
             convex.ModelMatrix = geometry.ModelMatrix;

@@ -1,14 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK.Graphics.OpenGL;
-using KI.Gfx.KIAsset;
+﻿using OpenTK.Graphics.OpenGL;
 namespace KI.Gfx.GLUtil
 {
+    public enum GeometryType
+    {
+        None,
+        Point,
+        Line,
+        Triangle,
+        Quad,
+        Patch,
+        Mix
+    }
+
     public class DeviceContext
     {
+
         /// <summary>
         /// Multi化はしない
         /// </summary>

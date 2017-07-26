@@ -1,5 +1,6 @@
 ﻿using RenderApp.AssetModel;
-using KI.Gfx.KIAsset;
+using KI.Gfx.KITexture;
+
 namespace RenderApp.RARenderSystem
 {
     public partial class OutputBuffer : RenderTechnique

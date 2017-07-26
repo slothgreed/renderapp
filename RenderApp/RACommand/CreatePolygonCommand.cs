@@ -1,13 +1,11 @@
 ﻿using KI.Foundation.Command;
 using KI.Foundation.Core;
-using KI.Gfx.KIAsset;
 using OpenTK;
 using RenderApp.AssetModel;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using KI.Asset;
+using KI.Gfx.GLUtil;
 
 namespace RenderApp.RACommand
 {

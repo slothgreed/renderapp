@@ -1,14 +1,10 @@
 ﻿using KI.Foundation.Tree;
 using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
-using KI.Gfx.KIAsset;
 using OpenTK;
 using RenderApp.AssetModel;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using KI.Asset;
 
 namespace RenderApp.RAControl
 {

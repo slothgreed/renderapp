@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.Utility;
-using RenderApp;
-using KI.Gfx.KIAsset;
+using KI.Gfx.KITexture;
+
 namespace RenderApp.ViewModel
 {
     public class TextureViewModel : TabItemViewModel

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using OpenTK;
-using KI.Gfx.KIAsset;
+using KI.Asset;
+using KI.Gfx.GLUtil;
+
 namespace RenderApp.AssetModel
 {
     class GridPlane : IPrimitive

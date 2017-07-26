@@ -2,7 +2,9 @@
 using OpenTK;
 using KI.Gfx.KIShader;
 using RenderApp.GfxUtility;
-using KI.Gfx.KIAsset;
+using KI.Asset;
+using KI.Gfx.GLUtil;
+
 namespace RenderApp.AssetModel.RA_Geometry
 {
     public class Cube

@@ -1,7 +1,9 @@
 ﻿using RenderApp.AssetModel;
 using KI.Gfx.GLUtil;
-using KI.Gfx.KIAsset;
 using KI.Gfx.KIShader;
+using KI.Asset;
+using KI.Gfx.KITexture;
+
 namespace RenderApp.GfxUtility
 {
     public enum ShaderType

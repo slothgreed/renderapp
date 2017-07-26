@@ -2,8 +2,7 @@
 using KI.Foundation.Utility;
 using KI.Foundation.Tree;
 using KI.Gfx.GLUtil;
-using KI.Gfx.KIAsset;
-using RenderApp.AssetModel;
+using KI.Asset;
 
 namespace RenderApp.RAControl
 {

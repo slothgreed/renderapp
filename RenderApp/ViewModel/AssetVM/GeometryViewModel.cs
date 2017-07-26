@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using KI.Asset;
 using KI.Foundation.ViewModel;
-using KI.Gfx.KIAsset;
 
 namespace RenderApp.ViewModel
 {

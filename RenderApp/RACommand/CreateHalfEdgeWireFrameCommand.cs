@@ -1,14 +1,12 @@
 ﻿using KI.Foundation.Command;
 using KI.Foundation.Core;
-using KI.Gfx.Analyzer;
-using KI.Gfx.KIAsset;
 using OpenTK;
 using RenderApp.AssetModel;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using KI.Asset;
+using KI.Gfx.GLUtil;
+using KI.Analyzer;
 
 namespace RenderApp.RACommand
 {
@@ -40,12 +38,12 @@ namespace RenderApp.RACommand
             if(counter > -1)
             {
                 //geometry.HalfEdge.VertexDecimation(geometry.HalfEdge.m_Edge[counter]);
-                geometry.HalfEdge.EdgeFlips(geometry.HalfEdge.m_Edge[counter]);
+                ((HalfEdge)geometry.HalfEdge).EdgeFlips(((HalfEdge)geometry.HalfEdge).m_Edge[counter]);
             }
             counter++;
             List<Vector3> position = new List<Vector3>();
             var color = new List<Vector3>();
-            foreach (var mesh in geometry.HalfEdge.m_Mesh)
+            foreach (var mesh in ((HalfEdge)geometry.HalfEdge).m_Mesh)
             {
                 foreach (var edge in mesh.AroundEdge)
                 {
@@ -90,7 +88,7 @@ namespace RenderApp.RACommand
                     //}
 
 
-                    if (edge == geometry.HalfEdge.m_Edge[counter])
+                    if (edge == ((HalfEdge)geometry.HalfEdge).m_Edge[counter])
                     {
                         color.Add(Vector3.UnitY);
                         color.Add(Vector3.UnitX);
@@ -111,7 +109,7 @@ namespace RenderApp.RACommand
                 info2.Update(position, info2.Normal, info2.Color, null, null, GeometryType.Line);
                 obj.SetupBuffer();
 
-                var update = geometry.HalfEdge.CreateGeometryInfo();
+                var update = ((HalfEdge)geometry.HalfEdge).CreateGeometryInfo();
                 geometry.geometryInfo.Update(update.Position, update.Normal, update.Color, null, update.Index, GeometryType.Triangle);
                 ((RenderObject)geometry).SetupBuffer();
 

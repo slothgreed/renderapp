@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using KI.Foundation.Utility;
-using KI.Gfx.KIAsset;
 using RenderApp.AssetModel;
 using KI.Gfx.Render;
 using KI.Foundation.Core;
 using KI.Gfx.KIShader;
+using KI.Gfx.KITexture;
+using KI.Asset;
 
 namespace RenderApp.RARenderSystem
 {

@@ -3,8 +3,9 @@ using OpenTK;
 using RenderApp.AssetModel;
 using KI.Foundation.Core;
 using KI.Foundation.Utility;
-using KI.Gfx.Analyzer;
-using KI.Gfx.KIAsset;
+using KI.Analyzer;
+using KI.Asset;
+using KI.Gfx.GLUtil;
 
 namespace RenderApp.RAControl
 {
@@ -24,7 +25,7 @@ namespace RenderApp.RAControl
                 var SelectObjectController = ControlManager.Instance.Controllers[ControlManager.CONTROL_MODE.SelectTriangle] as SelectTriangleControl;
                 if (SelectObjectController.PickTriangle(LeftMouse.Click, ref geometry, ref vertex_Index))
                 {
-                    Dijkstra.SetGeometry(geometry.HalfEdge);
+                    Dijkstra.SetGeometry(geometry.HalfEdge as HalfEdge);
 
                     if (Dijkstra.Geometry == null)
                     {
@@ -52,7 +53,7 @@ namespace RenderApp.RAControl
                         if (picking == null)
                         {
                             RenderObject triangle = AssetFactory.Instance.CreateRenderObject("Picking");
-                            GeometryInfo info = new GeometryInfo(new List<Vector3>() { tri1, tri2, tri3 },null,KICalc.RandomColor(),null,null,GeometryType.Triangle);
+                            GeometryInfo info = new GeometryInfo(new List<Vector3>() { tri1, tri2, tri3 }, null, KICalc.RandomColor(), null, null, GeometryType.Triangle);
                             triangle.SetGeometryInfo(info);
                             SceneManager.Instance.ActiveScene.AddObject(triangle);
                         }

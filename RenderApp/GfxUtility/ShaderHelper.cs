@@ -1,10 +1,10 @@
 ﻿using OpenTK;
-using KI.Gfx.KIAsset;
 using KI.Gfx;
 using KI.Gfx.GLUtil;
 using RenderApp.AssetModel;
 using System.Collections.Generic;
 using KI.Gfx.KIShader;
+using KI.Gfx.KITexture;
 
 namespace RenderApp.GfxUtility
 {
