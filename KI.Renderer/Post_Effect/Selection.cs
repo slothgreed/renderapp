@@ -1,13 +1,12 @@
 ﻿using KI.Asset;
 using KI.Gfx.KITexture;
-using RenderApp.Globals;
 
-namespace RenderApp.RARenderSystem
+namespace KI.Renderer
 {
     public partial class Selection : RenderTechnique
     {
-        private static string vertexShader = ProjectInfo.ShaderDirectory + @"\PostEffect\Selection.vert";
-        private static string fragShader = ProjectInfo.ShaderDirectory + @"\PostEffect\Selection.frag";
+        private static string vertexShader = Global.ShaderDirectory + @"\PostEffect\Selection.vert";
+        private static string fragShader = Global.ShaderDirectory + @"\PostEffect\Selection.frag";
 
         public override void Initialize()
         {
@@ -17,16 +16,16 @@ namespace RenderApp.RARenderSystem
         public Selection(RenderTechniqueType tech)
             : base("SelectionBuffer", vertexShader, fragShader, tech, RenderType.OffScreen)
         {
-            Plane.AddTexture(TextureKind.Normal, Workspace.RenderSystem.GBufferStage.OutputTexture[2]);
+            Plane.AddTexture(TextureKind.Normal, Global.RenderSystem.GBufferStage.OutputTexture[2]);
         }
 
         public void SelectObject()
         {
-            if (Workspace.SceneManager.ActiveScene.SelectAsset != null)
+            if (Global.Scene.SelectAsset != null)
             {
-                if (Workspace.SceneManager.ActiveScene.SelectAsset is Geometry)
+                if (Global.Scene.SelectAsset is Geometry)
                 {
-                    var geometry = Workspace.SceneManager.ActiveScene.SelectAsset as Geometry;
+                    var geometry = Global.Scene.SelectAsset as Geometry;
                     uID = geometry.ID;
                 }
                 else

@@ -1,13 +1,12 @@
-﻿using KI.Gfx.Render;
-using RenderApp.AssetModel;
-using RenderApp.Globals;
+﻿using KI.Asset;
+using KI.Gfx.Render;
 
-namespace RenderApp.RARenderSystem
+namespace KI.Renderer
 {
     public class ShadowMap : RenderTechnique
     {
-        private static string vertexShader = ProjectInfo.ShaderDirectory + @"\shadow.vert";
-        private static string fragShader = ProjectInfo.ShaderDirectory + @"\shadow.frag";
+        private static string vertexShader = Global.ShaderDirectory + @"\shadow.vert";
+        private static string fragShader = Global.ShaderDirectory + @"\shadow.frag";
 
         public ShadowMap(RenderTechniqueType tech)
             : base("ShadowMap", vertexShader, fragShader, tech, RenderType.Original)
@@ -22,14 +21,14 @@ namespace RenderApp.RARenderSystem
         {
             ClearBuffer();
             RenderTarget.BindRenderTarget(OutputTexture.ToArray());
-            foreach (var asset in Workspace.SceneManager.ActiveScene.RootNode.AllChildren())
+            foreach (var asset in Global.Scene.RootNode.AllChildren())
             {
                 if(asset.KIObject is RenderObject)
                 {
                     var geometry = asset.KIObject as RenderObject;
                     var old = geometry.Shader;
                     geometry.Shader = ShaderItem;
-                    geometry.Render();
+                    geometry.Render(Global.Scene);
                     geometry.Shader = old;
                 }
             }

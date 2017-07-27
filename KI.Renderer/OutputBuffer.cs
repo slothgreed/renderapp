@@ -1,19 +1,17 @@
-﻿using RenderApp.AssetModel;
-using KI.Gfx.KITexture;
-using RenderApp.Globals;
+﻿using KI.Gfx.KITexture;
 
-namespace RenderApp.RARenderSystem
+namespace KI.Renderer
 {
     public partial class OutputBuffer : RenderTechnique
     {
-        private static string vertexShader = ProjectInfo.ShaderDirectory + @"\PostEffect\Output.vert";
-        private static string fragShader = ProjectInfo.ShaderDirectory + @"\PostEffect\Output.frag";
+        private static string vertexShader = Global.ShaderDirectory + @"\PostEffect\Output.vert";
+        private static string fragShader = Global.ShaderDirectory + @"\PostEffect\Output.frag";
 
         public OutputBuffer(RenderTechniqueType tech)
             : base("OutputBuffer", vertexShader, fragShader, tech, RenderType.Original)
         {
             Plane = AssetFactory.Instance.CreatePostProcessPlane("OutputBuffer");
-            Plane.AddTexture(TextureKind.Normal, Workspace.RenderSystem.GBufferStage.OutputTexture[2]);
+            Plane.AddTexture(TextureKind.Normal, Global.RenderSystem.GBufferStage.OutputTexture[2]);
         }
 
         public override void Initialize()
@@ -30,7 +28,7 @@ namespace RenderApp.RARenderSystem
         {
             //最終出力フレームバッファのバインドの必要なし
             Plane.Shader = ShaderItem;
-            Plane.Render();
+            Plane.Render(Global.Scene);
         }
     }
 }

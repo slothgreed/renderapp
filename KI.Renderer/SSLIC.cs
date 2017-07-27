@@ -2,17 +2,16 @@
 using KI.Gfx.GLUtil;
 using OpenTK.Graphics.OpenGL;
 using KI.Asset;
-using RenderApp.Globals;
 
-namespace RenderApp.RARenderSystem
+namespace KI.Renderer
 {
     /// <summary>
     /// スクリーンスペースLIC
     /// </summary>
     public partial class SSLIC : RenderTechnique
     {
-        private static string vertexShader = ProjectInfo.ShaderDirectory + @"\PostEffect\sslic.vert";
-        private static string fragShader = ProjectInfo.ShaderDirectory + @"\PostEffect\sslic.frag";
+        private static string vertexShader = Global.ShaderDirectory + @"\PostEffect\sslic.vert";
+        private static string fragShader = Global.ShaderDirectory + @"\PostEffect\sslic.frag";
 
 
         public SSLIC(RenderTechniqueType tech)
@@ -60,13 +59,13 @@ namespace RenderApp.RARenderSystem
         {
             if (Plane != null)
             {
-                var vector = Workspace.RenderSystem.GBufferStage.OutputTexture[2];
+                var vector = Global.RenderSystem.GBufferStage.OutputTexture[2];
                 GL.Enable(EnableCap.Blend);
                 GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
                 RenderTarget.ClearBuffer();
                 RenderTarget.BindRenderTarget(OutputTexture.ToArray());
                 Plane.Shader = ShaderItem;
-                Plane.Render();
+                Plane.Render(Global.Scene);
                 RenderTarget.UnBindRenderTarget();
                 GL.Disable(EnableCap.Blend);
             }

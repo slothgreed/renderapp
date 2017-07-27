@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RenderApp.RARenderSystem;
+﻿using KI.Renderer;
 
 namespace RenderApp.Globals
 {
@@ -11,5 +6,11 @@ namespace RenderApp.Globals
     {
         public static SceneManager SceneManager = new SceneManager();
         public static RenderSystem RenderSystem = new RenderSystem();
+
+        static Workspace()
+        {
+            Global.Scene = SceneManager.ActiveScene;
+            Global.RenderSystem = RenderSystem;
+        }
     }
 }

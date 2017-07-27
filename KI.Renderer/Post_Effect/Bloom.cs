@@ -1,10 +1,10 @@
 ﻿using System;
-namespace RenderApp.RARenderSystem
+namespace KI.Renderer
 {
     public partial class Bloom : RenderTechnique
     {
-        private static string vertexShader = ProjectInfo.ShaderDirectory + @"\PostEffect\bloom.vert";
-        private static string fragShader = ProjectInfo.ShaderDirectory + @"\PostEffect\bloom.frag";
+        private static string vertexShader = Global.ShaderDirectory + @"\PostEffect\bloom.vert";
+        private static string fragShader = Global.ShaderDirectory + @"\PostEffect\bloom.frag";
         
         private float[] m_Weight = new float[5];
 

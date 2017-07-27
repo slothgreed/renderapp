@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using KI.Gfx.KITexture;
 
-namespace RenderApp.RARenderSystem
+namespace KI.Renderer
 {
     public class RenderSystem
     {
@@ -124,7 +124,7 @@ namespace RenderApp.RARenderSystem
             OutputStage.Render();
         }
 
-        internal void TogglePostProcess()
+        public void TogglePostProcess()
         {
             PostProcessMode = !PostProcessMode;
         }

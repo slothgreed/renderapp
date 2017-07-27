@@ -37,8 +37,8 @@
  };
 #>
 using System;
-using KI.Gfx.KIAsset;
-namespace RenderApp.RARenderSystem
+using KI.Gfx.KITexture;
+namespace KI.Renderer
 {
 <#
 	for(int classIndex = 0; classIndex < classProperty.Length; classIndex++){

@@ -1,8 +1,8 @@
-﻿using KI.Gfx.KITexture;
-
-namespace RenderApp.RARenderSystem
+﻿using System;
+using KI.Gfx.KITexture;
+namespace KI.Renderer
 {
-    public partial class Selection : RenderTechnique
+	public partial class Selection : RenderTechnique
 	{
 		private int _uID;
 		public int uID

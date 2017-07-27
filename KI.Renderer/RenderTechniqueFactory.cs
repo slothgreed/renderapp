@@ -2,7 +2,7 @@
 using KI.Foundation.Core;
 using KI.Gfx.KITexture;
 
-namespace RenderApp.RARenderSystem
+namespace KI.Renderer
 {
     public enum RenderTechniqueType
     {

@@ -1,9 +1,9 @@
-﻿namespace RenderApp.RARenderSystem
+﻿namespace KI.Renderer
 {
     partial class Sobel : RenderTechnique
     {
-        private static string vertexShader = ProjectInfo.ShaderDirectory + @"\PostEffect\sobel.vert";
-        private static string fragShader = ProjectInfo.ShaderDirectory + @"\PostEffect\sobel.frag";
+        private static string vertexShader = Global.ShaderDirectory + @"\PostEffect\sobel.vert";
+        private static string fragShader = Global.ShaderDirectory + @"\PostEffect\sobel.frag";
         
         #region [Shaderの初期化関数]
         public override void Initialize()

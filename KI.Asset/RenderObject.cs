@@ -5,11 +5,8 @@ using KI.Gfx.KIShader;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.GLUtil;
 using KI.Foundation.Utility;
-using KI.Asset;
-using RenderApp.Globals;
-using RenderApp.GfxUtility;
 
-namespace RenderApp.AssetModel
+namespace KI.Asset
 {
     /// <summary>
     /// 任意形状(triangle,quad,line,patchのみ対応)
@@ -122,7 +119,7 @@ namespace RenderApp.AssetModel
         }
 
         #region [render]
-        public virtual void Render()
+        public virtual void Render(Scene scene)
         {
             if (!Visible)
             {
@@ -134,7 +131,7 @@ namespace RenderApp.AssetModel
                 Logger.Log(Logger.LogLevel.Error, "not set shader");
                 return;
             }
-            ShaderHelper.InitializeState(Workspace.SceneManager.ActiveScene,Shader, this, TextureItem);
+            ShaderHelper.InitializeState(scene, Shader, this, TextureItem);
             Shader.BindBuffer();
             if (geometryInfo.Index.Count == 0)
             {

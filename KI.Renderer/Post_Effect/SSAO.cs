@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace RenderApp.RARenderSystem
+namespace KI.Renderer
 {
     public partial class SSAO : RenderTechnique
     {
-        private static string vertexShader = ProjectInfo.ShaderDirectory + @"\ssao.vert";
-        private static string fragShader = ProjectInfo.ShaderDirectory + @"\ssao.frag";
+        private static string vertexShader = Global.ShaderDirectory + @"\ssao.vert";
+        private static string fragShader = Global.ShaderDirectory + @"\ssao.frag";
 
         public SSAO(RenderTechniqueType tech)
             : base("SSAO", vertexShader, fragShader, tech, RenderType.OffScreen)

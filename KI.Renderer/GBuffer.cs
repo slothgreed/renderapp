@@ -1,10 +1,8 @@
 ﻿using KI.Asset;
 using KI.Gfx.KITexture;
 using KI.Gfx.Render;
-using RenderApp.AssetModel;
-using RenderApp.Globals;
 
-namespace RenderApp.RARenderSystem
+namespace KI.Renderer
 {
     public class GBuffer : RenderTechnique
     {
@@ -34,10 +32,10 @@ namespace RenderApp.RARenderSystem
             texture[2] = TextureFactory.Instance.CreateTexture("GColor", width, height);
             texture[3] = TextureFactory.Instance.CreateTexture("GLight", width, height);
 
-            RenderApp.Globals.Project.ActiveProject.AddChild(texture[0]);
-            RenderApp.Globals.Project.ActiveProject.AddChild(texture[1]);
-            RenderApp.Globals.Project.ActiveProject.AddChild(texture[2]);
-            RenderApp.Globals.Project.ActiveProject.AddChild(texture[3]);
+            //RenderApp.Globals.Project.ActiveProject.AddChild(texture[0]);
+            //RenderApp.Globals.Project.ActiveProject.AddChild(texture[1]);
+            //RenderApp.Globals.Project.ActiveProject.AddChild(texture[2]);
+            //RenderApp.Globals.Project.ActiveProject.AddChild(texture[3]);
 
             OutputTexture.Add(texture[0]);
             OutputTexture.Add(texture[1]);
@@ -55,12 +53,12 @@ namespace RenderApp.RARenderSystem
         {
             ClearBuffer();
             RenderTarget.BindRenderTarget(OutputTexture.ToArray());
-            foreach (var asset in Workspace.SceneManager.ActiveScene.RootNode.AllChildren())
+            foreach (var asset in Global.Scene.RootNode.AllChildren())
             {
                 if (asset.KIObject is RenderObject)
                 {
                     var geometry = asset.KIObject as RenderObject;
-                    geometry.Render();
+                    geometry.Render(Global.Scene);
                 }
             }
             RenderTarget.UnBindRenderTarget();

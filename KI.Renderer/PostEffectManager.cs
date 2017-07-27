@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using RenderApp.Globals;
 
-namespace RenderApp.RARenderSystem
+namespace KI.Renderer
 {
     public class PostEffectManager
     {
@@ -25,7 +24,7 @@ namespace RenderApp.RARenderSystem
             //ssao.uTarget = Workspace.SceneManager.RenderSystem.LightingStage.OutputTexture[0];
 
             SSLIC sslic = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.SSLIC) as SSLIC;
-            sslic.uVector = Workspace.RenderSystem.GBufferStage.OutputTexture[2];
+            sslic.uVector = Global.RenderSystem.GBufferStage.OutputTexture[2];
 
             //PostEffects.Add(bloom);
             //PostEffects.Add(sobel);
