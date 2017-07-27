@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using OpenTK;
-using RenderApp.GfxUtility;
+using OpenTK.Graphics.OpenGL;
 using KI.Gfx.KIShader;
 using KI.Gfx.GLUtil.Buffer;
-using OpenTK.Graphics.OpenGL;
 using KI.Gfx.GLUtil;
 using KI.Foundation.Utility;
 using KI.Asset;
 using RenderApp.Globals;
+using RenderApp.GfxUtility;
 
 namespace RenderApp.AssetModel
 {
