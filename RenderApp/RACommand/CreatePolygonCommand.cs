@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using KI.Asset;
 using KI.Gfx.GLUtil;
+using RenderApp.Globals;
 
 namespace RenderApp.RACommand
 {
@@ -28,7 +29,7 @@ namespace RenderApp.RACommand
             List<int> index = new List<int>(geometry.geometryInfo.Index);
             RenderObject polygon = AssetFactory.Instance.CreateRenderObject("Polygon :" + geometry.Name);
             polygon.SetGeometryInfo(new GeometryInfo(position, normal, new Vector3(0.7f, 0.7f, 0.7f), null, index, GeometryType.Triangle));
-            SceneManager.Instance.ActiveScene.AddObject(polygon);
+            Workspace.SceneManager.ActiveScene.AddObject(polygon);
 
             return RACommandResource.Success;
         }

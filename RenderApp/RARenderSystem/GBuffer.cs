@@ -2,6 +2,8 @@
 using KI.Gfx.KITexture;
 using KI.Gfx.Render;
 using RenderApp.AssetModel;
+using RenderApp.Globals;
+
 namespace RenderApp.RARenderSystem
 {
     public class GBuffer : RenderTechnique
@@ -53,7 +55,7 @@ namespace RenderApp.RARenderSystem
         {
             ClearBuffer();
             RenderTarget.BindRenderTarget(OutputTexture.ToArray());
-            foreach (var asset in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
+            foreach (var asset in Workspace.SceneManager.ActiveScene.RootNode.AllChildren())
             {
                 if (asset.KIObject is RenderObject)
                 {

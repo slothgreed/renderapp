@@ -2,6 +2,7 @@
 using KI.Gfx.GLUtil;
 using OpenTK.Graphics.OpenGL;
 using KI.Asset;
+using RenderApp.Globals;
 
 namespace RenderApp.RARenderSystem
 {
@@ -59,7 +60,7 @@ namespace RenderApp.RARenderSystem
         {
             if (Plane != null)
             {
-                var vector = SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[2];
+                var vector = Workspace.RenderSystem.GBufferStage.OutputTexture[2];
                 GL.Enable(EnableCap.Blend);
                 GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
                 RenderTarget.ClearBuffer();

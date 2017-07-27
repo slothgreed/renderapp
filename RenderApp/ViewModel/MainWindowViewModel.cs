@@ -47,11 +47,11 @@ namespace RenderApp.ViewModel
         {
             get
             {
-                if (SceneManager.Instance.RenderSystem == null)
+                if (Workspace.RenderSystem == null)
                 {
                     return false;
                 }
-                return SceneManager.Instance.RenderSystem.PostProcessMode;
+                return Workspace.RenderSystem.PostProcessMode;
             }
         }
         #endregion
@@ -111,21 +111,21 @@ namespace RenderApp.ViewModel
         #region [Viewport Method]
         public void OnLoadedEvent(object sender, EventArgs e)
         {
-            SceneManager.Instance.RenderSystem.Initialize(DeviceContext.Instance.Width,DeviceContext.Instance.Height);
-            SceneManager.Instance.Create("MainScene");
+            Workspace.RenderSystem.Initialize(DeviceContext.Instance.Width,DeviceContext.Instance.Height);
+            Workspace.SceneManager.Create("MainScene");
 
-            LeftUpDockPanel.Add(new RootNodeViewModel(SceneManager.Instance.ActiveScene.RootNode, "Scene"));
-            LeftDownDockPanel.Add(new RenderSystemViewModel(SceneManager.Instance.RenderSystem));
+            LeftUpDockPanel.Add(new RootNodeViewModel(Workspace.SceneManager.ActiveScene.RootNode, "Scene"));
+            LeftDownDockPanel.Add(new RenderSystemViewModel(Workspace.RenderSystem));
         }
         private void OnResizeEvent(object sender, EventArgs e)
         {
-            SceneManager.Instance.ActiveScene.MainCamera.SetProjMatrix((float)DeviceContext.Instance.Width / DeviceContext.Instance.Height);
-            SceneManager.Instance.RenderSystem.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
+            Workspace.SceneManager.ActiveScene.MainCamera.SetProjMatrix((float)DeviceContext.Instance.Width / DeviceContext.Instance.Height);
+            Workspace.RenderSystem.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
         }
 
         private void OnRenderEvent(object sender, PaintEventArgs e)
         {
-            SceneManager.Instance.RenderSystem.Render();
+            Workspace.RenderSystem.Render();
         }
 
         private void OnMouseWheelEvent(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -224,7 +224,7 @@ namespace RenderApp.ViewModel
                     List<RenderObject> geometrys = AssetFactory.Instance.CreateLoad3DModel(filename);
                     foreach(var geometry in geometrys)
                     {
-                        SceneManager.Instance.ActiveScene.AddObject(geometry);
+                        Workspace.SceneManager.ActiveScene.AddObject(geometry);
                         Project.ActiveProject.AddChild(geometry);
                     }
                 }
@@ -292,29 +292,29 @@ namespace RenderApp.ViewModel
                     CreatePlaneCommand();
                     break;
                 case RAGeometry.WireFrame:
-                    command = new CreateWireFrameCommand(SceneManager.Instance.ActiveScene.SelectAsset);
+                    command = new CreateWireFrameCommand(Workspace.SceneManager.ActiveScene.SelectAsset);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.Polygon:
-                    command = new CreatePolygonCommand(SceneManager.Instance.ActiveScene.SelectAsset);
+                    command = new CreatePolygonCommand(Workspace.SceneManager.ActiveScene.SelectAsset);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.HalfEdge:
-                    command = new CreateHalfEdgeCommand(SceneManager.Instance.ActiveScene.SelectAsset);
+                    command = new CreateHalfEdgeCommand(Workspace.SceneManager.ActiveScene.SelectAsset);
                     CommandManager.Instance.Execute(command, null, true); 
                     break;
                 case RAGeometry.ConvexHull:
-                    command = new CreateConvexHullCommand(SceneManager.Instance.ActiveScene.SelectAsset);
+                    command = new CreateConvexHullCommand(Workspace.SceneManager.ActiveScene.SelectAsset);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.MarchingCube:
-                    command = new CreateMarchingCubeCommand(SceneManager.Instance.ActiveScene.SelectAsset, 64);
+                    command = new CreateMarchingCubeCommand(Workspace.SceneManager.ActiveScene.SelectAsset, 64);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.HalfEdgeWireFrame:
-                    command = new CreateHalfEdgeWireFrameCommand(SceneManager.Instance.ActiveScene.SelectAsset);
+                    command = new CreateHalfEdgeWireFrameCommand(Workspace.SceneManager.ActiveScene.SelectAsset);
                     CommandManager.Instance.Execute(command, null, true);
-                    //select = SceneManager.Instance.ActiveScene.SelectAsset;
+                    //select = Workspace.SceneManager.ActiveScene.SelectAsset;
                     break;
                 default:
                     break;
@@ -323,7 +323,7 @@ namespace RenderApp.ViewModel
         //private static KIObject select;
         private void CreateCubeCommand()
         {
-            //Cube cube = new Cube(RAFile.GetNameFromType(EAssetType.Geometry), SceneManager.Instance.ActiveScene.WorldMin, SceneManager.Instance.ActiveScene.WorldMax);
+            //Cube cube = new Cube(RAFile.GetNameFromType(EAssetType.Geometry), Workspace.SceneManager.ActiveScene.WorldMin, Workspace.SceneManager.ActiveScene.WorldMax);
             //AssetFactory.Instance.CreateGeometry(cube);
         }
         private void CreateSphereCommand()
@@ -369,7 +369,7 @@ namespace RenderApp.ViewModel
         #region [MainWindow Event Command]
         private void WindowCloseCommand()
         {
-            SceneManager.Instance.ActiveScene.Dispose();
+            Workspace.SceneManager.ActiveScene.Dispose();
             Project.ActiveProject.Dispose();
             ShaderFactory.Instance.Dispose();
             RenderTargetFactory.Instance.Dispose();
@@ -399,7 +399,7 @@ namespace RenderApp.ViewModel
         #region [Rendering Menu Command]
         public void TogglePostProcessCommand()
         {
-            SceneManager.Instance.RenderSystem.TogglePostProcess();
+            Workspace.RenderSystem.TogglePostProcess();
             OnPropertyChanged("PostProcessMode");
         }
         #endregion
@@ -450,7 +450,7 @@ namespace RenderApp.ViewModel
         //{
         //    if(select == null)
         //    {
-        //        select = SceneManager.Instance.ActiveScene.SelectAsset;
+        //        select = Workspace.SceneManager.ActiveScene.SelectAsset;
         //    }
         //    var command = new CreateHalfEdgeWireFrameCommand(select);
         //    CommandManager.Instance.Execute(command, null, true);
@@ -466,7 +466,7 @@ namespace RenderApp.ViewModel
             if(node.KIObject is Geometry)
             {
                 vm = new GeometryViewModel((Geometry)node.KIObject);
-                SceneManager.Instance.ActiveScene.SelectAsset = (Geometry)node.KIObject;
+                Workspace.SceneManager.ActiveScene.SelectAsset = (Geometry)node.KIObject;
             }
             else if (node.KIObject is ShaderProgram)
             {

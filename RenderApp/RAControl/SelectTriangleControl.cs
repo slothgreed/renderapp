@@ -3,6 +3,7 @@ using KI.Foundation.Utility;
 using KI.Foundation.Tree;
 using KI.Gfx.GLUtil;
 using KI.Asset;
+using RenderApp.Globals;
 
 namespace RenderApp.RAControl
 {
@@ -78,7 +79,7 @@ namespace RenderApp.RAControl
             viewport[2] = DeviceContext.Instance.Width;
             viewport[3] = DeviceContext.Instance.Height;
 
-            Scene activeScene = SceneManager.Instance.ActiveScene;
+            Scene activeScene = Workspace.SceneManager.ActiveScene;
             KICalc.GetClickPos(
                 activeScene.MainCamera.Matrix,
                 activeScene.MainCamera.ProjMatrix,

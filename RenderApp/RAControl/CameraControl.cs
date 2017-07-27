@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using RenderApp.Globals;
 
 namespace RenderApp.RAControl
 {
@@ -45,11 +46,11 @@ namespace RenderApp.RAControl
                     break;
                 case System.Windows.Forms.MouseButtons.Middle:
                     MiddleMouse.Move(mouse.X, mouse.Y);
-                    SceneManager.Instance.ActiveScene.MainCamera.Translate(MiddleMouse.Delta.X, MiddleMouse.Delta.Y, 0);
+                    Workspace.SceneManager.ActiveScene.MainCamera.Translate(MiddleMouse.Delta.X, MiddleMouse.Delta.Y, 0);
                     break;
                 case System.Windows.Forms.MouseButtons.Right:
                     RightMouse.Move(mouse.X, mouse.Y);
-                    SceneManager.Instance.ActiveScene.MainCamera.Rotate(RightMouse.Delta.X, RightMouse.Delta.Y, 0);
+                    Workspace.SceneManager.ActiveScene.MainCamera.Rotate(RightMouse.Delta.X, RightMouse.Delta.Y, 0);
                     break;
             }
             return true;
@@ -75,7 +76,7 @@ namespace RenderApp.RAControl
             switch (mouse.Button)
             {
                 case MouseButtons.None:
-                    SceneManager.Instance.ActiveScene.MainCamera.Zoom((int)mouse.Delta);
+                    Workspace.SceneManager.ActiveScene.MainCamera.Zoom((int)mouse.Delta);
                     break;
             }
             return true;

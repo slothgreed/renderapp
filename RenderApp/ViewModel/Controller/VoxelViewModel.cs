@@ -7,6 +7,8 @@ using RenderApp.AssetModel;
 using System.Windows;
 using KI.Foundation.Command;
 using RenderApp.RACommand;
+using RenderApp.Globals;
+
 namespace RenderApp.ViewModel
 {
     public partial class VoxelViewModel : TabItemViewModel, IControllerViewModelBase
@@ -35,7 +37,7 @@ namespace RenderApp.ViewModel
         }
         private void ExecuteCommand()
         {
-            ICommand command = new CreateVoxelCommand(SceneManager.Instance.ActiveScene.SelectAsset, PartitionNum);
+            ICommand command = new CreateVoxelCommand(Workspace.SceneManager.ActiveScene.SelectAsset, PartitionNum);
             CommandManager.Instance.Execute(command, null, true);
         }
 

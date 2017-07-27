@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using KI.Asset;
 using KI.Analyzer;
 using KI.Gfx.GLUtil;
+using RenderApp.Globals;
 
 namespace RenderApp.RACommand
 {
@@ -32,7 +33,7 @@ namespace RenderApp.RACommand
             GeometryInfo info = new GeometryInfo(voxel.vPosition, voxel.vNormal, KICalc.RandomColor(), null, null, GeometryType.Quad);
             voxelObject.SetGeometryInfo(info);
             voxelObject.Transformation(geometry.ModelMatrix);
-            SceneManager.Instance.ActiveScene.AddObject(voxelObject);
+            Workspace.SceneManager.ActiveScene.AddObject(voxelObject);
 
             RenderObject innerObject = AssetFactory.Instance.CreateRenderObject("Voxel Inner : " + geometry.Name);
 
@@ -47,7 +48,7 @@ namespace RenderApp.RACommand
             GeometryInfo innerInfo = new GeometryInfo(voxel.GetPoint(VoxelSpace.VoxelState.Inner), null, colors, null, null, GeometryType.Point);
             innerObject.SetGeometryInfo(innerInfo);
             innerObject.Transformation(geometry.ModelMatrix);
-            SceneManager.Instance.ActiveScene.AddObject(innerObject);
+            Workspace.SceneManager.ActiveScene.AddObject(innerObject);
 
             return RACommandResource.Success;
         }

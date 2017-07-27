@@ -1,5 +1,6 @@
 ﻿using RenderApp.AssetModel;
 using KI.Gfx.KITexture;
+using RenderApp.Globals;
 
 namespace RenderApp.RARenderSystem
 {
@@ -12,7 +13,7 @@ namespace RenderApp.RARenderSystem
             : base("OutputBuffer", vertexShader, fragShader, tech, RenderType.Original)
         {
             Plane = AssetFactory.Instance.CreatePostProcessPlane("OutputBuffer");
-            Plane.AddTexture(TextureKind.Normal, SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[2]);
+            Plane.AddTexture(TextureKind.Normal, Workspace.RenderSystem.GBufferStage.OutputTexture[2]);
         }
 
         public override void Initialize()

@@ -4,6 +4,7 @@ using KI.Asset;
 using KI.Foundation.Command;
 using KI.Foundation.Core;
 using RenderApp.AssetModel;
+using RenderApp.Globals;
 
 namespace RenderApp.RACommand
 {
@@ -26,7 +27,7 @@ namespace RenderApp.RACommand
             RenderObject halfEdge = AssetFactory.Instance.CreateRenderObject("HalfEdge :" + geometry.Name);
             halfEdge.SetGeometryInfo(info);
             halfEdge.ModelMatrix = geometry.ModelMatrix;
-            SceneManager.Instance.ActiveScene.AddObject(halfEdge);
+            Workspace.SceneManager.ActiveScene.AddObject(halfEdge);
 
             return RACommandResource.Success;
         }

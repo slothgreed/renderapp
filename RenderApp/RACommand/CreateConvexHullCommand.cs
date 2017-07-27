@@ -7,6 +7,7 @@ using OpenTK;
 using KI.Asset;
 using KI.Analyzer.Algorithm;
 using KI.Gfx.GLUtil;
+using RenderApp.Globals;
 
 namespace RenderApp.RACommand
 {
@@ -64,13 +65,13 @@ namespace RenderApp.RACommand
             RenderObject convex = AssetFactory.Instance.CreateRenderObject("ConvexHull :" + geometry.Name);
             convex.SetGeometryInfo(info);
             convex.ModelMatrix = geometry.ModelMatrix;
-            SceneManager.Instance.ActiveScene.AddObject(convex);
+            Workspace.SceneManager.ActiveScene.AddObject(convex);
 
             RenderObject point = AssetFactory.Instance.CreateRenderObject("ConvexHull : Points" + geometry.Name);
             GeometryInfo info2 = new GeometryInfo(convexHull.Points, null, null, null, null, GeometryType.Point);
             point.SetGeometryInfo(info2);
             point.ModelMatrix = geometry.ModelMatrix;
-            SceneManager.Instance.ActiveScene.AddObject(point);
+            Workspace.SceneManager.ActiveScene.AddObject(point);
 
             return RACommandResource.Success;
         }

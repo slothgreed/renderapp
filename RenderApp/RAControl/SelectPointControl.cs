@@ -5,6 +5,7 @@ using OpenTK;
 using RenderApp.AssetModel;
 using System.Collections.Generic;
 using KI.Asset;
+using RenderApp.Globals;
 
 namespace RenderApp.RAControl
 {
@@ -22,7 +23,7 @@ namespace RenderApp.RAControl
                 RenderObject point = AssetFactory.Instance.CreateRenderObject("SelectPoint :" + geometry.Name +":"+ vertex_Index.ToString());
                 point.SetGeometryInfo(new GeometryInfo(new List<Vector3>() { pos }, null, KICalc.RandomColor(), null, null, GeometryType.Point));
                 point.ModelMatrix = geometry.ModelMatrix;
-                SceneManager.Instance.ActiveScene.AddObject(point);
+                Workspace.SceneManager.ActiveScene.AddObject(point);
             }
             return true;
         }
@@ -38,7 +39,7 @@ namespace RenderApp.RAControl
             viewport[2] = DeviceContext.Instance.Width;
             viewport[3] = DeviceContext.Instance.Height;
 
-            Scene activeScene = SceneManager.Instance.ActiveScene;
+            Scene activeScene = Workspace.SceneManager.ActiveScene;
             KICalc.GetClickPos(
                 activeScene.MainCamera.Matrix,
                 activeScene.MainCamera.ProjMatrix,

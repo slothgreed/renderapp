@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using KI.Asset;
 using KI.Gfx.GLUtil;
 using KI.Analyzer;
+using RenderApp.Globals;
 
 namespace RenderApp.RACommand
 {
@@ -120,7 +121,7 @@ namespace RenderApp.RACommand
             RenderObject halfWire = AssetFactory.Instance.CreateRenderObject("HalfEdgeWireFrame :" + geometry.Name);
             halfWire.SetGeometryInfo(info);
             halfWire.ModelMatrix = geometry.ModelMatrix;
-            SceneManager.Instance.ActiveScene.AddObject(halfWire);
+            Workspace.SceneManager.ActiveScene.AddObject(halfWire);
             info2 = info;
             obj = halfWire;
 

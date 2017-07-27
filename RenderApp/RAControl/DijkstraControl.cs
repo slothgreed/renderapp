@@ -6,6 +6,7 @@ using KI.Foundation.Utility;
 using KI.Analyzer;
 using KI.Asset;
 using KI.Gfx.GLUtil;
+using RenderApp.Globals;
 
 namespace RenderApp.RAControl
 {
@@ -49,13 +50,13 @@ namespace RenderApp.RAControl
                         tri1 += normal * 0.01f;
                         tri2 += normal * 0.01f;
                         tri3 += normal * 0.01f;
-                        var picking = SceneManager.Instance.ActiveScene.FindObject("Picking") as RenderObject;
+                        var picking = Workspace.SceneManager.ActiveScene.FindObject("Picking") as RenderObject;
                         if (picking == null)
                         {
                             RenderObject triangle = AssetFactory.Instance.CreateRenderObject("Picking");
                             GeometryInfo info = new GeometryInfo(new List<Vector3>() { tri1, tri2, tri3 }, null, KICalc.RandomColor(), null, null, GeometryType.Triangle);
                             triangle.SetGeometryInfo(info);
-                            SceneManager.Instance.ActiveScene.AddObject(triangle);
+                            Workspace.SceneManager.ActiveScene.AddObject(triangle);
                         }
                         else if (picking.geometryInfo.TriangleNum == 2)
                         {
@@ -97,7 +98,7 @@ namespace RenderApp.RAControl
         /// <returns></returns>
         public override bool UnBinding()
         {
-            SceneManager.Instance.ActiveScene.DeleteObject("Picking");
+            Workspace.SceneManager.ActiveScene.DeleteObject("Picking");
             return true;
         }
         private void SelectObject(KIObject select)

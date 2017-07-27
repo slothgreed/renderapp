@@ -7,6 +7,7 @@ using OpenTK.Graphics.OpenGL;
 using KI.Gfx.GLUtil;
 using KI.Foundation.Utility;
 using KI.Asset;
+using RenderApp.Globals;
 
 namespace RenderApp.AssetModel
 {
@@ -133,7 +134,7 @@ namespace RenderApp.AssetModel
                 Logger.Log(Logger.LogLevel.Error, "not set shader");
                 return;
             }
-            ShaderHelper.InitializeState(Shader, this, TextureItem);
+            ShaderHelper.InitializeState(Workspace.SceneManager.ActiveScene,Shader, this, TextureItem);
             Shader.BindBuffer();
             if (geometryInfo.Index.Count == 0)
             {

@@ -5,6 +5,7 @@ using RenderApp.AssetModel;
 using System.Collections.Generic;
 using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
+using KI.Asset;
 
 namespace RenderApp.GfxUtility
 {
@@ -13,7 +14,7 @@ namespace RenderApp.GfxUtility
         /// <summary>
         /// 初期状態の設定
         /// </summary>
-        public static void InitializeState(Shader shader, RenderObject geometry, Dictionary<TextureKind, Texture> TextureItem)
+        public static void InitializeState(Scene scene,Shader shader, RenderObject geometry, Dictionary<TextureKind, Texture> TextureItem)
         {
             foreach (ShaderProgramInfo info in shader.GetShaderVariable())
             {
@@ -44,12 +45,12 @@ namespace RenderApp.GfxUtility
                         info.variable = DeviceContext.Instance.Height;
                         break;
                     case "uMVP":
-                        Matrix4 vp = SceneManager.Instance.ActiveScene.MainCamera.CameraProjMatrix;
+                        Matrix4 vp = scene.MainCamera.CameraProjMatrix;
                         info.variable = geometry.ModelMatrix * vp;
                         break;
                     case "uSMVP":
-                        Matrix4 light = SceneManager.Instance.ActiveScene.SunLight.Matrix;
-                        Matrix4 proj = SceneManager.Instance.ActiveScene.MainCamera.ProjMatrix;
+                        Matrix4 light = scene.SunLight.Matrix;
+                        Matrix4 proj = scene.MainCamera.ProjMatrix;
                         info.variable = geometry.ModelMatrix * light * proj;
                         break;
                     case "uModelMatrix":
@@ -59,25 +60,25 @@ namespace RenderApp.GfxUtility
                         info.variable = geometry.NormalMatrix;
                         break;
                     case "uProjectMatrix":
-                        info.variable = SceneManager.Instance.ActiveScene.MainCamera.ProjMatrix;
+                        info.variable = scene.MainCamera.ProjMatrix;
                         break;
                     case "uUnProjectMatrix":
-                        info.variable = SceneManager.Instance.ActiveScene.MainCamera.UnProject;
+                        info.variable = scene.MainCamera.UnProject;
                         break;
                     case "uCameraPosition":
-                        info.variable = SceneManager.Instance.ActiveScene.MainCamera.Position;
+                        info.variable = scene.MainCamera.Position;
                         break;
                     case "uCameraMatrix":
-                        info.variable = SceneManager.Instance.ActiveScene.MainCamera.Matrix;
+                        info.variable =scene.MainCamera.Matrix;
                         break;
                     case "uLightPosition":
-                        info.variable = SceneManager.Instance.ActiveScene.SunLight.Position;
+                        info.variable = scene.SunLight.Position;
                         break;
                     case "uLightDirection":
-                        info.variable = SceneManager.Instance.ActiveScene.SunLight.Direction;
+                        info.variable = scene.SunLight.Direction;
                         break;
                     case "uLightMatrix":
-                        info.variable = SceneManager.Instance.ActiveScene.SunLight.Matrix;
+                        info.variable = scene.SunLight.Matrix;
                         break;
                     case "uAlbedoMap":
                         if (TextureItem.ContainsKey(TextureKind.Albedo))

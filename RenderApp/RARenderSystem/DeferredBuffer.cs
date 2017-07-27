@@ -1,5 +1,6 @@
 ﻿using KI.Asset;
 using KI.Gfx.KITexture;
+using RenderApp.Globals;
 
 namespace RenderApp.RARenderSystem
 {
@@ -19,7 +20,7 @@ namespace RenderApp.RARenderSystem
         {
             RenderTarget.ClearBuffer();
             RenderTarget.BindRenderTarget(OutputTexture.ToArray());
-            foreach (var light in SceneManager.Instance.ActiveScene.RootNode.AllChildren())
+            foreach (var light in Workspace.SceneManager.ActiveScene.RootNode.AllChildren())
             {
                 if (light.KIObject is Light)
                 {
@@ -32,10 +33,10 @@ namespace RenderApp.RARenderSystem
 
         public override void Initialize()
         {
-            Plane.AddTexture(TextureKind.Albedo, SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[2]);
-            Plane.AddTexture(TextureKind.Normal, SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[1]);
-            Plane.AddTexture(TextureKind.World, SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[0]);
-            Plane.AddTexture(TextureKind.Lighting, SceneManager.Instance.RenderSystem.GBufferStage.OutputTexture[3]);
+            Plane.AddTexture(TextureKind.Albedo, Workspace.RenderSystem.GBufferStage.OutputTexture[2]);
+            Plane.AddTexture(TextureKind.Normal, Workspace.RenderSystem.GBufferStage.OutputTexture[1]);
+            Plane.AddTexture(TextureKind.World, Workspace.RenderSystem.GBufferStage.OutputTexture[0]);
+            Plane.AddTexture(TextureKind.Lighting, Workspace.RenderSystem.GBufferStage.OutputTexture[3]);
         }
     }
 }

@@ -9,33 +9,12 @@ namespace RenderApp
 {
     public class SceneManager
     {
-        private static SceneManager _Instance = new SceneManager();
-        public static SceneManager Instance
-        {
-            get
-            {
-                return _Instance;
-            }
-        }
         public List<Scene> SceneList = new List<Scene>();
 
         public Scene ActiveScene
         {
             get;
             set;
-        }
-
-        private RenderSystem _renderSystem;
-        public RenderSystem RenderSystem
-        {
-            get
-            {
-                if (_renderSystem == null)
-                {
-                    _renderSystem = new RenderSystem();
-                }
-                return _renderSystem;
-            }
         }
 
         public void Create(string name)
