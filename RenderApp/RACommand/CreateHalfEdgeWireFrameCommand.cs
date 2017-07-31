@@ -8,6 +8,7 @@ using KI.Asset;
 using KI.Gfx.GLUtil;
 using KI.Analyzer;
 using RenderApp.Globals;
+using KI.Renderer;
 
 namespace RenderApp.RACommand
 {
@@ -103,27 +104,27 @@ namespace RenderApp.RACommand
                 }
             }
 
-            if(info2 != null)
-            {
-                info2.Color = color;
-                info2.Position = position;
-                info2.Update(position, info2.Normal, info2.Color, null, null, GeometryType.Line);
-                obj.SetupBuffer();
+            //if(info2 != null)
+            //{
+            //    info2.Color = color;
+            //    info2.Position = position;
+            //    info2.Update(position, info2.Normal, info2.Color, null, null, GeometryType.Line);
+            //    obj.SetupBuffer();
 
-                var update = ((HalfEdge)geometry.HalfEdge).CreateGeometryInfo();
-                geometry.geometryInfo.Update(update.Position, update.Normal, update.Color, null, update.Index, GeometryType.Triangle);
-                ((RenderObject)geometry).SetupBuffer();
+            //    var update = ((HalfEdge)geometry.HalfEdge).CreateGeometryInfo();
+            //    geometry.geometryInfo.Update(update.Position, update.Normal, update.Color, null, update.Index, GeometryType.Triangle);
+            //    ((RenderObject)geometry).SetupBuffer();
 
 
-                return RACommandResource.Success;
-            }
-            GeometryInfo info = new GeometryInfo(position, null, color, null, null, GeometryType.Line);
-            RenderObject halfWire = AssetFactory.Instance.CreateRenderObject("HalfEdgeWireFrame :" + geometry.Name);
-            halfWire.SetGeometryInfo(info);
-            halfWire.ModelMatrix = geometry.ModelMatrix;
-            Workspace.SceneManager.ActiveScene.AddObject(halfWire);
-            info2 = info;
-            obj = halfWire;
+            //    return RACommandResource.Success;
+            //}
+            //GeometryInfo info = new GeometryInfo(position, null, color, null, null, GeometryType.Line);
+            //RenderObject halfWire = RenderObjectFactory.Instance.CreateRenderObject("HalfEdgeWireFrame :" + geometry.Name);
+            //halfWire.SetGeometryInfo(info);
+            //halfWire.ModelMatrix = geometry.ModelMatrix;
+            //Workspace.SceneManager.ActiveScene.AddObject(halfWire);
+            //info2 = info;
+            //obj = halfWire;
 
             return RACommandResource.Success;
         }

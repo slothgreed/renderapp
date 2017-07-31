@@ -8,6 +8,7 @@ using OpenTK;
 using KI.Asset;
 using KI.Gfx.GLUtil;
 using RenderApp.Globals;
+using KI.Renderer;
 
 namespace RenderApp.RACommand
 {
@@ -57,7 +58,7 @@ namespace RenderApp.RACommand
 
                 }
             }
-            RenderObject wireframe = AssetFactory.Instance.CreateRenderObject("WireFrame :" + geometry.Name);
+            RenderObject wireframe = RenderObjectFactory.Instance.CreateRenderObject("WireFrame :" + geometry.Name);
             wireframe.SetGeometryInfo(new GeometryInfo(position, null, KICalc.RandomColor(), null, null, GeometryType.Line));
             wireframe.ModelMatrix = geometry.ModelMatrix;
             Workspace.SceneManager.ActiveScene.AddObject(wireframe);

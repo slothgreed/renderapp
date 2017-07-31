@@ -6,6 +6,7 @@ using RenderApp.AssetModel;
 using System.Collections.Generic;
 using KI.Asset;
 using RenderApp.Globals;
+using KI.Renderer;
 
 namespace RenderApp.RAControl
 {
@@ -20,7 +21,7 @@ namespace RenderApp.RAControl
             if (PickPoint(LeftMouse.Click, ref geometry, ref vertex_Index))
             {
                 Vector3 pos = geometry.geometryInfo.Position[vertex_Index];
-                RenderObject point = AssetFactory.Instance.CreateRenderObject("SelectPoint :" + geometry.Name +":"+ vertex_Index.ToString());
+                RenderObject point = RenderObjectFactory.Instance.CreateRenderObject("SelectPoint :" + geometry.Name +":"+ vertex_Index.ToString());
                 point.SetGeometryInfo(new GeometryInfo(new List<Vector3>() { pos }, null, KICalc.RandomColor(), null, null, GeometryType.Point));
                 point.ModelMatrix = geometry.ModelMatrix;
                 Workspace.SceneManager.ActiveScene.AddObject(point);

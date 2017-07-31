@@ -130,7 +130,7 @@ namespace KI.Renderer
                 CreateShader(vertexShader, fragShader);
             }
             OutputTexture = new List<Texture>();
-            Plane = AssetFactory.Instance.CreatePostProcessPlane(Name);
+            Plane = RenderObjectFactory.Instance.CreateRenderObject(Name, AssetFactory.Instance.CreatePlane(Name));
             CreateRenderTarget(KI.Gfx.GLUtil.DeviceContext.Instance.Width, KI.Gfx.GLUtil.DeviceContext.Instance.Height);
             Initialize();
         }

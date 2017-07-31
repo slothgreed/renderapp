@@ -1,5 +1,4 @@
-﻿using KI.Asset;
-using KI.Foundation.Command;
+﻿using KI.Foundation.Command;
 
 namespace KI.Analyzer
 {
@@ -17,11 +16,6 @@ namespace KI.Analyzer
     }
     public class DijkstraAlgorithm : ICommand
     {
-        public GeometryInfo Geometry
-        {
-            get;
-            set;
-        }
         public int StartIndex
         {
             get;
@@ -64,9 +58,6 @@ namespace KI.Analyzer
 
         public string CanExecute(string commandArg = null)
         {
-            if (Geometry == null)
-                return "geometry null error";
-
             if (StartIndex < 0 ||
                 EndIndex < 0 ||
                 StartIndex > _halfEdge.m_Vertex.Count ||
@@ -118,7 +109,6 @@ namespace KI.Analyzer
         {
             StartIndex = -1;
             EndIndex = -1;
-            Geometry = null;
             Distance = -1;
             return true;
         }

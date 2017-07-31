@@ -1,13 +1,12 @@
-﻿using OpenTK;
+﻿using System.Collections.Generic;
+using OpenTK;
 using KI.Gfx;
 using KI.Gfx.GLUtil;
-using RenderApp.AssetModel;
-using System.Collections.Generic;
 using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
 using KI.Asset;
 
-namespace RenderApp.GfxUtility
+namespace KI.Renderer
 {
     public static class ShaderHelper
     {

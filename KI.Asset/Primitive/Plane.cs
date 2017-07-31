@@ -1,10 +1,11 @@
 ﻿using OpenTK;
 using KI.Foundation.Utility;
 using KI.Foundation.Core;
+using System.Collections.Generic;
 
 namespace KI.Asset
 {
-    public class Plane : KIObject, IPrimitive
+    public class Plane : KIObject, IGeometry
     {
         #region [メンバ変数]
         /// <summary>
@@ -12,13 +13,10 @@ namespace KI.Asset
         /// </summary>
         private Vector4 surface = new Vector4();
 
-        private GeometryInfo _Geometry = new GeometryInfo();
-        public GeometryInfo Geometry
+        public GeometryInfo[] GeometryInfos
         {
-            get
-            {
-                return _Geometry;
-            }
+            get;
+            private set;
         }
 
         #endregion
@@ -47,22 +45,29 @@ namespace KI.Asset
         /// </summary>
         public void CreateObject(Vector3 q0, Vector3 q1, Vector3 q2, Vector3 q3)
         {
-            _Geometry.Position.Add(q0);
-            _Geometry.Position.Add(q1);
-            _Geometry.Position.Add(q2);
-            _Geometry.Position.Add(q3);
+            var position = new List<Vector3>();
+            var normal = new List<Vector3>();
+            var texcoord = new List<Vector2>();
+            position.Add(q0);
+            position.Add(q1);
+            position.Add(q2);
+            position.Add(q3);
 
             surface = KICalc.GetPlaneFormula(q0, q1, q2);
 
-            _Geometry.Normal.Add(new Vector3(surface));
-            _Geometry.Normal.Add(_Geometry.Normal[0]);
-            _Geometry.Normal.Add(_Geometry.Normal[0]);
-            _Geometry.Normal.Add(_Geometry.Normal[0]);
+            normal.Add(new Vector3(surface));
+            normal.Add(normal[0]);
+            normal.Add(normal[0]);
+            normal.Add(normal[0]);
 
-            _Geometry.TexCoord.Add(Vector2.Zero);
-            _Geometry.TexCoord.Add(Vector2.UnitX);
-            _Geometry.TexCoord.Add(Vector2.UnitX + Vector2.UnitY);
-            _Geometry.TexCoord.Add(Vector2.UnitY);
+            texcoord.Add(Vector2.Zero);
+            texcoord.Add(Vector2.UnitX);
+            texcoord.Add(Vector2.UnitX + Vector2.UnitY);
+            texcoord.Add(Vector2.UnitY);
+
+            var info = new GeometryInfo(position, normal, Vector3.UnitX, texcoord, null, Gfx.GLUtil.GeometryType.Quad);
+
+            GeometryInfos = new GeometryInfo[] { info };
 
         }
         #endregion

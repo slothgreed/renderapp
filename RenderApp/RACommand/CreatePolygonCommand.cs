@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using KI.Asset;
 using KI.Gfx.GLUtil;
 using RenderApp.Globals;
+using KI.Renderer;
 
 namespace RenderApp.RACommand
 {
@@ -27,7 +28,7 @@ namespace RenderApp.RACommand
             List<Vector3> position = new List<Vector3>(geometry.geometryInfo.Position);
             List<Vector3> normal = new List<Vector3>(geometry.geometryInfo.Normal);
             List<int> index = new List<int>(geometry.geometryInfo.Index);
-            RenderObject polygon = AssetFactory.Instance.CreateRenderObject("Polygon :" + geometry.Name);
+            RenderObject polygon = RenderObjectFactory.Instance.CreateRenderObject("Polygon :" + geometry.Name);
             polygon.SetGeometryInfo(new GeometryInfo(position, normal, new Vector3(0.7f, 0.7f, 0.7f), null, index, GeometryType.Triangle));
             Workspace.SceneManager.ActiveScene.AddObject(polygon);
 

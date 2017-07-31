@@ -3,7 +3,6 @@
 using System.Collections.Generic;
 using OpenTK;
 using KI.Foundation.Utility;
-using KI.Asset;
 
 namespace KI.Analyzer
 {
@@ -26,11 +25,6 @@ namespace KI.Analyzer
         public HalfEdge(List<Vector3> position, List<int> poly_Index = null)
         {
             Initialize(position, poly_Index);
-        }
-
-        public HalfEdge(GeometryInfo geometry)
-        {
-            Initialize(geometry.Position, geometry.Index);
         }
 
         private void Initialize(List<Vector3> position, List<int> poly_Index = null)
@@ -292,28 +286,6 @@ namespace KI.Analyzer
             }
         }
 
-        public GeometryInfo CreateGeometryInfo()
-        {
-            var geometry = new GeometryInfo();
-            var gray = new Vector3(0.8f);
-            foreach (var vertex in m_Vertex)
-            {
-                geometry.Position.Add(vertex.Position);
-                geometry.Normal.Add(vertex.Normal);
-                geometry.Color.Add(gray);
-
-            }
-            foreach (var mesh in m_Mesh)
-            {
-                foreach (var vertex in mesh.AroundVertex)
-                {
-                    geometry.Index.Add(vertex.Index);
-                }
-            }
-            //geometry.GeometryType = GeometryType.Triangle;
-            return geometry;
-
-        }
         /// <summary>
         /// 頂点インデックスの作成
         /// </summary>

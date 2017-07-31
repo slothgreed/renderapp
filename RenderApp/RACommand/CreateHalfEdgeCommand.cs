@@ -3,6 +3,7 @@ using KI.Analyzer;
 using KI.Asset;
 using KI.Foundation.Command;
 using KI.Foundation.Core;
+using KI.Renderer;
 using RenderApp.AssetModel;
 using RenderApp.Globals;
 
@@ -22,10 +23,9 @@ namespace RenderApp.RACommand
 
         public string Execute(string commandArg)
         {
-            HalfEdge half = new HalfEdge(geometry.geometryInfo);
-            GeometryInfo info = half.CreateGeometryInfo();
-            RenderObject halfEdge = AssetFactory.Instance.CreateRenderObject("HalfEdge :" + geometry.Name);
-            halfEdge.SetGeometryInfo(info);
+            var half = AssetFactory.Instance.CreateHalfEdge(geometry.geometryInfo.Position,geometry.geometryInfo.Index);
+            RenderObject halfEdge = RenderObjectFactory.Instance.CreateRenderObject("HalfEdge :" + geometry.Name);
+            halfEdge.SetGeometryInfo(half.GeometryInfos[0]);
             halfEdge.ModelMatrix = geometry.ModelMatrix;
             Workspace.SceneManager.ActiveScene.AddObject(halfEdge);
 

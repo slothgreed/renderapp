@@ -5,8 +5,9 @@ using KI.Gfx.KIShader;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.GLUtil;
 using KI.Foundation.Utility;
+using KI.Asset;
 
-namespace KI.Asset
+namespace KI.Renderer
 {
     /// <summary>
     /// 任意形状(triangle,quad,line,patchのみ対応)

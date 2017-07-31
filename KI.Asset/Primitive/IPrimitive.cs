@@ -1,7 +1,17 @@
 ﻿namespace KI.Asset
 {
-    public interface IPrimitive
+    public interface IGeometry
     {
-        GeometryInfo Geometry { get;}
+        GeometryInfo[] GeometryInfos
+        {
+            get;
+        }
+    }
+
+    public enum PrimitiveType
+    {
+        Axis,
+        Plane,
+        Sphere
     }
 }

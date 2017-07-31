@@ -5,7 +5,7 @@ using KI.Gfx.GLUtil;
 
 namespace RenderApp.AssetModel
 {
-    class GridPlane : IPrimitive
+    class GridPlane : IGeometry
     {
         /// <summary>
         /// グリッドの範囲
@@ -63,16 +63,14 @@ namespace RenderApp.AssetModel
                     Color.Add(Vector3.One);
                 }
             }
-            _geometry = new GeometryInfo(Position, null, Color, null, null, GeometryType.Line);
+            var info = new GeometryInfo(Position, null, Color, null, null, GeometryType.Line);
+            GeometryInfos = new GeometryInfo[] { info };
         }
 
-        private GeometryInfo _geometry;
-        public GeometryInfo Geometry
+        public GeometryInfo[] GeometryInfos
         {
-            get
-            {
-                return _geometry;
-            }
+            get;
+            private set;
         }
     }
 }

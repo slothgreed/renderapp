@@ -2,34 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using KI.Asset.Loader.Loader;
-using KI.Asset;
 using KI.Gfx.GLUtil;
 
-namespace RenderApp.AssetModel.RA_Geometry
+namespace KI.Asset
 {
-    class PLYConverter : IRenderObjectConverter
+    class PLYConverter : IGeometry
     {
-        private PLYLoader plyData;
-
         public PLYConverter(string name, string filePath)
         {
-            plyData = new PLYLoader(filePath);
+            var plyData = new PLYLoader(filePath);
+            CreateGeometryInfo(plyData);
         }
 
-        private List<RenderObject> renderObject;
-        public List<RenderObject> RenderObject
+        public GeometryInfo[] GeometryInfos
         {
-            get
-            {
-                return renderObject;
-            }
+            get;
+            private set;
         }
 
-
-        public List<RenderObject> CreateRenderObject()
+        public void CreateGeometryInfo(PLYLoader plyData)
         {
-            RenderObject geometry = AssetFactory.Instance.CreateRenderObject(plyData.FileName);
-
             var position = new List<Vector3>();
 
             int vertexNum = plyData.Propertys[0].Count;
@@ -49,10 +41,7 @@ namespace RenderApp.AssetModel.RA_Geometry
             List<int> index = plyData.FaceIndex.ToList();
 
             GeometryInfo info = new GeometryInfo(position, null, Vector3.UnitX, null, index, GeometryType.Triangle);
-
-            geometry.SetGeometryInfo(info);
-            renderObject = new List<RenderObject> { geometry };
-            return renderObject;
+            GeometryInfos = new GeometryInfo[] { info };
         }
     }
 

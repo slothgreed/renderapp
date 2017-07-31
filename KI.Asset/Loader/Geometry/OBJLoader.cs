@@ -37,8 +37,35 @@ namespace KI.Asset.Loader
         /// <summary>
         /// 頂点・色・テクスチャ座標を保持。
         /// </summary>
-        public GeometryInfo vertexInfo;
         public Dictionary<string, OBJMaterial> mtlList = new Dictionary<string,OBJMaterial>();
+
+        private List<Vector3> position = new List<Vector3>();
+        public List<Vector3> Position
+        {
+            get
+            {
+                return position;
+            }
+        }
+
+        private List<Vector3> normal = new List<Vector3>();
+        public List<Vector3> Normal
+        {
+            get
+            {
+                return normal;
+            }
+        }
+
+        private List<Vector2> texcoord = new List<Vector2>();
+        public List<Vector2> Texcoord
+        {
+            get
+            {
+                return texcoord;
+            }
+        }
+
         /// <summary>
         /// objファイルのローダ
         /// </summary>
@@ -49,7 +76,6 @@ namespace KI.Asset.Loader
         {
             try
             {
-                vertexInfo = new GeometryInfo();
                 string[] parser = File.ReadAllLines(filePath, System.Text.Encoding.GetEncoding("Shift_JIS"));
                 ReadData(parser);
             }
@@ -108,17 +134,17 @@ namespace KI.Asset.Loader
                 }
                 if (line[i] == "v")
                 {
-                    vertexInfo.Position.Add(new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3])));
+                    position.Add(new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3])));
                     break;
                 }
                 if (line[i] == "vt")
                 {
-                    vertexInfo.TexCoord.Add(new Vector2(float.Parse(line[i + 1]), float.Parse(line[i + 2])));
+                    texcoord.Add(new Vector2(float.Parse(line[i + 1]), float.Parse(line[i + 2])));
                     break;
                 }
                 if (line[i] == "vn")
                 {
-                    vertexInfo.Normal.Add(new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3])));
+                    normal.Add(new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3])));
                     break;
                 }
                 if (line[i] == "f")
@@ -247,6 +273,7 @@ namespace KI.Asset.Loader
                 Logger.Log(Logger.LogLevel.Warning,"we dont support more than 4 polygons");
             }
         }
+
         #region [read mtl file]
         private bool OpenMTL(string file_name)
         {

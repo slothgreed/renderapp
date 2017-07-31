@@ -26,6 +26,7 @@ namespace KI.Asset
         {
             RootNode = new KINode("ROOT");
         }
+
         #region [scene dictionary]
         /// <summary>
         /// ルートノード

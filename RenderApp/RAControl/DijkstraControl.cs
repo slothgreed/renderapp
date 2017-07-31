@@ -7,6 +7,7 @@ using KI.Analyzer;
 using KI.Asset;
 using KI.Gfx.GLUtil;
 using RenderApp.Globals;
+using KI.Renderer;
 
 namespace RenderApp.RAControl
 {
@@ -28,10 +29,6 @@ namespace RenderApp.RAControl
                 {
                     Dijkstra.SetGeometry(geometry.HalfEdge as HalfEdge);
 
-                    if (Dijkstra.Geometry == null)
-                    {
-                        Dijkstra.Geometry = geometry.geometryInfo;
-                    }
                     if(Dijkstra.StartIndex == -1)
                     {
                         Dijkstra.StartIndex = vertex_Index;
@@ -53,7 +50,7 @@ namespace RenderApp.RAControl
                         var picking = Workspace.SceneManager.ActiveScene.FindObject("Picking") as RenderObject;
                         if (picking == null)
                         {
-                            RenderObject triangle = AssetFactory.Instance.CreateRenderObject("Picking");
+                            RenderObject triangle = RenderObjectFactory.Instance.CreateRenderObject("Picking");
                             GeometryInfo info = new GeometryInfo(new List<Vector3>() { tri1, tri2, tri3 }, null, KICalc.RandomColor(), null, null, GeometryType.Triangle);
                             triangle.SetGeometryInfo(info);
                             Workspace.SceneManager.ActiveScene.AddObject(triangle);

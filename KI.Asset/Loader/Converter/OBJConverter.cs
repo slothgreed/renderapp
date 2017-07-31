@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
-using KI.Asset;
 using KI.Asset.Loader;
 using KI.Gfx.GLUtil;
 using KI.Gfx.KITexture;
 using OpenTK;
 
-namespace RenderApp.AssetModel.RA_Geometry
+namespace KI.Asset
 {
-    public class OBJConverter : IRenderObjectConverter
+    public class OBJConverter : IGeometry
     {
         private OBJLoader objData;
         /// <summary>
@@ -20,81 +19,75 @@ namespace RenderApp.AssetModel.RA_Geometry
             objData = new OBJLoader(name, filePath);
         }
 
+        public GeometryInfo[] GeometryInfos
+        {
+            get;
+            private set;
+        }
+
+
         public void SetMaterial(Geometry geometry, OBJMaterial material)
         {
             if (material.map_Kd != null)
             {
                 Texture albedo = TextureFactory.Instance.CreateTexture(material.map_Kd);
                 geometry.AddTexture(TextureKind.Albedo, albedo);
-                Globals.Project.ActiveProject.AddChild(albedo);
             }
 
             if (material.map_bump != null)
             {
                 Texture bump = TextureFactory.Instance.CreateTexture(material.map_bump);
                 geometry.AddTexture(TextureKind.Normal, bump);
-                Globals.Project.ActiveProject.AddChild(bump);
             }
 
             if (material.map_Ns != null)
             {
                 Texture spec = TextureFactory.Instance.CreateTexture(material.map_Ns);
                 geometry.AddTexture(TextureKind.Specular, spec);
-                Globals.Project.ActiveProject.AddChild(spec);
             }
         }
 
-        public List<RenderObject> CreateRenderObject()
+        public void CreateRenderObject()
         {
-            List<RenderObject> geometrys = new List<RenderObject>();
+            List<GeometryInfo> geometrys = new List<GeometryInfo>();
 
             foreach (var material in objData.mtlList.Values)
             {
-                RenderObject geometry = null;
+                GeometryInfo geometry = null;
                 var Position = new List<Vector3>();
                 var Normal = new List<Vector3>();
                 var TexCoord = new List<Vector2>();
                 for (int j = 0; j < material.posIndex.Count / 3; j++)
                 {
-                    Position.Add(objData.vertexInfo.Position[material.posIndex[3 * j]]);
-                    Position.Add(objData.vertexInfo.Position[material.posIndex[3 * j + 1]]);
-                    Position.Add(objData.vertexInfo.Position[material.posIndex[3 * j + 2]]);
-                    if (objData.vertexInfo.Normal.Count != 0)
+                    Position.Add(objData.Position[material.posIndex[3 * j]]);
+                    Position.Add(objData.Position[material.posIndex[3 * j + 1]]);
+                    Position.Add(objData.Position[material.posIndex[3 * j + 2]]);
+                    if (objData.Normal.Count != 0)
                     {
-                        Normal.Add(objData.vertexInfo.Normal[material.norIndex[3 * j]]);
-                        Normal.Add(objData.vertexInfo.Normal[material.norIndex[3 * j + 1]]);
-                        Normal.Add(objData.vertexInfo.Normal[material.norIndex[3 * j + 2]]);
+                        Normal.Add(objData.Normal[material.norIndex[3 * j]]);
+                        Normal.Add(objData.Normal[material.norIndex[3 * j + 1]]);
+                        Normal.Add(objData.Normal[material.norIndex[3 * j + 2]]);
                     }
-                    if (objData.vertexInfo.TexCoord.Count != 0)
+                    if (objData.Texcoord.Count != 0)
                     {
-                        TexCoord.Add(objData.vertexInfo.TexCoord[material.texIndex[3 * j]]);
-                        TexCoord.Add(objData.vertexInfo.TexCoord[material.texIndex[3 * j + 1]]);
-                        TexCoord.Add(objData.vertexInfo.TexCoord[material.texIndex[3 * j + 2]]);
+                        TexCoord.Add(objData.Texcoord[material.texIndex[3 * j]]);
+                        TexCoord.Add(objData.Texcoord[material.texIndex[3 * j + 1]]);
+                        TexCoord.Add(objData.Texcoord[material.texIndex[3 * j + 2]]);
                     }
                 }
                 if (Position.Count != 0)
                 {
-                    geometry = AssetFactory.Instance.CreateRenderObject(material.name);
-                    GeometryInfo info = new GeometryInfo(Position, Normal, null, TexCoord, null,GeometryType.Triangle);
+                    GeometryInfo info = new GeometryInfo(Position, Normal, null, TexCoord, null, GeometryType.Triangle);
                     //geometry.CreateGeometryInfo(objData.vertexInfo, PrimitiveType.Triangles);
-                    SetMaterial(geometry, material);
+                    //SetMaterial(geometry, material);
                     if (geometry != null)
                     {
                         geometrys.Add(geometry);
                     }
                 }
             }
-            _renderObject = geometrys;
-            return geometrys;
-        }
 
-        private List<RenderObject> _renderObject;
-        public List<RenderObject> RenderObject
-        {
-            get
-            {
-                return _renderObject;
-            }
+            GeometryInfos = geometrys.ToArray();
         }
     }
 }

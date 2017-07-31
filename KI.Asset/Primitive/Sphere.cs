@@ -1,27 +1,25 @@
 ﻿using System;
 using OpenTK;
 using KI.Foundation.Core;
+using System.Collections.Generic;
 
 namespace KI.Asset
 {
-    public class Sphere : KIObject, IPrimitive
+    public class Sphere : KIObject, IGeometry
     {
-        public GeometryInfo _Geometry;
-        public GeometryInfo Geometry
+        public GeometryInfo[] GeometryInfos
         {
-            get
-            {
-                return _Geometry;
-            }
+            get;
+            private set;
         }
         /// <param name="radial">半径</param>
         /// <param name="hpartition">高さ分割数</param>
         /// <param name="wpartition">横分割数</param>
         /// <param name="orient">面の方向true=外向きfalse=内向き</param>
-        public Sphere(string name, float radial, int hpartition, int wpartition, bool orient, Vector3 color)
+        public Sphere(string name, float radial, int hpartition, int wpartition, bool orient)
             : base(name)
         {
-            SetObjectData(radial, hpartition, wpartition, orient, color);
+            SetObjectData(radial, hpartition, wpartition, orient);
         }
         /// <summary>
         /// 球面座標の取得
@@ -51,27 +49,32 @@ namespace KI.Asset
 
             return texcoord;
         }
-        private void SetObjectData(float radial, int hpartition, int wpartition, bool orient, Vector3 color)
+        private void SetObjectData(float radial, int hpartition, int wpartition, bool orient)
         {
             float theta = (float)Math.PI / hpartition;
             float phi = (float)Math.PI / wpartition;
+
+            var position = new List<Vector3>();
+            var normal = new List<Vector3>();
+            var texcoord = new List<Vector2>();
+
 
             phi *= 2;
 
             //一番上
             for (int i = 0; i < wpartition; i++)
             {
-                _Geometry.Position.Add(GetSphericalPolarCoordinates(radial, 0, 0));
-                _Geometry.Position.Add(GetSphericalPolarCoordinates(radial, theta, phi * i));
-                _Geometry.Position.Add(GetSphericalPolarCoordinates(radial, theta, phi * (i + 1)));
+                position.Add(GetSphericalPolarCoordinates(radial, 0, 0));
+                position.Add(GetSphericalPolarCoordinates(radial, theta, phi * i));
+                position.Add(GetSphericalPolarCoordinates(radial, theta, phi * (i + 1)));
 
-                _Geometry.TexCoord.Add(GetSphericalTexCoord(_Geometry.Position[_Geometry.Position.Count - 3]));
-                _Geometry.TexCoord.Add(GetSphericalTexCoord(_Geometry.Position[_Geometry.Position.Count - 2]));
-                _Geometry.TexCoord.Add(GetSphericalTexCoord(_Geometry.Position[_Geometry.Position.Count - 1]));
+                texcoord.Add(GetSphericalTexCoord(position[position.Count - 3]));
+                texcoord.Add(GetSphericalTexCoord(position[position.Count - 2]));
+                texcoord.Add(GetSphericalTexCoord(position[position.Count - 1]));
 
-                _Geometry.Normal.Add(_Geometry.Position[_Geometry.Position.Count - 3].Normalized());
-                _Geometry.Normal.Add(_Geometry.Position[_Geometry.Position.Count - 2].Normalized());
-                _Geometry.Normal.Add(_Geometry.Position[_Geometry.Position.Count - 1].Normalized());
+                normal.Add(position[position.Count - 3].Normalized());
+                normal.Add(position[position.Count - 2].Normalized());
+                normal.Add(position[position.Count - 1].Normalized());
             }
 
 
@@ -79,58 +82,58 @@ namespace KI.Asset
             {
                 for (int j = 0; j < wpartition; j++)
                 {
-                    _Geometry.Position.Add(GetSphericalPolarCoordinates(radial, theta * i, phi * j));
-                    _Geometry.Position.Add(GetSphericalPolarCoordinates(radial, theta * i, phi * (j + 1)));
-                    _Geometry.Position.Add(GetSphericalPolarCoordinates(radial, theta * (i - 1), phi * j));
+                    position.Add(GetSphericalPolarCoordinates(radial, theta * i, phi * j));
+                    position.Add(GetSphericalPolarCoordinates(radial, theta * i, phi * (j + 1)));
+                    position.Add(GetSphericalPolarCoordinates(radial, theta * (i - 1), phi * j));
 
-                    _Geometry.Position.Add(GetSphericalPolarCoordinates(radial, theta * i, phi * (j + 1)));
-                    _Geometry.Position.Add(GetSphericalPolarCoordinates(radial, theta * (i - 1), phi * (j + 1)));
-                    _Geometry.Position.Add(GetSphericalPolarCoordinates(radial, theta * (i - 1), phi * j));
+                    position.Add(GetSphericalPolarCoordinates(radial, theta * i, phi * (j + 1)));
+                    position.Add(GetSphericalPolarCoordinates(radial, theta * (i - 1), phi * (j + 1)));
+                    position.Add(GetSphericalPolarCoordinates(radial, theta * (i - 1), phi * j));
 
-                    _Geometry.TexCoord.Add(GetSphericalTexCoord(_Geometry.Position[_Geometry.Position.Count - 6]));
-                    _Geometry.TexCoord.Add(GetSphericalTexCoord(_Geometry.Position[_Geometry.Position.Count - 5]));
-                    _Geometry.TexCoord.Add(GetSphericalTexCoord(_Geometry.Position[_Geometry.Position.Count - 4]));
-                    _Geometry.TexCoord.Add(GetSphericalTexCoord(_Geometry.Position[_Geometry.Position.Count - 3]));
-                    _Geometry.TexCoord.Add(GetSphericalTexCoord(_Geometry.Position[_Geometry.Position.Count - 2]));
-                    _Geometry.TexCoord.Add(GetSphericalTexCoord(_Geometry.Position[_Geometry.Position.Count - 1]));
+                    texcoord.Add(GetSphericalTexCoord(position[position.Count - 6]));
+                    texcoord.Add(GetSphericalTexCoord(position[position.Count - 5]));
+                    texcoord.Add(GetSphericalTexCoord(position[position.Count - 4]));
+                    texcoord.Add(GetSphericalTexCoord(position[position.Count - 3]));
+                    texcoord.Add(GetSphericalTexCoord(position[position.Count - 2]));
+                    texcoord.Add(GetSphericalTexCoord(position[position.Count - 1]));
 
 
 
-                    _Geometry.Normal.Add(_Geometry.Position[_Geometry.Position.Count - 6].Normalized());
-                    _Geometry.Normal.Add(_Geometry.Position[_Geometry.Position.Count - 5].Normalized());
-                    _Geometry.Normal.Add(_Geometry.Position[_Geometry.Position.Count - 4].Normalized());
+                    normal.Add(position[position.Count - 6].Normalized());
+                    normal.Add(position[position.Count - 5].Normalized());
+                    normal.Add(position[position.Count - 4].Normalized());
 
-                    _Geometry.Normal.Add(_Geometry.Position[_Geometry.Position.Count - 3].Normalized());
-                    _Geometry.Normal.Add(_Geometry.Position[_Geometry.Position.Count - 2].Normalized());
-                    _Geometry.Normal.Add(_Geometry.Position[_Geometry.Position.Count - 1].Normalized());
+                    normal.Add(position[position.Count - 3].Normalized());
+                    normal.Add(position[position.Count - 2].Normalized());
+                    normal.Add(position[position.Count - 1].Normalized());
 
                 }
             }
             for (int i = 0; i < wpartition; i++)
             {
-                _Geometry.Position.Add(GetSphericalPolarCoordinates(radial, theta * (hpartition - 1), phi * (i + 1)));
-                _Geometry.Position.Add(GetSphericalPolarCoordinates(radial, theta * (hpartition - 1), phi * i));
-                _Geometry.Position.Add(GetSphericalPolarCoordinates(radial, theta * hpartition, 0));
+                position.Add(GetSphericalPolarCoordinates(radial, theta * (hpartition - 1), phi * (i + 1)));
+                position.Add(GetSphericalPolarCoordinates(radial, theta * (hpartition - 1), phi * i));
+                position.Add(GetSphericalPolarCoordinates(radial, theta * hpartition, 0));
 
-                _Geometry.TexCoord.Add(GetSphericalTexCoord(_Geometry.Position[_Geometry.Position.Count - 3]));
-                _Geometry.TexCoord.Add(GetSphericalTexCoord(_Geometry.Position[_Geometry.Position.Count - 2]));
-                _Geometry.TexCoord.Add(GetSphericalTexCoord(_Geometry.Position[_Geometry.Position.Count - 1]));
+                texcoord.Add(GetSphericalTexCoord(position[position.Count - 3]));
+                texcoord.Add(GetSphericalTexCoord(position[position.Count - 2]));
+                texcoord.Add(GetSphericalTexCoord(position[position.Count - 1]));
 
-                _Geometry.Normal.Add(_Geometry.Position[_Geometry.Position.Count - 3].Normalized());
-                _Geometry.Normal.Add(_Geometry.Position[_Geometry.Position.Count - 2].Normalized());
-                _Geometry.Normal.Add(_Geometry.Position[_Geometry.Position.Count - 1].Normalized());
+                normal.Add(position[position.Count - 3].Normalized());
+                normal.Add(position[position.Count - 2].Normalized());
+                normal.Add(position[position.Count - 1].Normalized());
 
             }
 
             Vector2 max = Vector2.Zero;
             Vector2 min = Vector2.One;
-            for (int i = 0; i < _Geometry.TexCoord.Count; i++)
+            for (int i = 0; i < texcoord.Count; i++)
             {
-                if (max.X < _Geometry.TexCoord[i].X) { max.X = _Geometry.TexCoord[i].X; }
-                if (max.Y < _Geometry.TexCoord[i].Y) { max.Y = _Geometry.TexCoord[i].Y; }
+                if (max.X < texcoord[i].X) { max.X = texcoord[i].X; }
+                if (max.Y < texcoord[i].Y) { max.Y = texcoord[i].Y; }
 
-                if (min.X < _Geometry.TexCoord[i].X) { min.X = _Geometry.TexCoord[i].X; }
-                if (min.Y < _Geometry.TexCoord[i].Y) { min.Y = _Geometry.TexCoord[i].Y; }
+                if (min.X < texcoord[i].X) { min.X = texcoord[i].X; }
+                if (min.Y < texcoord[i].Y) { min.Y = texcoord[i].Y; }
             }
             //TODO: きちんと実装
             //RetouchTexcoord(TexCoord);
@@ -139,24 +142,28 @@ namespace KI.Asset
             {
                 Vector3 tmp3;
                 Vector2 tmp2;
-                for (int i = 0; i < _Geometry.Position.Count; i += 3)
+                for (int i = 0; i < position.Count; i += 3)
                 {
-                    tmp3 = _Geometry.Position[i];
-                    _Geometry.Position[i] = _Geometry.Position[i + 2];
-                    _Geometry.Position[i + 2] = tmp3;
+                    tmp3 = position[i];
+                    position[i] = position[i + 2];
+                    position[i + 2] = tmp3;
 
-                    _Geometry.Normal[i] = -_Geometry.Normal[i];
-                    _Geometry.Normal[i + 1] = -_Geometry.Normal[i + 1];
-                    _Geometry.Normal[i + 2] = -_Geometry.Normal[i + 2];
+                    normal[i] = -normal[i];
+                    normal[i + 1] = -normal[i + 1];
+                    normal[i + 2] = -normal[i + 2];
 
-                    tmp2 = _Geometry.TexCoord[i];
-                    _Geometry.TexCoord[i] = _Geometry.TexCoord[i + 2];
-                    _Geometry.TexCoord[i + 2] = tmp2;
+                    tmp2 = texcoord[i];
+                    texcoord[i] = texcoord[i + 2];
+                    texcoord[i + 2] = tmp2;
 
                 }
             }
 
-            Geometry.ConvertVertexArray();
+            var info = new GeometryInfo(position, normal, null, texcoord, null, Gfx.GLUtil.GeometryType.Triangle);
+
+            info.ConvertVertexArray();
+
+            GeometryInfos = new GeometryInfo[] { info };
 
         }
     }

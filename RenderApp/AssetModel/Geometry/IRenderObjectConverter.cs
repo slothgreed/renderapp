@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using KI.Asset;
+using KI.Renderer;
 
 namespace RenderApp.AssetModel.RA_Geometry
 {

@@ -1,10 +1,10 @@
-﻿using RenderApp.AssetModel;
-using KI.Gfx.GLUtil;
+﻿using KI.Gfx.GLUtil;
 using KI.Gfx.KIShader;
 using KI.Asset;
 using KI.Gfx.KITexture;
+using KI.Renderer;
 
-namespace RenderApp.GfxUtility
+namespace KI.Asset
 {
     public enum ShaderType
     {
@@ -33,7 +33,7 @@ namespace RenderApp.GfxUtility
         {
             get
             {
-                return ProjectInfo.ShaderDirectory + @"\";
+                return Global.ShaderDirectory + @"\";
             }
         }
         private bool CheckBufferEnable(BufferObject buffer)

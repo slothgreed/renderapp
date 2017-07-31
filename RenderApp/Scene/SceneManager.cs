@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using RenderApp.RARenderSystem;
 using RenderApp.AssetModel;
 using OpenTK;
 using KI.Asset;
+using KI.Renderer;
 
 namespace RenderApp
 {
@@ -28,11 +28,11 @@ namespace RenderApp
         }
         public void Initialize()
         {
-            List<RenderObject> axis = AssetFactory.Instance.CreateAxis("axis", Vector3.Zero, ActiveScene.WorldMax);
-            foreach(var a in axis)
-            {
-                ActiveScene.AddObject(a);
-            }
+            //List<RenderObject> axis = AssetFactory.Instance.CreateAxis("axis", Vector3.Zero, ActiveScene.WorldMax);
+            //foreach(var a in axis)
+            //{
+            //    ActiveScene.AddObject(a);
+            //}
             //List<RenderObject> sponzas = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/crytek-sponza/sponza.obj");
             //foreach (var sponza in sponzas)
             //{
@@ -67,12 +67,12 @@ namespace RenderApp
             //ActiveScene.AddObject(cubeMap);
 
             //List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/bunny.half");
-            List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/duck.half");
-            foreach (var b in bunny)
-            {
-                b.RotateX(-90);
-                ActiveScene.AddObject(b);
-            }
+            //List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/duck.half");
+            //foreach (var b in bunny)
+            //{
+            //    b.RotateX(-90);
+            //    ActiveScene.AddObject(b);
+            //}
 
             //List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/test.half");
             ////List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/Sphere.stl");
@@ -96,8 +96,8 @@ namespace RenderApp
         }
         public void AddObject(string filePath)
         {
-            var model = AssetFactory.Instance.CreateLoad3DModel(filePath);
-            ActiveScene.AddObject(model.FirstOrDefault());
+            //var model = AssetFactory.Instance.CreateLoad3DModel(filePath);
+            //ActiveScene.AddObject(model.FirstOrDefault());
         }
 
     }

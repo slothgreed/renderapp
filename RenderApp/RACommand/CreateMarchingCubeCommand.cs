@@ -6,6 +6,7 @@ using KI.Analyzer.Algorithm.MarchingCube;
 using KI.Gfx.GLUtil;
 using KI.Asset;
 using RenderApp.Globals;
+using KI.Renderer;
 
 namespace RenderApp.RACommand
 {
@@ -24,7 +25,7 @@ namespace RenderApp.RACommand
         public string Execute(string commandArg)
         {
             var marching = new MarchingCubesAlgorithm(200, 50);
-            RenderObject marchingObject = AssetFactory.Instance.CreateRenderObject("Marching Sphere");
+            RenderObject marchingObject = RenderObjectFactory.Instance.CreateRenderObject("Marching Sphere");
             GeometryInfo info = new GeometryInfo(marching.PositionList, null, marching.ColorList, null, null, GeometryType.Triangle);
             marchingObject.SetGeometryInfo(info);
             Workspace.SceneManager.ActiveScene.AddObject(marchingObject);

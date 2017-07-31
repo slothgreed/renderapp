@@ -142,7 +142,6 @@
     </ApplicationDefinition>
     <Compile Include="AppSystem.cs" />
     <Compile Include="AssetModel\AssetFactory.cs" />
-    <Compile Include="AssetModel\Geometry\File\PLYConverter.cs" />
     <Compile Include="AssetModel\Geometry\IRenderObjectConverter.cs" />
     <Compile Include="Globals\Workspace.cs" />
     <Compile Include="RACommand\CreateConvexHullCommand.cs" />
@@ -153,7 +152,6 @@
     <Compile Include="RACommand\CreatePolygonCommand.cs" />
     <Compile Include="RACommand\CreateVoxelCommand.cs" />
     <Compile Include="RACommand\CreateWireFrameCommand.cs" />
-    <Compile Include="GfxUtility\ShaderHelper.cs" />
     <Compile Include="RACommand\RACommandResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -162,7 +160,6 @@
     <Compile Include="RAControl\SelectPointControl.cs" />
     <Compile Include="Scene\SceneManager.cs" />
     <Compile Include="RAControl\CameraControl.cs" />
-    <Compile Include="GfxUtility\ShaderCreater.cs" />
     <Compile Include="ViewModel\Converter\EnumConverter.cs" />
     <Compile Include="Globals\Project.cs" />
     <Compile Include="Globals\Enum.cs" />
@@ -275,8 +272,6 @@
     </Compile>
     <Compile Include="Scene\Shader\OffScreen\Defferd\CDeffed.cs" />
     <Compile Include="Scene\Shader\OffScreen\Shadow\CShadowMap.cs" />
-    <Compile Include="AssetModel\Geometry\File\OBJConverter.cs" />
-    <Compile Include="AssetModel\Geometry\File\STLConverter.cs" />
     <Compile Include="Utility\TrueTypeFont.cs" />
     <Compile Include="Utility\Util.cs" />
     <Compile Include="View\ViewportView.xaml.cs">
@@ -442,6 +437,7 @@
     <EmbeddedResource Include="Thumbnail\noimage.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="AssetModel\Geometry\File\" />
     <Folder Include="Scene\Shader\ShaderType\" />
   </ItemGroup>
   <ItemGroup>

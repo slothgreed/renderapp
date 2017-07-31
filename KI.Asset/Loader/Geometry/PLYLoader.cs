@@ -13,30 +13,30 @@ namespace KI.Asset.Loader.Loader
     {
         private List<string> propertyNames;
 
-        public IReadOnlyList<string> PropertyName
+        public List<string> PropertyName
         {
             get
             {
-                return propertyNames.AsReadOnly();
+                return propertyNames;
             }
         }
 
         private List<List<float>> propertys = new List<List<float>>();
 
-        public IReadOnlyList<List<float>> Propertys
+        public List<List<float>> Propertys
         {
             get
             {
-                return propertys.AsReadOnly();
+                return propertys;
             }
         }
 
         private List<int> faceIndex = new List<int>();
-        public IReadOnlyList<int> FaceIndex
+        public List<int> FaceIndex
         {
             get
             {
-                return faceIndex.AsReadOnly();
+                return faceIndex;
             }
         }
 

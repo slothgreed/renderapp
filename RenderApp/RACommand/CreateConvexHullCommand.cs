@@ -8,6 +8,7 @@ using KI.Asset;
 using KI.Analyzer.Algorithm;
 using KI.Gfx.GLUtil;
 using RenderApp.Globals;
+using KI.Renderer;
 
 namespace RenderApp.RACommand
 {
@@ -62,12 +63,12 @@ namespace RenderApp.RACommand
             }
 
             GeometryInfo info = new GeometryInfo(position, null, Vector3.UnitZ, null, null, GeometryType.Line);
-            RenderObject convex = AssetFactory.Instance.CreateRenderObject("ConvexHull :" + geometry.Name);
+            RenderObject convex = RenderObjectFactory.Instance.CreateRenderObject("ConvexHull :" + geometry.Name);
             convex.SetGeometryInfo(info);
             convex.ModelMatrix = geometry.ModelMatrix;
             Workspace.SceneManager.ActiveScene.AddObject(convex);
 
-            RenderObject point = AssetFactory.Instance.CreateRenderObject("ConvexHull : Points" + geometry.Name);
+            RenderObject point = RenderObjectFactory.Instance.CreateRenderObject("ConvexHull : Points" + geometry.Name);
             GeometryInfo info2 = new GeometryInfo(convexHull.Points, null, null, null, null, GeometryType.Point);
             point.SetGeometryInfo(info2);
             point.ModelMatrix = geometry.ModelMatrix;

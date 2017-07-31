@@ -94,7 +94,6 @@ namespace KI.Asset
 
         private void Initialize(string name = null)
         {
-            geometryInfo = new GeometryInfo();
             ModelMatrix = Matrix4.Identity;
             TextureItem = new Dictionary<TextureKind,Texture>();
             //Shader = ShaderCreater.Instance.DefaultShader;
@@ -133,6 +132,7 @@ namespace KI.Asset
                 return null;
             }
         }
+
         #region [modelmatrix]
         #region [translate]
         /// <summary>

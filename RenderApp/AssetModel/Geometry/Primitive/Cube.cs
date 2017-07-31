@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using OpenTK;
 using KI.Gfx.KIShader;
-using RenderApp.GfxUtility;
 using KI.Asset;
 using KI.Gfx.GLUtil;
+using KI.Renderer;
 
 namespace RenderApp.AssetModel.RA_Geometry
 {
@@ -49,12 +49,12 @@ namespace RenderApp.AssetModel.RA_Geometry
                 Vector2.UnitX + Vector2.UnitY,
                 Vector2.UnitX
             };
-            var front = AssetFactory.Instance.CreateRenderObject("Front");
-            var left = AssetFactory.Instance.CreateRenderObject("Left");
-            var back = AssetFactory.Instance.CreateRenderObject("Back");
-            var right = AssetFactory.Instance.CreateRenderObject("Right");
-            var top = AssetFactory.Instance.CreateRenderObject("Top");
-            var bot = AssetFactory.Instance.CreateRenderObject("Bottom");
+            var front = RenderObjectFactory.Instance.CreateRenderObject("Front");
+            var left = RenderObjectFactory.Instance.CreateRenderObject("Left");
+            var back = RenderObjectFactory.Instance.CreateRenderObject("Back");
+            var right = RenderObjectFactory.Instance.CreateRenderObject("Right");
+            var top = RenderObjectFactory.Instance.CreateRenderObject("Top");
+            var bot = RenderObjectFactory.Instance.CreateRenderObject("Bottom");
 
             if(reverse == false)
             {

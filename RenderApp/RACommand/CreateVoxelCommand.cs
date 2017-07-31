@@ -9,6 +9,7 @@ using KI.Asset;
 using KI.Analyzer;
 using KI.Gfx.GLUtil;
 using RenderApp.Globals;
+using KI.Renderer;
 
 namespace RenderApp.RACommand
 {
@@ -29,13 +30,13 @@ namespace RenderApp.RACommand
         public string Execute(string commandArg)
         {
             VoxelSpace voxel = new VoxelSpace(geometry.geometryInfo.Position, geometry.geometryInfo.Index, Partition);
-            RenderObject voxelObject = AssetFactory.Instance.CreateRenderObject("Voxel :" + geometry.Name);
+            RenderObject voxelObject = RenderObjectFactory.Instance.CreateRenderObject("Voxel :" + geometry.Name);
             GeometryInfo info = new GeometryInfo(voxel.vPosition, voxel.vNormal, KICalc.RandomColor(), null, null, GeometryType.Quad);
             voxelObject.SetGeometryInfo(info);
             voxelObject.Transformation(geometry.ModelMatrix);
             Workspace.SceneManager.ActiveScene.AddObject(voxelObject);
 
-            RenderObject innerObject = AssetFactory.Instance.CreateRenderObject("Voxel Inner : " + geometry.Name);
+            RenderObject innerObject = RenderObjectFactory.Instance.CreateRenderObject("Voxel Inner : " + geometry.Name);
 
 
             var voxels = voxel.GetVoxel(VoxelSpace.VoxelState.Inner);

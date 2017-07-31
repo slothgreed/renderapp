@@ -7,6 +7,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using KI.Foundation.Utility;
 using KI.Foundation.Core;
+using System.Collections.ObjectModel;
 
 namespace KI.Asset.Loader
 {
@@ -15,7 +16,31 @@ namespace KI.Asset.Loader
     /// </summary>
     public class STLLoader : KIFile
     {
-        public GeometryInfo vertexInfo;
+
+        public GeometryInfo[] GeometryInfos
+        {
+            get;
+            private set;
+        }
+
+        private List<Vector3> position = new List<Vector3>();
+        public List<Vector3> Position
+        {
+            get
+            {
+                return position;
+            }
+        }
+
+        private List<Vector3> normal = new List<Vector3>();
+        public List<Vector3> Normal
+        {
+            get
+            {
+                return normal;
+            }
+        }
+
         /// <summary>
         /// STLのローダ。
         /// </summary>
@@ -27,25 +52,23 @@ namespace KI.Asset.Loader
         {
             try
             {
-                vertexInfo = new GeometryInfo();
                 String[] parser = File.ReadAllLines(filePath, System.Text.Encoding.GetEncoding("Shift_JIS"));
-                ReadData(vertexInfo, parser);
+                ReadData(parser);
             }
             catch (Exception)
             {
 
                 Logger.Log(Logger.LogLevel.Error,filePath + "開けません。現在のフォルダ位置" + System.Environment.CurrentDirectory);   
             }
-
-            
         }
+
         /// <summary>
         /// STLデータのロード
         /// </summary>
         /// <param name="parser">STLデータ</param>
         /// <param name="position">位置情報を格納</param>
         /// <param name="normal">法線情報を格納</param>
-        private void ReadData(GeometryInfo data,String[] parser)
+        private void ReadData(String[] parser)
         {
             try
             {
@@ -57,23 +80,23 @@ namespace KI.Asset.Loader
                     line = parser[counter].Split(' ');
                     line = line.Where(p => !(String.IsNullOrWhiteSpace(p) || String.IsNullOrEmpty(p))).ToArray();
                     for (int i = 0; i < line.Length; i++)
-                    {                        
+                    {
                         if (line[i] == "outer" && line[i + 1] == "loop") break;
                         if (line[i] == "solid" || line[i] == "endloop" || line[i] == "endfacet") break;
                         if (line[i] == "") continue;
                         if (line[i] == "facet" && line[i + 1] == "normal")
                         {
                             ////同じなものを3つ作って頂点の法線ベクトルにする
-                            data.Normal.Add(new Vector3(float.Parse(line[i + 2]), float.Parse(line[i + 3]), float.Parse(line[i + 4])));
-                            data.Normal.Add(new Vector3(float.Parse(line[i + 2]), float.Parse(line[i + 3]), float.Parse(line[i + 4])));
-                            data.Normal.Add(new Vector3(float.Parse(line[i + 2]), float.Parse(line[i + 3]), float.Parse(line[i + 4])));
+                            normal.Add(new Vector3(float.Parse(line[i + 2]), float.Parse(line[i + 3]), float.Parse(line[i + 4])));
+                            normal.Add(new Vector3(float.Parse(line[i + 2]), float.Parse(line[i + 3]), float.Parse(line[i + 4])));
+                            normal.Add(new Vector3(float.Parse(line[i + 2]), float.Parse(line[i + 3]), float.Parse(line[i + 4])));
                             break;
                         }
                         if (line[i] == "vertex")
                         {
                             pos = new Vector3(float.Parse(line[i + 1]), float.Parse(line[i + 2]), float.Parse(line[i + 3]));
 
-                            data.Position.Add(pos);                        
+                            position.Add(pos);
                             break;
                         }
 
@@ -87,13 +110,14 @@ namespace KI.Asset.Loader
                 throw new FileLoadException("stl file");
             }
         }
-        public static void Write(List<Vector3> position,List<Vector3> normal)
+
+        public static void Write(List<Vector3> position, List<Vector3> normal)
         {
             StreamWriter write = new StreamWriter("testfile.stl");
             write.WriteLine("solid stl");
             for (int i = 0; i < position.Count; i += 3)
             {
-                write.WriteLine("facet normal " + normal[i].X +" " + normal[i].Y + " " + normal[i].Z);
+                write.WriteLine("facet normal " + normal[i].X + " " + normal[i].Y + " " + normal[i].Z);
                 write.WriteLine("outer loop");
 
                 write.WriteLine("vertex " + position[i].X + " " + position[i].Y + " " + position[i].Z);
@@ -106,6 +130,5 @@ namespace KI.Asset.Loader
             write.WriteLine("endsolid vcg");
             write.Close();
         }
-
     }
 }

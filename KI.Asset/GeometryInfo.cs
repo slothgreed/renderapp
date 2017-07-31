@@ -28,10 +28,7 @@ namespace KI.Asset
             TexCoord.Clear();
             Index.Clear();
         }
-        public GeometryInfo()
-        {
-            GeometryType = GeometryType.None;
-        }
+
         public GeometryInfo(List<Vector3> pos, List<Vector3> nor, List<Vector3> col, List<Vector2> tex, List<int> idx, GeometryType type)
         {
             Update(pos, nor, col, tex, idx, type);

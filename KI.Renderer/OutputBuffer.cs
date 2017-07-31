@@ -1,5 +1,5 @@
 ﻿using KI.Gfx.KITexture;
-
+using KI.Asset;
 namespace KI.Renderer
 {
     public partial class OutputBuffer : RenderTechnique
@@ -10,7 +10,7 @@ namespace KI.Renderer
         public OutputBuffer(RenderTechniqueType tech)
             : base("OutputBuffer", vertexShader, fragShader, tech, RenderType.Original)
         {
-            Plane = AssetFactory.Instance.CreatePostProcessPlane("OutputBuffer");
+            Plane = RenderObjectFactory.Instance.CreateRenderObject("OutputBuffer",AssetFactory.Instance.CreatePlane("OutputPlane"));
             Plane.AddTexture(TextureKind.Normal, Global.RenderSystem.GBufferStage.OutputTexture[2]);
         }
 
