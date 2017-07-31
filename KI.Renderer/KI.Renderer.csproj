@@ -50,36 +50,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeferredBuffer.cs" />
-    <Compile Include="GBuffer.cs" />
+    <Compile Include="Technique\DeferredBuffer.cs" />
+    <Compile Include="Technique\GBuffer.cs" />
     <Compile Include="Global.cs" />
-    <Compile Include="ImageBasedLighting.cs" />
-    <Compile Include="OutputBuffer.cs" />
-    <Compile Include="PostEffectManager.cs" />
-    <Compile Include="Post_Effect\Bloom.cs" />
-    <Compile Include="Post_Effect\DOF.cs" />
-    <Compile Include="Post_Effect\RenderTechnique.cs" />
-    <Compile Include="Post_Effect\RenderTechniqueT4.cs">
+    <Compile Include="Technique\ImageBasedLighting.cs" />
+    <Compile Include="Technique\OutputBuffer.cs" />
+    <Compile Include="Technique\PostEffect\PostEffectManager.cs" />
+    <Compile Include="Technique\PostEffect\Bloom.cs" />
+    <Compile Include="Technique\PostEffect\DOF.cs" />
+    <Compile Include="Technique\RenderTechnique.cs" />
+    <Compile Include="Technique\RenderTechniqueT4.cs">
       <DependentUpon>RenderTechniqueT4.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Post_Effect\Selection.cs" />
-    <Compile Include="Post_Effect\Sobel.cs" />
-    <Compile Include="Post_Effect\SSAO.cs" />
+    <Compile Include="Technique\PostEffect\Selection.cs" />
+    <Compile Include="Technique\PostEffect\Sobel.cs" />
+    <Compile Include="Technique\PostEffect\SSAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RenderObject.cs" />
     <Compile Include="RenderObjectFactory.cs" />
     <Compile Include="RenderQueue.cs" />
     <Compile Include="RenderSystem.cs" />
-    <Compile Include="RenderTechniqueFactory.cs" />
-    <Compile Include="ShaderCreater.cs" />
-    <Compile Include="ShaderHelper.cs" />
-    <Compile Include="ShadowMap.cs" />
-    <Compile Include="SSLIC.cs" />
+    <Compile Include="Technique\RenderTechniqueFactory.cs" />
+    <Compile Include="Utility\ShaderCreater.cs" />
+    <Compile Include="Utility\ShaderHelper.cs" />
+    <Compile Include="Technique\ShadowMap.cs" />
+    <Compile Include="Technique\SSLIC.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Post_Effect\RenderTechniqueT4.tt">
+    <Content Include="Technique\RenderTechniqueT4.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RenderTechniqueT4.cs</LastGenOutput>
     </Content>

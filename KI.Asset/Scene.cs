@@ -50,6 +50,7 @@ namespace KI.Asset
         }
 
         #endregion
+        
         #region [default property]
         /// <summary>
         /// カメラ
@@ -79,6 +80,7 @@ namespace KI.Asset
             }
         }
         #endregion
+   
         #region [public scene method]
         /// <summary>
         /// シーンのオブジェクトの取得
@@ -125,6 +127,7 @@ namespace KI.Asset
             RootNode.RemoveRecursiveChild(key);
         }
         #endregion
+   
         #region [dispose]
         private string GetNewKey<T>(string key, Dictionary<string, T> AssetList) where T : KIFile
         {

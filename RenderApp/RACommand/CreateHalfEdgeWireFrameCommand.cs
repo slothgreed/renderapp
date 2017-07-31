@@ -26,6 +26,7 @@ namespace RenderApp.RACommand
             {
                 return RACommandResource.Failed;
             }
+
             if(geometry.HalfEdge == null)
             {
                 return RACommandResource.Failed;

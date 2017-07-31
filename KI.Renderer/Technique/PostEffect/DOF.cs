@@ -4,7 +4,7 @@
 //using System.Text;
 //using System.Threading.Tasks;
 //using OpenTK.Graphics.OpenGL;
-//namespace RenderApp.Render_System.Post_Effect
+//namespace RenderApp.Render_System.PostEffect
 //{
 //    class DOF : PostEffect
 //    {

@@ -14,19 +14,59 @@ namespace KI.Asset
     /// </summary>
     public class GeometryInfo
     {
-        public List<Vector3> Position = new List<Vector3>();
-        public List<Vector3> Normal = new List<Vector3>();
-        public List<Vector3> Color = new List<Vector3>();
-        public List<Vector2> TexCoord = new List<Vector2>();
-        public List<int> Index = new List<int>();
+        private List<Vector3> position = new List<Vector3>();
+        public List<Vector3> Position
+        {
+            get
+            {
+                return position;
+            }
+        }
+
+        private List<Vector3> normal = new List<Vector3>();
+        public List<Vector3> Normal
+        {
+            get
+            {
+                return normal;
+            }
+        }
+
+        private List<Vector3> color = new List<Vector3>();
+        public List<Vector3> Color
+        {
+            get
+            {
+                return color;
+            }
+        }
+
+        private List<Vector2> texcoord = new List<Vector2>();
+        public List<Vector2> TexCoord
+        {
+            get
+            {
+                return texcoord;
+            }
+        }
+
+        private List<int> index = new List<int>();
+        public List<int> Index
+        {
+            get
+            {
+                return index;
+            }
+        }
+
         public GeometryType GeometryType;
         public void Dispose()
         {
-            Position.Clear();
-            Color.Clear();
-            Normal.Clear();
-            TexCoord.Clear();
-            Index.Clear();
+            position.Clear();
+            color.Clear();
+            normal.Clear();
+            texcoord.Clear();
+            index.Clear();
         }
 
         public GeometryInfo(List<Vector3> pos, List<Vector3> nor, List<Vector3> col, List<Vector2> tex, List<int> idx, GeometryType type)
@@ -41,53 +81,53 @@ namespace KI.Asset
         {
             if (pos != null)
             {
-                Position = pos;
+                position = pos;
             }
             if (nor != null)
             {
-                Normal = nor;
+                normal = nor;
             }
             if (col != null)
             {
-                Color = col;
+                color = col;
             }
             if (tex != null)
             {
-                TexCoord = tex;
+                texcoord = tex;
             }
             if (idx != null)
             {
-                Index = idx;
+                index = idx;
             }
-            GeometryType = type;
 
+            GeometryType = type;
         }
         
         public void Update(List<Vector3> pos, List<Vector3> nor, Vector3 col, List<Vector2> tex, List<int> idx, GeometryType type)
         {
             if (pos != null)
             {
-                Position = pos;
+                position = pos;
             }
             if (nor != null)
             {
-                Normal = nor;
+                normal = nor;
             }
             if (col != null)
             {
-                Color.Clear();
+                color.Clear();
                 for (int i = 0; i < Position.Count; i++)
                 {
-                    Color.Add(col);
+                    color.Add(col);
                 }
             }
             if (tex != null)
             {
-                TexCoord = tex;
+                texcoord = tex;
             }
             if (idx != null)
             {
-                Index = idx;
+                index = idx;
             }
             GeometryType = type;
         }
@@ -163,11 +203,11 @@ namespace KI.Asset
                 }
             }
 
-            Position = newPosition;
-            Normal = newNormal;
-            TexCoord = newTexcoord;
-            Color = newColor;
-            Index.Clear();
+            position = newPosition;
+            normal = newNormal;
+            texcoord = newTexcoord;
+            color = newColor;
+            index.Clear();
         }
         /// <summary>
         /// 頂点配列に変換
@@ -205,14 +245,14 @@ namespace KI.Asset
                     if (newPosition[j] == Position[i])
                     {
                         isExist = true;
-                        Index.Add(j);
+                        index.Add(j);
                         break;
                     }
                 }
                 if (!isExist)
                 {
                     newPosition.Add(Position[i]);
-                    Index.Add(newPosition.Count - 1);
+                    index.Add(newPosition.Count - 1);
 
                     if (texArray)
                     {
@@ -228,14 +268,13 @@ namespace KI.Asset
                     }
                 }
             }
-            Position = newPosition;
-            TexCoord = newTexcoord;
-            Color = newColor;
-            Normal = newNormal;
+            position = newPosition;
+            texcoord = newTexcoord;
+            color = newColor;
+            normal = newNormal;
 
         }
+
         #endregion
-
-
     }
 }
