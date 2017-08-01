@@ -102,7 +102,7 @@ namespace KI.Asset
 
             GeometryType = type;
         }
-        
+
         public void Update(List<Vector3> pos, List<Vector3> nor, Vector3 col, List<Vector2> tex, List<int> idx, GeometryType type)
         {
             if (pos != null)
@@ -131,7 +131,7 @@ namespace KI.Asset
             }
             GeometryType = type;
         }
-        
+
         public int TriangleNum
         {
             get

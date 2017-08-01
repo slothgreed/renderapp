@@ -11,7 +11,7 @@ namespace KI.Foundation.ViewModel
         Func<Vector2, bool> updateFunc;
         private Vector2 Model;
 
-        public Vector2ViewModel(object owner,string name, Vector2 value)
+        public Vector2ViewModel(object owner, string name, Vector2 value)
         {
             Owner = owner;
             Name = name;
@@ -37,7 +37,7 @@ namespace KI.Foundation.ViewModel
         }
         public bool UpdateProperty(Vector2 value)
         {
-                        Model = value;
+            Model = value;
             if (Owner == null)
                 return false;
 

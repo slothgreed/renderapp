@@ -13,7 +13,7 @@ namespace KI.Foundation.Core
 
         public void AddItem(T value)
         {
-            if(value != null)
+            if (value != null)
             {
                 Items.Add(value);
             }
@@ -24,9 +24,9 @@ namespace KI.Foundation.Core
         /// </summary>
         public void RemoveByKey(string name)
         {
-            for(int i = 0; i < Items.Count; i++)
+            for (int i = 0; i < Items.Count; i++)
             {
-                if(Items[i].Name == name)
+                if (Items[i].Name == name)
                 {
                     Items.RemoveAt(i);
                     i--;// 要素の++を無視するため、2番目を削除したら、次の探索は2番目をする
@@ -36,7 +36,7 @@ namespace KI.Foundation.Core
 
         public T FindByKey(string name)
         {
-            foreach(var item in Items)
+            foreach (var item in Items)
             {
                 if (item.Name == name)
                 {
@@ -68,7 +68,7 @@ namespace KI.Foundation.Core
 
         public void Dispose()
         {
-            foreach(var v in Items)
+            foreach (var v in Items)
             {
                 v.Dispose();
             }

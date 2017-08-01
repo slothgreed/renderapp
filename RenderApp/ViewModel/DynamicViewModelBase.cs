@@ -33,13 +33,13 @@ namespace RenderApp.ViewModel
         {
             var propertyName = binder.Name;
             var property = _model.GetType().GetProperty(propertyName);
-            if(property == null || !property.CanRead)
+            if (property == null || !property.CanRead)
             {
                 result = null;
                 return false;
             }
             result = property.GetValue(_model, null);
-            
+
             return true;
         }
 

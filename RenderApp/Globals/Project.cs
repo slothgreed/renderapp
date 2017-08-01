@@ -30,7 +30,7 @@ namespace RenderApp.Globals
             RootNode.AddChild(GeometryRoot);
             RootNode.AddChild(TextureRoot);
             RootNode.AddChild(ShaderProgramRoot);
-        
+
         }
 
         internal void AddChild(KIObject value)

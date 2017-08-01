@@ -13,7 +13,7 @@ namespace KI.Foundation.Core
                 {
                     return null;
                 }
-                else if(_directoryPath == null)
+                else if (_directoryPath == null)
                 {
                     _directoryPath = System.IO.Path.GetDirectoryName(FilePath);
                 }
@@ -38,16 +38,16 @@ namespace KI.Foundation.Core
         }
 
         public KIFile(string filePath)
-            :base(filePath)
+            : base(filePath)
         {
             FileName = Path.GetFileName(filePath);
             FilePath = filePath;
             Name = FileName;
         }
-        
+
         public static string GetNameFromPath(string path)
         {
-           return Path.GetFileName(path);
+            return Path.GetFileName(path);
         }
     }
 }

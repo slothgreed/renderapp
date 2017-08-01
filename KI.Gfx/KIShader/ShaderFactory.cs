@@ -18,13 +18,14 @@ namespace KI.Gfx.KIShader
                 return _instance;
             }
         }
+
         public Dictionary<string, Shader> ShaderList = new Dictionary<string, Shader>();
 
-        public Shader FindShader(string vert,string frag)
+        public Shader FindShader(string vert, string frag)
         {
             foreach (var sh in ShaderList.Values)
             {
-                if (sh.FindShaderCombi(vert,frag))
+                if (sh.FindShaderCombi(vert, frag))
                 {
                     return sh;
                 }
@@ -40,7 +41,7 @@ namespace KI.Gfx.KIShader
         /// <returns></returns>
         public Shader CreateShaderVF(string path)
         {
-           return CreateShaderVF(path + ".vert", path + ".frag");
+            return CreateShaderVF(path + ".vert", path + ".frag");
         }
         /// <summary>
         /// vert,frag専用ファイル名は同一のもの
@@ -49,7 +50,7 @@ namespace KI.Gfx.KIShader
         /// <returns></returns>
         public Shader CreateShaderVF(string vPath, string fPath)
         {
-            if(vPath == null || fPath == null)
+            if (vPath == null || fPath == null)
             {
                 return null;
             }
@@ -68,7 +69,7 @@ namespace KI.Gfx.KIShader
 
         public void Dispose()
         {
-            foreach(var shader in ShaderList.Values)
+            foreach (var shader in ShaderList.Values)
             {
                 shader.Dispose();
             }

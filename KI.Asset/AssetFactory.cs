@@ -16,7 +16,6 @@ namespace KI.Asset
             }
         }
 
-
         public EnvironmentProbe CreateEnvironmentMap(string name)
         {
             return new EnvironmentProbe(name);

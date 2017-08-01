@@ -9,7 +9,6 @@ using KI.Gfx.GLUtil.Buffer;
 
 namespace KI.Gfx.KITexture
 {
-
     public class Texture : KIObject
     {
         #region [member]
@@ -44,18 +43,19 @@ namespace KI.Gfx.KITexture
         {
             get
             {
-                if(ImageInfos == null)
+                if (ImageInfos == null)
                 {
                     return null;
                 }
                 return ImageInfos.FirstOrDefault();
             }
         }
-        
+
         /// <summary>
         /// テクスチャID
         /// </summary>
-        public int DeviceID { 
+        public int DeviceID
+        {
             get
             {
                 return TextureBuffer.DeviceID;
@@ -95,7 +95,7 @@ namespace KI.Gfx.KITexture
         public static readonly Texture Empty;
         #region [constructor]
 
-        public Texture(string name,TextureType type)
+        public Texture(string name, TextureType type)
             : base(name)
         {
             ImageInfos = new List<KIImageInfo>();
@@ -160,7 +160,7 @@ namespace KI.Gfx.KITexture
             }
         }
 
-        private void SetupTexImage2D(TextureTarget target,PixelInternalFormat pixelFormat, float[,,] rgba)
+        private void SetupTexImage2D(TextureTarget target, PixelInternalFormat pixelFormat, float[,,] rgba)
         {
             GL.TexImage2D(target, 0, pixelFormat, Width, Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.Float, rgba);
         }
@@ -230,11 +230,11 @@ namespace KI.Gfx.KITexture
         {
             TextureBuffer.BindBuffer();
 
-            SetupTexImage2D(TextureBuffer.Target,PixelInternalFormat.Four, rgba);
+            SetupTexImage2D(TextureBuffer.Target, PixelInternalFormat.Four, rgba);
 
             TextureBuffer.UnBindBuffer();
         }
-    
+
         /// <summary>
         /// テクスチャの読み込み
         /// </summary>

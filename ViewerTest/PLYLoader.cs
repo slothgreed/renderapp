@@ -46,7 +46,7 @@ namespace ViewerTest
                 string[] fileStream = File.ReadAllLines(filePath, System.Text.Encoding.GetEncoding("Shift_JIS"));
                 ReadData(fileStream);
             }
-            catch (Exception e )
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -70,7 +70,7 @@ namespace ViewerTest
                     {
                         if (lineData[1] == "vertex")
                         {
-                            if(!int.TryParse(lineData[2], out vertexNum))
+                            if (!int.TryParse(lineData[2], out vertexNum))
                             {
                                 throw new Exception("can't parse vertexNum");
                             }
@@ -141,7 +141,7 @@ namespace ViewerTest
                     .Split(' ')
                     .Where(p => !string.IsNullOrEmpty(p))
                     .ToArray();
-               
+
 
                 if (faceDataStr[0] != "3")
                 {

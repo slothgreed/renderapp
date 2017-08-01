@@ -54,13 +54,13 @@ namespace KI.Foundation.Control
                 e.Handled = true;
             }
         }
-        
+
         void AssociatedObject_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             isMouseDown = false;
         }
 
-        public float Distance(Point point1,Point point2)
+        public float Distance(Point point1, Point point2)
         {
             double x = point1.X - point2.X;
             double y = point1.Y - point2.Y;

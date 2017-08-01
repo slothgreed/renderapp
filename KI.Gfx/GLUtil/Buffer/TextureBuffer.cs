@@ -21,7 +21,7 @@ namespace KI.Gfx.GLUtil
         CubemapNZ,
 
     }
-    
+
     public class TextureBuffer : BufferObject
     {
         public int Width
@@ -34,11 +34,13 @@ namespace KI.Gfx.GLUtil
             get;
             set;
         }
+
         public List<TextureTarget> Targets
         {
             get;
             private set;
         }
+
         public TextureTarget Target
         {
             get
@@ -46,14 +48,16 @@ namespace KI.Gfx.GLUtil
                 return Targets.FirstOrDefault();
             }
         }
+
         public PixelInternalFormat Format
         {
             get;
             private set;
         }
+
         private void SetTextureTargte(TextureType type)
         {
-            if(Targets == null)
+            if (Targets == null)
             {
                 Targets = new List<TextureTarget>();
             }
@@ -93,12 +97,11 @@ namespace KI.Gfx.GLUtil
                     Targets.Add(TextureTarget.Texture1D);
                     break;
             }
-
-
         }
+
         internal TextureBuffer(TextureType type)
         {
-            if(type != TextureType.Cubemap)
+            if (type != TextureType.Cubemap)
             {
                 SetTextureTargte(type);
             }
@@ -114,14 +117,17 @@ namespace KI.Gfx.GLUtil
             }
             Format = PixelInternalFormat.Rgba8;
         }
+
         public override void PreGenBuffer()
         {
             DeviceID = GL.GenTexture();
         }
+
         public void SetData()
         {
 
         }
+
         public void BindBuffer(int i)
         {
             GL.BindTexture(Targets[i], DeviceID);
@@ -132,18 +138,22 @@ namespace KI.Gfx.GLUtil
             NowBind = true;
             Logger.GLLog(Logger.LogLevel.Error);
         }
+
         public override void PreBindBuffer()
         {
             GL.BindTexture(Target, DeviceID);
         }
+
         public override void PreUnBindBuffer()
         {
             GL.BindTexture(Target, 0);
         }
+
         public override void PreDispose()
         {
             GL.DeleteTexture(DeviceID);
         }
+
         public void SizeChanged(int width, int height)
         {
             BindBuffer();
@@ -152,6 +162,7 @@ namespace KI.Gfx.GLUtil
             GL.TexImage2D(Target, 0, Format, width, height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.Byte, IntPtr.Zero);
             UnBindBuffer();
         }
+
         public void SetEmpty(int width, int height)
         {
             BindBuffer();

@@ -24,6 +24,7 @@ namespace RenderApp
             CreateMainCamera();
             CreateSceneLight();
         }
+
         public void Initialize()
         {
             //List<RenderObject> axis = AssetFactory.Instance.CreateAxis("axis", Vector3.Zero, ActiveScene.WorldMax);

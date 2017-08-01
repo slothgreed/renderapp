@@ -30,19 +30,19 @@ namespace KI.Foundation.ViewModel
             member = value;
             OnPropertyChanged(memberName);
         }
-        protected void SetValue<T>(Func<T, bool> updateFunc, T value,[CallerMemberName]string memberName = "")
+        protected void SetValue<T>(Func<T, bool> updateFunc, T value, [CallerMemberName]string memberName = "")
         {
             OnPropertyChanging(memberName);
-            if(updateFunc != null)
+            if (updateFunc != null)
             {
                 updateFunc(value);
             }
             OnPropertyChanged(memberName);
         }
-        protected void SetValue<T>(Action<T> action,T value, [CallerMemberName]string memberName = "")
+        protected void SetValue<T>(Action<T> action, T value, [CallerMemberName]string memberName = "")
         {
             OnPropertyChanging(memberName);
-            if(action != null)
+            if (action != null)
             {
                 action(value);
             }
@@ -90,7 +90,7 @@ namespace KI.Foundation.ViewModel
                 _Command = command;
                 _CanExecute = canExecute;
             }
-            public _DelegateCommand (Action command)
+            public _DelegateCommand(Action command)
             {
                 if (command == null)
                 {
@@ -100,14 +100,14 @@ namespace KI.Foundation.ViewModel
             }
             public _DelegateCommand(Action<object> command)
             {
-                if(command == null)
+                if (command == null)
                 {
                     throw new ArgumentNullException();
                 }
 
                 _CommandParam = command;
             }
-            
+
             bool ICommand.CanExecute(object parameter)
             {
                 if (_CanExecute != null)
@@ -125,17 +125,17 @@ namespace KI.Foundation.ViewModel
 
             public void Execute(object parameter)
             {
-                if(_Command != null)
+                if (_Command != null)
                 {
                     _Command();
                 }
-                if(_CommandParam != null)
+                if (_CommandParam != null)
                 {
                     _CommandParam(parameter);
                 }
             }
         }
-        protected ICommand CreateCommand(Action command,Func<bool> canExecute)
+        protected ICommand CreateCommand(Action command, Func<bool> canExecute)
         {
             return new _DelegateCommand(command, canExecute);
         }
@@ -148,9 +148,6 @@ namespace KI.Foundation.ViewModel
             return new _DelegateCommand(command);
         }
         #endregion
-        
-    }
-   
 
-   
+    }
 }

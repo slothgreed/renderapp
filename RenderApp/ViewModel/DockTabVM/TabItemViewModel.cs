@@ -42,7 +42,7 @@ namespace RenderApp.ViewModel
 
         private void CloseTabItemCommand()
         {
-            if(Parent != null)
+            if (Parent != null)
             {
                 Parent.Remove(this);
             }

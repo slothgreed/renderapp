@@ -11,16 +11,16 @@ namespace KI.Gfx
 {
     public class ShaderProgram : KIFile
     {
-       
+
         private ShaderType? _shaderType;
         public ShaderType shaderType
         {
             get
             {
-                if(_shaderType == null)
+                if (_shaderType == null)
                 {
                     string extension = Path.GetExtension(FilePath);
-                    switch(extension)
+                    switch (extension)
                     {
                         case ".vert":
                             _shaderType = ShaderType.VertexShader;
@@ -41,7 +41,7 @@ namespace KI.Gfx
                 }
                 return (ShaderType)_shaderType;
             }
-            
+
         }
         private string _shaderCode;
         public string ShaderCode
@@ -55,7 +55,7 @@ namespace KI.Gfx
                 _shaderCode = value;
             }
         }
-        public ShaderProgram(string name,string filePath)
+        public ShaderProgram(string name, string filePath)
             : base(filePath)
         {
             StreamReader reader = new StreamReader(FilePath);
@@ -67,6 +67,6 @@ namespace KI.Gfx
 
         }
 
-      
+
     }
 }

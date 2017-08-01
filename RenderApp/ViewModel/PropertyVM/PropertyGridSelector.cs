@@ -21,7 +21,7 @@ namespace RenderApp.ViewModel
         public DataTemplate ComboItemTemplate { get; set; }
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            if(item is KeyValuePair<string,object>)
+            if (item is KeyValuePair<string, object>)
             {
                 var key = (KeyValuePair<string, object>)item;
 

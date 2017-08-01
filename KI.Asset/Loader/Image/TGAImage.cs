@@ -26,7 +26,7 @@ namespace KI.Asset
         private TGAStruct ImageHeight;
         private Byte BitPerPixel;
         private Byte Discripter;
-        
+
         private int imageSize;
 
         public TGAImage(string path) :
@@ -70,16 +70,17 @@ namespace KI.Asset
 
             Byte[] rgb = binary.ReadBytes(imageSize);
 
-            if(BitPerPixel == 24)
+            if (BitPerPixel == 24)
             {
                 Format = PixelFormat.Format24bppRgb;
                 bmpImage = new Bitmap(Width, Height, Width * 3, Format, Marshal.UnsafeAddrOfPinnedArrayElement(rgb, 0));
             }
-            else if(BitPerPixel == 32)
+            else if (BitPerPixel == 32)
             {
                 Format = PixelFormat.Format32bppArgb;
                 bmpImage = new Bitmap(Width, Height, Width * 4, Format, Marshal.UnsafeAddrOfPinnedArrayElement(rgb, 0));
-            }else if(BitPerPixel == 8)
+            }
+            else if (BitPerPixel == 8)
             {
                 Format = PixelFormat.Format8bppIndexed;
                 bmpImage = new Bitmap(Width, Height, Width, Format, Marshal.UnsafeAddrOfPinnedArrayElement(rgb, 0));

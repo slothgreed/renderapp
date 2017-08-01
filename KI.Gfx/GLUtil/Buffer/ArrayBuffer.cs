@@ -16,16 +16,19 @@ namespace KI.Gfx.GLUtil
             get;
             set;
         }
+
         public BufferTarget Target
         {
             get;
             set;
         }
+
         public object Data
         {
             get;
             set;
         }
+
         public EArrayType ArrayType
         {
             get;
@@ -38,17 +41,20 @@ namespace KI.Gfx.GLUtil
             UsageHint = BufferUsageHint.StaticDraw;
             Enable = true;
         }
+
         internal ArrayBuffer(BufferTarget target)
         {
             Target = target;
             UsageHint = BufferUsageHint.StaticDraw;
             Enable = true;
         }
+
         public override void PreGenBuffer()
         {
-           this.DeviceID = GL.GenBuffer();
+            this.DeviceID = GL.GenBuffer();
         }
-        public void SetData(object data,EArrayType arrayType)
+
+        public void SetData(object data, EArrayType arrayType)
         {
             Data = data;
             ArrayType = arrayType;
@@ -63,7 +69,7 @@ namespace KI.Gfx.GLUtil
                     break;
                 case EArrayType.FloatArray:
                     List<float> fArray = (List<float>)data;
-                    GL.BufferData(Target, (IntPtr)(fArray.Count * sizeof(float)), fArray.ToArray(), UsageHint); 
+                    GL.BufferData(Target, (IntPtr)(fArray.Count * sizeof(float)), fArray.ToArray(), UsageHint);
                     break;
                 case EArrayType.DoubleArra:
                     List<double> dArray = (List<double>)data;
@@ -86,11 +92,12 @@ namespace KI.Gfx.GLUtil
             }
             UnBindBuffer();
         }
-        
+
         public override void PreBindBuffer()
         {
             GL.BindBuffer(Target, DeviceID);
         }
+
         public override void PreUnBindBuffer()
         {
             GL.BindBuffer(Target, 0);

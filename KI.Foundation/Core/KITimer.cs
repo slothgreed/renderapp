@@ -39,7 +39,7 @@ namespace KI.Foundation.Core
         /// </summary>
         public void Start()
         {
-            if(!m_Timer.IsEnabled)
+            if (!m_Timer.IsEnabled)
             {
                 m_Timer.Start();
             }
@@ -50,7 +50,7 @@ namespace KI.Foundation.Core
         /// </summary>
         public void Stop()
         {
-            if(m_Timer.IsEnabled)
+            if (m_Timer.IsEnabled)
             {
                 m_Timer.Stop();
             }

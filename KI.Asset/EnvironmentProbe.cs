@@ -10,7 +10,7 @@ namespace KI.Asset
         public Texture Cubemap
         {
             get;
-            private  set;
+            private set;
         }
 
         List<string> texturePath;

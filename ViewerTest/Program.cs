@@ -220,7 +220,7 @@ namespace ViewerTest
 
             //テクスチャ用バッファのひもづけ
             GL.BindTexture(TextureTarget.Texture2D, noizeId);
-            
+
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, noize.GetLength(0), noize.GetLength(1), 0, PixelFormat.Rgba, PixelType.UnsignedByte, noize);
             GL.BindTexture(TextureTarget.Texture2D, 0);
         }

@@ -47,8 +47,8 @@ namespace KI.Asset.Loader
         /// <param name="filePath"></param>
         /// <param name="position"></param>
         /// <param name="normal"></param>
-        public STLLoader(string name,string filePath)
-            :base(filePath)
+        public STLLoader(string name, string filePath)
+            : base(filePath)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace KI.Asset.Loader
             catch (Exception)
             {
 
-                Logger.Log(Logger.LogLevel.Error,filePath + "開けません。現在のフォルダ位置" + System.Environment.CurrentDirectory);   
+                Logger.Log(Logger.LogLevel.Error, filePath + "開けません。現在のフォルダ位置" + System.Environment.CurrentDirectory);
             }
         }
 

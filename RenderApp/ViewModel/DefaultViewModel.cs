@@ -27,11 +27,11 @@ namespace RenderApp.ViewModel
                 SetValue<object>(ref _value, value);
             }
         }
-        public DefaultViewModel(string name,string value)
+        public DefaultViewModel(string name, string value)
         {
             Name = name;
             Value = value;
-            
+
         }
         public override void UpdateProperty()
         {

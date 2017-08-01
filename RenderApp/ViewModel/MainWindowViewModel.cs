@@ -85,7 +85,7 @@ namespace RenderApp.ViewModel
 
 
         #region [constructor]
- 
+
 
         public MainWindowViewModel()
         {
@@ -95,8 +95,8 @@ namespace RenderApp.ViewModel
             RightDownDockPanel = new TabControlViewModel();
             CenterDockPanel = new TabControlViewModel();
 
-            LeftUpDockPanel.Add( new RootNodeViewModel(Project.ActiveProject.RootNode, "Project"));
-            CenterDockPanel.Add( new ViewportViewModel());
+            LeftUpDockPanel.Add(new RootNodeViewModel(Project.ActiveProject.RootNode, "Project"));
+            CenterDockPanel.Add(new ViewportViewModel());
             RightDownDockPanel = new TabControlViewModel();
             RightDownDockPanel.Add(new ShaderProgramViewModel(null));
             RightDownDockPanel.Add(new VoxelViewModel());
@@ -112,7 +112,7 @@ namespace RenderApp.ViewModel
         #region [Viewport Method]
         public void OnLoadedEvent(object sender, EventArgs e)
         {
-            Workspace.RenderSystem.Initialize(DeviceContext.Instance.Width,DeviceContext.Instance.Height);
+            Workspace.RenderSystem.Initialize(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
             Workspace.SceneManager.Create("MainScene");
 
             LeftUpDockPanel.Add(new RootNodeViewModel(Workspace.SceneManager.ActiveScene.RootNode, "Scene"));
@@ -152,7 +152,7 @@ namespace RenderApp.ViewModel
 
 
         #endregion
-        
+
         #endregion
 
         #region [Project Menu Command]
@@ -275,7 +275,7 @@ namespace RenderApp.ViewModel
             //}
         }
         #endregion
-        
+
         #region [Model Menu Command]
         private void CreateObjectCommand(object createObjectMenu)
         {
@@ -302,7 +302,7 @@ namespace RenderApp.ViewModel
                     break;
                 case RAGeometry.HalfEdge:
                     command = new CreateHalfEdgeCommand(Workspace.SceneManager.ActiveScene.SelectAsset);
-                    CommandManager.Instance.Execute(command, null, true); 
+                    CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.ConvexHull:
                     command = new CreateConvexHullCommand(Workspace.SceneManager.ActiveScene.SelectAsset);
@@ -351,7 +351,7 @@ namespace RenderApp.ViewModel
         {
             RAController menuParam = (RAController)controllerMenu;
             OnPropertyChanging("ControlMode");
-            switch(menuParam)
+            switch (menuParam)
             {
                 case RAController.Default:
                     ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.SelectTriangle;
@@ -404,7 +404,7 @@ namespace RenderApp.ViewModel
             OnPropertyChanged("PostProcessMode");
         }
         #endregion
-        
+
         #region [Analyze Menu Command]
         private void VoxelizeCommand()
         {
@@ -459,12 +459,12 @@ namespace RenderApp.ViewModel
         #region [Update Method]
         public void UpdateSelectNode(KINode node)
         {
-            if(node.KIObject == null)
+            if (node.KIObject == null)
             {
                 return;
             }
             TabItemViewModel vm = null;
-            if(node.KIObject is Geometry)
+            if (node.KIObject is Geometry)
             {
                 vm = new GeometryViewModel((Geometry)node.KIObject);
                 Workspace.SceneManager.ActiveScene.SelectAsset = (Geometry)node.KIObject;
@@ -477,15 +477,15 @@ namespace RenderApp.ViewModel
         }
         public void ReplaceTabWindow(TabItemViewModel window)
         {
-            if(window is GeometryViewModel)
+            if (window is GeometryViewModel)
             {
                 var oldItem = LeftDownDockPanel.FindVM<GeometryViewModel>();
-                LeftDownDockPanel.ReplaceVM(oldItem,window);
+                LeftDownDockPanel.ReplaceVM(oldItem, window);
             }
             if (window is ShaderProgramViewModel)
             {
                 var oldItem = RightDownDockPanel.FindVM<ShaderProgramViewModel>();
-                RightDownDockPanel.ReplaceVM(oldItem,window);
+                RightDownDockPanel.ReplaceVM(oldItem, window);
             }
 
         }

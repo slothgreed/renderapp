@@ -14,7 +14,7 @@ namespace KI.Asset
         /// </summary>
         /// <param name="name"></param>
         /// <param name="filePath"></param>
-        public OBJConverter(string name,string filePath)
+        public OBJConverter(string name, string filePath)
         {
             objData = new OBJLoader(name, filePath);
         }

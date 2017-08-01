@@ -6,7 +6,7 @@ using KI.Gfx.KITexture;
 
 namespace RenderApp.ViewModel
 {
-    class ShaderViewModel : TabItemViewModel,IPropertyGridViewModel
+    class ShaderViewModel : TabItemViewModel, IPropertyGridViewModel
     {
         public override string Title
         {
@@ -15,7 +15,7 @@ namespace RenderApp.ViewModel
                 return "Shader";
             }
         }
-        public Dictionary<string,object> PropertyItem
+        public Dictionary<string, object> PropertyItem
         {
             get;
             set;

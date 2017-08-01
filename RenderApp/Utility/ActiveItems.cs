@@ -2,10 +2,10 @@
 
 namespace RenderApp
 {
-    public abstract class ActiveItems <T>
+    public abstract class ActiveItems<T>
     {
         private List<T> _select = new List<T>();
-        
+
         private List<T> _lastSelect = new List<T>();
 
         public void Select(T item)
@@ -20,6 +20,6 @@ namespace RenderApp
         {
             return _select;
         }
-        
+
     }
 }

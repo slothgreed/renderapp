@@ -11,12 +11,12 @@ namespace KI.Foundation.Utility
         static KICalc()
         {
             float scale = 4;
-            for(int i = 0; i < 256; i++)
+            for (int i = 0; i < 256; i++)
             {
                 if (i <= 63)
                 {
-                    RGB[i].X = 0/255.0f;
-                    RGB[i].Y = scale * i/255.0f;
+                    RGB[i].X = 0 / 255.0f;
+                    RGB[i].Y = scale * i / 255.0f;
                     RGB[i].Z = 255 / 255.0f;
                     continue;
                 }
@@ -45,7 +45,7 @@ namespace KI.Foundation.Utility
         }
 
         #region [疑似カラー]
-        public static Vector3 GetPseudoColor(float value,float min,float max)
+        public static Vector3 GetPseudoColor(float value, float min, float max)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace KI.Foundation.Utility
                 }
                 float length = max - min;
                 float scale = 255 * (value - min) / length;
-                
+
                 return RGB[(int)scale];
 
             }
@@ -143,11 +143,11 @@ namespace KI.Foundation.Utility
                 return cos;
             }
         }
-        
+
 
         #endregion
 
- 
+
         ///// <summary>
         ///// 平面の公式から平面の点を求める
         ///// </summary>
@@ -251,7 +251,7 @@ namespace KI.Foundation.Utility
         /// <returns>あるtrue,ないfalse</returns>
         public static bool CrossPlanetoLinePos(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4, Vector3 near, Vector3 far, ref float min, out Vector3 result)
         {
-            Vector4 surface = GetPlaneFormula( v1, v2, v3);
+            Vector4 surface = GetPlaneFormula(v1, v2, v3);
             result = crossPlanetoLine(near, far, surface);
             float length;
             //交点あり
@@ -379,7 +379,7 @@ namespace KI.Foundation.Utility
             Vector3 normalize = normal.Normalized();
             float d = -Vector3.Dot(position, normalize);
 
-            Vector4 plane = new Vector4( normalize.X, normalize.Y, normalize.Z, d );
+            Vector4 plane = new Vector4(normalize.X, normalize.Y, normalize.Z, d);
             return plane;
         }
         #endregion
@@ -434,7 +434,7 @@ namespace KI.Foundation.Utility
             result.Y = matrix.Column1[0] * vector.X + matrix.Column1[1] * vector.Y + matrix.Column1[2] * vector.Z + matrix.Column1[3];
             result.Z = matrix.Column2[0] * vector.X + matrix.Column2[1] * vector.Y + matrix.Column2[2] * vector.Z + matrix.Column2[3];
 
-            return  Round(result);
+            return Round(result);
         }
         public static Vector4 Multiply(Matrix4 matrix, Vector4 vector)
         {
@@ -524,10 +524,10 @@ namespace KI.Foundation.Utility
             ret.Z = Round(value.Z);
             return ret;
         }
-        
+
         #endregion
-        
-        
+
+
         /// <summary>
         /// 点と平面の距離
         /// http://keisan.casio.jp/exec/system/1202458240
@@ -626,9 +626,9 @@ namespace KI.Foundation.Utility
         public static void GetClickPos(Matrix4 cameraMatrix, Matrix4 projMatrix, int[] viewport, Vector2 mouse, out Vector3 near, out Vector3 far)
         {
             near = UnProject(new Vector3(mouse.X, mouse.Y, 0.0f), cameraMatrix, projMatrix, viewport);
-            far = UnProject(new Vector3(mouse.X,mouse.Y,1.0f),cameraMatrix,projMatrix,viewport);
+            far = UnProject(new Vector3(mouse.X, mouse.Y, 1.0f), cameraMatrix, projMatrix, viewport);
         }
-        
+
         public static Vector3 RandomColor()
         {
             Vector3 color = new Vector3();

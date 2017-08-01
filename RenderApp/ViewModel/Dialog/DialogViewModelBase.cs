@@ -18,7 +18,7 @@ namespace RenderApp.ViewModel.Dialog
 
         public override void UpdateProperty()
         {
-            
+
         }
     }
 }

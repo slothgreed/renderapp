@@ -8,7 +8,7 @@ namespace KI.Asset
     public class HDRImage : KIImageInfo
     {
         public HDRImage(string path)
-            :base(path)
+            : base(path)
         {
 
         }
@@ -36,7 +36,7 @@ namespace KI.Asset
                 return false;
 
             string str;
-            while(true)
+            while (true)
             {
                 str = reader.ReadLine();
 
@@ -51,14 +51,14 @@ namespace KI.Asset
 
                 //空白を削除
                 str = str.Replace(" ", "");
-                if(str.Contains("FORMAT"))
+                if (str.Contains("FORMAT"))
                 {
                     //不要文字を削除
                     str = str.Replace("FORMAT=", "");
                     HDRFormat = str;
                 }
 
-                if(str.Contains("EXPOSURE="))
+                if (str.Contains("EXPOSURE="))
                 {
                     str = str.Replace("EXPOSURE=", "");
                     float.TryParse(str, out _exposure);

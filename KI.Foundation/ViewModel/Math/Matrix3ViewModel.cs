@@ -10,7 +10,7 @@ namespace KI.Foundation.ViewModel
     {
         Func<Matrix3, bool> updateFunc;
         private Matrix3 Model;
-        public Matrix3ViewModel(object owner,string name, Matrix3 value)
+        public Matrix3ViewModel(object owner, string name, Matrix3 value)
         {
             Owner = owner;
             Name = name;

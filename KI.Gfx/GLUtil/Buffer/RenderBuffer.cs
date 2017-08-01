@@ -14,10 +14,12 @@ namespace KI.Gfx.GLUtil
             get;
             set;
         }
+
         internal RenderBuffer()
         {
 
         }
+
         public override void PreGenBuffer()
         {
             DeviceID = GL.GenRenderbuffer();
@@ -25,26 +27,29 @@ namespace KI.Gfx.GLUtil
 
         public override void PreBindBuffer()
         {
-            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer,DeviceID);
+            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, DeviceID);
         }
 
         public override void PreUnBindBuffer()
         {
             GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, 0);
         }
-        public void Storage(RenderbufferStorage storage,int width,int height)
+
+        public void Storage(RenderbufferStorage storage, int width, int height)
         {
             BufferStorage = storage;
-            SizeChanged(width,height);
+            SizeChanged(width, height);
         }
-        public void SizeChanged(int width,int height)
+
+        public void SizeChanged(int width, int height)
         {
             BindBuffer();
-            GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, BufferStorage , width, height);
+            GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, BufferStorage, width, height);
             UnBindBuffer();
             Logger.GLLog(Logger.LogLevel.Error);
 
         }
+
         public override void PreDispose()
         {
             GL.DeleteRenderbuffer(DeviceID);

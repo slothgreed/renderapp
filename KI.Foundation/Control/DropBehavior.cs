@@ -21,7 +21,7 @@ namespace KI.Foundation.Control
 
     public class DropBehavior : Behavior<FrameworkElement>
     {
-        public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description",typeof(DropAcceptDescription),typeof(DropBehavior),new PropertyMetadata(null));
+        public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(DropAcceptDescription), typeof(DropBehavior), new PropertyMetadata(null));
         public DropAcceptDescription Description
         {
             get { return (DropAcceptDescription)GetValue(DescriptionProperty); }
@@ -45,7 +45,7 @@ namespace KI.Foundation.Control
         void AssociatedObject_PreviewDragOver(object sender, DragEventArgs e)
         {
             var desc = Description;
-            if(desc == null)
+            if (desc == null)
             {
                 e.Effects = DragDropEffects.Move;
                 e.Handled = true;

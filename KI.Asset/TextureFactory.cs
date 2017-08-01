@@ -40,7 +40,7 @@ namespace KI.Asset
                 case ".hdr":
                     return ImageKind.HDR;
             }
-            Logger.Log(Logger.LogLevel.Error, "not support texture"); 
+            Logger.Log(Logger.LogLevel.Error, "not support texture");
             return ImageKind.None;
         }
 
@@ -89,7 +89,7 @@ namespace KI.Asset
             Texture texture = new Texture("Cubemap" + KIFile.GetNameFromPath(px), TextureType.Cubemap);
             AddItem(texture);
             texture.GenCubemapTexture(images);
-            return texture;        
+            return texture;
         }
 
         public Texture CreateTexture(string name, int width, int height)

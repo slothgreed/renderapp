@@ -13,7 +13,7 @@ namespace RenderApp.ViewModel
 {
     public partial class VoxelViewModel : TabItemViewModel, IControllerViewModelBase
     {
-        private int _partitionNum = 64; 
+        private int _partitionNum = 64;
         public int PartitionNum
         {
             get

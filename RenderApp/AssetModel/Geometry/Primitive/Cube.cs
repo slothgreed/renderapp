@@ -14,6 +14,7 @@ namespace RenderApp.AssetModel.RA_Geometry
             get;
             set;
         }
+
         public Vector3 Max
         {
             get;

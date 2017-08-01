@@ -5,7 +5,7 @@ using KI.Foundation.ViewModel;
 
 namespace RenderApp.ViewModel
 {
-    public class GeometryViewModel : TabItemViewModel,IPropertyGridViewModel
+    public class GeometryViewModel : TabItemViewModel, IPropertyGridViewModel
     {
         public override string Title
         {

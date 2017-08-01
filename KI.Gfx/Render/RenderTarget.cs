@@ -8,7 +8,7 @@ using KI.Gfx.KITexture;
 
 namespace KI.Gfx.Render
 {
-    public class RenderTarget : KIObject 
+    public class RenderTarget : KIObject
     {
         /// <summary>
         /// 幅
@@ -39,8 +39,8 @@ namespace KI.Gfx.Render
         /// </summary>
         public static DrawBufferMode DefaultOutBuffer = DrawBufferMode.Back;
 
-        internal RenderTarget(string name, int width, int height,int num)
-            :base(name)
+        internal RenderTarget(string name, int width, int height, int num)
+            : base(name)
         {
             FrameBuffer = BufferFactory.Instance.CreateFrameBuffer(name);
             Initialize(width, height, num);
@@ -78,7 +78,7 @@ namespace KI.Gfx.Render
         }
         public void SizeChanged(int width, int height)
         {
-            if(width == Width && Height == height)
+            if (width == Width && Height == height)
             {
                 return;
             }
@@ -113,7 +113,7 @@ namespace KI.Gfx.Render
             {
                 GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, Attachment[i], TextureTarget.Texture2D, outputs[i].DeviceID, 0);
 
-                if(outputs[i].Width != Width || outputs[i].Height != Height)
+                if (outputs[i].Width != Width || outputs[i].Height != Height)
                 {
                     outputs[i].TextureBuffer.SizeChanged(Width, Height);
                 }

@@ -15,14 +15,14 @@ namespace RenderApp.ViewModel
 
         public override Style SelectStyle(object item, DependencyObject container)
         {
-            if(item is RootNodeViewModel)
+            if (item is RootNodeViewModel)
             {
                 return AnchorableStyle;
             }
             return AnchorableStyle;
         }
     }
-    class DockPaneTemplateSelector: DataTemplateSelector
+    class DockPaneTemplateSelector : DataTemplateSelector
     {
         public DataTemplate AssetTemplate { get; set; }
         public DataTemplate ShaderProgramTemplate { get; set; }
@@ -49,31 +49,31 @@ namespace RenderApp.ViewModel
             {
                 return TexureTemplate;
             }
-            if(item is ViewportViewModel)
+            if (item is ViewportViewModel)
             {
                 return ViewportTemplate;
             }
-            if(item is ShaderViewModel)
+            if (item is ShaderViewModel)
             {
                 return ShaderTemplate;
             }
-            if(item is GeometryViewModel)
+            if (item is GeometryViewModel)
             {
                 return GeometryTemplate;
             }
-            if(item is RenderSystemViewModel)
+            if (item is RenderSystemViewModel)
             {
                 return RenderTemplate;
             }
-            if(item is VoxelViewModel)
+            if (item is VoxelViewModel)
             {
                 return VoxelTemplate;
             }
-            if(item is DijkstraViewModel)
+            if (item is DijkstraViewModel)
             {
                 return DijkstraTemplate;
             }
-            if(item is SelectViewModel)
+            if (item is SelectViewModel)
             {
                 return SelectObjectTemplate;
             }

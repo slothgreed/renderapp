@@ -48,7 +48,7 @@ namespace RenderApp.ViewModel
             Owner = owner;
             Name = name;
             _items = new List<KIObject>();
-            if(value != null)
+            if (value != null)
             {
                 foreach (var item in value)
                 {

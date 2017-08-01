@@ -28,7 +28,7 @@ namespace KI.Gfx.GLUtil
         Sampler,
         Texture
     }
-   
+
     public abstract class BufferObject : KIObject
     {
         protected bool NowBind;
@@ -57,9 +57,9 @@ namespace KI.Gfx.GLUtil
         public virtual void BindBuffer()
         {
             PreBindBuffer();
-            if(NowBind)
+            if (NowBind)
             {
-                Logger.Log(Logger.LogLevel.Warning,"Duplicate Bind Error");
+                Logger.Log(Logger.LogLevel.Warning, "Duplicate Bind Error");
             }
             NowBind = true;
             Logger.GLLog(Logger.LogLevel.Error);

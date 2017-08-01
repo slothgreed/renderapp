@@ -16,6 +16,7 @@ namespace KI.Gfx.KITexture
         HDR,
         Num
     }
+
     public enum TextureKind
     {
         None = -1,
@@ -38,7 +39,7 @@ namespace KI.Gfx.KITexture
             get;
             set;
         }
-        
+
         public int Height
         {
             get;
@@ -72,13 +73,13 @@ namespace KI.Gfx.KITexture
         }
 
         public KIImageInfo(string path)
-            :base(path)
+            : base(path)
         {
             Format = PixelFormat.Format32bppArgb;
         }
         public virtual bool LoadImageData()
         {
-            if(Loaded)
+            if (Loaded)
             {
                 return true;
             }
@@ -96,7 +97,7 @@ namespace KI.Gfx.KITexture
         public void Lock()
         {
             NowLock = true;
-            bmpData = bmpImage.LockBits(new Rectangle(0, 0, Width,Height),
+            bmpData = bmpImage.LockBits(new Rectangle(0, 0, Width, Height),
                 ImageLockMode.ReadOnly, Format);
 
         }
@@ -104,7 +105,7 @@ namespace KI.Gfx.KITexture
         {
             get
             {
-                if(!NowLock)
+                if (!NowLock)
                 {
                     Logger.Log(Logger.LogLevel.Warning, "Not Lock");
                 }

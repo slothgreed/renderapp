@@ -48,7 +48,6 @@ namespace KI.Analyzer.Algorithm.MarchingCube
             set;
         }
 
-
         public Dictionary<CubeVertex, float> Neight;
     }
 
@@ -73,7 +72,6 @@ namespace KI.Analyzer.Algorithm.MarchingCube
                 return Vector3.Zero;
             }
         }
-
 
         public float Threshold
         {
@@ -101,8 +99,6 @@ namespace KI.Analyzer.Algorithm.MarchingCube
                 return new Vector3(Size / 2);
             }
         }
-
-
 
         /// <summary>
         /// MarchingTrianlge情報
@@ -268,7 +264,7 @@ namespace KI.Analyzer.Algorithm.MarchingCube
             MarchingSpace = new MarchingVoxel[Partition, Partition, Partition];
 
             var inter = Size / 4;
-            var value = new float[8];            
+            var value = new float[8];
             for (int i = 0; i < Partition; i++)
             {
                 for (int j = 0; j < Partition; j++)
@@ -276,7 +272,7 @@ namespace KI.Analyzer.Algorithm.MarchingCube
                     for (int k = 0; k < Partition; k++)
                     {
                         MarchingSpace[i, j, k] = new MarchingVoxel();
-                        
+
 
                         for (int l = 0; l < (int)CubeVertex.Num; l++)
                         {
@@ -295,7 +291,7 @@ namespace KI.Analyzer.Algorithm.MarchingCube
                             var marching = MarchingSpace[i, j, k];
                             for (int x = 0; x < value.Length; x++)
                             {
-                                marching.Neight[(CubeVertex)l] = Math.Min(marching.Neight[(CubeVertex)l],value[x]);
+                                marching.Neight[(CubeVertex)l] = Math.Min(marching.Neight[(CubeVertex)l], value[x]);
                             }
 
                             if (marching.Neight[(CubeVertex)l] < SphereSize)
@@ -310,7 +306,7 @@ namespace KI.Analyzer.Algorithm.MarchingCube
             }
         }
 
-        private void CreateQuad(int i,int j, int k)
+        private void CreateQuad(int i, int j, int k)
         {
             var marching = MarchingSpace[i, j, k];
 

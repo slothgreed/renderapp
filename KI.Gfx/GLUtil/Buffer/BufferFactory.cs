@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using KI.Foundation.Core;
+﻿using KI.Foundation.Core;
 using OpenTK.Graphics.OpenGL;
 
 namespace KI.Gfx.GLUtil.Buffer
@@ -39,18 +34,21 @@ namespace KI.Gfx.GLUtil.Buffer
             AddItem(obj);
             return obj;
         }
+
         public RenderBuffer CreateRenderBuffer()
         {
             RenderBuffer obj = new RenderBuffer();
             AddItem(obj);
             return obj;
         }
+
         public SamplerBuffer CreateSamplerBuffer()
         {
             SamplerBuffer obj = new SamplerBuffer();
             AddItem(obj);
             return obj;
         }
+
         public TextureBuffer CreateTextureBuffer(TextureType type)
         {
             TextureBuffer obj = new TextureBuffer(type);

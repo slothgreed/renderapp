@@ -15,6 +15,7 @@ namespace RenderApp.AssetModel
             get;
             set;
         }
+
         /// <summary>
         /// グリッドの幅
         /// </summary>

@@ -23,28 +23,32 @@ namespace KI.Gfx.GLUtil
         {
             get
             {
-                if(_Instance == null)
+                if (_Instance == null)
                 {
                     _Instance = new DeviceContext();
                 }
                 return _Instance;
             }
         }
+
         public int Width
         {
             get;
             set;
         }
+
         public int Height
         {
             get;
             set;
         }
+
         private DeviceContext()
         {
 
         }
-        public void Initialize(int width,int height)
+
+        public void Initialize(int width, int height)
         {
             GL.ClearColor(1, 1, 1, 1);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -65,18 +69,22 @@ namespace KI.Gfx.GLUtil
         {
             GL.CullFace(value);
         }
+
         public void PolygonOffset(float factor, float value)
         {
             GL.PolygonOffset(factor, value);
         }
+
         public void FrontFace(FrontFaceDirection value)
         {
             GL.FrontFace(value);
         }
+
         public void Enable(EnableCap enable)
         {
             GL.Enable(enable);
         }
+
         private PrimitiveType ConvertToPrimitiveType(GeometryType type)
         {
             switch (type)
@@ -99,11 +107,13 @@ namespace KI.Gfx.GLUtil
             }
             return PrimitiveType.Points;
         }
+
         public void DrawArrays(GeometryType type, int first, int count)
         {
             GL.DrawArrays(ConvertToPrimitiveType(type), first, count);
         }
-        public void DrawElements(GeometryType type,int count,DrawElementsType elementType,int indices)
+
+        public void DrawElements(GeometryType type, int count, DrawElementsType elementType, int indices)
         {
             GL.DrawElements(ConvertToPrimitiveType(type), count, elementType, indices);
         }

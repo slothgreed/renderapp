@@ -14,13 +14,13 @@ using KI.Foundation.Core;
 using System.Drawing;
 namespace KI.Gfx.GLUtil
 {
-    public delegate void OnLoadedHandler(object sender,EventArgs e);
+    public delegate void OnLoadedHandler(object sender, EventArgs e);
     public delegate void OnMouseDownHandler(object sender, MouseEventArgs e);
     public delegate void OnMouseMoveHandler(object sender, MouseEventArgs e);
     public delegate void OnMouseUpHandler(object sender, MouseEventArgs e);
     public delegate void OnMouseWheelHandler(object sender, MouseEventArgs e);
     public delegate void OnRenderHandler(object sender, PaintEventArgs e);
-    public delegate void OnResizeHandler(object sender,EventArgs e);
+    public delegate void OnResizeHandler(object sender, EventArgs e);
     public delegate void OnDragDropHandler(object sender, DragEventArgs e);
     public delegate void OnDragEnterHandler(object sender, DragEventArgs e);
     public delegate void OnDragLeaveHandler(object sender, EventArgs e);
@@ -36,7 +36,7 @@ namespace KI.Gfx.GLUtil
         {
             get
             {
-                if(m_Instance == null)
+                if (m_Instance == null)
                 {
                     m_Instance = new Viewport();
                 }
@@ -86,19 +86,19 @@ namespace KI.Gfx.GLUtil
         private void Initialize()
         {
             GraphicsMode mode = new GraphicsMode(
-                //ColorFormat構造体を用いて、各色のピクセル当たりのビット数(カラーバッファのサイズ)
+                                                 //ColorFormat構造体を用いて、各色のピクセル当たりのビット数(カラーバッファのサイズ)
                                                  GraphicsMode.Default.ColorFormat,
-                //デプスバッファのサイズ
+                                                 //デプスバッファのサイズ
                                                  GraphicsMode.Default.Depth,
-                //ステンシルバッファのサイズ
+                                                 //ステンシルバッファのサイズ
                                                  8,//GraphicsMode.Default.Stencil,
-                //AA(AntiAliasing)のサイズ x4 x8などの数字
+                                                   //AA(AntiAliasing)のサイズ x4 x8などの数字
                                                  8,//GraphicsMode.Default.Samples,
-                //ColorFormat構造体を用いて、アキュムレーションバッファのサイズ
+                                                   //ColorFormat構造体を用いて、アキュムレーションバッファのサイズ
                                                  GraphicsMode.Default.AccumulatorFormat,
-                //バッファリングに使うフレームバッファの数 1(シングルバッファリング),2(ダブル-),3(トリプル-)
+                                                 //バッファリングに使うフレームバッファの数 1(シングルバッファリング),2(ダブル-),3(トリプル-)
                                                  GraphicsMode.Default.Buffers,
-                //ステレオ投影をするかどうか
+                                                 //ステレオ投影をするかどうか
                                                  GraphicsMode.Default.Stereo
                                                  );
             m_glControl = new GLControl(mode);
@@ -122,10 +122,10 @@ namespace KI.Gfx.GLUtil
         //glControlの起動時に実行される。
         private void glControl_Load(object sender, EventArgs e)
         {
-            DeviceContext.Instance.Initialize(m_glControl.Size.Width,m_glControl.Size.Height);
+            DeviceContext.Instance.Initialize(m_glControl.Size.Width, m_glControl.Size.Height);
             m_AppstartUp = true;
             Logger.GLLog(Logger.LogLevel.Error);
-            if(OnLoaded != null)
+            if (OnLoaded != null)
             {
                 OnLoaded(sender, e);
             }
@@ -134,7 +134,7 @@ namespace KI.Gfx.GLUtil
         //glControlのサイズ変更時に実行される。
         private void glControl_Resize(object sender, EventArgs e)
         {
-            if(m_glControl.Size.Width == 0 || m_glControl.Size.Height == 0)
+            if (m_glControl.Size.Width == 0 || m_glControl.Size.Height == 0)
             {
                 m_glControl.Size = new Size(128, 128);
             }
@@ -164,7 +164,7 @@ namespace KI.Gfx.GLUtil
             }
             DeviceContext.Instance.Clear();
 
-            if(OnRender != null)
+            if (OnRender != null)
             {
                 OnRender(sender, e);
             }
@@ -178,7 +178,7 @@ namespace KI.Gfx.GLUtil
 
         public void glControl_DragOver(object sender, DragEventArgs e)
         {
-            if(OnDragOver != null)
+            if (OnDragOver != null)
             {
                 OnDragOver(sender, e);
             }
@@ -205,7 +205,7 @@ namespace KI.Gfx.GLUtil
 
         private void glControl_MouseWheel(object sender, MouseEventArgs e)
         {
-            if(OnMouseWheel != null)
+            if (OnMouseWheel != null)
             {
                 OnMouseWheel(sender, e);
             }
@@ -217,7 +217,7 @@ namespace KI.Gfx.GLUtil
             if (OnMouseDown != null)
             {
                 OnMouseDown(sender, e);
-            } 
+            }
             glControl_Paint(null, null);
         }
         private void glControl_MouseUp(object sender, MouseEventArgs e)
@@ -225,7 +225,7 @@ namespace KI.Gfx.GLUtil
             if (OnMouseUp != null)
             {
                 OnMouseUp(sender, e);
-            } 
+            }
             glControl_Paint(null, null);
         }
         private void glControl_MouseMove(object sender, MouseEventArgs e)
@@ -235,7 +235,7 @@ namespace KI.Gfx.GLUtil
                 return;
             }
             m_glControl.Focus();
-            if(OnMouseMove != null)
+            if (OnMouseMove != null)
             {
                 OnMouseMove(sender, e);
             }

@@ -51,7 +51,7 @@ namespace KI.Asset.Loader.Loader
                 string[] fileStream = File.ReadAllLines(filePath, System.Text.Encoding.GetEncoding("Shift_JIS"));
                 ReadData(fileStream);
             }
-            catch (Exception e )
+            catch (Exception e)
             {
                 Logger.Log(Logger.LogLevel.Warning, filePath + "開けません。" + "error : " + e.Message);
             }
@@ -75,7 +75,7 @@ namespace KI.Asset.Loader.Loader
                     {
                         if (lineData[1] == "vertex")
                         {
-                            if(!int.TryParse(lineData[2], out vertexNum))
+                            if (!int.TryParse(lineData[2], out vertexNum))
                             {
                                 throw new Exception("can't parse vertexNum");
                             }
@@ -146,7 +146,7 @@ namespace KI.Asset.Loader.Loader
                     .Split(' ')
                     .Where(p => !string.IsNullOrEmpty(p))
                     .ToArray();
-               
+
 
                 if (faceDataStr[0] != "3")
                 {

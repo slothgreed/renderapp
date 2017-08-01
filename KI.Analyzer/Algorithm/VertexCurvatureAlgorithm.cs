@@ -18,7 +18,7 @@ namespace KI.Analyzer.Algorithm
 
         private void Calculate(HalfEdge half)
         {
-            foreach(var vertex in half.m_Vertex)
+            foreach (var vertex in half.m_Vertex)
             {
                 SetGaussianParameter(vertex);
                 SetMeanCurvature(vertex);
@@ -31,7 +31,7 @@ namespace KI.Analyzer.Algorithm
         /// ボロノイ領域
         /// </summary>
         /// <param name="v_index"></param>
-        private void SetVoronoiRagion(Vertex  vertex)
+        private void SetVoronoiRagion(Vertex vertex)
         {
             float angle;
             Edge opposite;
@@ -60,7 +60,7 @@ namespace KI.Analyzer.Algorithm
         private void SetGaussianParameter(Vertex vertex)
         {
             float angle = 0;
-            foreach(var edge in vertex.AroundEdge)
+            foreach (var edge in vertex.AroundEdge)
             {
                 angle += edge.Angle;
             }
@@ -104,7 +104,7 @@ namespace KI.Analyzer.Algorithm
             float mean = (float)vertex.GetParameter(VertexParam.MeanCurvature);
             float gauss = (float)vertex.GetParameter(VertexParam.GaussCurvature);
 
-            
+
             float delta = (mean * mean) - gauss;
             if (delta > 0)
             {

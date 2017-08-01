@@ -23,13 +23,13 @@ namespace KI.Foundation.Utility
                 Console.WriteLine(level + ": " + message);
                 return;
             }
-            if(outputLogLevel == LogLevel.None)
+            if (outputLogLevel == LogLevel.None)
             {
                 return;
             }
-            if(level >= outputLogLevel)
+            if (level >= outputLogLevel)
             {
-                Console.WriteLine(level +" : "+ message);
+                Console.WriteLine(level + " : " + message);
             }
         }
 
@@ -38,14 +38,14 @@ namespace KI.Foundation.Utility
             if (glLogLevel == LogLevel.None)
             {
                 return;
-            } 
-            
+            }
+
             if (level >= glLogLevel)
             {
                 ErrorCode error = GL.GetError();
                 if (error != ErrorCode.NoError)
                 {
-                    Console.WriteLine(level + "GL: " +  methodName + ":" + error);
+                    Console.WriteLine(level + "GL: " + methodName + ":" + error);
                 }
             }
         }

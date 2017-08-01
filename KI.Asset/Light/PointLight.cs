@@ -8,8 +8,8 @@ namespace KI.Asset
 {
     public class PointLight : Light
     {
-        public PointLight(string name,Vector3 lightPos, Vector3 lightDir) 
-            : base(name,lightPos,lightDir)
+        public PointLight(string name, Vector3 lightPos, Vector3 lightDir)
+            : base(name, lightPos, lightDir)
         {
         }
 

@@ -22,7 +22,7 @@ namespace KI.Asset
         /// </summary>
         /// <param name="filePath"></param>
         /// <param name="position"></param>
-        public STLConverter(string name,string filePath)
+        public STLConverter(string name, string filePath)
         {
             stlData = new STLLoader(name, filePath);
             GeometryInfo info = new GeometryInfo(stlData.Position, stlData.Normal, Vector3.One, null, null, GeometryType.Triangle);

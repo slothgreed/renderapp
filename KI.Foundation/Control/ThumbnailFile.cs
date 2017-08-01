@@ -13,15 +13,15 @@ namespace KI.Foundation.Control
             set { SetValue(FilePathProperty, value); }
         }
 
-        public static readonly DependencyProperty ImagePathProperty = 
-            DependencyProperty.Register("ImagePath",typeof(string),typeof(ThumbnailFile),new PropertyMetadata(""));
+        public static readonly DependencyProperty ImagePathProperty =
+            DependencyProperty.Register("ImagePath", typeof(string), typeof(ThumbnailFile), new PropertyMetadata(""));
 
         public string ImagePath
         {
             get { return (string)GetValue(ImagePathProperty); }
             set { SetValue(ImagePathProperty, value); }
         }
-    
+
         static ThumbnailFile()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ThumbnailFile), new FrameworkPropertyMetadata(typeof(ThumbnailFile)));

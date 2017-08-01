@@ -8,11 +8,13 @@ namespace KI.Foundation.Command
         /// </summary>
         /// <returns></returns>
         string CanExecute(string commandArg);
+        
         /// <summary>
         /// 処理の実行
         /// </summary>
         /// <returns></returns>
         string Execute(string commandArg);
+        
         /// <summary>
         /// Undo
         /// </summary>

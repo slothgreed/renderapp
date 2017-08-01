@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using OpenTK;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
 using KI.Foundation.Core;
 
 namespace KI.Asset
@@ -16,10 +11,10 @@ namespace KI.Asset
     {
         #region [property method]
         public Matrix4 ProjMatrix { get; set; }
-        public Matrix4 Matrix { get;private set; }
-        public Vector3 Position { get;private set; }
-        public Vector3 Direction { get;private set; }
-        public Vector3 LookAt { get;private set; }
+        public Matrix4 Matrix { get; private set; }
+        public Vector3 Position { get; private set; }
+        public Vector3 Direction { get; private set; }
+        public Vector3 LookAt { get; private set; }
         public Vector3 Up { get; private set; }
 
         public Matrix4 CameraProjMatrix
@@ -182,7 +177,7 @@ namespace KI.Asset
         /// コンストラクタ
         /// </summary>
         public Camera(string name)
-            :base(name)
+            : base(name)
         {
             InitCamera();
             SetProjMatrix(1.0f);
@@ -274,7 +269,7 @@ namespace KI.Asset
             UpdateCamera();
         }
 
-        public void Translate(float x,float y,float z)
+        public void Translate(float x, float y, float z)
         {
             Translate(new Vector3(x, y, z));
         }
@@ -284,7 +279,7 @@ namespace KI.Asset
         /// <param name="Middle"></param>
         public void Translate(Vector3 move)
         {
-           
+
             Vector3 vectorX = new Vector3();
             Vector3 vectorY = new Vector3();
             Vector3 orient = new Vector3(move);

@@ -55,7 +55,6 @@ namespace KI.Foundation.Core
 
         }
 
-        
         /// <summary>
         /// クリック値
         /// </summary>
@@ -68,9 +67,8 @@ namespace KI.Foundation.Core
 
             ClickBefore = Click;
             Click = Current;
-
-
         }
+
         /// <summary>
         /// ドラッグ値
         /// </summary>
@@ -81,19 +79,20 @@ namespace KI.Foundation.Core
             Before = Current;
             Current = new Vector2(x, y);
             Drag(x, y);
-         }
+        }
 
         public void Up(int x, int y)
         {
             Before = Vector2.Zero;
             Current = Vector2.Zero;
         }
+
         /// <summary>
         /// 移動量を算出
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        private Vector2 Drag(int x,int y)
+        private Vector2 Drag(int x, int y)
         {
             Vector2 move;
 

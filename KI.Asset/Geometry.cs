@@ -96,7 +96,7 @@ namespace KI.Asset
         private void Initialize(string name = null)
         {
             ModelMatrix = Matrix4.Identity;
-            TextureItem = new Dictionary<TextureKind,Texture>();
+            TextureItem = new Dictionary<TextureKind, Texture>();
             //Shader = ShaderCreater.Instance.DefaultShader;
         }
 

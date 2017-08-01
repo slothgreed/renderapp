@@ -54,7 +54,7 @@ namespace RenderApp.ViewModel
             ItemsSource.Add(addItem);
             ActiveItem = addItem;
         }
-        public void Replace(TabItemViewModel oldItem,TabItemViewModel newItem)
+        public void Replace(TabItemViewModel oldItem, TabItemViewModel newItem)
         {
             Remove(oldItem);
             Add(newItem);
@@ -63,9 +63,9 @@ namespace RenderApp.ViewModel
         {
             return ItemsSource.Where(p => p is T).FirstOrDefault();
         }
-        public void ReplaceVM(TabItemViewModel oldItem,TabItemViewModel newItem)
+        public void ReplaceVM(TabItemViewModel oldItem, TabItemViewModel newItem)
         {
-            if(oldItem != null)
+            if (oldItem != null)
             {
                 Remove(oldItem);
                 Add(newItem);

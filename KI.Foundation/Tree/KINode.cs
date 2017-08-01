@@ -5,7 +5,7 @@ using KI.Foundation.Core;
 namespace KI.Foundation.Tree
 {
 
-    public class KINode 
+    public class KINode
     {
         public delegate void InsertNodeEventHandler(object sender, NotifyNodeChangedEventArgs e);
         public InsertNodeEventHandler InsertNodeEvent;
@@ -54,7 +54,7 @@ namespace KI.Foundation.Tree
             {
                 node.Parent = this;
                 Children.Add(node);
-                if(InsertNodeEvent != null)
+                if (InsertNodeEvent != null)
                 {
                     InsertNodeEvent(node, new NotifyNodeChangedEventArgs(NotifyNodeChangedAction.Add, node, Children.Count));
                 }
@@ -62,7 +62,7 @@ namespace KI.Foundation.Tree
         }
         public void AddChild(KIObject child)
         {
-            if(child == null)
+            if (child == null)
             {
                 return;
             }
@@ -102,7 +102,7 @@ namespace KI.Foundation.Tree
             {
                 var node = new KINode(name);
                 Children.Insert(index, node);
-                if(InsertNodeEvent != null)
+                if (InsertNodeEvent != null)
                 {
                     InsertNodeEvent(node, new NotifyNodeChangedEventArgs(NotifyNodeChangedAction.Add, node, index));
                 }
@@ -130,10 +130,10 @@ namespace KI.Foundation.Tree
         #region [remove method]
         public void RemoveChild(KINode child)
         {
-            if(Children.Contains(child))
+            if (Children.Contains(child))
             {
                 Children.Remove(child);
-                if(RemoveNodeEvent != null)
+                if (RemoveNodeEvent != null)
                 {
                     RemoveNodeEvent(child, new NotifyNodeChangedEventArgs(NotifyNodeChangedAction.Remove, child));
                 }
@@ -142,7 +142,7 @@ namespace KI.Foundation.Tree
         public void RemoveChild(KIObject child)
         {
             var remove = FindChild(child.Name);
-            if(remove != null)
+            if (remove != null)
             {
                 RemoveChild(remove);
             }
@@ -150,7 +150,7 @@ namespace KI.Foundation.Tree
         public void RemoveChild(string key)
         {
             var remove = FindChild(key);
-            if(remove != null)
+            if (remove != null)
             {
                 RemoveChild(remove);
             }
@@ -183,11 +183,11 @@ namespace KI.Foundation.Tree
         }
         public KINode FindChild(string key)
         {
-           return Children.Where(p => p.Name == key).FirstOrDefault();
+            return Children.Where(p => p.Name == key).FirstOrDefault();
         }
         public KINode FindRecursiveChild(string key)
         {
-            foreach(var child in Children)
+            foreach (var child in Children)
             {
                 var item = FindChild(key);
                 if (item == null)
@@ -212,11 +212,11 @@ namespace KI.Foundation.Tree
 
         public void Dispose()
         {
-            if(KIObject != null)
+            if (KIObject != null)
             {
                 KIObject.Dispose();
             }
-            foreach(var child in Children)
+            foreach (var child in Children)
             {
                 child.Dispose();
             }
@@ -246,7 +246,7 @@ namespace KI.Foundation.Tree
                     yield return grand.KIObject;
                 }
             }
-        }       
+        }
         #endregion
 
 

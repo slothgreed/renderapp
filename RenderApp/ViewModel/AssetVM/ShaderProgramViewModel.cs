@@ -10,11 +10,11 @@ namespace RenderApp.ViewModel
     public class ShaderProgramViewModel : TabItemViewModel
     {
 
-        public override  string Title
+        public override string Title
         {
             get
             {
-                if(_title == null)
+                if (_title == null)
                 {
                     return "ShaderProgram";
                 }
@@ -25,10 +25,10 @@ namespace RenderApp.ViewModel
             }
             set
             {
-                SetValue(ref _title,value);
+                SetValue(ref _title, value);
             }
         }
-                
+
         private ShaderProgram _model;
         public ShaderProgram Model
         {
@@ -42,13 +42,13 @@ namespace RenderApp.ViewModel
             }
         }
 
-        
+
 
         public ShaderProgramViewModel(ShaderProgram model)
         {
-            if(model != null)
+            if (model != null)
             {
-                Title = model.FileName; 
+                Title = model.FileName;
             }
             Model = model;
         }

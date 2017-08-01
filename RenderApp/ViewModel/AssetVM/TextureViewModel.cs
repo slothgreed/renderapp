@@ -26,7 +26,7 @@ namespace RenderApp.ViewModel
         {
             get
             {
-                if(Model == null)
+                if (Model == null)
                 {
                     return null;
                 }
@@ -50,15 +50,15 @@ namespace RenderApp.ViewModel
 
         private static void Initialize()
         {
-            if(TargetStr == null)
+            if (TargetStr == null)
             {
                 TargetStr = UtilRefrection.GetEnum<TextureTarget>();
             }
-            if(FilterStr == null)
+            if (FilterStr == null)
             {
                 FilterStr = UtilRefrection.GetEnum<TextureMinFilter>();
             }
-            if(WrapModeStr == null)
+            if (WrapModeStr == null)
             {
                 WrapModeStr = UtilRefrection.GetEnum<TextureWrapMode>();
             }

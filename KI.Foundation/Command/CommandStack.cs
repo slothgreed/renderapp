@@ -35,7 +35,7 @@ namespace KI.Foundation.Command
         {
             Commands.Push(info);
         }
-        public void Push(ICommand command,string commandArg)
+        public void Push(ICommand command, string commandArg)
         {
             Commands.Push(new CommandInfo(command, commandArg));
         }

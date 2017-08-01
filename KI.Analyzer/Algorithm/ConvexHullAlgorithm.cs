@@ -43,7 +43,7 @@ namespace KI.Analyzer.Algorithm
                 pointList.Add(pos);
             }
             QuickHullAlgorithm();
-            
+
             Logger.Log(Logger.LogLevel.Descript, "MeshList :" + meshList.Count.ToString());
             Logger.Log(Logger.LogLevel.Descript, "Point :" + pointList.Count.ToString());
         }
@@ -68,7 +68,7 @@ namespace KI.Analyzer.Algorithm
         /// </summary>
         private void QuickHullCore()
         {
-            while(true)
+            while (true)
             {
                 Mesh calcMesh = meshList.FirstOrDefault(p => (bool)p.CalcFlag == false);
 
@@ -188,7 +188,7 @@ namespace KI.Analyzer.Algorithm
         /// </summary>
         /// <param name="boundaryList">境界リスト</param>
         /// <param name="vertex">頂点</param>
-        private void CreateMesh(List<Edge> boundaryList,Vertex vertex)
+        private void CreateMesh(List<Edge> boundaryList, Vertex vertex)
         {
             //反対エッジ作成用に
             var newMesh = new List<Mesh>();
@@ -265,7 +265,7 @@ namespace KI.Analyzer.Algorithm
             Vector3 min = new Vector3(float.MaxValue);
             Vector3 max = new Vector3(float.MinValue);
             Vector3 xyMinzMax = new Vector3(float.MaxValue, float.MaxValue, float.MinValue);
-            
+
             foreach (var pos in pointList)
             {
                 if (max.X < pos.X && max.Y < pos.X && max.Z < pos.X)

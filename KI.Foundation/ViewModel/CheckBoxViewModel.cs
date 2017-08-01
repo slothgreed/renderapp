@@ -27,7 +27,6 @@ namespace KI.Foundation.ViewModel
             }
         }
 
-
         public bool UpdateProperty(bool value)
         {
             Model = value;

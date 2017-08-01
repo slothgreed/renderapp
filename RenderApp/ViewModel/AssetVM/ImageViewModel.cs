@@ -75,7 +75,7 @@ namespace RenderApp.ViewModel
                 SetValue<int>(ref _selectIndex, value);
             }
         }
-        
+
         public ImageViewModel(string name, Texture model)
         {
             Model = model;

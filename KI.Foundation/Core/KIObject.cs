@@ -9,11 +9,13 @@ namespace KI.Foundation.Core
             Logger.Log(Logger.LogLevel.Debug, "create kiobject " + Name + ":");
 
         }
+
         public KIObject(string name)
         {
             Name = name;
             Logger.Log(Logger.LogLevel.Debug, "create kiobject " + Name + ":");
         }
+
         private string _name = null;
         public string Name
         {
@@ -29,11 +31,12 @@ namespace KI.Foundation.Core
 
         public virtual void Dispose()
         {
-            
+
         }
+
         public override string ToString()
         {
             return Name;
-        } 
+        }
     }
 }

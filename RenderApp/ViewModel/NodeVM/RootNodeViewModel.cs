@@ -1,22 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using System.Windows.Controls;
-using RenderApp.AssetModel;
 using System.Diagnostics;
 using System.IO;
-using RenderApp.Utility;
 using KI.Foundation.Core;
 using KI.Foundation.Tree;
 
 namespace RenderApp.ViewModel
 {
-   
     public partial class RootNodeViewModel : TabItemViewModel
     {
 
@@ -42,13 +34,13 @@ namespace RenderApp.ViewModel
         {
             Title = title;
             Initialize(new List<KINode>() { rootNode });
-            
+
         }
-        public RootNodeViewModel(List<KINode> rootNodes,string title)
+        public RootNodeViewModel(List<KINode> rootNodes, string title)
         {
             Title = title;
             Initialize(rootNodes);
-            
+
         }
         public void Initialize(List<KINode> rootNodes)
         {
@@ -68,7 +60,7 @@ namespace RenderApp.ViewModel
         /// 再帰関数
         /// </summary>
         /// <param name="node"></param>
-        private void InitAddNode(KINode parent,NodeItemViewModel parentVM)
+        private void InitAddNode(KINode parent, NodeItemViewModel parentVM)
         {
             foreach (var node in parent.Children)
             {
@@ -81,7 +73,7 @@ namespace RenderApp.ViewModel
         public void SelectionChangedCommand(object sender, EventArgs e)
         {
             var nodeList = sender as MultiSelectTreeView;
-            if(nodeList.SelectedItems.Count > 0)
+            if (nodeList.SelectedItems.Count > 0)
             {
                 ActiveNode = nodeList.SelectedItems[0] as NodeItemViewModel;
                 MainWindowViewModel.Instance.UpdateSelectNode(ActiveNode.Model);
@@ -96,7 +88,7 @@ namespace RenderApp.ViewModel
         }
         public void OpenExplolerCommand()
         {
-            if(ActiveNode == null)
+            if (ActiveNode == null)
             {
                 return;
             }

@@ -66,7 +66,7 @@ namespace RenderApp.ViewModel
             }
             set
             {
-                SetValue<bool>(ref _hoverHighlighting,value);
+                SetValue<bool>(ref _hoverHighlighting, value);
             }
         }
         private int _itemIndent = 0;
@@ -78,7 +78,7 @@ namespace RenderApp.ViewModel
             }
             set
             {
-                SetValue<int>(ref _itemIndent,value);
+                SetValue<int>(ref _itemIndent, value);
             }
         }
         private bool _isKeyboardMode = true;
@@ -90,7 +90,7 @@ namespace RenderApp.ViewModel
             }
             set
             {
-                SetValue<bool>(ref _isKeyboardMode,value);
+                SetValue<bool>(ref _isKeyboardMode, value);
             }
         }
         private string _displayName;
@@ -103,7 +103,7 @@ namespace RenderApp.ViewModel
             set
             {
                 SetValue<string>(ref _displayName, value);
-                if(Model != null)
+                if (Model != null)
                 {
                     Model.KIObject.Name = _displayName;
                 }
@@ -120,7 +120,7 @@ namespace RenderApp.ViewModel
                 {
                     SetValue<bool>(ref _isSelected, value);
 
-                    if(_isSelected == true)
+                    if (_isSelected == true)
                     {
                         ActiveItem = this;
                         Logger.Log(Logger.LogLevel.Debug, this.DisplayName);
@@ -133,7 +133,7 @@ namespace RenderApp.ViewModel
             _children = new ObservableCollection<NodeItemViewModel>();
         }
 
-        public NodeItemViewModel(KINode node,NodeItemViewModel parent)
+        public NodeItemViewModel(KINode node, NodeItemViewModel parent)
             : this()
         {
             if (parent != null)
@@ -144,7 +144,7 @@ namespace RenderApp.ViewModel
             node.RemoveNodeEvent += RemoveNodeEvent;
             DisplayName = node.Name;
             Model = node;
-            
+
         }
 
         private void RemoveNodeEvent(object sender, NotifyNodeChangedEventArgs e)
@@ -153,7 +153,7 @@ namespace RenderApp.ViewModel
             {
                 KINode node = sender as KINode;
                 NodeItemViewModel nodeVM = Children.Where(p => p.DisplayName == node.Name).FirstOrDefault();
-                if(nodeVM != null)
+                if (nodeVM != null)
                 {
                     Children.Remove(nodeVM);
                 }
@@ -164,7 +164,7 @@ namespace RenderApp.ViewModel
             if (sender is KINode)
             {
                 KINode node = sender as KINode;
-                if(Children.Count > e.NewIndex)
+                if (Children.Count > e.NewIndex)
                 {
                     Children.Insert(e.NewIndex, new NodeItemViewModel(node, this));
                 }

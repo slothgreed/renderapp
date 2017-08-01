@@ -11,7 +11,6 @@ namespace KI.Asset
 {
     public class Scene : KIObject
     {
-
         /// <summary>
         /// 空間の最大値
         /// </summary>
@@ -50,7 +49,7 @@ namespace KI.Asset
         }
 
         #endregion
-        
+
         #region [default property]
         /// <summary>
         /// カメラ
@@ -80,7 +79,7 @@ namespace KI.Asset
             }
         }
         #endregion
-   
+
         #region [public scene method]
         /// <summary>
         /// シーンのオブジェクトの取得
@@ -92,7 +91,7 @@ namespace KI.Asset
         {
             KINode obj;
             obj = RootNode.FindChild(key);
-            if(obj == null)
+            if (obj == null)
             {
                 return null;
             }
@@ -127,7 +126,7 @@ namespace KI.Asset
             RootNode.RemoveRecursiveChild(key);
         }
         #endregion
-   
+
         #region [dispose]
         private string GetNewKey<T>(string key, Dictionary<string, T> AssetList) where T : KIFile
         {
@@ -145,7 +144,7 @@ namespace KI.Asset
                 }
             }
         }
-        
+
         public override void Dispose()
         {
 

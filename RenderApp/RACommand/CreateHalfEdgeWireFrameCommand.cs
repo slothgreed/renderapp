@@ -29,6 +29,7 @@ namespace RenderApp.RACommand
             }
             return CanCreateGeometry(geometry);
         }
+
         private static GeometryInfo info2;
         private static int counter = -1;
         private static RenderObject obj;

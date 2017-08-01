@@ -74,7 +74,7 @@ namespace KI.Analyzer
 
         public string Execute(string commandArg = null)
         {
-            if(_halfEdge == null)
+            if (_halfEdge == null)
             {
                 return "";
             }
@@ -82,7 +82,7 @@ namespace KI.Analyzer
             return "";
         }
 
-        private void CalcDijkstra(Node[] nodes,int start,int end)
+        private void CalcDijkstra(Node[] nodes, int start, int end)
         {
             //initialize
             Node current = nodes[start];
@@ -90,15 +90,15 @@ namespace KI.Analyzer
             current.cost = 0;
 
             //calc start
-            foreach(var aroundVertex in nodes[start].vertex.AroundVertex)
+            foreach (var aroundVertex in nodes[start].vertex.AroundVertex)
             {
                 Node around = nodes[aroundVertex.Index];
 
-                if(around.done)
+                if (around.done)
                 {
                     float newCost = around.cost;
                     newCost += (current.vertex - around.vertex).Length;
-                    if(around.cost > newCost)
+                    if (around.cost > newCost)
                     {
                         around.cost = newCost;
                     }
