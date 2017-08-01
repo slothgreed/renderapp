@@ -1,7 +1,6 @@
 ﻿using KI.Foundation.Command;
 using KI.Foundation.Core;
 using OpenTK;
-using RenderApp.AssetModel;
 using System;
 using System.Collections.Generic;
 using KI.Asset;

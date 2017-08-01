@@ -9,21 +9,13 @@ namespace KI.Foundation.Control
 
         public void OnDragOver(DragEventArgs dragEventArgs)
         {
-            var handler = DragOver;
-            if (handler != null)
-            {
-                handler(dragEventArgs);
-            }
+            DragOver?.Invoke(dragEventArgs);
         }
 
         public event Action<DragEventArgs> DragDrop;
         public void OnDrop(DragEventArgs dragEventArgs)
         {
-            var handler = DragDrop;
-            if (handler != null)
-            {
-                handler(dragEventArgs);
-            }
+            DragDrop?.Invoke(dragEventArgs);
         }
     }
 

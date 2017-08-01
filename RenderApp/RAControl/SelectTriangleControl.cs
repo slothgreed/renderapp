@@ -11,11 +11,13 @@ namespace RenderApp.RAControl
     {
         public override bool Down(System.Windows.Forms.MouseEventArgs mouse)
         {
-            if(mouse.Button == System.Windows.Forms.MouseButtons.Left)
+            if (mouse.Button == System.Windows.Forms.MouseButtons.Left)
             {
             }
+
             return true;
         }
+
         /// <summary>
         /// Picking
         /// </summary>
@@ -30,7 +32,7 @@ namespace RenderApp.RAControl
             //頂点配列の時
             if (geometry.geometryInfo.Index.Count != 0)
             {
-                for (int i = 0; i < geometry.geometryInfo.Index.Count; i+=3)
+                for (int i = 0; i < geometry.geometryInfo.Index.Count; i += 3)
                 {
                     Vector3 vertex1 = geometry.geometryInfo.Position[geometry.geometryInfo.Index[i]];
                     Vector3 vertex2 = geometry.geometryInfo.Position[geometry.geometryInfo.Index[i + 1]];
@@ -63,6 +65,7 @@ namespace RenderApp.RAControl
             }
             return select;
         }
+
         /// <summary>
         /// ポリゴンごとに行うので、CPUベースで頂点番号を取得
         /// </summary>
@@ -108,6 +111,5 @@ namespace RenderApp.RAControl
             }
             return true;
         }
-
     }
 }

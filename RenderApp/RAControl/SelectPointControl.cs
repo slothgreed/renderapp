@@ -2,7 +2,6 @@
 using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
 using OpenTK;
-using RenderApp.AssetModel;
 using System.Collections.Generic;
 using KI.Asset;
 using RenderApp.Globals;
@@ -21,13 +20,15 @@ namespace RenderApp.RAControl
             if (PickPoint(LeftMouse.Click, ref geometry, ref vertex_Index))
             {
                 Vector3 pos = geometry.geometryInfo.Position[vertex_Index];
-                RenderObject point = RenderObjectFactory.Instance.CreateRenderObject("SelectPoint :" + geometry.Name +":"+ vertex_Index.ToString());
+                RenderObject point = RenderObjectFactory.Instance.CreateRenderObject("SelectPoint :" + geometry.Name + ":" + vertex_Index.ToString());
                 point.SetGeometryInfo(new GeometryInfo(new List<Vector3>() { pos }, null, KICalc.RandomColor(), null, null, GeometryType.Point));
                 point.ModelMatrix = geometry.ModelMatrix;
                 Workspace.SceneManager.ActiveScene.AddObject(point);
             }
+
             return true;
         }
+
         public bool PickPoint(Vector2 mouse, ref Geometry selectGeometry, ref int selectIndex)
         {
             bool select = false;
@@ -47,9 +48,9 @@ namespace RenderApp.RAControl
                 viewport, mouse, out near, out far);
 
             Geometry geometry = null;
-            foreach(KINode geometryNode in activeScene.RootNode.AllChildren())
+            foreach (KINode geometryNode in activeScene.RootNode.AllChildren())
             {
-                if(geometryNode.KIObject is Geometry)
+                if (geometryNode.KIObject is Geometry)
                 {
                     geometry = geometryNode.KIObject as Geometry;
                 }
@@ -57,15 +58,18 @@ namespace RenderApp.RAControl
                 {
                     continue;
                 }
+
                 if (PickPointCore(near, far, geometry, ref minLength, ref selectIndex))
                 {
                     selectGeometry = geometry;
                     select = true;
                 }
             }
+
             return select;
 
         }
+
         private bool PickPointCore(Vector3 near, Vector3 far, Geometry geometry, ref float minLength, ref int selectIndex)
         {
             bool select = false;
@@ -74,7 +78,7 @@ namespace RenderApp.RAControl
             {
                 Vector3 point = geometry.geometryInfo.Position[i];
                 point = KICalc.Multiply(geometry.ModelMatrix, point);
-                
+
                 if (KICalc.PerpendicularPoint(point, near, far, out crossPos))
                 {
                     //線分から点までの距離が範囲内の頂点のうち
@@ -91,6 +95,7 @@ namespace RenderApp.RAControl
                     }
                 }
             }
+
             return select;
         }
     }

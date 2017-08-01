@@ -4,7 +4,7 @@ namespace RenderApp.RAControl
 {
     public class ControlManager : IControl
     {
-        public Dictionary<CONTROL_MODE,IControl> Controllers = new Dictionary<CONTROL_MODE, IControl>();
+        public Dictionary<CONTROL_MODE, IControl> Controllers = new Dictionary<CONTROL_MODE, IControl>();
 
         private IControl CameraController = new CameraControl();
         public enum CONTROL_MODE
@@ -13,6 +13,7 @@ namespace RenderApp.RAControl
             Dijkstra,
             SelectPoint
         }
+
         public enum MOUSE_STATE
         {
             DOWN,
@@ -48,16 +49,14 @@ namespace RenderApp.RAControl
         private ControlManager()
         {
             Controllers.Add(CONTROL_MODE.SelectTriangle, new SelectTriangleControl());
-            Controllers.Add(CONTROL_MODE.Dijkstra,new DijkstraControl());
+            Controllers.Add(CONTROL_MODE.Dijkstra, new DijkstraControl());
             Controllers.Add(CONTROL_MODE.SelectPoint, new SelectPointControl());
             CameraController = new CameraControl();
         }
 
         public void ProcessInput(MouseEventArgs mouse, MOUSE_STATE state)
         {
-            
-
-            switch(state)
+            switch (state)
             {
                 case MOUSE_STATE.DOWN:
                     CameraController.Down(mouse);

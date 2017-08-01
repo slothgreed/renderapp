@@ -44,11 +44,12 @@ namespace RenderApp.Globals
             {
                 TextureRoot.AddChild(value);
             }
-            if(value is ShaderProgram)
+            if (value is ShaderProgram)
             {
                 ShaderProgramRoot.AddChild(value);
             }
         }
+
         internal IEnumerable<KIObject> GetObject(RAAsset assetType)
         {
             switch (assetType)
@@ -62,6 +63,7 @@ namespace RenderApp.Globals
             }
             return null;
         }
+
         internal void Dispose()
         {
         }

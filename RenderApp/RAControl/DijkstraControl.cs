@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using OpenTK;
-using RenderApp.AssetModel;
 using KI.Foundation.Core;
 using KI.Foundation.Utility;
 using KI.Analyzer;
@@ -29,7 +28,7 @@ namespace RenderApp.RAControl
                 {
                     Dijkstra.SetGeometry(geometry.HalfEdge as HalfEdge);
 
-                    if(Dijkstra.StartIndex == -1)
+                    if (Dijkstra.StartIndex == -1)
                     {
                         Dijkstra.StartIndex = vertex_Index;
                     }

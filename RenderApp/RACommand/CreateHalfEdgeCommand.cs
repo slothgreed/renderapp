@@ -16,6 +16,7 @@ namespace RenderApp.RACommand
         {
             geometry = asset as Geometry;
         }
+
         public string CanExecute(string commandArg)
         {
             return CanCreateGeometry(geometry);
@@ -23,7 +24,7 @@ namespace RenderApp.RACommand
 
         public string Execute(string commandArg)
         {
-            var half = AssetFactory.Instance.CreateHalfEdge(geometry.geometryInfo.Position,geometry.geometryInfo.Index);
+            var half = AssetFactory.Instance.CreateHalfEdge(geometry.geometryInfo.Position, geometry.geometryInfo.Index);
             RenderObject halfEdge = RenderObjectFactory.Instance.CreateRenderObject("HalfEdge :" + geometry.Name);
             halfEdge.SetGeometryInfo(half.GeometryInfos[0]);
             halfEdge.ModelMatrix = geometry.ModelMatrix;

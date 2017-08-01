@@ -14,7 +14,7 @@ namespace RenderApp
         {
             get
             {
-                return AppSystem.KIDirectory + @"\renderapp";
+                return AppSystem.KIDirectory;
             }
         }
         public static string ResourceDirectory
@@ -52,7 +52,7 @@ namespace RenderApp
         public bool Open(string filePath)
         {
 
-            if(Path.GetExtension(filePath) != "proj")
+            if (Path.GetExtension(filePath) != "proj")
             {
                 throw new FileFormatException("extention error");
             }
@@ -65,7 +65,7 @@ namespace RenderApp
             {
                 Directory.CreateDirectory(ResourceDirectory);
             }
-            
+
             //ToDo: models;
             //List<AssetModel.Asset> models = new List<CModel>();
             //foreach(var loop in models)
@@ -77,13 +77,13 @@ namespace RenderApp
             //{
             //    File.Copy(loop.FilePath, ProjectDirectory + loop.FileName);
             //}
-            
+
             return true;
         }
         public bool SaveAs(string filePath)
         {
             return Save();
         }
-        
+
     }
 }

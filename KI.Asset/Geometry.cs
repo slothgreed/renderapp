@@ -4,6 +4,7 @@ using KI.Foundation.Utility;
 using KI.Foundation.Core;
 using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
+using KI.Analyzer;
 
 namespace KI.Asset
 {
@@ -270,7 +271,7 @@ namespace KI.Asset
         #endregion
         #endregion
 
-        public object HalfEdge
+        public HalfEdge HalfEdge
         {
             get;
             set;

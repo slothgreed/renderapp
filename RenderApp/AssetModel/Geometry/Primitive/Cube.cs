@@ -22,7 +22,7 @@ namespace RenderApp.AssetModel.RA_Geometry
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public Cube(string name,Vector3 min,Vector3 max)
+        public Cube(string name, Vector3 min, Vector3 max)
         {
             Min = min;
             Max = max;
@@ -56,14 +56,14 @@ namespace RenderApp.AssetModel.RA_Geometry
             var top = RenderObjectFactory.Instance.CreateRenderObject("Top");
             var bot = RenderObjectFactory.Instance.CreateRenderObject("Bottom");
 
-            if(reverse == false)
+            if (reverse == false)
             {
-                front.SetGeometryInfo(   new GeometryInfo(new List<Vector3> { v0, v3, v2, v1 }, null, null, TexCoord, null, GeometryType.Quad));
-                left.SetGeometryInfo(    new GeometryInfo(new List<Vector3> { v0, v4, v7, v3 }, null, null, TexCoord, null, GeometryType.Quad));
-                back.SetGeometryInfo(    new GeometryInfo(new List<Vector3> { v4, v5, v6, v7 }, null, null, TexCoord, null, GeometryType.Quad));
-                right.SetGeometryInfo(   new GeometryInfo(new List<Vector3> { v1, v2, v6, v5 }, null, null, TexCoord, null, GeometryType.Quad));
-                top.SetGeometryInfo(     new GeometryInfo(new List<Vector3> { v2, v3, v7, v6 }, null, null, TexCoord, null, GeometryType.Quad));
-                bot.SetGeometryInfo(     new GeometryInfo(new List<Vector3> { v1, v5, v4, v0 }, null, null, TexCoord, null, GeometryType.Quad));
+                front.SetGeometryInfo(new GeometryInfo(new List<Vector3> { v0, v3, v2, v1 }, null, null, TexCoord, null, GeometryType.Quad));
+                left.SetGeometryInfo(new GeometryInfo(new List<Vector3> { v0, v4, v7, v3 }, null, null, TexCoord, null, GeometryType.Quad));
+                back.SetGeometryInfo(new GeometryInfo(new List<Vector3> { v4, v5, v6, v7 }, null, null, TexCoord, null, GeometryType.Quad));
+                right.SetGeometryInfo(new GeometryInfo(new List<Vector3> { v1, v2, v6, v5 }, null, null, TexCoord, null, GeometryType.Quad));
+                top.SetGeometryInfo(new GeometryInfo(new List<Vector3> { v2, v3, v7, v6 }, null, null, TexCoord, null, GeometryType.Quad));
+                bot.SetGeometryInfo(new GeometryInfo(new List<Vector3> { v1, v5, v4, v0 }, null, null, TexCoord, null, GeometryType.Quad));
             }
             else
             {
@@ -86,13 +86,12 @@ namespace RenderApp.AssetModel.RA_Geometry
             string frag = ShaderCreater.Instance.GetFragShader(front);
             Shader shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
 
-            foreach(var geom in geometry)
+            foreach (var geom in geometry)
             {
                 geom.Shader = shader;
             }
 
             return geometry;
         }
-
     }
 }

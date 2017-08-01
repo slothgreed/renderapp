@@ -1,13 +1,9 @@
 ﻿using KI.Foundation.Command;
 using KI.Foundation.Core;
 using OpenTK;
-using RenderApp.AssetModel;
 using System;
 using System.Collections.Generic;
 using KI.Asset;
-using KI.Gfx.GLUtil;
-using KI.Analyzer;
-using RenderApp.Globals;
 using KI.Renderer;
 
 namespace RenderApp.RACommand
@@ -27,7 +23,7 @@ namespace RenderApp.RACommand
                 return RACommandResource.Failed;
             }
 
-            if(geometry.HalfEdge == null)
+            if (geometry.HalfEdge == null)
             {
                 return RACommandResource.Failed;
             }
@@ -38,15 +34,15 @@ namespace RenderApp.RACommand
         private static RenderObject obj;
         public string Execute(string commandArg)
         {
-            if(counter > -1)
+            if (counter > -1)
             {
                 //geometry.HalfEdge.VertexDecimation(geometry.HalfEdge.m_Edge[counter]);
-                ((HalfEdge)geometry.HalfEdge).EdgeFlips(((HalfEdge)geometry.HalfEdge).m_Edge[counter]);
+                geometry.HalfEdge.EdgeFlips(geometry.HalfEdge.m_Edge[counter]);
             }
             counter++;
             List<Vector3> position = new List<Vector3>();
             var color = new List<Vector3>();
-            foreach (var mesh in ((HalfEdge)geometry.HalfEdge).m_Mesh)
+            foreach (var mesh in geometry.HalfEdge.m_Mesh)
             {
                 foreach (var edge in mesh.AroundEdge)
                 {
@@ -91,7 +87,7 @@ namespace RenderApp.RACommand
                     //}
 
 
-                    if (edge == ((HalfEdge)geometry.HalfEdge).m_Edge[counter])
+                    if (edge == geometry.HalfEdge.m_Edge[counter])
                     {
                         color.Add(Vector3.UnitY);
                         color.Add(Vector3.UnitX);
@@ -101,7 +97,7 @@ namespace RenderApp.RACommand
                         color.Add(Vector3.UnitZ);
                         color.Add(Vector3.UnitZ);
                     }
-                    
+
                 }
             }
 

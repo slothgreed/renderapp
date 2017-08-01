@@ -104,6 +104,7 @@ namespace KI.Foundation.ViewModel
                 {
                     throw new ArgumentNullException();
                 }
+
                 _CommandParam = command;
             }
             

@@ -12,18 +12,22 @@ namespace RenderApp.RAControl
         {
             return true;
         }
+
         public virtual bool Click(MouseEventArgs mouse)
         {
             return true;
         }
+
         public virtual bool Move(MouseEventArgs mouse)
         {
             return true;
         }
+
         public virtual bool Up(MouseEventArgs mouse)
         {
             return true;
         }
+
         public virtual bool Wheel(MouseEventArgs mouse)
         {
             return true;
@@ -44,10 +48,12 @@ namespace RenderApp.RAControl
         {
             return true;
         }
+
         public virtual bool Execute()
         {
             return true;
         }
+
         public virtual bool Reset()
         {
             return true;

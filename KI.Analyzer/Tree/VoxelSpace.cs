@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 using KI.Foundation.Utility;
 
 namespace KI.Analyzer
@@ -459,6 +456,7 @@ namespace KI.Analyzer
 
             return SearchAllVoxel(neightInner);
         }
+
         /// <summary>
         /// 距離場の算出duckでやるとバグる
         /// 周囲がInnerで未決定の場合、事前に決まった値の加算値になる。

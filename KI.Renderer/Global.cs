@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using KI.Asset;
 
 namespace KI.Renderer
@@ -11,6 +7,26 @@ namespace KI.Renderer
     {
         public static RenderSystem RenderSystem;
         public static Scene Scene;
-        public static string ShaderDirectory;
+        private static string kiDirectory = null;
+        public static string KIDirectory
+        {
+            get
+            {
+                if (kiDirectory == null)
+                {
+                    kiDirectory = Environment.GetEnvironmentVariable("KIProject");
+                }
+                return kiDirectory;
+            }
+        }
+
+        public static string ShaderDirectory
+        {
+            get
+            {
+                return KIDirectory + @"\renderapp\Resource\Shader";
+            }
+        }
+
     }
 }

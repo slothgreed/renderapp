@@ -1,7 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using RenderApp.AssetModel;
-using OpenTK;
 using KI.Asset;
 using KI.Renderer;
 
@@ -22,6 +19,7 @@ namespace RenderApp
             var scene = new Scene(name);
             SceneList.Add(scene);
             ActiveScene = scene;
+            Global.Scene = ActiveScene;
             Initialize();
             CreateMainCamera();
             CreateSceneLight();
@@ -74,13 +72,11 @@ namespace RenderApp
             //    ActiveScene.AddObject(b);
             //}
 
-            //List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/test.half");
-            ////List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/Sphere.stl");
-            //foreach (var b in bunny)
-            //{
-            //    b.Scale = new OpenTK.Vector3(50);
-            //    ActiveScene.AddObject(b);
-            //}
+            var bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/bunny.half");
+            //List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/Sphere.stl");
+
+            var renderBunny = RenderObjectFactory.Instance.CreateRenderObject("bunny", bunny);
+            ActiveScene.AddObject(renderBunny);
 
         }
 

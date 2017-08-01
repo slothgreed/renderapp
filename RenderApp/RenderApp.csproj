@@ -141,7 +141,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppSystem.cs" />
-    <Compile Include="AssetModel\AssetFactory.cs" />
     <Compile Include="AssetModel\Geometry\IRenderObjectConverter.cs" />
     <Compile Include="Globals\Workspace.cs" />
     <Compile Include="RACommand\CreateConvexHullCommand.cs" />
@@ -437,7 +436,6 @@
     <EmbeddedResource Include="Thumbnail\noimage.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AssetModel\Geometry\File\" />
     <Folder Include="Scene\Shader\ShaderType\" />
   </ItemGroup>
   <ItemGroup>

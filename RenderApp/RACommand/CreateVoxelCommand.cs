@@ -2,7 +2,6 @@
 using KI.Foundation.Core;
 using KI.Foundation.Utility;
 using OpenTK;
-using RenderApp.AssetModel;
 using System;
 using System.Collections.Generic;
 using KI.Asset;
@@ -17,7 +16,7 @@ namespace RenderApp.RACommand
     {
         Geometry geometry = null;
         int Partition = 0;
-        public CreateVoxelCommand(KIObject asset,int partition)
+        public CreateVoxelCommand(KIObject asset, int partition)
         {
             geometry = asset as Geometry;
             Partition = partition;
@@ -41,7 +40,7 @@ namespace RenderApp.RACommand
 
             var voxels = voxel.GetVoxel(VoxelSpace.VoxelState.Inner);
             var colors = new List<Vector3>();
-            foreach(var v in voxels)
+            foreach (var v in voxels)
             {
                 colors.Add(KICalc.GetPseudoColor(v.Value, 0, 100));
             }

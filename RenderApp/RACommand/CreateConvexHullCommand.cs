@@ -1,6 +1,5 @@
 ﻿using KI.Foundation.Command;
 using KI.Foundation.Core;
-using RenderApp.AssetModel;
 using System;
 using System.Collections.Generic;
 using OpenTK;
@@ -28,7 +27,7 @@ namespace RenderApp.RACommand
         {
             ConvexHullAlgorithm convexHull = new ConvexHullAlgorithm(geometry.geometryInfo.Position);
             List<Vector3> position = new List<Vector3>();
-            foreach(var mesh in convexHull.Meshs)
+            foreach (var mesh in convexHull.Meshs)
             {
                 Vector3 pos0 = Vector3.Zero;
                 Vector3 pos1 = Vector3.Zero;

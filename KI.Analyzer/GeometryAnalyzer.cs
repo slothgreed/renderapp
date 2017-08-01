@@ -1,10 +1,6 @@
 ﻿using KI.Foundation.Core;
 using KI.Analyzer.Algorithm;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KI.Analyzer
 {
@@ -15,12 +11,11 @@ namespace KI.Analyzer
         VertexSaliency,
     }
 
-
     public class GeometryAnalyzer : KIFactoryBase<IAnalyzer>
     {
         public Dictionary<string, IAnalyzer> Storage = new Dictionary<string, IAnalyzer>();
 
-        private HalfEdge halfEdge
+        private HalfEdge HalfEdge
         {
             get;
             set;    
@@ -28,25 +23,27 @@ namespace KI.Analyzer
 
         public GeometryAnalyzer(HalfEdge half)
         {
-            halfEdge = half;
+            HalfEdge = half;
         }
+
         public void CalculateParameter(AnalyzeType type)
         {
             IAnalyzer analyze = null;
             switch (type)
             {
                 case AnalyzeType.VertexMeanNormal:
-                    analyze = new VertexNormalAlgorithm(halfEdge);
+                    analyze = new VertexNormalAlgorithm(HalfEdge);
                     break;
                 case AnalyzeType.VertexCurvature:
-                    analyze = new VertexCurvatureAlgorithm(halfEdge);
+                    analyze = new VertexCurvatureAlgorithm(HalfEdge);
                     break;
                 case AnalyzeType.VertexSaliency:
-                    analyze = new VertexSaliencyAlgorithm(halfEdge);
+                    analyze = new VertexSaliencyAlgorithm(HalfEdge);
                     break;
                 default:
                     break;
             }
+
             AddItem(analyze);
         }
     }

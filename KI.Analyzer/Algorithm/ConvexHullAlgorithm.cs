@@ -11,23 +11,23 @@ namespace KI.Analyzer.Algorithm
         /// <summary>
         /// メッシュリスト
         /// </summary>
-        private List<Mesh> MeshList;
+        private List<Mesh> meshList;
         public ReadOnlyCollection<Mesh> Meshs
         {
             get
             {
-                return MeshList.AsReadOnly();
+                return meshList.AsReadOnly();
             }
         }
         /// <summary>
         /// 点群
         /// </summary>
-        private List<Vector3> PointList;
+        private List<Vector3> pointList;
         public List<Vector3> Points
         {
             get
             {
-                return PointList;
+                return pointList;
             }
         }
         /// <summary>
@@ -35,17 +35,17 @@ namespace KI.Analyzer.Algorithm
         /// </summary>
         public ConvexHullAlgorithm(List<Vector3> position)
         {
-            PointList = new List<Vector3>();
-            MeshList = new List<Mesh>();
+            pointList = new List<Vector3>();
+            meshList = new List<Mesh>();
 
             foreach (var pos in position)
             {
-                PointList.Add(pos);
+                pointList.Add(pos);
             }
             QuickHullAlgorithm();
             
-            Logger.Log(Logger.LogLevel.Descript, "MeshList :" + MeshList.Count.ToString());
-            Logger.Log(Logger.LogLevel.Descript, "Point :" + PointList.Count.ToString());
+            Logger.Log(Logger.LogLevel.Descript, "MeshList :" + meshList.Count.ToString());
+            Logger.Log(Logger.LogLevel.Descript, "Point :" + pointList.Count.ToString());
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace KI.Analyzer.Algorithm
         /// <param name="position"></param>
         public void QuickHullAlgorithm()
         {
-            if (PointList.Count < 3)
+            if (pointList.Count < 3)
             {
                 return;
             }
@@ -70,7 +70,7 @@ namespace KI.Analyzer.Algorithm
         {
             while(true)
             {
-                Mesh calcMesh = MeshList.FirstOrDefault(p => (bool)p.CalcFlag == false);
+                Mesh calcMesh = meshList.FirstOrDefault(p => (bool)p.CalcFlag == false);
 
                 //すべて計算し終わったら終了
                 if (calcMesh == null)
@@ -81,11 +81,11 @@ namespace KI.Analyzer.Algorithm
                 if (FindFarPoint(calcMesh, out FarPoint))
                 {
                     CreateQuickHullMesh(FarPoint);
-                    MeshList.RemoveAll(mesh => mesh.DeleteFlag);
-                    PointList.Remove(FarPoint);
+                    meshList.RemoveAll(mesh => mesh.DeleteFlag);
+                    pointList.Remove(FarPoint);
 
                     //簡単な高速化この処理が重い。
-                    if (PointList.Count > 5000)
+                    if (pointList.Count > 5000)
                     {
                         DeleteInsideVertex();
                     }
@@ -103,7 +103,7 @@ namespace KI.Analyzer.Algorithm
         /// <param name="farPoint"></param>
         private void CreateQuickHullMesh(Vector3 farPoint)
         {
-            var visibleMesh = FindVisibleMesh(MeshList, farPoint);
+            var visibleMesh = FindVisibleMesh(meshList, farPoint);
             var boundaryList = FindBoundaryEdge(visibleMesh);
             CreateMesh(boundaryList, new Vertex(farPoint));
             visibleMesh.All(p => { p.Dispose(); return true; });
@@ -114,12 +114,12 @@ namespace KI.Analyzer.Algorithm
         /// </summary>
         private void DeleteInsideVertex()
         {
-            for (int i = 0; i < PointList.Count; i++)
+            for (int i = 0; i < pointList.Count; i++)
             {
                 //1つでも負の値があるなら、凸包の中にないので残す
-                if (!MeshList.Any(mesh => Vector3.Dot(mesh.Normal, mesh.Gravity - PointList[i]) < 0))
+                if (!meshList.Any(mesh => Vector3.Dot(mesh.Normal, mesh.Gravity - pointList[i]) < 0))
                 {
-                    PointList.RemoveAt(i);
+                    pointList.RemoveAt(i);
                     i--;
                 }
             }
@@ -201,7 +201,7 @@ namespace KI.Analyzer.Algorithm
                 Mesh mesh = new Mesh(edge1, boundary, edge2);
                 mesh.CalcFlag = false;
                 newMesh.Add(mesh);
-                MeshList.Add(mesh);
+                meshList.Add(mesh);
             }
 
             //反対エッジの設定
@@ -225,17 +225,18 @@ namespace KI.Analyzer.Algorithm
                 Edge.SetupOpposite(newMesh[i].GetEdge(2), newMesh[i + 1].GetEdge(0));
             }
         }
+
         /// <summary>
         /// 最も遠い点の取得
         /// </summary>
         /// <param name="mesh"></param>
         /// <param name="posit"></param>
         /// <returns></returns>
-        private bool FindFarPoint(Mesh mesh,out Vector3 posit)
+        private bool FindFarPoint(Mesh mesh, out Vector3 posit)
         {
             float maxDist = float.MinValue;
             posit = Vector3.Zero;
-            foreach(var pos in PointList)
+            foreach (var pos in pointList)
             {
                 float dist = KICalc.DistancePlane(mesh.Plane, pos);
                 if (Vector3.Dot(mesh.Normal, pos - mesh.Gravity) > 0)
@@ -247,14 +248,14 @@ namespace KI.Analyzer.Algorithm
                     }
                 }
             }
+
             if (posit == Vector3.Zero)
             {
                 return false;
             }
+
             return true;
         }
-
-
 
         /// <summary>
         /// 初期平面の作成
@@ -265,7 +266,7 @@ namespace KI.Analyzer.Algorithm
             Vector3 max = new Vector3(float.MinValue);
             Vector3 xyMinzMax = new Vector3(float.MaxValue, float.MaxValue, float.MinValue);
             
-            foreach (var pos in PointList)
+            foreach (var pos in pointList)
             {
                 if (max.X < pos.X && max.Y < pos.X && max.Z < pos.X)
                 {
@@ -305,11 +306,11 @@ namespace KI.Analyzer.Algorithm
             var mesh2 = new Mesh(oppo1, oppo2, oppo3);
             mesh1.CalcFlag = false;
             mesh2.CalcFlag = false;
-            MeshList.Add(mesh1);
-            MeshList.Add(mesh2);
+            meshList.Add(mesh1);
+            meshList.Add(mesh2);
 
             //triangleを作った頂点の削除
-            PointList.RemoveAll(p => (p == vertex1.Position || p == vertex2.Position || p == vertex3.Position));
+            pointList.RemoveAll(p => (p == vertex1.Position || p == vertex2.Position || p == vertex3.Position));
         }
     }
 }

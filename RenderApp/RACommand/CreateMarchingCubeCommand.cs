@@ -1,6 +1,5 @@
 ﻿using KI.Foundation.Command;
 using KI.Foundation.Core;
-using RenderApp.AssetModel;
 using System;
 using KI.Analyzer.Algorithm.MarchingCube;
 using KI.Gfx.GLUtil;
