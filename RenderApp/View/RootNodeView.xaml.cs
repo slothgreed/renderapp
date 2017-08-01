@@ -19,11 +19,9 @@ namespace RenderApp.View
     /// </summary>
     public partial class RootNodeView : UserControl
     {
-
         public RootNodeView()
         {
             InitializeComponent();
         }
-
     }
 }

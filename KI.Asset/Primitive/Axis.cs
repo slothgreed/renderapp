@@ -11,11 +11,13 @@ namespace KI.Asset
             get;
             set;
         }
+
         public Vector3 Max
         {
             get;
             set;
         }
+
         public Axis(string name, Vector3 min, Vector3 max)
             : base(name)
         {

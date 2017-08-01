@@ -11,7 +11,6 @@
 //using RenderApp.Scene;
 //using RenderApp.AssetModel;
 
-
 //namespace RenderApp.AssetModel.OffScreen
 //{
 //    /// <summary>

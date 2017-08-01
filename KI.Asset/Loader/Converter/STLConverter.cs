@@ -20,11 +20,10 @@ namespace KI.Asset
         /// <summary>
         /// STLのローダ。
         /// </summary>
-        /// <param name="filePath"></param>
-        /// <param name="position"></param>
-        public STLConverter(string name, string filePath)
+        /// <param name="filePath">ファイルパス</param>
+        public STLConverter(string filePath)
         {
-            stlData = new STLLoader(name, filePath);
+            stlData = new STLLoader(filePath);
             GeometryInfo info = new GeometryInfo(stlData.Position, stlData.Normal, Vector3.One, null, null, GeometryType.Triangle);
             GeometryInfos = new GeometryInfo[] { info };
 

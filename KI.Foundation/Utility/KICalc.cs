@@ -497,6 +497,7 @@ namespace KI.Foundation.Utility
                 {
                     return tmp + 1;
                 }
+
                 else//-0.99999
                 {
                     return tmp - 1;

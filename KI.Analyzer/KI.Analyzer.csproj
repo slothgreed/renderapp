@@ -53,7 +53,9 @@
     <Compile Include="Algorithm\ConvexHullAlgorithm.cs" />
     <Compile Include="Algorithm\DijkstraAlgorithm.cs" />
     <Compile Include="Algorithm\MarchingCube\MarchingCubesAlgorithm.cs" />
-    <Compile Include="Algorithm\MarchingCube\MarchingCubeTable.cs" />
+    <Compile Include="Algorithm\MarchingCube\MarchingCubeTable.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Algorithm\VertexCurvatureAlgorithm.cs" />
     <Compile Include="Algorithm\VertexNormalAlgorithm.cs" />
     <Compile Include="Algorithm\VertexSaliencyAlgorithm.cs" />

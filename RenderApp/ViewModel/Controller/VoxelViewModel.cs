@@ -14,17 +14,27 @@ namespace RenderApp.ViewModel
     public partial class VoxelViewModel : TabItemViewModel, IControllerViewModelBase
     {
         private int _partitionNum = 64;
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public VoxelViewModel()
+        {
+        }
+
         public int PartitionNum
         {
             get
             {
                 return _partitionNum;
             }
+
             set
             {
                 SetValue<int>(ref _partitionNum, value);
             }
         }
+
         public override string Title
         {
             get
@@ -32,15 +42,12 @@ namespace RenderApp.ViewModel
                 return "Voxel";
             }
         }
-        public VoxelViewModel()
-        {
-        }
+
         private void ExecuteCommand()
         {
             ICommand command = new CreateVoxelCommand(Workspace.SceneManager.ActiveScene.SelectAsset, PartitionNum);
             CommandManager.Instance.Execute(command, null, true);
         }
-
 
         public override void UpdateProperty()
         {

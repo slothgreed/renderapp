@@ -26,6 +26,7 @@ namespace KI.Asset
         public Texture ShadowMap { get; private set; }
 
         private string _objectName = "Light";
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -44,6 +45,10 @@ namespace KI.Asset
                 Name = _objectName;
             }
         }
+
+        /// <summary>
+        /// 解放処理
+        /// </summary>
         public override void Dispose()
         {
 

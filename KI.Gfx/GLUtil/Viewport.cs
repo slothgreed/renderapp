@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using OpenTK;
 using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
-using System.Diagnostics;
-using System.IO;
 using System.Windows.Forms;
-using System.Timers;
 using KI.Foundation.Utility;
-using KI.Foundation.Core;
 using System.Drawing;
 namespace KI.Gfx.GLUtil
 {
@@ -115,8 +107,6 @@ namespace KI.Gfx.GLUtil
             m_glControl.AllowDrop = true;
         }
 
-
-
         #endregion
         #region [context event]
         //glControlの起動時に実行される。
@@ -148,7 +138,6 @@ namespace KI.Gfx.GLUtil
                 Logger.GLLog(Logger.LogLevel.Error);
                 glControl_Paint(null, null);
             }
-
         }
 
         //glControlの描画時に実行される。
@@ -171,7 +160,6 @@ namespace KI.Gfx.GLUtil
             m_NowRender = true;
             m_glControl.SwapBuffers();
             m_NowRender = false;
-
         }
         #endregion
         #region [mouse event]
@@ -247,6 +235,9 @@ namespace KI.Gfx.GLUtil
         #endregion
 
         #region [Main Window Event]
+        /// <summary>
+        /// 解放処理
+        /// </summary>
         public void Dispose()
         {
             m_glControl.Load -= glControl_Load;

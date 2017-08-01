@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+
 namespace RenderApp
 {
     class ProjectInfo
@@ -17,6 +18,7 @@ namespace RenderApp
                 return AppSystem.KIDirectory;
             }
         }
+
         public static string ResourceDirectory
         {
             get
@@ -25,6 +27,7 @@ namespace RenderApp
                 return ProjectDirectory + @"\RenderApp\Resource";
             }
         }
+
         public static string ShaderDirectory
         {
             get
@@ -32,6 +35,7 @@ namespace RenderApp
                 return ResourceDirectory + @"\Shader";
             }
         }
+
         public static string TextureDirectory
         {
             get
@@ -39,6 +43,7 @@ namespace RenderApp
                 return ResourceDirectory + @"\Texture";
             }
         }
+
         public static string ModelDirectory
         {
             get
@@ -46,12 +51,13 @@ namespace RenderApp
                 return ResourceDirectory + @"\Model";
             }
         }
+
         public ProjectInfo()
         {
         }
+
         public bool Open(string filePath)
         {
-
             if (Path.GetExtension(filePath) != "proj")
             {
                 throw new FileFormatException("extention error");
@@ -59,6 +65,7 @@ namespace RenderApp
 
             return true;
         }
+
         public bool Save()
         {
             if (!Directory.Exists(ResourceDirectory))
@@ -80,6 +87,7 @@ namespace RenderApp
 
             return true;
         }
+
         public bool SaveAs(string filePath)
         {
             return Save();

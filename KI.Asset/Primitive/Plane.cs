@@ -78,11 +78,11 @@ namespace KI.Asset
         /// </summary>
         /// <param name="near">始点</param>
         /// <param name="far">終点</param>
-        public Vector3 CrossPoint(Vector3 near,Vector3 far)
+        public Vector3 CrossPoint(Vector3 near, Vector3 far)
         {
             Vector3 line = far - near;
             Vector3 result = new Vector3();
-            
+
             result = KICalc.crossPlanetoLine(near, far, surface);
 
             return result;

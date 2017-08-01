@@ -44,6 +44,7 @@ namespace KI.Gfx.GLUtil
             get;
             set;
         }
+
         public virtual void GenBuffer()
         {
             CreateNum++;
@@ -51,9 +52,11 @@ namespace KI.Gfx.GLUtil
             {
                 Dispose();
             }
+
             PreGenBuffer();
             Logger.GLLog(Logger.LogLevel.Error);
         }
+
         public virtual void BindBuffer()
         {
             PreBindBuffer();
@@ -61,21 +64,28 @@ namespace KI.Gfx.GLUtil
             {
                 Logger.Log(Logger.LogLevel.Warning, "Duplicate Bind Error");
             }
+
             NowBind = true;
             Logger.GLLog(Logger.LogLevel.Error);
         }
+
         public virtual void UnBindBuffer()
         {
             PreUnBindBuffer();
             NowBind = false;
             Logger.GLLog(Logger.LogLevel.Error);
         }
+
+        /// <summary>
+        /// 解放処理
+        /// </summary>
         public override void Dispose()
         {
             CreateNum--;
             PreDispose();
             DeviceID = -1;
         }
+
         public BufferObject()
             : base("BufferObject")
         {

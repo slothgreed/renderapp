@@ -4,15 +4,7 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ output extension=".cs" #>
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using RenderApp.ViewModel.DockTab;
-
 <#
 	string[] _class =
 	{
@@ -42,10 +34,11 @@ namespace RenderApp.ViewModel
 		{
 			get
 			{
-				if(_<#=_command[i]#> == null)
+				if (_<#=_command[i]#> == null)
 				{
 					return _<#=_command[i]#> = CreateCommand(<#=_command[i]#>Command);						
 				}
+
 				return _<#=_command[i]#>;
 			}
 		}

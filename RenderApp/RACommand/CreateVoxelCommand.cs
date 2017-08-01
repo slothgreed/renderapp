@@ -14,13 +14,15 @@ namespace RenderApp.RACommand
 {
     class CreateVoxelCommand : CreateModelCommandBase, ICommand
     {
-        Geometry geometry = null;
-        int Partition = 0;
+        private Geometry geometry = null;
+        private int Partition = 0;
+
         public CreateVoxelCommand(KIObject asset, int partition)
         {
             geometry = asset as Geometry;
             Partition = partition;
         }
+
         public string CanExecute(string commandArg)
         {
             return CanCreateGeometry(geometry);
@@ -36,7 +38,6 @@ namespace RenderApp.RACommand
             Workspace.SceneManager.ActiveScene.AddObject(voxelObject);
 
             RenderObject innerObject = RenderObjectFactory.Instance.CreateRenderObject("Voxel Inner : " + geometry.Name);
-
 
             var voxels = voxel.GetVoxel(VoxelSpace.VoxelState.Inner);
             var colors = new List<Vector3>();

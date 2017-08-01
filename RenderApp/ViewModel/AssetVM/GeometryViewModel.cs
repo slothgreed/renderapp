@@ -21,23 +21,27 @@ namespace RenderApp.ViewModel
                 }
             }
         }
-        private Dictionary<string, object> _item;
+
+        private Dictionary<string, object> item;
         public Dictionary<string, object> PropertyItem
         {
             get
             {
-                return _item;
+                return item;
             }
+
             set
             {
-                SetValue(ref _item, value);
+                SetValue(ref item, value);
             }
         }
+
         public Geometry Model
         {
             get;
             private set;
         }
+
         public GeometryViewModel(Geometry model)
         {
             Model = model;

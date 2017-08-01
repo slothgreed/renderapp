@@ -37,6 +37,7 @@ namespace KI.Analyzer.Algorithm.MarchingCube
             Neight.Add(CubeVertex.XYz, float.MaxValue);
             Neight.Add(CubeVertex.xYz, float.MaxValue);
         }
+
         /// <summary>
         /// 0～15　MarchingCubesの形状
         /// </summary>
@@ -54,7 +55,9 @@ namespace KI.Analyzer.Algorithm.MarchingCube
     public class MarchingCubesAlgorithm
     {
         private float Size;
+
         private int Partition;
+
         public MarchingVoxel[,,] MarchingSpace;
 
         private float Interval

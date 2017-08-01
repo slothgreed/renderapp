@@ -18,8 +18,10 @@ namespace RenderApp.ViewModel
     }
     public class TabControlViewModel : DockWindowViewModel
     {
-
         private TabItemViewModel _activeItem;
+
+        private ObservableCollection<TabItemViewModel> _ItemsSource = new ObservableCollection<TabItemViewModel>();
+
         public TabItemViewModel ActiveItem
         {
             get
@@ -31,7 +33,7 @@ namespace RenderApp.ViewModel
                 SetValue(ref _activeItem, value);
             }
         }
-        private ObservableCollection<TabItemViewModel> _ItemsSource = new ObservableCollection<TabItemViewModel>();
+
         public ObservableCollection<TabItemViewModel> ItemsSource
         {
             get
@@ -48,21 +50,25 @@ namespace RenderApp.ViewModel
         {
 
         }
+
         public void Add(TabItemViewModel addItem)
         {
             addItem.Parent = this;
             ItemsSource.Add(addItem);
             ActiveItem = addItem;
         }
+
         public void Replace(TabItemViewModel oldItem, TabItemViewModel newItem)
         {
             Remove(oldItem);
             Add(newItem);
         }
+
         public TabItemViewModel FindVM<T>() where T : TabItemViewModel
         {
             return ItemsSource.Where(p => p is T).FirstOrDefault();
         }
+
         public void ReplaceVM(TabItemViewModel oldItem, TabItemViewModel newItem)
         {
             if (oldItem != null)
@@ -75,6 +81,7 @@ namespace RenderApp.ViewModel
                 Add(newItem);
             }
         }
+
         public void Remove(TabItemViewModel removeItem)
         {
             bool delActive = false;
@@ -82,12 +89,14 @@ namespace RenderApp.ViewModel
             {
                 delActive = true;
             }
+
             ItemsSource.Remove(removeItem);
             if (delActive)
             {
                 ActiveItem = ItemsSource.FirstOrDefault();
             }
         }
+
         public override void UpdateProperty()
         {
             throw new NotImplementedException();

@@ -20,6 +20,7 @@ namespace KI.Foundation.ViewModel
             {
                 throw new ArgumentNullException();
             }
+
             _Command = command;
             _CanExecute = canExecute;
         }
@@ -29,6 +30,7 @@ namespace KI.Foundation.ViewModel
             {
                 throw new ArgumentNullException();
             }
+
             _Command = command;
         }
         private CommandBase(Action<object> command)
@@ -37,6 +39,7 @@ namespace KI.Foundation.ViewModel
             {
                 throw new ArgumentNullException();
             }
+
             _CommandParam = command;
         }
 
@@ -51,6 +54,7 @@ namespace KI.Foundation.ViewModel
                 return true;
             }
         }
+
         public event EventHandler CanExecuteChanged;
 
         public void Execute(object parameter)
@@ -64,14 +68,17 @@ namespace KI.Foundation.ViewModel
                 _CommandParam(parameter);
             }
         }
+
         public static ICommand CreateCommand(Action command, Func<bool> canExecute)
         {
             return new CommandBase(command, canExecute);
         }
+
         public static ICommand CreateCommand(Action command)
         {
             return new CommandBase(command);
         }
+
         public static ICommand CreateCommand(Action<object> command)
         {
             return new CommandBase(command);

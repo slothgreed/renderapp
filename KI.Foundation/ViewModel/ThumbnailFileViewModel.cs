@@ -15,6 +15,7 @@ namespace KI.Foundation.ViewModel
             {
                 return _filePath;
             }
+
             set
             {
                 SetValue(ref _filePath, value);
@@ -28,6 +29,7 @@ namespace KI.Foundation.ViewModel
             {
                 return _imagePath;
             }
+
             set
             {
                 SetValue(ref _imagePath, value);

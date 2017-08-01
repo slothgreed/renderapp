@@ -18,6 +18,7 @@ namespace KI.Foundation.Tree
             get;
             private set;
         }
+
         private string emptyName;
         public string Name
         {
@@ -30,11 +31,13 @@ namespace KI.Foundation.Tree
                 return KIObject.Name;
             }
         }
+
         public KIObject KIObject
         {
             get;
             private set;
         }
+
         private KINode Parent;
 
         public KINode(KIObject _kiobject)
@@ -210,6 +213,9 @@ namespace KI.Foundation.Tree
             return emptyName;
         }
 
+        /// <summary>
+        /// 解放処理
+        /// </summary>
         public void Dispose()
         {
             if (KIObject != null)

@@ -15,11 +15,7 @@ namespace KI.Asset
         public GeometryInfo geometryInfo { get; set; }
         public bool Visible { get; set; } = true;
 
-        public Matrix4 ModelMatrix
-        {
-            get;
-            set;
-        }
+        public Matrix4 ModelMatrix { get; set; }
 
         private Vector3 _translate = Vector3.Zero;
         public Vector3 Translate
@@ -28,12 +24,14 @@ namespace KI.Asset
             {
                 return _translate;
             }
+
             set
             {
                 _translate = value;
                 CalcTranslate(_translate);
             }
         }
+
         private Vector3 _scale = Vector3.One;
         public Vector3 Scale
         {
@@ -47,6 +45,7 @@ namespace KI.Asset
                 CalcScale(_scale);
             }
         }
+
         private Vector3 _rotate = Vector3.Zero;
         public Vector3 Rotate
         {
@@ -54,12 +53,14 @@ namespace KI.Asset
             {
                 return _rotate;
             }
+
             set
             {
                 _rotate = value;
                 RotateXYZ(_rotate.X, _rotate.Y, _rotate.Z);
             }
         }
+
         public Matrix3 NormalMatrix
         {
             get
@@ -68,6 +69,7 @@ namespace KI.Asset
                 return new Matrix3(norm);
             }
         }
+
         public Shader Shader
         {
             get;
@@ -100,6 +102,9 @@ namespace KI.Asset
             //Shader = ShaderCreater.Instance.DefaultShader;
         }
 
+        /// <summary>
+        /// 解放処理
+        /// </summary>
         public override void Dispose()
         {
             geometryInfo.Dispose();
@@ -120,8 +125,10 @@ namespace KI.Asset
             {
                 return 0;
             }
+
             return TextureItem.Count;
         }
+
         public Texture GetTexture(TextureKind kind)
         {
             if (TextureItem.ContainsKey(kind))
@@ -136,8 +143,9 @@ namespace KI.Asset
 
         #region [modelmatrix]
         #region [translate]
+
         /// <summary>
-        ///　モデルビューに平行移動を適用
+        /// モデルビューに平行移動を適用
         /// </summary>
         /// <param name="move"></param>
         private void CalcTranslate(Vector3 move)
@@ -150,7 +158,7 @@ namespace KI.Asset
         #region [scale]
 
         /// <summary>
-        ///　モデルビューに拡大縮小を適用
+        /// モデルビューに拡大縮小を適用
         /// </summary>
         private void CalcScale(Vector3 scale)
         {
@@ -169,7 +177,7 @@ namespace KI.Asset
         #endregion
         #region [rotate]
         /// <summary>
-        ///　形状に回転を適用(初期の向きに対して)
+        /// 形状に回転を適用(初期の向きに対して)
         /// </summary>
         private bool SetModelViewRotateXYZ(Matrix4 quart, bool init)
         {
@@ -212,6 +220,7 @@ namespace KI.Asset
             Matrix4 rotate = Matrix4.CreateRotationY(MathHelper.DegreesToRadians(angle));
             return SetModelViewRotateXYZ(rotate, init);
         }
+
         /// <summary>
         /// Z軸で回転
         /// </summary>
@@ -222,6 +231,7 @@ namespace KI.Asset
             Matrix4 rotate = Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(angle));
             return SetModelViewRotateXYZ(rotate, init);
         }
+
         public bool RotateXYZ(float angleX, float angleY, float angleZ, bool init = false)
         {
             Matrix4 rotateX = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(angleX));
@@ -229,6 +239,7 @@ namespace KI.Asset
             Matrix4 rotateZ = Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(angleZ));
             return SetModelViewRotateXYZ(rotateX * rotateY * rotateZ, init);
         }
+
         /// <summary>
         /// vector1をvector2に回転させる。
         /// </summary>

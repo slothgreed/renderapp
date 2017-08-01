@@ -10,33 +10,35 @@ namespace RenderApp.ViewModel
 {
     public class TabItemViewModel : ViewModelBase
     {
-        protected string _title;
+        private ICommand closeTabItem;
+
+        protected string title;
+
+        public TabControlViewModel Parent { get; set; }
+
         public virtual string Title
         {
             get
             {
-                return _title;
+                return title;
             }
+
             set
             {
-                SetValue<string>(ref _title, value);
+                SetValue<string>(ref title, value);
             }
         }
-        public TabControlViewModel Parent
-        {
-            get;
-            set;
-        }
-        private ICommand _CloseTabItem;
+
         public ICommand CloseTabItem
         {
             get
             {
-                if (_CloseTabItem == null)
+                if (closeTabItem == null)
                 {
-                    return _CloseTabItem = CreateCommand(CloseTabItemCommand);
+                    return closeTabItem = CreateCommand(CloseTabItemCommand);
                 }
-                return _CloseTabItem;
+
+                return closeTabItem;
             }
         }
 

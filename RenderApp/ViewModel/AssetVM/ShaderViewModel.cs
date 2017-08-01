@@ -8,18 +8,6 @@ namespace RenderApp.ViewModel
 {
     class ShaderViewModel : TabItemViewModel, IPropertyGridViewModel
     {
-        public override string Title
-        {
-            get
-            {
-                return "Shader";
-            }
-        }
-        public Dictionary<string, object> PropertyItem
-        {
-            get;
-            set;
-        }
         public ShaderViewModel(Shader shader)
         {
             PropertyItem = new Dictionary<string, object>();
@@ -51,6 +39,21 @@ namespace RenderApp.ViewModel
                 }
             }
         }
+
+        public override string Title
+        {
+            get
+            {
+                return "Shader";
+            }
+        }
+
+        public Dictionary<string, object> PropertyItem
+        {
+            get;
+            set;
+        }
+
         public override void UpdateProperty()
         {
 

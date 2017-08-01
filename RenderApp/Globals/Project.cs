@@ -10,7 +10,9 @@ namespace RenderApp.Globals
     public class Project
     {
         public KINode RootNode;
+
         private KINode GeometryRoot;
+
         /// <summary>
         /// Textureオブジェクト
         /// </summary>
@@ -19,6 +21,7 @@ namespace RenderApp.Globals
         /// シェーダオブジェクト
         /// </summary>
         private KINode ShaderProgramRoot;
+
         public static Project ActiveProject = new Project();
 
         private Project()
@@ -40,10 +43,12 @@ namespace RenderApp.Globals
                 GeometryRoot.AddChild(value);
                 Workspace.SceneManager.ActiveScene.AddObject(value);
             }
+
             if (value is Texture)
             {
                 TextureRoot.AddChild(value);
             }
+
             if (value is ShaderProgram)
             {
                 ShaderProgramRoot.AddChild(value);

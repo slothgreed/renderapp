@@ -6,7 +6,7 @@ namespace KI.Foundation.Control
     public class DirectoryAccessor : System.Windows.Controls.Control
     {
         public static readonly DependencyProperty FolderPathProperty =
-            DependencyProperty.Register("FolderPath", typeof(string), typeof(DirectoryAccessor), new PropertyMetadata(""));
+            DependencyProperty.Register("FolderPath", typeof(string), typeof(DirectoryAccessor), new PropertyMetadata(string.Empty));
 
         public string FolderPath
         {
@@ -24,8 +24,11 @@ namespace KI.Foundation.Control
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DirectoryAccessor), new FrameworkPropertyMetadata(typeof(DirectoryAccessor)));
         }
+
         private Button PART_RefButton = null;
+
         private TextBlock PART_FolderPath = null;
+
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();

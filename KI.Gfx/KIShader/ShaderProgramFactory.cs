@@ -27,7 +27,7 @@ namespace KI.Gfx.KIShader
             }
             else
             {
-                program = new ShaderProgram(key, path);
+                program = new ShaderProgram(path);
                 AddItem(program);
                 return program;
             }

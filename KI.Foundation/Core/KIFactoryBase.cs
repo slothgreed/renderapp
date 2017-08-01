@@ -43,6 +43,7 @@ namespace KI.Foundation.Core
                     return item;
                 }
             }
+
             return null;
         }
 
@@ -55,6 +56,7 @@ namespace KI.Foundation.Core
                     return item.Name;
                 }
             }
+
             return string.Empty;
         }
 
@@ -66,14 +68,17 @@ namespace KI.Foundation.Core
             }
         }
 
+        /// <summary>
+        /// 解放処理
+        /// </summary>
         public void Dispose()
         {
             foreach (var v in Items)
             {
                 v.Dispose();
             }
+
             Items.Clear();
         }
-
     }
 }

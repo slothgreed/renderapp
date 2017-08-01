@@ -10,6 +10,7 @@ namespace KI.Asset
     {
 
         private static TextureFactory _instance = new TextureFactory();
+
         public static TextureFactory Instance
         {
             get
@@ -40,6 +41,7 @@ namespace KI.Asset
                 case ".hdr":
                     return ImageKind.HDR;
             }
+
             Logger.Log(Logger.LogLevel.Error, "not support texture");
             return ImageKind.None;
         }
@@ -69,6 +71,7 @@ namespace KI.Asset
             {
                 return find;
             }
+
             KIImageInfo image = CreateImageInfo(path, kind);
             Texture texture = new Texture(KIFile.GetNameFromPath(path), TextureType.Texture2D);
             AddItem(texture);

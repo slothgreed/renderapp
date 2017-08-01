@@ -33,11 +33,6 @@ namespace RenderApp
     //    //private int uScreenH;
     //    //private int ulightColorId;
 
-
-
-
-
-
     //    //protected override int LoadShader()
     //    //{
     //    //    string vertShader;

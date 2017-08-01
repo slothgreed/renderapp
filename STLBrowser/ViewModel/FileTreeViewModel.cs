@@ -21,7 +21,7 @@ namespace STLBrowser.ViewModel
             }
             set
             {
-                SetValue(ref _FolderPath,value);
+                SetValue(ref _FolderPath, value);
                 CreateDirectoryTree(value);
             }
         }
@@ -43,7 +43,7 @@ namespace STLBrowser.ViewModel
         {
             get
             {
-                if(_OpenFolder == null)
+                if (_OpenFolder == null)
                 {
                     _OpenFolder = CreateCommand(OnOpenFolderCommand);
                 }
@@ -60,7 +60,7 @@ namespace STLBrowser.ViewModel
         {
             get
             {
-                if(_SelectedItemChanged == null)
+                if (_SelectedItemChanged == null)
                 {
                     _SelectedItemChanged = CreateCommand(OnSelectedFolderChanged);
                 }
@@ -75,6 +75,7 @@ namespace STLBrowser.ViewModel
         {
             FolderPath = path;
         }
+
         public void CreateDirectoryTree(string path)
         {
             Root = new DirectoryViewModel(path);

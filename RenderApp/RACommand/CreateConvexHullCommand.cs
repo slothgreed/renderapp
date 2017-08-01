@@ -11,13 +11,22 @@ using KI.Renderer;
 
 namespace RenderApp.RACommand
 {
+    /// <summary>
+    /// Convexhullの作成コマンド
+    /// </summary>
     class CreateConvexHullCommand : CreateModelCommandBase, ICommand
     {
-        Geometry geometry;
+        private Geometry geometry;
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="asset">作成するオブジェクト</param>
         public CreateConvexHullCommand(KIObject asset)
         {
             geometry = asset as Geometry;
         }
+
         public string CanExecute(string commandArg)
         {
             return CanCreateGeometry(geometry);
@@ -39,17 +48,20 @@ namespace RenderApp.RACommand
                         pos0 = vertex.Position;
                         continue;
                     }
+
                     if (pos1 == Vector3.Zero)
                     {
                         pos1 = vertex.Position;
                         continue;
                     }
+
                     if (pos2 == Vector3.Zero)
                     {
                         pos2 = vertex.Position;
                         continue;
                     }
                 }
+
                 position.Add(pos0);
                 position.Add(pos1);
 
@@ -58,7 +70,6 @@ namespace RenderApp.RACommand
 
                 position.Add(pos2);
                 position.Add(pos0);
-
             }
 
             GeometryInfo info = new GeometryInfo(position, null, Vector3.UnitZ, null, null, GeometryType.Line);
@@ -75,6 +86,7 @@ namespace RenderApp.RACommand
 
             return RACommandResource.Success;
         }
+
         public string Undo(string commandArg)
         {
             throw new NotImplementedException();

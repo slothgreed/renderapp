@@ -14,35 +14,22 @@ namespace KI.Analyzer
             vertex = _v;
         }
     }
+
     public class DijkstraAlgorithm : ICommand
     {
-        public int StartIndex
-        {
-            get;
-            set;
-        }
-        public int EndIndex
-        {
-            get;
-            set;
-        }
-        private float _distance;
-        public float Distance
-        {
-            get
-            {
-                return _distance;
-            }
-            set
-            {
-                _distance = value;
-            }
-        }
+        public int StartIndex { get; set; }
+
+        public int EndIndex { get; set; }
+
+        public float Distance { get; set; }
+
         private HalfEdge _halfEdge = null;
+
         public DijkstraAlgorithm()
         {
             Reset();
         }
+
         private bool DistanceDijkstra(int index1, int index2)
         {
             Node[] nodeArray = new Node[_halfEdge.m_Vertex.Count];
@@ -65,8 +52,9 @@ namespace KI.Analyzer
             {
                 return "init value error";
             }
-            return "";
+            return string.Empty;
         }
+
         public void SetGeometry(HalfEdge halfEdge)
         {
             _halfEdge = halfEdge;
@@ -76,10 +64,10 @@ namespace KI.Analyzer
         {
             if (_halfEdge == null)
             {
-                return "";
+                return string.Empty;
             }
             DistanceDijkstra(StartIndex, EndIndex);
-            return "";
+            return string.Empty;
         }
 
         private void CalcDijkstra(Node[] nodes, int start, int end)
@@ -105,6 +93,7 @@ namespace KI.Analyzer
                 }
             }
         }
+
         public bool Reset()
         {
             StartIndex = -1;

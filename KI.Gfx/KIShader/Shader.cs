@@ -32,31 +32,37 @@ namespace KI.Gfx.KIShader
             get;
             private set;
         }
+
         ShaderProgram _vert;
         public ShaderProgram VertexShader
         {
             get { return _vert; }
         }
+
         ShaderProgram _frag;
         public ShaderProgram FragShader
         {
             get { return _frag; }
         }
+
         ShaderProgram _geom;
         public ShaderProgram GeomShader
         {
             get { return _geom; }
         }
+
         ShaderProgram _tcs;
         public ShaderProgram TcsShader
         {
             get { return _tcs; }
         }
+
         ShaderProgram _tes;
         public ShaderProgram TesShader
         {
             get { return _tes; }
         }
+
         List<ShaderProgram> _activeShader = new List<ShaderProgram>();
         public List<ShaderProgram> ActiveShader
         {
@@ -287,7 +293,6 @@ namespace KI.Gfx.KIShader
             Logger.GLLog(Logger.LogLevel.Error);
         }
 
-
         public bool SetValue(string key, object value)
         {
             if (_shaderVariable.ContainsKey(key))
@@ -391,8 +396,6 @@ namespace KI.Gfx.KIShader
         }
         #endregion
 
-
-
         private Dictionary<string, ShaderProgramInfo> _shaderVariable = new Dictionary<string, ShaderProgramInfo>();
 
         public IEnumerable<object> GetShaderVariable()
@@ -402,8 +405,6 @@ namespace KI.Gfx.KIShader
                 yield return loop.Value;
             }
         }
-
-
 
         #region [virtual process]
         /// <summary>
@@ -435,7 +436,7 @@ namespace KI.Gfx.KIShader
         }
         public override string ToString()
         {
-            string name = "";
+            string name = string.Empty;
             if (_vert != null)
             {
                 name += "[v]" + System.IO.Path.GetFileNameWithoutExtension(_vert.FileName);
@@ -633,8 +634,10 @@ namespace KI.Gfx.KIShader
                     Logger.Log(Logger.LogLevel.Error, "Shader ReadError" + name);
                     return;
             }
+
             return;
         }
+
         /// <summary>
         /// UniformとAttributeの指定
         /// </summary>
@@ -698,7 +701,7 @@ namespace KI.Gfx.KIShader
                             {
                                 string arrName = code[2];
                                 int arrNum = 0;
-                                string arrNumStr = "";
+                                string arrNumStr = string.Empty;
                                 int startIndex = arrName.IndexOf("[");
                                 int endIndex = arrName.IndexOf("]");
                                 arrNumStr = arrName.Substring(startIndex + 1, endIndex - (startIndex + 1));
@@ -722,7 +725,7 @@ namespace KI.Gfx.KIShader
 
         #region [fin process]
         /// <summary>
-        /// 解放
+        /// 解放処理
         /// </summary>
         public void Dispose()
         {
@@ -766,6 +769,7 @@ namespace KI.Gfx.KIShader
             return program;
 
         }
+
         /// <summary>
         /// ジオメトリシェーダ用
         /// </summary>
@@ -874,7 +878,6 @@ namespace KI.Gfx.KIShader
             //GL.ProgramParameter(program, AssemblyProgramParameterArb.GeometryOutputType, outType);
             //GL.ProgramParameter(program, AssemblyProgramParameterArb.GeometryVerticesOut, outVertexNum);
 
-
             GL.DeleteShader(vshader);
             GL.DeleteShader(fshader);
             GL.DeleteShader(gshader);
@@ -939,7 +942,5 @@ namespace KI.Gfx.KIShader
             return program;
         }
         #endregion
-
-
     }
 }

@@ -56,6 +56,9 @@ namespace KI.Renderer
            }
         }
 
+        /// <summary>
+        /// 解放処理
+        /// </summary>
         public void Dispose()
         {
 

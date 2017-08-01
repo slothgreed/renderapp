@@ -10,6 +10,7 @@
         EnvProbe,
         Materials,
     }
+
     /// <summary>
     /// Attribute(Shader用)
     /// </summary>
@@ -23,6 +24,7 @@
         Timer = 5,
         Num = 6,
     }
+
     /// <summary>
     /// レンダリングステージ
     /// </summary>
@@ -33,12 +35,14 @@
         PostProcessPass,
         ForwardPass
     }
+
     public enum TextureType
     {
         Texture2D,
         FrameBuffer,
         CubeMap
     }
+
     public enum RAGeometry
     {
         Cube,
@@ -54,6 +58,7 @@
         OBJ,
         File
     }
+
     public enum RAAsset
     {
         Model,

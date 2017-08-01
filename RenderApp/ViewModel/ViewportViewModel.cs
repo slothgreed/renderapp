@@ -9,6 +9,8 @@ namespace RenderApp.ViewModel
 {
     public class ViewportViewModel : TabItemViewModel
     {
+        private WindowsFormsHost glContext;
+
         public override string Title
         {
             get
@@ -16,23 +18,25 @@ namespace RenderApp.ViewModel
                 return "RenderApp";
             }
         }
-        private WindowsFormsHost _glContext;
+
+        public ViewportViewModel()
+        {
+        }
+
         public WindowsFormsHost GLContext
         {
             get
             {
-                if (_glContext == null)
+                if (glContext == null)
                 {
-                    _glContext = new WindowsFormsHost()
+                    glContext = new WindowsFormsHost()
                     {
                         Child = Viewport.Instance.glControl
                     };
                 }
-                return _glContext;
+
+                return glContext;
             }
-        }
-        public ViewportViewModel()
-        {
         }
 
         public override void UpdateProperty()

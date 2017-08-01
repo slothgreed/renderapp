@@ -67,6 +67,9 @@ namespace KI.Gfx.KIShader
             return shader;
         }
 
+        /// <summary>
+        /// 解放処理
+        /// </summary>
         public void Dispose()
         {
             foreach (var shader in ShaderList.Values)

@@ -60,6 +60,10 @@ namespace KI.Asset
         }
 
         public GeometryType GeometryType;
+
+        /// <summary>
+        /// 解放処理
+        /// </summary>
         public void Dispose()
         {
             position.Clear();
@@ -73,28 +77,34 @@ namespace KI.Asset
         {
             Update(pos, nor, col, tex, idx, type);
         }
+
         public GeometryInfo(List<Vector3> pos, List<Vector3> nor, Vector3 col, List<Vector2> tex, List<int> idx, GeometryType type)
         {
             Update(pos, nor, col, tex, idx, type);
         }
+
         public void Update(List<Vector3> pos, List<Vector3> nor, List<Vector3> col, List<Vector2> tex, List<int> idx, GeometryType type)
         {
             if (pos != null)
             {
                 position = pos;
             }
+
             if (nor != null)
             {
                 normal = nor;
             }
+
             if (col != null)
             {
                 color = col;
             }
+
             if (tex != null)
             {
                 texcoord = tex;
             }
+
             if (idx != null)
             {
                 index = idx;
@@ -109,10 +119,12 @@ namespace KI.Asset
             {
                 position = pos;
             }
+
             if (nor != null)
             {
                 normal = nor;
             }
+
             if (col != null)
             {
                 color.Clear();
@@ -121,14 +133,17 @@ namespace KI.Asset
                     color.Add(col);
                 }
             }
+
             if (tex != null)
             {
                 texcoord = tex;
             }
+
             if (idx != null)
             {
                 index = idx;
             }
+
             GeometryType = type;
         }
 
@@ -209,6 +224,7 @@ namespace KI.Asset
             color = newColor;
             index.Clear();
         }
+
         /// <summary>
         /// 頂点配列に変換
         /// </summary>
@@ -268,11 +284,11 @@ namespace KI.Asset
                     }
                 }
             }
+
             position = newPosition;
             texcoord = newTexcoord;
             color = newColor;
             normal = newNormal;
-
         }
 
         #endregion

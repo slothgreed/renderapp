@@ -8,7 +8,7 @@ namespace KI.Asset
 {
     class PLYConverter : IGeometry
     {
-        public PLYConverter(string name, string filePath)
+        public PLYConverter(string filePath)
         {
             var plyData = new PLYLoader(filePath);
             CreateGeometryInfo(plyData);

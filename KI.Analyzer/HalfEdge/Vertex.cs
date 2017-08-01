@@ -19,24 +19,25 @@ namespace KI.Analyzer
 
     public class Vertex
     {
+        private Vector3 normal = Vector3.Zero;
+
         /// <summary>
         /// temporaryEdgeforopposite
         /// </summary>
-        public List<Edge> m_AroundEdge = new List<Edge>();
-        public Vector3 Position
-        {
-            get;
-            set;
-        }
+        public List<Edge> aroundEdge = new List<Edge>();
 
+        public Vector3 Position { get; set; }
 
 
         /// <summary>
         /// HalfEdgeでもつm_VertexのIndex番号
         /// </summary>
         public int Index { get; set; }
+
         public Vector3 MaxVector { get; set; }
+
         public Vector3 MinVector { get; set; }
+
         private Dictionary<VertexParam, object> Parameter;
 
 
@@ -44,18 +45,16 @@ namespace KI.Analyzer
         {
             Parameter.Add(param, value);
         }
+
         public object GetParameter(VertexParam param)
         {
             return Parameter[param];
         }
+
         /// <summary>
         /// テンポラリ計算用フラグ
         /// </summary>
-        public object CalcFlag
-        {
-            get;
-            set;
-        }
+        public object CalcFlag { get; set; }
 
         /// <summary>
         /// 削除フラグ。Updateが走ると必ず削除するべきもの
@@ -70,21 +69,22 @@ namespace KI.Analyzer
             }
         }
 
-        public Vertex(Vector3 pos,int index = -1)
+        public Vertex(Vector3 pos, int index = -1)
         {
             Parameter = new Dictionary<VertexParam, object>();
             Position = pos;
             Index = index;
         }
+
         /// <summary>
         /// エッジのセッタ
         /// </summary>
         /// <param name="edge"></param>
         public void AddEdge(Edge edge)
         {
-            if(!m_AroundEdge.Contains(edge))
+            if (!aroundEdge.Contains(edge))
             {
-                m_AroundEdge.Add(edge);
+                aroundEdge.Add(edge);
             }
         }
 
@@ -93,15 +93,16 @@ namespace KI.Analyzer
             get
             {
                 //opposite計算後は削除されている。
-                if (m_AroundEdge != null)
+                if (aroundEdge != null)
                 {
-                    foreach (var edge in m_AroundEdge)
+                    foreach (var edge in aroundEdge)
                     {
                         yield return edge;
                     }
                 }
             }
         }
+
         public IEnumerable<Mesh> AroundMesh
         {
             get
@@ -112,6 +113,7 @@ namespace KI.Analyzer
                 }
             }
         }
+
         public IEnumerable<Vertex> AroundVertex
         {
             get
@@ -125,17 +127,16 @@ namespace KI.Analyzer
 
         public void RemoveAroundEdge(Edge edge)
         {
-            m_AroundEdge.Remove(edge);
+            aroundEdge.Remove(edge);
         }
 
-        private Vector3 _normal = Vector3.Zero;
         public Vector3 Normal
         {
             get
             {
-                if (_normal == Vector3.Zero)
+                if (normal == Vector3.Zero)
                 {
-                    if(AroundMesh.Count() != 0)
+                    if (AroundMesh.Count() != 0)
                     {
                         Vector3 sum = Vector3.Zero;
                         int count = AroundMesh.Count();
@@ -146,16 +147,21 @@ namespace KI.Analyzer
                         sum.X /= count;
                         sum.Y /= count;
                         sum.Z /= count;
-                        _normal = sum.Normalized();
+                        normal = sum.Normalized();
                     }
                 }
-                return _normal;
+
+                return normal;
             }
         }
+
+        /// <summary>
+        /// 解放処理
+        /// </summary>
         public void Dispose()
         {
             DeleteFlag = true;
-            m_AroundEdge = null;
+            aroundEdge = null;
         }
 
         #region [operator]
@@ -163,20 +169,24 @@ namespace KI.Analyzer
         {
             return new Vector3(v1.Position + v2.Position);
         }
+
         public static Vector3 operator -(Vertex v1, Vertex v2)
         {
             return new Vector3(v1.Position - v2.Position);
         }
+
         public static Vector3 operator *(Vertex v1, Vertex v2)
         {
             return new Vector3(v1.Position * v2.Position);
         }
+
         public static bool operator ==(Vertex v1, Vertex v2)
         {
             if (object.ReferenceEquals(v1, v2))
             {
                 return true;
             }
+
             if ((object)v1 == null || (object)v2 == null)
             {
                 return false;
@@ -186,16 +196,20 @@ namespace KI.Analyzer
             {
                 return false;
             }
+
             if (Math.Abs(v1.Position.Y - v2.Position.Y) > KICalc.THRESHOLD05)
             {
                 return false;
             }
+
             if (Math.Abs(v1.Position.Z - v2.Position.Z) > KICalc.THRESHOLD05)
             {
                 return false;
             }
+
             return true;
         }
+
         public static bool operator !=(Vertex v1, Vertex v2)
         {
             return !(v1 == v2);

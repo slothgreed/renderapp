@@ -14,6 +14,7 @@ namespace KI.Foundation.ViewModel
             this.Name = name;
             Model = value;
         }
+
         public float Value
         {
             get { return Model; }

@@ -16,6 +16,9 @@ namespace KI.Asset.Loader
     /// </summary>
     public class STLLoader : KIFile
     {
+        private List<Vector3> position = new List<Vector3>();
+
+        private List<Vector3> normal = new List<Vector3>();
 
         public GeometryInfo[] GeometryInfos
         {
@@ -23,7 +26,6 @@ namespace KI.Asset.Loader
             private set;
         }
 
-        private List<Vector3> position = new List<Vector3>();
         public List<Vector3> Position
         {
             get
@@ -32,7 +34,6 @@ namespace KI.Asset.Loader
             }
         }
 
-        private List<Vector3> normal = new List<Vector3>();
         public List<Vector3> Normal
         {
             get
@@ -44,15 +45,13 @@ namespace KI.Asset.Loader
         /// <summary>
         /// STLのローダ。
         /// </summary>
-        /// <param name="filePath"></param>
-        /// <param name="position"></param>
-        /// <param name="normal"></param>
-        public STLLoader(string name, string filePath)
+        /// <param name="filePath">ファイルパス</param>
+        public STLLoader(string filePath)
             : base(filePath)
         {
             try
             {
-                String[] parser = File.ReadAllLines(filePath, System.Text.Encoding.GetEncoding("Shift_JIS"));
+                string[] parser = File.ReadAllLines(filePath, System.Text.Encoding.GetEncoding("Shift_JIS"));
                 ReadData(parser);
             }
             catch (Exception)
@@ -68,22 +67,22 @@ namespace KI.Asset.Loader
         /// <param name="parser">STLデータ</param>
         /// <param name="position">位置情報を格納</param>
         /// <param name="normal">法線情報を格納</param>
-        private void ReadData(String[] parser)
+        private void ReadData(string[] parser)
         {
             try
             {
                 int counter = 0;
-                String[] line;
+                string[] line;
                 Vector3 pos;
                 while (parser.Length != counter)
                 {
                     line = parser[counter].Split(' ');
-                    line = line.Where(p => !(String.IsNullOrWhiteSpace(p) || String.IsNullOrEmpty(p))).ToArray();
+                    line = line.Where(p => !(string.IsNullOrWhiteSpace(p) || string.IsNullOrEmpty(p))).ToArray();
                     for (int i = 0; i < line.Length; i++)
                     {
                         if (line[i] == "outer" && line[i + 1] == "loop") break;
                         if (line[i] == "solid" || line[i] == "endloop" || line[i] == "endfacet") break;
-                        if (line[i] == "") continue;
+                        if (line[i] == string.Empty) continue;
                         if (line[i] == "facet" && line[i + 1] == "normal")
                         {
                             ////同じなものを3つ作って頂点の法線ベクトルにする

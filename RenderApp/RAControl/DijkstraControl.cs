@@ -13,7 +13,9 @@ namespace RenderApp.RAControl
     class DijkstraControl : IControl
     {
         private DijkstraAlgorithm Dijkstra;
+
         private KIObject SelectGeometry;
+
         public override bool Down(System.Windows.Forms.MouseEventArgs mouse)
         {
             int vertex_Index = 0;
@@ -70,11 +72,13 @@ namespace RenderApp.RAControl
             }
             return true;
         }
+
         public override bool Binding()
         {
             Dijkstra = new DijkstraAlgorithm();
             return true;
         }
+
         public override bool Execute()
         {
             //if(Dijkstra.CanExecute())
@@ -84,10 +88,12 @@ namespace RenderApp.RAControl
             //return false;
             return false;
         }
+
         public override bool Reset()
         {
             return Dijkstra.Reset();
         }
+
         /// <summary>
         /// ピッキング終了処理
         /// </summary>
@@ -97,6 +103,7 @@ namespace RenderApp.RAControl
             Workspace.SceneManager.ActiveScene.DeleteObject("Picking");
             return true;
         }
+
         private void SelectObject(KIObject select)
         {
             SelectGeometry = select;

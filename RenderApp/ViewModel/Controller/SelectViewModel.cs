@@ -15,6 +15,7 @@ namespace RenderApp.ViewModel
                 return "Select";
             }
         }
+
         private void ExecuteCommand()
         {
             throw new NotImplementedException();

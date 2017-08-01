@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KI.Foundation.Core;
+
 namespace KI.Analyzer
 {
     public abstract class IAnalyzer : KIObject

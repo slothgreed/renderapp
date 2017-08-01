@@ -2,9 +2,19 @@
 
 namespace RenderApp
 {
-    class AppSystem
+    /// <summary>
+    /// アプリ
+    /// </summary>
+    public class AppSystem
     {
+        /// <summary>
+        /// KIProjectDirectory
+        /// </summary>
         private static string kiDirectory = null;
+
+        /// <summary>
+        /// KIProjectDirectory
+        /// </summary>
         public static string KIDirectory
         {
             get
@@ -13,6 +23,7 @@ namespace RenderApp
                 {
                     kiDirectory = Environment.GetEnvironmentVariable("KIProject");
                 }
+
                 return kiDirectory;
             }
         }

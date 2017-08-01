@@ -47,8 +47,6 @@
 //            return CreateShaderProgram(vertShader, fragShader);
 //        }
                        
-        
-
 //        public override void Initialize()
 //        {
 //            m_Axis = new CAxis(Global.WorldMin, Global.WorldMax);

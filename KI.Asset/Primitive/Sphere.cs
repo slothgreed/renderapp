@@ -12,6 +12,7 @@ namespace KI.Asset
             get;
             private set;
         }
+
         /// <param name="radial">半径</param>
         /// <param name="hpartition">高さ分割数</param>
         /// <param name="wpartition">横分割数</param>
@@ -21,6 +22,7 @@ namespace KI.Asset
         {
             SetObjectData(radial, hpartition, wpartition, orient);
         }
+
         /// <summary>
         /// 球面座標の取得
         /// </summary>
@@ -49,6 +51,7 @@ namespace KI.Asset
 
             return texcoord;
         }
+
         private void SetObjectData(float radial, int hpartition, int wpartition, bool orient)
         {
             float theta = (float)Math.PI / hpartition;
@@ -57,7 +60,6 @@ namespace KI.Asset
             var position = new List<Vector3>();
             var normal = new List<Vector3>();
             var texcoord = new List<Vector2>();
-
 
             phi *= 2;
 
@@ -76,7 +78,6 @@ namespace KI.Asset
                 normal.Add(position[position.Count - 2].Normalized());
                 normal.Add(position[position.Count - 1].Normalized());
             }
-
 
             for (int i = 2; i < hpartition; i++)
             {
@@ -106,9 +107,9 @@ namespace KI.Asset
                     normal.Add(position[position.Count - 3].Normalized());
                     normal.Add(position[position.Count - 2].Normalized());
                     normal.Add(position[position.Count - 1].Normalized());
-
                 }
             }
+
             for (int i = 0; i < wpartition; i++)
             {
                 position.Add(GetSphericalPolarCoordinates(radial, theta * (hpartition - 1), phi * (i + 1)));
@@ -122,7 +123,6 @@ namespace KI.Asset
                 normal.Add(position[position.Count - 3].Normalized());
                 normal.Add(position[position.Count - 2].Normalized());
                 normal.Add(position[position.Count - 1].Normalized());
-
             }
 
             Vector2 max = Vector2.Zero;

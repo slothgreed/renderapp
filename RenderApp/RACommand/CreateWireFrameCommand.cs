@@ -53,9 +53,9 @@ namespace RenderApp.RACommand
 
                     position.Add(geometry.geometryInfo.Position[3 * i + 2]);
                     position.Add(geometry.geometryInfo.Position[3 * i]);
-
                 }
             }
+
             RenderObject wireframe = RenderObjectFactory.Instance.CreateRenderObject("WireFrame :" + geometry.Name);
             wireframe.SetGeometryInfo(new GeometryInfo(position, null, KICalc.RandomColor(), null, null, GeometryType.Line));
             wireframe.ModelMatrix = geometry.ModelMatrix;

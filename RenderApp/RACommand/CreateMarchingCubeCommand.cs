@@ -9,13 +9,18 @@ using KI.Renderer;
 
 namespace RenderApp.RACommand
 {
+    /// <summary>
+    /// Marching Cube の作成
+    /// </summary>
     class CreateMarchingCubeCommand : CreateModelCommandBase, ICommand
     {
-        int Partition = 0;
+        private int Partition = 0;
+
         public CreateMarchingCubeCommand(KIObject asset, int partition)
         {
             Partition = partition;
         }
+
         public string CanExecute(string commandArg)
         {
             return RACommandResource.Success;

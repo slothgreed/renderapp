@@ -14,6 +14,7 @@ namespace KI.Foundation.Utility
             Error,
             Descript
         }
+
         public static LogLevel outputLogLevel = LogLevel.Error;
         public static LogLevel glLogLevel = LogLevel.Error;
         public static void Log(LogLevel level, string message, [CallerMemberName]string methodName = "")

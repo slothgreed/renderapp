@@ -19,8 +19,6 @@
 //        }
 //        #endregion
 
-
-
 //        private int uMVP;
 //        private int uModelMatrix;
 //        private int uNormalMatrix;
@@ -62,7 +60,6 @@
 //            model.SetUniformMVP(uMVP, RenderScene.ActiveScene.MainCamera.GetProjMatrix(), RenderScene.ActiveScene.MainCamera.GetCameraMatrix());
 //            model.SetUniformModelMatrix(uModelMatrix, uNormalMatrix);
 //            model.Draw();
-            
 //        }
 //    }
 //}

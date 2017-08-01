@@ -63,6 +63,7 @@ namespace RenderApp.RAControl
                     }
                 }
             }
+
             return select;
         }
 
@@ -100,6 +101,7 @@ namespace RenderApp.RAControl
                 {
                     continue;
                 }
+
                 if (PickTriangleCore(near, far, geometry, ref minLength, ref selectIndex))
                 {
                     selectGeometry = geometry;

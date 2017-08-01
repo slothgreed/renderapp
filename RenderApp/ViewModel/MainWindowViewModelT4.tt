@@ -53,10 +53,11 @@ namespace RenderApp.ViewModel
 			{
 				get
 				{
-					if(_<#=_command[i]#> == null)
+					if (_<#=_command[i]#> == null)
 					{
 						return _<#=_command[i]#> = CreateCommand(<#=_command[i]#>Command);						
 					}
+
 					return _<#=_command[i]#>;
 				}
 			}
@@ -76,9 +77,10 @@ namespace RenderApp.ViewModel
 				{
 					return _<#=_property[i]#>;
 				}
+
 				set
 				{
-					SetValue(ref _<#=_property[i]#>,value);
+					SetValue(ref _<#=_property[i]#>, value);
 				}
 			}
 <#

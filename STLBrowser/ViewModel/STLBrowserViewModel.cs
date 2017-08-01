@@ -37,7 +37,7 @@ namespace STLBrowser.ViewModel
                 string[] files = System.IO.Directory.GetFiles(path);
                 foreach (var file in files)
                 {
-                    if(Path.GetExtension(file) == ".stl")
+                    if (Path.GetExtension(file) == ".stl")
                     {
                         STLFiles.Add(new ThumbnailFileViewModel(Path.GetFileName(file), file));
                     }
@@ -50,7 +50,7 @@ namespace STLBrowser.ViewModel
         }
         public override void UpdateProperty()
         {
-            SceneManager.Instance.AddObject(@"C:\Users\ido\Documents\KIProject\renderapp\STLBrowser\TestFolder\StanfordBunny.stl");
+            //SceneManager.Instance.AddObject(@"C:\Users\ido\Documents\KIProject\renderapp\STLBrowser\TestFolder\StanfordBunny.stl");
         }
     }
 }

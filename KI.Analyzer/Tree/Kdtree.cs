@@ -96,7 +96,7 @@ namespace KI.Analyzer
         /// <returns></returns>
         private Vector3 GetAxisPos(KdList list)
         {
-            return list.BoundMean;
+            return list.Mean;
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace KI.Analyzer
                 case 2:
                     return Vector3.UnitZ;
             }
-             return Vector3.Zero;
+            return Vector3.Zero;
         }
         #endregion
         #region [Getter Method]
@@ -155,7 +155,7 @@ namespace KI.Analyzer
         /// </summary>
         /// <param name="leaf">葉が格納されているリスト</param>
         /// <param name="kdlist"></param>
-        private void SearchLeaf(List<KdList> leaf,KdList kdlist)
+        private void SearchLeaf(List<KdList> leaf, KdList kdlist)
         {
             if (kdlist.Left == null && kdlist.Right == null)
             {
@@ -185,37 +185,40 @@ namespace KI.Analyzer
         /// <summary>
         /// 頂点リスト
         /// </summary>
-        private List<Vector3> m_positon;
+        private List<Vector3> positon;
+
         /// <summary>
         /// 左の枝
         /// </summary>
         public KdList Left;
+
         /// <summary>
         /// 右の枝
         /// </summary>
         public KdList Right;
-
 
         /// <summary>
         /// 階層のレベル
         /// </summary>
         private int m_Level;
 
-        public int Level { get { return m_Level; } }
-        public List<Vector3> position { get { return m_positon; } }
-        public KdList(List<Vector3> position, int level)
-            : base(position)
+        public KdList(List<Vector3> posit, int level)
+            : base(posit)
         {
             m_Level = level;
-            m_positon = position;
+            positon = posit;
         }
+
+        public int Level { get { return m_Level; } }
+
+        public List<Vector3> position { get { return positon; } }
 
         /// <summary>
         /// リストの削除
         /// </summary>
         public void ClearList()
         {
-            m_positon.Clear();
+            positon.Clear();
         }
 
     }

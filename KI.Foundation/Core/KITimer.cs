@@ -21,10 +21,11 @@ namespace KI.Foundation.Core
                 {
                     return false;
                 }
-                return m_Timer.IsEnabled;
 
+                return m_Timer.IsEnabled;
             }
         }
+
         /// <summary>
         /// タイマーの初期化
         /// </summary>
@@ -43,6 +44,7 @@ namespace KI.Foundation.Core
             {
                 m_Timer.Start();
             }
+
             m_TimerCount = 0;
         }
         /// <summary>

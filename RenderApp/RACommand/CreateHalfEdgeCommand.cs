@@ -11,7 +11,8 @@ namespace RenderApp.RACommand
 {
     class CreateHalfEdgeCommand : CreateModelCommandBase, ICommand
     {
-        Geometry geometry;
+        private Geometry geometry;
+
         public CreateHalfEdgeCommand(KIObject asset)
         {
             geometry = asset as Geometry;

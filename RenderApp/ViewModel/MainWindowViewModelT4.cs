@@ -15,10 +15,11 @@ namespace RenderApp.ViewModel
 			{
 				get
 				{
-					if(_NewProject == null)
+					if (_NewProject == null)
 					{
 						return _NewProject = CreateCommand(NewProjectCommand);						
 					}
+
 					return _NewProject;
 				}
 			}
@@ -27,10 +28,11 @@ namespace RenderApp.ViewModel
 			{
 				get
 				{
-					if(_OpenProject == null)
+					if (_OpenProject == null)
 					{
 						return _OpenProject = CreateCommand(OpenProjectCommand);						
 					}
+
 					return _OpenProject;
 				}
 			}
@@ -39,10 +41,11 @@ namespace RenderApp.ViewModel
 			{
 				get
 				{
-					if(_SaveProject == null)
+					if (_SaveProject == null)
 					{
 						return _SaveProject = CreateCommand(SaveProjectCommand);						
 					}
+
 					return _SaveProject;
 				}
 			}
@@ -51,10 +54,11 @@ namespace RenderApp.ViewModel
 			{
 				get
 				{
-					if(_SaveAsProject == null)
+					if (_SaveAsProject == null)
 					{
 						return _SaveAsProject = CreateCommand(SaveAsProjectCommand);						
 					}
+
 					return _SaveAsProject;
 				}
 			}
@@ -63,10 +67,11 @@ namespace RenderApp.ViewModel
 			{
 				get
 				{
-					if(_LoadAsset == null)
+					if (_LoadAsset == null)
 					{
 						return _LoadAsset = CreateCommand(LoadAssetCommand);						
 					}
+
 					return _LoadAsset;
 				}
 			}
@@ -75,10 +80,11 @@ namespace RenderApp.ViewModel
 			{
 				get
 				{
-					if(_CreateObject == null)
+					if (_CreateObject == null)
 					{
 						return _CreateObject = CreateCommand(CreateObjectCommand);						
 					}
+
 					return _CreateObject;
 				}
 			}
@@ -87,10 +93,11 @@ namespace RenderApp.ViewModel
 			{
 				get
 				{
-					if(_Controller == null)
+					if (_Controller == null)
 					{
 						return _Controller = CreateCommand(ControllerCommand);						
 					}
+
 					return _Controller;
 				}
 			}
@@ -99,10 +106,11 @@ namespace RenderApp.ViewModel
 			{
 				get
 				{
-					if(_WindowClose == null)
+					if (_WindowClose == null)
 					{
 						return _WindowClose = CreateCommand(WindowCloseCommand);						
 					}
+
 					return _WindowClose;
 				}
 			}
@@ -111,10 +119,11 @@ namespace RenderApp.ViewModel
 			{
 				get
 				{
-					if(_SizeChanged == null)
+					if (_SizeChanged == null)
 					{
 						return _SizeChanged = CreateCommand(SizeChangedCommand);						
 					}
+
 					return _SizeChanged;
 				}
 			}
@@ -123,10 +132,11 @@ namespace RenderApp.ViewModel
 			{
 				get
 				{
-					if(_TogglePostProcess == null)
+					if (_TogglePostProcess == null)
 					{
 						return _TogglePostProcess = CreateCommand(TogglePostProcessCommand);						
 					}
+
 					return _TogglePostProcess;
 				}
 			}
@@ -135,10 +145,11 @@ namespace RenderApp.ViewModel
 			{
 				get
 				{
-					if(_Voxelize == null)
+					if (_Voxelize == null)
 					{
 						return _Voxelize = CreateCommand(VoxelizeCommand);						
 					}
+
 					return _Voxelize;
 				}
 			}
@@ -147,10 +158,11 @@ namespace RenderApp.ViewModel
 			{
 				get
 				{
-					if(_Octree == null)
+					if (_Octree == null)
 					{
 						return _Octree = CreateCommand(OctreeCommand);						
 					}
+
 					return _Octree;
 				}
 			}
@@ -159,10 +171,11 @@ namespace RenderApp.ViewModel
 			{
 				get
 				{
-					if(_OpenExplorer == null)
+					if (_OpenExplorer == null)
 					{
 						return _OpenExplorer = CreateCommand(OpenExplorerCommand);						
 					}
+
 					return _OpenExplorer;
 				}
 			}
@@ -171,10 +184,11 @@ namespace RenderApp.ViewModel
 			{
 				get
 				{
-					if(_OpenDebugWindow == null)
+					if (_OpenDebugWindow == null)
 					{
 						return _OpenDebugWindow = CreateCommand(OpenDebugWindowCommand);						
 					}
+
 					return _OpenDebugWindow;
 				}
 			}
@@ -183,10 +197,11 @@ namespace RenderApp.ViewModel
 			{
 				get
 				{
-					if(_Undo == null)
+					if (_Undo == null)
 					{
 						return _Undo = CreateCommand(UndoCommand);						
 					}
+
 					return _Undo;
 				}
 			}
@@ -195,10 +210,11 @@ namespace RenderApp.ViewModel
 			{
 				get
 				{
-					if(_Redo == null)
+					if (_Redo == null)
 					{
 						return _Redo = CreateCommand(RedoCommand);						
 					}
+
 					return _Redo;
 				}
 			}
@@ -210,9 +226,10 @@ namespace RenderApp.ViewModel
 				{
 					return _LeftUpDockPanel;
 				}
+
 				set
 				{
-					SetValue(ref _LeftUpDockPanel,value);
+					SetValue(ref _LeftUpDockPanel, value);
 				}
 			}
 			private TabControlViewModel _LeftDownDockPanel;
@@ -222,9 +239,10 @@ namespace RenderApp.ViewModel
 				{
 					return _LeftDownDockPanel;
 				}
+
 				set
 				{
-					SetValue(ref _LeftDownDockPanel,value);
+					SetValue(ref _LeftDownDockPanel, value);
 				}
 			}
 			private TabControlViewModel _RightUpDockPanel;
@@ -234,9 +252,10 @@ namespace RenderApp.ViewModel
 				{
 					return _RightUpDockPanel;
 				}
+
 				set
 				{
-					SetValue(ref _RightUpDockPanel,value);
+					SetValue(ref _RightUpDockPanel, value);
 				}
 			}
 			private TabControlViewModel _RightDownDockPanel;
@@ -246,9 +265,10 @@ namespace RenderApp.ViewModel
 				{
 					return _RightDownDockPanel;
 				}
+
 				set
 				{
-					SetValue(ref _RightDownDockPanel,value);
+					SetValue(ref _RightDownDockPanel, value);
 				}
 			}
 			private TabControlViewModel _CenterDockPanel;
@@ -258,9 +278,10 @@ namespace RenderApp.ViewModel
 				{
 					return _CenterDockPanel;
 				}
+
 				set
 				{
-					SetValue(ref _CenterDockPanel,value);
+					SetValue(ref _CenterDockPanel, value);
 				}
 			}
 

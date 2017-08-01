@@ -11,21 +11,22 @@ namespace KI.Asset
     {
         struct TGAStruct
         {
-            public Byte Low;
-            public Byte High;
+            public byte Low;
+            public byte High;
         }
-        private Byte IDFieldLength;
-        private Byte ColorMapType;
-        private Byte ImageType;
+
+        private byte IDFieldLength;
+        private byte ColorMapType;
+        private byte ImageType;
         private TGAStruct ColorMapIndex;
         private TGAStruct ColorMapLength;
-        private Byte ColorMap_Size;
+        private byte ColorMap_Size;
         private TGAStruct ImageOriginX;
         private TGAStruct ImageOriginY;
         private TGAStruct ImageWidth;
         private TGAStruct ImageHeight;
-        private Byte BitPerPixel;
-        private Byte Discripter;
+        private byte BitPerPixel;
+        private byte Discripter;
 
         private int imageSize;
 
@@ -34,6 +35,7 @@ namespace KI.Asset
         {
 
         }
+
         private void ReadHeaderData(BinaryReader binary)
         {
             IDFieldLength = binary.ReadByte();
@@ -55,6 +57,7 @@ namespace KI.Asset
             BitPerPixel = binary.ReadByte();
             Discripter = binary.ReadByte();
         }
+
         private bool ReadTGAImage(string filename)
         {
             Stream fp = File.Open(filename, FileMode.Open);
@@ -68,7 +71,7 @@ namespace KI.Asset
             Height = TGAStructValue(ImageHeight);
             imageSize = Width * Height * BitPerPixel;
 
-            Byte[] rgb = binary.ReadBytes(imageSize);
+            byte[] rgb = binary.ReadBytes(imageSize);
 
             if (BitPerPixel == 24)
             {
@@ -90,10 +93,12 @@ namespace KI.Asset
             Loaded = true;
             return true;
         }
+
         private int TGAStructValue(TGAStruct data)
         {
             return data.High * 256 + data.Low;
         }
+
         public override bool LoadImageData()
         {
             return ReadTGAImage(FilePath);

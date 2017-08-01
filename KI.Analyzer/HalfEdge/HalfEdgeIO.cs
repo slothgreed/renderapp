@@ -18,6 +18,7 @@ namespace KI.Analyzer
             {
                 return false;
             }
+
             if (Path.GetExtension(inputFile).ToLower() != ".half")
             {
                 return false;
@@ -29,8 +30,8 @@ namespace KI.Analyzer
                 halfEdge.m_Edge.Clear();
                 halfEdge.m_Vertex.Clear();
 
-                String[] fileData = File.ReadAllLines(inputFile, System.Text.Encoding.GetEncoding("Shift_JIS"));
-                ReadHalfEdgeData(fileData,halfEdge);
+                string[] fileData = File.ReadAllLines(inputFile, System.Text.Encoding.GetEncoding("Shift_JIS"));
+                ReadHalfEdgeData(fileData, halfEdge);
                 return true;
             }
             catch (Exception)
@@ -39,10 +40,11 @@ namespace KI.Analyzer
                 return false;
             }
         }
-        private static void ReadHalfEdgeData(String[] fileData, HalfEdge halfEdge)
+
+        private static void ReadHalfEdgeData(string[] fileData, HalfEdge halfEdge)
         {
             int lineNumber = 0;
-            String line;
+            string line;
             int EdgeInfoCounter = 0;
             while (fileData.Length != lineNumber)
             {
@@ -55,7 +57,7 @@ namespace KI.Analyzer
                 if (line.Contains("Edge Info :")) continue;
 
                 string[] lineInfos = line.Split(' ');
-                lineInfos = lineInfos.Where(p => !(String.IsNullOrWhiteSpace(p) || String.IsNullOrEmpty(p))).ToArray();
+                lineInfos = lineInfos.Where(p => !(string.IsNullOrWhiteSpace(p) || string.IsNullOrEmpty(p))).ToArray();
 
                 if (lineInfos[0] == "v")
                 {
@@ -124,6 +126,7 @@ namespace KI.Analyzer
             //}
             //halfEdge.HasError();
         }
+
         /// <summary>
         /// 書き込み
         /// </summary>
@@ -147,7 +150,7 @@ namespace KI.Analyzer
             write.WriteLine("Mesh : Vertex Index");
             foreach (var mesh in halfEdge.m_Mesh)
             {
-                string edgeIdx = "";
+                string edgeIdx = string.Empty;
                 foreach (var edge in mesh.AroundEdge)
                 {
                     if (edge == mesh.AroundEdge.Last())

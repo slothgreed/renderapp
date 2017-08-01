@@ -272,7 +272,9 @@
     </Compile>
     <Compile Include="Scene\Shader\OffScreen\Defferd\CDeffed.cs" />
     <Compile Include="Scene\Shader\OffScreen\Shadow\CShadowMap.cs" />
-    <Compile Include="Utility\TrueTypeFont.cs" />
+    <Compile Include="Utility\TrueTypeFont.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Utility\Util.cs" />
     <Compile Include="View\ViewportView.xaml.cs">
       <DependentUpon>ViewportView.xaml</DependentUpon>
@@ -443,6 +445,7 @@
     <Content Include="ViewModel\Controller\ControllerViewModelT4.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ControllerViewModelT4.cs</LastGenOutput>
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Content>
   </ItemGroup>
   <ItemGroup>

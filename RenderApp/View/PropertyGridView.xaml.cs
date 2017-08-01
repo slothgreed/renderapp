@@ -26,7 +26,9 @@ namespace RenderApp.View
             Key = key;
             Value = value;
         }
+
         public string Key { get; set; }
+
         public object Value { get; set; }
     }
 
@@ -42,7 +44,7 @@ namespace RenderApp.View
 
         #region [Binding Item]
         public static readonly DependencyProperty PropertyItemProperty =
-            DependencyProperty.Register("PropertyItem", typeof(Dictionary<string,object>), typeof(PropertyGridView),
+            DependencyProperty.Register("PropertyItem", typeof(Dictionary<string, object>), typeof(PropertyGridView),
             new FrameworkPropertyMetadata(null));
         public Dictionary<string, object> PropertyItem
         {
@@ -50,6 +52,7 @@ namespace RenderApp.View
             {
                 return (Dictionary<string, object>)GetValue(PropertyItemProperty);
             }
+
             set
             {
                 SetValue(PropertyItemProperty, value);
@@ -61,10 +64,12 @@ namespace RenderApp.View
         {
             base.OnApplyTemplate();
         }
+
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
         }
+
         protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
             base.OnPropertyChanged(e);

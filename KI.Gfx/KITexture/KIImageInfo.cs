@@ -34,43 +34,19 @@ namespace KI.Gfx.KITexture
     /// </summary>
     public class KIImageInfo : KIFile
     {
-        public int Width
-        {
-            get;
-            set;
-        }
+        public int Width { get; set; }
 
-        public int Height
-        {
-            get;
-            set;
-        }
+        public int Height { get; set; }
 
-        public Bitmap bmpImage
-        {
-            get;
-            set;
-        }
-        public BitmapData bmpData
-        {
-            get;
-            set;
-        }
-        private bool NowLock
-        {
-            get;
-            set;
-        }
-        public bool Loaded
-        {
-            get;
-            set;
-        }
-        public PixelFormat Format
-        {
-            get;
-            set;
-        }
+        public Bitmap bmpImage { get; set; }
+
+        public BitmapData bmpData { get; set; }
+
+        private bool NowLock { get; set; }
+
+        public bool Loaded { get; set; }
+
+        public PixelFormat Format { get; set; }
 
         public KIImageInfo(string path)
             : base(path)
@@ -101,6 +77,7 @@ namespace KI.Gfx.KITexture
                 ImageLockMode.ReadOnly, Format);
 
         }
+
         public IntPtr Scan0
         {
             get
@@ -112,6 +89,7 @@ namespace KI.Gfx.KITexture
                 return bmpData.Scan0;
             }
         }
+
         public void UnLock()
         {
             bmpImage.UnlockBits(bmpData);

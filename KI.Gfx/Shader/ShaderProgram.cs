@@ -1,16 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+﻿using System.IO;
 using OpenTK.Graphics.OpenGL;
 using KI.Foundation.Core;
-using OpenTK;
 namespace KI.Gfx
 {
+    /// <summary>
+    /// シェーダプログラム
+    /// </summary>
     public class ShaderProgram : KIFile
     {
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="filePath">ファイルパス</param>
+        public ShaderProgram(string filePath)
+            : base(filePath)
+        {
+            StreamReader reader = new StreamReader(FilePath);
+            ShaderCode = reader.ReadToEnd();
+            reader.Close();
+        }
 
         private ShaderType? _shaderType;
         public ShaderType shaderType
@@ -41,32 +49,19 @@ namespace KI.Gfx
                 }
                 return (ShaderType)_shaderType;
             }
+        }
 
-        }
-        private string _shaderCode;
-        public string ShaderCode
-        {
-            get
-            {
-                return _shaderCode;
-            }
-            set
-            {
-                _shaderCode = value;
-            }
-        }
-        public ShaderProgram(string name, string filePath)
-            : base(filePath)
-        {
-            StreamReader reader = new StreamReader(FilePath);
-            _shaderCode = reader.ReadToEnd();
-            reader.Close();
-        }
+        /// <summary>
+        /// シェーダコード
+        /// </summary>
+        public string ShaderCode { get; set; }
+
+        /// <summary>
+        /// 解放処理
+        /// </summary>
         public override void Dispose()
         {
 
         }
-
-
     }
 }

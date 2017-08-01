@@ -1,92 +1,61 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
+﻿using System.Collections.Generic;
 using KI.Foundation.Core;
 using KI.Foundation.Tree;
+using OpenTK;
 
 namespace KI.Asset
 {
+    /// <summary>
+    /// シーンクラス
+    /// </summary>
     public class Scene : KIObject
     {
         /// <summary>
         /// 空間の最大値
         /// </summary>
         public readonly Vector3 WorldMax = new Vector3(100, 125, 100);
+
         /// <summary>
         /// 空間の最小値
         /// </summary>
         public readonly Vector3 WorldMin = new Vector3(-100, -75, -100);
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="name">シーン名</param>
         public Scene(string name)
             : base(name)
         {
             RootNode = new KINode("ROOT");
         }
 
-        #region [scene dictionary]
         /// <summary>
         /// ルートノード
         /// </summary>
-        public KINode RootNode;
+        public KINode RootNode { get; set; }
 
         /// <summary>
         /// 選択中のアセット
         /// </summary>
-        private KIObject _selectAsset;
-        public KIObject SelectAsset
-        {
-            get
-            {
-                return _selectAsset;
-            }
-            set
-            {
-                _selectAsset = value;
-            }
-        }
+        public KIObject SelectAsset { get; set; }
 
-        #endregion
-
-        #region [default property]
         /// <summary>
-        /// カメラ
+        /// メインカメラ
         /// </summary>
-        private Camera _mainCamera;
-        public Camera MainCamera
-        {
-            get
-            {
-                return _mainCamera;
-            }
-            set
-            {
-                _mainCamera = value;
-            }
-        }
-        private Light _sunLight;
-        public Light SunLight
-        {
-            get
-            {
-                return _sunLight;
-            }
-            set
-            {
-                _sunLight = value;
-            }
-        }
-        #endregion
+        public Camera MainCamera { get; set; }
+
+        /// <summary>
+        /// 主な光源
+        /// </summary>
+        public Light SunLight { get; set; }
 
         #region [public scene method]
         /// <summary>
         /// シーンのオブジェクトの取得
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="assetType"></param>
-        /// <returns></returns>
+        /// <param name="key">キー</param>
+        /// <returns>オブジェクト</returns>
         public KIObject FindObject(string key)
         {
             KINode obj;
@@ -101,34 +70,59 @@ namespace KI.Asset
             }
         }
 
+        /// <summary>
+        /// オブジェクトの追加
+        /// </summary>
+        /// <param name="value">追加するオブジェクト</param>
+        /// <param name="parent">親</param>
         public void AddObject(KIObject value, KINode parent = null)
         {
-            if (parent == null)
-            {
-                parent = RootNode;
-            }
-            parent.AddChild(value);
+            AddObject(new List<KIObject>() { value }, parent);
         }
+
+        /// <summary>
+        /// オブジェクトの追加
+        /// </summary>
+        /// <param name="value">追加するオブジェクトリスト</param>
+        /// <param name="parent">親</param>
         public void AddObject(List<KIObject> value, KINode parent = null)
         {
             if (parent == null)
             {
                 parent = RootNode;
             }
+
             foreach (var obj in value)
             {
                 parent.AddChild(obj);
             }
         }
 
+        /// <summary>
+        /// オブジェクトの削除
+        /// </summary>
+        /// <param name="key">キー</param>
         public void DeleteObject(string key)
         {
             RootNode.RemoveRecursiveChild(key);
         }
         #endregion
 
-        #region [dispose]
-        private string GetNewKey<T>(string key, Dictionary<string, T> AssetList) where T : KIFile
+        /// <summary>
+        /// 解放処理
+        /// </summary>
+        public override void Dispose()
+        {
+        }
+
+        /// <summary>
+        /// 新しいキーの作成
+        /// </summary>
+        /// <typeparam name="T">KIObject</typeparam>
+        /// <param name="key">初期キー</param>
+        /// <param name="assetList">既存のアセット</param>
+        /// <returns>キー</returns>
+        private string GetNewKey<T>(string key, Dictionary<string, T> assetList) where T : KIObject
         {
             string newKey = key;
             int serialNumber = 0;
@@ -137,21 +131,12 @@ namespace KI.Asset
             {
                 serialNumber++;
                 newKey = key + serialNumber;
-                exist = AssetList.ContainsKey(newKey);
+                exist = assetList.ContainsKey(newKey);
                 if (!exist)
                 {
                     return newKey;
                 }
             }
         }
-
-        public override void Dispose()
-        {
-
-        }
-        #endregion
-
-
-
     }
 }

@@ -11,37 +11,39 @@ namespace RenderApp.ViewModel
 {
     public partial class RootNodeViewModel : TabItemViewModel
     {
+        private NodeItemViewModel _activeNode;
+
+        public RootNodeViewModel(KINode rootNode, string title)
+        {
+            Title = title;
+            Initialize(new List<KINode>() { rootNode });
+        }
+
+        public RootNodeViewModel(List<KINode> rootNodes, string title)
+        {
+            Title = title;
+            Initialize(rootNodes);
+        }
 
         public ObservableCollection<NodeItemViewModel> RootNode
         {
             get;
             private set;
         }
-        private NodeItemViewModel _activeNode;
+
         public NodeItemViewModel ActiveNode
         {
             get
             {
                 return _activeNode;
             }
+
             private set
             {
                 _activeNode = value;
             }
         }
 
-        public RootNodeViewModel(KINode rootNode, string title)
-        {
-            Title = title;
-            Initialize(new List<KINode>() { rootNode });
-
-        }
-        public RootNodeViewModel(List<KINode> rootNodes, string title)
-        {
-            Title = title;
-            Initialize(rootNodes);
-
-        }
         public void Initialize(List<KINode> rootNodes)
         {
             if (rootNodes != null)
@@ -79,19 +81,21 @@ namespace RenderApp.ViewModel
                 MainWindowViewModel.Instance.UpdateSelectNode(ActiveNode.Model);
             }
         }
+
         public void DeleteCommand()
         {
             var parent = ActiveNode.Parent;
             parent.Model.RemoveChild(ActiveNode.Model);
             parent.Children.Remove(ActiveNode);
-
         }
+
         public void OpenExplolerCommand()
         {
             if (ActiveNode == null)
             {
                 return;
             }
+
             if (ActiveNode.Model is KINode)
             {
                 var node = ActiveNode.Model as KINode;
@@ -105,6 +109,7 @@ namespace RenderApp.ViewModel
                 }
             }
         }
+
         public override void UpdateProperty()
         {
 

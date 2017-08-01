@@ -20,6 +20,7 @@ namespace KI.Asset
         {
             texturePath = new List<string>();
         }
+
         public void GenCubemap(string[] paths)
         {
             if (paths.Length != 6)
@@ -27,8 +28,10 @@ namespace KI.Asset
                 Logger.Log(Logger.LogLevel.Error, "not set 6 paths ");
                 return;
             }
+
             GenCubemap(paths[0], paths[1], paths[2], paths[3], paths[4], paths[5]);
         }
+
         public void GenCubemap(string px, string py, string pz, string nx, string ny, string nz)
         {
             Cubemap = TextureFactory.Instance.CreateCubemapTexture(px, py, pz, nx, ny, nz);

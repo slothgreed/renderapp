@@ -4,18 +4,18 @@ namespace RenderApp.ViewModel
 {
     public class DynamicViewModelBase<T> : DynamicObject, INotifyPropertyChanged where T : class
     {
-        private T _model;
+        private T model;
         protected T Model
         {
             get
             {
-                return _model;
+                return model;
             }
         }
 
         public DynamicViewModelBase(T model)
         {
-            this._model = model;
+            this.model = model;
         }
 
         // INotifyPropertyChangedの実装
@@ -32,13 +32,13 @@ namespace RenderApp.ViewModel
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
             var propertyName = binder.Name;
-            var property = _model.GetType().GetProperty(propertyName);
+            var property = model.GetType().GetProperty(propertyName);
             if (property == null || !property.CanRead)
             {
                 result = null;
                 return false;
             }
-            result = property.GetValue(_model, null);
+            result = property.GetValue(model, null);
 
             return true;
         }
@@ -46,12 +46,12 @@ namespace RenderApp.ViewModel
         public override bool TrySetMember(SetMemberBinder binder, object value)
         {
             var propertyName = binder.Name;
-            var property = _model.GetType().GetProperty(propertyName);
+            var property = model.GetType().GetProperty(propertyName);
             if (property == null || !property.CanWrite)
             {
                 return false;
             }
-            property.SetValue(_model, value, null);
+            property.SetValue(model, value, null);
             OnPropertyChanged(propertyName);
             return true;
         }

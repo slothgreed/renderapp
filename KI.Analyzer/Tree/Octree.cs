@@ -12,7 +12,7 @@ namespace KI.Analyzer
         private int m_MaxLevel = 0;
         public int MaxLevel { get { return m_MaxLevel; } }
 
-        public Octree(List<Vector3> position,int level)
+        public Octree(List<Vector3> position, int level)
         {
             m_MaxLevel = level;
 
@@ -30,7 +30,7 @@ namespace KI.Analyzer
             List<Vector3> copy = new List<Vector3>(position);
             BDB.GetBoundBox(copy, out bdbMin, out bdbMax);
             m_root = new Octant(copy, bdbMin, bdbMax, 0);
-            MakeOctant(m_root,0);
+            MakeOctant(m_root, 0);
 
         }
         /// <summary>
@@ -88,7 +88,7 @@ namespace KI.Analyzer
         /// <param name="bdbMax">親オクタントの最大値</param>
         /// <param name="octantMin">各オクタント(8個)の最小値</param>
         /// <param name="octantMax">各オクタント(8個)の最大値</param>
-        private void GetOctant(Vector3 bdbMin,Vector3 bdbMax,out List<Vector3> octantMin,out List<Vector3> octantMax)
+        private void GetOctant(Vector3 bdbMin, Vector3 bdbMax, out List<Vector3> octantMin, out List<Vector3> octantMax)
         {
             octantMin = new List<Vector3>();
             octantMax = new List<Vector3>();
@@ -102,13 +102,13 @@ namespace KI.Analyzer
             octantMin.Add(new Vector3(center.X, bdbMin.Y, bdbMin.Z));
             octantMax.Add(new Vector3(bdbMax.X, center.Y, center.Z));
             //左上手前
-            octantMin.Add(new Vector3(bdbMin.X,center.Y,bdbMin.Z));
-            octantMax.Add(new Vector3(center.X,bdbMax.Y,center.Z));
+            octantMin.Add(new Vector3(bdbMin.X, center.Y, bdbMin.Z));
+            octantMax.Add(new Vector3(center.X, bdbMax.Y, center.Z));
             //右上手前
             octantMin.Add(new Vector3(center.X, center.Y, bdbMin.Z));
             octantMax.Add(new Vector3(bdbMax.X, bdbMax.Y, center.Z));
-            
-            
+
+
             //左下奥
             octantMin.Add(new Vector3(bdbMin.X, bdbMin.Y, center.Z));
             octantMax.Add(new Vector3(center.X, center.Y, bdbMax.Z));
@@ -121,7 +121,7 @@ namespace KI.Analyzer
             //右上奥
             octantMin.Add(new Vector3(center.X, center.Y, center.Z));
             octantMax.Add(new Vector3(bdbMax.X, bdbMax.Y, bdbMax.Z));
- 
+
         }
 
         #region [geteer method ]
@@ -130,7 +130,7 @@ namespace KI.Analyzer
         /// </summary>
         /// <param name="posList"></param>
         /// <param name="norList"></param>
-        public void GetRenderPosition(out List<Vector3> posList,out List<Vector3> norList)
+        public void GetRenderPosition(out List<Vector3> posList, out List<Vector3> norList)
         {
             List<Octant> leafs = GetLeaf();
             posList = new List<Vector3>();
@@ -143,7 +143,7 @@ namespace KI.Analyzer
                 posList.AddRange(posit);
                 norList.AddRange(normal);
             }
-            
+
         }
         /// <summary>
         /// 葉の取得
@@ -202,10 +202,10 @@ namespace KI.Analyzer
             return true;
         }
         #endregion
-        
-        
+
+
         #endregion
-        
+
     }
 
 
@@ -224,8 +224,8 @@ namespace KI.Analyzer
         public Vector3 BDBMax { get { return m_bdbMax; } }
 
         public List<Vector3> position { get { return m_position; } }
-        
-        public Octant(List<Vector3> position,Vector3 min,Vector3 max,int level)
+
+        public Octant(List<Vector3> position, Vector3 min, Vector3 max, int level)
         {
             m_bdbMax = max;
             m_bdbMin = min;

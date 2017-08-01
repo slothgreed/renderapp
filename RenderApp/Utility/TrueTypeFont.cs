@@ -107,7 +107,7 @@ namespace RenderApp.Utility
             {
                 dims = g.MeasureString("l", font);
             }
-            
+
             int charwidth = (int)dims.Width + 2;
 
             if (charwidth <= 0)
@@ -257,7 +257,7 @@ namespace RenderApp.Utility
                 return m_TextureBuffer;
 
                 //string filename = "bitmap.bmp";
-                //if (String.IsNullOrEmpty(filename))
+                //if (byte.IsNullOrEmpty(filename))
                 //    throw new ArgumentException(filename);
 
                 //int m_TextureBuffer = GL.GenTexture();
@@ -295,7 +295,7 @@ namespace RenderApp.Utility
         /// テクスチャ座標の指定1文字1Quads
         /// </summary>
         private void drawQuad(float drawX, float drawY, float drawX2, float drawY2,
-                float srcX, float srcY, float srcX2, float srcY2,List<Vector3>position,List<Vector2>texcoord)
+                float srcX, float srcY, float srcX2, float srcY2, List<Vector3> position, List<Vector2> texcoord)
         {
             float DrawWidth = drawX2 - drawX;
             float DrawHeight = drawY2 - drawY;
@@ -307,13 +307,13 @@ namespace RenderApp.Utility
             float RenderHeight = (SrcHeight / textureHeight);
 
             texcoord.Add(new Vector2(TextureSrcX, TextureSrcY));
-            position.Add(new Vector3(drawX, drawY,0));
+            position.Add(new Vector3(drawX, drawY, 0));
             texcoord.Add(new Vector2(TextureSrcX, TextureSrcY + RenderHeight));
-            position.Add(new Vector3(drawX, drawY + DrawHeight,0));
+            position.Add(new Vector3(drawX, drawY + DrawHeight, 0));
             texcoord.Add(new Vector2(TextureSrcX + RenderWidth, TextureSrcY + RenderHeight));
-            position.Add(new Vector3(drawX + DrawWidth, drawY + DrawHeight,0));
+            position.Add(new Vector3(drawX + DrawWidth, drawY + DrawHeight, 0));
             texcoord.Add(new Vector2(TextureSrcX + RenderWidth, TextureSrcY));
-            position.Add(new Vector3(drawX + DrawWidth, drawY,0));
+            position.Add(new Vector3(drawX + DrawWidth, drawY, 0));
 
         }
 
@@ -330,13 +330,13 @@ namespace RenderApp.Utility
         public void MakeTextTexture(float x, float y,
                 string whatchars, float scaleX, float scaleY, List<Vector3> position, List<Vector2> texcoord)
         {
-            MakeTextTexture(x, y, whatchars, 0, whatchars.Length - 1, scaleX, scaleY,position,texcoord);
+            MakeTextTexture(x, y, whatchars, 0, whatchars.Length - 1, scaleX, scaleY, position, texcoord);
         }
 
 
         private void MakeTextTexture(float x, float y,
                 string whatchars, int startIndex, int endIndex,
-                float scaleX, float scaleY,List<Vector3>position,List<Vector2>texcoord)
+                float scaleX, float scaleY, List<Vector3> position, List<Vector2> texcoord)
         {
 
             IntObject intObject = null;
@@ -402,7 +402,7 @@ namespace RenderApp.Utility
                             (startY + intObject.height) * scaleY + y, intObject.storedX + intObject.width,
                             intObject.storedY, intObject.storedX,
                             intObject.storedY + intObject.height,
-                            position,texcoord);
+                            position, texcoord);
                         if (loopd > 0) totalwidth += (intObject.width - c) * loopd;
                     }
                     i += loopd;

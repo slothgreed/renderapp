@@ -4,6 +4,7 @@ namespace KI.Gfx.Render
     public class RenderTargetFactory : KIFactoryBase<RenderTarget>
     {
         private static RenderTargetFactory _instance = new RenderTargetFactory();
+
         public static RenderTargetFactory Instance
         {
             get

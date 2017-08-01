@@ -12,11 +12,13 @@ namespace RenderApp.RACommand
             {
                 return RACommandResource.Failed;
             }
+
             Geometry geometry = asset as Geometry;
             if (geometry.geometryInfo.GeometryType != GeometryType.Triangle)
             {
                 return RACommandResource.Failed;
             }
+
             return RACommandResource.Success;
         }
     }

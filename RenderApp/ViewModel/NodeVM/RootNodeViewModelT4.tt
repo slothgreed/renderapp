@@ -22,23 +22,21 @@ namespace RenderApp.ViewModel
 		for(int i =0 ; i < _command.Length; i++)
 		{
 #>
-			private ICommand _<#=_command[i]#>;
-			public ICommand <#=_command[i]#>
+		private ICommand _<#=_command[i]#>;
+		public ICommand <#=_command[i]#>
+		{
+			get
 			{
-				get
+				if (_<#=_command[i]#> == null)
 				{
-					if(_<#=_command[i]#> == null)
-					{
-						return _<#=_command[i]#> = CreateCommand(<#=_command[i]#>Command);						
-					}
-					return _<#=_command[i]#>;
+					return _<#=_command[i]#> = CreateCommand(<#=_command[i]#>Command);						
 				}
+
+				return _<#=_command[i]#>;
 			}
+		}
 <#
 		}
-
 #>
-
 	}
-
 }

@@ -9,7 +9,9 @@ namespace KI.Foundation.ViewModel
     public class Vector4ViewModel : PropertyViewModelBase
     {
         Func<Vector4, bool> updateFunc;
+
         private Vector4 Model;
+
         public Vector4ViewModel(object owner, string name, Vector4 value)
         {
             Owner = owner;
@@ -17,6 +19,7 @@ namespace KI.Foundation.ViewModel
             Model = value;
             updateFunc = new Func<Vector4, bool>(UpdateProperty);
         }
+
         public float X
         {
             get { return Model.X; }
@@ -25,6 +28,7 @@ namespace KI.Foundation.ViewModel
                 SetValue<Vector4>(updateFunc, new Vector4(value, Y, Z, W));
             }
         }
+
         public float Y
         {
             get { return Model.Y; }
@@ -33,6 +37,7 @@ namespace KI.Foundation.ViewModel
                 SetValue<Vector4>(updateFunc, new Vector4(X, value, Z, W));
             }
         }
+
         public float Z
         {
             get { return Model.Z; }
@@ -41,6 +46,7 @@ namespace KI.Foundation.ViewModel
                 SetValue<Vector4>(updateFunc, new Vector4(X, Y, value, W));
             }
         }
+
         public float W
         {
             get { return Model.W; }
@@ -49,6 +55,7 @@ namespace KI.Foundation.ViewModel
                 SetValue<Vector4>(updateFunc, new Vector4(X, Y, Z, value));
             }
         }
+
         public bool UpdateProperty(Vector4 value)
         {
             Model = value;
@@ -63,6 +70,7 @@ namespace KI.Foundation.ViewModel
 
             return true;
         }
+
         public override void UpdateProperty()
         {
 

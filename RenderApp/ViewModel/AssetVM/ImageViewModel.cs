@@ -6,13 +6,16 @@ namespace RenderApp.ViewModel
 {
     class ImageViewModel : ViewModelBase
     {
+        private string _name;
+        private List<string> items;
+        private int selectIndex;
 
         public Texture Model
         {
             get;
             private set;
         }
-        private string _name;
+
         public string Name
         {
             get
@@ -25,6 +28,7 @@ namespace RenderApp.ViewModel
                 OnPropertyChanged("Items");
             }
         }
+
         public string ImagePath
         {
             get
@@ -33,46 +37,52 @@ namespace RenderApp.ViewModel
                 {
                     return @"C:\Users\ido\Desktop\RenderApp-clone\RenderApp\Thumbnail\noimage.png";
                 }
+
                 if (Model.ImageInfo.FilePath == null)
                 {
                     return @"C:\Users\ido\Desktop\RenderApp-clone\RenderApp\Thumbnail\noimage.png";
                 }
+
                 return Model.ImageInfo.FilePath;
             }
         }
+
         public string FileName
         {
             get
             {
                 if (Model.ImageInfo == null)
                 {
-                    return "";
+                    return string.Empty;
                 }
+
                 if (Model.ImageInfo.FilePath == null)
                 {
-                    return "";
+                    return string.Empty;
                 }
+
                 return Model.ImageInfo.FileName;
             }
         }
-        private List<string> _items;
+
         public List<string> Items
         {
             get
             {
-                return _items;
+                return items;
             }
         }
-        private int _selectIndex;
+
         public int SelectIndex
         {
             get
             {
-                return _selectIndex;
+                return selectIndex;
             }
+
             set
             {
-                SetValue<int>(ref _selectIndex, value);
+                SetValue<int>(ref selectIndex, value);
             }
         }
 
@@ -80,7 +90,7 @@ namespace RenderApp.ViewModel
         {
             Model = model;
             Name = name;
-            _items = new List<string>();
+            items = new List<string>();
             //_items = new List<string>(RenderApp.Workspace.SceneManager.ActiveScene.GetAssetListStr(EAssetType.Textures));
             //SelectIndex = _items.IndexOf(model.ImageInfo.FileName);
         }
@@ -90,6 +100,7 @@ namespace RenderApp.ViewModel
             Model = model;
             Name = "noname";
         }
+
         public override void UpdateProperty()
         {
         }

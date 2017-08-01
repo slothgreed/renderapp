@@ -21,6 +21,7 @@ namespace RenderApp.RAControl
             }
             return true;
         }
+
         public override bool Click(MouseEventArgs mouse)
         {
             //switch (mouse.Button)
@@ -37,6 +38,7 @@ namespace RenderApp.RAControl
             //}
             return true;
         }
+
         public override bool Move(MouseEventArgs mouse)
         {
             switch (mouse.Button)
@@ -55,6 +57,7 @@ namespace RenderApp.RAControl
             }
             return true;
         }
+
         public override bool Up(MouseEventArgs mouse)
         {
             switch (mouse.Button)
@@ -71,6 +74,7 @@ namespace RenderApp.RAControl
             }
             return true;
         }
+
         public override bool Wheel(MouseEventArgs mouse)
         {
             switch (mouse.Button)
@@ -81,6 +85,7 @@ namespace RenderApp.RAControl
             }
             return true;
         }
+
         /// <summary>
         /// コントローラ終了処理
         /// </summary>
@@ -89,6 +94,7 @@ namespace RenderApp.RAControl
         {
             return true;
         }
+
         /// <summary>
         /// コントローラ開始処理
         /// </summary>

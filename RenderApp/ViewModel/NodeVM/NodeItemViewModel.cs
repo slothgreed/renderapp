@@ -1,35 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RenderApp;
+﻿using System.Linq;
 using System.Collections.ObjectModel;
-using RenderApp.AssetModel;
-using RenderApp.Utility;
 using KI.Foundation.ViewModel;
 using KI.Foundation.Utility;
 using KI.Foundation.Tree;
+
 namespace RenderApp.ViewModel
 {
     public class NodeItemViewModel : ViewModelBase
     {
+        private ObservableCollection<NodeItemViewModel> _children;
+
+        private bool hoverHighlighting = true;
+
+        private int itemIndent = 0;
+
+        private bool isKeyboardMode = true;
+
+        private bool isSelected;
+
+        private string displayName;
+
         public EAssetType AssetType
         {
             get;
             private set;
         }
+
         public KINode Model
         {
             get;
             private set;
         }
+
         public static NodeItemViewModel ActiveItem
         {
             get;
             set;
         }
-        private ObservableCollection<NodeItemViewModel> _children;
+
         public ObservableCollection<NodeItemViewModel> Children
         {
             get
@@ -37,6 +45,7 @@ namespace RenderApp.ViewModel
                 return _children;
             }
         }
+
         public bool IsExpanded
         {
             get
@@ -48,79 +57,79 @@ namespace RenderApp.ViewModel
                         return false;
                     }
                 }
+
                 return true;
             }
         }
-        public NodeItemViewModel Parent
-        {
-            get;
-            set;
-        }
 
-        private bool _hoverHighlighting = true;
+        public NodeItemViewModel Parent { get; set; }
+
         public bool HoverHighlighting
         {
             get
             {
-                return _hoverHighlighting;
+                return hoverHighlighting;
             }
+
             set
             {
-                SetValue<bool>(ref _hoverHighlighting, value);
+                SetValue<bool>(ref hoverHighlighting, value);
             }
         }
-        private int _itemIndent = 0;
+
         public int ItemIndent
         {
             get
             {
-                return _itemIndent;
+                return itemIndent;
             }
+
             set
             {
-                SetValue<int>(ref _itemIndent, value);
+                SetValue<int>(ref itemIndent, value);
             }
         }
-        private bool _isKeyboardMode = true;
+
         public bool IsKeyboardMode
         {
             get
             {
-                return _isKeyboardMode;
+                return isKeyboardMode;
             }
+
             set
             {
-                SetValue<bool>(ref _isKeyboardMode, value);
+                SetValue<bool>(ref isKeyboardMode, value);
             }
         }
-        private string _displayName;
+
         public string DisplayName
         {
             get
             {
-                return _displayName;
+                return displayName;
             }
+
             set
             {
-                SetValue<string>(ref _displayName, value);
+                SetValue<string>(ref displayName, value);
                 if (Model != null)
                 {
-                    Model.KIObject.Name = _displayName;
+                    Model.KIObject.Name = displayName;
                 }
             }
         }
 
-        private bool _isSelected;
         public bool IsSelected
         {
-            get { return _isSelected; }
+            get { return isSelected; }
             set
             {
-                if (value != _isSelected)
+                if (value != isSelected)
                 {
-                    SetValue<bool>(ref _isSelected, value);
+                    SetValue<bool>(ref isSelected, value);
 
-                    if (_isSelected == true)
+                    if (isSelected == true)
                     {
                         ActiveItem = this;
                         Logger.Log(Logger.LogLevel.Debug, this.DisplayName);
@@ -128,6 +137,7 @@ namespace RenderApp.ViewModel
                 }
             }
         }
+
         public NodeItemViewModel()
         {
             _children = new ObservableCollection<NodeItemViewModel>();
@@ -140,11 +150,11 @@ namespace RenderApp.ViewModel
             {
                 Parent = parent;
             }
+
             node.InsertNodeEvent += InsertNodeEvent;
             node.RemoveNodeEvent += RemoveNodeEvent;
             DisplayName = node.Name;
             Model = node;
-
         }
 
         private void RemoveNodeEvent(object sender, NotifyNodeChangedEventArgs e)
@@ -159,6 +169,7 @@ namespace RenderApp.ViewModel
                 }
             }
         }
+
         private void InsertNodeEvent(object sender, NotifyNodeChangedEventArgs e)
         {
             if (sender is KINode)

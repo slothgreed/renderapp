@@ -9,31 +9,34 @@ namespace KI.Analyzer
 {
     public class BDB : IAnalyzer
     {
-        #region [Member]
-        private Vector3 m_Min;
-        private Vector3 m_Max;
-        private Vector3 m_Center;
-        private Vector3 m_Mean;
-        public Vector3 BoundMin
-        {
-            get { return m_Min; }
-        }
-        public Vector3 BoundMax
-        {
-            get { return m_Max; }
-        }
-        public Vector3 BoundCenter
-        {
-            get { return m_Center; }
-        }
-        public Vector3 BoundMean { get { return m_Mean; } }  
-        #endregion
-        
-
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="position">位置</param>
         public BDB(List<Vector3> position)
         {
             SetBoundBox(position);
         }
+
+        /// <summary>
+        /// 最小値
+        /// </summary>
+        public Vector3 Min { get; private set; }
+
+        /// <summary>
+        /// 最大値
+        /// </summary>
+        public Vector3 Max { get; private set; }
+
+        /// <summary>
+        /// 中央値
+        /// </summary>
+        public Vector3 Center { get; private set; }
+
+        /// <summary>
+        /// 平均値
+        /// </summary>
+        public Vector3 Mean { get; private set; }
 
         /// <summary>
         /// BDBの算出
@@ -54,11 +57,12 @@ namespace KI.Analyzer
                 if (max.Z < position[i].Z) { max.Z = position[i].Z; }
                 sum += position[i];
             }
-            m_Min = new Vector3(min.X, min.Y, min.Z);
-            m_Max = new Vector3(max.X, max.Y, max.Z);
-            m_Center = new Vector3((m_Max - m_Min) / 2);
-            m_Mean = new Vector3(sum.X / position.Count, sum.Y / position.Count, sum.Z / position.Count);
+            Min = new Vector3(min.X, min.Y, min.Z);
+            Max = new Vector3(max.X, max.Y, max.Z);
+            Center = new Vector3((Max - Min) / 2);
+            Mean = new Vector3(sum.X / position.Count, sum.Y / position.Count, sum.Z / position.Count);
         }
+
         /// <summary>
         /// BDBの算出
         /// </summary>
@@ -80,6 +84,7 @@ namespace KI.Analyzer
             Min = new Vector3(min.X, min.Y, min.Z);
             Max = new Vector3(max.X, max.Y, max.Z);
         }
+
         /// <summary>
         /// BDB内に頂点があるか
         /// </summary>
@@ -97,12 +102,12 @@ namespace KI.Analyzer
                     {
                         return true;
                     }
-
                 }
-
             }
+
             return false;
         }
+
         /// <summary>
         /// BDBの三角形群を取得
         /// </summary>
@@ -171,6 +176,7 @@ namespace KI.Analyzer
             normalList.Add(normal);
             normalList.Add(normal);
         }
+
         /// <summary>
         /// 四角形の取得
         /// </summary>
@@ -178,6 +184,7 @@ namespace KI.Analyzer
         {
             return KICalc.Normal(v1 - v0, v2 - v0);
         }
+
         /// <summary>
         /// BDBの三角形群を取得
         /// </summary>
@@ -188,15 +195,15 @@ namespace KI.Analyzer
             normalList = new List<Vector3>();
             posit = new List<Vector3>();
             Vector3 normal;
-            Vector3 v0 = new Vector3(BoundMin.X, BoundMin.Y, BoundMin.Z);
-            Vector3 v1 = new Vector3(BoundMax.X, BoundMin.Y, BoundMin.Z);
-            Vector3 v2 = new Vector3(BoundMax.X, BoundMax.Y, BoundMin.Z);
-            Vector3 v3 = new Vector3(BoundMin.X, BoundMax.Y, BoundMin.Z);
+            Vector3 v0 = new Vector3(Min.X, Min.Y, Min.Z);
+            Vector3 v1 = new Vector3(Max.X, Min.Y, Min.Z);
+            Vector3 v2 = new Vector3(Max.X, Max.Y, Min.Z);
+            Vector3 v3 = new Vector3(Min.X, Max.Y, Min.Z);
 
-            Vector3 v4 = new Vector3(BoundMin.X, BoundMin.Y, BoundMax.Z);
-            Vector3 v5 = new Vector3(BoundMax.X, BoundMin.Y, BoundMax.Z);
-            Vector3 v6 = new Vector3(BoundMax.X, BoundMax.Y, BoundMax.Z);
-            Vector3 v7 = new Vector3(BoundMin.X, BoundMax.Y, BoundMax.Z);
+            Vector3 v4 = new Vector3(Min.X, Min.Y, Max.Z);
+            Vector3 v5 = new Vector3(Max.X, Min.Y, Max.Z);
+            Vector3 v6 = new Vector3(Max.X, Max.Y, Max.Z);
+            Vector3 v7 = new Vector3(Min.X, Max.Y, Max.Z);
 
             //手前
             posit.Add(v0); posit.Add(v3); posit.Add(v2); posit.Add(v1);
@@ -246,6 +253,5 @@ namespace KI.Analyzer
             normalList.Add(normal);
             normalList.Add(normal);
         }
-       
     }
 }

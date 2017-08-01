@@ -9,19 +9,22 @@ namespace RenderApp.ViewModel
             get;
             set;
         }
-        private int _textureIndex;
+
+        private int textureIndex;
         public int TextureIndex
         {
             get
             {
-                return _textureIndex;
+                return textureIndex;
             }
+
             private set
             {
-                SetValue<int>(ref _textureIndex, value);
+                SetValue<int>(ref textureIndex, value);
                 Model.OutputTexture = Model.ProcessingTexture[value];
             }
         }
+
         public RenderSystemViewModel(RenderSystem _model)
         {
             Model = _model;

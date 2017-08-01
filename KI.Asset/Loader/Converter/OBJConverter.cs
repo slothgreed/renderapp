@@ -6,17 +6,23 @@ using OpenTK;
 
 namespace KI.Asset
 {
+    /// <summary>
+    /// objファイルのコンバータ
+    /// </summary>
     public class OBJConverter : IGeometry
     {
+        /// <summary>
+        /// objファイルのデータ
+        /// </summary>
         private OBJLoader objData;
+
         /// <summary>
         /// objファイルのローダ
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="filePath"></param>
-        public OBJConverter(string name, string filePath)
+        /// <param name="filePath">ファイルパス</param>
+        public OBJConverter(string filePath)
         {
-            objData = new OBJLoader(name, filePath);
+            objData = new OBJLoader(filePath);
         }
 
         public GeometryInfo[] GeometryInfos
@@ -24,7 +30,6 @@ namespace KI.Asset
             get;
             private set;
         }
-
 
         public void SetMaterial(Geometry geometry, OBJMaterial material)
         {
@@ -54,30 +59,32 @@ namespace KI.Asset
             foreach (var material in objData.mtlList.Values)
             {
                 GeometryInfo geometry = null;
-                var Position = new List<Vector3>();
-                var Normal = new List<Vector3>();
-                var TexCoord = new List<Vector2>();
+                var position = new List<Vector3>();
+                var normal = new List<Vector3>();
+                var texCoord = new List<Vector2>();
                 for (int j = 0; j < material.posIndex.Count / 3; j++)
                 {
-                    Position.Add(objData.Position[material.posIndex[3 * j]]);
-                    Position.Add(objData.Position[material.posIndex[3 * j + 1]]);
-                    Position.Add(objData.Position[material.posIndex[3 * j + 2]]);
+                    position.Add(objData.Position[material.posIndex[3 * j]]);
+                    position.Add(objData.Position[material.posIndex[3 * j + 1]]);
+                    position.Add(objData.Position[material.posIndex[3 * j + 2]]);
                     if (objData.Normal.Count != 0)
                     {
-                        Normal.Add(objData.Normal[material.norIndex[3 * j]]);
-                        Normal.Add(objData.Normal[material.norIndex[3 * j + 1]]);
-                        Normal.Add(objData.Normal[material.norIndex[3 * j + 2]]);
+                        normal.Add(objData.Normal[material.norIndex[3 * j]]);
+                        normal.Add(objData.Normal[material.norIndex[3 * j + 1]]);
+                        normal.Add(objData.Normal[material.norIndex[3 * j + 2]]);
                     }
+
                     if (objData.Texcoord.Count != 0)
                     {
-                        TexCoord.Add(objData.Texcoord[material.texIndex[3 * j]]);
-                        TexCoord.Add(objData.Texcoord[material.texIndex[3 * j + 1]]);
-                        TexCoord.Add(objData.Texcoord[material.texIndex[3 * j + 2]]);
+                        texCoord.Add(objData.Texcoord[material.texIndex[3 * j]]);
+                        texCoord.Add(objData.Texcoord[material.texIndex[3 * j + 1]]);
+                        texCoord.Add(objData.Texcoord[material.texIndex[3 * j + 2]]);
                     }
                 }
-                if (Position.Count != 0)
+
+                if (position.Count != 0)
                 {
-                    GeometryInfo info = new GeometryInfo(Position, Normal, null, TexCoord, null, GeometryType.Triangle);
+                    GeometryInfo info = new GeometryInfo(position, normal, null, texCoord, null, GeometryType.Triangle);
                     //geometry.CreateGeometryInfo(objData.vertexInfo, PrimitiveType.Triangles);
                     //SetMaterial(geometry, material);
                     if (geometry != null)

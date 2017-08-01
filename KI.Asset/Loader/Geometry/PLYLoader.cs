@@ -13,6 +13,10 @@ namespace KI.Asset.Loader.Loader
     {
         private List<string> propertyNames;
 
+        private List<List<float>> propertys = new List<List<float>>();
+
+        private List<int> faceIndex = new List<int>();
+
         public List<string> PropertyName
         {
             get
@@ -20,8 +24,6 @@ namespace KI.Asset.Loader.Loader
                 return propertyNames;
             }
         }
-
-        private List<List<float>> propertys = new List<List<float>>();
 
         public List<List<float>> Propertys
         {
@@ -31,7 +33,6 @@ namespace KI.Asset.Loader.Loader
             }
         }
 
-        private List<int> faceIndex = new List<int>();
         public List<int> FaceIndex
         {
             get

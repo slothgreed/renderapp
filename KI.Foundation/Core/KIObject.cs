@@ -29,6 +29,9 @@ namespace KI.Foundation.Core
             }
         }
 
+        /// <summary>
+        /// 解放処理
+        /// </summary>
         public virtual void Dispose()
         {
 

@@ -5,7 +5,7 @@ namespace KI.Foundation.Control
     public class ThumbnailFile : System.Windows.Controls.Control
     {
         public static readonly DependencyProperty FilePathProperty =
-            DependencyProperty.Register("FilePath", typeof(string), typeof(ThumbnailFile), new PropertyMetadata(""));
+            DependencyProperty.Register("FilePath", typeof(string), typeof(ThumbnailFile), new PropertyMetadata(string.Empty));
 
         public string FilePath
         {
@@ -14,7 +14,7 @@ namespace KI.Foundation.Control
         }
 
         public static readonly DependencyProperty ImagePathProperty =
-            DependencyProperty.Register("ImagePath", typeof(string), typeof(ThumbnailFile), new PropertyMetadata(""));
+            DependencyProperty.Register("ImagePath", typeof(string), typeof(ThumbnailFile), new PropertyMetadata(string.Empty));
 
         public string ImagePath
         {

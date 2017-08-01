@@ -7,6 +7,7 @@ namespace RenderApp.RAControl
         public Dictionary<CONTROL_MODE, IControl> Controllers = new Dictionary<CONTROL_MODE, IControl>();
 
         private IControl CameraController = new CameraControl();
+
         public enum CONTROL_MODE
         {
             SelectTriangle,
@@ -23,29 +24,33 @@ namespace RenderApp.RAControl
             WHEEL,
         }
 
-        CONTROL_MODE _mode = CONTROL_MODE.SelectTriangle;
+        CONTROL_MODE mode = CONTROL_MODE.SelectTriangle;
+
         public CONTROL_MODE Mode
         {
             get
             {
-                return _mode;
+                return mode;
             }
+
             set
             {
-                Controllers[_mode].UnBinding();
-                _mode = value;
-                Controllers[_mode].Binding();
+                Controllers[mode].UnBinding();
+                mode = value;
+                Controllers[mode].Binding();
             }
         }
 
-        private static ControlManager _instance = new ControlManager();
+        private static ControlManager instance = new ControlManager();
+
         public static ControlManager Instance
         {
             get
             {
-                return _instance;
+                return instance;
             }
         }
+
         private ControlManager()
         {
             Controllers.Add(CONTROL_MODE.SelectTriangle, new SelectTriangleControl());

@@ -24,6 +24,7 @@ namespace RenderApp.ViewModel
         #region [property method]
 
         private DockWindowViewModel _activePane = null;
+
         public DockWindowViewModel ActivePane
         {
             get
@@ -38,11 +39,8 @@ namespace RenderApp.ViewModel
                 }
             }
         }
-        public DockWindowViewModel ActiveWindow
-        {
-            get;
-            set;
-        }
+
+        public DockWindowViewModel ActiveWindow { get; set; }
 
         public bool PostProcessMode
         {
@@ -59,33 +57,32 @@ namespace RenderApp.ViewModel
 
         #region [Member]
 
-        private static MainWindowViewModel _instance;
+        private static MainWindowViewModel instance;
         public static MainWindowViewModel Instance
         {
             get
             {
-                return _instance;
+                return instance;
             }
         }
 
-        private Viewport m_Viewport;
-        private string _taskBarText;
+        private Viewport viewport;
+        private string taskBarText;
         public string TaskBarText
         {
             get
             {
-                return _taskBarText;
+                return taskBarText;
             }
+
             set
             {
-                SetValue(ref _taskBarText, value);
+                SetValue(ref taskBarText, value);
             }
         }
         #endregion
 
-
         #region [constructor]
-
 
         public MainWindowViewModel()
         {
@@ -107,7 +104,7 @@ namespace RenderApp.ViewModel
             Viewport.Instance.OnMouseWheel += OnMouseWheelEvent;
             Viewport.Instance.OnRender += OnRenderEvent;
             Viewport.Instance.OnResize += OnResizeEvent;
-            _instance = this;
+            instance = this;
         }
         #region [Viewport Method]
         public void OnLoadedEvent(object sender, EventArgs e)
@@ -118,6 +115,7 @@ namespace RenderApp.ViewModel
             LeftUpDockPanel.Add(new RootNodeViewModel(Workspace.SceneManager.ActiveScene.RootNode, "Scene"));
             LeftDownDockPanel.Add(new RenderSystemViewModel(Workspace.RenderSystem));
         }
+
         private void OnResizeEvent(object sender, EventArgs e)
         {
             Workspace.SceneManager.ActiveScene.MainCamera.SetProjMatrix((float)DeviceContext.Instance.Width / DeviceContext.Instance.Height);
@@ -149,8 +147,6 @@ namespace RenderApp.ViewModel
             ControlManager.Instance.ProcessInput(e, ControlManager.MOUSE_STATE.DOWN);
         }
 
-
-
         #endregion
 
         #endregion
@@ -163,6 +159,7 @@ namespace RenderApp.ViewModel
                 ProjectInfo.IsOpen = true;
             }
         }
+
         private void OpenProjectCommand()
         {
             ProjectInfo.IsOpen = true;
@@ -176,9 +173,11 @@ namespace RenderApp.ViewModel
 
             }
         }
+
         private void SaveProjectCommand()
         {
         }
+
         private void SaveAsProjectCommand()
         {
             System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
@@ -211,6 +210,7 @@ namespace RenderApp.ViewModel
                     break;
             }
         }
+
         private void Load3DModelCommand()
         {
             System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
@@ -231,6 +231,7 @@ namespace RenderApp.ViewModel
                 //}
             }
         }
+
         private void LoadTextureCommand()
         {
             System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
@@ -247,6 +248,7 @@ namespace RenderApp.ViewModel
                 }
             }
         }
+
         private void LoadShaderCommand()
         {
             //System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
@@ -321,17 +323,20 @@ namespace RenderApp.ViewModel
                     break;
             }
         }
+
         //private static KIObject select;
         private void CreateCubeCommand()
         {
             //Cube cube = new Cube(RAFile.GetNameFromType(EAssetType.Geometry), Workspace.SceneManager.ActiveScene.WorldMin, Workspace.SceneManager.ActiveScene.WorldMax);
             //AssetFactory.Instance.CreateGeometry(cube);
         }
+
         private void CreateSphereCommand()
         {
             //Sphere sphere = new Sphere(RAFile.GetNameFromType(EAssetType.Geometry), 5, 5, 5, true, OpenTK.Vector3.UnitY);
             //AssetFactory.Instance.CreateGeometry(sphere);
         }
+
         private void CreatePlaneCommand()
         {
             //Plane plane = new Plane(KIFile.GetNameFromType(EAssetType.Geometry));
@@ -347,6 +352,7 @@ namespace RenderApp.ViewModel
                 return ControlManager.Instance.Mode;
             }
         }
+
         private void ControllerCommand(object controllerMenu)
         {
             RAController menuParam = (RAController)controllerMenu;
@@ -365,6 +371,7 @@ namespace RenderApp.ViewModel
             }
             OnPropertyChanged("ControlMode");
         }
+
         #endregion
 
         #region [MainWindow Event Command]
@@ -378,23 +385,27 @@ namespace RenderApp.ViewModel
             BufferFactory.Instance.Dispose();
             AssetFactory.Instance.Dispose();
         }
+
         private void SizeChangedCommand()
         {
 
         }
+
         public void LoadedCommand()
         {
-            m_Viewport = Viewport.Instance;
+            viewport = Viewport.Instance;
         }
+
         public void ClosedCommand()
         {
-            if (m_Viewport != null)
+            if (viewport != null)
             {
-                m_Viewport.Dispose();
+                viewport.Dispose();
             }
             WindowCloseCommand();
             GC.Collect();
         }
+
         #endregion
 
         #region [Rendering Menu Command]
@@ -409,6 +420,7 @@ namespace RenderApp.ViewModel
         private void VoxelizeCommand()
         {
         }
+
         private void OctreeCommand()
         {
 
@@ -417,7 +429,7 @@ namespace RenderApp.ViewModel
 
         private void OpenExplorerCommand(object directoryPath)
         {
-            string path = "";
+            string path = string.Empty;
             if (directoryPath is string)
             {
                 path = directoryPath as string;
@@ -463,6 +475,7 @@ namespace RenderApp.ViewModel
             {
                 return;
             }
+
             TabItemViewModel vm = null;
             if (node.KIObject is Geometry)
             {
@@ -473,8 +486,10 @@ namespace RenderApp.ViewModel
             {
                 vm = new ShaderProgramViewModel((ShaderProgram)node.KIObject);
             }
+
             ReplaceTabWindow(vm);
         }
+
         public void ReplaceTabWindow(TabItemViewModel window)
         {
             if (window is GeometryViewModel)
@@ -482,12 +497,12 @@ namespace RenderApp.ViewModel
                 var oldItem = LeftDownDockPanel.FindVM<GeometryViewModel>();
                 LeftDownDockPanel.ReplaceVM(oldItem, window);
             }
+
             if (window is ShaderProgramViewModel)
             {
                 var oldItem = RightDownDockPanel.FindVM<ShaderProgramViewModel>();
                 RightDownDockPanel.ReplaceVM(oldItem, window);
             }
-
         }
 
         public override void UpdateProperty()

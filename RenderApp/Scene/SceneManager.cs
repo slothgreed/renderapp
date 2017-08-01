@@ -78,7 +78,6 @@ namespace RenderApp
 
             var renderBunny = RenderObjectFactory.Instance.CreateRenderObject("bunny", bunny);
             ActiveScene.AddObject(renderBunny);
-
         }
 
         public void CreateMainCamera()

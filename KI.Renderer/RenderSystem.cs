@@ -78,37 +78,40 @@ namespace KI.Renderer
         public RenderSystem()
         {
         }
-        public void Initialize(int width,int height)
+        public void Initialize(int width, int height)
         {
             Width = width;
             Height = height;
             ProcessingTexture = new List<Texture>();
             PostProcessMode = false;
-            PreRenderStage  = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Shadow);
-            GBufferStage    = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer);
-            IBLStage        = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.IBL);
-            DeferredStage   = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Deferred);
-            SelectionStage  = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Selection);
-            PostEffect      = new PostEffectManager();
-            OutputStage     = (OutputBuffer)RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output);
-            OutputTexture   = ((GBuffer)GBufferStage).GetOutputTexture(GBuffer.GBufferOutputType.Color);
+            PreRenderStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Shadow);
+            GBufferStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer);
+            IBLStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.IBL);
+            DeferredStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Deferred);
+            SelectionStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Selection);
+            PostEffect = new PostEffectManager();
+            OutputStage = (OutputBuffer)RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output);
+            OutputTexture = ((GBuffer)GBufferStage).GetOutputTexture(GBuffer.GBufferOutputType.Color);
 
             foreach (var texture in RenderTechniqueFactory.Instance.OutputTextures())
             {
                 ProcessingTexture.Add(texture);
             }
-            
-
         }
 
         public void SizeChanged(int width, int height)
         {
             RenderTechniqueFactory.Instance.SizeChanged(width, height);
         }
+
+        /// <summary>
+        /// 解放処理
+        /// </summary>
         public void Dispose()
         {
             RenderTechniqueFactory.Instance.Dispose();
         }
+
         public void Render()
         {
             //PreRenderStage.Render();

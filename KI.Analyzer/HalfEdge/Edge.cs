@@ -8,40 +8,53 @@ using KI.Foundation.Utility;
 
 namespace KI.Analyzer
 {
+    /// <summary>
+    /// エッジクラス
+    /// </summary>
     public class Edge
     {
+
+        /// <summary>
+        /// 三角形を構成するエッジの角度thisと前のエッジの反対の角度
+        /// </summary>
+
+        private float _angle = 0.0f;
+
         /// <summary>
         /// 始点
         /// </summary>
         public Vertex Start { get; set; }
+
         /// <summary>
         /// 終点
         /// </summary>
         public Vertex End { get; set; }
+
         /// <summary>
         /// メッシュ
         /// </summary>
         public Mesh Mesh { get; set; }
+
         /// <summary>
         /// 次のエッジ
         /// </summary>
         public Edge Next { get; set; }
+
         /// <summary>
         /// 前のエッジ
         /// </summary>
         public Edge Before { get; set; }
+
         /// <summary>
         /// 反対エッジ
         /// </summary>
         public Edge Opposite { get; set; }
+
         /// <summary>
         /// 削除フラグ。Updateが走ると必ず削除するべきもの
         /// </summary>
         public bool DeleteFlag { get; set; }
-        /// <summary>
-        /// 三角形を構成するエッジの角度thisと前のエッジの反対の角度
-        /// </summary>
-        private float _angle = 0.0f;
+
         /// <summary>
         /// 初期のIndex
         /// </summary>
@@ -70,17 +83,19 @@ namespace KI.Analyzer
             //共有EdgeでもTrue
             return (edge1.Start == edge2.End && edge1.End == edge2.Start);
         }
-        public static bool operator !=(Edge edge1,Edge edge2)
+
+        public static bool operator !=(Edge edge1, Edge edge2)
         {
             return !(edge1 == edge2);
         }
+
         public float Angle
         {
             get
             {
-                if(_angle == 0.0f)
+                if (_angle == 0.0f)
                 {
-                    if(Start == null || End == null || Before == null || Opposite == null)
+                    if (Start == null || End == null || Before == null || Opposite == null)
                     {
                         Logger.GLLog(Logger.LogLevel.Error, "half edge angle error");
                         return _angle = 0.0f;
@@ -97,14 +112,15 @@ namespace KI.Analyzer
         {
             get
             {
-                if(Start == null || End == null)
+                if (Start == null || End == null)
                 {
-                    Logger.GLLog(Logger.LogLevel.Error,"half edge Length error");
+                    Logger.GLLog(Logger.LogLevel.Error, "half edge Length error");
                     return 0.0f;
                 }
                 return (Start - End).Length;
             }
         }
+
         public bool ErrorEdge
         {
             get
@@ -138,6 +154,9 @@ namespace KI.Analyzer
             Start.AddEdge(this);
         }
 
+        /// <summary>
+        /// 解放処理
+        /// </summary>
         public void Dispose()
         {
             Start.RemoveAroundEdge(this);
@@ -149,7 +168,6 @@ namespace KI.Analyzer
             Before = null;
             Opposite = null;
         }
-
 
         public static void SetupNextBefore(Edge edge1, Edge edge2, Edge edge3)
         {

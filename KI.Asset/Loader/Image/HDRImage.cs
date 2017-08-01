@@ -12,23 +12,19 @@ namespace KI.Asset
         {
 
         }
+
         public string HDRFormat
         {
             get;
             private set;
         }
-        private float _exposure;
+
         public float Expropsure
         {
-            get
-            {
-                return _exposure;
-            }
-            private set
-            {
-                _exposure = value;
-            }
+            get;
+            private set;
         }
+
         private bool LoadHDRImageData()
         {
             StreamReader reader = new StreamReader(FilePath);
@@ -44,24 +40,26 @@ namespace KI.Asset
                     continue;
 
                 //空白行の1行後はBinaryになるため
-                if (String.IsNullOrWhiteSpace(str))
+                if (string.IsNullOrWhiteSpace(str))
                 {
                     break;
                 }
 
                 //空白を削除
-                str = str.Replace(" ", "");
+                str = str.Replace(" ", string.Empty);
                 if (str.Contains("FORMAT"))
                 {
                     //不要文字を削除
-                    str = str.Replace("FORMAT=", "");
+                    str = str.Replace("FORMAT=", string.Empty);
                     HDRFormat = str;
                 }
 
                 if (str.Contains("EXPOSURE="))
                 {
-                    str = str.Replace("EXPOSURE=", "");
-                    float.TryParse(str, out _exposure);
+                    str = str.Replace("EXPOSURE=", string.Empty);
+                    float expropsure = 0;
+                    float.TryParse(str, out expropsure);
+                    Expropsure = expropsure;
                 }
             }
             str = reader.ReadLine();

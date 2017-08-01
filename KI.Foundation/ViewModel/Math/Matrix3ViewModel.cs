@@ -26,6 +26,7 @@ namespace KI.Foundation.ViewModel
                 SetValue<Matrix3>(updateFunc, new Matrix3(M11, M12, M13, M21, M22, M23, M31, M32, M33));
             }
         }
+
         public float M12
         {
             get { return Model.M12; }
@@ -34,6 +35,7 @@ namespace KI.Foundation.ViewModel
                 SetValue<Matrix3>(updateFunc, new Matrix3(M11, value, M13, M21, M22, M23, M31, M32, M33));
             }
         }
+
         public float M13
         {
             get { return Model.M13; }
@@ -42,6 +44,7 @@ namespace KI.Foundation.ViewModel
                 SetValue<Matrix3>(updateFunc, new Matrix3(M11, M12, value, M21, M22, M23, M31, M32, M33));
             }
         }
+
         public float M21
         {
             get { return Model.M21; }
@@ -50,6 +53,7 @@ namespace KI.Foundation.ViewModel
                 SetValue<Matrix3>(updateFunc, new Matrix3(M11, M12, M13, value, M22, M23, M31, M32, M33));
             }
         }
+
         public float M22
         {
             get { return Model.M22; }
@@ -58,6 +62,7 @@ namespace KI.Foundation.ViewModel
                 SetValue<Matrix3>(updateFunc, new Matrix3(M11, M12, M13, M21, value, M23, M31, M32, M33));
             }
         }
+
         public float M23
         {
             get { return Model.M23; }
@@ -66,6 +71,7 @@ namespace KI.Foundation.ViewModel
                 SetValue<Matrix3>(updateFunc, new Matrix3(M11, M12, M13, M21, M22, value, M31, M32, M33));
             }
         }
+
         public float M31
         {
             get { return Model.M31; }
@@ -74,6 +80,7 @@ namespace KI.Foundation.ViewModel
                 SetValue<Matrix3>(updateFunc, new Matrix3(M11, M12, M13, M21, M22, M23, value, M32, M33));
             }
         }
+
         public float M32
         {
             get { return Model.M32; }
@@ -82,6 +89,7 @@ namespace KI.Foundation.ViewModel
                 SetValue<Matrix3>(updateFunc, new Matrix3(M11, M12, M13, M21, M22, M23, M31, value, M33));
             }
         }
+
         public float M33
         {
             get { return Model.M33; }
@@ -90,6 +98,7 @@ namespace KI.Foundation.ViewModel
                 SetValue<Matrix3>(updateFunc, new Matrix3(M11, M12, M13, M21, M22, M23, M31, M32, value));
             }
         }
+
         public bool UpdateProperty(Matrix3 value)
         {
             Model = value;
@@ -104,6 +113,7 @@ namespace KI.Foundation.ViewModel
 
             return true;
         }
+
         public override void UpdateProperty()
         {
 

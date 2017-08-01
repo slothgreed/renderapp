@@ -8,9 +8,13 @@ using KI.Renderer;
 
 namespace RenderApp.RACommand
 {
+    /// <summary>
+    /// ハーフエッジのワイヤフレーム作成
+    /// </summary>
     class CreateHalfEdgeWireFrameCommand : CreateModelCommandBase, ICommand
     {
-        Geometry geometry;
+        private Geometry geometry;
+
         public CreateHalfEdgeWireFrameCommand(KIObject asset)
         {
             geometry = asset as Geometry;
@@ -27,6 +31,7 @@ namespace RenderApp.RACommand
             {
                 return RACommandResource.Failed;
             }
+
             return CanCreateGeometry(geometry);
         }
 
@@ -87,7 +92,6 @@ namespace RenderApp.RACommand
                     //    color.Add(Vector3.UnitX);
                     //}
 
-
                     if (edge == geometry.HalfEdge.m_Edge[counter])
                     {
                         color.Add(Vector3.UnitY);
@@ -98,7 +102,6 @@ namespace RenderApp.RACommand
                         color.Add(Vector3.UnitZ);
                         color.Add(Vector3.UnitZ);
                     }
-
                 }
             }
 

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 using KI.Foundation.Utility;
+
 namespace KI.Analyzer
 {
     public class Mesh
@@ -14,55 +15,60 @@ namespace KI.Analyzer
         /// </summary>
         private List<Edge> m_Edge = new List<Edge>();
 
-        public int Index
-        {
-            get;
-            set;
-        }
+        /// <summary>
+        /// 法線
+        /// </summary>
+        private Vector3 _normal = Vector3.Zero;
+
+        /// <summary>
+        /// 平面の公式
+        /// </summary>
+        private Vector4 plane = Vector4.Zero;
+
+        /// <summary>
+        /// 重心
+        /// </summary>
+        private Vector3 gravity = Vector3.Zero;
+
+        /// <summary>
+        /// 要素番号
+        /// </summary>
+        public int Index { get; set; }
 
         /// <summary>
         /// テンポラリ計算用フラグ
         /// </summary>
-        public object CalcFlag
-        {
-            get;
-            set;
-        }
-        /// <summary>
-        /// Modified
-        /// </summary>
-        public bool Modified
-        {
-            get;
-            set;
-        }
+        public object CalcFlag { get; set; }
+
         /// <summary>
         /// 削除フラグ。Updateが走ると必ず削除するべきもの
         /// </summary>
         public bool DeleteFlag { get; set; }
 
-        private Vector3 _normal = Vector3.Zero;
+
+        /// <summary>
+        /// 法線
+        /// </summary>
         public Vector3 Normal
         {
             get
             {
-                if(_normal == Vector3.Zero)
+                if (_normal == Vector3.Zero)
                 {
                     _normal = KICalc.Normal(
                         m_Edge[1].Start.Position - m_Edge[0].Start.Position,
                         m_Edge[2].Start.Position - m_Edge[0].Start.Position
                     );
-
                 }
-                return _normal; 
+                return _normal;
             }
         }
-        private Vector4 _plane = Vector4.Zero;
+
         public Vector4 Plane
         {
             get
             {
-                if (_plane == Vector4.Zero)
+                if (plane == Vector4.Zero)
                 {
                     Vector3 pos1 = Vector3.Zero;
                     Vector3 pos2 = Vector3.Zero;
@@ -78,31 +84,34 @@ namespace KI.Analyzer
                         {
                             pos2 = position.Position;
                             continue;
-                        } if (pos3 == Vector3.Zero)
+                        }
+                        if (pos3 == Vector3.Zero)
                         {
                             pos3 = position.Position;
                             break;
                         }
                     }
-                    _plane = KICalc.GetPlaneFormula(pos1, pos2, pos3);
+
+                    plane = KICalc.GetPlaneFormula(pos1, pos2, pos3);
                 }
-                return _plane;
+
+                return plane;
             }
         }
-        private Vector3 _gravity = Vector3.Zero;
+
         public Vector3 Gravity
         {
             get
             {
-                if (_gravity == Vector3.Zero)
+                if (gravity == Vector3.Zero)
                 {
-                    foreach(var vertex in AroundVertex)
+                    foreach (var vertex in AroundVertex)
                     {
-                        _gravity += vertex.Position;
+                        gravity += vertex.Position;
                     }
-                    _gravity /= AroundVertex.Count();
+                    gravity /= AroundVertex.Count();
                 }
-                return _gravity;
+                return gravity;
             }
         }
 
@@ -110,6 +119,7 @@ namespace KI.Analyzer
         {
             Index = index;
         }
+
         public Mesh(Edge edge1, Edge edge2, Edge edge3, int index = -1)
         {
             SetEdge(edge1, edge2, edge3);
@@ -127,14 +137,17 @@ namespace KI.Analyzer
             edge2.Mesh = this;
             edge3.Mesh = this;
         }
+
         public Edge GetEdge(int index)
         {
-            if(m_Edge.Count < index)
+            if (m_Edge.Count < index)
             {
                 return null;
             }
+
             return m_Edge[index];
         }
+
         public IEnumerable<Edge> AroundEdge
         {
             get
@@ -142,6 +155,7 @@ namespace KI.Analyzer
                 return m_Edge;
             }
         }
+
         public IEnumerable<Vertex> AroundVertex
         {
             get
@@ -152,6 +166,10 @@ namespace KI.Analyzer
                 }
             }
         }
+
+        /// <summary>
+        /// 解放処理
+        /// </summary>
         public void Dispose()
         {
             DeleteFlag = true;

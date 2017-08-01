@@ -14,26 +14,32 @@ namespace KI.Gfx.Render
         /// 幅
         /// </summary>
         public int Width = 0;
+        
         /// <summary>
         /// 高さ
         /// </summary>
         public int Height = 0;
+        
         /// <summary>
         /// フレームバッファ
         /// </summary>
         public FrameBuffer FrameBuffer { get; private set; }
+        
         /// <summary>
         /// レンダーバッファID
         /// </summary>
         public RenderBuffer RenderBuffer { get; private set; }
+        
         /// <summary>
         /// テクスチャのアタッチメント
         /// </summary>
         public List<FramebufferAttachment> Attachment = new List<FramebufferAttachment>();
+        
         /// <summary>
         /// 描画場所
         /// </summary>
         public List<DrawBuffersEnum> OutputBuffers = new List<DrawBuffersEnum>();
+        
         /// <summary>
         /// デフォルトの出力先
         /// </summary>
@@ -66,6 +72,7 @@ namespace KI.Gfx.Render
             FrameBuffer.GenBuffer();
             CreateRenderBuffer();
         }
+
         private void CreateRenderBuffer()
         {
             FrameBuffer.BindBuffer();
@@ -95,6 +102,9 @@ namespace KI.Gfx.Render
             FrameBuffer.UnBindBuffer();
         }
 
+        /// <summary>
+        /// 解放処理
+        /// </summary>
         public override void Dispose()
         {
             RenderBuffer.Dispose();
@@ -118,8 +128,10 @@ namespace KI.Gfx.Render
                     outputs[i].TextureBuffer.SizeChanged(Width, Height);
                 }
             }
+
             GL.DrawBuffers(OutputBuffers.Count, OutputBuffers.ToArray());
         }
+
         public void UnBindRenderTarget()
         {
             FrameBuffer.UnBindBuffer();

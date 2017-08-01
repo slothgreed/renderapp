@@ -8,6 +8,7 @@ namespace KI.Asset
     public class AssetFactory : KIFactoryBase<Geometry>
     {
         private static AssetFactory _instance = new AssetFactory();
+
         public static AssetFactory Instance
         {
             get
@@ -59,13 +60,13 @@ namespace KI.Asset
             switch (extension)
             {
                 case ".obj":
-                    return new OBJConverter(fileName, filePath);
+                    return new OBJConverter(filePath);
                 case ".stl":
-                    return new STLConverter(fileName, filePath);
+                    return new STLConverter(filePath);
                 case ".half":
-                    return new HalfEdgeConverter(fileName, filePath);
+                    return new HalfEdgeConverter(filePath);
                 case ".ply":
-                    return new PLYConverter(fileName, filePath);
+                    return new PLYConverter(filePath);
             }
 
             return null;

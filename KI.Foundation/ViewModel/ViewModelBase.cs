@@ -90,6 +90,7 @@ namespace KI.Foundation.ViewModel
                 _Command = command;
                 _CanExecute = canExecute;
             }
+
             public _DelegateCommand(Action command)
             {
                 if (command == null)
@@ -98,6 +99,7 @@ namespace KI.Foundation.ViewModel
                 }
                 _Command = command;
             }
+
             public _DelegateCommand(Action<object> command)
             {
                 if (command == null)
@@ -120,7 +122,6 @@ namespace KI.Foundation.ViewModel
                 }
             }
 
-
             public event EventHandler CanExecuteChanged;
 
             public void Execute(object parameter)
@@ -135,14 +136,17 @@ namespace KI.Foundation.ViewModel
                 }
             }
         }
+
         protected ICommand CreateCommand(Action command, Func<bool> canExecute)
         {
             return new _DelegateCommand(command, canExecute);
         }
+
         protected ICommand CreateCommand(Action command)
         {
             return new _DelegateCommand(command);
         }
+
         protected ICommand CreateCommand(Action<object> command)
         {
             return new _DelegateCommand(command);

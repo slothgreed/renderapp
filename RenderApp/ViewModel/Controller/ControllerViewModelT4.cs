@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using RenderApp.ViewModel.DockTab;
-
+﻿using System.Windows.Input;
 namespace RenderApp.ViewModel
 {
 	public partial class SelectViewModel : TabItemViewModel
@@ -16,10 +8,11 @@ namespace RenderApp.ViewModel
 		{
 			get
 			{
-				if(_Execute == null)
+				if (_Execute == null)
 				{
 					return _Execute = CreateCommand(ExecuteCommand);						
 				}
+
 				return _Execute;
 			}
 		}
@@ -31,10 +24,11 @@ namespace RenderApp.ViewModel
 		{
 			get
 			{
-				if(_Execute == null)
+				if (_Execute == null)
 				{
 					return _Execute = CreateCommand(ExecuteCommand);						
 				}
+
 				return _Execute;
 			}
 		}
@@ -46,10 +40,11 @@ namespace RenderApp.ViewModel
 		{
 			get
 			{
-				if(_Execute == null)
+				if (_Execute == null)
 				{
 					return _Execute = CreateCommand(ExecuteCommand);						
 				}
+
 				return _Execute;
 			}
 		}

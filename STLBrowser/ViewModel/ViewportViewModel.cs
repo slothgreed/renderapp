@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms.Integration;
 using System.Windows.Forms;
-using System.Windows;
 using RenderApp;
 using RenderApp.RAControl;
 using KI.Foundation.ViewModel;
 using KI.Gfx.GLUtil;
-using KI.Foundation.Control;
 namespace STLBrowser.ViewModel
 {
     public class ViewportViewModel : ViewModelBase

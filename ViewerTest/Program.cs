@@ -330,6 +330,9 @@ namespace ViewerTest
             SwapBuffers();
         }
 
+        /// <summary>
+        /// 解放処理
+        /// </summary>
         protected override void Dispose(bool manual)
         {
             GL.DeleteTexture(noizeId);

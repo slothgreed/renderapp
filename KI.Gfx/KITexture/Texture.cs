@@ -135,6 +135,9 @@ namespace KI.Gfx.KITexture
             Logger.GLLog(Logger.LogLevel.Error);
         }
 
+        /// <summary>
+        /// 解放処理
+        /// </summary>
         public override void Dispose()
         {
             TextureBuffer.Dispose();

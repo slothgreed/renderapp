@@ -10,7 +10,7 @@ namespace KI.Asset
 {
     class HalfEdgeConverter : IGeometry
     {
-        public HalfEdgeConverter(string name, string filePath)
+        public HalfEdgeConverter(string filePath)
         {
             var half = new HalfEdge();
             HalfEdgeIO.ReadFile(filePath, half);
@@ -43,6 +43,7 @@ namespace KI.Asset
                 color.Add(gray);
 
             }
+
             foreach (var mesh in half.m_Mesh)
             {
                 foreach (var vertex in mesh.AroundVertex)

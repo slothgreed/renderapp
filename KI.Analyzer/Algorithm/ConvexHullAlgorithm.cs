@@ -12,17 +12,20 @@ namespace KI.Analyzer.Algorithm
         /// メッシュリスト
         /// </summary>
         private List<Mesh> meshList;
-        public ReadOnlyCollection<Mesh> Meshs
-        {
-            get
-            {
-                return meshList.AsReadOnly();
-            }
-        }
+
         /// <summary>
         /// 点群
         /// </summary>
         private List<Vector3> pointList;
+
+        public List<Mesh> Meshs
+        {
+            get
+            {
+                return meshList;
+            }
+        }
+
         public List<Vector3> Points
         {
             get
@@ -30,6 +33,7 @@ namespace KI.Analyzer.Algorithm
                 return pointList;
             }
         }
+
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -97,6 +101,7 @@ namespace KI.Analyzer.Algorithm
                 }
             }
         }
+
         /// <summary>
         /// QuickHullMeshの作成
         /// </summary>

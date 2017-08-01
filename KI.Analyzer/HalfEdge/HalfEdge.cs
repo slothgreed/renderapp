@@ -12,11 +12,12 @@ namespace KI.Analyzer
         public List<Edge> m_Edge = new List<Edge>();
         public List<Vertex> m_Vertex = new List<Vertex>();
         public List<int> m_Index = new List<int>();
-        
+
         public HalfEdge()
         {
 
         }
+
         /// <summary>
         /// メッシュのインデックスと、頂点を受け取る
         /// </summary>
@@ -58,9 +59,9 @@ namespace KI.Analyzer
         /// <returns></returns>
         public bool ErrorHalfEdge()
         {
-            foreach(var vertex in m_Vertex)
+            foreach (var vertex in m_Vertex)
             {
-                if(vertex.ErrorVertex)
+                if (vertex.ErrorVertex)
                 {
                     return true;
                 }
@@ -133,6 +134,7 @@ namespace KI.Analyzer
             {
                 m_Vertex[i].Index = i;
             }
+
 # if CHECKHALFEDGE
             HasError();
 #endif
@@ -217,14 +219,15 @@ namespace KI.Analyzer
         #endregion
         public bool HasError()
         {
-            foreach(var edge in m_Edge)
+            foreach (var edge in m_Edge)
             {
-                if(edge.ErrorEdge)
+                if (edge.ErrorEdge)
                 {
                     Logger.Log(Logger.LogLevel.Error, "Edge : HasError");
                     return true;
                 }
             }
+
             foreach (var mesh in m_Mesh)
             {
                 if (mesh.ErrorMesh)
@@ -233,6 +236,7 @@ namespace KI.Analyzer
                     return true;
                 }
             }
+
             foreach (var vertex in m_Vertex)
             {
                 if (vertex.ErrorVertex)
@@ -252,6 +256,7 @@ namespace KI.Analyzer
                 m_Mesh.Remove(mesh);
             }
         }
+
         private void DeleteEdge(List<Edge> deleteEdge)
         {
             foreach (var edge in deleteEdge)
@@ -260,6 +265,7 @@ namespace KI.Analyzer
                 m_Edge.Remove(edge);
             }
         }
+
         private void DeleteVertex(List<Vertex> deleteVertex)
         {
             //エッジ削除
@@ -352,6 +358,7 @@ namespace KI.Analyzer
             m_Edge.Add(edge2);
             m_Edge.Add(edge3);
         }
+
         /// <summary>
         /// 頂点番号を持つエッジと面を生成
         /// </summary>
@@ -364,22 +371,24 @@ namespace KI.Analyzer
                 Vertex v2 = m_Vertex[poly_Index[3 * num + 1]];
                 Vertex v3 = m_Vertex[poly_Index[3 * num + 2]];
                 CreateMesh(v1, v2, v3);
-                
+
             }
         }
+
         /// <summary>
         /// 反対エッジのセット
         /// </summary>
         private void SetOppositeEdge()
         {
-            foreach(var vertex in m_Vertex)
+            foreach (var vertex in m_Vertex)
             {
-                foreach(var edge in vertex.AroundEdge)
+                foreach (var edge in vertex.AroundEdge)
                 {
                     SetOppositeEdge2(edge);
                 }
             }
         }
+
         /// <summary>
         /// 反対エッジの取得
         /// edge      op_edge
@@ -407,6 +416,7 @@ namespace KI.Analyzer
                 }
             }
         }
+
         /// <summary>
         /// 反対エッジがきちんとできているかチェック
         /// </summary>
@@ -442,6 +452,7 @@ namespace KI.Analyzer
             }
             return null;
         }
+
         /// <summary>
         /// 一定距離内の頂点の取得
         /// </summary>
@@ -459,7 +470,7 @@ namespace KI.Analyzer
             }
             return vertex_list;
         }
-        
+
         /// <summary>
         /// 一定距離内の頂点の取得を行う再起関数
         /// </summary>

@@ -9,17 +9,6 @@ namespace RenderApp.AssetModel.RA_Geometry
 {
     public class Cube
     {
-        public Vector3 Min
-        {
-            get;
-            set;
-        }
-
-        public Vector3 Max
-        {
-            get;
-            set;
-        }
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -27,7 +16,18 @@ namespace RenderApp.AssetModel.RA_Geometry
         {
             Min = min;
             Max = max;
-            //手前
+        }
+
+        public Vector3 Min
+        {
+            get;
+            private set;
+        }
+
+        public Vector3 Max
+        {
+            get;
+            private set;
         }
 
         public List<RenderObject> ConvertGeometrys(bool reverse = false)
@@ -81,7 +81,7 @@ namespace RenderApp.AssetModel.RA_Geometry
             geometry.Add(back);     ///< posz
             geometry.Add(left);    ///< negx
             geometry.Add(bot);      ///< negy
-            geometry.Add(front);      ///< negz
+            geometry.Add(front);    ///< negz
 
             string vert = ShaderCreater.Instance.GetVertexShader(front);
             string frag = ShaderCreater.Instance.GetFragShader(front);
