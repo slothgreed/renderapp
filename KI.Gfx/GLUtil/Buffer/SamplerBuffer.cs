@@ -16,7 +16,6 @@ namespace KI.Gfx.GLUtil
 
         internal SamplerBuffer()
         {
-
         }
 
         public override void PreGenBuffer()

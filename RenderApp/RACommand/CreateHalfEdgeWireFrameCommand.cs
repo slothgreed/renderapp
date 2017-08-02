@@ -116,7 +116,6 @@ namespace RenderApp.RACommand
             //    geometry.geometryInfo.Update(update.Position, update.Normal, update.Color, null, update.Index, GeometryType.Triangle);
             //    ((RenderObject)geometry).SetupBuffer();
 
-
             //    return RACommandResource.Success;
             //}
             //GeometryInfo info = new GeometryInfo(position, null, color, null, null, GeometryType.Line);

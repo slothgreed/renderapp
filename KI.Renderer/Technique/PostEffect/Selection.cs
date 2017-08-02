@@ -8,6 +8,9 @@ namespace KI.Renderer
         private static string vertexShader = Global.ShaderDirectory + @"\PostEffect\Selection.vert";
         private static string fragShader = Global.ShaderDirectory + @"\PostEffect\Selection.frag";
 
+        /// <summary>
+        /// 初期化
+        /// </summary>
         public override void Initialize()
         {
             uID = -1;

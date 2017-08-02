@@ -4,14 +4,15 @@ namespace KI.Analyzer
 {
     public struct Node
     {
-        public bool done;
-        public float cost;
-        public Vertex vertex;
-        public Node(bool _done, int _Cost, Vertex _v)
+        public bool Done;
+        public float Cost;
+        public Vertex Vertex;
+
+        public Node(bool done, int cost, Vertex vertex)
         {
-            done = _done;
-            cost = _Cost;
-            vertex = _v;
+            Done = done;
+            Cost = cost;
+            Vertex = vertex;
         }
     }
 
@@ -52,6 +53,7 @@ namespace KI.Analyzer
             {
                 return "init value error";
             }
+
             return string.Empty;
         }
 
@@ -66,34 +68,10 @@ namespace KI.Analyzer
             {
                 return string.Empty;
             }
+
             DistanceDijkstra(StartIndex, EndIndex);
             return string.Empty;
         }
-
-        private void CalcDijkstra(Node[] nodes, int start, int end)
-        {
-            //initialize
-            Node current = nodes[start];
-            current.done = true;
-            current.cost = 0;
-
-            //calc start
-            foreach (var aroundVertex in nodes[start].vertex.AroundVertex)
-            {
-                Node around = nodes[aroundVertex.Index];
-
-                if (around.done)
-                {
-                    float newCost = around.cost;
-                    newCost += (current.vertex - around.vertex).Length;
-                    if (around.cost > newCost)
-                    {
-                        around.cost = newCost;
-                    }
-                }
-            }
-        }
-
         public bool Reset()
         {
             StartIndex = -1;
@@ -105,6 +83,30 @@ namespace KI.Analyzer
         public string Undo(string commandArg = null)
         {
             return "Failed";
+        }
+
+        private void CalcDijkstra(Node[] nodes, int start, int end)
+        {
+            //initialize
+            Node current = nodes[start];
+            current.Done = true;
+            current.Cost = 0;
+
+            //calc start
+            foreach (var aroundVertex in nodes[start].Vertex.AroundVertex)
+            {
+                Node around = nodes[aroundVertex.Index];
+
+                if (around.Done)
+                {
+                    float newCost = around.Cost;
+                    newCost += (current.Vertex - around.Vertex).Length;
+                    if (around.Cost > newCost)
+                    {
+                        around.Cost = newCost;
+                    }
+                }
+            }
         }
     }
 }

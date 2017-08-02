@@ -12,7 +12,6 @@ namespace KI.Renderer
         public DeferredBuffer(RenderTechniqueType tech)
             : base("Deferred", vertexShader, fragShader, tech, RenderType.Original)
         {
-
         }
 
         public override void Render()
@@ -27,9 +26,13 @@ namespace KI.Renderer
                     Plane.Render(Global.Scene);
                 }
             }
+
             RenderTarget.UnBindRenderTarget();
         }
 
+        /// <summary>
+        /// 初期化
+        /// </summary>
         public override void Initialize()
         {
             Plane.AddTexture(TextureKind.Albedo, Global.RenderSystem.GBufferStage.OutputTexture[2]);

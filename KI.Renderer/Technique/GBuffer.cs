@@ -17,13 +17,13 @@ namespace KI.Renderer
         public GBuffer(RenderTechniqueType tech)
             : base("GBuffer", tech, RenderType.Original)
         {
-        
         }
 
         public Texture GetOutputTexture(GBufferOutputType target)
         {
             return OutputTexture[(int)target];
         }
+
         public override void CreateRenderTarget(int width, int height)
         {
             Texture[] texture = new Texture[4];
@@ -45,10 +45,16 @@ namespace KI.Renderer
             RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget(Name, width, height, OutputTexture.Count);
         }
 
+        /// <summary>
+        /// 初期化
+        /// </summary>
         public override void Initialize()
         {
         }
 
+        /// <summary>
+        /// 描画
+        /// </summary>
         public override void Render()
         {
             ClearBuffer();
@@ -61,6 +67,7 @@ namespace KI.Renderer
                     geometry.Render(Global.Scene);
                 }
             }
+
             RenderTarget.UnBindRenderTarget();
         }
     }

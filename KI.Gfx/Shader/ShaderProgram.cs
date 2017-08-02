@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using OpenTK.Graphics.OpenGL;
 using KI.Foundation.Core;
+
 namespace KI.Gfx
 {
     /// <summary>
@@ -8,6 +9,8 @@ namespace KI.Gfx
     /// </summary>
     public class ShaderProgram : KIFile
     {
+        private ShaderType? _shaderType;
+        
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -20,7 +23,6 @@ namespace KI.Gfx
             reader.Close();
         }
 
-        private ShaderType? _shaderType;
         public ShaderType shaderType
         {
             get
@@ -47,6 +49,7 @@ namespace KI.Gfx
                             break;
                     }
                 }
+
                 return (ShaderType)_shaderType;
             }
         }
@@ -61,7 +64,6 @@ namespace KI.Gfx
         /// </summary>
         public override void Dispose()
         {
-
         }
     }
 }

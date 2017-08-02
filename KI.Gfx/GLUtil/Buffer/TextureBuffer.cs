@@ -24,6 +24,25 @@ namespace KI.Gfx.GLUtil
 
     public class TextureBuffer : BufferObject
     {
+        internal TextureBuffer(TextureType type)
+        {
+            if (type != TextureType.Cubemap)
+            {
+                SetTextureTargte(type);
+            }
+            else
+            {
+                SetTextureTargte(type);
+                SetTextureTargte(TextureType.CubemapPX);
+                SetTextureTargte(TextureType.CubemapPY);
+                SetTextureTargte(TextureType.CubemapPZ);
+                SetTextureTargte(TextureType.CubemapNX);
+                SetTextureTargte(TextureType.CubemapNY);
+                SetTextureTargte(TextureType.CubemapNZ);
+            }
+            Format = PixelInternalFormat.Rgba8;
+        }
+
         public int Width
         {
             get;
@@ -53,6 +72,64 @@ namespace KI.Gfx.GLUtil
         {
             get;
             private set;
+        }
+
+        public override void PreGenBuffer()
+        {
+            DeviceID = GL.GenTexture();
+        }
+
+        public void SetData()
+        {
+        }
+
+        public void BindBuffer(int i)
+        {
+            GL.BindTexture(Targets[i], DeviceID);
+            if (NowBind)
+            {
+                Logger.Log(Logger.LogLevel.Warning, "Duplicate Bind Error");
+            }
+            NowBind = true;
+            Logger.GLLog(Logger.LogLevel.Error);
+        }
+
+        public override void PreBindBuffer()
+        {
+            GL.BindTexture(Target, DeviceID);
+        }
+
+        public override void PreUnBindBuffer()
+        {
+            GL.BindTexture(Target, 0);
+        }
+
+        public override void PreDispose()
+        {
+            GL.DeleteTexture(DeviceID);
+        }
+
+        /// <summary>
+        /// サイズ変更
+        /// </summary>
+        /// <param name="width">横</param>
+        /// <param name="height">縦</param>
+        public void SizeChanged(int width, int height)
+        {
+            BindBuffer();
+            Width = width;
+            Height = height;
+            GL.TexImage2D(Target, 0, Format, width, height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.Byte, IntPtr.Zero);
+            UnBindBuffer();
+        }
+
+        public void SetEmpty(int width, int height)
+        {
+            BindBuffer();
+            GL.TexImage2D(Target, 0, Format, width, height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.Byte, IntPtr.Zero);
+            Width = width;
+            Height = height;
+            UnBindBuffer();
         }
 
         private void SetTextureTargte(TextureType type)
@@ -99,77 +176,5 @@ namespace KI.Gfx.GLUtil
             }
         }
 
-        internal TextureBuffer(TextureType type)
-        {
-            if (type != TextureType.Cubemap)
-            {
-                SetTextureTargte(type);
-            }
-            else
-            {
-                SetTextureTargte(type);
-                SetTextureTargte(TextureType.CubemapPX);
-                SetTextureTargte(TextureType.CubemapPY);
-                SetTextureTargte(TextureType.CubemapPZ);
-                SetTextureTargte(TextureType.CubemapNX);
-                SetTextureTargte(TextureType.CubemapNY);
-                SetTextureTargte(TextureType.CubemapNZ);
-            }
-            Format = PixelInternalFormat.Rgba8;
-        }
-
-        public override void PreGenBuffer()
-        {
-            DeviceID = GL.GenTexture();
-        }
-
-        public void SetData()
-        {
-
-        }
-
-        public void BindBuffer(int i)
-        {
-            GL.BindTexture(Targets[i], DeviceID);
-            if (NowBind)
-            {
-                Logger.Log(Logger.LogLevel.Warning, "Duplicate Bind Error");
-            }
-            NowBind = true;
-            Logger.GLLog(Logger.LogLevel.Error);
-        }
-
-        public override void PreBindBuffer()
-        {
-            GL.BindTexture(Target, DeviceID);
-        }
-
-        public override void PreUnBindBuffer()
-        {
-            GL.BindTexture(Target, 0);
-        }
-
-        public override void PreDispose()
-        {
-            GL.DeleteTexture(DeviceID);
-        }
-
-        public void SizeChanged(int width, int height)
-        {
-            BindBuffer();
-            Width = width;
-            Height = height;
-            GL.TexImage2D(Target, 0, Format, width, height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.Byte, IntPtr.Zero);
-            UnBindBuffer();
-        }
-
-        public void SetEmpty(int width, int height)
-        {
-            BindBuffer();
-            GL.TexImage2D(Target, 0, Format, width, height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.Byte, IntPtr.Zero);
-            Width = width;
-            Height = height;
-            UnBindBuffer();
-        }
     }
 }

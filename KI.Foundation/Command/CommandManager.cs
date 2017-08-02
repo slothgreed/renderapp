@@ -6,22 +6,29 @@ using System.Threading.Tasks;
 using KI.Foundation.Utility;
 namespace KI.Foundation.Command
 {
+    /// <summary>
+    /// コマンドマネージャ
+    /// </summary>
     public class CommandManager
     {
-        private static CommandManager _instance = new CommandManager();
-        public static CommandManager Instance
-        {
-            get
-            {
-                return _instance;
-            }
-        }
+        /// <summary>
+        /// シングルトン
+        /// </summary>
+        public static CommandManager Instance { get; } = new CommandManager();
+        
         /// <summary>
         /// Listで管理、各ツールでenumで設定できる
         /// </summary>
         private List<CommandStack> CommandList;
+
+        /// <summary>
+        /// UndoList
+        /// </summary>
         private List<CommandStack> UndoList;
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public CommandManager()
         {
             CommandList = new List<CommandStack>();
@@ -29,8 +36,6 @@ namespace KI.Foundation.Command
             UndoList = new List<CommandStack>();
             UndoList.Add(new CommandStack());
         }
-
-
 
         /// <summary>
         /// コマンドスタックの追加
@@ -44,7 +49,7 @@ namespace KI.Foundation.Command
         /// <summary>
         /// コマンドのクリア
         /// </summary>
-        /// <param name="stack"></param>
+        /// <param name="stack">コマンドリスト番号</param>
         public void Clear(int stack = 0)
         {
             if (CommandList.Count < stack)
@@ -53,19 +58,21 @@ namespace KI.Foundation.Command
                 UndoList[stack].Clear();
             }
         }
+
         /// <summary>
         /// コマンドの実行
         /// </summary>
-        /// <param name="command"></param>
-        /// <param name="undo"></param>
-        /// <param name="stack"></param>
-        /// <returns></returns>
+        /// <param name="command">コマンド</param>
+        /// <param name="undo">undoできるか</param>
+        /// <param name="stack">コマンドリスト番号</param>
+        /// <returns>成功したか</returns>
         public string Execute(ICommand command, string commandArg = null, bool undo = true, int stack = 0)
         {
             if (CommandList.Count < stack)
             {
                 Logger.Log(Logger.LogLevel.Error, "command Stack Error");
             }
+
             string error = string.Empty;
             error = command.CanExecute(commandArg);
             if (error != CommandResource.Success)
@@ -112,7 +119,7 @@ namespace KI.Foundation.Command
         /// <summary>
         /// Redo
         /// </summary>
-        /// <param name="stack"></param>
+        /// <param name="stack">コマンドリスト番号</param>
         public void Redo(int stack = 0)
         {
             if (UndoList.Count < stack)

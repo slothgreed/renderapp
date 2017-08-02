@@ -13,12 +13,12 @@ namespace KI.Analyzer
         /// <summary>
         /// エッジ
         /// </summary>
-        private List<Edge> m_Edge = new List<Edge>();
+        private List<Edge> edges = new List<Edge>();
 
         /// <summary>
         /// 法線
         /// </summary>
-        private Vector3 _normal = Vector3.Zero;
+        private Vector3 normal = Vector3.Zero;
 
         /// <summary>
         /// 平面の公式
@@ -53,14 +53,15 @@ namespace KI.Analyzer
         {
             get
             {
-                if (_normal == Vector3.Zero)
+                if (normal == Vector3.Zero)
                 {
-                    _normal = KICalc.Normal(
-                        m_Edge[1].Start.Position - m_Edge[0].Start.Position,
-                        m_Edge[2].Start.Position - m_Edge[0].Start.Position
+                    normal = KICalc.Normal(
+                        edges[1].Start.Position - edges[0].Start.Position,
+                        edges[2].Start.Position - edges[0].Start.Position
                     );
                 }
-                return _normal;
+
+                return normal;
             }
         }
 
@@ -80,11 +81,13 @@ namespace KI.Analyzer
                             pos1 = position.Position;
                             continue;
                         }
+
                         if (pos2 == Vector3.Zero)
                         {
                             pos2 = position.Position;
                             continue;
                         }
+
                         if (pos3 == Vector3.Zero)
                         {
                             pos3 = position.Position;
@@ -109,8 +112,10 @@ namespace KI.Analyzer
                     {
                         gravity += vertex.Position;
                     }
+
                     gravity /= AroundVertex.Count();
                 }
+
                 return gravity;
             }
         }
@@ -128,9 +133,9 @@ namespace KI.Analyzer
 
         public void SetEdge(Edge edge1, Edge edge2, Edge edge3)
         {
-            m_Edge.Add(edge1);
-            m_Edge.Add(edge2);
-            m_Edge.Add(edge3);
+            edges.Add(edge1);
+            edges.Add(edge2);
+            edges.Add(edge3);
 
             Edge.SetupNextBefore(edge1, edge2, edge3);
             edge1.Mesh = this;
@@ -140,19 +145,19 @@ namespace KI.Analyzer
 
         public Edge GetEdge(int index)
         {
-            if (m_Edge.Count < index)
+            if (edges.Count < index)
             {
                 return null;
             }
 
-            return m_Edge[index];
+            return edges[index];
         }
 
         public IEnumerable<Edge> AroundEdge
         {
             get
             {
-                return m_Edge;
+                return edges;
             }
         }
 
@@ -160,7 +165,7 @@ namespace KI.Analyzer
         {
             get
             {
-                foreach (var edge in m_Edge)
+                foreach (var edge in edges)
                 {
                     yield return edge.Start;
                 }
@@ -173,8 +178,8 @@ namespace KI.Analyzer
         public void Dispose()
         {
             DeleteFlag = true;
-            m_Edge.Clear();
-            m_Edge = null;
+            edges.Clear();
+            edges = null;
         }
 
         public bool ErrorMesh

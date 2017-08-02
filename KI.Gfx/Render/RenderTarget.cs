@@ -83,12 +83,19 @@ namespace KI.Gfx.Render
             FrameBuffer.UnBindBuffer();
             Logger.GLLog(Logger.LogLevel.Error);
         }
+
+        /// <summary>
+        /// サイズ変更
+        /// </summary>
+        /// <param name="width">横</param>
+        /// <param name="height">縦</param>
         public void SizeChanged(int width, int height)
         {
             if (width == Width && Height == height)
             {
                 return;
             }
+
             Height = height;
             Width = width;
             RenderBuffer.SizeChanged(width, height);

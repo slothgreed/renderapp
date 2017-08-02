@@ -7,6 +7,23 @@ namespace RenderApp.ViewModel
 {
     public class GeometryViewModel : TabItemViewModel, IPropertyGridViewModel
     {
+        private Dictionary<string, object> item;
+
+        public GeometryViewModel()
+        {
+        }
+
+        public GeometryViewModel(Geometry model)
+        {
+            Model = model;
+            PropertyItem = new Dictionary<string, object>();
+            PropertyItem.Add("Translate", new Vector3ViewModel(Model, "Translate", model.Translate));
+            PropertyItem.Add("Scale", new Vector3ViewModel(Model, "Scale", model.Scale));
+            PropertyItem.Add("Rotate", new Vector3ViewModel(Model, "Rotate", model.Rotate));
+            PropertyItem.Add("Shader", new ComboItemViewModel(Model, "Shader", RenderApp.Globals.Project.ActiveProject.GetObject(RAAsset.Shader), 0));
+            PropertyItem.Add("Visible", new CheckBoxViewModel(Model, "Visible", model.Visible));
+        }
+
         public override string Title
         {
             get
@@ -22,7 +39,6 @@ namespace RenderApp.ViewModel
             }
         }
 
-        private Dictionary<string, object> item;
         public Dictionary<string, object> PropertyItem
         {
             get
@@ -36,26 +52,7 @@ namespace RenderApp.ViewModel
             }
         }
 
-        public Geometry Model
-        {
-            get;
-            private set;
-        }
-
-        public GeometryViewModel(Geometry model)
-        {
-            Model = model;
-            PropertyItem = new Dictionary<string, object>();
-            PropertyItem.Add("Translate", new Vector3ViewModel(Model, "Translate", model.Translate));
-            PropertyItem.Add("Scale", new Vector3ViewModel(Model, "Scale", model.Scale));
-            PropertyItem.Add("Rotate", new Vector3ViewModel(Model, "Rotate", model.Rotate));
-            PropertyItem.Add("Shader", new ComboItemViewModel(Model, "Shader", RenderApp.Globals.Project.ActiveProject.GetObject(RAAsset.Shader), 0));
-            PropertyItem.Add("Visible", new CheckBoxViewModel(Model, "Visible", model.Visible));
-        }
-
-        public GeometryViewModel()
-        {
-        }
+        public Geometry Model { get; private set; }
 
         public override void UpdateProperty()
         {

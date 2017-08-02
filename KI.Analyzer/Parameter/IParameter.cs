@@ -9,6 +9,7 @@ namespace KI.Analyzer
     public interface IParameter
     {
         void AddValue(object value);
+
         object GetValue(int index);
     }
 }

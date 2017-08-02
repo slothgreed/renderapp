@@ -7,34 +7,28 @@ namespace KI.Foundation.Core
         {
             Name = this.GetType().ToString();
             Logger.Log(Logger.LogLevel.Debug, "create kiobject " + Name + ":");
-
         }
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="name"></param>
         public KIObject(string name)
         {
             Name = name;
             Logger.Log(Logger.LogLevel.Debug, "create kiobject " + Name + ":");
         }
 
-        private string _name = null;
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-            set
-            {
-                _name = value;
-            }
-        }
+        /// <summary>
+        /// 名前
+        /// </summary>
+        public string Name { get; set; }
 
         /// <summary>
         /// 解放処理
         /// </summary>
         public virtual void Dispose()
         {
-
         }
 
         public override string ToString()

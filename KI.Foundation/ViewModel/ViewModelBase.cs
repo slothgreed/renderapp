@@ -24,12 +24,14 @@ namespace KI.Foundation.ViewModel
                 PropertyChanging(this, new PropertyChangingEventArgs(propertyName));
             }
         }
+
         protected void SetValue<T>(ref T member, T value, [CallerMemberName]string memberName = "")
         {
             OnPropertyChanging(memberName);
             member = value;
             OnPropertyChanged(memberName);
         }
+
         protected void SetValue<T>(Func<T, bool> updateFunc, T value, [CallerMemberName]string memberName = "")
         {
             OnPropertyChanging(memberName);
@@ -39,6 +41,7 @@ namespace KI.Foundation.ViewModel
             }
             OnPropertyChanged(memberName);
         }
+
         protected void SetValue<T>(Action<T> action, T value, [CallerMemberName]string memberName = "")
         {
             OnPropertyChanging(memberName);
@@ -66,12 +69,10 @@ namespace KI.Foundation.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
         public virtual void UpdateProperty()
         {
-
         }
-
-
         #endregion
 
         #region [Command]

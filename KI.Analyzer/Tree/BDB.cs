@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 using KI.Foundation.Utility;
+
 namespace KI.Analyzer
 {
     public class BDB : IAnalyzer
@@ -43,7 +44,6 @@ namespace KI.Analyzer
         /// </summary>
         private void SetBoundBox(List<Vector3> position)
         {
-
             Vector3 min = new Vector3(float.MaxValue);
             Vector3 max = new Vector3(float.MinValue);
             Vector3 sum = new Vector3();
@@ -68,7 +68,6 @@ namespace KI.Analyzer
         /// </summary>
         public static void GetBoundBox(List<Vector3> position, out Vector3 Min, out Vector3 Max)
         {
-
             Vector3 min = new Vector3(float.MaxValue);
             Vector3 max = new Vector3(float.MinValue);
 
@@ -81,6 +80,7 @@ namespace KI.Analyzer
                 if (max.Y < position[i].Y) { max.Y = position[i].Y; }
                 if (max.Z < position[i].Z) { max.Z = position[i].Z; }
             }
+
             Min = new Vector3(min.X, min.Y, min.Z);
             Max = new Vector3(max.X, max.Y, max.Z);
         }

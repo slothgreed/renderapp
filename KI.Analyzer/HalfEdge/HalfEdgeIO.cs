@@ -99,6 +99,7 @@ namespace KI.Analyzer
                     EdgeInfoCounter++;
                 }
             }
+
             int count = halfEdge.m_Edge.Count;
 
             //for(int i = 0; i < 3;i++)
@@ -141,6 +142,7 @@ namespace KI.Analyzer
             {
                 write.WriteLine("v" + " " + vertex.Position.X + " " + vertex.Position.Y + " " + vertex.Position.Z);
             }
+
             write.WriteLine("Edge : Start Vetex Index, End Vertex Index");
             foreach (var edge in halfEdge.m_Edge)
             {
@@ -162,6 +164,7 @@ namespace KI.Analyzer
                         edgeIdx += edge.Index.ToString() + " ";
                     }
                 }
+
                 write.WriteLine("m" + " " + edgeIdx);
             }
 
@@ -170,6 +173,7 @@ namespace KI.Analyzer
             {
                 write.WriteLine("ei" + " " + edge.Next.Index + " " + edge.Before.Index + " " + edge.Opposite.Index + " " + edge.Mesh.Index);
             }
+
             write.WriteLine("end");
             write.Close();
         }

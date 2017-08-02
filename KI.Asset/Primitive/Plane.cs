@@ -37,7 +37,6 @@ namespace KI.Asset
             Vector3 q2 = new Vector3(1, 1, 0);
             Vector3 q3 = new Vector3(-1, 1, 0);
             CreateObject(q0, q1, q2, q3);
-
         }
         #region [形状の作成]
         /// <summary>
@@ -68,7 +67,6 @@ namespace KI.Asset
             var info = new GeometryInfo(position, normal, Vector3.UnitX, texcoord, null, Gfx.GLUtil.GeometryType.Quad);
 
             GeometryInfos = new GeometryInfo[] { info };
-
         }
         #endregion
 

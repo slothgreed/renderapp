@@ -4,6 +4,9 @@ using KI.Gfx.KITexture;
 
 namespace KI.Renderer
 {
+    /// <summary>
+    /// レンダーテクニック種類
+    /// </summary>
     public enum RenderTechniqueType
     {
         Shadow,
@@ -19,21 +22,15 @@ namespace KI.Renderer
         Output
     }
 
+    /// <summary>
+    /// レンダーテクニックのファクトリークラス
+    /// </summary>
     class RenderTechniqueFactory : KIFactoryBase<RenderTechnique>
     {
-        private static RenderTechniqueFactory _instance = null;
-
-        public static RenderTechniqueFactory Instance
-        {
-            get
-            {
-                if(_instance == null)
-                {
-                    _instance = new RenderTechniqueFactory();
-                }
-                return _instance;
-            }
-        }
+        /// <summary>
+        /// シングルトン
+        /// </summary>
+        public static RenderTechniqueFactory Instance { get; } =  new RenderTechniqueFactory();
 
         public RenderTechnique CreateRenderTechnique(RenderTechniqueType type)
         {
@@ -74,35 +71,46 @@ namespace KI.Renderer
                     technique = null;
                     break;
             }
+
             AddItem(technique);
             return technique;
         }
+
         public List<Texture> OutputTexture(RenderTechniqueType type)
         {
-            foreach(var technique in AllItem)
+            foreach (var technique in AllItem)
             {
-                if(technique.Technique == type)
+                if (technique.Technique == type)
                 {
                     return technique.OutputTexture;
                 }
             }
+
             return null;
         }
+
         public IEnumerable<Texture> OutputTextures()
         {
             foreach (var technique in AllItem)
             {
                 //出力用のは返さない
-                if(technique is OutputBuffer)
+                if (technique is OutputBuffer)
                 {
                     continue;
                 }
-                foreach(var texture in technique.OutputTexture)
+
+                foreach (var texture in technique.OutputTexture)
                 {
                     yield return texture;
                 }
             }
         }
+
+        /// <summary>
+        /// サイズ変更
+        /// </summary>
+        /// <param name="width">横</param>
+        /// <param name="height">縦</param>
         public void SizeChanged(int width, int height)
         {
             foreach (var technique in AllItem)

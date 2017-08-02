@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using OpenTK;
+
 namespace KI.Analyzer.Algorithm
 {
     public class VertexNormalAlgorithm : IAnalyzer
@@ -23,6 +24,7 @@ namespace KI.Analyzer.Algorithm
                     sum += mesh.Normal;
                     num++;
                 }
+
                 Normal.Add(sum / num);
             }
         }

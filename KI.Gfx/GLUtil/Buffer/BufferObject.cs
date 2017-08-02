@@ -31,19 +31,22 @@ namespace KI.Gfx.GLUtil
 
     public abstract class BufferObject : KIObject
     {
+        private static int CreateNum = 0;
+
         protected bool NowBind;
-        public int DeviceID { get; protected set; }
         public abstract void PreGenBuffer();
         public abstract void PreDispose();
         public abstract void PreBindBuffer();
         public abstract void PreUnBindBuffer();
 
-        private static int CreateNum = 0;
-        public bool Enable
+        public BufferObject()
+            : base("BufferObject")
         {
-            get;
-            set;
+            DeviceID = -1;
         }
+
+        public bool Enable { get; set; }
+        public int DeviceID { get; protected set; }
 
         public virtual void GenBuffer()
         {
@@ -83,12 +86,6 @@ namespace KI.Gfx.GLUtil
         {
             CreateNum--;
             PreDispose();
-            DeviceID = -1;
-        }
-
-        public BufferObject()
-            : base("BufferObject")
-        {
             DeviceID = -1;
         }
     }

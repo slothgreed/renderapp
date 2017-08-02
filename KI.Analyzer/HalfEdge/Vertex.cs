@@ -17,39 +17,47 @@ namespace KI.Analyzer
         Voronoi
     }
 
+    /// <summary>
+    /// 頂点クラス
+    /// </summary>
     public class Vertex
     {
+        /// <summary>
+        /// 法線
+        /// </summary>
         private Vector3 normal = Vector3.Zero;
 
         /// <summary>
         /// temporaryEdgeforopposite
         /// </summary>
-        public List<Edge> aroundEdge = new List<Edge>();
+        private List<Edge> aroundEdge = new List<Edge>();
 
+        /// <summary>
+        /// パラメータ
+        /// </summary>
+        private Dictionary<VertexParam, object> parameter;
+
+        /// <summary>
+        /// 頂点
+        /// </summary>
+        /// <param name="pos">座標</param>
+        /// <param name="index">要素番号</param>
+        public Vertex(Vector3 pos, int index = -1)
+        {
+            parameter = new Dictionary<VertexParam, object>();
+            Position = pos;
+            Index = index;
+        }
+
+        /// <summary>
+        /// 座標
+        /// </summary>
         public Vector3 Position { get; set; }
-
 
         /// <summary>
         /// HalfEdgeでもつm_VertexのIndex番号
         /// </summary>
         public int Index { get; set; }
-
-        public Vector3 MaxVector { get; set; }
-
-        public Vector3 MinVector { get; set; }
-
-        private Dictionary<VertexParam, object> Parameter;
-
-
-        public void AddParameter(VertexParam param, float value)
-        {
-            Parameter.Add(param, value);
-        }
-
-        public object GetParameter(VertexParam param)
-        {
-            return Parameter[param];
-        }
 
         /// <summary>
         /// テンポラリ計算用フラグ
@@ -61,6 +69,9 @@ namespace KI.Analyzer
         /// </summary>
         public bool DeleteFlag { get; set; }
 
+        /// <summary>
+        /// 頂点に不正があるか
+        /// </summary>
         public bool ErrorVertex
         {
             get
@@ -69,25 +80,9 @@ namespace KI.Analyzer
             }
         }
 
-        public Vertex(Vector3 pos, int index = -1)
-        {
-            Parameter = new Dictionary<VertexParam, object>();
-            Position = pos;
-            Index = index;
-        }
-
         /// <summary>
-        /// エッジのセッタ
+        /// 周辺エッジ
         /// </summary>
-        /// <param name="edge"></param>
-        public void AddEdge(Edge edge)
-        {
-            if (!aroundEdge.Contains(edge))
-            {
-                aroundEdge.Add(edge);
-            }
-        }
-
         public IEnumerable<Edge> AroundEdge
         {
             get
@@ -103,6 +98,9 @@ namespace KI.Analyzer
             }
         }
 
+        /// <summary>
+        /// 周辺メッシュ
+        /// </summary>
         public IEnumerable<Mesh> AroundMesh
         {
             get
@@ -114,6 +112,9 @@ namespace KI.Analyzer
             }
         }
 
+        /// <summary>
+        /// 周辺頂点
+        /// </summary>
         public IEnumerable<Vertex> AroundVertex
         {
             get
@@ -125,11 +126,50 @@ namespace KI.Analyzer
             }
         }
 
+        /// <summary>
+        /// パラメータの追加
+        /// </summary>
+        /// <param name="param">パラメータのタイプ</param>
+        /// <param name="value">値</param>
+        public void AddParameter(VertexParam param, float value)
+        {
+            parameter.Add(param, value);
+        }
+
+        /// <summary>
+        /// パラメータの取得
+        /// </summary>
+        /// <param name="param">パラメータのタイプ</param>
+        /// <returns>値</returns>
+        public object GetParameter(VertexParam param)
+        {
+            return parameter[param];
+        }
+
+        /// <summary>
+        /// エッジのセッタ
+        /// </summary>
+        /// <param name="edge">エッジ</param>
+        public void AddEdge(Edge edge)
+        {
+            if (!aroundEdge.Contains(edge))
+            {
+                aroundEdge.Add(edge);
+            }
+        }
+
+        /// <summary>
+        /// 周辺エッジの削除
+        /// </summary>
+        /// <param name="edge">エッジ</param>
         public void RemoveAroundEdge(Edge edge)
         {
             aroundEdge.Remove(edge);
         }
 
+        /// <summary>
+        /// 法線
+        /// </summary>
         public Vector3 Normal
         {
             get
@@ -144,6 +184,7 @@ namespace KI.Analyzer
                         {
                             sum += mesh.Normal;
                         }
+
                         sum.X /= count;
                         sum.Y /= count;
                         sum.Z /= count;

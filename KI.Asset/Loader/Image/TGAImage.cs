@@ -33,7 +33,11 @@ namespace KI.Asset
         public TGAImage(string path) :
             base(path)
         {
+        }
 
+        public override bool LoadImageData()
+        {
+            return ReadTGAImage(FilePath);
         }
 
         private void ReadHeaderData(BinaryReader binary)
@@ -78,16 +82,19 @@ namespace KI.Asset
                 Format = PixelFormat.Format24bppRgb;
                 bmpImage = new Bitmap(Width, Height, Width * 3, Format, Marshal.UnsafeAddrOfPinnedArrayElement(rgb, 0));
             }
+
             else if (BitPerPixel == 32)
             {
                 Format = PixelFormat.Format32bppArgb;
                 bmpImage = new Bitmap(Width, Height, Width * 4, Format, Marshal.UnsafeAddrOfPinnedArrayElement(rgb, 0));
             }
+
             else if (BitPerPixel == 8)
             {
                 Format = PixelFormat.Format8bppIndexed;
                 bmpImage = new Bitmap(Width, Height, Width, Format, Marshal.UnsafeAddrOfPinnedArrayElement(rgb, 0));
             }
+
             binary.Close();
             fp.Close();
             Loaded = true;
@@ -97,11 +104,6 @@ namespace KI.Asset
         private int TGAStructValue(TGAStruct data)
         {
             return data.High * 256 + data.Low;
-        }
-
-        public override bool LoadImageData()
-        {
-            return ReadTGAImage(FilePath);
         }
 
     }

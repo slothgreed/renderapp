@@ -10,66 +10,106 @@ namespace KI.Gfx.KIShader
 {
     public class Shader
     {
-
         #region [member value]
+
+        /// <summary>
+        /// 利用しているシェーダ
+        /// </summary>
+        private List<ShaderProgram> ActiveShader { get; set; }
+
         /// <summary>
         /// シェーダプログラム
         /// </summary>
-        private int _program = -1;
-        public int Program
-        {
-            get
-            {
-                return _program;
-            }
-        }
+        public int Program { get; private set; } = -1;
 
         /// <summary>
         /// 出力バッファ数
         /// </summary>
-        public int OutputBufferNum
-        {
-            get;
-            private set;
-        }
+        public int OutputBufferNum { get; private set; }
 
-        ShaderProgram _vert;
-        public ShaderProgram VertexShader
-        {
-            get { return _vert; }
-        }
+        /// <summary>
+        /// 頂点シェーダ
+        /// </summary>
+        public ShaderProgram VertexShader { get; private set; }
 
-        ShaderProgram _frag;
-        public ShaderProgram FragShader
-        {
-            get { return _frag; }
-        }
+        /// <summary>
+        /// フラグメントシェーダ
+        /// </summary>
+        public ShaderProgram FragShader { get; private set; }
 
-        ShaderProgram _geom;
-        public ShaderProgram GeomShader
-        {
-            get { return _geom; }
-        }
+        /// <summary>
+        /// ジオメトリシェーダ
+        /// </summary>
+        public ShaderProgram GeomShader { get; private set; }
 
-        ShaderProgram _tcs;
-        public ShaderProgram TcsShader
-        {
-            get { return _tcs; }
-        }
+        public ShaderProgram TcsShader { get; private set; }
 
-        ShaderProgram _tes;
-        public ShaderProgram TesShader
-        {
-            get { return _tes; }
-        }
+        public ShaderProgram TesShader { get; private set; }
 
-        List<ShaderProgram> _activeShader = new List<ShaderProgram>();
-        public List<ShaderProgram> ActiveShader
+        #endregion
+
+        #region [constructor]
+
+        public Shader(ShaderProgram vert, ShaderProgram frag)
         {
-            get
+            if (vert.shaderType == ShaderType.VertexShader && frag.shaderType == ShaderType.FragmentShader)
             {
-                return _activeShader;
+                VertexShader = vert;
+                FragShader = frag;
+                Program = CreateShaderProgram(vert.ShaderCode, frag.ShaderCode);
             }
+
+            Initialize();
+        }
+
+        public Shader(ShaderProgram vert, ShaderProgram frag, ShaderProgram geom)
+        {
+            if (vert.shaderType == ShaderType.VertexShader &&
+                frag.shaderType == ShaderType.FragmentShader &&
+                geom.shaderType == ShaderType.GeometryShader)
+            {
+                VertexShader = vert;
+                FragShader = frag;
+                GeomShader = geom;
+                Program = CreateShaderProgram(vert.ShaderCode, frag.ShaderCode, geom.ShaderCode, 3, 3);
+            }
+
+            Initialize();
+        }
+
+        public Shader(ShaderProgram vert, ShaderProgram frag, ShaderProgram geom, ShaderProgram tcs, ShaderProgram tes)
+        {
+            if (vert.shaderType == ShaderType.VertexShader &&
+                frag.shaderType == ShaderType.FragmentShader &&
+                geom.shaderType == ShaderType.GeometryShader &&
+                tcs.shaderType == ShaderType.TessControlShader)
+            {
+                VertexShader = vert;
+                FragShader = frag;
+                GeomShader = geom;
+                TcsShader = tcs;
+                TesShader = tes;
+                Program = CreateShaderProgram(vert.ShaderCode, frag.ShaderCode, geom.ShaderCode, tcs.ShaderCode, tes.ShaderCode);
+            }
+
+            Initialize();
+        }
+
+        public Shader(ShaderProgram vert, ShaderProgram frag, ShaderProgram tcs, ShaderProgram tes)
+        {
+            if (vert.shaderType == ShaderType.VertexShader &&
+                frag.shaderType == ShaderType.FragmentShader &&
+                tcs.shaderType == ShaderType.TessControlShader &&
+                tes.shaderType == ShaderType.TessEvaluationShader)
+            {
+                VertexShader = vert;
+                FragShader = frag;
+                TcsShader = tcs;
+                TesShader = tes;
+                Program = CreateShaderProgram(vert.ShaderCode, frag.ShaderCode, tcs.ShaderCode, tes.ShaderCode);
+            }
+
+            Initialize();
         }
         #endregion
 
@@ -79,10 +119,12 @@ namespace KI.Gfx.KIShader
             {
                 return false;
             }
+
             if (prog.FilePath == path)
             {
                 return true;
             }
+
             return false;
         }
 
@@ -98,6 +140,7 @@ namespace KI.Gfx.KIShader
                 return false;
             }
         }
+
         public bool FindShaderCombi(string vert, string frag, string geom)
         {
             if (ExistShaderProgram(VertexShader, vert) &&
@@ -142,64 +185,8 @@ namespace KI.Gfx.KIShader
                 return false;
             }
         }
-
-        #region [constructor]
-        public Shader(ShaderProgram vert, ShaderProgram frag)
-        {
-            if (vert.shaderType == ShaderType.VertexShader && frag.shaderType == ShaderType.FragmentShader)
-            {
-                _vert = vert;
-                _frag = frag;
-                _program = CreateShaderProgram(vert.ShaderCode, frag.ShaderCode);
-            }
-            Initialize();
-        }
-        public Shader(ShaderProgram vert, ShaderProgram frag, ShaderProgram geom)
-        {
-            if (vert.shaderType == ShaderType.VertexShader &&
-                frag.shaderType == ShaderType.FragmentShader &&
-                geom.shaderType == ShaderType.GeometryShader)
-            {
-                _vert = vert;
-                _frag = frag;
-                _geom = geom;
-                _program = CreateShaderProgram(vert.ShaderCode, frag.ShaderCode, geom.ShaderCode, 3, 3);
-            }
-            Initialize();
-        }
-        public Shader(ShaderProgram vert, ShaderProgram frag, ShaderProgram geom, ShaderProgram tcs, ShaderProgram tes)
-        {
-            if (vert.shaderType == ShaderType.VertexShader &&
-                frag.shaderType == ShaderType.FragmentShader &&
-                geom.shaderType == ShaderType.GeometryShader &&
-                tcs.shaderType == ShaderType.TessControlShader)
-            {
-                _vert = vert;
-                _frag = frag;
-                _geom = geom;
-                _tcs = tcs;
-                _tes = tes;
-                _program = CreateShaderProgram(vert.ShaderCode, frag.ShaderCode, geom.ShaderCode, tcs.ShaderCode, tes.ShaderCode);
-            }
-            Initialize();
-        }
-        public Shader(ShaderProgram vert, ShaderProgram frag, ShaderProgram tcs, ShaderProgram tes)
-        {
-            if (vert.shaderType == ShaderType.VertexShader &&
-                frag.shaderType == ShaderType.FragmentShader &&
-                tcs.shaderType == ShaderType.TessControlShader &&
-                tes.shaderType == ShaderType.TessEvaluationShader)
-            {
-                _vert = vert;
-                _frag = frag;
-                _tcs = tcs;
-                _tes = tes;
-                _program = CreateShaderProgram(vert.ShaderCode, frag.ShaderCode, tcs.ShaderCode, tes.ShaderCode);
-            }
-            Initialize();
-        }
-        #endregion
         #region [bind buffer]
+
         private int ActiveTextureCounter;
         public void BindBuffer()
         {
@@ -212,10 +199,12 @@ namespace KI.Gfx.KIShader
                 {
                     continue;
                 }
+
                 if (loop.shaderVariableType == EShaderVariableType.Uniform)
                 {
                     BindUniformState(loop, ref ActiveTextureCounter);
                 }
+
                 if (loop.shaderVariableType == EShaderVariableType.Attribute)
                 {
                     BindAttributeState(loop);
@@ -233,6 +222,7 @@ namespace KI.Gfx.KIShader
             {
                 return;
             }
+
             if (attribute.variable is ArrayBuffer)
             {
                 var array = attribute.variable as ArrayBuffer;
@@ -261,6 +251,7 @@ namespace KI.Gfx.KIShader
                         default:
                             break;
                     }
+
                     array.UnBindBuffer();
                 }
                 else
@@ -271,6 +262,7 @@ namespace KI.Gfx.KIShader
 
             Logger.GLLog(Logger.LogLevel.Error);
         }
+
         public void UnBindBuffer()
         {
             foreach (ShaderProgramInfo loop in _shaderVariable.Values)
@@ -283,11 +275,13 @@ namespace KI.Gfx.KIShader
                     }
                 }
             }
+
             for (int i = 0; i < ActiveTextureCounter; i++)
             {
                 GL.ActiveTexture(TextureUnit.Texture0 + i);
                 GL.BindTexture(TextureTarget.Texture2D, 0);
             }
+
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             Logger.GLLog(Logger.LogLevel.Error);
@@ -316,11 +310,13 @@ namespace KI.Gfx.KIShader
                     }
                     return true;
                 }
+
                 _shaderVariable[key].variable = value;
                 return true;
             }
             return false;
         }
+
         /// <summary>
         /// Uniform変数のBinding
         /// </summary>
@@ -332,10 +328,10 @@ namespace KI.Gfx.KIShader
                 Logger.Log(Logger.LogLevel.Warning, this.ToString() + " : Shader Binding Error : " + uniform.Name);
                 return;
             }
+
             if (uniform.ShaderID == -1)
-            {
                 return;
-            }
+
             if (uniform.variableType == EVariableType.Vec2)
             {
                 GL.Uniform2(uniform.ShaderID, (Vector2)uniform.variable);
@@ -392,6 +388,7 @@ namespace KI.Gfx.KIShader
             {
                 Logger.Log(Logger.LogLevel.Warning, "BindUniformState not identify");
             }
+
             Logger.GLLog(Logger.LogLevel.Error);
         }
         #endregion
@@ -412,51 +409,62 @@ namespace KI.Gfx.KIShader
         /// </summary>
         public void Initialize()
         {
-            if (_vert != null)
+            if (VertexShader != null)
             {
-                _activeShader.Add(_vert);
+                ActiveShader.Add(VertexShader);
             }
-            if (_frag != null)
+
+            if (FragShader != null)
             {
-                _activeShader.Add(_frag);
+                ActiveShader.Add(FragShader);
             }
-            if (_geom != null)
+
+            if (GeomShader != null)
             {
-                _activeShader.Add(_geom);
+                ActiveShader.Add(GeomShader);
             }
-            if (_tcs != null)
+
+            if (TcsShader != null)
             {
-                _activeShader.Add(_tcs);
+                ActiveShader.Add(TcsShader);
             }
-            if (_tes != null)
+
+            if (TesShader != null)
             {
-                _activeShader.Add(_tes);
+                ActiveShader.Add(TesShader);
             }
+
             AnalyzeShaderProgram();
         }
+
         public override string ToString()
         {
             string name = string.Empty;
-            if (_vert != null)
+            if (VertexShader != null)
             {
-                name += "[v]" + System.IO.Path.GetFileNameWithoutExtension(_vert.FileName);
+                name += "[v]" + System.IO.Path.GetFileNameWithoutExtension(VertexShader.FileName);
             }
-            if (_frag != null)
+
+            if (FragShader != null)
             {
-                name += "[f]" + System.IO.Path.GetFileNameWithoutExtension(_frag.FileName);
+                name += "[f]" + System.IO.Path.GetFileNameWithoutExtension(FragShader.FileName);
             }
-            if (_geom != null)
+
+            if (GeomShader != null)
             {
-                name += "[g]" + System.IO.Path.GetFileNameWithoutExtension(_geom.FileName);
+                name += "[g]" + System.IO.Path.GetFileNameWithoutExtension(GeomShader.FileName);
             }
-            if (_tcs != null)
+
+            if (TcsShader != null)
             {
-                name += "[tc]" + System.IO.Path.GetFileNameWithoutExtension(_tcs.FileName);
+                name += "[tc]" + System.IO.Path.GetFileNameWithoutExtension(TcsShader.FileName);
             }
-            if (_tes != null)
+
+            if (TesShader != null)
             {
-                name += "[te]" + System.IO.Path.GetFileNameWithoutExtension(_tes.FileName);
+                name += "[te]" + System.IO.Path.GetFileNameWithoutExtension(TesShader.FileName);
             }
+
             return name;
         }
 
@@ -465,19 +473,20 @@ namespace KI.Gfx.KIShader
         /// </summary>
         private void SetShaderVariableID()
         {
-            GL.UseProgram(_program);
+            GL.UseProgram(Program);
             foreach (ShaderProgramInfo loop in _shaderVariable.Values)
             {
                 switch (loop.shaderVariableType)
                 {
                     case EShaderVariableType.Attribute:
-                        loop.ShaderID = GL.GetAttribLocation(_program, loop.Name);
+                        loop.ShaderID = GL.GetAttribLocation(Program, loop.Name);
                         break;
                     case EShaderVariableType.Uniform:
-                        loop.ShaderID = GL.GetUniformLocation(_program, loop.Name);
+                        loop.ShaderID = GL.GetUniformLocation(Program, loop.Name);
                         break;
                 }
             }
+
             Logger.GLLog(Logger.LogLevel.Error);
         }
 
@@ -487,12 +496,13 @@ namespace KI.Gfx.KIShader
         public void AnalyzeShaderProgram()
         {
             _shaderVariable.Clear();
-            GL.UseProgram(_program);
+            GL.UseProgram(Program);
 
-            foreach (ShaderProgram loop in _activeShader)
+            foreach (ShaderProgram loop in ActiveShader)
             {
                 AnalyzeShaderProgram(loop);
             }
+
             SetShaderVariableID();
 
             // index buffer
@@ -501,8 +511,8 @@ namespace KI.Gfx.KIShader
             info.variable = new List<int>();
             info.shaderVariableType = EShaderVariableType.Attribute;
             _shaderVariable.Add(info.Name, info);
-
         }
+
         /// <summary>
         /// attributeをDictionaryに追加
         /// </summary>
@@ -511,14 +521,15 @@ namespace KI.Gfx.KIShader
         {
             if (code[0] == "attribute" || code[0] == "in")
             {
-
             }
             else
             {
                 return;
             }
+
             GetAttributeVariableCode(info, code[1], code[2]);
         }
+
         /// <summary>
         /// uniformをDictionaryに追加
         /// </summary>
@@ -529,8 +540,10 @@ namespace KI.Gfx.KIShader
             {
                 return;
             }
+
             GetUniformVariableCode(info, code[1], code[2]);
         }
+
         /// <summary>
         /// シェーダ解析
         /// </summary>
@@ -560,6 +573,7 @@ namespace KI.Gfx.KIShader
                     Logger.Log(Logger.LogLevel.Error, "Shader ReadError" + name);
                     break;
             }
+
             return;
         }
 
@@ -595,6 +609,7 @@ namespace KI.Gfx.KIShader
                         return;
                 }
             }
+
             switch (variable)
             {
                 case "vec2":
@@ -647,6 +662,7 @@ namespace KI.Gfx.KIShader
             {
                 return;
             }
+
             string shaderCode = shader.ShaderCode;
             string[] lines = shaderCode.Split(new[] { "\r\n" }, StringSplitOptions.None);
             for (int i = 0; i < lines.Length; i++)
@@ -659,16 +675,19 @@ namespace KI.Gfx.KIShader
                 {
                     OutputBufferNum++;
                 }
+
                 if (line.Contains("gl_FragColor"))
                 {
                     OutputBufferNum++;
                 }
+
                 //セミコロン以降削除
                 int colon = line.IndexOf(";");
                 if (colon == 0 || colon == -1)
                 {
                     continue;
                 }
+
                 line = line.Remove(colon);
 
                 string[] derim = line.Split(' ');
@@ -676,6 +695,7 @@ namespace KI.Gfx.KIShader
                 {
                     continue;
                 }
+
                 //後半3つが信頼性高いため
                 string[] code = { derim[derim.Length - 3], derim[derim.Length - 2], derim[derim.Length - 1] };
                 ShaderProgramInfo info = new ShaderProgramInfo();
@@ -690,6 +710,7 @@ namespace KI.Gfx.KIShader
                             info.shaderVariableType = EShaderVariableType.Attribute;
                             _shaderVariable.Add(info.Name, info);
                         }
+
                         Logger.GLLog(Logger.LogLevel.Error);
 
                         break;
@@ -710,15 +731,17 @@ namespace KI.Gfx.KIShader
                                 code[2] = arrName;
                                 info.arrayNum = arrNum;
                             }
+
                             info.Name = code[2];
                             info.shaderVariableType = EShaderVariableType.Uniform;
                             _shaderVariable.Add(info.Name, info);
                         }
-                        Logger.GLLog(Logger.LogLevel.Error);
 
+                        Logger.GLLog(Logger.LogLevel.Error);
                         break;
                 }
             }
+
             Logger.GLLog(Logger.LogLevel.Error);
         }
         #endregion
@@ -729,7 +752,7 @@ namespace KI.Gfx.KIShader
         /// </summary>
         public void Dispose()
         {
-            GL.DeleteProgram(_program);
+            GL.DeleteProgram(Program);
             Logger.GLLog(Logger.LogLevel.Error);
         }
         #endregion
@@ -760,6 +783,7 @@ namespace KI.Gfx.KIShader
             {
                 Logger.Log(Logger.LogLevel.Error, info);
             }
+
             GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
             if (status == 0)
             {
@@ -767,7 +791,6 @@ namespace KI.Gfx.KIShader
             }
 
             return program;
-
         }
 
         /// <summary>
@@ -783,6 +806,7 @@ namespace KI.Gfx.KIShader
             {
                 GL.GetInteger(GetPName.MaxGeometryOutputVertices, out outVertexNum);
             }
+
             int program = GL.CreateProgram();
             GL.AttachShader(program, vshader);
             GL.AttachShader(program, fshader);
@@ -803,14 +827,115 @@ namespace KI.Gfx.KIShader
             {
                 Logger.Log(Logger.LogLevel.Error, info);
             }
+
             GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
             if (status == 0)
             {
                 Logger.GLLog(Logger.LogLevel.Error, GL.GetProgramInfoLog(program));
             }
+
             Logger.GLLog(Logger.LogLevel.Error);
             return program;
         }
+
+        /// <summary>
+        /// テッセレーションシェーダ用
+        /// </summary>
+        protected int CreateShaderProgram(string vertexShaderCode, string fragmentShaderCode, string geometryShaderCode, string tcsShaderCode, string tesShaderCode)
+        {
+            int vshader = CompailShader(ShaderType.VertexShader, vertexShaderCode);
+            int fshader = CompailShader(ShaderType.FragmentShader, fragmentShaderCode);
+            int gshader = CompailShader(ShaderType.GeometryShader, geometryShaderCode);
+            int tesshader = CompailShader(ShaderType.TessEvaluationShader, tesShaderCode);
+            int tcsshader = CompailShader(ShaderType.TessControlShader, tcsShaderCode);
+
+            int outVertexNum = -1;
+
+            if (outVertexNum < 0)
+            {
+                GL.GetInteger(GetPName.MaxGeometryOutputVertices, out outVertexNum);
+            }
+
+            int program = GL.CreateProgram();
+            GL.AttachShader(program, vshader);
+            GL.AttachShader(program, fshader);
+            GL.AttachShader(program, gshader);
+            GL.AttachShader(program, tesshader);
+            GL.AttachShader(program, tcsshader);
+            //int inType = 3;
+            //int outType = 3;
+            //GL.ProgramParameter(program, AssemblyProgramParameterArb.GeometryInputType, inType);
+            //GL.ProgramParameter(program, AssemblyProgramParameterArb.GeometryOutputType, outType);
+            //GL.ProgramParameter(program, AssemblyProgramParameterArb.GeometryVerticesOut, outVertexNum);
+
+            GL.DeleteShader(vshader);
+            GL.DeleteShader(fshader);
+            GL.DeleteShader(gshader);
+            GL.DeleteShader(tesshader);
+            GL.DeleteShader(tcsshader);
+
+            GL.LinkProgram(program);
+
+            int status;
+            string info;
+            GL.GetProgramInfoLog(program, out info);
+            if (!string.IsNullOrWhiteSpace(info))
+            {
+                Logger.Log(Logger.LogLevel.Error, info);
+            }
+
+            GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
+            if (status == 0)
+            {
+                Logger.GLLog(Logger.LogLevel.Error, GL.GetProgramInfoLog(program));
+            }
+
+            Logger.GLLog(Logger.LogLevel.Error);
+            return program;
+        }
+
+        /// <summary>
+        /// テッセレーションシェーダ用
+        /// </summary>
+        protected int CreateShaderProgram(string vertexShaderCode, string fragmentShaderCode, string tcsShaderCode, string tesShaderCode)
+        {
+            int vshader = CompailShader(ShaderType.VertexShader, vertexShaderCode);
+            int fshader = CompailShader(ShaderType.FragmentShader, fragmentShaderCode);
+            int tesshader = CompailShader(ShaderType.TessEvaluationShader, tesShaderCode);
+            int tcsshader = CompailShader(ShaderType.TessControlShader, tcsShaderCode);
+
+            int program = GL.CreateProgram();
+            GL.AttachShader(program, vshader);
+            GL.AttachShader(program, fshader);
+            GL.AttachShader(program, tesshader);
+            GL.AttachShader(program, tcsshader);
+
+            GL.DeleteShader(vshader);
+            GL.DeleteShader(fshader);
+            GL.DeleteShader(tesshader);
+            GL.DeleteShader(tcsshader);
+
+            GL.LinkProgram(program);
+
+            int status;
+            string info;
+            GL.GetProgramInfoLog(program, out info);
+            if (!string.IsNullOrWhiteSpace(info))
+            {
+                Logger.Log(Logger.LogLevel.Error, info);
+            }
+
+            GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
+            if (status == 0)
+            {
+                Logger.GLLog(Logger.LogLevel.Error, GL.GetProgramInfoLog(program));
+            }
+
+            Logger.GLLog(Logger.LogLevel.Error);
+            return program;
+        }
+        #endregion
+
         private int CompailShader(ShaderType shaderType, string shaderCode)
         {
             int shader = GL.CreateShader(shaderType);
@@ -842,105 +967,13 @@ namespace KI.Gfx.KIShader
                     default:
                         break;
                 }
+
                 Logger.Log(Logger.LogLevel.Error, info);
             }
+
             Logger.GLLog(Logger.LogLevel.Error);
             return shader;
         }
 
-        /// <summary>
-        /// テッセレーションシェーダ用
-        /// </summary>
-        protected int CreateShaderProgram(string vertexShaderCode, string fragmentShaderCode, string geometryShaderCode, string tcsShaderCode, string tesShaderCode)
-        {
-            int vshader = CompailShader(ShaderType.VertexShader, vertexShaderCode);
-            int fshader = CompailShader(ShaderType.FragmentShader, fragmentShaderCode);
-            int gshader = CompailShader(ShaderType.GeometryShader, geometryShaderCode);
-            int tesshader = CompailShader(ShaderType.TessEvaluationShader, tesShaderCode);
-            int tcsshader = CompailShader(ShaderType.TessControlShader, tcsShaderCode);
-
-            int outVertexNum = -1;
-
-
-            if (outVertexNum < 0)
-            {
-                GL.GetInteger(GetPName.MaxGeometryOutputVertices, out outVertexNum);
-            }
-            int program = GL.CreateProgram();
-            GL.AttachShader(program, vshader);
-            GL.AttachShader(program, fshader);
-            GL.AttachShader(program, gshader);
-            GL.AttachShader(program, tesshader);
-            GL.AttachShader(program, tcsshader);
-            //int inType = 3;
-            //int outType = 3;
-            //GL.ProgramParameter(program, AssemblyProgramParameterArb.GeometryInputType, inType);
-            //GL.ProgramParameter(program, AssemblyProgramParameterArb.GeometryOutputType, outType);
-            //GL.ProgramParameter(program, AssemblyProgramParameterArb.GeometryVerticesOut, outVertexNum);
-
-            GL.DeleteShader(vshader);
-            GL.DeleteShader(fshader);
-            GL.DeleteShader(gshader);
-            GL.DeleteShader(tesshader);
-            GL.DeleteShader(tcsshader);
-
-            GL.LinkProgram(program);
-
-            int status;
-            string info;
-            GL.GetProgramInfoLog(program, out info);
-            if (!string.IsNullOrWhiteSpace(info))
-            {
-                Logger.Log(Logger.LogLevel.Error, info);
-            }
-            GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
-            if (status == 0)
-            {
-                Logger.GLLog(Logger.LogLevel.Error, GL.GetProgramInfoLog(program));
-            }
-            Logger.GLLog(Logger.LogLevel.Error);
-            return program;
-        }
-
-        /// <summary>
-        /// テッセレーションシェーダ用
-        /// </summary>
-        protected int CreateShaderProgram(string vertexShaderCode, string fragmentShaderCode, string tcsShaderCode, string tesShaderCode)
-        {
-            int vshader = CompailShader(ShaderType.VertexShader, vertexShaderCode);
-            int fshader = CompailShader(ShaderType.FragmentShader, fragmentShaderCode);
-            int tesshader = CompailShader(ShaderType.TessEvaluationShader, tesShaderCode);
-            int tcsshader = CompailShader(ShaderType.TessControlShader, tcsShaderCode);
-
-
-            int program = GL.CreateProgram();
-            GL.AttachShader(program, vshader);
-            GL.AttachShader(program, fshader);
-            GL.AttachShader(program, tesshader);
-            GL.AttachShader(program, tcsshader);
-
-            GL.DeleteShader(vshader);
-            GL.DeleteShader(fshader);
-            GL.DeleteShader(tesshader);
-            GL.DeleteShader(tcsshader);
-
-            GL.LinkProgram(program);
-
-            int status;
-            string info;
-            GL.GetProgramInfoLog(program, out info);
-            if (!string.IsNullOrWhiteSpace(info))
-            {
-                Logger.Log(Logger.LogLevel.Error, info);
-            }
-            GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
-            if (status == 0)
-            {
-                Logger.GLLog(Logger.LogLevel.Error, GL.GetProgramInfoLog(program));
-            }
-            Logger.GLLog(Logger.LogLevel.Error);
-            return program;
-        }
-        #endregion
     }
 }

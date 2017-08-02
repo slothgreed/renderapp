@@ -2,16 +2,28 @@
 
 namespace KI.Renderer
 {
+    /// <summary>
+    /// ポストエフェクトマネージャクラス
+    /// </summary>
     public class PostEffectManager
     {
+        /// <summary>
+        /// ポストエフェクトリスト
+        /// </summary>
         public List<RenderTechnique> PostEffects = new List<RenderTechnique>();
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public PostEffectManager()
         {
-            CreatePostProcessFlow();
+            Initialize();
         }
 
-        private void CreatePostProcessFlow()
+        /// <summary>
+        /// 初期ポストエフェクト
+        /// </summary>
+        private void Initialize()
         {
             //Bloom bloom = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Bloom) as Bloom;
             //bloom.uTarget = Workspace.SceneManager.RenderSystem.GBufferStage.OutputTexture[3];
@@ -33,14 +45,22 @@ namespace KI.Renderer
 
         }
 
+        /// <summary>
+        /// バッファのクリア
+        /// </summary>
         private void ClearBuffer()
         {
-            foreach(var post in PostEffects)
+            foreach (var post in PostEffects)
             {
                 post.ClearBuffer();
             }
         }
 
+        /// <summary>
+        /// サイズ変更
+        /// </summary>
+        /// <param name="width">横</param>
+        /// <param name="height">縦</param>
         public void SizeChanged(int width, int height)
         {
             foreach (var post in PostEffects)
@@ -48,12 +68,16 @@ namespace KI.Renderer
                 post.SizeChanged(width, height);
             }
         }
+
+        /// <summary>
+        /// 描画
+        /// </summary>
         public void Render()
         {
-           foreach(var post in PostEffects)
-           {
-               post.Render();
-           }
+            foreach (var post in PostEffects)
+            {
+                post.Render();
+            }
         }
 
         /// <summary>
@@ -61,7 +85,6 @@ namespace KI.Renderer
         /// </summary>
         public void Dispose()
         {
-
         }
     }
 }

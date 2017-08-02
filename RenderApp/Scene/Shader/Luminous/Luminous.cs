@@ -21,7 +21,6 @@ namespace RenderApp
     //    //int lightColorId;
     //    //private List<CSphere> m_SphereLight = new List<CSphere>();
 
-        
     //    //private int uMVP;
     //    //private int uModelMatrix;
     //    //private int uNormalMatrix; 

@@ -15,49 +15,52 @@ namespace KI.Asset
         public GeometryInfo geometryInfo { get; set; }
         public bool Visible { get; set; } = true;
 
+        public HalfEdge HalfEdge { get; set; }
+
         public Matrix4 ModelMatrix { get; set; }
 
-        private Vector3 _translate = Vector3.Zero;
+        private Vector3 translate = Vector3.Zero;
         public Vector3 Translate
         {
             get
             {
-                return _translate;
+                return translate;
             }
 
             set
             {
-                _translate = value;
-                CalcTranslate(_translate);
+                translate = value;
+                CalcTranslate(translate);
             }
         }
 
-        private Vector3 _scale = Vector3.One;
+        private Vector3 scale = Vector3.One;
         public Vector3 Scale
         {
             get
             {
-                return _scale;
+                return scale;
             }
+
             set
             {
-                _scale = value;
-                CalcScale(_scale);
+                scale = value;
+                CalcScale(scale);
             }
         }
 
-        private Vector3 _rotate = Vector3.Zero;
+        private Vector3 rotate = Vector3.Zero;
         public Vector3 Rotate
         {
             get
             {
-                return _rotate;
+                return rotate;
             }
 
             set
             {
-                _rotate = value;
-                RotateXYZ(_rotate.X, _rotate.Y, _rotate.Z);
+                rotate = value;
+                RotateXYZ(rotate.X, rotate.Y, rotate.Z);
             }
         }
 
@@ -70,24 +73,17 @@ namespace KI.Asset
             }
         }
 
-        public Shader Shader
-        {
-            get;
-            set;
-        }
+        public Shader Shader { get; set; }
 
-        public Dictionary<TextureKind, Texture> TextureItem
-        {
-            get;
-            private set;
-        }
+        public Dictionary<TextureKind, Texture> TextureItem { get; private set; }
+        
         #endregion
 
         #region [Initializer disposer]
         public Geometry()
         {
-
         }
+
         public Geometry(string name)
             : base(name)
         {
@@ -119,6 +115,7 @@ namespace KI.Asset
         {
             TextureItem[kind] = texture;
         }
+
         public int TextureNum()
         {
             if (TextureItem == null)
@@ -142,62 +139,6 @@ namespace KI.Asset
         }
 
         #region [modelmatrix]
-        #region [translate]
-
-        /// <summary>
-        /// モデルビューに平行移動を適用
-        /// </summary>
-        /// <param name="move"></param>
-        private void CalcTranslate(Vector3 move)
-        {
-            ModelMatrix = ModelMatrix.ClearTranslation();
-            Matrix4 translate = Matrix4.CreateTranslation(move);
-            ModelMatrix *= translate;
-        }
-        #endregion
-        #region [scale]
-
-        /// <summary>
-        /// モデルビューに拡大縮小を適用
-        /// </summary>
-        private void CalcScale(Vector3 scale)
-        {
-            ModelMatrix = ModelMatrix.ClearScale();
-            Vector3 translate = ModelMatrix.ExtractTranslation();
-            Quaternion quart = ModelMatrix.ExtractRotation();
-            ModelMatrix = Matrix4.Identity;
-
-
-            ModelMatrix *= Matrix4.CreateScale(scale);
-            Matrix4 quartMat = Matrix4.CreateFromQuaternion(quart);
-            ModelMatrix *= quartMat;
-            ModelMatrix = ModelMatrix.ClearTranslation();
-            ModelMatrix *= Matrix4.CreateTranslation(translate);
-        }
-        #endregion
-        #region [rotate]
-        /// <summary>
-        /// 形状に回転を適用(初期の向きに対して)
-        /// </summary>
-        private bool SetModelViewRotateXYZ(Matrix4 quart, bool init)
-        {
-            //移動量を消して、回転後移動
-            Vector3 translate = ModelMatrix.ExtractTranslation();
-            //初期形状に対しての場合は、回転量も削除
-            if (init)
-            {
-                ModelMatrix = ModelMatrix.ClearRotation();
-            }
-            ModelMatrix = ModelMatrix.ClearTranslation();
-
-            ModelMatrix *= quart;
-            //基点分元に戻す
-            ModelMatrix = ModelMatrix.ClearTranslation();
-            ModelMatrix *= Matrix4.CreateTranslation(translate);
-
-            return true;
-        }
-
 
         /// <summary>
         /// X軸で回転
@@ -259,6 +200,7 @@ namespace KI.Asset
                 RotateY(0, init);
                 return true;
             }
+
             if (Ex.Length != 0)
             {
                 Ex.Normalize();
@@ -266,10 +208,9 @@ namespace KI.Asset
                 Matrix4 mat = Matrix4.CreateFromAxisAngle(Ex, angle);
                 return SetModelViewRotateXYZ(mat, init);
             }
+
             return false;
         }
-        #endregion
-        #region [Transformation]
         /// <summary>
         /// 初期形状から一括変換する用
         /// </summary>
@@ -280,12 +221,55 @@ namespace KI.Asset
             return true;
         }
         #endregion
-        #endregion
 
-        public HalfEdge HalfEdge
+        /// <summary>
+        /// モデルビューに平行移動を適用
+        /// </summary>
+        /// <param name="move"></param>
+        private void CalcTranslate(Vector3 move)
         {
-            get;
-            set;
+            ModelMatrix = ModelMatrix.ClearTranslation();
+            Matrix4 translate = Matrix4.CreateTranslation(move);
+            ModelMatrix *= translate;
         }
+
+        /// <summary>
+        /// モデルビューに拡大縮小を適用
+        /// </summary>
+        private void CalcScale(Vector3 scale)
+        {
+            ModelMatrix = ModelMatrix.ClearScale();
+            Vector3 translate = ModelMatrix.ExtractTranslation();
+            Quaternion quart = ModelMatrix.ExtractRotation();
+            ModelMatrix = Matrix4.Identity;
+
+            ModelMatrix *= Matrix4.CreateScale(scale);
+            Matrix4 quartMat = Matrix4.CreateFromQuaternion(quart);
+            ModelMatrix *= quartMat;
+            ModelMatrix = ModelMatrix.ClearTranslation();
+            ModelMatrix *= Matrix4.CreateTranslation(translate);
+        }
+        /// <summary>
+        /// 形状に回転を適用(初期の向きに対して)
+        /// </summary>
+        private bool SetModelViewRotateXYZ(Matrix4 quart, bool init)
+        {
+            //移動量を消して、回転後移動
+            Vector3 translate = ModelMatrix.ExtractTranslation();
+            //初期形状に対しての場合は、回転量も削除
+            if (init)
+            {
+                ModelMatrix = ModelMatrix.ClearRotation();
+            }
+            ModelMatrix = ModelMatrix.ClearTranslation();
+
+            ModelMatrix *= quart;
+            //基点分元に戻す
+            ModelMatrix = ModelMatrix.ClearTranslation();
+            ModelMatrix *= Matrix4.CreateTranslation(translate);
+
+            return true;
+        }
+
     }
 }

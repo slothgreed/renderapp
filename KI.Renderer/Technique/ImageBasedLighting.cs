@@ -11,9 +11,11 @@ namespace KI.Renderer
         public ImageBasedLighting(RenderTechniqueType tech)
             : base("IBL", vertexShader, fragShader, tech, RenderType.Original)
         {
-            
         }
 
+        /// <summary>
+        /// 描画
+        /// </summary>
         public override void Render()
         {
             RenderTarget.ClearBuffer();
@@ -28,9 +30,13 @@ namespace KI.Renderer
                     Plane.Render(Global.Scene);
                 }
             }
+
             RenderTarget.UnBindRenderTarget();
         }
 
+        /// <summary>
+        /// 初期化
+        /// </summary>
         public override void Initialize()
         {
             Plane.AddTexture(TextureKind.Albedo, Global.RenderSystem.GBufferStage.OutputTexture[2]);

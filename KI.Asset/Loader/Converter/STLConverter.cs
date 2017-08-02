@@ -26,7 +26,6 @@ namespace KI.Asset
             stlData = new STLLoader(filePath);
             GeometryInfo info = new GeometryInfo(stlData.Position, stlData.Normal, Vector3.One, null, null, GeometryType.Triangle);
             GeometryInfos = new GeometryInfo[] { info };
-
         }
     }
 }

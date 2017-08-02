@@ -41,15 +41,11 @@ namespace KI.Analyzer.Algorithm.MarchingCube
         /// <summary>
         /// 0～15　MarchingCubesの形状
         /// </summary>
-        public int State;
+        public int State { get; set; }
 
-        public float NeightNum
-        {
-            get;
-            set;
-        }
+        public float NeightNum { get; set; }
 
-        public Dictionary<CubeVertex, float> Neight;
+        public Dictionary<CubeVertex, float> Neight { get; set; }
     }
 
     public class MarchingCubesAlgorithm
@@ -59,6 +55,28 @@ namespace KI.Analyzer.Algorithm.MarchingCube
         private int Partition;
 
         public MarchingVoxel[,,] MarchingSpace;
+
+        /// <summary>
+        /// MarchingTrianlge情報
+        /// </summary>
+        public List<Vector3> PositionList = new List<Vector3>();
+
+        /// <summary>
+        /// MarchingTrianlge情報
+        /// </summary>
+        public List<Vector3> ColorList = new List<Vector3>();
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="voxel">voxel</param>
+        public MarchingCubesAlgorithm(float size, int partition)
+        {
+            Size = size;
+            Partition = partition;
+            CalculateSpace();
+            CreateTriangle();
+        }
 
         private float Interval
         {
@@ -103,78 +121,6 @@ namespace KI.Analyzer.Algorithm.MarchingCube
             }
         }
 
-        /// <summary>
-        /// MarchingTrianlge情報
-        /// </summary>
-        public List<Vector3> PositionList = new List<Vector3>();
-
-        /// <summary>
-        /// MarchingTrianlge情報
-        /// </summary>
-        public List<Vector3> ColorList = new List<Vector3>();
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="voxel">voxel</param>
-        public MarchingCubesAlgorithm(float size, int partition)
-        {
-            Size = size;
-            Partition = partition;
-            CalculateSpace();
-            CreateTriangle();
-        }
-
-        /// <summary>
-        /// ボクセルの最小値を返却
-        /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        private Vector3 GetPosition(int x, int y, int z, CubeVertex state)
-        {
-            Vector3 position = new Vector3(Min);
-
-            position.X += x * Interval;
-            position.Y += y * Interval;
-            position.Z += z * Interval;
-
-            switch (state)
-            {
-                case CubeVertex.xyZ:
-                    position.Z += Interval;
-                    break;
-                case CubeVertex.XyZ:
-                    position.X += Interval;
-                    position.Z += Interval;
-                    break;
-                case CubeVertex.Xyz:
-                    position.X += Interval;
-                    break;
-                case CubeVertex.xyz:
-                    break;
-                case CubeVertex.xYZ:
-                    position.Y += Interval;
-                    position.Z += Interval;
-                    break;
-                case CubeVertex.XYZ:
-                    position.X += Interval;
-                    position.Y += Interval;
-                    position.Z += Interval;
-                    break;
-                case CubeVertex.XYz:
-                    position.X += Interval;
-                    position.Y += Interval;
-                    break;
-                case CubeVertex.xYz:
-                    position.Y += Interval;
-                    break;
-                default:
-                    break;
-            }
-
-            return position;
-        }
-
         public Vector3 VertexCreatePosition(int x, int y, int z, int v0, int v1)
         {
             var marching = MarchingSpace[x, y, z];
@@ -190,6 +136,7 @@ namespace KI.Analyzer.Algorithm.MarchingCube
             {
                 return pos0;
             }
+
             if (Math.Abs(Threshold - marching.Neight[ver1]) < KICalc.THRESHOLD05)
             {
                 return pos1;
@@ -276,7 +223,6 @@ namespace KI.Analyzer.Algorithm.MarchingCube
                     {
                         MarchingSpace[i, j, k] = new MarchingVoxel();
 
-
                         for (int l = 0; l < (int)CubeVertex.Num; l++)
                         {
                             var pos = GetPosition(i, j, k, (CubeVertex)l);
@@ -307,6 +253,56 @@ namespace KI.Analyzer.Algorithm.MarchingCube
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// ボクセルの最小値を返却
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        private Vector3 GetPosition(int x, int y, int z, CubeVertex state)
+        {
+            Vector3 position = new Vector3(Min);
+
+            position.X += x * Interval;
+            position.Y += y * Interval;
+            position.Z += z * Interval;
+
+            switch (state)
+            {
+                case CubeVertex.xyZ:
+                    position.Z += Interval;
+                    break;
+                case CubeVertex.XyZ:
+                    position.X += Interval;
+                    position.Z += Interval;
+                    break;
+                case CubeVertex.Xyz:
+                    position.X += Interval;
+                    break;
+                case CubeVertex.xyz:
+                    break;
+                case CubeVertex.xYZ:
+                    position.Y += Interval;
+                    position.Z += Interval;
+                    break;
+                case CubeVertex.XYZ:
+                    position.X += Interval;
+                    position.Y += Interval;
+                    position.Z += Interval;
+                    break;
+                case CubeVertex.XYz:
+                    position.X += Interval;
+                    position.Y += Interval;
+                    break;
+                case CubeVertex.xYz:
+                    position.Y += Interval;
+                    break;
+                default:
+                    break;
+            }
+
+            return position;
         }
 
         private void CreateQuad(int i, int j, int k)
@@ -394,7 +390,6 @@ namespace KI.Analyzer.Algorithm.MarchingCube
             PositionList.Add(GetPosition(i, j, k, (CubeVertex)0));
             PositionList.Add(GetPosition(i, j, k, (CubeVertex)2));
             PositionList.Add(GetPosition(i, j, k, (CubeVertex)1));
-
         }
     }
 }

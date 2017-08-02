@@ -3,7 +3,6 @@ using System.Windows.Threading;
 using OpenTK;
 namespace KI.Foundation.Core
 {
-
     public class KITimer
     {
         public delegate void OnTimerEvent(object source, EventArgs e);
@@ -62,6 +61,5 @@ namespace KI.Foundation.Core
         {
             m_TimerCount++;
         }
-
     }
 }

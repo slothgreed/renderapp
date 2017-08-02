@@ -54,6 +54,7 @@ namespace KI.Analyzer
             public int j;
             public int k;
             public float Value;
+
             public Voxel(int _i, int _j, int _k, VoxelState state)
             {
                 i = _i;
@@ -88,7 +89,6 @@ namespace KI.Analyzer
 
         public VoxelSpace(List<Vector3> position, List<int> posIndex, int partition)
         {
-
             Partition = partition;
             CalcMinMax(position);
             SetInterval(partition);
@@ -113,10 +113,63 @@ namespace KI.Analyzer
                     posStream.Add(position[posIndex[3 * i + 1]]);
                     posStream.Add(position[posIndex[3 * i + 2]]);
                 }
+
                 MakeVoxels(posStream);
             }
 
             CalcDistanceField();
+        }
+
+        public void GetVoxel(out List<Vector3> position, out List<Vector3> normal)
+        {
+            position = vPosition;
+            normal = vNormal;
+        }
+
+
+        public List<Vector3> GetPoint(VoxelState state)
+        {
+            List<Vector3> point = new List<Vector3>();
+            var index = Vector3.Zero;
+            var mid = Interval / 2;
+
+            Action<int, int, int> addPoint = (int i, int j, int k) =>
+            {
+                if (Voxels[i, j, k].State == state)
+                {
+                    index.X = i;
+                    index.Y = j;
+                    index.Z = k;
+                    var position = GetVoxelPosition(index);
+                    position.X += mid;
+                    position.Y += mid;
+                    position.Z += mid;
+                    point.Add(position);
+                }
+            };
+
+            AllVoxelAction(addPoint);
+
+            return point;
+        }
+
+        public List<Voxel> GetVoxel(VoxelState state)
+        {
+            List<Voxel> voxels = new List<Voxel>();
+            var index = Vector3.Zero;
+            var mid = Interval / 2;
+
+            Action<int, int, int> addList = (int i, int j, int k) =>
+            {
+                if (Voxels[i, j, k].State == state)
+                {
+                    voxels.Add(Voxels[i, j, k]);
+                }
+            };
+
+            AllVoxelAction(addList);
+
+            return voxels;
         }
 
         /// <summary>
@@ -223,10 +276,8 @@ namespace KI.Analyzer
                 if (Max.X < position[i].X) { Max.X = position[i].X; }
                 if (Max.Y < position[i].Y) { Max.Y = position[i].Y; }
                 if (Max.Z < position[i].Z) { Max.Z = position[i].Z; }
-
             }
         }
-
 
         private Vector3 MinVector(Vector3 v1, Vector3 v2)
         {
@@ -278,7 +329,6 @@ namespace KI.Analyzer
             if (InBox(tri1, minVoxel, maxVoxel)) { return true; }
             if (InBox(tri2, minVoxel, maxVoxel)) { return true; }
             if (InBox(tri3, minVoxel, maxVoxel)) { return true; }
-
 
             //ボクセルの線と、三角形の面が交差するならtrue
             float maxValue = float.MaxValue;
@@ -772,57 +822,5 @@ namespace KI.Analyzer
         }
 
         #endregion
-
-        public void GetVoxel(out List<Vector3> position, out List<Vector3> normal)
-        {
-            position = vPosition;
-            normal = vNormal;
-        }
-
-
-        public List<Vector3> GetPoint(VoxelState state)
-        {
-            List<Vector3> point = new List<Vector3>();
-            var index = Vector3.Zero;
-            var mid = Interval / 2;
-
-            Action<int, int, int> addPoint = (int i, int j, int k) =>
-            {
-                if (Voxels[i, j, k].State == state)
-                {
-                    index.X = i;
-                    index.Y = j;
-                    index.Z = k;
-                    var position = GetVoxelPosition(index);
-                    position.X += mid;
-                    position.Y += mid;
-                    position.Z += mid;
-                    point.Add(position);
-                }
-            };
-
-            AllVoxelAction(addPoint);
-
-            return point;
-        }
-
-        public List<Voxel> GetVoxel(VoxelState state)
-        {
-            List<Voxel> voxels = new List<Voxel>();
-            var index = Vector3.Zero;
-            var mid = Interval / 2;
-
-            Action<int, int, int> addList = (int i, int j, int k) =>
-            {
-                if (Voxels[i, j, k].State == state)
-                {
-                    voxels.Add(Voxels[i, j, k]);
-                }
-            };
-
-            AllVoxelAction(addList);
-
-            return voxels;
-        }
     }
 }

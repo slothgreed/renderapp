@@ -52,7 +52,6 @@ namespace KI.Foundation.Core
         /// </summary>
         public KIMouse()
         {
-
         }
 
         /// <summary>
@@ -106,12 +105,9 @@ namespace KI.Foundation.Core
                 move.X /= 10.0f;
                 move.Y /= 10.0f;
             }
+
             Delta = move;
             return move;
         }
-
-
-
-
     }
 }

@@ -11,10 +11,12 @@ namespace KI.Analyzer
     {
         #region [Member]
         KdList m_rootNode;
+
         /// <summary>
         /// 最大階層
         /// </summary>
         private int m_MaxLevel;
+
         #endregion
         #region [Constructor]
         /// <summary>
@@ -81,6 +83,7 @@ namespace KI.Analyzer
                 kdlist.Left = kdlist1;
                 PartitionPoint(kdlist1, level);
             }
+
             if (list2.Count != 0)
             {
                 KdList kdlist2 = new KdList(list2, level);
@@ -115,6 +118,7 @@ namespace KI.Analyzer
                 case 2:
                     return Vector3.UnitZ;
             }
+
             return Vector3.Zero;
         }
         #endregion
@@ -167,10 +171,10 @@ namespace KI.Analyzer
                 {
                     SearchLeaf(leaf, kdlist.Left);
                 }
+
                 if (kdlist.Right != null)
                 {
                     SearchLeaf(leaf, kdlist.Right);
-
                 }
             }
         }

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace KI.Foundation.Command
 {
-
     public class CommandInfo
     {
         public CommandInfo(ICommand command, string commandArg)
@@ -14,10 +13,10 @@ namespace KI.Foundation.Command
             Command = command;
             CommandArg = commandArg;
         }
-        public ICommand Command;
-        public string CommandArg;
-    }
 
+        public ICommand Command { get; set; }
+        public string CommandArg { get; set; }
+    }
 
     public class CommandStack
     {

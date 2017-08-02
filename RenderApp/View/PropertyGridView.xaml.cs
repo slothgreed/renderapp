@@ -37,15 +37,18 @@ namespace RenderApp.View
     /// </summary>
     public partial class PropertyGridView : UserControl
     {
+        public static readonly DependencyProperty PropertyItemProperty =
+    DependencyProperty.Register("PropertyItem", typeof(Dictionary<string, object>), typeof(PropertyGridView),
+    new FrameworkPropertyMetadata(null));
+
         public PropertyGridView()
         {
             InitializeComponent();
         }
 
         #region [Binding Item]
-        public static readonly DependencyProperty PropertyItemProperty =
-            DependencyProperty.Register("PropertyItem", typeof(Dictionary<string, object>), typeof(PropertyGridView),
-            new FrameworkPropertyMetadata(null));
+
+
         public Dictionary<string, object> PropertyItem
         {
             get
@@ -74,6 +77,5 @@ namespace RenderApp.View
         {
             base.OnPropertyChanged(e);
         }
-
     }
 }

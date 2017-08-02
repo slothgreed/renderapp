@@ -44,5 +44,4 @@ namespace KI.Asset
             GeometryInfos = new GeometryInfo[] { info };
         }
     }
-
 }

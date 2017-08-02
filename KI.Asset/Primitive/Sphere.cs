@@ -98,8 +98,6 @@ namespace KI.Asset
                     texcoord.Add(GetSphericalTexCoord(position[position.Count - 2]));
                     texcoord.Add(GetSphericalTexCoord(position[position.Count - 1]));
 
-
-
                     normal.Add(position[position.Count - 6].Normalized());
                     normal.Add(position[position.Count - 5].Normalized());
                     normal.Add(position[position.Count - 4].Normalized());
@@ -155,7 +153,6 @@ namespace KI.Asset
                     tmp2 = texcoord[i];
                     texcoord[i] = texcoord[i + 2];
                     texcoord[i + 2] = tmp2;
-
                 }
             }
 
@@ -164,7 +161,6 @@ namespace KI.Asset
             info.ConvertVertexArray();
 
             GeometryInfos = new GeometryInfo[] { info };
-
         }
     }
 }

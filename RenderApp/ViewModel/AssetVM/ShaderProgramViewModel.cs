@@ -9,6 +9,8 @@ namespace RenderApp.ViewModel
 {
     public class ShaderProgramViewModel : TabItemViewModel
     {
+        private ShaderProgram model;
+
         public ShaderProgramViewModel(ShaderProgram model)
         {
             if (model != null)
@@ -39,7 +41,6 @@ namespace RenderApp.ViewModel
             }
         }
 
-        private ShaderProgram model;
         public ShaderProgram Model
         {
             get

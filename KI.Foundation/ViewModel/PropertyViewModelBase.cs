@@ -15,6 +15,7 @@ namespace KI.Foundation.ViewModel
             {
                 return _name;
             }
+
             set
             {
                 SetValue<string>(ref _name, value);

@@ -31,6 +31,7 @@ namespace RenderApp.ViewModel
             {
                 return _activePane;
             }
+
             set
             {
                 if (_activePane != value)
@@ -170,7 +171,6 @@ namespace RenderApp.ViewModel
             dlg.Title = "開くファイルを選択してください。";
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-
             }
         }
 
@@ -187,7 +187,6 @@ namespace RenderApp.ViewModel
             dlg.Title = "開くファイルを選択してください。";
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-
             }
         }
         #endregion
@@ -388,7 +387,6 @@ namespace RenderApp.ViewModel
 
         private void SizeChangedCommand()
         {
-
         }
 
         public void LoadedCommand()
@@ -423,7 +421,6 @@ namespace RenderApp.ViewModel
 
         private void OctreeCommand()
         {
-
         }
         #endregion
 

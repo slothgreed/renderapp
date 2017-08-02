@@ -11,6 +11,32 @@ namespace KI.Gfx.KITexture
 {
     public class Texture : KIObject
     {
+        #region [constructor]
+
+        public Texture(string name, TextureType type)
+            : base(name)
+        {
+            ImageInfos = new List<KIImageInfo>();
+            CreateTextureBuffer(type);
+        }
+
+        /// <summary>
+        /// 空のテクスチャの作成
+        /// </summary>
+        /// <param name="name">テクスチャ名</param>
+        /// <param name="type">テクスチャタイプ</param>
+        /// <param name="width">横<param>
+        /// <param name="height">縦</param>
+        public Texture(string name, TextureType type, int width, int height)
+            : base(name)
+        {
+            ImageInfos = new List<KIImageInfo>();
+            CreateTextureBuffer(type);
+            TextureBuffer.SetEmpty(width, height);
+        }
+
+        #endregion
+
         #region [member]
         public int Width
         {
@@ -47,6 +73,7 @@ namespace KI.Gfx.KITexture
                 {
                     return null;
                 }
+
                 return ImageInfos.FirstOrDefault();
             }
         }
@@ -61,6 +88,7 @@ namespace KI.Gfx.KITexture
                 return TextureBuffer.DeviceID;
             }
         }
+
         /// <summary>
         /// MinMag兼ねたフィルタ
         /// </summary>
@@ -74,6 +102,7 @@ namespace KI.Gfx.KITexture
                 BindFilter(_filter);
             }
         }
+
         /// <summary>
         /// デフォルトはクランプ
         /// </summary>
@@ -93,31 +122,7 @@ namespace KI.Gfx.KITexture
         #endregion
 
         public static readonly Texture Empty;
-        #region [constructor]
 
-        public Texture(string name, TextureType type)
-            : base(name)
-        {
-            ImageInfos = new List<KIImageInfo>();
-            CreateTextureBuffer(type);
-        }
-
-        /// <summary>
-        /// 空のテクスチャの作成
-        /// </summary>
-        /// <param name="name">テクスチャ名</param>
-        /// <param name="type">テクスチャタイプ</param>
-        /// <param name="width">横<param>
-        /// <param name="height">縦</param>
-        public Texture(string name, TextureType type, int width, int height)
-            : base(name)
-        {
-            ImageInfos = new List<KIImageInfo>();
-            CreateTextureBuffer(type);
-            TextureBuffer.SetEmpty(width, height);
-        }
-
-        #endregion
         private void BindWrapMode(TextureWrapMode wrapMode)
         {
             TextureBuffer.BindBuffer();
@@ -126,6 +131,7 @@ namespace KI.Gfx.KITexture
             TextureBuffer.UnBindBuffer();
             Logger.GLLog(Logger.LogLevel.Error);
         }
+
         private void BindFilter(TextureMinFilter filter)
         {
             TextureBuffer.BindBuffer();
@@ -144,40 +150,18 @@ namespace KI.Gfx.KITexture
         }
         #region [テクスチャ周り]
 
-        private void SetupTexImage2D(TextureTarget target, KIImageInfo image)
-        {
-            if (image.Format == System.Drawing.Imaging.PixelFormat.Format24bppRgb)
-            {
-                GL.TexImage2D(target, 0, PixelInternalFormat.Rgba, image.Width, image.Height,
-                                0, OpenTK.Graphics.OpenGL.PixelFormat.Bgr, PixelType.UnsignedByte, image.Scan0);
-            }
-            else if (image.Format == System.Drawing.Imaging.PixelFormat.Format32bppArgb)
-            {
-                GL.TexImage2D(target, 0, PixelInternalFormat.Rgba, image.Width, image.Height,
-                                0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, image.Scan0);
-            }
-            else
-            {
-                GL.TexImage2D(target, 0, PixelInternalFormat.Rgba, image.Width, image.Height,
-                                0, OpenTK.Graphics.OpenGL.PixelFormat.ColorIndex, PixelType.UnsignedByte, image.Scan0);
-            }
-        }
-
-        private void SetupTexImage2D(TextureTarget target, PixelInternalFormat pixelFormat, float[,,] rgba)
-        {
-            GL.TexImage2D(target, 0, pixelFormat, Width, Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.Float, rgba);
-        }
-
         public void GenCubemapTexture(List<KIImageInfo> images)
         {
             if (images == null)
             {
                 Logger.Log(Logger.LogLevel.Error, "not set image");
             }
+
             if (images.Count != 6)
             {
                 Logger.Log(Logger.LogLevel.Error, "can not set up cubemap texture");
             }
+
             TextureBuffer.BindBuffer();
             TextureTarget[] target = new TextureTarget[6];
             target[0] = TextureTarget.TextureCubeMapPositiveX;
@@ -194,12 +178,14 @@ namespace KI.Gfx.KITexture
                 {
                     image.LoadImageData();
                 }
+
                 image.Lock();
                 //targetのPX～は、cubemapの2つ目以降から
                 SetupTexImage2D(target[i], image);
                 image.UnLock();
                 ImageInfos.Add(image);
             }
+
             TextureBuffer.UnBindBuffer();
 
         }
@@ -254,6 +240,31 @@ namespace KI.Gfx.KITexture
             TextureBuffer.UnBindBuffer();
             Logger.GLLog(Logger.LogLevel.Error);
         }
+
+        private void SetupTexImage2D(TextureTarget target, PixelInternalFormat pixelFormat, float[,,] rgba)
+        {
+            GL.TexImage2D(target, 0, pixelFormat, Width, Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.Float, rgba);
+        }
+
+        private void SetupTexImage2D(TextureTarget target, KIImageInfo image)
+        {
+            if (image.Format == System.Drawing.Imaging.PixelFormat.Format24bppRgb)
+            {
+                GL.TexImage2D(target, 0, PixelInternalFormat.Rgba, image.Width, image.Height,
+                                0, OpenTK.Graphics.OpenGL.PixelFormat.Bgr, PixelType.UnsignedByte, image.Scan0);
+            }
+            else if (image.Format == System.Drawing.Imaging.PixelFormat.Format32bppArgb)
+            {
+                GL.TexImage2D(target, 0, PixelInternalFormat.Rgba, image.Width, image.Height,
+                                0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, image.Scan0);
+            }
+            else
+            {
+                GL.TexImage2D(target, 0, PixelInternalFormat.Rgba, image.Width, image.Height,
+                                0, OpenTK.Graphics.OpenGL.PixelFormat.ColorIndex, PixelType.UnsignedByte, image.Scan0);
+            }
+        }
+
         #endregion
     }
 }

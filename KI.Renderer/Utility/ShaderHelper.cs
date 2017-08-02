@@ -13,7 +13,7 @@ namespace KI.Renderer
         /// <summary>
         /// 初期状態の設定
         /// </summary>
-        public static void InitializeState(Scene scene,Shader shader, RenderObject geometry, Dictionary<TextureKind, Texture> TextureItem)
+        public static void InitializeState(Scene scene, Shader shader, RenderObject geometry, Dictionary<TextureKind, Texture> TextureItem)
         {
             foreach (ShaderProgramInfo info in shader.GetShaderVariable())
             {
@@ -68,7 +68,7 @@ namespace KI.Renderer
                         info.variable = scene.MainCamera.Position;
                         break;
                     case "uCameraMatrix":
-                        info.variable =scene.MainCamera.Matrix;
+                        info.variable = scene.MainCamera.Matrix;
                         break;
                     case "uLightPosition":
                         info.variable = scene.SunLight.Position;
@@ -84,48 +84,56 @@ namespace KI.Renderer
                         {
                             info.variable = TextureItem[TextureKind.Albedo].DeviceID;
                         }
+
                         break;
                     case "uCubeMap":
                         if (TextureItem.ContainsKey(TextureKind.Cubemap))
                         {
                             info.variable = TextureItem[TextureKind.Cubemap].DeviceID;
                         }
+
                         break;
                     case "uSpecularMap":
                         if (TextureItem.ContainsKey(TextureKind.Specular))
                         {
                             info.variable = TextureItem[TextureKind.Specular].DeviceID;
                         }
+
                         break;
                     case "uWorldMap":
                         if (TextureItem.ContainsKey(TextureKind.World))
                         {
                             info.variable = TextureItem[TextureKind.World].DeviceID;
                         }
+
                         break;
                     case "uLightingMap":
                         if (TextureItem.ContainsKey(TextureKind.Lighting))
                         {
                             info.variable = TextureItem[TextureKind.Lighting].DeviceID;
                         }
+
                         break;
                     case "uNormalMap":
                         if (TextureItem.ContainsKey(TextureKind.Normal))
                         {
                             info.variable = TextureItem[TextureKind.Normal].DeviceID;
                         }
+
                         break;
                     case "uHeightMap":
                         if (TextureItem.ContainsKey(TextureKind.Height))
                         {
                             info.variable = TextureItem[TextureKind.Height].DeviceID;
                         }
+
                         break;
                     case "uEmissiveMap":
                         if (TextureItem.ContainsKey(TextureKind.Emissive))
                         {
                             info.variable = TextureItem[TextureKind.Emissive].DeviceID;
                         }
+
                         break;
                 }
             }

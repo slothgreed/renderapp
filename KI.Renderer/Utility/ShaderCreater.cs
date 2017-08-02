@@ -6,6 +6,9 @@ using KI.Renderer;
 
 namespace KI.Asset
 {
+    /// <summary>
+    /// シェーダ種類
+    /// </summary>
     public enum ShaderType
     {
         Bezier,
@@ -14,21 +17,20 @@ namespace KI.Asset
         NURBS,
         Fur
     }
+
+    /// <summary>
+    /// シェーダ生成クラス
+    /// </summary>
     public class ShaderCreater
     {
+        /// <summary>
+        /// シングルトンインスタンス
+        /// </summary>
+        public static ShaderCreater Instance { get; } = new ShaderCreater();
 
-        private static ShaderCreater _Instance;
-        public static ShaderCreater Instance
-        {
-            get
-            {
-                if(_Instance == null)
-                {
-                    _Instance = new ShaderCreater();
-                }
-                return _Instance;
-            }
-        }
+        /// <summary>
+        /// シェーダディレクトリ
+        /// </summary>
         public string Directory
         {
             get
@@ -36,24 +38,20 @@ namespace KI.Asset
                 return Global.ShaderDirectory + @"\";
             }
         }
-        private bool CheckBufferEnable(BufferObject buffer)
-        {
-            if(buffer == null)
-            {
-                return false;
-            }
-            return buffer.Enable;
-        }
+
         /// <summary>
-        /// 汎用的な頂点シェーダの読み込み
+        /// 頂点シェーダの取得
         /// </summary>
+        /// <param name="renderObject">描画オブジェクト</param>
+        /// <returns>ファイルパス</returns>
         public string GetVertexShader(RenderObject renderObject)
         {
             string shaderPath = GetTextureFragShader(renderObject);
-            if(shaderPath != null)
+            if (shaderPath != null)
             {
                 return shaderPath;
             }
+
             if (CheckBufferEnable(renderObject.PositionBuffer) &&
                 CheckBufferEnable(renderObject.NormalBuffer) &&
                 CheckBufferEnable(renderObject.ColorBuffer) &&
@@ -61,12 +59,14 @@ namespace KI.Asset
             {
                 return Directory + @"GBuffer\GeneralPNCT.vert";
             }
+
             if (CheckBufferEnable(renderObject.PositionBuffer) &&
                 CheckBufferEnable(renderObject.NormalBuffer) &&
                 CheckBufferEnable(renderObject.TexCoordBuffer))
             {
                 return Directory + @"GBuffer\GeneralPNT.vert";
             }
+
             if (CheckBufferEnable(renderObject.PositionBuffer) &&
                 CheckBufferEnable(renderObject.NormalBuffer) &&
                 CheckBufferEnable(renderObject.ColorBuffer))
@@ -79,28 +79,33 @@ namespace KI.Asset
             {
                 return Directory + @"GBuffer\GeneralPC.vert";
             }
-            
+
             if (CheckBufferEnable(renderObject.PositionBuffer) &&
                 CheckBufferEnable(renderObject.TexCoordBuffer))
             {
                 return Directory + @"GBuffer\GeneralPT.vert";
             }
+
             if (CheckBufferEnable(renderObject.PositionBuffer))
             {
                 return Directory + @"GBuffer\GeneralP.vert";
             }
+
             return null;
         }
+
         /// <summary>
-        /// フラグシェーダの切り替え
+        /// フラグシェーダの取得
         /// </summary>
+        /// <param name="renderObject">描画オブジェクト</param>
+        /// <returns>ファイルパス</returns>
         public string GetFragShader(RenderObject renderObject)
         {
             if (CheckBufferEnable(renderObject.PositionBuffer) &&
                 CheckBufferEnable(renderObject.TexCoordBuffer) &&
                 CheckBufferEnable(renderObject.NormalBuffer))
             {
-                    return Directory + @"GBuffer\GeneralPNT.frag";
+                return Directory + @"GBuffer\GeneralPNT.frag";
             }
 
             if (CheckBufferEnable(renderObject.PositionBuffer) &&
@@ -115,19 +120,26 @@ namespace KI.Asset
             {
                 return Directory + @"GBuffer\GeneralPC.frag";
             }
-            
+
             if (CheckBufferEnable(renderObject.PositionBuffer) &&
                 CheckBufferEnable(renderObject.NormalBuffer))
             {
                 return Directory + @"GBuffer\GeneralPN.frag";
             }
-            
+
             if (CheckBufferEnable(renderObject.PositionBuffer))
             {
                 return Directory + @"GBuffer\GeneralPN.frag";
             }
+
             return null;
         }
+
+        /// <summary>
+        /// テクスチャ付フラグメントシェーダの取得
+        /// </summary>
+        /// <param name="geometry">形状</param>
+        /// <returns>ファイルパス</returns>
         public string GetTextureFragShader(Geometry geometry)
         {
             if (geometry.GetTexture(TextureKind.Albedo) != null &&
@@ -136,23 +148,32 @@ namespace KI.Asset
             {
                 return Directory + @"GBuffer\GeneralANS.frag";
             }
+
             if (geometry.GetTexture(TextureKind.Albedo) != null &&
                 geometry.GetTexture(TextureKind.Normal) != null)
             {
                 return Directory + @"GBuffer\GeneralAN.frag";
             }
+
             if (geometry.GetTexture(TextureKind.Albedo) != null &&
                 geometry.GetTexture(TextureKind.Specular) != null)
             {
                 return Directory + @"GBuffer\GeneralAS.frag";
             }
+
             if (geometry.GetTexture(TextureKind.Albedo) != null)
             {
                 return Directory + @"GBuffer\GeneralA.frag";
             }
+
             return null;
         }
 
+        /// <summary>
+        /// 特殊シェーダの作成
+        /// </summary>
+        /// <param name="type">シェーダ種類</param>
+        /// <returns>シェーダ</returns>
         public Shader CreateShader(ShaderType type)
         {
             switch (type)
@@ -168,8 +189,25 @@ namespace KI.Asset
                 case ShaderType.Fur:
                     return ShaderFactory.Instance.CreateShaderVF(Directory + @"GBuffer\fur");
             }
+
             return null;
         }
+
+        /// <summary>
+        /// 形状データのバッファ状態の取得
+        /// </summary>
+        /// <param name="buffer">バッファ</param>
+        /// <returns>enable</returns>
+        private bool CheckBufferEnable(BufferObject buffer)
+        {
+            if (buffer == null)
+            {
+                return false;
+            }
+
+            return buffer.Enable;
+        }
+
         //private Shader _defaultShader;
         //public Shader DefaultShader
         //{

@@ -53,17 +53,20 @@ namespace KI.Gfx.KITexture
         {
             Format = PixelFormat.Format32bppArgb;
         }
+
         public virtual bool LoadImageData()
         {
             if (Loaded)
             {
                 return true;
             }
+
             bmpImage = new Bitmap(FilePath);
             if (System.IO.Path.GetExtension(FilePath) == ".bmp")
             {
                 bmpImage.RotateFlip(RotateFlipType.RotateNoneFlipY);
             }
+
             Width = bmpImage.Width;
             Height = bmpImage.Height;
             Loaded = true;

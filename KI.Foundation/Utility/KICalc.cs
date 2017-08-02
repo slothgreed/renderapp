@@ -4,7 +4,6 @@ namespace KI.Foundation.Utility
 {
     public class KICalc
     {
-
         public const float THRESHOLD05 = 0.00001f;          // 誤差範囲 0.00001
         public static Vector3[] RGB = new Vector3[256];
 
@@ -65,7 +64,6 @@ namespace KI.Foundation.Utility
                 float scale = 255 * (value - min) / length;
 
                 return RGB[(int)scale];
-
             }
             catch (Exception)
             {
@@ -88,6 +86,7 @@ namespace KI.Foundation.Utility
 
             return normal.Normalized();
         }
+
         /// <summary>
         /// 法線の算出
         /// </summary>
@@ -131,7 +130,6 @@ namespace KI.Foundation.Utility
             ex = Vector3.Cross(v1, v2);
             cos = Vector3.Dot(v1, v2);
 
-
             cos = (float)Math.Acos(cos);
 
             if (Vector3.Dot(ex, axis) < 0)
@@ -144,9 +142,7 @@ namespace KI.Foundation.Utility
             }
         }
 
-
         #endregion
-
 
         ///// <summary>
         ///// 平面の公式から平面の点を求める
@@ -237,6 +233,7 @@ namespace KI.Foundation.Utility
 
             return result;
         }
+
         /// <summary>
         /// 線と平面の交差位置
         /// </summary>
@@ -270,9 +267,7 @@ namespace KI.Foundation.Utility
             }
 
             return false;
-
         }
-
 
         /// <summary>
         /// 線と平面の交差位置
@@ -287,7 +282,6 @@ namespace KI.Foundation.Utility
         /// <returns>あるtrue,ないfalse</returns>
         public static bool CrossPlanetoLinePos(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 near, Vector3 far, ref float min, out Vector3 result)
         {
-
             Vector4 surface = GetPlaneFormula(v1, v2, v3);
             result = crossPlanetoLine(near, far, surface);
             float length;
@@ -411,7 +405,6 @@ namespace KI.Foundation.Utility
             return false;
         }
 
-
         /// <summary>
         /// 多角形の内外判定
         /// </summary>
@@ -436,6 +429,7 @@ namespace KI.Foundation.Utility
 
             return Round(result);
         }
+
         public static Vector4 Multiply(Matrix4 matrix, Vector4 vector)
         {
             Vector4 result = new Vector4();
@@ -445,6 +439,7 @@ namespace KI.Foundation.Utility
             result.W = matrix.Column3[0] * vector.X + matrix.Column3[1] * vector.Y + matrix.Column3[2] * vector.Z + matrix.Column3[3] * vector.W;
             return result;
         }
+
         /// <summary>
         /// 法線用
         /// </summary>
@@ -465,6 +460,7 @@ namespace KI.Foundation.Utility
 
             return result;
         }
+
         public static Vector3 Multiply(Matrix3 matrix, Vector3 vector)
         {
             Vector3 result = new Vector3();
@@ -504,11 +500,13 @@ namespace KI.Foundation.Utility
 
                 }
             }
+
             //0.00001 or -0.00001
             if (Math.Abs(result) < THRESHOLD05)
             {
                 return (float)tmp;
             }
+
             return value;
         }
 
@@ -528,7 +526,6 @@ namespace KI.Foundation.Utility
 
         #endregion
 
-
         /// <summary>
         /// 点と平面の距離
         /// http://keisan.casio.jp/exec/system/1202458240
@@ -542,6 +539,7 @@ namespace KI.Foundation.Utility
             float up = (float)Math.Abs((double)(plane[0] * point.X + plane[1] * point.Y + plane[2] * point.Z + plane[3]));
             return up / low;
         }
+
         public static float DistancePlane(Vector4 plane, Vector3 point)
         {
             float[] p = new float[4];
@@ -640,9 +638,5 @@ namespace KI.Foundation.Utility
 
             return color;
         }
-
-
-
-
     }
 }

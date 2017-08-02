@@ -41,18 +41,22 @@ namespace KI.Gfx.GLUtil
         /// glControl
         /// </summary>
         private GLControl m_glControl;
+
         /// <summary>
         /// レンダリング中か
         /// </summary>
         private bool m_NowRender;
+
         /// <summary>
         /// 起動後か
         /// </summary>
         private bool m_AppstartUp = false;
+
         /// <summary>
         /// レンダリング時間(mm)
         /// </summary>
         public int RenderingMillSec = 0;
+
         /// <summary>
         /// glControlのゲッタ
         /// </summary>
@@ -144,19 +148,18 @@ namespace KI.Gfx.GLUtil
         public void glControl_Paint(object sender, PaintEventArgs e)
         {
             if (!m_AppstartUp)
-            {
                 return;
-            }
+
             if (m_NowRender)
-            {
                 return;
-            }
+
             DeviceContext.Instance.Clear();
 
             if (OnRender != null)
             {
                 OnRender(sender, e);
             }
+
             m_NowRender = true;
             m_glControl.SwapBuffers();
             m_NowRender = false;
@@ -170,6 +173,7 @@ namespace KI.Gfx.GLUtil
             {
                 OnDragOver(sender, e);
             }
+
             glControl_Paint(null, null);
         }
 
@@ -179,6 +183,7 @@ namespace KI.Gfx.GLUtil
             {
                 OnDragLeave(sender, e);
             }
+
             glControl_Paint(null, null);
         }
 
@@ -188,6 +193,7 @@ namespace KI.Gfx.GLUtil
             {
                 OnDragEnter(sender, e);
             }
+
             glControl_Paint(null, null);
         }
 
@@ -197,6 +203,7 @@ namespace KI.Gfx.GLUtil
             {
                 OnMouseWheel(sender, e);
             }
+
             glControl_Paint(null, null);
         }
 
@@ -206,16 +213,20 @@ namespace KI.Gfx.GLUtil
             {
                 OnMouseDown(sender, e);
             }
+
             glControl_Paint(null, null);
         }
+
         private void glControl_MouseUp(object sender, MouseEventArgs e)
         {
             if (OnMouseUp != null)
             {
                 OnMouseUp(sender, e);
             }
+
             glControl_Paint(null, null);
         }
+
         private void glControl_MouseMove(object sender, MouseEventArgs e)
         {
             if (!m_AppstartUp)
@@ -227,6 +238,7 @@ namespace KI.Gfx.GLUtil
             {
                 OnMouseMove(sender, e);
             }
+
             if (e.Button != MouseButtons.None)
             {
                 glControl_Paint(null, null);

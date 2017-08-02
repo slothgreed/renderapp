@@ -1,17 +1,10 @@
 ﻿using KI.Foundation.Core;
+
 namespace KI.Gfx.Render
 {
     public class RenderTargetFactory : KIFactoryBase<RenderTarget>
     {
-        private static RenderTargetFactory _instance = new RenderTargetFactory();
-
-        public static RenderTargetFactory Instance
-        {
-            get
-            {
-                return _instance;
-            }
-        }
+        public static RenderTargetFactory Instance { get; } = new RenderTargetFactory();
 
         public RenderTarget CreateRenderTarget(string name, int width, int height, int outputNum)
         {
@@ -21,6 +14,7 @@ namespace KI.Gfx.Render
         }
 
         private RenderTarget _default = null;
+
         public RenderTarget Default
         {
             get

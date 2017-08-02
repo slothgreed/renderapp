@@ -7,34 +7,8 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 namespace KI.Gfx.GLUtil
 {
-
     public class ArrayBuffer : BufferObject
     {
-
-        public BufferUsageHint UsageHint
-        {
-            get;
-            set;
-        }
-
-        public BufferTarget Target
-        {
-            get;
-            set;
-        }
-
-        public object Data
-        {
-            get;
-            set;
-        }
-
-        public EArrayType ArrayType
-        {
-            get;
-            set;
-        }
-
         internal ArrayBuffer()
         {
             Target = BufferTarget.ArrayBuffer;
@@ -48,6 +22,14 @@ namespace KI.Gfx.GLUtil
             UsageHint = BufferUsageHint.StaticDraw;
             Enable = true;
         }
+
+        public BufferUsageHint UsageHint { get; set; }
+
+        public BufferTarget Target { get; set; }
+
+        public object Data { get; set; }
+
+        public EArrayType ArrayType { get; set; }
 
         public override void PreGenBuffer()
         {

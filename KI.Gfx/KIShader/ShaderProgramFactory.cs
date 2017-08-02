@@ -1,21 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using KI.Foundation.Core;
+﻿using KI.Foundation.Core;
+
 namespace KI.Gfx.KIShader
 {
     class ShaderProgramFactory : KIFactoryBase<ShaderProgram>
     {
-        private static ShaderProgramFactory _instance = new ShaderProgramFactory();
-        public static ShaderProgramFactory Instance
-        {
-            get
-            {
-                return _instance;
-            }
-        }
+        public static ShaderProgramFactory Instance { get; } = new ShaderProgramFactory();
 
         public ShaderProgram CreateShaderProgram(string key, string path)
         {

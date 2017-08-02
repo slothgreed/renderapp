@@ -5,28 +5,41 @@ using KI.Analyzer;
 
 namespace KI.Asset
 {
+    /// <summary>
+    /// アセットファクトリ
+    /// </summary>
     public class AssetFactory : KIFactoryBase<Geometry>
     {
-        private static AssetFactory _instance = new AssetFactory();
+        /// <summary>
+        /// シングルトン
+        /// </summary>
+        public static AssetFactory Instance { get; } = new AssetFactory();
 
-        public static AssetFactory Instance
-        {
-            get
-            {
-                return _instance;
-            }
-        }
-
+        /// <summary>
+        /// 環境プローブの作成
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <returns>環境プローブ</returns>
         public EnvironmentProbe CreateEnvironmentMap(string name)
         {
             return new EnvironmentProbe(name);
         }
 
+        /// <summary>
+        /// カメラの作成
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <returns>カメラ</returns>
         public Camera CreateCamera(string name)
         {
             return new Camera(name);
         }
 
+        /// <summary>
+        /// ライトの作成
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <returns>ライト</returns>
         public Light CreateLight(string name)
         {
             return new PointLight(name, new Vector3(-11, 300, -18), Vector3.Zero);

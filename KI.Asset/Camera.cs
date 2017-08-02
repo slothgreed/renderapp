@@ -10,6 +10,80 @@ namespace KI.Asset
     public class Camera : KIFile
     {
         #region [property method]
+        /// <summary>
+        /// カメラからの距離
+        /// </summary>
+        private float ZoomLength;
+
+        /// <summary>
+        /// ズームイン倍率
+        /// </summary>
+        private float ZoomInRatio = 1.1f;
+
+        /// <summary>
+        /// ズームアウト倍率
+        /// </summary>
+        private float ZoomOutRatio = 0.9f;
+
+        /// <summary>
+        /// ズームの最小値
+        /// </summary>
+        private float ZoomMin = 1;
+
+        /// <summary>
+        /// ズームの最大値
+        /// </summary>
+        private float ZoomMax = 600;
+        /// <summary>
+        /// 注視点の平行移動量
+        /// </summary>
+        private Vector3 Pan = new Vector3(0.0f, 5.0f, 10.0f);
+
+        /// <summary>
+        /// 平行移動の最小値
+        /// </summary>
+        private Vector3 PanMin = new Vector3(-100, -100, -100);
+
+        /// <summary>
+        /// 平行移動の最大値
+        /// </summary>
+        private Vector3 PanMax = new Vector3(100, 100, 100);
+
+        /// <summary>
+        /// 平行移動量の倍率設定
+        /// </summary>
+        private float PanRatio = 10.0f;
+
+        /// <summary>
+        /// projectionのnear
+        /// </summary>
+        private float Near { get; set; } = 1;
+
+        /// <summary>
+        /// 回転倍率
+        /// </summary>
+        private float RotateRatio;
+
+        /// <summary>
+        /// 球面座標の角度
+        /// </summary>
+        private float phi;
+
+        /// <summary>
+        /// 球面座標の角度
+        /// </summary>
+        private float theta;
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public Camera(string name)
+            : base(name)
+        {
+            InitCamera();
+            SetProjMatrix(1.0f);
+        }
+
         public Matrix4 ProjMatrix { get; set; }
 
         public Matrix4 Matrix { get; private set; }
@@ -38,133 +112,34 @@ namespace KI.Asset
             }
         }
 
-        public void SetProjMatrix(float aspect)
-        {
-            ProjMatrix = Matrix4.CreatePerspectiveFieldOfView((float)System.Math.PI / 4.0f, aspect, Near, Far);
-        }
-
         #endregion
-        #region [Zoom関連]
-        /// <summary>
-        /// カメラからの距離
-        /// </summary>
-        private float ZoomLength;
+        public float Far { get; set; } = 1000;
 
-        /// <summary>
-        /// ズームイン倍率
-        /// </summary>
-        private float ZoomInRatio = 1.1f;
-
-        /// <summary>
-        /// ズームアウト倍率
-        /// </summary>
-        private float ZoomOutRatio = 0.9f;
-
-        /// <summary>
-        /// ズームの最小値
-        /// </summary>
-        private float ZoomMin = 1;
-
-        /// <summary>
-        /// ズームの最大値
-        /// </summary>
-        private float ZoomMax = 600;
-
-        #endregion
-        #region [平行移動関連]
-        /// <summary>
-        /// 注視点の平行移動量
-        /// </summary>
-        private Vector3 Pan = new Vector3(0.0f, 5.0f, 10.0f);
-
-        /// <summary>
-        /// 平行移動の最小値
-        /// </summary>
-        private Vector3 PanMin = new Vector3(-100, -100, -100);
-
-        /// <summary>
-        /// 平行移動の最大値
-        /// </summary>
-        private Vector3 PanMax = new Vector3(100, 100, 100);
-
-        /// <summary>
-        /// 平行移動量の倍率設定
-        /// </summary>
-        private float PanRatio = 10.0f;
-
-        /// <summary>
-        /// projectionのnear
-        /// </summary>
-        private float _near = 1;
-
-        public float Near
-        {
-            get
-            {
-                return _near;
-            }
-
-            private set
-            {
-                _near = value;
-            }
-        }
-
-        /// <summary>
-        /// projectionのfar
-        /// </summary>
-        private float _far = 1000;
-        public float Far
-        {
-            get
-            {
-                return _far;
-            }
-            private set
-            {
-                _far = value;
-            }
-        }
-        #endregion
         #region [回転関連]
-
-        /// <summary>
-        /// 回転倍率
-        /// </summary>
-        private float RotateRatio;
-
-        /// <summary>
-        /// 球面座標の角度
-        /// </summary>
-        private float PHI;
-
-        /// <summary>
-        /// 球面座標の角度
-        /// </summary>
-        private float THETA;
 
         /// <summary>
         /// カメラ回転のPHI
         /// </summary>
-        public float m_phi
+        public float Phi
         {
             get
             {
-                return PHI;
+                return phi;
             }
+
             set
             {
                 if (value >= 90.0f)
                 {
-                    PHI = 89.9999f;
+                    phi = 89.9999f;
                 }
                 else if (value <= -90.0f)
                 {
-                    PHI = -89.9999f;
+                    phi = -89.9999f;
                 }
                 else
                 {
-                    PHI = value;
+                    phi = value;
                 }
 
             }
@@ -173,47 +148,30 @@ namespace KI.Asset
         /// <summary>
         /// カメラ回転のTHETA
         /// </summary>
-        public float m_theta
+        public float Theta
         {
             get
             {
-                return THETA;
+                return theta;
             }
+
             set
             {
                 if (value >= 360.0f)
                 {
-                    THETA = 0;
+                    theta = 0;
                 }
                 else if (value <= -360.0f)
                 {
-                    THETA = 0;
+                    theta = 0;
                 }
                 else
                 {
-                    THETA = value;
+                    theta = value;
                 }
             }
         }
         #endregion
-        #region [コンストラクタ]
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        public Camera(string name)
-            : base(name)
-        {
-            InitCamera();
-            SetProjMatrix(1.0f);
-        }
-
-        /// <summary>
-        /// 解放処理
-        /// </summary>
-        public override void Dispose()
-        {
-
-        }
 
         /// <summary>
         /// 初期のカメラ位置
@@ -224,36 +182,22 @@ namespace KI.Asset
             LookAt = Vector3.Zero;
             Up = Vector3.UnitY;
             ZoomLength = ZoomMax;
-            m_theta = 90.0f;
-            m_phi = 0.0f;
+            Theta = 90.0f;
+            Phi = 0.0f;
             UpdateCamera();
         }
 
-        #endregion
-        #region [カメラの球面移動]
-        private Vector3 GetSphericalMove()
-        {
-            Vector3 move = new Vector3();
-            double theta = MathHelper.DegreesToRadians(m_theta);
-            double phi = MathHelper.DegreesToRadians(m_phi);
-            move.X = (float)(Math.Cos(theta) * Math.Cos(phi));
-            move.Y = (float)(Math.Sin(phi));
-            move.Z = (float)(Math.Sin(theta) * Math.Cos(phi));
-
-            return move;
-        }
-
         /// <summary>
-        /// カメラの設定
+        /// 解放処理
         /// </summary>
-        private void UpdateCamera()
+        public override void Dispose()
         {
-            Vector3 q_Move = GetSphericalMove();
-            Position = Pan + (q_Move * ZoomLength);
-            LookAt = Pan;
-            Matrix = Matrix4.LookAt(Position, LookAt, Up);
         }
-        #endregion
+
+        public void SetProjMatrix(float aspect)
+        {
+            ProjMatrix = Matrix4.CreatePerspectiveFieldOfView((float)System.Math.PI / 4.0f, aspect, Near, Far);
+        }
         #region [カメラの平行移動]
 
         /// <summary>
@@ -311,7 +255,6 @@ namespace KI.Asset
         /// <param name="Middle"></param>
         public void Translate(Vector3 move)
         {
-
             Vector3 vectorX = new Vector3();
             Vector3 vectorY = new Vector3();
             Vector3 orient = new Vector3(move);
@@ -338,8 +281,8 @@ namespace KI.Asset
         /// <param name="Right"></param>
         public void Rotate(Vector3 move)
         {
-            m_theta += move.X;
-            m_phi += move.Y;
+            Theta += move.X;
+            Phi += move.Y;
             UpdateCamera();
         }
         #endregion
@@ -374,5 +317,31 @@ namespace KI.Asset
         }
         #endregion
 
+        /// <summary>
+        /// カメラの設定
+        /// </summary>
+        private void UpdateCamera()
+        {
+            Vector3 q_Move = GetSphericalMove();
+            Position = Pan + (q_Move * ZoomLength);
+            LookAt = Pan;
+            Matrix = Matrix4.LookAt(Position, LookAt, Up);
+        }
+
+        /// <summary>
+        /// カメラの球面移動
+        /// </summary>
+        /// <returns></returns>
+        private Vector3 GetSphericalMove()
+        {
+            Vector3 move = new Vector3();
+            double theta = MathHelper.DegreesToRadians(Theta);
+            double phi = MathHelper.DegreesToRadians(Phi);
+            move.X = (float)(Math.Cos(theta) * Math.Cos(phi));
+            move.Y = (float)(Math.Sin(phi));
+            move.Z = (float)(Math.Sin(theta) * Math.Cos(phi));
+
+            return move;
+        }
     }
 }

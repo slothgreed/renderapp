@@ -13,13 +13,15 @@ namespace KI.Renderer
 
         }
 
+        /// <summary>
+        /// 初期化
+        /// </summary>
         public override void Initialize()
         {
             uSample = new float[1200];
             float radius = 0.02f;//10.0f / m_ViewPort.w;
             Random rand = new Random();
             float[] val = new float[uSample.Length];
-
 
             for (int i = 0; i < val.Length; i += 3)
             {
@@ -37,6 +39,5 @@ namespace KI.Renderer
 
             uSample = val;
         }
-
     }
 }

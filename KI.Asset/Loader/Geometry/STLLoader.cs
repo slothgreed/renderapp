@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 using KI.Foundation.Utility;
 using KI.Foundation.Core;
-using System.Collections.ObjectModel;
 
 namespace KI.Asset.Loader
 {
@@ -56,7 +53,6 @@ namespace KI.Asset.Loader
             }
             catch (Exception)
             {
-
                 Logger.Log(Logger.LogLevel.Error, filePath + "開けません。現在のフォルダ位置" + System.Environment.CurrentDirectory);
             }
         }
@@ -98,14 +94,12 @@ namespace KI.Asset.Loader
                             position.Add(pos);
                             break;
                         }
-
                     }
                     counter++;
                 }
             }
             catch (Exception)
             {
-
                 throw new FileLoadException("stl file");
             }
         }

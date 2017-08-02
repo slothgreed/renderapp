@@ -11,13 +11,12 @@ namespace KI.Renderer
 			{
 				return _uID;
 			}
+
 			set
 			{
 				SetValue<int>(ref _uID, value); 
 			}
 		}
-
-
 	}
 	public partial class Bloom : RenderTechnique
 	{
@@ -28,12 +27,12 @@ namespace KI.Renderer
 			{
 				return _uScale;
 			}
+
 			set
 			{
 				SetValue<int>(ref _uScale, value); 
 			}
 		}
-
 		private float[] _uWeight;
 		public float[] uWeight
 		{
@@ -41,12 +40,12 @@ namespace KI.Renderer
 			{
 				return _uWeight;
 			}
+
 			set
 			{
 				SetValue<float[]>(ref _uWeight, value); 
 			}
 		}
-
 		private Texture _uTarget;
 		public Texture uTarget
 		{
@@ -54,12 +53,12 @@ namespace KI.Renderer
 			{
 				return _uTarget;
 			}
+
 			set
 			{
 				SetValue<Texture>(ref _uTarget, value); 
 			}
 		}
-
 		private bool _uHorizon;
 		public bool uHorizon
 		{
@@ -67,13 +66,12 @@ namespace KI.Renderer
 			{
 				return _uHorizon;
 			}
+
 			set
 			{
 				SetValue<bool>(ref _uHorizon, value); 
 			}
 		}
-
-
 	}
 	public partial class Sobel : RenderTechnique
 	{
@@ -84,12 +82,12 @@ namespace KI.Renderer
 			{
 				return _uTarget;
 			}
+
 			set
 			{
 				SetValue<Texture>(ref _uTarget, value); 
 			}
 		}
-
 		private int _uWidth;
 		public int uWidth
 		{
@@ -97,12 +95,12 @@ namespace KI.Renderer
 			{
 				return _uWidth;
 			}
+
 			set
 			{
 				SetValue<int>(ref _uWidth, value); 
 			}
 		}
-
 		private int _uHeight;
 		public int uHeight
 		{
@@ -110,12 +108,12 @@ namespace KI.Renderer
 			{
 				return _uHeight;
 			}
+
 			set
 			{
 				SetValue<int>(ref _uHeight, value); 
 			}
 		}
-
 		private float _uThreshold;
 		public float uThreshold
 		{
@@ -123,13 +121,12 @@ namespace KI.Renderer
 			{
 				return _uThreshold;
 			}
+
 			set
 			{
 				SetValue<float>(ref _uThreshold, value); 
 			}
 		}
-
-
 	}
 	public partial class SSAO : RenderTechnique
 	{
@@ -140,12 +137,12 @@ namespace KI.Renderer
 			{
 				return _uPosition;
 			}
+
 			set
 			{
 				SetValue<Texture>(ref _uPosition, value); 
 			}
 		}
-
 		private Texture _uTarget;
 		public Texture uTarget
 		{
@@ -153,12 +150,12 @@ namespace KI.Renderer
 			{
 				return _uTarget;
 			}
+
 			set
 			{
 				SetValue<Texture>(ref _uTarget, value); 
 			}
 		}
-
 		private float[] _uSample;
 		public float[] uSample
 		{
@@ -166,13 +163,12 @@ namespace KI.Renderer
 			{
 				return _uSample;
 			}
+
 			set
 			{
 				SetValue<float[]>(ref _uSample, value); 
 			}
 		}
-
-
 	}
 	public partial class SSLIC : RenderTechnique
 	{
@@ -183,12 +179,12 @@ namespace KI.Renderer
 			{
 				return _uPosit;
 			}
+
 			set
 			{
 				SetValue<Texture>(ref _uPosit, value); 
 			}
 		}
-
 		private Texture _uNormal;
 		public Texture uNormal
 		{
@@ -196,12 +192,12 @@ namespace KI.Renderer
 			{
 				return _uNormal;
 			}
+
 			set
 			{
 				SetValue<Texture>(ref _uNormal, value); 
 			}
 		}
-
 		private Texture _uVector;
 		public Texture uVector
 		{
@@ -209,12 +205,12 @@ namespace KI.Renderer
 			{
 				return _uVector;
 			}
+
 			set
 			{
 				SetValue<Texture>(ref _uVector, value); 
 			}
 		}
-
 		private Texture _uNoize;
 		public Texture uNoize
 		{
@@ -222,12 +218,12 @@ namespace KI.Renderer
 			{
 				return _uNoize;
 			}
+
 			set
 			{
 				SetValue<Texture>(ref _uNoize, value); 
 			}
 		}
-
 		private Texture _uTexCoord;
 		public Texture uTexCoord
 		{
@@ -235,13 +231,12 @@ namespace KI.Renderer
 			{
 				return _uTexCoord;
 			}
+
 			set
 			{
 				SetValue<Texture>(ref _uTexCoord, value); 
 			}
 		}
-
-
 	}
 	public partial class OutputBuffer : RenderTechnique
 	{
@@ -252,12 +247,12 @@ namespace KI.Renderer
 			{
 				return _uSelectMap;
 			}
+
 			set
 			{
 				SetValue<Texture>(ref _uSelectMap, value); 
 			}
 		}
-
 		private Texture _uTarget;
 		public Texture uTarget
 		{
@@ -265,12 +260,11 @@ namespace KI.Renderer
 			{
 				return _uTarget;
 			}
+
 			set
 			{
 				SetValue<Texture>(ref _uTarget, value); 
 			}
 		}
-
-
 	}
 }

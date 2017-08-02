@@ -53,6 +53,5 @@ namespace KI.Asset
             get;
             private set;
         }
-
     }
 }

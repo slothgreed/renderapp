@@ -1,4 +1,5 @@
 ﻿using OpenTK.Graphics.OpenGL;
+
 namespace KI.Gfx.GLUtil
 {
     public enum GeometryType
@@ -14,7 +15,6 @@ namespace KI.Gfx.GLUtil
 
     public class DeviceContext
     {
-
         /// <summary>
         /// Multi化はしない
         /// </summary>
@@ -45,7 +45,6 @@ namespace KI.Gfx.GLUtil
 
         private DeviceContext()
         {
-
         }
 
         public void Initialize(int width, int height)
@@ -118,6 +117,11 @@ namespace KI.Gfx.GLUtil
             GL.DrawElements(ConvertToPrimitiveType(type), count, elementType, indices);
         }
 
+        /// <summary>
+        /// サイズ変更
+        /// </summary>
+        /// <param name="width">横</param>
+        /// <param name="height">縦</param>
         public void SizeChanged(int width, int height)
         {
             Width = width;

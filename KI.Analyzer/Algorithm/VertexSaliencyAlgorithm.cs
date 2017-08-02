@@ -10,7 +10,6 @@ namespace KI.Analyzer.Algorithm
 
         public void Calculate(HalfEdge half)
         {
-
         }
     }
 }

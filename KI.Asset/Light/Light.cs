@@ -51,7 +51,6 @@ namespace KI.Asset
         /// </summary>
         public override void Dispose()
         {
-
         }
     }
 }

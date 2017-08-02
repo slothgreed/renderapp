@@ -15,7 +15,6 @@ namespace KI.Analyzer
 
         public HalfEdge()
         {
-
         }
 
         /// <summary>
@@ -26,31 +25,6 @@ namespace KI.Analyzer
         public HalfEdge(List<Vector3> position, List<int> poly_Index = null)
         {
             Initialize(position, poly_Index);
-        }
-
-        private void Initialize(List<Vector3> position, List<int> poly_Index = null)
-        {
-            if (poly_Index == null || poly_Index.Count == 0)
-            {
-                CreateHalfEdgeData(position);
-                CreateVertexIndex();
-            }
-            else
-            {
-                MakeVertexListByVertexIndex(position);
-                MakeEdgeListByVertexIndex(poly_Index);
-            }
-            SetOppositeEdge();
-
-            //for (int i = 0; i < m_Vertex.Count; i++ )
-            //{
-            //    VertexDecimation(m_Vertex[i].m_Edge.Start, m_Vertex[i].m_Edge.End);
-            //}
-
-            if (CheckOppositeEdge())
-            {
-                Logger.Log(Logger.LogLevel.Debug, "Create Half Edge OK!");
-            }
         }
 
         /// <summary>
@@ -66,6 +40,7 @@ namespace KI.Analyzer
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -126,10 +101,12 @@ namespace KI.Analyzer
             {
                 m_Mesh[i].Index = i;
             }
+
             for (int i = 0; i < m_Edge.Count; i++)
             {
                 m_Edge[i].Index = i;
             }
+
             for (int i = 0; i < m_Vertex.Count; i++)
             {
                 m_Vertex[i].Index = i;
@@ -188,6 +165,7 @@ namespace KI.Analyzer
             //HasError();
 #endif
         }
+
         public void EdgeFlips(Edge edge)
         {
             // delete edge & mesh
@@ -245,8 +223,36 @@ namespace KI.Analyzer
                     return true;
                 }
             }
+
             return false;
         }
+
+        private void Initialize(List<Vector3> position, List<int> poly_Index = null)
+        {
+            if (poly_Index == null || poly_Index.Count == 0)
+            {
+                CreateHalfEdgeData(position);
+                CreateVertexIndex();
+            }
+            else
+            {
+                MakeVertexListByVertexIndex(position);
+                MakeEdgeListByVertexIndex(poly_Index);
+            }
+
+            SetOppositeEdge();
+
+            //for (int i = 0; i < m_Vertex.Count; i++ )
+            //{
+            //    VertexDecimation(m_Vertex[i].m_Edge.Start, m_Vertex[i].m_Edge.End);
+            //}
+
+            if (CheckOppositeEdge())
+            {
+                Logger.Log(Logger.LogLevel.Debug, "Create Half Edge OK!");
+            }
+        }
+
         #region [delete object]
         private void DeleteMesh(List<Mesh> deleteMesh)
         {
@@ -371,7 +377,6 @@ namespace KI.Analyzer
                 Vertex v2 = m_Vertex[poly_Index[3 * num + 1]];
                 Vertex v3 = m_Vertex[poly_Index[3 * num + 2]];
                 CreateMesh(v1, v2, v3);
-
             }
         }
 
@@ -437,6 +442,7 @@ namespace KI.Analyzer
                     return false;
                 }
             }
+
             return true;
         }
         #endregion
@@ -450,6 +456,7 @@ namespace KI.Analyzer
                     return edge;
                 }
             }
+
             return null;
         }
 
@@ -468,6 +475,7 @@ namespace KI.Analyzer
             {
                 vertex_list[i].CalcFlag = false;
             }
+
             return vertex_list;
         }
 

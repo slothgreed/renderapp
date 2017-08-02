@@ -8,6 +8,10 @@ namespace KI.Renderer
         public static RenderSystem RenderSystem;
         public static Scene Scene;
         private static string kiDirectory = null;
+
+        /// <summary>
+        /// KIProjectDirecoty
+        /// </summary>
         public static string KIDirectory
         {
             get
@@ -16,6 +20,7 @@ namespace KI.Renderer
                 {
                     kiDirectory = Environment.GetEnvironmentVariable("KIProject");
                 }
+
                 return kiDirectory;
             }
         }
@@ -27,6 +32,5 @@ namespace KI.Renderer
                 return KIDirectory + @"\renderapp\Resource\Shader";
             }
         }
-
     }
 }

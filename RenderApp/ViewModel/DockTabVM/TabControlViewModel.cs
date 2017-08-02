@@ -16,6 +16,7 @@ namespace RenderApp.ViewModel
         RightDown,
         Center,
     }
+
     public class TabControlViewModel : DockWindowViewModel
     {
         private TabItemViewModel _activeItem;
@@ -28,6 +29,7 @@ namespace RenderApp.ViewModel
             {
                 return _activeItem;
             }
+
             set
             {
                 SetValue(ref _activeItem, value);
@@ -40,6 +42,7 @@ namespace RenderApp.ViewModel
             {
                 return _ItemsSource;
             }
+
             set
             {
                 SetValue(ref _ItemsSource, value);
@@ -48,7 +51,6 @@ namespace RenderApp.ViewModel
 
         public TabControlViewModel()
         {
-
         }
 
         public void Add(TabItemViewModel addItem)

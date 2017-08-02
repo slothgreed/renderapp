@@ -61,6 +61,16 @@ namespace KI.Asset
 
         public GeometryType GeometryType;
 
+        public GeometryInfo(List<Vector3> pos, List<Vector3> nor, List<Vector3> col, List<Vector2> tex, List<int> idx, GeometryType type)
+        {
+            Update(pos, nor, col, tex, idx, type);
+        }
+
+        public GeometryInfo(List<Vector3> pos, List<Vector3> nor, Vector3 col, List<Vector2> tex, List<int> idx, GeometryType type)
+        {
+            Update(pos, nor, col, tex, idx, type);
+        }
+
         /// <summary>
         /// 解放処理
         /// </summary>
@@ -71,16 +81,6 @@ namespace KI.Asset
             normal.Clear();
             texcoord.Clear();
             index.Clear();
-        }
-
-        public GeometryInfo(List<Vector3> pos, List<Vector3> nor, List<Vector3> col, List<Vector2> tex, List<int> idx, GeometryType type)
-        {
-            Update(pos, nor, col, tex, idx, type);
-        }
-
-        public GeometryInfo(List<Vector3> pos, List<Vector3> nor, Vector3 col, List<Vector2> tex, List<int> idx, GeometryType type)
-        {
-            Update(pos, nor, col, tex, idx, type);
         }
 
         public void Update(List<Vector3> pos, List<Vector3> nor, List<Vector3> col, List<Vector2> tex, List<int> idx, GeometryType type)
@@ -191,7 +191,6 @@ namespace KI.Asset
             var newColor = new List<Vector3>();
             var newNormal = new List<Vector3>();
 
-
             for (int i = 0; i < Index.Count; i += 3)
             {
                 newPosition.Add(Position[Index[i]]);
@@ -265,6 +264,7 @@ namespace KI.Asset
                         break;
                     }
                 }
+
                 if (!isExist)
                 {
                     newPosition.Add(Position[i]);
@@ -274,10 +274,12 @@ namespace KI.Asset
                     {
                         newTexcoord.Add(TexCoord[i]);
                     }
+
                     if (colorArray)
                     {
                         newColor.Add(Color[i]);
                     }
+
                     if (normalArray)
                     {
                         newNormal.Add(Normal[i]);

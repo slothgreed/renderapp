@@ -56,7 +56,6 @@ namespace RenderApp.ViewModel
 
         public override void UpdateProperty()
         {
-
         }
     }
 }

@@ -6,18 +6,12 @@ using KI.Gfx.KITexture;
 
 namespace KI.Asset
 {
+    /// <summary>
+    /// テクスチャファクトリ
+    /// </summary>
     public class TextureFactory : KIFactoryBase<Texture>
     {
-
-        private static TextureFactory _instance = new TextureFactory();
-
-        public static TextureFactory Instance
-        {
-            get
-            {
-                return _instance;
-            }
-        }
+        public static TextureFactory Instance { get; } = new TextureFactory();
 
         public Texture CreateTexture(string path)
         {
@@ -44,24 +38,6 @@ namespace KI.Asset
 
             Logger.Log(Logger.LogLevel.Error, "not support texture");
             return ImageKind.None;
-        }
-
-        private KIImageInfo CreateImageInfo(string path, ImageKind kind)
-        {
-            switch (kind)
-            {
-                case ImageKind.PNG:
-                case ImageKind.JPG:
-                case ImageKind.BMP:
-                    return new KIImageInfo(path);
-                case ImageKind.TGA:
-                    return new TGAImage(path);
-                case ImageKind.HDR:
-                    return new HDRImage(path);
-                default:
-                    Logger.Log(Logger.LogLevel.Error, "not support texture");
-                    return null;
-            }
         }
 
         public Texture CreateTexture(string path, ImageKind kind)
@@ -101,5 +77,24 @@ namespace KI.Asset
             AddItem(texture);
             return texture;
         }
+
+        private KIImageInfo CreateImageInfo(string path, ImageKind kind)
+        {
+            switch (kind)
+            {
+                case ImageKind.PNG:
+                case ImageKind.JPG:
+                case ImageKind.BMP:
+                    return new KIImageInfo(path);
+                case ImageKind.TGA:
+                    return new TGAImage(path);
+                case ImageKind.HDR:
+                    return new HDRImage(path);
+                default:
+                    Logger.Log(Logger.LogLevel.Error, "not support texture");
+                    return null;
+            }
+        }
+
     }
 }

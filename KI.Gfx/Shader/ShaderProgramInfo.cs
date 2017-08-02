@@ -6,6 +6,7 @@
         Uniform,
         Attribute,
     }
+
     public enum EVariableType
     {
         None,
@@ -29,7 +30,7 @@
     }
 
     /// <summary>
-    /// シェーダ情報
+    /// シェーダプログラム
     /// </summary>
     public class ShaderProgramInfo
     {

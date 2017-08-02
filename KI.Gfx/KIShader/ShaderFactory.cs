@@ -10,14 +10,7 @@ namespace KI.Gfx.KIShader
 {
     public class ShaderFactory
     {
-        private static ShaderFactory _instance = new ShaderFactory();
-        public static ShaderFactory Instance
-        {
-            get
-            {
-                return _instance;
-            }
-        }
+        public static ShaderFactory Instance { get; } = new ShaderFactory();
 
         public Dictionary<string, Shader> ShaderList = new Dictionary<string, Shader>();
 
@@ -30,8 +23,8 @@ namespace KI.Gfx.KIShader
                     return sh;
                 }
             }
-            return null;
 
+            return null;
         }
 
         /// <summary>
@@ -43,6 +36,7 @@ namespace KI.Gfx.KIShader
         {
             return CreateShaderVF(path + ".vert", path + ".frag");
         }
+
         /// <summary>
         /// vert,frag専用ファイル名は同一のもの
         /// </summary>
@@ -54,6 +48,7 @@ namespace KI.Gfx.KIShader
             {
                 return null;
             }
+
             Shader shader = FindShader(vPath, fPath);
             if (shader == null)
             {
@@ -64,6 +59,7 @@ namespace KI.Gfx.KIShader
                 shader = new Shader(vert, frag);
                 ShaderList.Add(vname + fname, shader);
             }
+
             return shader;
         }
 

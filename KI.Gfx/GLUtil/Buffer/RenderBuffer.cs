@@ -9,16 +9,11 @@ namespace KI.Gfx.GLUtil
 {
     public class RenderBuffer : BufferObject
     {
-        RenderbufferStorage BufferStorage
-        {
-            get;
-            set;
-        }
-
         internal RenderBuffer()
         {
-
         }
+
+        RenderbufferStorage BufferStorage { get; set; }
 
         public override void PreGenBuffer()
         {
@@ -41,13 +36,17 @@ namespace KI.Gfx.GLUtil
             SizeChanged(width, height);
         }
 
+        /// <summary>
+        /// サイズ変更
+        /// </summary>
+        /// <param name="width">横</param>
+        /// <param name="height">縦</param>
         public void SizeChanged(int width, int height)
         {
             BindBuffer();
             GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, BufferStorage, width, height);
             UnBindBuffer();
             Logger.GLLog(Logger.LogLevel.Error);
-
         }
 
         public override void PreDispose()

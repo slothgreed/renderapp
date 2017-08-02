@@ -8,22 +8,32 @@ using KI.Foundation.Core;
 
 namespace KI.Renderer
 {
+    /// <summary>
+    /// 描画オブジェクト作成ファクトリ
+    /// </summary>
     public class RenderObjectFactory : KIFactoryBase<RenderObject>
     {
-        private static RenderObjectFactory _instance = new RenderObjectFactory();
-        public static RenderObjectFactory Instance
-        {
-            get
-            {
-                return _instance;
-            }
-        }
+        /// <summary>
+        /// シングルトンインスタンス
+        /// </summary>
+        public static RenderObjectFactory Instance { get; } = new RenderObjectFactory();
 
+        /// <summary>
+        /// 空オブジェクトの作成
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <returns>描画オブジェクト</returns>
         public RenderObject CreateRenderObject(string name)
         {
             return new RenderObject(name);
         }
 
+        /// <summary>
+        /// ジオメトリの描画オブジェクトの作成
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <param name="primitive">ジオメトリ</param>
+        /// <returns>描画オブジェクト</returns>
         public RenderObject CreateRenderObject(string name, IGeometry primitive)
         {
             RenderObject renderObject = CreateRenderObject(name);
@@ -31,14 +41,21 @@ namespace KI.Renderer
             return renderObject;
         }
 
+        /// <summary>
+        /// ジオメトリの描画オブジェクトの作成
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <param name="primitive">ジオメトリ</param>
+        /// <returns>描画オブジェクト</returns>
         public IEnumerable<RenderObject> CreateRenderObjects(string name, IGeometry primitive)
         {
             var list = new List<RenderObject>();
-            foreach(var info in primitive.GeometryInfos)
+            foreach (var info in primitive.GeometryInfos)
             {
                 RenderObject renderObject = CreateRenderObject(name);
                 renderObject.SetGeometryInfo(info);
             }
+
             return list;
         }
     }

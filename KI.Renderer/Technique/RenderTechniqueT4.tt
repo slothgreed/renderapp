@@ -55,16 +55,15 @@ namespace KI.Renderer
 			{
 				return _<#=classProperty[classIndex].Item3[propetyIndex]#>;
 			}
+
 			set
 			{
 				SetValue<<#=classProperty[classIndex].Item2[propetyIndex]#>>(ref _<#=classProperty[classIndex].Item3[propetyIndex]#>, value); 
 			}
 		}
-
 <#
 	}
 #>
-
 	}
 <#
 	}

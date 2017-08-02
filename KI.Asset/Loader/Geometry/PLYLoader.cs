@@ -81,6 +81,7 @@ namespace KI.Asset.Loader.Loader
                                 throw new Exception("can't parse vertexNum");
                             }
                         }
+
                         if (lineData[1] == "face")
                         {
                             if (!int.TryParse(lineData[2], out faceNum))
@@ -107,7 +108,6 @@ namespace KI.Asset.Loader.Loader
 
                 ReadVertexData(fileStream, i + 1, vertexNum);
                 ReadFaceData(fileStream, i + 1 + vertexNum, faceNum);
-
             }
             catch (Exception e)
             {
@@ -147,7 +147,6 @@ namespace KI.Asset.Loader.Loader
                     .Split(' ')
                     .Where(p => !string.IsNullOrEmpty(p))
                     .ToArray();
-
 
                 if (faceDataStr[0] != "3")
                 {

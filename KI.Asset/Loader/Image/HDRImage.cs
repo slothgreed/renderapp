@@ -10,7 +10,6 @@ namespace KI.Asset
         public HDRImage(string path)
             : base(path)
         {
-
         }
 
         public string HDRFormat
@@ -62,6 +61,7 @@ namespace KI.Asset
                     Expropsure = expropsure;
                 }
             }
+
             str = reader.ReadLine();
 
             string[] xyData = str.Split(' ');
@@ -73,6 +73,7 @@ namespace KI.Asset
                     i++;
                     Width = int.Parse(xyData[i]);
                 }
+
                 if (xyData[i].Contains("Y"))
                 {
                     i++;
@@ -89,12 +90,9 @@ namespace KI.Asset
             return true;
         }
 
-
-
         public override bool LoadImageData()
         {
             return LoadHDRImageData();
         }
-
     }
 }

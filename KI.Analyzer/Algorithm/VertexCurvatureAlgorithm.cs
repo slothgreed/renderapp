@@ -26,7 +26,6 @@ namespace KI.Analyzer.Algorithm
             }
         }
 
-
         /// <summary>
         /// ボロノイ領域
         /// </summary>
@@ -47,8 +46,8 @@ namespace KI.Analyzer.Algorithm
                 alpha = edge.Next.Next.Angle;
                 beta = opposite.Next.Next.Angle;
                 angle += (float)((1 / Math.Cos(alpha)) + (1 / Math.Cos(beta))) * length;
-
             }
+
             Parameters[VertexParam.Voronoi].AddValue(angle / 8);
             vertex.AddParameter(VertexParam.Voronoi, angle / 8);
         }
@@ -64,6 +63,7 @@ namespace KI.Analyzer.Algorithm
             {
                 angle += edge.Angle;
             }
+
             float value = (2 * MathHelper.Pi - angle) / (float)vertex.GetParameter(VertexParam.Voronoi);
             Parameters[VertexParam.GaussCurvature].AddValue(value);
             vertex.AddParameter(VertexParam.GaussCurvature, value);
@@ -83,13 +83,13 @@ namespace KI.Analyzer.Algorithm
             angle = 0;
             foreach (var edge in vertex.AroundEdge)
             {
-
                 length = edge.Length;
                 opposite = edge.Opposite;
                 alpha = edge.Next.Next.Angle;
                 beta = opposite.Next.Next.Angle;
                 angle += (float)((1 / Math.Cos(alpha)) + (1 / Math.Cos(beta))) * length;
             }
+
             float value = (angle / (float)vertex.GetParameter(VertexParam.Voronoi) * 2);
             Parameters[VertexParam.Voronoi].AddValue(value);
             vertex.AddParameter(VertexParam.Voronoi, value);
@@ -103,7 +103,6 @@ namespace KI.Analyzer.Algorithm
         {
             float mean = (float)vertex.GetParameter(VertexParam.MeanCurvature);
             float gauss = (float)vertex.GetParameter(VertexParam.GaussCurvature);
-
 
             float delta = (mean * mean) - gauss;
             if (delta > 0)
@@ -150,7 +149,6 @@ namespace KI.Analyzer.Algorithm
             //Vector3 baseV = Vector3.Cross(baseU, Normal);
             //baseV.Normalize();
 
-
             //for (int i = 0; i < around.Count; i++)
             //{
             //    edge = around[i].End.GetPosition() - around[i].Start.GetPosition();
@@ -159,7 +157,6 @@ namespace KI.Analyzer.Algorithm
             //    tangent = new Vector3(numer.X / denom.X, numer.Y / denom.Y, numer.Z / denom.Z);
             //    TangentUV = new Vector2(Vector3.Dot(baseU, tangent), Vector3.Dot(baseV, tangent));
             //    edge_Kapper = 2 * Vector3.Dot(-edge, Normal) / (edge).Length * (edge).Length;
-
 
             //    ellipse.M11 += (TangentUV.X * TangentUV.X * TangentUV.X * TangentUV.X);
             //    ellipse.M12 += (TangentUV.X * TangentUV.X * TangentUV.X * TangentUV.Y);
@@ -197,12 +194,10 @@ namespace KI.Analyzer.Algorithm
             //Cv.Zero(eigenValue);
             //Cv.EigenVV(matEplise, eigenVector, eigenValue);
 
-
             //float max1 = (float)eigenVector.Get2D(0, 0).Val0;
             //float max2 = (float)eigenVector.Get2D(0, 1).Val0;
             //float min1 = (float)eigenVector.Get2D(1, 0).Val0;
             //float min2 = (float)eigenVector.Get2D(1, 1).Val0;
-
 
             //m_Vertex[v_index].MaxVector = new Vector3(
             //    baseU.X * max1 + baseV.X * max2,
@@ -216,7 +211,6 @@ namespace KI.Analyzer.Algorithm
             //   ).Normalized();
             //float in1 = Vector3.Dot(m_Vertex[v_index].Normal, m_Vertex[v_index].MaxVector);
             //float in2 = Vector3.Dot(m_Vertex[v_index].Normal, m_Vertex[v_index].MaxVector);
-
         }
     }
 }

@@ -39,7 +39,24 @@ namespace KI.Asset.Loader
         /// </summary>
         public Dictionary<string, OBJMaterial> mtlList = new Dictionary<string, OBJMaterial>();
 
+        /// <summary>
+        /// 座標
+        /// </summary>
         private List<Vector3> position = new List<Vector3>();
+
+        /// <summary>
+        /// 法線
+        /// </summary>
+        private List<Vector3> normal = new List<Vector3>();
+
+        /// <summary>
+        /// テクスチャ座標
+        /// </summary>
+        private List<Vector2> texcoord = new List<Vector2>();
+
+        /// <summary>
+        /// 頂点
+        /// </summary>
         public List<Vector3> Position
         {
             get
@@ -48,7 +65,9 @@ namespace KI.Asset.Loader
             }
         }
 
-        private List<Vector3> normal = new List<Vector3>();
+        /// <summary>
+        /// 法線
+        /// </summary>
         public List<Vector3> Normal
         {
             get
@@ -57,7 +76,9 @@ namespace KI.Asset.Loader
             }
         }
 
-        private List<Vector2> texcoord = new List<Vector2>();
+        /// <summary>
+        /// テクスチャ座標
+        /// </summary>
         public List<Vector2> Texcoord
         {
             get
@@ -109,11 +130,10 @@ namespace KI.Asset.Loader
             }
             catch (Exception)
             {
-
                 throw;
             }
-
         }
+
         /// <summary>
         /// 1行ずつの読み込み
         /// </summary>
@@ -156,6 +176,7 @@ namespace KI.Asset.Loader
                     {
                         SetIndexBuffer(currentMat, line);
                     }
+
                     break;
                 }
 
@@ -174,6 +195,7 @@ namespace KI.Asset.Loader
                     {
                         Logger.Log(Logger.LogLevel.Warning, "not found material on load obj file" + line[i + 1]);
                     }
+
                     break;
                 }
 
@@ -213,7 +235,6 @@ namespace KI.Asset.Loader
                         currentMat.texIndex.Add(int.Parse(part1[1]) - 1);
                         currentMat.texIndex.Add(int.Parse(part2[1]) - 1);
                         currentMat.texIndex.Add(int.Parse(part3[1]) - 1);
-
                     }
                 }
 
@@ -224,7 +245,6 @@ namespace KI.Asset.Loader
                         currentMat.norIndex.Add(int.Parse(part1[2]) - 1);
                         currentMat.norIndex.Add(int.Parse(part2[2]) - 1);
                         currentMat.norIndex.Add(int.Parse(part3[2]) - 1);
-
                     }
                 }
             }
@@ -262,6 +282,7 @@ namespace KI.Asset.Loader
                         currentMat.texIndex.Add(int.Parse(part4[1]) - 1);
                     }
                 }
+
                 if (part1.Length > 2)
                 {
                     if (part1[2] != string.Empty)
@@ -319,6 +340,7 @@ namespace KI.Asset.Loader
 
                         break;
                     }
+
                     if (mat != null)
                     {
                         switch (line[i])

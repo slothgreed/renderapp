@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
+
 namespace KI.Analyzer
 {
     public class Octree : IAnalyzer
     {
         Octant m_root;
         private int m_MaxLevel = 0;
+
         public int MaxLevel { get { return m_MaxLevel; } }
 
         public Octree(List<Vector3> position, int level)
@@ -31,8 +33,8 @@ namespace KI.Analyzer
             BDB.GetBoundBox(copy, out bdbMin, out bdbMax);
             m_root = new Octant(copy, bdbMin, bdbMax, 0);
             MakeOctant(m_root, 0);
-
         }
+
         /// <summary>
         /// オクタントの作成
         /// </summary>
@@ -54,6 +56,7 @@ namespace KI.Analyzer
             {
                 octant[i] = new List<Vector3>();
             }
+
             //親オクタントの点ループ
             for (int i = 0; i < parent.position.Count; i++)
             {
@@ -67,6 +70,7 @@ namespace KI.Analyzer
                     }
                 }
             }
+
             parent.ClearList();
             level++;
 
@@ -79,8 +83,8 @@ namespace KI.Analyzer
                     MakeOctant(parent.octant[i], level);
                 }
             }
-
         }
+
         /// <summary>
         /// オクトリーの最小、最大頂点を返す
         /// </summary>
@@ -121,7 +125,6 @@ namespace KI.Analyzer
             //右上奥
             octantMin.Add(new Vector3(center.X, center.Y, center.Z));
             octantMax.Add(new Vector3(bdbMax.X, bdbMax.Y, bdbMax.Z));
-
         }
 
         #region [geteer method ]
@@ -145,6 +148,7 @@ namespace KI.Analyzer
             }
 
         }
+
         /// <summary>
         /// 葉の取得
         /// </summary>
@@ -165,7 +169,6 @@ namespace KI.Analyzer
         /// <param name="node"></param>
         private void SearchLeaf(List<Octant> leafs, Octant node)
         {
-
             if (IsLeaf(node))
             {
                 leafs.Add(node);
@@ -178,12 +181,10 @@ namespace KI.Analyzer
                     {
                         SearchLeaf(leafs, node.octant[i]);
                     }
-
                 }
-
             }
-
         }
+
         /// <summary>
         /// 葉ノードかチェック
         /// </summary>
@@ -202,10 +203,7 @@ namespace KI.Analyzer
             return true;
         }
         #endregion
-
-
         #endregion
-
     }
 
 
@@ -220,7 +218,9 @@ namespace KI.Analyzer
         private List<Vector3> m_position;
 
         public int Level { get { return m_Level; } }
+
         public Vector3 BDBMin { get { return m_bdbMin; } }
+
         public Vector3 BDBMax { get { return m_bdbMax; } }
 
         public List<Vector3> position { get { return m_position; } }

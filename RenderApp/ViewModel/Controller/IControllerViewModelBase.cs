@@ -7,6 +7,5 @@ namespace RenderApp.ViewModel
 {
     interface IControllerViewModelBase
     {
-
     }
 }

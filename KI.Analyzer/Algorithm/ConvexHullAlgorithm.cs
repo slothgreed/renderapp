@@ -17,26 +17,11 @@ namespace KI.Analyzer.Algorithm
         /// 点群
         /// </summary>
         private List<Vector3> pointList;
-
-        public List<Mesh> Meshs
-        {
-            get
-            {
-                return meshList;
-            }
-        }
-
-        public List<Vector3> Points
-        {
-            get
-            {
-                return pointList;
-            }
-        }
-
+        
         /// <summary>
         /// Constructor.
         /// </summary>
+        /// <param name="position">座標</param>
         public ConvexHullAlgorithm(List<Vector3> position)
         {
             pointList = new List<Vector3>();
@@ -46,6 +31,7 @@ namespace KI.Analyzer.Algorithm
             {
                 pointList.Add(pos);
             }
+
             QuickHullAlgorithm();
 
             Logger.Log(Logger.LogLevel.Descript, "MeshList :" + meshList.Count.ToString());
@@ -53,15 +39,37 @@ namespace KI.Analyzer.Algorithm
         }
 
         /// <summary>
+        /// メッシュ
+        /// </summary>
+        public List<Mesh> Meshs
+        {
+            get
+            {
+                return meshList;
+            }
+        }
+
+        /// <summary>
+        /// 座標
+        /// </summary>
+        public List<Vector3> Points
+        {
+            get
+            {
+                return pointList;
+            }
+        }
+
+        /// <summary>
         /// クイックハル
         /// </summary>
-        /// <param name="position"></param>
-        public void QuickHullAlgorithm()
+        private void QuickHullAlgorithm()
         {
             if (pointList.Count < 3)
             {
                 return;
             }
+
             CreateInitMesh();
             QuickHullCore();
             DeleteInsideVertex();
@@ -81,12 +89,13 @@ namespace KI.Analyzer.Algorithm
                 {
                     return;
                 }
-                Vector3 FarPoint;
-                if (FindFarPoint(calcMesh, out FarPoint))
+
+                Vector3 farPoint;
+                if (FindFarPoint(calcMesh, out farPoint))
                 {
-                    CreateQuickHullMesh(FarPoint);
+                    CreateQuickHullMesh(farPoint);
                     meshList.RemoveAll(mesh => mesh.DeleteFlag);
-                    pointList.Remove(FarPoint);
+                    pointList.Remove(farPoint);
 
                     //簡単な高速化この処理が重い。
                     if (pointList.Count > 5000)

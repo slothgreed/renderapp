@@ -13,13 +13,14 @@ namespace KI.Renderer
         private static string vertexShader = Global.ShaderDirectory + @"\PostEffect\sslic.vert";
         private static string fragShader = Global.ShaderDirectory + @"\PostEffect\sslic.frag";
 
-
         public SSLIC(RenderTechniqueType tech)
             : base("SSLIC", vertexShader, fragShader, tech, RenderType.Original)
         {
-
         }
 
+        /// <summary>
+        /// 初期化
+        /// </summary>
         public override void Initialize()
         {
             uNoize = TextureFactory.Instance.CreateTexture("Noize", DeviceContext.Instance.Width, DeviceContext.Instance.Height);
@@ -27,6 +28,11 @@ namespace KI.Renderer
             CreateNoize(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
         }
 
+        /// <summary>
+        /// サイズ変更
+        /// </summary>
+        /// <param name="width">横</param>
+        /// <param name="height">縦</param>
         public override void SizeChanged(int width, int height)
         {
             base.SizeChanged(width, height);
@@ -55,6 +61,9 @@ namespace KI.Renderer
             uNoize.GenTexture(rgba);
         }
 
+        /// <summary>
+        /// 描画
+        /// </summary>
         public override void Render()
         {
             if (Plane != null)

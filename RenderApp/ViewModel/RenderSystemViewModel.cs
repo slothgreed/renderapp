@@ -11,6 +11,7 @@ namespace RenderApp.ViewModel
         }
 
         private int textureIndex;
+
         public int TextureIndex
         {
             get
@@ -38,8 +39,6 @@ namespace RenderApp.ViewModel
                 return "RenderSystem";
             }
         }
-
-
 
         public override void UpdateProperty()
         {

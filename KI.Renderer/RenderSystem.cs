@@ -6,6 +6,43 @@ namespace KI.Renderer
     public class RenderSystem
     {
         /// <summary>
+        /// ポストエフェクト
+        /// </summary>
+        private PostEffectManager PostEffect;
+
+        /// <summary>
+        /// 後処理のUtil（選択とか）
+        /// </summary>
+        private RenderTechnique SelectionStage;
+
+        /// <summary>
+        /// 最終出力画像
+        /// </summary>
+        private OutputBuffer OutputStage;
+
+        /// <summary>
+        /// FrameBufferの横
+        /// </summary>
+        private int Width;
+
+        /// <summary>
+        /// FrameBufferの縦
+        /// </summary>
+        private int Height;
+
+        /// <summary>
+        /// 出力テクスチャ
+        /// </summary>
+        public Texture OutputTexture { get; set; }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public RenderSystem()
+        {
+        }
+
+        /// <summary>
         /// ポストプロセスモード
         /// </summary>
         public bool PostProcessMode
@@ -13,6 +50,7 @@ namespace KI.Renderer
             get;
             set;
         }
+
         /// <summary>
         /// レンダリング結果のテクスチャすべて
         /// </summary>
@@ -21,6 +59,7 @@ namespace KI.Renderer
             get;
             private set;
         }
+
         /// <summary>
         /// GBuffer前
         /// </summary>
@@ -29,6 +68,7 @@ namespace KI.Renderer
             get;
             private set;
         }
+
         /// <summary>
         /// defferdシェーディング用
         /// </summary>
@@ -37,11 +77,13 @@ namespace KI.Renderer
             get;
             private set;
         }
+
         public RenderTechnique IBLStage
         {
             get;
             private set;
         }
+
         /// <summary>
         /// ライティングステージ
         /// </summary>
@@ -50,34 +92,12 @@ namespace KI.Renderer
             get;
             private set;
         }
+
         /// <summary>
-        /// ポストエフェクト
+        /// 初期化
         /// </summary>
-        private PostEffectManager PostEffect;
-        /// <summary>
-        /// 後処理のUtil（選択とか）
-        /// </summary>
-        private RenderTechnique SelectionStage;
-        /// <summary>
-        /// 最終出力画像
-        /// </summary>
-        private OutputBuffer OutputStage;
-        /// <summary>
-        /// FrameBufferの横
-        /// </summary>
-        private int Width;
-        /// <summary>
-        /// FrameBufferの縦
-        /// </summary>
-        private int Height;
-        public Texture OutputTexture
-        {
-            get;
-            set;
-        }
-        public RenderSystem()
-        {
-        }
+        /// <param name="width">横</param>
+        /// <param name="height">縦</param>
         public void Initialize(int width, int height)
         {
             Width = width;
@@ -99,6 +119,11 @@ namespace KI.Renderer
             }
         }
 
+        /// <summary>
+        /// サイズ変更
+        /// </summary>
+        /// <param name="width">横</param>
+        /// <param name="height">縦</param>
         public void SizeChanged(int width, int height)
         {
             RenderTechniqueFactory.Instance.SizeChanged(width, height);
@@ -112,6 +137,9 @@ namespace KI.Renderer
             RenderTechniqueFactory.Instance.Dispose();
         }
 
+        /// <summary>
+        /// 描画
+        /// </summary>
         public void Render()
         {
             //PreRenderStage.Render();

@@ -11,19 +11,25 @@ namespace KI.Renderer
         public ShadowMap(RenderTechniqueType tech)
             : base("ShadowMap", vertexShader, fragShader, tech, RenderType.Original)
         {
-
         }
+
+        /// <summary>
+        /// 初期化
+        /// </summary>
         public override void Initialize()
         {
         }
 
+        /// <summary>
+        /// 描画
+        /// </summary>
         public override void Render()
         {
             ClearBuffer();
             RenderTarget.BindRenderTarget(OutputTexture.ToArray());
             foreach (var asset in Global.Scene.RootNode.AllChildren())
             {
-                if(asset.KIObject is RenderObject)
+                if (asset.KIObject is RenderObject)
                 {
                     var geometry = asset.KIObject as RenderObject;
                     var old = geometry.Shader;
@@ -32,6 +38,7 @@ namespace KI.Renderer
                     geometry.Shader = old;
                 }
             }
+
             RenderTarget.UnBindRenderTarget();
         }
     }
