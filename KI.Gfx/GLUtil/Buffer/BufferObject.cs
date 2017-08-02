@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using KI.Foundation.Core;
 using KI.Foundation.Utility;
-using System.Diagnostics;
-using KI.Foundation.Core;
 
 namespace KI.Gfx.GLUtil
 {

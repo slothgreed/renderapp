@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Threading;
 using OpenTK;
+
 namespace KI.Foundation.Core
 {
     public class KITimer

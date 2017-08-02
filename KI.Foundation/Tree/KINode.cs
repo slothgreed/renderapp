@@ -11,6 +11,20 @@ namespace KI.Foundation.Tree
 
         public delegate void RemoveNodeEventHandler(object sender, NotifyNodeChangedEventArgs e);
         public RemoveNodeEventHandler RemoveNodeEvent;
+        private string emptyName;
+        private KINode Parent;
+
+        public KINode(KIObject _kiobject)
+        {
+            KIObject = _kiobject;
+            Children = new List<KINode>();
+        }
+
+        public KINode(string name)
+        {
+            emptyName = name;
+            Children = new List<KINode>();
+        }
 
         public List<KINode> Children
         {
@@ -18,7 +32,6 @@ namespace KI.Foundation.Tree
             private set;
         }
 
-        private string emptyName;
         public string Name
         {
             get
@@ -38,19 +51,6 @@ namespace KI.Foundation.Tree
             private set;
         }
 
-        private KINode Parent;
-
-        public KINode(KIObject _kiobject)
-        {
-            KIObject = _kiobject;
-            Children = new List<KINode>();
-        }
-
-        public KINode(string name)
-        {
-            emptyName = name;
-            Children = new List<KINode>();
-        }
         #region [add child]
         public void AddChild(KINode node)
         {
@@ -95,7 +95,6 @@ namespace KI.Foundation.Tree
                 {
                     InsertNodeEvent(node, new NotifyNodeChangedEventArgs(NotifyNodeChangedAction.Add, node, Children.Count));
                 }
-
             }
         }
 
@@ -134,7 +133,6 @@ namespace KI.Foundation.Tree
                 {
                     InsertNodeEvent(node, new NotifyNodeChangedEventArgs(NotifyNodeChangedAction.Add, node, index));
                 }
-
             }
         }
 

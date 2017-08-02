@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using KI.Gfx.GLUtil;
 using OpenTK;
+
 namespace KI.Asset
 {
     public enum VertexStoreType
@@ -9,6 +10,7 @@ namespace KI.Asset
         Normal,     //普通に順番に入っている
         VertexArray //VertexArray状態で入っている
     }
+
     /// <summary>
     /// 頂点情報
     /// </summary>
@@ -38,6 +40,36 @@ namespace KI.Asset
         /// 頂点インデックスリスト
         /// </summary>
         private List<int> index = new List<int>();
+
+        public GeometryType GeometryType;
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="pos">頂点</param>
+        /// <param name="nor">法線</param>
+        /// <param name="col">色</param>
+        /// <param name="tex">テクスチャ座標</param>
+        /// <param name="idx">頂点Index</param>
+        /// <param name="type">形状タイプ</param>
+        public GeometryInfo(List<Vector3> pos, List<Vector3> nor, List<Vector3> col, List<Vector2> tex, List<int> idx, GeometryType type)
+        {
+            Update(pos, nor, col, tex, idx, type);
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="pos">頂点</param>
+        /// <param name="nor">法線</param>
+        /// <param name="col">色</param>
+        /// <param name="tex">テクスチャ座標</param>
+        /// <param name="idx">頂点Index</param>
+        /// <param name="type">形状タイプ</param>
+        public GeometryInfo(List<Vector3> pos, List<Vector3> nor, Vector3 col, List<Vector2> tex, List<int> idx, GeometryType type)
+        {
+            Update(pos, nor, col, tex, idx, type);
+        }
 
         /// <summary>
         /// 頂点リスト
@@ -94,8 +126,6 @@ namespace KI.Asset
             }
         }
 
-        public GeometryType GeometryType;
-
         /// <summary>
         /// 三角形の数
         /// </summary>
@@ -114,17 +144,6 @@ namespace KI.Asset
             }
         }
 
-
-        public GeometryInfo(List<Vector3> pos, List<Vector3> nor, List<Vector3> col, List<Vector2> tex, List<int> idx, GeometryType type)
-        {
-            Update(pos, nor, col, tex, idx, type);
-        }
-
-        public GeometryInfo(List<Vector3> pos, List<Vector3> nor, Vector3 col, List<Vector2> tex, List<int> idx, GeometryType type)
-        {
-            Update(pos, nor, col, tex, idx, type);
-        }
-
         /// <summary>
         /// 解放処理
         /// </summary>
@@ -137,6 +156,15 @@ namespace KI.Asset
             index.Clear();
         }
 
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="pos">頂点</param>
+        /// <param name="nor">法線</param>
+        /// <param name="col">色</param>
+        /// <param name="tex">テクスチャ座標</param>
+        /// <param name="idx">頂点Index</param>
+        /// <param name="type">形状タイプ</param>
         public void Update(List<Vector3> pos, List<Vector3> nor, List<Vector3> col, List<Vector2> tex, List<int> idx, GeometryType type)
         {
             if (pos != null)
@@ -167,6 +195,15 @@ namespace KI.Asset
             GeometryType = type;
         }
 
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="pos">頂点</param>
+        /// <param name="nor">法線</param>
+        /// <param name="col">色</param>
+        /// <param name="tex">テクスチャ座標</param>
+        /// <param name="idx">頂点Index</param>
+        /// <param name="type">形状タイプ</param>
         public void Update(List<Vector3> pos, List<Vector3> nor, Vector3 col, List<Vector2> tex, List<int> idx, GeometryType type)
         {
             if (pos != null)
@@ -332,7 +369,6 @@ namespace KI.Asset
             color = newColor;
             normal = newNormal;
         }
-
         #endregion
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenTK;
 using KI.Foundation.Utility;
+using OpenTK;
 
 namespace KI.Analyzer.Algorithm.MarchingCube
 {

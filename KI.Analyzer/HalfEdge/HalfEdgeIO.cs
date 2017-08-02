@@ -1,11 +1,13 @@
-﻿using OpenTK;
-using System;
-using System.Linq;
+﻿using System;
 using System.IO;
-using System.Collections.Generic;
+using System.Linq;
+using OpenTK;
 
 namespace KI.Analyzer
 {
+    /// <summary>
+    /// ハーフエッジの入出力
+    /// </summary>
     public static class HalfEdgeIO
     {
         /// <summary>
@@ -26,9 +28,9 @@ namespace KI.Analyzer
 
             try
             {
-                halfEdge.m_Vertex.Clear();
-                halfEdge.m_Edge.Clear();
-                halfEdge.m_Vertex.Clear();
+                halfEdge.vertexs.Clear();
+                halfEdge.edges.Clear();
+                halfEdge.vertexs.Clear();
 
                 string[] fileData = File.ReadAllLines(inputFile, System.Text.Encoding.GetEncoding("Shift_JIS"));
                 ReadHalfEdgeData(fileData, halfEdge);
@@ -45,7 +47,7 @@ namespace KI.Analyzer
         {
             int lineNumber = 0;
             string line;
-            int EdgeInfoCounter = 0;
+            int edgeInfoCounter = 0;
             while (fileData.Length != lineNumber)
             {
                 line = fileData[lineNumber];
@@ -62,16 +64,16 @@ namespace KI.Analyzer
                 if (lineInfos[0] == "v")
                 {
                     var position = new Vector3(float.Parse(lineInfos[1]), float.Parse(lineInfos[2]), float.Parse(lineInfos[3]));
-                    var vertex = new Vertex(position, halfEdge.m_Vertex.Count);
-                    halfEdge.m_Vertex.Add(vertex);
+                    var vertex = new Vertex(position, halfEdge.vertexs.Count);
+                    halfEdge.vertexs.Add(vertex);
                 }
 
                 if (lineInfos[0] == "e")
                 {
                     int startIndex = int.Parse(lineInfos[1]);
                     int endIndex = int.Parse(lineInfos[2]);
-                    var edge = new Edge(halfEdge.m_Vertex[startIndex], halfEdge.m_Vertex[endIndex], halfEdge.m_Edge.Count);
-                    halfEdge.m_Edge.Add(edge);
+                    var edge = new Edge(halfEdge.vertexs[startIndex], halfEdge.vertexs[endIndex], halfEdge.edges.Count);
+                    halfEdge.edges.Add(edge);
                 }
 
                 if (lineInfos[0] == "m")
@@ -79,9 +81,9 @@ namespace KI.Analyzer
                     int edge1 = int.Parse(lineInfos[1]);
                     int edge2 = int.Parse(lineInfos[2]);
                     int edge3 = int.Parse(lineInfos[3]);
-                    var mesh = new Mesh(halfEdge.m_Mesh.Count);
-                    mesh.SetEdge(halfEdge.m_Edge[edge1], halfEdge.m_Edge[edge2], halfEdge.m_Edge[edge3]);
-                    halfEdge.m_Mesh.Add(mesh);
+                    var mesh = new Mesh(halfEdge.meshs.Count);
+                    mesh.SetEdge(halfEdge.edges[edge1], halfEdge.edges[edge2], halfEdge.edges[edge3]);
+                    halfEdge.meshs.Add(mesh);
                 }
 
                 if (lineInfos[0] == "ei")
@@ -90,17 +92,17 @@ namespace KI.Analyzer
                     int beforeIndex = int.Parse(lineInfos[2]);
                     int oppositeIndex = int.Parse(lineInfos[3]);
                     int meshIndex = int.Parse(lineInfos[4]);
-                    var edge = halfEdge.m_Edge[EdgeInfoCounter];
+                    var edge = halfEdge.edges[edgeInfoCounter];
 
-                    edge.Next = halfEdge.m_Edge[nextIndex];
-                    edge.Before = halfEdge.m_Edge[beforeIndex];
-                    edge.Opposite = halfEdge.m_Edge[oppositeIndex];
-                    edge.Mesh = halfEdge.m_Mesh[meshIndex];
-                    EdgeInfoCounter++;
+                    edge.Next = halfEdge.edges[nextIndex];
+                    edge.Before = halfEdge.edges[beforeIndex];
+                    edge.Opposite = halfEdge.edges[oppositeIndex];
+                    edge.Mesh = halfEdge.meshs[meshIndex];
+                    edgeInfoCounter++;
                 }
             }
 
-            int count = halfEdge.m_Edge.Count;
+            int count = halfEdge.edges.Count;
 
             //for(int i = 0; i < 3;i++)
             //{
@@ -138,19 +140,19 @@ namespace KI.Analyzer
 
             write.WriteLine("HalfEdge Data Structure");
             write.WriteLine("Vertex : Position");
-            foreach (var vertex in halfEdge.m_Vertex)
+            foreach (var vertex in halfEdge.vertexs)
             {
                 write.WriteLine("v" + " " + vertex.Position.X + " " + vertex.Position.Y + " " + vertex.Position.Z);
             }
 
             write.WriteLine("Edge : Start Vetex Index, End Vertex Index");
-            foreach (var edge in halfEdge.m_Edge)
+            foreach (var edge in halfEdge.edges)
             {
                 write.WriteLine("e" + " " + edge.Start.Index + " " + edge.End.Index);
             }
 
             write.WriteLine("Mesh : Vertex Index");
-            foreach (var mesh in halfEdge.m_Mesh)
+            foreach (var mesh in halfEdge.meshs)
             {
                 string edgeIdx = string.Empty;
                 foreach (var edge in mesh.AroundEdge)
@@ -169,7 +171,7 @@ namespace KI.Analyzer
             }
 
             write.WriteLine("Edge Info : Next Edge Index,Before Edge, Opposite Edge Index, Incident Face ");
-            foreach (var edge in halfEdge.m_Edge)
+            foreach (var edge in halfEdge.edges)
             {
                 write.WriteLine("ei" + " " + edge.Next.Index + " " + edge.Before.Index + " " + edge.Opposite.Index + " " + edge.Mesh.Index);
             }

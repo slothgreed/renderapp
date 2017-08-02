@@ -6,7 +6,7 @@ namespace RenderApp.RAControl
     {
         public Dictionary<CONTROL_MODE, IControl> Controllers = new Dictionary<CONTROL_MODE, IControl>();
 
-        private IControl CameraController = new CameraControl();
+        private IControl cameraController = new CameraControl();
 
         public enum CONTROL_MODE
         {
@@ -41,22 +41,17 @@ namespace RenderApp.RAControl
             }
         }
 
-        private static ControlManager instance = new ControlManager();
+        public static ControlManager Instance = new ControlManager();
 
-        public static ControlManager Instance
-        {
-            get
-            {
-                return instance;
-            }
-        }
-
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         private ControlManager()
         {
             Controllers.Add(CONTROL_MODE.SelectTriangle, new SelectTriangleControl());
             Controllers.Add(CONTROL_MODE.Dijkstra, new DijkstraControl());
             Controllers.Add(CONTROL_MODE.SelectPoint, new SelectPointControl());
-            CameraController = new CameraControl();
+            cameraController = new CameraControl();
         }
 
         public void ProcessInput(MouseEventArgs mouse, MOUSE_STATE state)
@@ -64,23 +59,23 @@ namespace RenderApp.RAControl
             switch (state)
             {
                 case MOUSE_STATE.DOWN:
-                    CameraController.Down(mouse);
+                    cameraController.Down(mouse);
                     Controllers[Mode].Down(mouse);
                     break;
                 case MOUSE_STATE.CLICK:
-                    CameraController.Click(mouse);
+                    cameraController.Click(mouse);
                     Controllers[Mode].Click(mouse);
                     break;
                 case MOUSE_STATE.MOVE:
-                    CameraController.Move(mouse);
+                    cameraController.Move(mouse);
                     Controllers[Mode].Move(mouse);
                     break;
                 case MOUSE_STATE.UP:
-                    CameraController.Up(mouse);
+                    cameraController.Up(mouse);
                     Controllers[Mode].Up(mouse);
                     break;
                 case MOUSE_STATE.WHEEL:
-                    CameraController.Wheel(mouse);
+                    cameraController.Wheel(mouse);
                     Controllers[Mode].Wheel(mouse);
                     break;
             }

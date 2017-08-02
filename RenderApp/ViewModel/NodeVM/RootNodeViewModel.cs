@@ -11,7 +11,7 @@ namespace RenderApp.ViewModel
 {
     public partial class RootNodeViewModel : TabItemViewModel
     {
-        private NodeItemViewModel _activeNode;
+        private NodeItemViewModel activeNode;
 
         public RootNodeViewModel(KINode rootNode, string title)
         {
@@ -35,12 +35,12 @@ namespace RenderApp.ViewModel
         {
             get
             {
-                return _activeNode;
+                return activeNode;
             }
 
             private set
             {
-                _activeNode = value;
+                activeNode = value;
             }
         }
 

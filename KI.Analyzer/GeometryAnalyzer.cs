@@ -1,6 +1,6 @@
-﻿using KI.Foundation.Core;
+﻿using System.Collections.Generic;
 using KI.Analyzer.Algorithm;
-using System.Collections.Generic;
+using KI.Foundation.Core;
 
 namespace KI.Analyzer
 {

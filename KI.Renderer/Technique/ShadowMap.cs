@@ -1,15 +1,27 @@
-﻿using KI.Asset;
-using KI.Gfx.Render;
+﻿using KI.Gfx.Render;
 
 namespace KI.Renderer
 {
+    /// <summary>
+    /// シャドウマップ
+    /// </summary>
     public class ShadowMap : RenderTechnique
     {
+        /// <summary>
+        /// 頂点シェーダ
+        /// </summary>
         private static string vertexShader = Global.ShaderDirectory + @"\shadow.vert";
+
+        /// <summary>
+        /// フラグシェーダ
+        /// </summary>
         private static string fragShader = Global.ShaderDirectory + @"\shadow.frag";
 
-        public ShadowMap(RenderTechniqueType tech)
-            : base("ShadowMap", vertexShader, fragShader, tech, RenderType.Original)
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public ShadowMap()
+            : base("ShadowMap", vertexShader, fragShader, RenderTechniqueType.Shadow, RenderType.Original)
         {
         }
 

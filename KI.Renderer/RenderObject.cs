@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
+using KI.Asset;
+using KI.Foundation.Utility;
+using KI.Gfx.GLUtil;
+using KI.Gfx.GLUtil.Buffer;
+using KI.Gfx.KIShader;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using KI.Gfx.KIShader;
-using KI.Gfx.GLUtil.Buffer;
-using KI.Gfx.GLUtil;
-using KI.Foundation.Utility;
-using KI.Asset;
 
 namespace KI.Renderer
 {
@@ -14,6 +14,26 @@ namespace KI.Renderer
     /// </summary>
     public class RenderObject : Geometry
     {
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="name">名前</param>
+        public RenderObject(string name)
+            : base(name)
+        {
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <param name="info">形状</param>
+        public RenderObject(string name, GeometryInfo info)
+            : base(name)
+        {
+            SetGeometryInfo(info);
+        }
+
         /// <summary>
         /// 頂点バッファ
         /// </summary>
@@ -39,77 +59,11 @@ namespace KI.Renderer
         /// </summary>
         public ArrayBuffer IndexBuffer { get; private set; }
 
-        private void Initialize()
-        {
-            GenBuffer();
-
-            string vert = ShaderCreater.Instance.GetVertexShader(this);
-            string frag = ShaderCreater.Instance.GetFragShader(this);
-            this.Shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
-        }
-
         /// <summary>
-        /// コンストラクタ
+        /// 頂点の追加
         /// </summary>
-        /// <param name="name">名前</param>
-        public RenderObject(string name)
-            : base(name)
-        {
-        }
-
-        public void SetGeometryInfo(GeometryInfo info)
-        {
-            geometryInfo = info;
-
-            if (geometryInfo.Index.Count == 0)
-            {
-                if (geometryInfo.Normal != null)
-                {
-                    if (geometryInfo.Normal.Count == 0)
-                    {
-                        CalcNormal(geometryInfo.Position, info.GeometryType);
-                    }
-                }
-            }
-
-            Initialize();
-        }
-
-        private void CalcNormal(List<Vector3> position, GeometryType type)
-        {
-            switch (type)
-            {
-                case GeometryType.None:
-                case GeometryType.Point:
-                case GeometryType.Line:
-                case GeometryType.Mix:
-                    return;
-                case GeometryType.Triangle:
-                    for (int i = 0; i < position.Count; i += 3)
-                    {
-                        Vector3 normal = Vector3.Cross(position[i + 2] - position[i + 1], position[i] - position[i + 1]).Normalized();
-                        geometryInfo.Normal.Add(normal);
-                        geometryInfo.Normal.Add(normal);
-                        geometryInfo.Normal.Add(normal);
-                    }
-
-                    break;
-                case GeometryType.Quad:
-                    for (int i = 0; i < position.Count; i += 4)
-                    {
-                        Vector3 normal = Vector3.Cross(position[i + 2] - position[i + 1], position[i] - position[i + 1]).Normalized();
-                        geometryInfo.Normal.Add(normal);
-                        geometryInfo.Normal.Add(normal);
-                        geometryInfo.Normal.Add(normal);
-                        geometryInfo.Normal.Add(normal);
-                    }
-
-                    break;
-                default:
-                    break;
-            }
-        }
-
+        /// <param name="addVertex"></param>
+        /// <param name="color"></param>
         public void AddVertex(List<Vector3> addVertex, Vector3 color)
         {
             switch (geometryInfo.GeometryType)
@@ -145,7 +99,6 @@ namespace KI.Renderer
             }
         }
 
-        #region [render]
         public virtual void Render(Scene scene)
         {
             if (!Visible)
@@ -173,42 +126,84 @@ namespace KI.Renderer
             Shader.UnBindBuffer();
             Logger.GLLog(Logger.LogLevel.Error);
         }
-        #endregion
 
-        public void SetupBuffer()
+        /// <summary>
+        /// 形状をセット
+        /// </summary>
+        /// <param name="info"></param>
+        public void SetGeometryInfo(GeometryInfo info)
         {
-            if (PositionBuffer != null)
-            {
-                PositionBuffer.SetData(geometryInfo.Position, EArrayType.Vec3Array);
-            }
+            geometryInfo = info;
 
-            if (geometryInfo.Normal.Count != 0)
+            if (geometryInfo.Index.Count == 0)
             {
-                NormalBuffer.SetData(geometryInfo.Normal, EArrayType.Vec3Array);
-            }
-
-            if (geometryInfo.Color.Count != 0)
-            {
-                ColorBuffer.SetData(geometryInfo.Color, EArrayType.Vec3Array);
-            }
-
-            if (geometryInfo.TexCoord.Count != 0)
-            {
-                TexCoordBuffer.SetData(geometryInfo.TexCoord, EArrayType.Vec2Array);
-            }
-
-            if (geometryInfo.Index.Count != 0)
-            {
-                if (IndexBuffer == null)
+                if (geometryInfo.Normal != null)
                 {
-                    IndexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
-                    IndexBuffer.GenBuffer();
+                    if (geometryInfo.Normal.Count == 0)
+                    {
+                        CalcNormal(geometryInfo.Position, info.GeometryType);
+                    }
                 }
+            }
 
-                IndexBuffer.SetData(geometryInfo.Index, EArrayType.IntArray);
+            Initialize();
+        }
+
+        /// <summary>
+        /// 初期化
+        /// </summary>
+        private void Initialize()
+        {
+            GenBuffer();
+
+            string vert = ShaderCreater.Instance.GetVertexShader(this);
+            string frag = ShaderCreater.Instance.GetFragShader(this);
+            this.Shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
+        }
+
+        /// <summary>
+        /// 法線の算出
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="type"></param>
+        private void CalcNormal(List<Vector3> position, GeometryType type)
+        {
+            switch (type)
+            {
+                case GeometryType.None:
+                case GeometryType.Point:
+                case GeometryType.Line:
+                case GeometryType.Mix:
+                    return;
+                case GeometryType.Triangle:
+                    for (int i = 0; i < position.Count; i += 3)
+                    {
+                        Vector3 normal = Vector3.Cross(position[i + 2] - position[i + 1], position[i] - position[i + 1]).Normalized();
+                        geometryInfo.Normal.Add(normal);
+                        geometryInfo.Normal.Add(normal);
+                        geometryInfo.Normal.Add(normal);
+                    }
+
+                    break;
+                case GeometryType.Quad:
+                    for (int i = 0; i < position.Count; i += 4)
+                    {
+                        Vector3 normal = Vector3.Cross(position[i + 2] - position[i + 1], position[i] - position[i + 1]).Normalized();
+                        geometryInfo.Normal.Add(normal);
+                        geometryInfo.Normal.Add(normal);
+                        geometryInfo.Normal.Add(normal);
+                        geometryInfo.Normal.Add(normal);
+                    }
+
+                    break;
+                default:
+                    break;
             }
         }
 
+        /// <summary>
+        /// バッファの作成
+        /// </summary>
         private void GenBuffer()
         {
             if (geometryInfo.Position.Count != 0)
@@ -242,6 +237,43 @@ namespace KI.Renderer
             }
 
             SetupBuffer();
+        }
+
+        /// <summary>
+        /// バッファにデータの設定
+        /// </summary>
+        private void SetupBuffer()
+        {
+            if (PositionBuffer != null)
+            {
+                PositionBuffer.SetData(geometryInfo.Position, EArrayType.Vec3Array);
+            }
+
+            if (geometryInfo.Normal.Count != 0)
+            {
+                NormalBuffer.SetData(geometryInfo.Normal, EArrayType.Vec3Array);
+            }
+
+            if (geometryInfo.Color.Count != 0)
+            {
+                ColorBuffer.SetData(geometryInfo.Color, EArrayType.Vec3Array);
+            }
+
+            if (geometryInfo.TexCoord.Count != 0)
+            {
+                TexCoordBuffer.SetData(geometryInfo.TexCoord, EArrayType.Vec2Array);
+            }
+
+            if (geometryInfo.Index.Count != 0)
+            {
+                if (IndexBuffer == null)
+                {
+                    IndexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
+                    IndexBuffer.GenBuffer();
+                }
+
+                IndexBuffer.SetData(geometryInfo.Index, EArrayType.IntArray);
+            }
         }
     }
 }

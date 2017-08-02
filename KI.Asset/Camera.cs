@@ -1,6 +1,6 @@
 ﻿using System;
-using OpenTK;
 using KI.Foundation.Core;
+using OpenTK;
 
 namespace KI.Asset
 {
@@ -38,17 +38,17 @@ namespace KI.Asset
         /// <summary>
         /// 注視点の平行移動量
         /// </summary>
-        private Vector3 Pan = new Vector3(0.0f, 5.0f, 10.0f);
+        private Vector3 pan = new Vector3(0.0f, 5.0f, 10.0f);
 
         /// <summary>
         /// 平行移動の最小値
         /// </summary>
-        private Vector3 PanMin = new Vector3(-100, -100, -100);
+        private Vector3 panMin = new Vector3(-100, -100, -100);
 
         /// <summary>
         /// 平行移動の最大値
         /// </summary>
-        private Vector3 PanMax = new Vector3(100, 100, 100);
+        private Vector3 panMax = new Vector3(100, 100, 100);
 
         /// <summary>
         /// 平行移動量の倍率設定
@@ -71,11 +71,6 @@ namespace KI.Asset
         private float theta;
 
         /// <summary>
-        /// projectionのnear
-        /// </summary>
-        private float Near { get; set; } = 1;
-
-        /// <summary>
         /// コンストラクタ
         /// </summary>
         public Camera(string name)
@@ -85,18 +80,44 @@ namespace KI.Asset
             SetProjMatrix(1.0f);
         }
 
+        /// <summary>
+        /// projectionのnear
+        /// </summary>
+        public float Near { get; set; } = 1;
+
+        /// <summary>
+        /// 投影行列
+        /// </summary>
         public Matrix4 ProjMatrix { get; set; }
 
+        /// <summary>
+        /// マトリクス
+        /// </summary>
         public Matrix4 Matrix { get; private set; }
 
+        /// <summary>
+        /// 位置
+        /// </summary>
         public Vector3 Position { get; private set; }
 
+        /// <summary>
+        /// 向き
+        /// </summary>
         public Vector3 Direction { get; private set; }
 
+        /// <summary>
+        /// 注視点
+        /// </summary>
         public Vector3 LookAt { get; private set; }
 
+        /// <summary>
+        /// 上方向
+        /// </summary>
         public Vector3 Up { get; private set; }
 
+        /// <summary>
+        /// カメラ*投影マトリクス
+        /// </summary>
         public Matrix4 CameraProjMatrix
         {
             get
@@ -142,7 +163,6 @@ namespace KI.Asset
                 {
                     phi = value;
                 }
-
             }
         }
 
@@ -179,7 +199,7 @@ namespace KI.Asset
         /// </summary>
         public void InitCamera()
         {
-            Pan = new Vector3(0.0f, 22.5f, 0.0f);
+            pan = new Vector3(0.0f, 22.5f, 0.0f);
             LookAt = Vector3.Zero;
             Up = Vector3.UnitY;
             zoomLength = zoomMax;
@@ -195,6 +215,10 @@ namespace KI.Asset
         {
         }
 
+        /// <summary>
+        /// 投影マトリクスの設定
+        /// </summary>
+        /// <param name="aspect">比率</param>
         public void SetProjMatrix(float aspect)
         {
             ProjMatrix = Matrix4.CreatePerspectiveFieldOfView((float)System.Math.PI / 4.0f, aspect, Near, Far);
@@ -210,11 +234,11 @@ namespace KI.Asset
         {
             if (type)
             {
-                Pan = move;
+                pan = move;
             }
             else
             {
-                Pan += move;
+                pan += move;
             }
             ////境界ないかチェック
             //if (m_Pan.X > m_PanMax.X)
@@ -324,8 +348,8 @@ namespace KI.Asset
         private void UpdateCamera()
         {
             Vector3 q_Move = GetSphericalMove();
-            Position = Pan + (q_Move * zoomLength);
-            LookAt = Pan;
+            Position = pan + (q_Move * zoomLength);
+            LookAt = pan;
             Matrix = Matrix4.LookAt(Position, LookAt, Up);
         }
 

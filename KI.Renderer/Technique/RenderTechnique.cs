@@ -1,16 +1,30 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using KI.Foundation.Utility;
-using KI.Gfx.Render;
+using KI.Asset;
 using KI.Foundation.Core;
+using KI.Foundation.Utility;
 using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
-using KI.Asset;
+using KI.Gfx.Render;
 
 namespace KI.Renderer
 {
+    /// <summary>
+    /// レンダーテクニック
+    /// </summary>
     public abstract class RenderTechnique : KIObject
     {
+        public enum RenderType
+        {
+            Original,
+            OffScreen
+        }
+
+        /// <summary>
+        /// 描画タイプ
+        /// </summary>
+        private RenderType renderType;
+
         public RenderTechnique(string name, RenderTechniqueType tech, RenderType type)
             : base(name)
         {
@@ -27,23 +41,24 @@ namespace KI.Renderer
             Technique = tech;
         }
 
-        public enum RenderType
-        {
-            Original,
-            OffScreen
-        }
-
-        protected RenderType renderType { get; private set; }
-
+        /// <summary>
+        /// レンダーテクニックの種類
+        /// </summary>
         public RenderTechniqueType Technique { get; private set; }
 
         public Shader ShaderItem { get; set; }
 
-        protected RenderObject Plane { get; set; }
-
         public RenderTarget RenderTarget { get; set; }
 
+        /// <summary>
+        /// 出力テクスチャ
+        /// </summary>
         public List<Texture> OutputTexture { get; set; }
+
+        /// <summary>
+        /// ポストプロセス用平面
+        /// </summary>
+        protected RenderObject Plane { get; set; }
 
         public void ClearBuffer()
         {
@@ -69,6 +84,7 @@ namespace KI.Renderer
             {
                 Logger.Log(Logger.LogLevel.Error, "RenderTechnique : Not Defined Original Render");
             }
+
             if (renderType == RenderType.OffScreen)
             {
                 if (Plane != null)
@@ -99,6 +115,11 @@ namespace KI.Renderer
             ShaderItem = ShaderFactory.Instance.CreateShaderVF(vertexShader, fragShader);
         }
 
+        /// <summary>
+        /// レンダーターゲットの作成
+        /// </summary>
+        /// <param name="width">横</param>
+        /// <param name="height">縦</param>
         public virtual void CreateRenderTarget(int width, int height)
         {
             OutputTexture.Add(TextureFactory.Instance.CreateTexture("Texture:" + Name, width, height));
@@ -122,6 +143,11 @@ namespace KI.Renderer
             }
         }
 
+        /// <summary>
+        /// 初期化
+        /// </summary>
+        /// <param name="vertexShader">頂点シェーダ</param>
+        /// <param name="fragShader">フラグシェーダ</param>
         private void Init(string vertexShader = null, string fragShader = null)
         {
             if (vertexShader != null && fragShader != null)

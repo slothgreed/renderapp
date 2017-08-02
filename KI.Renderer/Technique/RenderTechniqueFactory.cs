@@ -25,47 +25,52 @@ namespace KI.Renderer
     /// <summary>
     /// レンダーテクニックのファクトリークラス
     /// </summary>
-    class RenderTechniqueFactory : KIFactoryBase<RenderTechnique>
+    public class RenderTechniqueFactory : KIFactoryBase<RenderTechnique>
     {
         /// <summary>
         /// シングルトン
         /// </summary>
         public static RenderTechniqueFactory Instance { get; } =  new RenderTechniqueFactory();
 
+        /// <summary>
+        /// レンダーテクニックの作成
+        /// </summary>
+        /// <param name="type">テクニックのタイプ</param>
+        /// <returns>レンダーテクニック</returns>
         public RenderTechnique CreateRenderTechnique(RenderTechniqueType type)
         {
             RenderTechnique technique = null;
             switch (type)
             {
                 case RenderTechniqueType.Shadow:
-                    technique = new ShadowMap(type);
+                    technique = new ShadowMap();
                     break;
                 case RenderTechniqueType.GBuffer:
-                    technique = new GBuffer(type);
+                    technique = new GBuffer();
                     break;
                 case RenderTechniqueType.Deferred:
-                    technique = new DeferredBuffer(type);
+                    technique = new DeferredBuffer();
                     break;
                 case RenderTechniqueType.IBL:
-                    technique = new ImageBasedLighting(type);
+                    technique = new ImageBasedLighting();
                     break;
                 case RenderTechniqueType.Selection:
-                    technique = new Selection(type);
+                    technique = new Selection();
                     break;
                 case RenderTechniqueType.Sobel:
-                    technique = new Sobel(type);
+                    technique = new Sobel();
                     break;
                 case RenderTechniqueType.Bloom:
-                    technique = new Bloom(type);
+                    technique = new Bloom();
                     break;
                 case RenderTechniqueType.Output:
-                    technique = new OutputBuffer(type);
+                    technique = new OutputBuffer();
                     break;
                 case RenderTechniqueType.SSAO:
-                    technique = new SSAO(type);
+                    technique = new SSAO();
                     break;
                 case RenderTechniqueType.SSLIC:
-                    technique = new SSLIC(type);
+                    technique = new SSLIC();
                     break;
                 default:
                     technique = null;
@@ -76,6 +81,11 @@ namespace KI.Renderer
             return technique;
         }
 
+        /// <summary>
+        /// 指定したレンダーテクニックのテクスチャを取得
+        /// </summary>
+        /// <param name="type">テクニックのタイプ</param>
+        /// <returns>出力テクスチャ</returns>
         public List<Texture> OutputTexture(RenderTechniqueType type)
         {
             foreach (var technique in AllItem)
@@ -89,6 +99,10 @@ namespace KI.Renderer
             return null;
         }
 
+        /// <summary>
+        /// 全ての出力テクスチャの取得
+        /// </summary>
+        /// <returns>出力テクスチャ</returns>
         public IEnumerable<Texture> OutputTextures()
         {
             foreach (var technique in AllItem)

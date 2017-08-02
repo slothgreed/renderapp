@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK.Graphics.OpenGL;
-using KI.Gfx.GLUtil;
-using KI.Foundation.Utility;
+﻿using OpenTK.Graphics.OpenGL;
 
 namespace KI.Gfx.GLUtil
 {
@@ -14,10 +7,10 @@ namespace KI.Gfx.GLUtil
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="FrameName"></param>
-        internal FrameBuffer(string FrameName)
+        /// <param name="name">名前</param>
+        internal FrameBuffer(string name)
         {
-            this.Name = FrameName;
+            this.Name = name;
         }
 
         public override void PreBindBuffer()

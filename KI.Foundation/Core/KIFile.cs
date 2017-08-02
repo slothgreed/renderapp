@@ -4,7 +4,7 @@ namespace KI.Foundation.Core
 {
     public abstract class KIFile : KIObject
     {
-        private string _directoryPath;
+        private string directoryPath;
         public string DirectoryPath
         {
             get
@@ -13,12 +13,12 @@ namespace KI.Foundation.Core
                 {
                     return null;
                 }
-                else if (_directoryPath == null)
+                else if (directoryPath == null)
                 {
-                    _directoryPath = System.IO.Path.GetDirectoryName(FilePath);
+                    directoryPath = System.IO.Path.GetDirectoryName(FilePath);
                 }
 
-                return _directoryPath;
+                return directoryPath;
             }
         }
 

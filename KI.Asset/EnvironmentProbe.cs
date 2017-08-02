@@ -5,16 +5,19 @@ using KI.Gfx.KITexture;
 
 namespace KI.Asset
 {
+    /// <summary>
+    /// 環境プローブ
+    /// </summary>
     public class EnvironmentProbe : KIObject
     {
-        List<string> texturePath;
+        private List<string> texturePath;
 
-        public Texture Cubemap
-        {
-            get;
-            private set;
-        }
+        public Texture Cubemap { get; private set; }
 
+        /// <summary>
+        /// 環境プローブ
+        /// </summary>
+        /// <param name="name">名前</param>
         public EnvironmentProbe(string name)
             : base(name)
         {

@@ -1,27 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenTK.Graphics.OpenGL;
-using KI.Foundation.Utility;
 using KI.Foundation.Core;
+using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Gfx.KITexture
 {
+    /// <summary>
+    /// テクスチャ
+    /// </summary>
     public class Texture : KIObject
     {
         #region [constructor]
 
+        public static readonly Texture Empty;
+
         /// <summary>
         /// MinMag兼ねたフィルタ
         /// </summary>
-        private TextureMinFilter _filter = TextureMinFilter.Linear;
+        private TextureMinFilter filter = TextureMinFilter.Linear;
 
         /// <summary>
         /// デフォルトはクランプ
         /// </summary>
-        private TextureWrapMode _wrapMode = TextureWrapMode.Repeat;
+        private TextureWrapMode wrapMode = TextureWrapMode.Repeat;
 
         public Texture(string name, TextureType type)
             : base(name)
@@ -48,6 +53,9 @@ namespace KI.Gfx.KITexture
         #endregion
 
         #region [member]
+        /// <summary>
+        /// 横
+        /// </summary>
         public int Width
         {
             get
@@ -56,6 +64,9 @@ namespace KI.Gfx.KITexture
             }
         }
 
+        /// <summary>
+        /// 縦
+        /// </summary>
         public int Height
         {
             get
@@ -64,17 +75,9 @@ namespace KI.Gfx.KITexture
             }
         }
 
-        public TextureBuffer TextureBuffer
-        {
-            get;
-            set;
-        }
+        public TextureBuffer TextureBuffer { get; set; }
 
-        public List<KIImageInfo> ImageInfos
-        {
-            get;
-            private set;
-        }
+        public List<KIImageInfo> ImageInfos { get; private set; }
 
         public KIImageInfo ImageInfo
         {
@@ -105,11 +108,11 @@ namespace KI.Gfx.KITexture
         /// </summary>
         public TextureMinFilter Filter
         {
-            get { return _filter; }
+            get { return filter; }
             set
             {
-                _filter = value;
-                BindFilter(_filter);
+                filter = value;
+                BindFilter(filter);
             }
         }
 
@@ -118,19 +121,17 @@ namespace KI.Gfx.KITexture
         /// </summary>
         public TextureWrapMode WrapMode
         {
-            get { return _wrapMode; }
+            get { return wrapMode; }
             set
             {
-                if (_wrapMode != value)
+                if (wrapMode != value)
                 {
-                    _wrapMode = value;
-                    BindWrapMode(_wrapMode);
+                    wrapMode = value;
+                    BindWrapMode(wrapMode);
                 }
             }
         }
         #endregion
-
-        public static readonly Texture Empty;
 
         /// <summary>
         /// 解放処理
@@ -178,13 +179,12 @@ namespace KI.Gfx.KITexture
             }
 
             TextureBuffer.UnBindBuffer();
-
         }
 
         /// <summary>
         /// ファイルからのテクスチャ生成
         /// </summary>
-        /// <param name="image"></param>
+        /// <param name="image">画像ファイル情報</param>
         public void GenTexture(KIImageInfo image)
         {
             if (!image.Loaded)
@@ -219,7 +219,7 @@ namespace KI.Gfx.KITexture
         /// <summary>
         /// テクスチャの読み込み
         /// </summary>
-        /// <rereturns>テクスチャ種類</rereturns>
+        /// <param name="type">テクスチャ種類</param>
         private void CreateTextureBuffer(TextureType type)
         {
             TextureBuffer = BufferFactory.Instance.CreateTextureBuffer(type);
@@ -257,6 +257,10 @@ namespace KI.Gfx.KITexture
             }
         }
 
+        /// <summary>
+        /// wrapmodeの設定
+        /// </summary>
+        /// <param name="wrapMode"></param>
         private void BindWrapMode(TextureWrapMode wrapMode)
         {
             TextureBuffer.BindBuffer();
@@ -266,6 +270,10 @@ namespace KI.Gfx.KITexture
             Logger.GLLog(Logger.LogLevel.Error);
         }
 
+        /// <summary>
+        /// フィルタの設定
+        /// </summary>
+        /// <param name="filter"></param>
         private void BindFilter(TextureMinFilter filter)
         {
             TextureBuffer.BindBuffer();

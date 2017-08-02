@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using OpenTK;
-using KI.Foundation.Utility;
+using KI.Analyzer;
 using KI.Foundation.Core;
+using KI.Foundation.Utility;
 using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
-using KI.Analyzer;
+using OpenTK;
 
 namespace KI.Asset
 {
@@ -13,26 +13,39 @@ namespace KI.Asset
         #region Propety
 
         private Vector3 translate = Vector3.Zero;
+
         private Vector3 scale = Vector3.One;
+
         private Vector3 rotate = Vector3.Zero;
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public Geometry()
         {
         }
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="name">名前</param>
         public Geometry(string name)
             : base(name)
         {
-            Initialize(name);
-
+            Initialize();
         }
 
         public int ID { get; set; }
+
         public GeometryInfo geometryInfo { get; set; }
+
         public bool Visible { get; set; } = true;
 
         public HalfEdge HalfEdge { get; set; }
 
+        /// <summary>
+        /// モデルマトリックス
+        /// </summary>
         public Matrix4 ModelMatrix { get; set; }
 
         public Vector3 Translate
@@ -93,14 +106,6 @@ namespace KI.Asset
         #endregion
 
         #region [Initializer disposer]
-
-
-        private void Initialize(string name = null)
-        {
-            ModelMatrix = Matrix4.Identity;
-            TextureItem = new Dictionary<TextureKind, Texture>();
-            //Shader = ShaderCreater.Instance.DefaultShader;
-        }
 
         /// <summary>
         /// 解放処理
@@ -188,12 +193,12 @@ namespace KI.Asset
         /// <summary>
         /// vector1をvector2に回転させる。
         /// </summary>
-        /// <param name="vector1"></param>
-        /// <param name="vector2"></param>
+        /// <param name="vector1">vector1</param>
+        /// <param name="vector2">vector2</param>
         /// <param name="init">初期形状に対してか否か</param>
         public virtual bool RotateQuaternion(Vector3 vector1, Vector3 vector2, bool init = false)
         {
-            Vector3 Ex = Vector3.Cross(vector1, vector2);
+            Vector3 exterior = Vector3.Cross(vector1, vector2);
             if (vector1.Z == -1.0f)
             {
                 RotateY(180, init);
@@ -205,11 +210,11 @@ namespace KI.Asset
                 return true;
             }
 
-            if (Ex.Length != 0)
+            if (exterior.Length != 0)
             {
-                Ex.Normalize();
-                float angle = KICalc.Angle(vector1, vector2, Ex);
-                Matrix4 mat = Matrix4.CreateFromAxisAngle(Ex, angle);
+                exterior.Normalize();
+                float angle = KICalc.Angle(vector1, vector2, exterior);
+                Matrix4 mat = Matrix4.CreateFromAxisAngle(exterior, angle);
                 return SetModelViewRotateXYZ(mat, init);
             }
 
@@ -219,6 +224,7 @@ namespace KI.Asset
         /// <summary>
         /// 初期形状から一括変換する用
         /// </summary>
+        /// <param name="matrix">matrix</param>
         public bool Transformation(Matrix4 matrix)
         {
             ModelMatrix = Matrix4.Identity;
@@ -228,9 +234,20 @@ namespace KI.Asset
         #endregion
 
         /// <summary>
+        /// 初期化
+        /// </summary>
+        /// <param name="name"></param>
+        private void Initialize()
+        {
+            ModelMatrix = Matrix4.Identity;
+            TextureItem = new Dictionary<TextureKind, Texture>();
+            //Shader = ShaderCreater.Instance.DefaultShader;
+        }
+
+        /// <summary>
         /// モデルビューに平行移動を適用
         /// </summary>
-        /// <param name="move"></param>
+        /// <param name="move">移動量</param>
         private void CalcTranslate(Vector3 move)
         {
             ModelMatrix = ModelMatrix.ClearTranslation();
@@ -254,6 +271,7 @@ namespace KI.Asset
             ModelMatrix = ModelMatrix.ClearTranslation();
             ModelMatrix *= Matrix4.CreateTranslation(translate);
         }
+
         /// <summary>
         /// 形状に回転を適用(初期の向きに対して)
         /// </summary>
@@ -276,6 +294,5 @@ namespace KI.Asset
 
             return true;
         }
-
     }
 }

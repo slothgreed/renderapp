@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using System.ComponentModel;
+using System.Windows.Input;
 using System.Runtime.CompilerServices;
+
 namespace KI.Foundation.ViewModel
 {
     public abstract class ViewModelBase : INotifyPropertyChanged, INotifyPropertyChanging
@@ -18,7 +15,7 @@ namespace KI.Foundation.ViewModel
         /// <summary>
         /// WPF変更前に使用
         /// </summary>
-        /// <param name="propertyName"></param>
+        /// <param name="propertyName">プロパティ名</param>
         protected virtual void OnPropertyChanging(string propertyName)
         {
             if (PropertyChanging != null)
@@ -54,7 +51,6 @@ namespace KI.Foundation.ViewModel
             }
 
             OnPropertyChanged(memberName);
-
         }
 
         protected void OnPropertyChange([CallerMemberName]string memberName = "")
@@ -161,6 +157,5 @@ namespace KI.Foundation.ViewModel
             return new _DelegateCommand(command);
         }
         #endregion
-
     }
 }

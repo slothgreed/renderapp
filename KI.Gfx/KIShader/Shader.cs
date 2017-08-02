@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
 using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
 using KI.Gfx.KITexture;
+using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Gfx.KIShader
 {
@@ -15,9 +15,14 @@ namespace KI.Gfx.KIShader
     {
         #region [constructor]
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="vert">頂点シェーダ</param>
+        /// <param name="frag">フラグシェーダ</param>
         public Shader(ShaderProgram vert, ShaderProgram frag)
         {
-            if (vert.shaderType == ShaderType.VertexShader && frag.shaderType == ShaderType.FragmentShader)
+            if (vert.ShaderType == ShaderType.VertexShader && frag.ShaderType == ShaderType.FragmentShader)
             {
                 VertexShader = vert;
                 FragShader = frag;
@@ -27,11 +32,17 @@ namespace KI.Gfx.KIShader
             Initialize();
         }
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="vert">頂点シェーダ</param>
+        /// <param name="frag">フラグシェーダ</param>
+        /// <param name="geom">ジオメトリシェーダ</param>
         public Shader(ShaderProgram vert, ShaderProgram frag, ShaderProgram geom)
         {
-            if (vert.shaderType == ShaderType.VertexShader &&
-                frag.shaderType == ShaderType.FragmentShader &&
-                geom.shaderType == ShaderType.GeometryShader)
+            if (vert.ShaderType == ShaderType.VertexShader &&
+                frag.ShaderType == ShaderType.FragmentShader &&
+                geom.ShaderType == ShaderType.GeometryShader)
             {
                 VertexShader = vert;
                 FragShader = frag;
@@ -44,10 +55,10 @@ namespace KI.Gfx.KIShader
 
         public Shader(ShaderProgram vert, ShaderProgram frag, ShaderProgram geom, ShaderProgram tcs, ShaderProgram tes)
         {
-            if (vert.shaderType == ShaderType.VertexShader &&
-                frag.shaderType == ShaderType.FragmentShader &&
-                geom.shaderType == ShaderType.GeometryShader &&
-                tcs.shaderType == ShaderType.TessControlShader)
+            if (vert.ShaderType == ShaderType.VertexShader &&
+                frag.ShaderType == ShaderType.FragmentShader &&
+                geom.ShaderType == ShaderType.GeometryShader &&
+                tcs.ShaderType == ShaderType.TessControlShader)
             {
                 VertexShader = vert;
                 FragShader = frag;
@@ -62,10 +73,10 @@ namespace KI.Gfx.KIShader
 
         public Shader(ShaderProgram vert, ShaderProgram frag, ShaderProgram tcs, ShaderProgram tes)
         {
-            if (vert.shaderType == ShaderType.VertexShader &&
-                frag.shaderType == ShaderType.FragmentShader &&
-                tcs.shaderType == ShaderType.TessControlShader &&
-                tes.shaderType == ShaderType.TessEvaluationShader)
+            if (vert.ShaderType == ShaderType.VertexShader &&
+                frag.ShaderType == ShaderType.FragmentShader &&
+                tcs.ShaderType == ShaderType.TessControlShader &&
+                tes.ShaderType == ShaderType.TessEvaluationShader)
             {
                 VertexShader = vert;
                 FragShader = frag;
@@ -189,6 +200,7 @@ namespace KI.Gfx.KIShader
         #region [bind buffer]
 
         private int ActiveTextureCounter;
+
         public void BindBuffer()
         {
             GL.UseProgram(Program);
@@ -201,12 +213,12 @@ namespace KI.Gfx.KIShader
                     continue;
                 }
 
-                if (loop.shaderVariableType == EShaderVariableType.Uniform)
+                if (loop.ShaderVariableType == EShaderVariableType.Uniform)
                 {
                     BindUniformState(loop, ref ActiveTextureCounter);
                 }
 
-                if (loop.shaderVariableType == EShaderVariableType.Attribute)
+                if (loop.ShaderVariableType == EShaderVariableType.Attribute)
                 {
                     BindAttributeState(loop);
                 }
@@ -216,7 +228,6 @@ namespace KI.Gfx.KIShader
         /// <summary>
         /// AttributeのBinding
         /// </summary>
-        /// <param name="geometry"></param>
         /// <param name="attribute"></param>
         public static void BindAttributeState(ShaderProgramInfo attribute)
         {
@@ -269,7 +280,7 @@ namespace KI.Gfx.KIShader
         {
             foreach (ShaderProgramInfo loop in _shaderVariable.Values)
             {
-                if (loop.shaderVariableType == EShaderVariableType.Uniform)
+                if (loop.ShaderVariableType == EShaderVariableType.Uniform)
                 {
                     if (loop.ShaderID != -1)
                     {
@@ -418,7 +429,7 @@ namespace KI.Gfx.KIShader
             ShaderProgramInfo info = new ShaderProgramInfo();
             info.Name = "index";
             info.variable = new List<int>();
-            info.shaderVariableType = EShaderVariableType.Attribute;
+            info.ShaderVariableType = EShaderVariableType.Attribute;
             _shaderVariable.Add(info.Name, info);
         }
 
@@ -625,57 +636,57 @@ namespace KI.Gfx.KIShader
             if (uniform.ShaderID == -1)
                 return;
 
-            if (uniform.variableType == EVariableType.Vec2)
+            if (uniform.VariableType == EVariableType.Vec2)
             {
                 GL.Uniform2(uniform.ShaderID, (Vector2)uniform.variable);
             }
-            else if (uniform.variableType == EVariableType.Vec3)
+            else if (uniform.VariableType == EVariableType.Vec3)
             {
                 GL.Uniform3(uniform.ShaderID, (Vector3)uniform.variable);
             }
-            else if (uniform.variableType == EVariableType.Mat3)
+            else if (uniform.VariableType == EVariableType.Mat3)
             {
                 Matrix3 tmp = (Matrix3)uniform.variable;
                 GL.UniformMatrix3(uniform.ShaderID, false, ref tmp);
             }
-            else if (uniform.variableType == EVariableType.Mat4)
+            else if (uniform.VariableType == EVariableType.Mat4)
             {
                 Matrix4 tmp = (Matrix4)uniform.variable;
                 GL.UniformMatrix4(uniform.ShaderID, false, ref tmp);
             }
-            else if (uniform.variableType == EVariableType.Int)
+            else if (uniform.VariableType == EVariableType.Int)
             {
                 GL.Uniform1(uniform.ShaderID, (int)uniform.variable);
             }
-            else if (uniform.variableType == EVariableType.Float)
+            else if (uniform.VariableType == EVariableType.Float)
             {
                 GL.Uniform1(uniform.ShaderID, (float)uniform.variable);
             }
-            else if (uniform.variableType == EVariableType.Texture2D)
+            else if (uniform.VariableType == EVariableType.Texture2D)
             {
                 GL.ActiveTexture(TextureUnit.Texture0 + activeCount);
                 GL.BindTexture(TextureTarget.Texture2D, (int)uniform.variable);
                 GL.Uniform1(uniform.ShaderID, activeCount);
                 activeCount++;
             }
-            else if (uniform.variableType == EVariableType.Cubemap)
+            else if (uniform.VariableType == EVariableType.Cubemap)
             {
                 GL.ActiveTexture(TextureUnit.Texture0 + activeCount);
                 GL.BindTexture(TextureTarget.TextureCubeMap, (int)uniform.variable);
                 GL.Uniform1(uniform.ShaderID, activeCount);
                 activeCount++;
             }
-            else if (uniform.variableType == EVariableType.IntArray)
+            else if (uniform.VariableType == EVariableType.IntArray)
             {
-                GL.Uniform1(uniform.ShaderID, uniform.arrayNum, (int[])uniform.variable);
+                GL.Uniform1(uniform.ShaderID, uniform.ArrayNum, (int[])uniform.variable);
             }
-            else if (uniform.variableType == EVariableType.FloatArray)
+            else if (uniform.VariableType == EVariableType.FloatArray)
             {
-                GL.Uniform1(uniform.ShaderID, uniform.arrayNum, (float[])uniform.variable);
+                GL.Uniform1(uniform.ShaderID, uniform.ArrayNum, (float[])uniform.variable);
             }
-            else if (uniform.variableType == EVariableType.DoubleArray)
+            else if (uniform.VariableType == EVariableType.DoubleArray)
             {
-                GL.Uniform1(uniform.ShaderID, uniform.arrayNum, (double[])uniform.variable);
+                GL.Uniform1(uniform.ShaderID, uniform.ArrayNum, (double[])uniform.variable);
             }
             else
             {
@@ -693,7 +704,7 @@ namespace KI.Gfx.KIShader
             GL.UseProgram(Program);
             foreach (ShaderProgramInfo loop in _shaderVariable.Values)
             {
-                switch (loop.shaderVariableType)
+                switch (loop.ShaderVariableType)
                 {
                     case EShaderVariableType.Attribute:
                         loop.ShaderID = GL.GetAttribLocation(Program, loop.Name);
@@ -749,20 +760,20 @@ namespace KI.Gfx.KIShader
             switch (variable)
             {
                 case "vec2":
-                    info.variableType = EVariableType.Vec2Array;
+                    info.VariableType = EVariableType.Vec2Array;
                     break;
                 case "vec3":
-                    info.variableType = EVariableType.Vec3Array;
+                    info.VariableType = EVariableType.Vec3Array;
                     break;
                 case "vec4":
-                    info.variableType = EVariableType.Vec4Array;
+                    info.VariableType = EVariableType.Vec4Array;
                     break;
                 case "int":
-                    info.variableType = EVariableType.IntArray;
+                    info.VariableType = EVariableType.IntArray;
                     break;
                 case "float":
                 case "double":
-                    info.variableType = EVariableType.FloatArray;
+                    info.VariableType = EVariableType.FloatArray;
                     break;
                 default:
                     Logger.Log(Logger.LogLevel.Error, "Shader ReadError" + name);
@@ -785,22 +796,22 @@ namespace KI.Gfx.KIShader
                 switch (variable)
                 {
                     case "vec2":
-                        info.variableType = EVariableType.Vec2Array;
+                        info.VariableType = EVariableType.Vec2Array;
                         return;
                     case "vec3":
-                        info.variableType = EVariableType.Vec3Array;
+                        info.VariableType = EVariableType.Vec3Array;
                         return;
                     case "vec4":
-                        info.variableType = EVariableType.Vec4Array;
+                        info.VariableType = EVariableType.Vec4Array;
                         return;
                     case "int":
-                        info.variableType = EVariableType.IntArray;
+                        info.VariableType = EVariableType.IntArray;
                         return;
                     case "float":
-                        info.variableType = EVariableType.FloatArray;
+                        info.VariableType = EVariableType.FloatArray;
                         return;
                     case "double":
-                        info.variableType = EVariableType.DoubleArray;
+                        info.VariableType = EVariableType.DoubleArray;
                         return;
                 }
             }
@@ -808,37 +819,37 @@ namespace KI.Gfx.KIShader
             switch (variable)
             {
                 case "vec2":
-                    info.variableType = EVariableType.Vec2;
+                    info.VariableType = EVariableType.Vec2;
                     return;
                 case "vec3":
-                    info.variableType = EVariableType.Vec3;
+                    info.VariableType = EVariableType.Vec3;
                     return;
                 case "vec4":
-                    info.variableType = EVariableType.Vec4;
+                    info.VariableType = EVariableType.Vec4;
                     return;
                 case "int":
-                    info.variableType = EVariableType.Int;
+                    info.VariableType = EVariableType.Int;
                     return;
                 case "sampler2D":
-                    info.variableType = EVariableType.Texture2D;
+                    info.VariableType = EVariableType.Texture2D;
                     return;
                 case "samplerCube":
-                    info.variableType = EVariableType.Cubemap;
+                    info.VariableType = EVariableType.Cubemap;
                     return;
                 case "sampler3D":
-                    info.variableType = EVariableType.Texture3D;
+                    info.VariableType = EVariableType.Texture3D;
                     break;
                 case "float":
-                    info.variableType = EVariableType.Float;
+                    info.VariableType = EVariableType.Float;
                     return;
                 case "double":
-                    info.variableType = EVariableType.Double;
+                    info.VariableType = EVariableType.Double;
                     return;
                 case "mat3":
-                    info.variableType = EVariableType.Mat3;
+                    info.VariableType = EVariableType.Mat3;
                     return;
                 case "mat4":
-                    info.variableType = EVariableType.Mat4;
+                    info.VariableType = EVariableType.Mat4;
                     return;
                 default:
                     Logger.Log(Logger.LogLevel.Error, "Shader ReadError" + name);
@@ -899,10 +910,10 @@ namespace KI.Gfx.KIShader
                     case "attribute":
                     case "in":
                         AttributeParameter(info, code);
-                        if (info.variableType != EVariableType.None && !_shaderVariable.ContainsKey(code[2]))
+                        if (info.VariableType != EVariableType.None && !_shaderVariable.ContainsKey(code[2]))
                         {
                             info.Name = code[2];
-                            info.shaderVariableType = EShaderVariableType.Attribute;
+                            info.ShaderVariableType = EShaderVariableType.Attribute;
                             _shaderVariable.Add(info.Name, info);
                         }
 
@@ -911,7 +922,7 @@ namespace KI.Gfx.KIShader
                         break;
                     case "uniform":
                         UniformParameter(info, code);
-                        if (info.variableType != EVariableType.None && !_shaderVariable.ContainsKey(code[2]))
+                        if (info.VariableType != EVariableType.None && !_shaderVariable.ContainsKey(code[2]))
                         {
                             if (code[2].Contains("["))
                             {
@@ -924,11 +935,11 @@ namespace KI.Gfx.KIShader
                                 arrNum = int.Parse(arrNumStr);
                                 arrName = arrName.Substring(0, startIndex);
                                 code[2] = arrName;
-                                info.arrayNum = arrNum;
+                                info.ArrayNum = arrNum;
                             }
 
                             info.Name = code[2];
-                            info.shaderVariableType = EShaderVariableType.Uniform;
+                            info.ShaderVariableType = EShaderVariableType.Uniform;
                             _shaderVariable.Add(info.Name, info);
                         }
 
@@ -979,6 +990,5 @@ namespace KI.Gfx.KIShader
             Logger.GLLog(Logger.LogLevel.Error);
             return shader;
         }
-
     }
 }

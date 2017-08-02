@@ -6,7 +6,7 @@ namespace RenderApp.ViewModel
 {
     class ImageViewModel : ViewModelBase
     {
-        private string _name;
+        private string name;
         private List<string> items;
         private int selectIndex;
 
@@ -20,12 +20,12 @@ namespace RenderApp.ViewModel
         {
             get
             {
-                return _name;
+                return name;
             }
 
             private set
             {
-                SetValue<string>(ref _name, value);
+                SetValue<string>(ref name, value);
                 OnPropertyChanged("Items");
             }
         }

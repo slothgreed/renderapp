@@ -1,8 +1,8 @@
-﻿using OpenTK;
-using KI.Foundation.Utility;
+﻿using KI.Asset;
 using KI.Foundation.Tree;
+using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
-using KI.Asset;
+using OpenTK;
 using RenderApp.Globals;
 
 namespace RenderApp.RAControl

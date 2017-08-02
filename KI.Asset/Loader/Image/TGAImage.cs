@@ -1,12 +1,14 @@
-﻿using System;
+﻿using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Drawing;
-using System.Drawing.Imaging;
 using KI.Gfx.KITexture;
 
 namespace KI.Asset
 {
+    /// <summary>
+    /// TGA画像
+    /// </summary>
     public class TGAImage : KIImageInfo
     {
         struct TGAStruct
@@ -30,6 +32,10 @@ namespace KI.Asset
 
         private int imageSize;
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="path">ファイルパス</param>
         public TGAImage(string path) :
             base(path)
         {
@@ -82,13 +88,11 @@ namespace KI.Asset
                 Format = PixelFormat.Format24bppRgb;
                 bmpImage = new Bitmap(Width, Height, Width * 3, Format, Marshal.UnsafeAddrOfPinnedArrayElement(rgb, 0));
             }
-
             else if (BitPerPixel == 32)
             {
                 Format = PixelFormat.Format32bppArgb;
                 bmpImage = new Bitmap(Width, Height, Width * 4, Format, Marshal.UnsafeAddrOfPinnedArrayElement(rgb, 0));
             }
-
             else if (BitPerPixel == 8)
             {
                 Format = PixelFormat.Format8bppIndexed;
@@ -105,6 +109,5 @@ namespace KI.Asset
         {
             return data.High * 256 + data.Low;
         }
-
     }
 }

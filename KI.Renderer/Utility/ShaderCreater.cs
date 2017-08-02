@@ -1,6 +1,5 @@
 ﻿using KI.Gfx.GLUtil;
 using KI.Gfx.KIShader;
-using KI.Asset;
 using KI.Gfx.KITexture;
 using KI.Renderer;
 

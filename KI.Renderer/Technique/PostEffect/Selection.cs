@@ -3,10 +3,29 @@ using KI.Gfx.KITexture;
 
 namespace KI.Renderer
 {
+    /// <summary>
+    /// 形状選択ようのレンダリング
+    /// </summary>
     public partial class Selection : RenderTechnique
     {
+        /// <summary>
+        /// 頂点シェーダ
+        /// </summary>
         private static string vertexShader = Global.ShaderDirectory + @"\PostEffect\Selection.vert";
+
+        /// <summary>
+        /// フラグシェーダ
+        /// </summary>
         private static string fragShader = Global.ShaderDirectory + @"\PostEffect\Selection.frag";
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public Selection()
+            : base("SelectionBuffer", vertexShader, fragShader, RenderTechniqueType.Selection, RenderType.OffScreen)
+        {
+            Plane.AddTexture(TextureKind.Normal, Global.RenderSystem.GBufferStage.OutputTexture[2]);
+        }
 
         /// <summary>
         /// 初期化
@@ -16,12 +35,9 @@ namespace KI.Renderer
             uID = -1;
         }
 
-        public Selection(RenderTechniqueType tech)
-            : base("SelectionBuffer", vertexShader, fragShader, tech, RenderType.OffScreen)
-        {
-            Plane.AddTexture(TextureKind.Normal, Global.RenderSystem.GBufferStage.OutputTexture[2]);
-        }
-
+        /// <summary>
+        /// 形状の選択
+        /// </summary>
         public void SelectObject()
         {
             if (Global.Scene.SelectAsset != null)

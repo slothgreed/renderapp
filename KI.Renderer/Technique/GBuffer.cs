@@ -4,6 +4,9 @@ using KI.Gfx.Render;
 
 namespace KI.Renderer
 {
+    /// <summary>
+    /// GBuffer
+    /// </summary>
     public class GBuffer : RenderTechnique
     {
         public enum GBufferOutputType
@@ -14,16 +17,29 @@ namespace KI.Renderer
             Light
         }
 
-        public GBuffer(RenderTechniqueType tech)
-            : base("GBuffer", tech, RenderType.Original)
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public GBuffer()
+            : base("GBuffer", RenderTechniqueType.GBuffer, RenderType.Original)
         {
         }
 
+        /// <summary>
+        /// 出力テクスチャの取得
+        /// </summary>
+        /// <param name="target">GBufferのタイプ</param>
+        /// <returns>テクスチャ</returns>
         public Texture GetOutputTexture(GBufferOutputType target)
         {
             return OutputTexture[(int)target];
         }
 
+        /// <summary>
+        /// レンダーターゲットの生成
+        /// </summary>
+        /// <param name="width">横</param>
+        /// <param name="height">縦</param>
         public override void CreateRenderTarget(int width, int height)
         {
             Texture[] texture = new Texture[4];

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using KI.Foundation.Core;
-using KI.Gfx.GLUtil;
 using KI.Foundation.Utility;
-using OpenTK.Graphics.OpenGL;
+using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KITexture;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Gfx.Render
 {
@@ -99,7 +99,6 @@ namespace KI.Gfx.Render
             Height = height;
             Width = width;
             RenderBuffer.SizeChanged(width, height);
-
         }
 
         public void ClearBuffer()

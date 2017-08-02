@@ -1,11 +1,11 @@
-﻿using KI.Foundation.Tree;
+﻿using System.Collections.Generic;
+using KI.Asset;
+using KI.Foundation.Tree;
 using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
-using OpenTK;
-using System.Collections.Generic;
-using KI.Asset;
-using RenderApp.Globals;
 using KI.Renderer;
+using OpenTK;
+using RenderApp.Globals;
 
 namespace RenderApp.RAControl
 {

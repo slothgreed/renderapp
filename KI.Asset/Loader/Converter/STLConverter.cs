@@ -9,23 +9,24 @@ namespace KI.Asset
     /// </summary>
     public class STLConverter : IGeometry
     {
-        STLLoader stlData;
-
-        public GeometryInfo[] GeometryInfos
-        {
-            get;
-            private set;
-        }
-
         /// <summary>
         /// STLのローダ。
         /// </summary>
         /// <param name="filePath">ファイルパス</param>
         public STLConverter(string filePath)
         {
-            stlData = new STLLoader(filePath);
+            var stlData = new STLLoader(filePath);
             GeometryInfo info = new GeometryInfo(stlData.Position, stlData.Normal, Vector3.One, null, null, GeometryType.Triangle);
             GeometryInfos = new GeometryInfo[] { info };
+        }
+
+        /// <summary>
+        /// 形状情報
+        /// </summary>
+        public GeometryInfo[] GeometryInfos
+        {
+            get;
+            private set;
         }
     }
 }

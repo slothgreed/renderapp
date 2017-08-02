@@ -45,7 +45,6 @@
 //            return m_Instance;
 //        }
 
-
 //        #region [Shaderの初期化関数]
 //        protected override int LoadShader()
 //        {

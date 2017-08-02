@@ -1,38 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+
 namespace KI.Foundation.ViewModel
 {
     public class ThumbnailFileViewModel : ViewModelBase
     {
-        private string _filePath;
+        private string filePath;
         public string FilePath
         {
             get
             {
-                return _filePath;
+                return filePath;
             }
 
             set
             {
-                SetValue(ref _filePath, value);
+                SetValue(ref filePath, value);
             }
         }
 
-        private string _imagePath;
+        private string imagePath;
         public string ImagePath
         {
             get
             {
-                return _imagePath;
+                return imagePath;
             }
 
             set
             {
-                SetValue(ref _imagePath, value);
+                SetValue(ref imagePath, value);
             }
         }
 

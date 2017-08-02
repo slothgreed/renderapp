@@ -7,15 +7,22 @@ using OpenTK;
 
 namespace KI.Analyzer
 {
+    /// <summary>
+    /// kdtree
+    /// </summary>
     public class Kdtree : IAnalyzer
     {
         #region [Member]
-        KdList m_rootNode;
+
+        /// <summary>
+        /// ルートノード
+        /// </summary>
+        private KdList rootNode;
 
         /// <summary>
         /// 最大階層
         /// </summary>
-        private int m_MaxLevel;
+        private int maxLevel;
 
         #endregion
         #region [Constructor]
@@ -25,7 +32,7 @@ namespace KI.Analyzer
         /// <param name="position"></param>
         public Kdtree(List<Vector3> position, int level)
         {
-            m_MaxLevel = level;
+            maxLevel = level;
             MakeKdtree(position, level);
         }
         #endregion
@@ -38,9 +45,9 @@ namespace KI.Analyzer
             List<Vector3> copy = new List<Vector3>(position);
 
             //1個目のツリー作成
-            m_rootNode = new KdList(copy, 0);
+            rootNode = new KdList(copy, 0);
             int level = 0;
-            PartitionPoint(m_rootNode, level);
+            PartitionPoint(rootNode, level);
         }
 
         /// <summary>
@@ -48,7 +55,7 @@ namespace KI.Analyzer
         /// </summary>
         private void PartitionPoint(KdList kdlist, int level)
         {
-            if (kdlist.Level == m_MaxLevel)
+            if (kdlist.Level == maxLevel)
             {
                 return;
             }
@@ -61,16 +68,16 @@ namespace KI.Analyzer
             List<Vector3> list1 = new List<Vector3>();
             List<Vector3> list2 = new List<Vector3>();
 
-            for (int i = 0; i < kdlist.position.Count; i++)
+            for (int i = 0; i < kdlist.Position.Count; i++)
             {
-                vector = axisPos - kdlist.position[i];
+                vector = axisPos - kdlist.Position[i];
                 if (Vector3.Dot(vector, axisNormal) > 0)
                 {
-                    list1.Add(new Vector3(kdlist.position[i]));
+                    list1.Add(new Vector3(kdlist.Position[i]));
                 }
                 else
                 {
-                    list2.Add(new Vector3(kdlist.position[i]));
+                    list2.Add(new Vector3(kdlist.Position[i]));
                 }
             }
 
@@ -147,8 +154,8 @@ namespace KI.Analyzer
         public List<KdList> GetLeaf()
         {
             List<KdList> leaf = new List<KdList>();
-            KdList list = m_rootNode;
-            SearchLeaf(leaf, m_rootNode);
+            KdList list = rootNode;
+            SearchLeaf(leaf, rootNode);
             return leaf;
         }
         #endregion
@@ -212,9 +219,21 @@ namespace KI.Analyzer
             positon = posit;
         }
 
-        public int Level { get { return m_Level; } }
+        public int Level
+        {
+            get
+            {
+                return m_Level;
+            }
+        }
 
-        public List<Vector3> position { get { return positon; } }
+        public List<Vector3> Position
+        {
+            get
+            {
+                return positon;
+            }
+        }
 
         /// <summary>
         /// リストの削除

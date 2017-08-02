@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RenderApp.AssetModel;
-using System.Windows;
 using KI.Foundation.Command;
-using RenderApp.RACommand;
 using RenderApp.Globals;
+using RenderApp.RACommand;
 
 namespace RenderApp.ViewModel
 {
     public partial class VoxelViewModel : TabItemViewModel, IControllerViewModelBase
     {
-        private int _partitionNum = 64;
+        private int partitionNum = 64;
 
         /// <summary>
         /// コンストラクタ
@@ -26,12 +20,12 @@ namespace RenderApp.ViewModel
         {
             get
             {
-                return _partitionNum;
+                return partitionNum;
             }
 
             set
             {
-                SetValue<int>(ref _partitionNum, value);
+                SetValue<int>(ref partitionNum, value);
             }
         }
 

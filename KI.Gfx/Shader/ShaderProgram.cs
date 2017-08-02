@@ -1,6 +1,6 @@
 ﻿using System.IO;
-using OpenTK.Graphics.OpenGL;
 using KI.Foundation.Core;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Gfx
 {
@@ -9,7 +9,7 @@ namespace KI.Gfx
     /// </summary>
     public class ShaderProgram : KIFile
     {
-        private ShaderType? _shaderType;
+        private ShaderType? shaderType;
         
         /// <summary>
         /// コンストラクタ
@@ -23,34 +23,34 @@ namespace KI.Gfx
             reader.Close();
         }
 
-        public ShaderType shaderType
+        public ShaderType ShaderType
         {
             get
             {
-                if (_shaderType == null)
+                if (shaderType == null)
                 {
                     string extension = Path.GetExtension(FilePath);
                     switch (extension)
                     {
                         case ".vert":
-                            _shaderType = ShaderType.VertexShader;
+                            shaderType = ShaderType.VertexShader;
                             break;
                         case ".frag":
-                            _shaderType = ShaderType.FragmentShader;
+                            shaderType = ShaderType.FragmentShader;
                             break;
                         case ".geom":
-                            _shaderType = ShaderType.GeometryShader;
+                            shaderType = ShaderType.GeometryShader;
                             break;
                         case ".tcs":
-                            _shaderType = ShaderType.TessControlShader;
+                            shaderType = ShaderType.TessControlShader;
                             break;
                         case ".tes":
-                            _shaderType = ShaderType.TessEvaluationShader;
+                            shaderType = ShaderType.TessEvaluationShader;
                             break;
                     }
                 }
 
-                return (ShaderType)_shaderType;
+                return (ShaderType)shaderType;
             }
         }
 

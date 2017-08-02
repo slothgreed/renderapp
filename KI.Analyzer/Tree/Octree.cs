@@ -10,13 +10,12 @@ namespace KI.Analyzer
     public class Octree : IAnalyzer
     {
         Octant m_root;
-        private int m_MaxLevel = 0;
 
-        public int MaxLevel { get { return m_MaxLevel; } }
+        public int MaxLevel { get; private set; } 
 
         public Octree(List<Vector3> position, int level)
         {
-            m_MaxLevel = level;
+            MaxLevel = level;
 
             MakeOctree(position);
         }
@@ -42,7 +41,7 @@ namespace KI.Analyzer
         /// <param name="level"></param>
         private void MakeOctant(Octant parent, int level)
         {
-            if (m_MaxLevel == level)
+            if (MaxLevel == level)
                 return;
 
             List<Vector3> octantMin;
@@ -57,14 +56,14 @@ namespace KI.Analyzer
             }
 
             //親オクタントの点ループ
-            for (int i = 0; i < parent.position.Count; i++)
+            for (int i = 0; i < parent.Position.Count; i++)
             {
                 //子オクタントに割り当て
                 for (int j = 0; j < 8; j++)
                 {
-                    if (BDB.CheckInBox(octantMin[j], octantMax[j], parent.position[i]))
+                    if (BDB.CheckInBox(octantMin[j], octantMax[j], parent.Position[i]))
                     {
-                        octant[j].Add(parent.position[i]);
+                        octant[j].Add(parent.Position[i]);
                         break;
                     }
                 }
@@ -109,7 +108,6 @@ namespace KI.Analyzer
             //右上手前
             octantMin.Add(new Vector3(center.X, center.Y, bdbMin.Z));
             octantMax.Add(new Vector3(bdbMax.X, bdbMax.Y, center.Z));
-
 
             //左下奥
             octantMin.Add(new Vector3(bdbMin.X, bdbMin.Y, center.Z));
@@ -203,35 +201,33 @@ namespace KI.Analyzer
         #endregion
     }
 
+    /// <summary>
+    /// オクタント
+    /// </summary>
     public class Octant
     {
         //左下、右下、左上、右上その後奥の順
         public Octant[] octant = new Octant[8];
 
-        private int m_Level;
-        private Vector3 m_bdbMin;
-        private Vector3 m_bdbMax;
-        private List<Vector3> m_position;
+        public int Level { get; private set; }
 
-        public int Level { get { return m_Level; } }
+        public Vector3 BDBMin { get; private set; }
 
-        public Vector3 BDBMin { get { return m_bdbMin; } }
+        public Vector3 BDBMax { get; private set; }
 
-        public Vector3 BDBMax { get { return m_bdbMax; } }
-
-        public List<Vector3> position { get { return m_position; } }
+        public List<Vector3> Position { get; private set; }
 
         public Octant(List<Vector3> position, Vector3 min, Vector3 max, int level)
         {
-            m_bdbMax = max;
-            m_bdbMin = min;
-            m_position = position;
-            m_Level = level;
+            BDBMax = max;
+            BDBMin = min;
+            Position = position;
+            Level = level;
         }
 
         public void ClearList()
         {
-            m_position.Clear();
+            Position.Clear();
         }
     }
 }

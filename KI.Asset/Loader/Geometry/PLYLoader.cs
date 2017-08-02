@@ -1,46 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using KI.Foundation.Core;
 using KI.Foundation.Utility;
-using System.IO;
 
 namespace KI.Asset.Loader.Loader
 {
+    /// <summary>
+    /// plyファイルのローダ
+    /// </summary>
     public class PLYLoader : KIFile
     {
+        /// <summary>
+        /// プロパティ名
+        /// </summary>
         private List<string> propertyNames;
 
+        /// <summary>
+        /// プロパティ
+        /// </summary>
         private List<List<float>> propertys = new List<List<float>>();
 
+        /// <summary>
+        /// 面情報
+        /// </summary>
         private List<int> faceIndex = new List<int>();
 
-        public List<string> PropertyName
-        {
-            get
-            {
-                return propertyNames;
-            }
-        }
-
-        public List<List<float>> Propertys
-        {
-            get
-            {
-                return propertys;
-            }
-        }
-
-        public List<int> FaceIndex
-        {
-            get
-            {
-                return faceIndex;
-            }
-        }
-
+        /// <summary>
+        /// plyファイルのローダ
+        /// </summary>
+        /// <param name="filePath">ファイルパス</param>
         public PLYLoader(string filePath)
             : base(filePath)
         {
@@ -58,6 +48,43 @@ namespace KI.Asset.Loader.Loader
             }
         }
 
+        /// <summary>
+        /// プロパティ名
+        /// </summary>
+        public List<string> PropertyName
+        {
+            get
+            {
+                return propertyNames;
+            }
+        }
+
+        /// <summary>
+        /// プロパティ値
+        /// </summary>
+        public List<List<float>> Propertys
+        {
+            get
+            {
+                return propertys;
+            }
+        }
+
+        /// <summary>
+        /// 面情報
+        /// </summary>
+        public List<int> FaceIndex
+        {
+            get
+            {
+                return faceIndex;
+            }
+        }
+
+        /// <summary>
+        /// ファイルの読み込み
+        /// </summary>
+        /// <param name="fileStream">ファイルデータ</param>
         private void ReadData(string[] fileStream)
         {
             try
@@ -115,6 +142,12 @@ namespace KI.Asset.Loader.Loader
             }
         }
 
+        /// <summary>
+        /// 頂点データの読み込み
+        /// </summary>
+        /// <param name="fileStream">ファイルデータ</param>
+        /// <param name="startIndex">読み込み開始位置</param>
+        /// <param name="vertexNum">頂点数</param>
         private void ReadVertexData(string[] fileStream, int startIndex, int vertexNum)
         {
             for (int i = startIndex; i < startIndex + vertexNum; i++)
@@ -139,6 +172,12 @@ namespace KI.Asset.Loader.Loader
             }
         }
 
+        /// <summary>
+        /// 面データの読み込み
+        /// </summary>
+        /// <param name="fileStream">ファイルデータ</param>
+        /// <param name="startIndex">読み込み開始位置</param>
+        /// <param name="faceNum">面数</param>
         private void ReadFaceData(string[] fileStream, int startIndex, int faceNum)
         {
             for (int i = startIndex; i < startIndex + faceNum; i++)

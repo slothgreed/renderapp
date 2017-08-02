@@ -1,10 +1,13 @@
-﻿using OpenTK;
-using KI.Foundation.Utility;
+﻿using System.Collections.Generic;
 using KI.Foundation.Core;
-using System.Collections.Generic;
+using KI.Foundation.Utility;
+using OpenTK;
 
 namespace KI.Asset
 {
+    /// <summary>
+    /// 平面
+    /// </summary>
     public class Plane : KIObject, IGeometry
     {
         #region [メンバ変数]
@@ -13,22 +16,25 @@ namespace KI.Asset
         /// </summary>
         private Vector4 surface = new Vector4();
 
-        public GeometryInfo[] GeometryInfos
-        {
-            get;
-            private set;
-        }
-
         #endregion
         /// <summary>
         /// コンストラクタ
         /// </summary>
+        /// <param name="name">名前</param>
+        /// <param name="q0">頂点0</param>
+        /// <param name="q1">頂点1</param>
+        /// <param name="q2">頂点2</param>
+        /// <param name="q3">頂点3</param>
         public Plane(string name, Vector3 q0, Vector3 q1, Vector3 q2, Vector3 q3)
             : base(name)
         {
             CreateObject(q0, q1, q2, q3);
         }
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="name">名前</param>
         public Plane(string name)
             : base(name)
         {
@@ -38,11 +44,21 @@ namespace KI.Asset
             Vector3 q3 = new Vector3(-1, 1, 0);
             CreateObject(q0, q1, q2, q3);
         }
+
+        /// <summary>
+        /// 形状情報
+        /// </summary>
+        public GeometryInfo[] GeometryInfos { get; private set; }
+
         #region [形状の作成]
         /// <summary>
         /// 任意面
         /// </summary>
-        public void CreateObject(Vector3 q0, Vector3 q1, Vector3 q2, Vector3 q3)
+        /// <param name="q0">頂点0</param>
+        /// <param name="q1">頂点1</param>
+        /// <param name="q2">頂点2</param>
+        /// <param name="q3">頂点3</param>
+        private void CreateObject(Vector3 q0, Vector3 q1, Vector3 q2, Vector3 q3)
         {
             var position = new List<Vector3>();
             var normal = new List<Vector3>();
@@ -81,7 +97,7 @@ namespace KI.Asset
             Vector3 line = far - near;
             Vector3 result = new Vector3();
 
-            result = KICalc.crossPlanetoLine(near, far, surface);
+            result = KICalc.CrossPlanetoLine(near, far, surface);
 
             return result;
         }

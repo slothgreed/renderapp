@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using KI.Foundation.Utility;
 using OpenTK.Graphics.OpenGL;
-using KI.Foundation.Utility;
+
 namespace KI.Gfx.GLUtil
 {
     public class RenderBuffer : BufferObject

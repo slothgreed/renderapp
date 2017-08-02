@@ -1,19 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using KI.Foundation.Core;
-using KI.Gfx;
-using KI.Gfx.KIShader;
+
 namespace KI.Gfx.KIShader
 {
+    /// <summary>
+    /// シェーダファクトリ
+    /// </summary>
     public class ShaderFactory
     {
+        /// <summary>
+        /// シングルトン
+        /// </summary>
         public static ShaderFactory Instance { get; } = new ShaderFactory();
 
         public Dictionary<string, Shader> ShaderList = new Dictionary<string, Shader>();
 
+        /// <summary>
+        /// 同一シェーダの確認
+        /// </summary>
+        /// <param name="vert">頂点シェーダ</param>
+        /// <param name="frag">フラグシェーダ</param>
+        /// <returns>シェーダ</returns>
         public Shader FindShader(string vert, string frag)
         {
             foreach (var sh in ShaderList.Values)
@@ -30,8 +37,8 @@ namespace KI.Gfx.KIShader
         /// <summary>
         /// vert,frag専用ファイル名は同一のもの
         /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
+        /// <param name="path">ファイルパス</param>
+        /// <returns>シェーダ</returns>
         public Shader CreateShaderVF(string path)
         {
             return CreateShaderVF(path + ".vert", path + ".frag");
@@ -40,8 +47,8 @@ namespace KI.Gfx.KIShader
         /// <summary>
         /// vert,frag専用ファイル名は同一のもの
         /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
+        /// <param name="path">ファイルパス</param>
+        /// <returns>シェーダ</returns>
         public Shader CreateShaderVF(string vPath, string fPath)
         {
             if (vPath == null || fPath == null)

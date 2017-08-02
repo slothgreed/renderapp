@@ -1,12 +1,12 @@
-﻿using KI.Foundation.Command;
+﻿using System.Collections.Generic;
+using KI.Asset;
+using KI.Foundation.Command;
 using KI.Foundation.Core;
 using KI.Foundation.Utility;
-using System.Collections.Generic;
-using OpenTK;
-using KI.Asset;
 using KI.Gfx.GLUtil;
-using RenderApp.Globals;
 using KI.Renderer;
+using OpenTK;
+using RenderApp.Globals;
 
 namespace RenderApp.RACommand
 {

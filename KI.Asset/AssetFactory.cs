@@ -1,7 +1,7 @@
-﻿using OpenTK;
-using KI.Foundation.Core;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using KI.Analyzer;
+using KI.Foundation.Core;
+using OpenTK;
 
 namespace KI.Asset
 {
@@ -45,16 +45,37 @@ namespace KI.Asset
             return new PointLight(name, new Vector3(-11, 300, -18), Vector3.Zero);
         }
 
+        /// <summary>
+        /// 軸の作成
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <param name="min">最小値</param>
+        /// <param name="max">最大値</param>
+        /// <returns>軸</returns>
         public IGeometry CreateAxis(string name, Vector3 min, Vector3 max)
         {
             return new Axis(name, min, max);
         }
 
+        /// <summary>
+        /// 球の作成
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <param name="radial">半径</param>
+        /// <param name="hpartition">縦分割数</param>
+        /// <param name="wpartition">横分割数</param>
+        /// <param name="orient">内外</param>
+        /// <returns>球</returns>
         public IGeometry CreateSphere(string name, float radial, int hpartition, int wpartition, bool orient)
         {
             return new Sphere(name, radial, hpartition, wpartition, orient);
         }
 
+        /// <summary>
+        /// 平面の作成
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <returns>平面</returns>
         public IGeometry CreatePlane(string name)
         {
             return new Plane(name);
@@ -66,6 +87,11 @@ namespace KI.Asset
         //    return cube.ConvertGeometrys(true);
         //}
 
+        /// <summary>
+        /// 3dモデルのロード
+        /// </summary>
+        /// <param name="filePath">ファイルパス</param>
+        /// <returns>3dモデル</returns>
         public IGeometry CreateLoad3DModel(string filePath)
         {
             string extension = System.IO.Path.GetExtension(filePath);
@@ -85,6 +111,12 @@ namespace KI.Asset
             return null;
         }
 
+        /// <summary>
+        /// ハーフエッジの作成
+        /// </summary>
+        /// <param name="position">頂点座標</param>
+        /// <param name="index">頂点番号</param>
+        /// <returns>ハーフエッジ</returns>
         public IGeometry CreateHalfEdge(List<Vector3> position, List<int> index)
         {
             return new HalfEdgeConverter(new HalfEdge(position, index));

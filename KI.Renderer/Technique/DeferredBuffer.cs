@@ -3,16 +3,32 @@ using KI.Gfx.KITexture;
 
 namespace KI.Renderer
 {
+    /// <summary>
+    /// Deffered Rendering
+    /// </summary>
     public class DeferredBuffer : RenderTechnique
     {
+        /// <summary>
+        /// 頂点シェーダ
+        /// </summary>
         private static string vertexShader = Global.ShaderDirectory + @"\Lighthing\Defferd.vert";
+
+        /// <summary>
+        /// フラグシェーダ
+        /// </summary>
         private static string fragShader = Global.ShaderDirectory + @"\Lighthing\Defferd.frag";
 
-        public DeferredBuffer(RenderTechniqueType tech)
-            : base("Deferred", vertexShader, fragShader, tech, RenderType.Original)
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public DeferredBuffer()
+            : base("Deferred", vertexShader, fragShader, RenderTechniqueType.Deferred, RenderType.Original)
         {
         }
 
+        /// <summary>
+        /// 描画
+        /// </summary>
         public override void Render()
         {
             RenderTarget.ClearBuffer();

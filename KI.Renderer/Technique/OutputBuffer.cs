@@ -1,15 +1,28 @@
-﻿using KI.Gfx.KITexture;
-using KI.Asset;
+﻿using KI.Asset;
+using KI.Gfx.KITexture;
 
 namespace KI.Renderer
 {
+    /// <summary>
+    /// 最終出力用のバッファ
+    /// </summary>
     public partial class OutputBuffer : RenderTechnique
     {
+        /// <summary>
+        /// 頂点シェーダ
+        /// </summary>
         private static string vertexShader = Global.ShaderDirectory + @"\PostEffect\Output.vert";
+
+        /// <summary>
+        /// フラグシェーダ
+        /// </summary>
         private static string fragShader = Global.ShaderDirectory + @"\PostEffect\Output.frag";
 
-        public OutputBuffer(RenderTechniqueType tech)
-            : base("OutputBuffer", vertexShader, fragShader, tech, RenderType.Original)
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public OutputBuffer()
+            : base("OutputBuffer", vertexShader, fragShader, RenderTechniqueType.Output, RenderType.Original)
         {
             Plane = RenderObjectFactory.Instance.CreateRenderObject("OutputBuffer", AssetFactory.Instance.CreatePlane("OutputPlane"));
             Plane.AddTexture(TextureKind.Normal, Global.RenderSystem.GBufferStage.OutputTexture[2]);
@@ -23,9 +36,14 @@ namespace KI.Renderer
             uSelectMap = null;
         }
 
-        internal void SetOutputTarget(TextureKind textureKind, Texture OutputTexture)
+        /// <summary>
+        /// 描画テクスチャの設定
+        /// </summary>
+        /// <param name="textureKind"></param>
+        /// <param name="outputTexture"></param>
+        public void SetOutputTarget(TextureKind textureKind, Texture outputTexture)
         {
-            Plane.AddTexture(textureKind, OutputTexture);
+            Plane.AddTexture(textureKind, outputTexture);
         }
 
         /// <summary>

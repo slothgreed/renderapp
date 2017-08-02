@@ -1,41 +1,56 @@
-﻿using OpenTK;
+﻿using System.Collections.Generic;
 using KI.Foundation.Core;
-using System.Collections.Generic;
+using OpenTK;
 
 namespace KI.Asset
 {
+    /// <summary>
+    /// 軸
+    /// </summary>
     public class Axis : KIObject, IGeometry
     {
-        public Vector3 Min
-        {
-            get;
-            set;
-        }
+        /// <summary>
+        /// 最小値
+        /// </summary>
+        private Vector3 min;
 
-        public Vector3 Max
-        {
-            get;
-            set;
-        }
+        /// <summary>
+        /// 最大値
+        /// </summary>
+        private Vector3 max;
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <param name="min">最小値</param>
+        /// <param name="max">最大値</param>
         public Axis(string name, Vector3 min, Vector3 max)
             : base(name)
         {
-            Min = min;
-            Max = max;
+            this.min = min;
+            this.max = max;
             CreateObject();
         }
 
+        /// <summary>
+        /// 形状情報
+        /// </summary>
+        public GeometryInfo[] GeometryInfos { get; private set; }
+
+        /// <summary>
+        /// 軸作成
+        /// </summary>
         private void CreateObject()
         {
             var position = new List<Vector3>();
             var color = new List<Vector3>();
-            position.Add(new Vector3(Max.X, 0.0f, 0.0f));
-            position.Add(new Vector3(Min.X, 0.0f, 0.0f));
-            position.Add(new Vector3(0.0f, Max.Y, 0.0f));
-            position.Add(new Vector3(0.0f, Min.Y, 0.0f));
-            position.Add(new Vector3(0.0f, 0.0f, Max.Z));
-            position.Add(new Vector3(0.0f, 0.0f, Min.Z));
+            position.Add(new Vector3(max.X, 0.0f, 0.0f));
+            position.Add(new Vector3(min.X, 0.0f, 0.0f));
+            position.Add(new Vector3(0.0f, max.Y, 0.0f));
+            position.Add(new Vector3(0.0f, min.Y, 0.0f));
+            position.Add(new Vector3(0.0f, 0.0f, max.Z));
+            position.Add(new Vector3(0.0f, 0.0f, min.Z));
 
             color.Add(new Vector3(1, 0, 0));
             color.Add(new Vector3(1, 0, 0));
@@ -46,12 +61,6 @@ namespace KI.Asset
 
             GeometryInfo info = new GeometryInfo(position, null, color, null, null, Gfx.GLUtil.GeometryType.Line);
             GeometryInfos = new GeometryInfo[] { info };
-        }
-
-        public GeometryInfo[] GeometryInfos
-        {
-            get;
-            private set;
         }
     }
 }

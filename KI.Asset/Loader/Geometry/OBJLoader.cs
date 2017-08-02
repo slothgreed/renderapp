@@ -1,37 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
-using OpenTK;
-using KI.Foundation.Utility;
+using System.Linq;
 using KI.Foundation.Core;
+using KI.Foundation.Utility;
+using OpenTK;
 
 namespace KI.Asset.Loader
 {
-    public class OBJMaterial
-    {
-        public string name;
-        public Vector3 Ka;//ambient
-        public Vector3 Kd;//diffuse
-        public Vector3 Ks;//specular
-        public Vector3 Ke;//emissive
-        public float Ns;//specular指数
-        public float Ni;//屈折率
-        public string map_Ka;//ambientMap
-        public string map_Kd;//diffuseMap(sponzaはambientと一緒
-        public string map_Ns;//specular
-        public string map_bump;//bumpMap
-
-        public Vector3 Tf;//atmosphereの値（無視rgbで指定されてるがrと同一っぽい）
-        public string map_d;//透過度テクスチャ（無視）
-        public float d;//透過（無視）
-        public float Tr;//透過（無視）
-        public float illum;//0~10のパラメータで異なる（無視）sponza全部2（Color on and Ambient on）
-        public List<int> posIndex = new List<int>();//ポリゴンのIndex情報を保持
-        public List<int> norIndex = new List<int>();//ポリゴンのIndex情報を保持
-        public List<int> texIndex = new List<int>();//ポリゴンのIndex情報を保持
-    }
-
+    /// <summary>
+    /// objファイルのローダ
+    /// </summary>
     public class OBJLoader : KIFile
     {
         /// <summary>
@@ -53,6 +32,24 @@ namespace KI.Asset.Loader
         /// テクスチャ座標
         /// </summary>
         private List<Vector2> texcoord = new List<Vector2>();
+
+        /// <summary>
+        /// objファイルのローダ
+        /// </summary>
+        /// <param name="filePath">ファイルパス</param>
+        public OBJLoader(string filePath)
+            : base(filePath)
+        {
+            try
+            {
+                string[] parser = File.ReadAllLines(filePath, System.Text.Encoding.GetEncoding("Shift_JIS"));
+                ReadData(parser);
+            }
+            catch (Exception)
+            {
+                Logger.Log(Logger.LogLevel.Warning, filePath + "開けません。");
+            }
+        }
 
         /// <summary>
         /// 頂点
@@ -87,31 +84,11 @@ namespace KI.Asset.Loader
             }
         }
 
-        /// <summary>
-        /// objファイルのローダ
-        /// </summary>
-        /// <param name="filePath">ファイルパス</param>
-        public OBJLoader(string filePath)
-            : base(filePath)
-        {
-            try
-            {
-                string[] parser = File.ReadAllLines(filePath, System.Text.Encoding.GetEncoding("Shift_JIS"));
-                ReadData(parser);
-            }
-            catch (Exception)
-            {
-                Logger.Log(Logger.LogLevel.Warning, filePath + "開けません。");
-            }
-        }
-
         #region [データのロード]
         /// <summary>
         /// OBJデータのロード
         /// </summary>
         /// <param name="parser">STLデータ</param>
-        /// <param name="position">位置情報を格納</param>
-        /// <param name="normal">法線情報を格納</param>
         private void ReadData(string[] parser)
         {
             try
@@ -137,7 +114,8 @@ namespace KI.Asset.Loader
         /// <summary>
         /// 1行ずつの読み込み
         /// </summary>
-        /// <param name="line"></param>
+        /// <param name="currentMat">マテリアル</param>
+        /// <param name="line">ファイルデータ</param>
         private void ReadLineData(ref OBJMaterial currentMat, string[] line)
         {
             line = line.Where(p => p != string.Empty).ToArray();
@@ -210,7 +188,8 @@ namespace KI.Asset.Loader
         /// <summary>
         /// IndexBufferの設定
         /// </summary>
-        /// <param name="line"></param>
+        /// <param name="currentMat">マテリアル</param>
+        /// <param name="line">ファイルデータ</param>
         private void SetIndexBuffer(OBJMaterial currentMat, string[] line)
         {
             if (line.Length == 4)
@@ -304,6 +283,12 @@ namespace KI.Asset.Loader
         }
 
         #region [read mtl file]
+
+        /// <summary>
+        /// マテリアルファイルの読み込み
+        /// </summary>
+        /// <param name="file_name">ファイル名</param>
+        /// <returns>成功</returns>
         private bool OpenMTL(string file_name)
         {
             string directory = DirectoryPath + @"\";
@@ -330,7 +315,6 @@ namespace KI.Asset.Loader
 
                     //コメント領域
                     if (line[i] == "#" || line[i] == string.Empty) break;
-
 
                     if (line[i] == "newmtl")
                     {
@@ -403,5 +387,32 @@ namespace KI.Asset.Loader
         #endregion
 
         #endregion
+    }
+
+    /// <summary>
+    /// objファイルのマテリアル
+    /// </summary>
+    public class OBJMaterial
+    {
+        public string name;
+        public Vector3 Ka;//ambient
+        public Vector3 Kd;//diffuse
+        public Vector3 Ks;//specular
+        public Vector3 Ke;//emissive
+        public float Ns;//specular指数
+        public float Ni;//屈折率
+        public string map_Ka;//ambientMap
+        public string map_Kd;//diffuseMap(sponzaはambientと一緒
+        public string map_Ns;//specular
+        public string map_bump;//bumpMap
+
+        public Vector3 Tf;//atmosphereの値（無視rgbで指定されてるがrと同一っぽい）
+        public string map_d;//透過度テクスチャ（無視）
+        public float d;//透過（無視）
+        public float Tr;//透過（無視）
+        public float illum;//0~10のパラメータで異なる（無視）sponza全部2（Color on and Ambient on）
+        public List<int> posIndex = new List<int>();//ポリゴンのIndex情報を保持
+        public List<int> norIndex = new List<int>();//ポリゴンのIndex情報を保持
+        public List<int> texIndex = new List<int>();//ポリゴンのIndex情報を保持
     }
 }

@@ -10,14 +10,46 @@ namespace KI.Renderer
         /// <summary>
         /// ポストエフェクトリスト
         /// </summary>
-        public List<RenderTechnique> PostEffects = new List<RenderTechnique>();
+        private List<RenderTechnique> postEffects = new List<RenderTechnique>();
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public PostEffectManager()
         {
+            postEffects = new List<RenderTechnique>();
             Initialize();
+        }
+
+        /// <summary>
+        /// サイズ変更
+        /// </summary>
+        /// <param name="width">横</param>
+        /// <param name="height">縦</param>
+        public void SizeChanged(int width, int height)
+        {
+            foreach (var post in postEffects)
+            {
+                post.SizeChanged(width, height);
+            }
+        }
+
+        /// <summary>
+        /// 描画
+        /// </summary>
+        public void Render()
+        {
+            foreach (var post in postEffects)
+            {
+                post.Render();
+            }
+        }
+
+        /// <summary>
+        /// 解放処理
+        /// </summary>
+        public void Dispose()
+        {
         }
 
         /// <summary>
@@ -41,7 +73,7 @@ namespace KI.Renderer
             //PostEffects.Add(bloom);
             //PostEffects.Add(sobel);
             //PostEffects.Add(ssao);
-            PostEffects.Add(sslic);
+            postEffects.Add(sslic);
         }
 
         /// <summary>
@@ -49,41 +81,10 @@ namespace KI.Renderer
         /// </summary>
         private void ClearBuffer()
         {
-            foreach (var post in PostEffects)
+            foreach (var post in postEffects)
             {
                 post.ClearBuffer();
             }
-        }
-
-        /// <summary>
-        /// サイズ変更
-        /// </summary>
-        /// <param name="width">横</param>
-        /// <param name="height">縦</param>
-        public void SizeChanged(int width, int height)
-        {
-            foreach (var post in PostEffects)
-            {
-                post.SizeChanged(width, height);
-            }
-        }
-
-        /// <summary>
-        /// 描画
-        /// </summary>
-        public void Render()
-        {
-            foreach (var post in PostEffects)
-            {
-                post.Render();
-            }
-        }
-
-        /// <summary>
-        /// 解放処理
-        /// </summary>
-        public void Dispose()
-        {
         }
     }
 }

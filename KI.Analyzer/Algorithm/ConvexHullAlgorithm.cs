@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using OpenTK;
 using KI.Foundation.Utility;
+using OpenTK;
 
 namespace KI.Analyzer.Algorithm
 {

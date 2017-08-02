@@ -19,20 +19,20 @@ namespace RenderApp.ViewModel
 
     public class TabControlViewModel : DockWindowViewModel
     {
-        private TabItemViewModel _activeItem;
+        private TabItemViewModel activeItem;
 
-        private ObservableCollection<TabItemViewModel> _ItemsSource = new ObservableCollection<TabItemViewModel>();
+        private ObservableCollection<TabItemViewModel> itemsSource = new ObservableCollection<TabItemViewModel>();
 
         public TabItemViewModel ActiveItem
         {
             get
             {
-                return _activeItem;
+                return activeItem;
             }
 
             set
             {
-                SetValue(ref _activeItem, value);
+                SetValue(ref activeItem, value);
             }
         }
 
@@ -40,12 +40,12 @@ namespace RenderApp.ViewModel
         {
             get
             {
-                return _ItemsSource;
+                return itemsSource;
             }
 
             set
             {
-                SetValue(ref _ItemsSource, value);
+                SetValue(ref itemsSource, value);
             }
         }
 

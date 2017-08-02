@@ -15,7 +15,7 @@ namespace KI.Analyzer.Algorithm
         private void Calculate(HalfEdge halfedge)
         {
             Normal.Clear();
-            foreach (var vertex in halfedge.m_Vertex)
+            foreach (var vertex in halfedge.vertexs)
             {
                 Vector3 sum = new Vector3();
                 int num = 0;

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using OpenTK;
 using KI.Asset;
 using KI.Gfx.GLUtil;
+using OpenTK;
 
 namespace RenderApp.AssetModel
 {
@@ -29,8 +29,8 @@ namespace RenderApp.AssetModel
 
         public void Create()
         {
-            List<Vector3> Position = new List<Vector3>();
-            List<Vector3> Color = new List<Vector3>();
+            List<Vector3> position = new List<Vector3>();
+            List<Vector3> color = new List<Vector3>();
 
             Vector3 line_start1 = new Vector3();
             Vector3 line_fin1 = new Vector3();
@@ -48,18 +48,18 @@ namespace RenderApp.AssetModel
                     line_start2 = new Vector3(i, 0, -world);
                     line_fin2 = new Vector3(i, 0, world);
 
-                    Position.Add(line_start1);
-                    Position.Add(line_fin1);
-                    Position.Add(line_start2);
-                    Position.Add(line_fin2);
-                    Color.Add(Vector3.One);
-                    Color.Add(Vector3.One);
-                    Color.Add(Vector3.One);
-                    Color.Add(Vector3.One);
+                    position.Add(line_start1);
+                    position.Add(line_fin1);
+                    position.Add(line_start2);
+                    position.Add(line_fin2);
+                    color.Add(Vector3.One);
+                    color.Add(Vector3.One);
+                    color.Add(Vector3.One);
+                    color.Add(Vector3.One);
                 }
             }
 
-            var info = new GeometryInfo(Position, null, Color, null, null, GeometryType.Line);
+            var info = new GeometryInfo(position, null, color, null, null, GeometryType.Line);
             GeometryInfos = new GeometryInfo[] { info };
         }
 

@@ -1,10 +1,10 @@
-﻿using KI.Foundation.Command;
-using KI.Foundation.Core;
-using OpenTK;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using KI.Asset;
+using KI.Foundation.Command;
+using KI.Foundation.Core;
 using KI.Renderer;
+using OpenTK;
 
 namespace RenderApp.RACommand
 {
@@ -43,13 +43,13 @@ namespace RenderApp.RACommand
             if (counter > -1)
             {
                 //geometry.HalfEdge.VertexDecimation(geometry.HalfEdge.m_Edge[counter]);
-                geometry.HalfEdge.EdgeFlips(geometry.HalfEdge.m_Edge[counter]);
+                geometry.HalfEdge.EdgeFlips(geometry.HalfEdge.edges[counter]);
             }
 
             counter++;
             List<Vector3> position = new List<Vector3>();
             var color = new List<Vector3>();
-            foreach (var mesh in geometry.HalfEdge.m_Mesh)
+            foreach (var mesh in geometry.HalfEdge.meshs)
             {
                 foreach (var edge in mesh.AroundEdge)
                 {
@@ -93,7 +93,7 @@ namespace RenderApp.RACommand
                     //    color.Add(Vector3.UnitX);
                     //}
 
-                    if (edge == geometry.HalfEdge.m_Edge[counter])
+                    if (edge == geometry.HalfEdge.edges[counter])
                     {
                         color.Add(Vector3.UnitY);
                         color.Add(Vector3.UnitX);

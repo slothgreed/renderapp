@@ -31,13 +31,12 @@ namespace KI.Analyzer
             Reset();
         }
 
-
         public string CanExecute(string commandArg = null)
         {
             if (StartIndex < 0 ||
                 EndIndex < 0 ||
-                StartIndex > halfEdge.m_Vertex.Count ||
-                EndIndex > halfEdge.m_Vertex.Count)
+                StartIndex > halfEdge.vertexs.Count ||
+                EndIndex > halfEdge.vertexs.Count)
             {
                 return "init value error";
             }
@@ -76,11 +75,11 @@ namespace KI.Analyzer
 
         private bool DistanceDijkstra(int index1, int index2)
         {
-            Node[] nodeArray = new Node[halfEdge.m_Vertex.Count];
+            Node[] nodeArray = new Node[halfEdge.vertexs.Count];
 
             for (int i = 0; i < nodeArray.Length; i++)
             {
-                nodeArray[i] = new Node(false, -1, halfEdge.m_Vertex[i]);
+                nodeArray[i] = new Node(false, -1, halfEdge.vertexs[i]);
             }
 
             CalcDijkstra(nodeArray, index1, index2);

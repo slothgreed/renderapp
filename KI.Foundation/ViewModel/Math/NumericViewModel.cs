@@ -23,7 +23,6 @@ namespace KI.Foundation.ViewModel
 
         public override void UpdateProperty()
         {
-
         }
     }
 }

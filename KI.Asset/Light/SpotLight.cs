@@ -2,11 +2,11 @@
 
 namespace KI.Asset
 {
+    /// <summary>
+    /// スポットライト
+    /// </summary>
     class SpotLight : Light
     {
-        public float SpotRange { get; set; }
-        public float Fallof { get; set; }
-
         /// <summary>
         /// スポットライト
         /// </summary>
@@ -16,5 +16,9 @@ namespace KI.Asset
             SpotRange = SpotRangeDegree;
             Fallof = fallof;
         }
+
+        public float SpotRange { get; private set; }
+
+        public float Fallof { get; private set; }
     }
 }

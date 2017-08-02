@@ -97,13 +97,13 @@ namespace KI.Foundation.Utility
         /// <summary>
         /// 法線の算出
         /// </summary>
-        /// <param name="point"></param>
-        /// <param name="point2"></param>
-        /// <returns></returns>
-        public static Vector3 Normal(Vector3 point, Vector3 point2)
+        /// <param name="vector1">ベクトル1</param>
+        /// <param name="vector2">ベクトル2</param>
+        /// <returns>法線</returns>
+        public static Vector3 Normal(Vector3 vector1, Vector3 vector2)
         {
             Vector3 normal;
-            normal = Vector3.Cross(point, point2);
+            normal = Vector3.Cross(vector1, vector2);
             return normal.Normalized();
         }
 
@@ -111,21 +111,21 @@ namespace KI.Foundation.Utility
         /// <summary>
         /// 0~180
         /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
+        /// <param name="vector1">ベクトル1</param>
+        /// <param name="vector2">ベクトル2</param>
         /// <returns>Radian</returns>
-        public static float Angle(Vector3 a, Vector3 b)
+        public static float Angle(Vector3 vector1, Vector3 vector2)
         {
             float cos = 0;
 
-            Vector3 v1 = a.Normalized();
-            Vector3 v2 = b.Normalized();
+            Vector3 v1 = vector1.Normalized();
+            Vector3 v2 = vector2.Normalized();
             cos = Vector3.Dot(v1, v2);
             cos = (float)Math.Acos(cos);
 
             return cos;
         }
-        //Radian
+
         public static float Angle(Vector3 a, Vector3 b, Vector3 axis)
         {
             float cos = 0;
@@ -195,7 +195,7 @@ namespace KI.Foundation.Utility
         /// http://www.sousakuba.com/Programming/gs_plane_line_intersect.html
         /// </summary>
         /// <returns></returns>
-        public static Vector3 crossPlanetoLine(Vector3 start, Vector3 fin, Vector4 plane1)
+        public static Vector3 CrossPlanetoLine(Vector3 start, Vector3 fin, Vector4 plane1)
         {
             Vector3 result = new Vector3();
             Vector4 plane = new Vector4();
@@ -255,7 +255,7 @@ namespace KI.Foundation.Utility
         public static bool CrossPlanetoLinePos(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4, Vector3 near, Vector3 far, ref float min, out Vector3 result)
         {
             Vector4 surface = GetPlaneFormula(v1, v2, v3);
-            result = crossPlanetoLine(near, far, surface);
+            result = CrossPlanetoLine(near, far, surface);
             float length;
             //交点あり
             if (result.Length != 0)
@@ -264,7 +264,7 @@ namespace KI.Foundation.Utility
                 if (length < min)
                 {
                     //四角形ない
-                    if (KICalc.innerSurface(result, v1, v2, v3, v4))
+                    if (KICalc.InnerSurface(result, v1, v2, v3, v4))
                     {
                         min = length;
                         return true;
@@ -289,7 +289,7 @@ namespace KI.Foundation.Utility
         public static bool CrossPlanetoLinePos(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 near, Vector3 far, ref float min, out Vector3 result)
         {
             Vector4 surface = GetPlaneFormula(v1, v2, v3);
-            result = crossPlanetoLine(near, far, surface);
+            result = CrossPlanetoLine(near, far, surface);
             float length;
             //交点あり
             if (result.Length != 0)
@@ -298,7 +298,7 @@ namespace KI.Foundation.Utility
                 if (length < min)
                 {
                     //3角形ない
-                    if (KICalc.innerSurface(result, v1, v2, v3))
+                    if (KICalc.InnerSurface(result, v1, v2, v3))
                     {
                         min = length;
                         return true;
@@ -307,15 +307,14 @@ namespace KI.Foundation.Utility
             }
 
             return false;
-
         }
         #endregion
         #region [平面]
         /// <summary>
         /// 平面の公式の正規化
         /// </summary>
-        /// <param name="result"></param>
-        /// <param name="plane"></param>
+        /// <param name="plane">平面の公式</param>
+        /// <returns>正規化後</returns>
         public static Vector4 normalizePlane(Vector4 plane)
         {
             Vector4 result = new Vector4();
@@ -341,7 +340,6 @@ namespace KI.Foundation.Utility
                 posit.Z = plane.W / plane.Z;
             }
 
-
             float scalar = new Vector3(plane).Length;
             result.X = plane[0] / scalar;
             result.Y = plane[1] / scalar;
@@ -353,10 +351,10 @@ namespace KI.Foundation.Utility
         /// <summary>
         /// 平面の公式の算出
         /// </summary>
-        /// <param name="result"></param>
-        /// <param name="v1"></param>
-        /// <param name="v2"></param>
-        /// <param name="v3"></param>
+        /// <param name="v1">頂点1</param>
+        /// <param name="v2">頂点2</param>
+        /// <param name="v3">頂点3</param>
+        /// <returns>平面の公式</returns>
         public static Vector4 GetPlaneFormula(Vector3 v1, Vector3 v2, Vector3 v3)
         {
             Vector3 ex;
@@ -393,7 +391,7 @@ namespace KI.Foundation.Utility
         /// http://www.sousakuba.com/Programming/gs_hittest_point_triangle.html
         /// </summary>
         /// <returns></returns>
-        public static bool innerSurface(Vector3 p, Vector3 a, Vector3 b, Vector3 c)
+        public static bool InnerSurface(Vector3 p, Vector3 a, Vector3 b, Vector3 c)
         {
             Vector3 ab = b - a;
             Vector3 bp = p - b;
@@ -420,15 +418,14 @@ namespace KI.Foundation.Utility
         /// 多角形の内外判定
         /// </summary>
         /// <returns></returns>
-        public static bool innerSurface(Vector3 point, Vector3 a, Vector3 b, Vector3 c, Vector3 d)
+        public static bool InnerSurface(Vector3 point, Vector3 a, Vector3 b, Vector3 c, Vector3 d)
         {
-            if (innerSurface(point, a, b, c) || innerSurface(point, a, c, d))
+            if (InnerSurface(point, a, b, c) || InnerSurface(point, a, c, d))
             {
                 return true;
             }
 
             return false;
-
         }
         #endregion
         #region [行列 * ベクトル]
@@ -504,10 +501,10 @@ namespace KI.Foundation.Utility
                 {
                     return tmp + 1;
                 }
-                else//-0.99999
+                else
                 {
+                    //-0.99999
                     return tmp - 1;
-
                 }
             }
 

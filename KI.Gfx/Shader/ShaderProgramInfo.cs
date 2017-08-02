@@ -42,10 +42,13 @@
 
         public object variable { get; set; }
 
-        public int arrayNum { get; set; }//配列のときの要素数
+        /// <summary>
+        /// 配列のときの要素数
+        /// </summary>
+        public int ArrayNum { get; set; }
 
-        public EShaderVariableType shaderVariableType { get; set; }
+        public EShaderVariableType ShaderVariableType { get; set; }
 
-        public EVariableType variableType { get; set; }
+        public EVariableType VariableType { get; set; }
     }
 }

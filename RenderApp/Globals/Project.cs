@@ -9,8 +9,6 @@ namespace RenderApp.Globals
 {
     public class Project
     {
-        public KINode RootNode;
-
         private KINode GeometryRoot;
 
         /// <summary>
@@ -35,6 +33,8 @@ namespace RenderApp.Globals
             RootNode.AddChild(TextureRoot);
             RootNode.AddChild(ShaderProgramRoot);
         }
+
+        public KINode RootNode { get; private set; }
 
         internal void AddChild(KIObject value)
         {

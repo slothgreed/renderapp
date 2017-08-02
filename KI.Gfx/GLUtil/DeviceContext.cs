@@ -117,6 +117,7 @@ namespace KI.Gfx.GLUtil
                 default:
                     break;
             }
+
             return PrimitiveType.Points;
         }
     }

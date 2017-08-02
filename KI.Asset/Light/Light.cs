@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OpenTK;
-using KI.Foundation.Core;
+﻿using KI.Foundation.Core;
 using KI.Gfx.KITexture;
+using OpenTK;
 
 namespace KI.Asset
 {
@@ -13,23 +9,12 @@ namespace KI.Asset
     /// </summary>
     public abstract class Light : KIObject
     {
-        public Vector3 Position { get; protected set; }
-
-        public Vector3 Direction { get; protected set; }
-
-        public float Shiness { get; protected set; }
-
-        public Vector3 Color { get; protected set; }
-
-        public Matrix4 Matrix { get; private set; }
-
-        public Texture ShadowMap { get; private set; }
-
-        private string _objectName = "Light";
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
+        /// <param name="name">名前</param>
+        /// <param name="lightPos">位置</param>
+        /// <param name="lightDir">方向</param>
         protected Light(string name, Vector3 lightPos, Vector3 lightDir)
             : base(name)
         {
@@ -42,9 +27,39 @@ namespace KI.Asset
             }
             else
             {
-                Name = _objectName;
+                Name = "Light";
             }
         }
+
+        /// <summary>
+        /// 位置
+        /// </summary>
+        public Vector3 Position { get; protected set; }
+
+        /// <summary>
+        /// 方向
+        /// </summary>
+        public Vector3 Direction { get; protected set; }
+
+        /// <summary>
+        /// 強度
+        /// </summary>
+        public float Shiness { get; protected set; }
+
+        /// <summary>
+        /// 色
+        /// </summary>
+        public Vector3 Color { get; protected set; }
+
+        /// <summary>
+        /// マトリクス
+        /// </summary>
+        public Matrix4 Matrix { get; private set; }
+
+        /// <summary>
+        /// シャドウマップ
+        /// </summary>
+        public Texture ShadowMap { get; private set; }
 
         /// <summary>
         /// 解放処理

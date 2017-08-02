@@ -27,7 +27,5 @@ namespace KI.Gfx.Render
                 return _default;
             }
         }
-
     }
-
 }

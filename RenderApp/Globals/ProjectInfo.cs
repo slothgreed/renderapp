@@ -3,13 +3,24 @@ using System.IO;
 
 namespace RenderApp
 {
-    class ProjectInfo
+    /// <summary>
+    /// プロジェクト情報
+    /// </summary>
+    public class ProjectInfo
     {
-        public static bool IsOpen
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public ProjectInfo()
         {
-            get;
-            set;
         }
+
+        /// <summary>
+        /// 開いたか
+        /// </summary>
+        public static bool IsOpen { get; set; }
+
 
         public static string ProjectDirectory
         {
@@ -23,7 +34,6 @@ namespace RenderApp
         {
             get
             {
-                //return _projectPath;
                 return ProjectDirectory + @"\RenderApp\Resource";
             }
         }
@@ -52,10 +62,11 @@ namespace RenderApp
             }
         }
 
-        public ProjectInfo()
-        {
-        }
-
+        /// <summary>
+        /// プロジェクトを開く
+        /// </summary>
+        /// <param name="filePath">ファイルパス</param>
+        /// <returns>成功</returns>
         public bool Open(string filePath)
         {
             if (Path.GetExtension(filePath) != "proj")
@@ -66,6 +77,10 @@ namespace RenderApp
             return true;
         }
 
+        /// <summary>
+        /// 保存
+        /// </summary>
+        /// <returns>成功</returns>
         public bool Save()
         {
             if (!Directory.Exists(ResourceDirectory))
@@ -88,6 +103,11 @@ namespace RenderApp
             return true;
         }
 
+        /// <summary>
+        /// 別名保存
+        /// </summary>
+        /// <param name="filePath">ファイルパス</param>
+        /// <returns>成功</returns>
         public bool SaveAs(string filePath)
         {
             return Save();

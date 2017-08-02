@@ -7,7 +7,7 @@ using OpenTK;
 namespace KI.Asset
 {
     /// <summary>
-    /// objファイルのコンバータ
+    /// objファイルデータを独自形式に変換
     /// </summary>
     public class OBJConverter : IGeometry
     {
@@ -25,6 +25,9 @@ namespace KI.Asset
             objData = new OBJLoader(filePath);
         }
 
+        /// <summary>
+        /// 形状情報
+        /// </summary>
         public GeometryInfo[] GeometryInfos
         {
             get;

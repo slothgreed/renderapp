@@ -10,9 +10,9 @@ namespace KI.Foundation.ViewModel
     public class CommandBase : ICommand
     {
         #region [Command]
-        private Action _Command;
-        private Action<object> _CommandParam;
-        private Func<bool> _CanExecute;
+        private Action command;
+        private Action<object> commandParam;
+        private Func<bool> canExecute;
 
         private CommandBase(Action command, Func<bool> canExecute)
         {
@@ -21,8 +21,8 @@ namespace KI.Foundation.ViewModel
                 throw new ArgumentNullException();
             }
 
-            _Command = command;
-            _CanExecute = canExecute;
+            this.command = command;
+            this.canExecute = canExecute;
         }
 
         private CommandBase(Action command)
@@ -32,7 +32,7 @@ namespace KI.Foundation.ViewModel
                 throw new ArgumentNullException();
             }
 
-            _Command = command;
+            this.command = command;
         }
 
         private CommandBase(Action<object> command)
@@ -42,14 +42,14 @@ namespace KI.Foundation.ViewModel
                 throw new ArgumentNullException();
             }
 
-            _CommandParam = command;
+            commandParam = command;
         }
 
         bool ICommand.CanExecute(object parameter)
         {
-            if (_CanExecute != null)
+            if (canExecute != null)
             {
-                return _CanExecute();
+                return canExecute();
             }
             else
             {
@@ -61,14 +61,14 @@ namespace KI.Foundation.ViewModel
 
         public void Execute(object parameter)
         {
-            if (_Command != null)
+            if (command != null)
             {
-                _Command();
+                command();
             }
 
-            if (_CommandParam != null)
+            if (commandParam != null)
             {
-                _CommandParam(parameter);
+                commandParam(parameter);
             }
         }
 

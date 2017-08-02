@@ -1,18 +1,19 @@
 ﻿using System;
-using OpenTK;
-using KI.Foundation.Core;
 using System.Collections.Generic;
+using KI.Foundation.Core;
+using OpenTK;
 
 namespace KI.Asset
 {
+    /// <summary>
+    /// 球
+    /// </summary>
     public class Sphere : KIObject, IGeometry
     {
-        public GeometryInfo[] GeometryInfos
-        {
-            get;
-            private set;
-        }
-
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="name">名前</param>
         /// <param name="radial">半径</param>
         /// <param name="hpartition">高さ分割数</param>
         /// <param name="wpartition">横分割数</param>
@@ -22,6 +23,11 @@ namespace KI.Asset
         {
             SetObjectData(radial, hpartition, wpartition, orient);
         }
+
+        /// <summary>
+        /// 形状情報
+        /// </summary>
+        public GeometryInfo[] GeometryInfos { get; private set; }
 
         /// <summary>
         /// 球面座標の取得

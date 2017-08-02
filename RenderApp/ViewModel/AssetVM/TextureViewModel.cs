@@ -1,7 +1,7 @@
 ﻿using System;
+using KI.Gfx.KITexture;
 using OpenTK.Graphics.OpenGL;
 using RenderApp.Utility;
-using KI.Gfx.KITexture;
 
 namespace RenderApp.ViewModel
 {

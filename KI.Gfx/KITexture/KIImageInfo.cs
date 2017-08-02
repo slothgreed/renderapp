@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Drawing.Imaging;
 using System.Drawing;
-using KI.Foundation.Utility;
+using System.Drawing.Imaging;
 using KI.Foundation.Core;
+using KI.Foundation.Utility;
 
 namespace KI.Gfx.KITexture
 {
@@ -99,6 +99,5 @@ namespace KI.Gfx.KITexture
             bmpImage.UnlockBits(bmpData);
             NowLock = false;
         }
-
     }
 }

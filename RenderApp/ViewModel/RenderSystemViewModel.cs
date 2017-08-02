@@ -26,9 +26,9 @@ namespace RenderApp.ViewModel
             }
         }
 
-        public RenderSystemViewModel(RenderSystem _model)
+        public RenderSystemViewModel(RenderSystem model)
         {
-            Model = _model;
+            Model = model;
             TextureIndex = Model.ProcessingTexture.IndexOf(Model.OutputTexture);
         }
 

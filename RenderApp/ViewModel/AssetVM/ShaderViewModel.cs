@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using OpenTK;
 using KI.Gfx;
 using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
+using OpenTK;
 
 namespace RenderApp.ViewModel
 {

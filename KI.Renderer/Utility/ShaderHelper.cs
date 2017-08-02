@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using OpenTK;
+using KI.Asset;
 using KI.Gfx;
 using KI.Gfx.GLUtil;
 using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
-using KI.Asset;
+using OpenTK;
 
 namespace KI.Renderer
 {
@@ -13,7 +13,7 @@ namespace KI.Renderer
         /// <summary>
         /// 初期状態の設定
         /// </summary>
-        public static void InitializeState(Scene scene, Shader shader, RenderObject geometry, Dictionary<TextureKind, Texture> TextureItem)
+        public static void InitializeState(Scene scene, Shader shader, RenderObject geometry, Dictionary<TextureKind, Texture> textureItem)
         {
             foreach (ShaderProgramInfo info in shader.GetShaderVariable())
             {
@@ -80,58 +80,58 @@ namespace KI.Renderer
                         info.variable = scene.SunLight.Matrix;
                         break;
                     case "uAlbedoMap":
-                        if (TextureItem.ContainsKey(TextureKind.Albedo))
+                        if (textureItem.ContainsKey(TextureKind.Albedo))
                         {
-                            info.variable = TextureItem[TextureKind.Albedo].DeviceID;
+                            info.variable = textureItem[TextureKind.Albedo].DeviceID;
                         }
 
                         break;
                     case "uCubeMap":
-                        if (TextureItem.ContainsKey(TextureKind.Cubemap))
+                        if (textureItem.ContainsKey(TextureKind.Cubemap))
                         {
-                            info.variable = TextureItem[TextureKind.Cubemap].DeviceID;
+                            info.variable = textureItem[TextureKind.Cubemap].DeviceID;
                         }
 
                         break;
                     case "uSpecularMap":
-                        if (TextureItem.ContainsKey(TextureKind.Specular))
+                        if (textureItem.ContainsKey(TextureKind.Specular))
                         {
-                            info.variable = TextureItem[TextureKind.Specular].DeviceID;
+                            info.variable = textureItem[TextureKind.Specular].DeviceID;
                         }
 
                         break;
                     case "uWorldMap":
-                        if (TextureItem.ContainsKey(TextureKind.World))
+                        if (textureItem.ContainsKey(TextureKind.World))
                         {
-                            info.variable = TextureItem[TextureKind.World].DeviceID;
+                            info.variable = textureItem[TextureKind.World].DeviceID;
                         }
 
                         break;
                     case "uLightingMap":
-                        if (TextureItem.ContainsKey(TextureKind.Lighting))
+                        if (textureItem.ContainsKey(TextureKind.Lighting))
                         {
-                            info.variable = TextureItem[TextureKind.Lighting].DeviceID;
+                            info.variable = textureItem[TextureKind.Lighting].DeviceID;
                         }
 
                         break;
                     case "uNormalMap":
-                        if (TextureItem.ContainsKey(TextureKind.Normal))
+                        if (textureItem.ContainsKey(TextureKind.Normal))
                         {
-                            info.variable = TextureItem[TextureKind.Normal].DeviceID;
+                            info.variable = textureItem[TextureKind.Normal].DeviceID;
                         }
 
                         break;
                     case "uHeightMap":
-                        if (TextureItem.ContainsKey(TextureKind.Height))
+                        if (textureItem.ContainsKey(TextureKind.Height))
                         {
-                            info.variable = TextureItem[TextureKind.Height].DeviceID;
+                            info.variable = textureItem[TextureKind.Height].DeviceID;
                         }
 
                         break;
                     case "uEmissiveMap":
-                        if (TextureItem.ContainsKey(TextureKind.Emissive))
+                        if (textureItem.ContainsKey(TextureKind.Emissive))
                         {
-                            info.variable = TextureItem[TextureKind.Emissive].DeviceID;
+                            info.variable = textureItem[TextureKind.Emissive].DeviceID;
                         }
 
                         break;

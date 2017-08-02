@@ -1,7 +1,7 @@
 ﻿using System;
+using KI.Asset;
 using KI.Gfx.GLUtil;
 using OpenTK.Graphics.OpenGL;
-using KI.Asset;
 
 namespace KI.Renderer
 {
@@ -10,11 +10,21 @@ namespace KI.Renderer
     /// </summary>
     public partial class SSLIC : RenderTechnique
     {
+        /// <summary>
+        /// 頂点シェーダ
+        /// </summary>
         private static string vertexShader = Global.ShaderDirectory + @"\PostEffect\sslic.vert";
+
+        /// <summary>
+        /// フラグシェーダ
+        /// </summary>
         private static string fragShader = Global.ShaderDirectory + @"\PostEffect\sslic.frag";
 
-        public SSLIC(RenderTechniqueType tech)
-            : base("SSLIC", vertexShader, fragShader, tech, RenderType.Original)
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public SSLIC()
+            : base("SSLIC", vertexShader, fragShader, RenderTechniqueType.SSLIC, RenderType.Original)
         {
         }
 
@@ -40,6 +50,30 @@ namespace KI.Renderer
             CreateNoize(width, height);
         }
 
+        /// <summary>
+        /// 描画
+        /// </summary>
+        public override void Render()
+        {
+            if (Plane != null)
+            {
+                var vector = Global.RenderSystem.GBufferStage.OutputTexture[2];
+                GL.Enable(EnableCap.Blend);
+                GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+                RenderTarget.ClearBuffer();
+                RenderTarget.BindRenderTarget(OutputTexture.ToArray());
+                Plane.Shader = ShaderItem;
+                Plane.Render(Global.Scene);
+                RenderTarget.UnBindRenderTarget();
+                GL.Disable(EnableCap.Blend);
+            }
+        }
+
+        /// <summary>
+        /// ノイズの生成
+        /// </summary>
+        /// <param name="width">ノイズテクスチャ横</param>
+        /// <param name="height">ノイズテクスチャ縦</param>
         private void CreateNoize(int width, int height)
         {
             float[,,] rgba = new float[width, height, 4];
@@ -59,25 +93,6 @@ namespace KI.Renderer
             }
 
             uNoize.GenTexture(rgba);
-        }
-
-        /// <summary>
-        /// 描画
-        /// </summary>
-        public override void Render()
-        {
-            if (Plane != null)
-            {
-                var vector = Global.RenderSystem.GBufferStage.OutputTexture[2];
-                GL.Enable(EnableCap.Blend);
-                GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-                RenderTarget.ClearBuffer();
-                RenderTarget.BindRenderTarget(OutputTexture.ToArray());
-                Plane.Shader = ShaderItem;
-                Plane.Render(Global.Scene);
-                RenderTarget.UnBindRenderTarget();
-                GL.Disable(EnableCap.Blend);
-            }
         }
     }
 }

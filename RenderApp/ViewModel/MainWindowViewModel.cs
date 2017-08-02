@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using RenderApp.AssetModel;
-using RenderApp.Globals;
-using RenderApp.RAControl;
-using KI.Foundation.ViewModel;
-using KI.Foundation.Tree;
-using KI.Gfx.GLUtil;
-using KI.Gfx;
-using KI.Gfx.Render;
-using KI.Gfx.KIShader;
-using KI.Gfx.GLUtil.Buffer;
-using RenderApp.RACommand;
-using KI.Foundation.Command;
 using KI.Asset;
-using KI.Renderer;
+using KI.Foundation.Command;
+using KI.Foundation.Tree;
+using KI.Foundation.ViewModel;
+using KI.Gfx;
+using KI.Gfx.GLUtil;
+using KI.Gfx.GLUtil.Buffer;
+using KI.Gfx.KIShader;
+using KI.Gfx.Render;
+using RenderApp.Globals;
+using RenderApp.RACommand;
+using RenderApp.RAControl;
 
 namespace RenderApp.ViewModel
 {
@@ -23,20 +20,20 @@ namespace RenderApp.ViewModel
     {
         #region [property method]
 
-        private DockWindowViewModel _activePane = null;
+        private DockWindowViewModel activePane = null;
 
         public DockWindowViewModel ActivePane
         {
             get
             {
-                return _activePane;
+                return activePane;
             }
 
             set
             {
-                if (_activePane != value)
+                if (activePane != value)
                 {
-                    SetValue<DockWindowViewModel>(ref _activePane, value);
+                    SetValue<DockWindowViewModel>(ref activePane, value);
                 }
             }
         }

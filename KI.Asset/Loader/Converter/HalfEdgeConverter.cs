@@ -8,6 +8,9 @@ using OpenTK;
 
 namespace KI.Asset
 {
+    /// <summary>
+    /// ハーフエッジを独自形式に変換
+    /// </summary>
     class HalfEdgeConverter : IGeometry
     {
         public HalfEdgeConverter(string filePath)
@@ -36,15 +39,14 @@ namespace KI.Asset
             var index = new List<int>();
 
             var gray = new Vector3(0.8f);
-            foreach (var vertex in half.m_Vertex)
+            foreach (var vertex in half.vertexs)
             {
                 position.Add(vertex.Position);
                 normal.Add(vertex.Normal);
                 color.Add(gray);
-
             }
 
-            foreach (var mesh in half.m_Mesh)
+            foreach (var mesh in half.meshs)
             {
                 foreach (var vertex in mesh.AroundVertex)
                 {

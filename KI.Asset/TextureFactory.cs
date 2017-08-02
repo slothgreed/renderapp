@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using KI.Foundation.Utility;
 using KI.Foundation.Core;
+using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
 using KI.Gfx.KITexture;
 
@@ -11,8 +11,16 @@ namespace KI.Asset
     /// </summary>
     public class TextureFactory : KIFactoryBase<Texture>
     {
+        /// <summary>
+        /// シングルトン
+        /// </summary>
         public static TextureFactory Instance { get; } = new TextureFactory();
 
+        /// <summary>
+        /// テクスチャの作成
+        /// </summary>
+        /// <param name="path">ファイルパス</param>
+        /// <returns>テクスチャ</returns>
         public Texture CreateTexture(string path)
         {
             return CreateTexture(path, SelectImageKind(path));
@@ -40,6 +48,12 @@ namespace KI.Asset
             return ImageKind.None;
         }
 
+        /// <summary>
+        /// テクスチャの作成
+        /// </summary>
+        /// <param name="path">ファイルパス</param>
+        /// <param name="kind">テクスチャ種類</param>
+        /// <returns>テクスチャ</returns>
         public Texture CreateTexture(string path, ImageKind kind)
         {
             Texture find = FindByKey(path);
@@ -55,6 +69,30 @@ namespace KI.Asset
             return texture;
         }
 
+        /// <summary>
+        /// テクスチャの作成
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <param name="width">横</param>
+        /// <param name="height">縦</param>
+        /// <returns>テクスチャ</returns>
+        public Texture CreateTexture(string name, int width, int height)
+        {
+            Texture texture = new Texture(name, TextureType.Texture2D, width, height);
+            AddItem(texture);
+            return texture;
+        }
+
+        /// <summary>
+        /// キューブマップの作成
+        /// </summary>
+        /// <param name="px">PXファイルパス</param>
+        /// <param name="py">PYファイルパス</param>
+        /// <param name="pz">PZファイルパス</param>
+        /// <param name="nx">NXファイルパス</param>
+        /// <param name="ny">NYファイルパス</param>
+        /// <param name="nz">NZファイルパス</param>
+        /// <returns>テクスチャ</returns>
         public Texture CreateCubemapTexture(string px, string py, string pz, string nx, string ny, string nz)
         {
             List<KIImageInfo> images = new List<KIImageInfo>();
@@ -71,13 +109,12 @@ namespace KI.Asset
             return texture;
         }
 
-        public Texture CreateTexture(string name, int width, int height)
-        {
-            Texture texture = new Texture(name, TextureType.Texture2D, width, height);
-            AddItem(texture);
-            return texture;
-        }
-
+        /// <summary>
+        /// 画像情報の作成
+        /// </summary>
+        /// <param name="path">ファイルパス</param>
+        /// <param name="kind">画像の種類</param>
+        /// <returns>画像</returns>
         private KIImageInfo CreateImageInfo(string path, ImageKind kind)
         {
             switch (kind)
@@ -95,6 +132,5 @@ namespace KI.Asset
                     return null;
             }
         }
-
     }
 }

@@ -8,32 +8,17 @@ namespace KI.Renderer
         /// <summary>
         /// ポストエフェクト
         /// </summary>
-        private PostEffectManager PostEffect;
+        private PostEffectManager postEffect;
 
         /// <summary>
         /// 後処理のUtil（選択とか）
         /// </summary>
-        private RenderTechnique SelectionStage;
+        private RenderTechnique selectionStage;
 
         /// <summary>
         /// 最終出力画像
         /// </summary>
-        private OutputBuffer OutputStage;
-
-        /// <summary>
-        /// FrameBufferの横
-        /// </summary>
-        private int Width;
-
-        /// <summary>
-        /// FrameBufferの縦
-        /// </summary>
-        private int Height;
-
-        /// <summary>
-        /// 出力テクスチャ
-        /// </summary>
-        public Texture OutputTexture { get; set; }
+        private OutputBuffer outputStage;
 
         /// <summary>
         /// コンストラクタ
@@ -43,55 +28,39 @@ namespace KI.Renderer
         }
 
         /// <summary>
+        /// 出力テクスチャ
+        /// </summary>
+        public Texture OutputTexture { get; set; }
+
+        /// <summary>
         /// ポストプロセスモード
         /// </summary>
-        public bool PostProcessMode
-        {
-            get;
-            set;
-        }
+        public bool PostProcessMode { get; set; }
 
         /// <summary>
         /// レンダリング結果のテクスチャすべて
         /// </summary>
-        public List<Texture> ProcessingTexture
-        {
-            get;
-            private set;
-        }
+        public List<Texture> ProcessingTexture { get; private set; }
 
         /// <summary>
         /// GBuffer前
         /// </summary>
-        public RenderTechnique PreRenderStage
-        {
-            get;
-            private set;
-        }
+        public RenderTechnique PreRenderStage { get; private set; }
 
         /// <summary>
         /// defferdシェーディング用
         /// </summary>
-        public RenderTechnique GBufferStage
-        {
-            get;
-            private set;
-        }
+        public RenderTechnique GBufferStage { get; private set; }
 
-        public RenderTechnique IBLStage
-        {
-            get;
-            private set;
-        }
+        /// <summary>
+        /// ibl用
+        /// </summary>
+        public RenderTechnique IBLStage { get; private set; }
 
         /// <summary>
         /// ライティングステージ
         /// </summary>
-        public RenderTechnique DeferredStage
-        {
-            get;
-            private set;
-        }
+        public RenderTechnique DeferredStage { get; private set; }
 
         /// <summary>
         /// 初期化
@@ -100,17 +69,15 @@ namespace KI.Renderer
         /// <param name="height">縦</param>
         public void Initialize(int width, int height)
         {
-            Width = width;
-            Height = height;
             ProcessingTexture = new List<Texture>();
             PostProcessMode = false;
             PreRenderStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Shadow);
             GBufferStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer);
             IBLStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.IBL);
             DeferredStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Deferred);
-            SelectionStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Selection);
-            PostEffect = new PostEffectManager();
-            OutputStage = (OutputBuffer)RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output);
+            selectionStage = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Selection);
+            postEffect = new PostEffectManager();
+            outputStage = (OutputBuffer)RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output);
             OutputTexture = ((GBuffer)GBufferStage).GetOutputTexture(GBuffer.GBufferOutputType.Color);
 
             foreach (var texture in RenderTechniqueFactory.Instance.OutputTextures())
@@ -149,12 +116,15 @@ namespace KI.Renderer
             //SelectionStage.ClearBuffer();
             //SelectionStage.Render();
 
-            PostEffect.Render();
-            OutputStage.uSelectMap = SelectionStage.OutputTexture[0];
-            OutputStage.uTarget = OutputTexture;
-            OutputStage.Render();
+            postEffect.Render();
+            outputStage.uSelectMap = selectionStage.OutputTexture[0];
+            outputStage.uTarget = OutputTexture;
+            outputStage.Render();
         }
 
+        /// <summary>
+        /// ポストプロセスを行うかのトグル
+        /// </summary>
         public void TogglePostProcess()
         {
             PostProcessMode = !PostProcessMode;

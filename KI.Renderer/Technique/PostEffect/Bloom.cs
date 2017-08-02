@@ -2,15 +2,31 @@
 
 namespace KI.Renderer
 {
+    /// <summary>
+    /// bloom
+    /// </summary>
     public partial class Bloom : RenderTechnique
     {
+        /// <summary>
+        /// 頂点シェーダ
+        /// </summary>
         private static string vertexShader = Global.ShaderDirectory + @"\PostEffect\bloom.vert";
+
+        /// <summary>
+        /// フラグシェーダ
+        /// </summary>
         private static string fragShader = Global.ShaderDirectory + @"\PostEffect\bloom.frag";
         
+        /// <summary>
+        /// 重み
+        /// </summary>
         private float[] weight = new float[5];
 
-        public Bloom(RenderTechniqueType tech)
-            : base("Bloom", vertexShader, fragShader, tech, RenderType.OffScreen)
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public Bloom()
+            : base("Bloom", vertexShader, fragShader, RenderTechniqueType.Bloom, RenderType.OffScreen)
         {
         }
 

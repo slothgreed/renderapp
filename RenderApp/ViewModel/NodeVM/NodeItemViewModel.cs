@@ -1,14 +1,14 @@
-﻿using System.Linq;
-using System.Collections.ObjectModel;
-using KI.Foundation.ViewModel;
-using KI.Foundation.Utility;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
 using KI.Foundation.Tree;
+using KI.Foundation.Utility;
+using KI.Foundation.ViewModel;
 
 namespace RenderApp.ViewModel
 {
     public class NodeItemViewModel : ViewModelBase
     {
-        private ObservableCollection<NodeItemViewModel> _children;
+        private ObservableCollection<NodeItemViewModel> children;
 
         private bool hoverHighlighting = true;
 
@@ -42,7 +42,7 @@ namespace RenderApp.ViewModel
         {
             get
             {
-                return _children;
+                return children;
             }
         }
 
@@ -140,7 +140,7 @@ namespace RenderApp.ViewModel
 
         public NodeItemViewModel()
         {
-            _children = new ObservableCollection<NodeItemViewModel>();
+            children = new ObservableCollection<NodeItemViewModel>();
         }
 
         public NodeItemViewModel(KINode node, NodeItemViewModel parent)

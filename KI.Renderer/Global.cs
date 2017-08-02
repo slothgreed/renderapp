@@ -3,11 +3,25 @@ using KI.Asset;
 
 namespace KI.Renderer
 {
+    /// <summary>
+    /// グローバルクラス
+    /// </summary>
     public static class Global
     {
-        public static RenderSystem RenderSystem;
-        public static Scene Scene;
+        /// <summary>
+        /// KIProjectDirecoty
+        /// </summary>
         private static string kiDirectory = null;
+
+        /// <summary>
+        /// レンダリングシステム
+        /// </summary>
+        public static RenderSystem RenderSystem { get; set; }
+
+        /// <summary>
+        /// シーン
+        /// </summary>
+        public static Scene Scene { get; set; }
 
         /// <summary>
         /// KIProjectDirecoty
@@ -25,6 +39,9 @@ namespace KI.Renderer
             }
         }
 
+        /// <summary>
+        /// シェーダディレクトリ
+        /// </summary>
         public static string ShaderDirectory
         {
             get

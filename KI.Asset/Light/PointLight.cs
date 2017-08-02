@@ -1,17 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
+﻿using OpenTK;
+
 namespace KI.Asset
 {
+    /// <summary>
+    /// 点光源
+    /// </summary>
     public class PointLight : Light
     {
+        /// <summary>
+        /// 点光源
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <param name="lightPos">位置</param>
+        /// <param name="lightDir">方向</param>
         public PointLight(string name, Vector3 lightPos, Vector3 lightDir)
             : base(name, lightPos, lightDir)
         {
         }
-
     }
 }

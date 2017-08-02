@@ -6,20 +6,30 @@ using KI.Gfx.GLUtil;
 
 namespace KI.Asset
 {
+    /// <summary>
+    /// plyファイルデータを独自形式に変換
+    /// </summary>
     class PLYConverter : IGeometry
     {
+        /// <summary>
+        /// plyファイルのローダ
+        /// </summary>
+        /// <param name="filePath">ファイルパス</param>
         public PLYConverter(string filePath)
         {
             var plyData = new PLYLoader(filePath);
             CreateGeometryInfo(plyData);
         }
 
-        public GeometryInfo[] GeometryInfos
-        {
-            get;
-            private set;
-        }
+        /// <summary>
+        /// 形状情報
+        /// </summary>
+        public GeometryInfo[] GeometryInfos { get; private set; }
 
+        /// <summary>
+        /// 形状情報の作成
+        /// </summary>
+        /// <param name="plyData">plyデータ</param>
         public void CreateGeometryInfo(PLYLoader plyData)
         {
             var position = new List<Vector3>();

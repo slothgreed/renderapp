@@ -3,14 +3,25 @@
     /// <summary>
     /// Sobel
     /// </summary>
-    partial class Sobel : RenderTechnique
+    public partial class Sobel : RenderTechnique
     {
+        /// <summary>
+        /// 頂点シェーダ
+        /// </summary>
         private static string vertexShader = Global.ShaderDirectory + @"\PostEffect\sobel.vert";
+
+        /// <summary>
+        /// フラグシェーダ
+        /// </summary>
         private static string fragShader = Global.ShaderDirectory + @"\PostEffect\sobel.frag";
 
         #region [Shaderの初期化関数]
-        public Sobel(RenderTechniqueType tech)
-            : base("Sobel", vertexShader, fragShader, tech, RenderType.OffScreen)
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public Sobel()
+            : base("Sobel", vertexShader, fragShader, RenderTechniqueType.Sobel, RenderType.OffScreen)
         {
         }
 

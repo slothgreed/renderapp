@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenTK;
 using KI.Foundation.Utility;
+using OpenTK;
 
 namespace KI.Analyzer
 {
@@ -148,7 +148,7 @@ namespace KI.Analyzer
         /// <summary>
         /// 形状を包括するBDBで、ボクセルを生成
         /// </summary>
-        /// <param name="posIndex">頂点リスト</param>
+        /// <param name="position">頂点リスト</param>
         private void MakeVoxels(List<Vector3> position)
         {
             //ボクセルのインデックス番号
@@ -499,13 +499,13 @@ namespace KI.Analyzer
         {
             CalcInOut();
 
-            var Inners = new List<Voxel>();
+            var inners = new List<Voxel>();
             Action<int, int, int> initializeField = (int i, int j, int k) =>
             {
                 if (Voxels[i, j, k].State == VoxelState.Inner)
                 {
                     Voxels[i, j, k].Value = float.MaxValue;
-                    Inners.Add(Voxels[i, j, k]);
+                    inners.Add(Voxels[i, j, k]);
                 }
                 else
                 {

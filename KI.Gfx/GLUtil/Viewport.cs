@@ -1,9 +1,10 @@
 ﻿using System;
-using OpenTK;
-using OpenTK.Graphics;
+using System.Drawing;
 using System.Windows.Forms;
 using KI.Foundation.Utility;
-using System.Drawing;
+using OpenTK;
+using OpenTK.Graphics;
+
 namespace KI.Gfx.GLUtil
 {
     public delegate void OnLoadedHandler(object sender, EventArgs e);
@@ -23,7 +24,6 @@ namespace KI.Gfx.GLUtil
     /// </summary>
     public class Viewport
     {
-
         #region [member]
         /// <summary>
         /// glControl
@@ -81,16 +81,15 @@ namespace KI.Gfx.GLUtil
                                                  //デプスバッファのサイズ
                                                  GraphicsMode.Default.Depth,
                                                  //ステンシルバッファのサイズ
-                                                 8,//GraphicsMode.Default.Stencil,
-                                                   //AA(AntiAliasing)のサイズ x4 x8などの数字
-                                                 8,//GraphicsMode.Default.Samples,
-                                                   //ColorFormat構造体を用いて、アキュムレーションバッファのサイズ
+                                                 8, //GraphicsMode.Default.Stencil,
+                                                    //AA(AntiAliasing)のサイズ x4 x8などの数字
+                                                 8, //GraphicsMode.Default.Samples,
+                                                    //ColorFormat構造体を用いて、アキュムレーションバッファのサイズ
                                                  GraphicsMode.Default.AccumulatorFormat,
                                                  //バッファリングに使うフレームバッファの数 1(シングルバッファリング),2(ダブル-),3(トリプル-)
                                                  GraphicsMode.Default.Buffers,
                                                  //ステレオ投影をするかどうか
-                                                 GraphicsMode.Default.Stereo
-                                                 );
+                                                 GraphicsMode.Default.Stereo);
             m_glControl = new GLControl(mode);
             m_glControl.Load += glControl_Load;
             m_glControl.MouseDown += glControl_MouseDown;
@@ -107,7 +106,11 @@ namespace KI.Gfx.GLUtil
 
         #endregion
         #region [context event]
-        //glControlの起動時に実行される。
+        /// <summary>
+        /// glControlの起動時に実行される
+        /// </summary>
+        /// <param name="sender">発生元</param>
+        /// <param name="e">イベント</param>
         private void glControl_Load(object sender, EventArgs e)
         {
             DeviceContext.Instance.Initialize(m_glControl.Size.Width, m_glControl.Size.Height);
@@ -118,8 +121,13 @@ namespace KI.Gfx.GLUtil
                 OnLoaded(sender, e);
             }
         }
-        //Loadより先に呼ばれる
-        //glControlのサイズ変更時に実行される。
+
+        /// <summary>
+        /// Loadより先に呼ばれる
+        /// glControlのサイズ変更時に実行される
+        /// </summary>
+        /// <param name="sender">発生元</param>
+        /// <param name="e">イベント</param>
         private void glControl_Resize(object sender, EventArgs e)
         {
             if (m_glControl.Size.Width == 0 || m_glControl.Size.Height == 0)
@@ -140,7 +148,11 @@ namespace KI.Gfx.GLUtil
             }
         }
 
-        //glControlの描画時に実行される。
+        /// <summary>
+        /// glControlの描画時に実行される
+        /// </summary>
+        /// <param name="sender">発生元</param>
+        /// <param name="e">イベント</param>
         public void glControl_Paint(object sender, PaintEventArgs e)
         {
             if (!m_AppstartUp)
@@ -163,6 +175,11 @@ namespace KI.Gfx.GLUtil
         #endregion
         #region [mouse event]
 
+        /// <summary>
+        /// ドラッグイベント
+        /// </summary>
+        /// <param name="sender">発生元</param>
+        /// <param name="e">イベント</param>
         public void glControl_DragOver(object sender, DragEventArgs e)
         {
             if (OnDragOver != null)
@@ -173,6 +190,11 @@ namespace KI.Gfx.GLUtil
             glControl_Paint(null, null);
         }
 
+        /// <summary>
+        /// ドラッグ中に離れた
+        /// </summary>
+        /// <param name="sender">発生元</param>
+        /// <param name="e">イベント</param>
         public void glControl_DragLeave(object sender, EventArgs e)
         {
             if (OnDragLeave != null)
@@ -183,6 +205,11 @@ namespace KI.Gfx.GLUtil
             glControl_Paint(null, null);
         }
 
+        /// <summary>
+        /// ドラッグ中にviewportに入った
+        /// </summary>
+        /// <param name="sender">発生元</param>
+        /// <param name="e">イベント</param>
         public void glControl_DragEnter(object sender, DragEventArgs e)
         {
             if (OnDragEnter != null)
@@ -193,6 +220,11 @@ namespace KI.Gfx.GLUtil
             glControl_Paint(null, null);
         }
 
+        /// <summary>
+        /// マウスホイール
+        /// </summary>
+        /// <param name="sender">発生元</param>
+        /// <param name="e">イベント</param>
         private void glControl_MouseWheel(object sender, MouseEventArgs e)
         {
             if (OnMouseWheel != null)
@@ -203,6 +235,11 @@ namespace KI.Gfx.GLUtil
             glControl_Paint(null, null);
         }
 
+        /// <summary>
+        /// マウス押下
+        /// </summary>
+        /// <param name="sender">発生元</param>
+        /// <param name="e">イベント</param>
         private void glControl_MouseDown(object sender, MouseEventArgs e)
         {
             if (OnMouseDown != null)
@@ -213,6 +250,11 @@ namespace KI.Gfx.GLUtil
             glControl_Paint(null, null);
         }
 
+        /// <summary>
+        /// マウス押上げ
+        /// </summary>
+        /// <param name="sender">発生元</param>
+        /// <param name="e">イベント</param>
         private void glControl_MouseUp(object sender, MouseEventArgs e)
         {
             if (OnMouseUp != null)
@@ -223,12 +265,18 @@ namespace KI.Gfx.GLUtil
             glControl_Paint(null, null);
         }
 
+        /// <summary>
+        /// マウス移動
+        /// </summary>
+        /// <param name="sender">発生元</param>
+        /// <param name="e">イベント</param>
         private void glControl_MouseMove(object sender, MouseEventArgs e)
         {
             if (!m_AppstartUp)
             {
                 return;
             }
+
             m_glControl.Focus();
             if (OnMouseMove != null)
             {
@@ -277,6 +325,5 @@ namespace KI.Gfx.GLUtil
             return bmp;
         }
         #endregion
-
     }
 }

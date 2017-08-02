@@ -35,7 +35,6 @@ namespace KI.Foundation.ViewModel
             {
                 SetValue<Vector3>(updateFunc, new Vector3(X, value, Z));
             }
-
         }
 
         public float Z
