@@ -19,7 +19,6 @@ namespace KI.Gfx.GLUtil
         CubemapNX,
         CubemapNY,
         CubemapNZ,
-
     }
 
     public class TextureBuffer : BufferObject
@@ -48,6 +47,7 @@ namespace KI.Gfx.GLUtil
             get;
             set;
         }
+
         public int Height
         {
             get;
@@ -175,6 +175,5 @@ namespace KI.Gfx.GLUtil
                     break;
             }
         }
-
     }
 }

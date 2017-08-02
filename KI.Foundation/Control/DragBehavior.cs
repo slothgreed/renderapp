@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interactivity;
+
 namespace KI.Foundation.Control
 {
     public class DragBehavior : Behavior<FrameworkElement>

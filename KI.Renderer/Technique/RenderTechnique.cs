@@ -45,21 +45,6 @@ namespace KI.Renderer
 
         public List<Texture> OutputTexture { get; set; }
 
-        /// <summary>
-        /// シェーダへ値のセット
-        /// </summary>
-        protected void SetValue<T>(ref T member, T value, [CallerMemberName]string memberName = "")
-        {
-            if (ShaderItem.SetValue(memberName, value))
-            {
-                member = value;
-            }
-            else
-            {
-                Logger.Log(Logger.LogLevel.Error, "Set Shader Error " + memberName);
-            }
-        }
-
         public void ClearBuffer()
         {
             RenderTarget.ClearBuffer();
@@ -120,6 +105,21 @@ namespace KI.Renderer
             RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget("RenderTarget:" + Name, width, height, OutputTexture.Count);
             //RenderTarget = RenderTargetFactory.Instance.Default;
             RenderTarget.SizeChanged(width, height);
+        }
+
+        /// <summary>
+        /// シェーダへ値のセット
+        /// </summary>
+        protected void SetValue<T>(ref T member, T value, [CallerMemberName]string memberName = "")
+        {
+            if (ShaderItem.SetValue(memberName, value))
+            {
+                member = value;
+            }
+            else
+            {
+                Logger.Log(Logger.LogLevel.Error, "Set Shader Error " + memberName);
+            }
         }
 
         private void Init(string vertexShader = null, string fragShader = null)

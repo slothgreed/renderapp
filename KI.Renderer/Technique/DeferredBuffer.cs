@@ -3,7 +3,6 @@ using KI.Gfx.KITexture;
 
 namespace KI.Renderer
 {
-
     public class DeferredBuffer : RenderTechnique
     {
         private static string vertexShader = Global.ShaderDirectory + @"\Lighthing\Defferd.vert";

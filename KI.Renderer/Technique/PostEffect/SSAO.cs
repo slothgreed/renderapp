@@ -2,15 +2,21 @@
 
 namespace KI.Renderer
 {
+    /// <summary>
+    /// SSAO
+    /// </summary>
     public partial class SSAO : RenderTechnique
     {
         private static string vertexShader = Global.ShaderDirectory + @"\ssao.vert";
         private static string fragShader = Global.ShaderDirectory + @"\ssao.frag";
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="tech"></param>
         public SSAO(RenderTechniqueType tech)
             : base("SSAO", vertexShader, fragShader, tech, RenderType.OffScreen)
         {
-
         }
 
         /// <summary>
@@ -34,7 +40,6 @@ namespace KI.Renderer
                 val[i] = r * sp * ct;
                 val[i + 1] = r * sp * st;
                 val[i + 2] = r * cp;
-
             }
 
             uSample = val;

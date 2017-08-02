@@ -42,7 +42,6 @@ namespace KI.Renderer
             //PostEffects.Add(sobel);
             //PostEffects.Add(ssao);
             PostEffects.Add(sslic);
-
         }
 
         /// <summary>

@@ -1,5 +1,8 @@
 ﻿namespace KI.Renderer
 {
+    /// <summary>
+    /// Sobel
+    /// </summary>
     partial class Sobel : RenderTechnique
     {
         private static string vertexShader = Global.ShaderDirectory + @"\PostEffect\sobel.vert";
@@ -34,6 +37,5 @@
             uHeight = height;
         }
         #endregion
-
     }
 }

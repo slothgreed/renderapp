@@ -45,6 +45,7 @@ namespace KI.Foundation.Tree
             KIObject = _kiobject;
             Children = new List<KINode>();
         }
+
         public KINode(string name)
         {
             emptyName = name;
@@ -142,6 +143,7 @@ namespace KI.Foundation.Tree
                 }
             }
         }
+
         public void RemoveChild(KIObject child)
         {
             var remove = FindChild(child.Name);
@@ -150,6 +152,7 @@ namespace KI.Foundation.Tree
                 RemoveChild(remove);
             }
         }
+
         public void RemoveChild(string key)
         {
             var remove = FindChild(key);
@@ -158,6 +161,7 @@ namespace KI.Foundation.Tree
                 RemoveChild(remove);
             }
         }
+
         public void RemoveRecursiveChild(string key)
         {
             foreach (var child in Children)
@@ -184,10 +188,12 @@ namespace KI.Foundation.Tree
             }
             return false;
         }
+
         public KINode FindChild(string key)
         {
             return Children.Where(p => p.Name == key).FirstOrDefault();
         }
+
         public KINode FindRecursiveChild(string key)
         {
             foreach (var child in Children)

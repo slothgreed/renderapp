@@ -1,5 +1,6 @@
 ﻿using System;
 using OpenTK;
+
 namespace KI.Foundation.Utility
 {
     public class KICalc
@@ -341,6 +342,7 @@ namespace KI.Foundation.Utility
             result.W = -Vector3.Dot(new Vector3(result), posit);
             return result;
         }
+
         /// <summary>
         /// 平面の公式の算出
         /// </summary>
@@ -362,6 +364,7 @@ namespace KI.Foundation.Utility
 
             return result;
         }
+
         /// <summary>
         /// 平面の公式の算出
         /// </summary>
@@ -493,7 +496,6 @@ namespace KI.Foundation.Utility
                 {
                     return tmp + 1;
                 }
-
                 else//-0.99999
                 {
                     return tmp - 1;

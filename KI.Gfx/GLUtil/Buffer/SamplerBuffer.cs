@@ -8,14 +8,14 @@ namespace KI.Gfx.GLUtil
 {
     public class SamplerBuffer : BufferObject
     {
+        internal SamplerBuffer()
+        {
+        }
+
         public int ActiveTexture
         {
             get;
             set;
-        }
-
-        internal SamplerBuffer()
-        {
         }
 
         public override void PreGenBuffer()

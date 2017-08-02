@@ -83,7 +83,6 @@ namespace RenderApp.RAControl
                     CameraController.Wheel(mouse);
                     Controllers[Mode].Wheel(mouse);
                     break;
-
             }
         }
     }

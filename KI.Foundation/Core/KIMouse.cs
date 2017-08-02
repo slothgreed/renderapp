@@ -16,6 +16,7 @@ namespace KI.Foundation.Core
             get;
             private set;
         }
+
         /// <summary>
         /// 前回のクリック位置
         /// </summary>
@@ -24,6 +25,7 @@ namespace KI.Foundation.Core
             get;
             private set;
         }
+
         /// <summary>
         /// 現在のマウス位置
         /// </summary>
@@ -32,6 +34,7 @@ namespace KI.Foundation.Core
             get;
             private set;
         }
+
         /// <summary>
         /// 前回のマウス位置
         /// </summary>

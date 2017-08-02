@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
+
 namespace KI.Foundation.ViewModel
 {
     public class Vector4ViewModel : PropertyViewModelBase

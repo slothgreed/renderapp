@@ -3,6 +3,9 @@ using KI.Gfx.KITexture;
 
 namespace KI.Renderer
 {
+    /// <summary>
+    /// IBL
+    /// </summary>
     class ImageBasedLighting : RenderTechnique
     {
         private static string vertexShader = Global.ShaderDirectory + @"\Lighthing\ibl.vert";

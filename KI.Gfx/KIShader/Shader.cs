@@ -8,46 +8,11 @@ using KI.Gfx.KITexture;
 
 namespace KI.Gfx.KIShader
 {
+    /// <summary>
+    /// シェーダ
+    /// </summary>
     public class Shader
     {
-        #region [member value]
-
-        /// <summary>
-        /// 利用しているシェーダ
-        /// </summary>
-        private List<ShaderProgram> ActiveShader { get; set; }
-
-        /// <summary>
-        /// シェーダプログラム
-        /// </summary>
-        public int Program { get; private set; } = -1;
-
-        /// <summary>
-        /// 出力バッファ数
-        /// </summary>
-        public int OutputBufferNum { get; private set; }
-
-        /// <summary>
-        /// 頂点シェーダ
-        /// </summary>
-        public ShaderProgram VertexShader { get; private set; }
-
-        /// <summary>
-        /// フラグメントシェーダ
-        /// </summary>
-        public ShaderProgram FragShader { get; private set; }
-
-        /// <summary>
-        /// ジオメトリシェーダ
-        /// </summary>
-        public ShaderProgram GeomShader { get; private set; }
-
-        public ShaderProgram TcsShader { get; private set; }
-
-        public ShaderProgram TesShader { get; private set; }
-
-        #endregion
-
         #region [constructor]
 
         public Shader(ShaderProgram vert, ShaderProgram frag)
@@ -112,7 +77,43 @@ namespace KI.Gfx.KIShader
             Initialize();
         }
         #endregion
+        #region [member value]
 
+        /// <summary>
+        /// 利用しているシェーダ
+        /// </summary>
+        private List<ShaderProgram> ActiveShader { get; set; }
+
+        /// <summary>
+        /// シェーダプログラム
+        /// </summary>
+        public int Program { get; private set; } = -1;
+
+        /// <summary>
+        /// 出力バッファ数
+        /// </summary>
+        public int OutputBufferNum { get; private set; }
+
+        /// <summary>
+        /// 頂点シェーダ
+        /// </summary>
+        public ShaderProgram VertexShader { get; private set; }
+
+        /// <summary>
+        /// フラグメントシェーダ
+        /// </summary>
+        public ShaderProgram FragShader { get; private set; }
+
+        /// <summary>
+        /// ジオメトリシェーダ
+        /// </summary>
+        public ShaderProgram GeomShader { get; private set; }
+
+        public ShaderProgram TcsShader { get; private set; }
+
+        public ShaderProgram TesShader { get; private set; }
+
+        #endregion
         public bool ExistShaderProgram(ShaderProgram prog, string path)
         {
             if (prog == null)

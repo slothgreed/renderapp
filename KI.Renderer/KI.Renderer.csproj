@@ -63,6 +63,7 @@
       <DependentUpon>RenderTechniqueT4.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Technique\PostEffect\Selection.cs" />
     <Compile Include="Technique\PostEffect\Sobel.cs" />
@@ -82,6 +83,7 @@
     <Content Include="Technique\RenderTechniqueT4.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RenderTechniqueT4.cs</LastGenOutput>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Content>
   </ItemGroup>
   <ItemGroup>

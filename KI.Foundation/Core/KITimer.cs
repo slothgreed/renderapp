@@ -34,6 +34,7 @@ namespace KI.Foundation.Core
             m_Timer.Interval = TimeSpan.FromMilliseconds(32);
             m_Timer.Tick += new EventHandler(timer);
         }
+
         /// <summary>
         /// タイマースタート
         /// </summary>
@@ -46,6 +47,7 @@ namespace KI.Foundation.Core
 
             m_TimerCount = 0;
         }
+
         /// <summary>
         /// タイマーストップ
         /// </summary>

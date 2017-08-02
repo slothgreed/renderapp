@@ -48,7 +48,6 @@ namespace RenderApp.View
 
         #region [Binding Item]
 
-
         public Dictionary<string, object> PropertyItem
         {
             get

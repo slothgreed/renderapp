@@ -17,6 +17,7 @@ namespace RenderApp.Globals
         /// Textureオブジェクト
         /// </summary>
         private KINode TextureRoot;
+
         /// <summary>
         /// シェーダオブジェクト
         /// </summary>
@@ -33,7 +34,6 @@ namespace RenderApp.Globals
             RootNode.AddChild(GeometryRoot);
             RootNode.AddChild(TextureRoot);
             RootNode.AddChild(ShaderProgramRoot);
-
         }
 
         internal void AddChild(KIObject value)

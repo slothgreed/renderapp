@@ -80,7 +80,6 @@ namespace RenderApp
     //    //    sphere.Translate(new Vector3(center.X,0, center.Z));
     //    //    m_SphereLight.Add(sphere);
             
-
     //    //}
         
     //    //public override void Dispose()

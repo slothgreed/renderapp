@@ -13,6 +13,16 @@ namespace KI.Gfx.KITexture
     {
         #region [constructor]
 
+        /// <summary>
+        /// MinMag兼ねたフィルタ
+        /// </summary>
+        private TextureMinFilter _filter = TextureMinFilter.Linear;
+
+        /// <summary>
+        /// デフォルトはクランプ
+        /// </summary>
+        private TextureWrapMode _wrapMode = TextureWrapMode.Repeat;
+
         public Texture(string name, TextureType type)
             : base(name)
         {
@@ -45,6 +55,7 @@ namespace KI.Gfx.KITexture
                 return TextureBuffer.Width;
             }
         }
+
         public int Height
         {
             get
@@ -92,7 +103,6 @@ namespace KI.Gfx.KITexture
         /// <summary>
         /// MinMag兼ねたフィルタ
         /// </summary>
-        private TextureMinFilter _filter = TextureMinFilter.Linear;
         public TextureMinFilter Filter
         {
             get { return _filter; }
@@ -104,9 +114,8 @@ namespace KI.Gfx.KITexture
         }
 
         /// <summary>
-        /// デフォルトはクランプ
+        /// TextureWrapMode
         /// </summary>
-        private TextureWrapMode _wrapMode = TextureWrapMode.Repeat;
         public TextureWrapMode WrapMode
         {
             get { return _wrapMode; }

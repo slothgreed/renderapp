@@ -27,7 +27,6 @@
 //        private int ufogEnd;
 //        private int ufogColor;
 
-
 //        private int uposit_2D ;
 //        private int ulight_2D ;
 //        private int unormal_2D;
@@ -46,7 +45,7 @@
 //            return m_Instance;
 //        }
 
-       
+
 //        #region [Shaderの初期化関数]
 //        protected override int LoadShader()
 //        {
@@ -77,6 +76,5 @@
         
 //        #endregion
        
-
 //    }
 //}

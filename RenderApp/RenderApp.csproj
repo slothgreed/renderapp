@@ -172,6 +172,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ControllerViewModelT4.tt</DependentUpon>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="ViewModel\Controller\DijkstraViewModel.cs" />
     <Compile Include="ViewModel\Controller\IControllerViewModelBase.cs" />
@@ -182,6 +183,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RootNodeViewModelT4.tt</DependentUpon>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="ViewModel\DockTabVM\DockPaneSelector.cs" />
     <Compile Include="ViewModel\DockTabVM\DockWindowViewModel.cs" />
@@ -216,6 +218,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MainWindowViewModelT4.tt</DependentUpon>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Globals\ProjectInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -365,10 +368,12 @@
     <None Include="ViewModel\NodeVM\RootNodeViewModelT4.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RootNodeViewModelT4.cs</LastGenOutput>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </None>
     <None Include="ViewModel\MainWindowViewModelT4.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MainWindowViewModelT4.cs</LastGenOutput>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </None>
     <None Include="packages.config" />
     <None Include="Scene\Shader\Bezier\bezier.frag" />
@@ -445,7 +450,7 @@
     <Content Include="ViewModel\Controller\ControllerViewModelT4.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ControllerViewModelT4.cs</LastGenOutput>
-      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Content>
   </ItemGroup>
   <ItemGroup>

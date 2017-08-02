@@ -14,6 +14,7 @@ namespace KI.Foundation.Control
             {
                 return (string)GetValue(FolderPathProperty);
             }
+
             set
             {
                 SetValue(FolderPathProperty, value);

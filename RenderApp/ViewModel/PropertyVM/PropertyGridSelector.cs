@@ -43,7 +43,6 @@ namespace RenderApp.ViewModel
             }
 
             return DefaultTemplate;
-
         }
     }
 }

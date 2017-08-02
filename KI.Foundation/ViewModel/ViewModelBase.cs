@@ -12,7 +12,9 @@ namespace KI.Foundation.ViewModel
     {
         #region [PropertyChange view vm]
         public event PropertyChangedEventHandler PropertyChanged;
+
         public event PropertyChangingEventHandler PropertyChanging;
+
         /// <summary>
         /// WPF変更前に使用
         /// </summary>
@@ -39,6 +41,7 @@ namespace KI.Foundation.ViewModel
             {
                 updateFunc(value);
             }
+
             OnPropertyChanged(memberName);
         }
 
@@ -49,6 +52,7 @@ namespace KI.Foundation.ViewModel
             {
                 action(value);
             }
+
             OnPropertyChanged(memberName);
 
         }
@@ -58,6 +62,7 @@ namespace KI.Foundation.ViewModel
             OnPropertyChanging(memberName);
             OnPropertyChanged(memberName);
         }
+
         /// <summary>
         /// WPF変更後に使用
         /// </summary>

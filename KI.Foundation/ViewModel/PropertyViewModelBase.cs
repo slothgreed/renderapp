@@ -9,6 +9,7 @@ namespace KI.Foundation.ViewModel
     public abstract class PropertyViewModelBase : ViewModelBase
     {
         private string _name;
+
         public string Name
         {
             get
@@ -21,6 +22,7 @@ namespace KI.Foundation.ViewModel
                 SetValue<string>(ref _name, value);
             }
         }
+
         protected object Owner
         {
             get;

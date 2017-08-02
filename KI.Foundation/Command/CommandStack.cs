@@ -15,6 +15,7 @@ namespace KI.Foundation.Command
         }
 
         public ICommand Command { get; set; }
+
         public string CommandArg { get; set; }
     }
 
@@ -26,14 +27,17 @@ namespace KI.Foundation.Command
         {
             Commands = new Stack<CommandInfo>();
         }
+
         public void Clear()
         {
             Commands.Clear();
         }
+
         public void Push(CommandInfo info)
         {
             Commands.Push(info);
         }
+
         public void Push(ICommand command, string commandArg)
         {
             Commands.Push(new CommandInfo(command, commandArg));

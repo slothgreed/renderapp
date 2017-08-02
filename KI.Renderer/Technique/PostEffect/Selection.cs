@@ -41,6 +41,5 @@ namespace KI.Renderer
                 uID = 0;
             }
         }
-
     }
 }

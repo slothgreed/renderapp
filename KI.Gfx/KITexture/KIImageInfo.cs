@@ -29,6 +29,7 @@ namespace KI.Gfx.KITexture
         Lighting,
         Cubemap
     }
+
     /// <summary>
     /// BMPで保持
     /// </summary>

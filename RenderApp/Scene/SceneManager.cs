@@ -95,6 +95,5 @@ namespace RenderApp
             //var model = AssetFactory.Instance.CreateLoad3DModel(filePath);
             //ActiveScene.AddObject(model.FirstOrDefault());
         }
-
     }
 }

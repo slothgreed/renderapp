@@ -95,7 +95,6 @@ namespace RenderApp.ViewModel
             }
 
             return base.SelectTemplate(item, container);
-
         }
     }
 }

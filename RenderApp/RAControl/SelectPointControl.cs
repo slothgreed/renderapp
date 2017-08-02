@@ -67,7 +67,6 @@ namespace RenderApp.RAControl
             }
 
             return select;
-
         }
 
         private bool PickPointCore(Vector3 near, Vector3 far, Geometry geometry, ref float minLength, ref int selectIndex)

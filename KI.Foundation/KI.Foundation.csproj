@@ -74,6 +74,7 @@
       <DependentUpon>NotifyNodeChangedEventArgs.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Utility\KICalc.cs" />
     <Compile Include="Utility\Logger.cs" />
@@ -161,6 +162,7 @@
     <Content Include="Tree\NotifyNodeChangedEventArgs.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>NotifyNodeChangedEventArgs.cs</LastGenOutput>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Content>
   </ItemGroup>
   <ItemGroup>

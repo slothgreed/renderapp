@@ -31,6 +31,5 @@ namespace RenderApp
         //    //m_uniform.LightPos = GL.GetUniformLocation(mProgram, "LightPos");
         //    //m_uniform.CameraPos = GL.GetUniformLocation(mProgram, "CameraPos");
         //}
-
     }
 }

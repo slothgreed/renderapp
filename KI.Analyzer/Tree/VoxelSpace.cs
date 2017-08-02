@@ -69,13 +69,9 @@ namespace KI.Analyzer
 
         public Vector3 Max;
 
-        public float Interval;
+        public float Interval { get; private set; }
 
-        public int Partition
-        {
-            get;
-            private set;
-        }
+        public int Partition { get; private set; }
 
         private Voxel[,,] Voxels
         {

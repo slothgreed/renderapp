@@ -46,6 +46,7 @@ namespace KI.Gfx.GLUtil
         }
 
         public bool Enable { get; set; }
+
         public int DeviceID { get; protected set; }
 
         public virtual void GenBuffer()

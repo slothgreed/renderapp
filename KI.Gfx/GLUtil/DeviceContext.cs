@@ -15,37 +15,18 @@ namespace KI.Gfx.GLUtil
 
     public class DeviceContext
     {
-        /// <summary>
-        /// Multi化はしない
-        /// </summary>
-        private static DeviceContext _Instance;
-        public static DeviceContext Instance
-        {
-            get
-            {
-                if (_Instance == null)
-                {
-                    _Instance = new DeviceContext();
-                }
-                return _Instance;
-            }
-        }
-
-        public int Width
-        {
-            get;
-            set;
-        }
-
-        public int Height
-        {
-            get;
-            set;
-        }
-
         private DeviceContext()
         {
         }
+        
+        /// <summary>
+        /// Multi化はしない
+        /// </summary>
+        public static DeviceContext Instance { get; } = new DeviceContext();
+
+        public int Width { get; set; }
+
+        public int Height { get; set; }
 
         public void Initialize(int width, int height)
         {
@@ -84,29 +65,6 @@ namespace KI.Gfx.GLUtil
             GL.Enable(enable);
         }
 
-        private PrimitiveType ConvertToPrimitiveType(GeometryType type)
-        {
-            switch (type)
-            {
-                case GeometryType.None:
-                case GeometryType.Point:
-                    return PrimitiveType.Points;
-                case GeometryType.Line:
-                    return PrimitiveType.Lines;
-                case GeometryType.Triangle:
-                    return PrimitiveType.Triangles;
-                case GeometryType.Quad:
-                    return PrimitiveType.Quads;
-                case GeometryType.Mix:
-                    break;
-                case GeometryType.Patch:
-                    return PrimitiveType.Patches;
-                default:
-                    break;
-            }
-            return PrimitiveType.Points;
-        }
-
         public void DrawArrays(GeometryType type, int first, int count)
         {
             GL.DrawArrays(ConvertToPrimitiveType(type), first, count);
@@ -137,6 +95,29 @@ namespace KI.Gfx.GLUtil
         public void Clear()
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+        }
+
+        private PrimitiveType ConvertToPrimitiveType(GeometryType type)
+        {
+            switch (type)
+            {
+                case GeometryType.None:
+                case GeometryType.Point:
+                    return PrimitiveType.Points;
+                case GeometryType.Line:
+                    return PrimitiveType.Lines;
+                case GeometryType.Triangle:
+                    return PrimitiveType.Triangles;
+                case GeometryType.Quad:
+                    return PrimitiveType.Quads;
+                case GeometryType.Mix:
+                    break;
+                case GeometryType.Patch:
+                    return PrimitiveType.Patches;
+                default:
+                    break;
+            }
+            return PrimitiveType.Points;
         }
     }
 }

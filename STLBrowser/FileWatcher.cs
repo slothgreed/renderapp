@@ -13,13 +13,11 @@ namespace STLBrowser
         
         public FileWatcher()
         {
-            
         }
+
         public bool CreateFileWatcher(string path, string filter)
         {
             watcher = new FileSystemWatcher(path, filter);
-
-
             return true;
         }
     }

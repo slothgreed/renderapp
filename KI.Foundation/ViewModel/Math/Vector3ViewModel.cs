@@ -43,6 +43,7 @@ namespace KI.Foundation.ViewModel
                 SetValue<Vector3>(updateFunc, new Vector3(X, Y, value));
             }
         }
+
         public bool UpdateProperty(Vector3 value)
         {
             Model = value;

@@ -17,8 +17,8 @@ namespace RenderApp.RACommand
         public CreateWireFrameCommand(KIObject asset)
         {
             geometry = asset as Geometry;
-
         }
+
         public string CanExecute(string commandArg)
         {
             return CanCreateGeometry(geometry);

@@ -3,16 +3,15 @@ using OpenTK.Graphics.OpenGL;
 
 namespace KI.Gfx.GLUtil.Buffer
 {
+    /// <summary>
+    /// バッファファクトリ
+    /// </summary>
     public class BufferFactory : KIFactoryBase<BufferObject>
     {
-        private static BufferFactory _instance = new BufferFactory();
-        public static BufferFactory Instance
-        {
-            get
-            {
-                return _instance;
-            }
-        }
+        /// <summary>
+        /// インスタンス
+        /// </summary>
+        public static BufferFactory Instance { get; } = new BufferFactory();
 
         public ArrayBuffer CreateArrayBuffer()
         {

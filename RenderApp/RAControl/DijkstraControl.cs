@@ -65,7 +65,6 @@ namespace RenderApp.RAControl
                         {
                             picking.AddVertex(new List<Vector3>() { tri1, tri2, tri3 }, KICalc.RandomColor());
                             Dijkstra.Execute();
-
                         }
                     }
                 }
