@@ -43,6 +43,7 @@ namespace KI.Foundation.Core
             get;
             private set;
         }
+
         public Vector2 Delta
         {
             get;
@@ -60,8 +61,8 @@ namespace KI.Foundation.Core
         /// <summary>
         /// クリック値
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
+        /// <param name="x">x座標</param>
+        /// <param name="y">y座標</param>
         public void Down(int x, int y)
         {
             Before = Current;
@@ -74,8 +75,8 @@ namespace KI.Foundation.Core
         /// <summary>
         /// ドラッグ値
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
+        /// <param name="x">x座標</param>
+        /// <param name="y">y座標</param>
         public void Move(int x, int y)
         {
             Before = Current;
@@ -83,6 +84,11 @@ namespace KI.Foundation.Core
             Drag(x, y);
         }
 
+        /// <summary>
+        /// マウス押上げ
+        /// </summary>
+        /// <param name="x">x座標</param>
+        /// <param name="y">y座標</param>
         public void Up(int x, int y)
         {
             Before = Vector2.Zero;
@@ -92,8 +98,8 @@ namespace KI.Foundation.Core
         /// <summary>
         /// 移動量を算出
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
+        /// <param name="x">x座標</param>
+        /// <param name="y">y座標</param>
         private Vector2 Drag(int x, int y)
         {
             Vector2 move;

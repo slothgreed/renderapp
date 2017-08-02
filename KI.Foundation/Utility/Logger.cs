@@ -24,10 +24,12 @@ namespace KI.Foundation.Utility
                 Console.WriteLine(level + ": " + message);
                 return;
             }
+
             if (outputLogLevel == LogLevel.None)
             {
                 return;
             }
+
             if (level >= outputLogLevel)
             {
                 Console.WriteLine(level + " : " + message);

@@ -145,7 +145,6 @@ namespace KI.Analyzer.Algorithm.MarchingCube
             var mu = (Threshold - marching.Neight[ver0]) / (marching.Neight[ver1] - marching.Neight[ver0]);
 
             return pos0 + mu * (pos1 - pos0);
-
         }
 
         /// <summary>
@@ -249,7 +248,6 @@ namespace KI.Analyzer.Algorithm.MarchingCube
                                 marching.NeightNum++;
                             }
                         }
-
                     }
                 }
             }

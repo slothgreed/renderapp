@@ -14,7 +14,34 @@ namespace KI.Asset
     /// </summary>
     public class GeometryInfo
     {
+        /// <summary>
+        /// 頂点リスト
+        /// </summary>
         private List<Vector3> position = new List<Vector3>();
+
+        /// <summary>
+        /// 法線リスト
+        /// </summary>
+        private List<Vector3> normal = new List<Vector3>();
+
+        /// <summary>
+        /// 色リスト
+        /// </summary>
+        private List<Vector3> color = new List<Vector3>();
+
+        /// <summary>
+        /// テクスチャ座標リスト
+        /// </summary>
+        private List<Vector2> texcoord = new List<Vector2>();
+
+        /// <summary>
+        /// 頂点インデックスリスト
+        /// </summary>
+        private List<int> index = new List<int>();
+
+        /// <summary>
+        /// 頂点リスト
+        /// </summary>
         public List<Vector3> Position
         {
             get
@@ -23,7 +50,9 @@ namespace KI.Asset
             }
         }
 
-        private List<Vector3> normal = new List<Vector3>();
+        /// <summary>
+        /// 法線リスト
+        /// </summary>
         public List<Vector3> Normal
         {
             get
@@ -32,7 +61,9 @@ namespace KI.Asset
             }
         }
 
-        private List<Vector3> color = new List<Vector3>();
+        /// <summary>
+        /// 色リスト
+        /// </summary>
         public List<Vector3> Color
         {
             get
@@ -41,7 +72,9 @@ namespace KI.Asset
             }
         }
 
-        private List<Vector2> texcoord = new List<Vector2>();
+        /// <summary>
+        /// テクスチャ座標リスト
+        /// </summary>
         public List<Vector2> TexCoord
         {
             get
@@ -50,7 +83,9 @@ namespace KI.Asset
             }
         }
 
-        private List<int> index = new List<int>();
+        /// <summary>
+        /// 頂点インデックスリスト
+        /// </summary>
         public List<int> Index
         {
             get
@@ -60,6 +95,25 @@ namespace KI.Asset
         }
 
         public GeometryType GeometryType;
+
+        /// <summary>
+        /// 三角形の数
+        /// </summary>
+        public int TriangleNum
+        {
+            get
+            {
+                if (Index.Count == 0)
+                {
+                    return Position.Count / 3;
+                }
+                else
+                {
+                    return Index.Count / 3;
+                }
+            }
+        }
+
 
         public GeometryInfo(List<Vector3> pos, List<Vector3> nor, List<Vector3> col, List<Vector2> tex, List<int> idx, GeometryType type)
         {
@@ -147,21 +201,6 @@ namespace KI.Asset
             GeometryType = type;
         }
 
-        public int TriangleNum
-        {
-            get
-            {
-                if (Index.Count == 0)
-                {
-                    return Position.Count / 3;
-                }
-                else
-                {
-                    return Index.Count / 3;
-                }
-            }
-        }
-
         #region [convert mesh]
         /// <summary>
         /// Triangle毎に変換
@@ -202,6 +241,7 @@ namespace KI.Asset
                     newTexcoord.Add(TexCoord[Index[i + 1]]);
                     newTexcoord.Add(TexCoord[Index[i + 2]]);
                 }
+
                 if (colorArray)
                 {
                     newColor.Add(Color[Index[i]]);

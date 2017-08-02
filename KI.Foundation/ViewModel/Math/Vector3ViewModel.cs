@@ -18,6 +18,7 @@ namespace KI.Foundation.ViewModel
             Model = value;
             updateFunc = new Func<Vector3, bool>(UpdateProperty);
         }
+
         public float X
         {
             get { return Model.X; }
@@ -34,7 +35,9 @@ namespace KI.Foundation.ViewModel
             {
                 SetValue<Vector3>(updateFunc, new Vector3(X, value, Z));
             }
+
         }
+
         public float Z
         {
             get { return Model.Z; }

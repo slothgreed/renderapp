@@ -23,6 +23,7 @@ namespace KI.Gfx.Render
                 {
                     _default = new RenderTarget("DefaultBuffer", 1, 1, 1);
                 }
+
                 return _default;
             }
         }

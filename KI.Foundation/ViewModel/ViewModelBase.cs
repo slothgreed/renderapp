@@ -93,6 +93,7 @@ namespace KI.Foundation.ViewModel
                 {
                     throw new ArgumentNullException();
                 }
+
                 _Command = command;
                 _CanExecute = canExecute;
             }
@@ -103,6 +104,7 @@ namespace KI.Foundation.ViewModel
                 {
                     throw new ArgumentNullException();
                 }
+
                 _Command = command;
             }
 
@@ -136,6 +138,7 @@ namespace KI.Foundation.ViewModel
                 {
                     _Command();
                 }
+
                 if (_CommandParam != null)
                 {
                     _CommandParam(parameter);

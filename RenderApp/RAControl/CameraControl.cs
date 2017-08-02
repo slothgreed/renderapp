@@ -19,6 +19,7 @@ namespace RenderApp.RAControl
                     RightMouse.Down(mouse.X, mouse.Y);
                     break;
             }
+
             return true;
         }
 
@@ -55,6 +56,7 @@ namespace RenderApp.RAControl
                     Workspace.SceneManager.ActiveScene.MainCamera.Rotate(RightMouse.Delta.X, RightMouse.Delta.Y, 0);
                     break;
             }
+
             return true;
         }
 
@@ -72,6 +74,7 @@ namespace RenderApp.RAControl
                     LeftMouse.Up(mouse.X, mouse.Y);
                     break;
             }
+
             return true;
         }
 
@@ -83,6 +86,7 @@ namespace RenderApp.RAControl
                     Workspace.SceneManager.ActiveScene.MainCamera.Zoom((int)mouse.Delta);
                     break;
             }
+
             return true;
         }
 

@@ -39,6 +39,7 @@ namespace KI.Gfx.GLUtil
                 SetTextureTargte(TextureType.CubemapNY);
                 SetTextureTargte(TextureType.CubemapNZ);
             }
+
             Format = PixelInternalFormat.Rgba8;
         }
 
@@ -90,6 +91,7 @@ namespace KI.Gfx.GLUtil
             {
                 Logger.Log(Logger.LogLevel.Warning, "Duplicate Bind Error");
             }
+
             NowBind = true;
             Logger.GLLog(Logger.LogLevel.Error);
         }
@@ -138,6 +140,7 @@ namespace KI.Gfx.GLUtil
             {
                 Targets = new List<TextureTarget>();
             }
+
             switch (type)
             {
                 case TextureType.Texture1D:

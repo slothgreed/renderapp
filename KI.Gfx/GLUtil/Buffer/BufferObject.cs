@@ -31,7 +31,7 @@ namespace KI.Gfx.GLUtil
 
     public abstract class BufferObject : KIObject
     {
-        private static int CreateNum = 0;
+        private static int createNum = 0;
 
         protected bool NowBind;
         public abstract void PreGenBuffer();
@@ -51,7 +51,7 @@ namespace KI.Gfx.GLUtil
 
         public virtual void GenBuffer()
         {
-            CreateNum++;
+            createNum++;
             if (DeviceID != -1)
             {
                 Dispose();
@@ -85,7 +85,7 @@ namespace KI.Gfx.GLUtil
         /// </summary>
         public override void Dispose()
         {
-            CreateNum--;
+            createNum--;
             PreDispose();
             DeviceID = -1;
         }

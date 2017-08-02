@@ -12,10 +12,12 @@ namespace RenderApp
         {
             select.Add(item);
         }
+
         public void Select(List<T> items)
         {
             select = items;
         }
+
         public List<T> Select()
         {
             return select;

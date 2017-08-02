@@ -66,6 +66,7 @@ namespace RenderApp.Globals
                 case RAAsset.ShaderProgram:
                     return ShaderProgramRoot.AllChildrenObject();
             }
+
             return null;
         }
 

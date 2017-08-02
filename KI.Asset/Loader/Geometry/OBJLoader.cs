@@ -397,6 +397,7 @@ namespace KI.Asset.Loader
 
                 counter++;
             }
+
             return true;
         }
         #endregion

@@ -7,13 +7,13 @@ namespace KI.Asset
 {
     public class EnvironmentProbe : KIObject
     {
+        List<string> texturePath;
+
         public Texture Cubemap
         {
             get;
             private set;
         }
-
-        List<string> texturePath;
 
         public EnvironmentProbe(string name)
             : base(name)

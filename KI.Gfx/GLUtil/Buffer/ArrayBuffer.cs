@@ -72,6 +72,7 @@ namespace KI.Gfx.GLUtil
                 default:
                     break;
             }
+
             UnBindBuffer();
         }
 

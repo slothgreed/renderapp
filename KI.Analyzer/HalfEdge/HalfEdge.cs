@@ -44,7 +44,6 @@ namespace KI.Analyzer
             return false;
         }
 
-
         #region [edit method]
         #region [vertex decimation]
         /// <summary>
@@ -225,6 +224,38 @@ namespace KI.Analyzer
             }
 
             return false;
+        }
+        public Edge GetEdge(Vertex start, Vertex end)
+        {
+            foreach (var edge in start.AroundEdge)
+            {
+                if (edge.Start == start && edge.End == end)
+                {
+                    return edge;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 一定距離内の頂点の取得
+        /// </summary>
+        /// <param name="vertex">起点</param>
+        /// <param name="distance">距離</param>
+        /// <returns>範囲内の頂点</returns>
+        public List<Vertex> GetAroundVertex(Vertex vertex, float distance)
+        {
+            List<Vertex> vertex_list = new List<Vertex>();
+            vertex.CalcFlag = true;
+            vertex_list.Add(vertex);
+            RecursiveAroundPosition(vertex_list, vertex, vertex, distance);
+            for (int i = 0; i < vertex_list.Count; i++)
+            {
+                vertex_list[i].CalcFlag = false;
+            }
+
+            return vertex_list;
         }
 
         private void Initialize(List<Vector3> position, List<int> poly_Index = null)
@@ -447,37 +478,6 @@ namespace KI.Analyzer
         }
         #endregion
         #region [getter method]
-        public Edge GetEdge(Vertex start, Vertex end)
-        {
-            foreach (var edge in start.AroundEdge)
-            {
-                if (edge.Start == start && edge.End == end)
-                {
-                    return edge;
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// 一定距離内の頂点の取得
-        /// </summary>
-        /// <param name="distance"></param>
-        /// <returns></returns>
-        public List<Vertex> GetAroundVertex(Vertex vertex, float distance)
-        {
-            List<Vertex> vertex_list = new List<Vertex>();
-            vertex.CalcFlag = true;
-            vertex_list.Add(vertex);
-            RecursiveAroundPosition(vertex_list, vertex, vertex, distance);
-            for (int i = 0; i < vertex_list.Count; i++)
-            {
-                vertex_list[i].CalcFlag = false;
-            }
-
-            return vertex_list;
-        }
 
         /// <summary>
         /// 一定距離内の頂点の取得を行う再起関数

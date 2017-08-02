@@ -27,6 +27,7 @@ namespace KI.Foundation.ViewModel
                 SetValue<Vector2>(updateFunc, new Vector2(value, Y));
             }
         }
+
         public float Y
         {
             get { return Model.Y; }
@@ -35,6 +36,7 @@ namespace KI.Foundation.ViewModel
                 SetValue<Vector2>(updateFunc, new Vector2(value, Y));
             }
         }
+
         public bool UpdateProperty(Vector2 value)
         {
             Model = value;
@@ -49,6 +51,7 @@ namespace KI.Foundation.ViewModel
 
             return true;
         }
+
         public override void UpdateProperty()
         {
 

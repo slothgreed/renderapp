@@ -56,7 +56,6 @@ namespace KI.Analyzer
             Vector3 axisNormal = GetAxisNormal(level);
             Vector3 axisPos = GetAxisPos(kdlist);
 
-
             Vector3 vector;
             int currentLevel = level;
             List<Vector3> list1 = new List<Vector3>();
@@ -224,6 +223,5 @@ namespace KI.Analyzer
         {
             positon.Clear();
         }
-
     }
 }

@@ -45,6 +45,7 @@ namespace RenderApp.RACommand
                 //geometry.HalfEdge.VertexDecimation(geometry.HalfEdge.m_Edge[counter]);
                 geometry.HalfEdge.EdgeFlips(geometry.HalfEdge.m_Edge[counter]);
             }
+
             counter++;
             List<Vector3> position = new List<Vector3>();
             var color = new List<Vector3>();

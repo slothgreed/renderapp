@@ -47,37 +47,9 @@ namespace KI.Analyzer
             All
         }
 
-        public class Voxel
-        {
-            public VoxelState State = VoxelState.None;
-            public int i;
-            public int j;
-            public int k;
-            public float Value;
-
-            public Voxel(int _i, int _j, int _k, VoxelState state)
-            {
-                i = _i;
-                j = _j;
-                k = _k;
-                State = state;
-                Value = 0;
-            }
-        }
-
         public Vector3 Min;
 
         public Vector3 Max;
-
-        public float Interval { get; private set; }
-
-        public int Partition { get; private set; }
-
-        private Voxel[,,] Voxels
-        {
-            get;
-            set;
-        }
 
         public List<Vector3> vPosition = new List<Vector3>();
 
@@ -116,12 +88,17 @@ namespace KI.Analyzer
             CalcDistanceField();
         }
 
+        public float Interval { get; private set; }
+
+        public int Partition { get; private set; }
+
+        private Voxel[,,] Voxels { get; set; }
+
         public void GetVoxel(out List<Vector3> position, out List<Vector3> normal)
         {
             position = vPosition;
             normal = vNormal;
         }
-
 
         public List<Vector3> GetPoint(VoxelState state)
         {
@@ -171,8 +148,7 @@ namespace KI.Analyzer
         /// <summary>
         /// 形状を包括するBDBで、ボクセルを生成
         /// </summary>
-        /// <param name="m_position"></param>
-        /// <param name="posIndex"></param>
+        /// <param name="posIndex">頂点リスト</param>
         private void MakeVoxels(List<Vector3> position)
         {
             //ボクセルのインデックス番号
@@ -219,10 +195,10 @@ namespace KI.Analyzer
 
         #region [utility]
         /// <summary>
-        /// ボクセルの最小値を返却
+        /// ボクセルの最小座標を返却
         /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
+        /// <param name="voxel">ボクセル</param>
+        /// <returns>座標</returns>
         private Vector3 GetVoxelPosition(Voxel voxel)
         {
             Vector3 minVoxel = Min;
@@ -233,10 +209,10 @@ namespace KI.Analyzer
         }
 
         /// <summary>
-        /// ボクセルの最小値を返却
+        /// ボクセルの最小座標を返却
         /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
+        /// <param name="index">ボクセルの要素番号</param>
+        /// <returns>座標</returns>
         private Vector3 GetVoxelPosition(Vector3 index)
         {
             Vector3 minVoxel = Min;
@@ -247,7 +223,7 @@ namespace KI.Analyzer
         /// <summary>
         /// 分割数から長さを計算
         /// </summary>
-        /// <param name="partition"></param>
+        /// <param name="partition">分割数</param>
         private void SetInterval(int partition)
         {
             float tmpmax, tmpmin;
@@ -315,6 +291,9 @@ namespace KI.Analyzer
         /// <summary>
         /// ボクセルを作るかチェック
         /// </summary>
+        /// <param name="tri1">三角形頂点1</param>
+        /// <param name="tri2">三角形頂点2</param>
+        /// <param name="tri3">三角形頂点3</param>
         /// <param name="voxelIndex">voxelのindex番号</param>
         private bool CheckVoxel(Vector3 tri1, Vector3 tri2, Vector3 tri3, Vector3 voxelIndex)
         {
@@ -438,8 +417,8 @@ namespace KI.Analyzer
         /// <summary>
         /// すべてのボクセルから、ボクセルを検索
         /// </summary>
-        /// <param name="condition"></param>
-        /// <returns></returns>
+        /// <param name="condition">条件</param>
+        /// <returns>最初に成功したボクセル</returns>
         private Voxel SearchAllVoxel(Func<int, int, int, Voxel> condition)
         {
             for (int i = 0; i < Partition; i++)
@@ -535,7 +514,6 @@ namespace KI.Analyzer
             };
 
             AllVoxelAction(initializeField);
-
 
             while (true)
             {
@@ -639,7 +617,6 @@ namespace KI.Analyzer
             {
                 return;
             }
-
 
             while (true)
             {
@@ -818,5 +795,23 @@ namespace KI.Analyzer
         }
 
         #endregion
+
+        public class Voxel
+        {
+            public VoxelState State = VoxelState.None;
+            public int i;
+            public int j;
+            public int k;
+            public float Value;
+
+            public Voxel(int _i, int _j, int _k, VoxelState state)
+            {
+                i = _i;
+                j = _j;
+                k = _k;
+                State = state;
+                Value = 0;
+            }
+        }
     }
 }

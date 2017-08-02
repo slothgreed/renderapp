@@ -17,6 +17,7 @@ namespace RenderApp.RACommand
         {
             geometry = asset as Geometry;
         }
+
         public string CanExecute(string commandArg)
         {
             return CanCreateGeometry(geometry);

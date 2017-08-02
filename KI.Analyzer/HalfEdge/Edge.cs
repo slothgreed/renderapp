@@ -117,7 +117,6 @@ namespace KI.Analyzer
 
         #endregion
 
-
         public float Angle
         {
             get

@@ -43,9 +43,8 @@ namespace KI.Analyzer
         private void MakeOctant(Octant parent, int level)
         {
             if (m_MaxLevel == level)
-            {
                 return;
-            }
+
             List<Vector3> octantMin;
             List<Vector3> octantMax;
             GetOctant(parent.BDBMin, parent.BDBMax, out octantMin, out octantMax);
@@ -98,7 +97,6 @@ namespace KI.Analyzer
             octantMax = new List<Vector3>();
             Vector3 center = new Vector3((bdbMin + bdbMax) * 0.5f);
 
-
             //左下手前
             octantMin.Add(new Vector3(bdbMin.X, bdbMin.Y, bdbMin.Z));
             octantMax.Add(new Vector3(center.X, center.Y, center.Z));
@@ -146,7 +144,6 @@ namespace KI.Analyzer
                 posList.AddRange(posit);
                 norList.AddRange(normal);
             }
-
         }
 
         /// <summary>
@@ -205,7 +202,6 @@ namespace KI.Analyzer
         #endregion
         #endregion
     }
-
 
     public class Octant
     {

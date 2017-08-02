@@ -45,7 +45,6 @@ namespace KI.Analyzer
         /// </summary>
         public bool DeleteFlag { get; set; }
 
-
         /// <summary>
         /// 法線
         /// </summary>

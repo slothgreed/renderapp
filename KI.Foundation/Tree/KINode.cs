@@ -4,7 +4,6 @@ using KI.Foundation.Core;
 
 namespace KI.Foundation.Tree
 {
-
     public class KINode
     {
         public delegate void InsertNodeEventHandler(object sender, NotifyNodeChangedEventArgs e);
@@ -28,6 +27,7 @@ namespace KI.Foundation.Tree
                 {
                     return emptyName;
                 }
+
                 return KIObject.Name;
             }
         }
@@ -64,12 +64,14 @@ namespace KI.Foundation.Tree
                 }
             }
         }
+
         public void AddChild(KIObject child)
         {
             if (child == null)
             {
                 return;
             }
+
             if (FindChild(child.Name) == null)
             {
                 KINode node = new KINode(child);
@@ -81,6 +83,7 @@ namespace KI.Foundation.Tree
                 }
             }
         }
+
         public void AddChild(string name)
         {
             if (FindChild(name) == null)
@@ -95,6 +98,7 @@ namespace KI.Foundation.Tree
 
             }
         }
+
         public void Insert(int index, string name)
         {
             if (Children.Count < index)
@@ -102,6 +106,7 @@ namespace KI.Foundation.Tree
                 AddChild(name);
                 return;
             }
+
             if (FindChild(name) == null)
             {
                 var node = new KINode(name);
@@ -112,6 +117,7 @@ namespace KI.Foundation.Tree
                 }
             }
         }
+
         public void Insert(int index, KIObject child)
         {
             if (Children.Count < index)
@@ -119,6 +125,7 @@ namespace KI.Foundation.Tree
                 AddChild(child);
                 return;
             }
+
             if (FindChild(child.Name) == null)
             {
                 var node = new KINode(child.Name);
@@ -130,6 +137,7 @@ namespace KI.Foundation.Tree
 
             }
         }
+
         #endregion
         #region [remove method]
         public void RemoveChild(KINode child)
@@ -186,6 +194,7 @@ namespace KI.Foundation.Tree
             {
                 return true;
             }
+
             return false;
         }
 
@@ -208,6 +217,7 @@ namespace KI.Foundation.Tree
                     return item;
                 }
             }
+
             return null;
         }
 
@@ -228,6 +238,7 @@ namespace KI.Foundation.Tree
             {
                 KIObject.Dispose();
             }
+
             foreach (var child in Children)
             {
                 child.Dispose();
@@ -260,7 +271,5 @@ namespace KI.Foundation.Tree
             }
         }
         #endregion
-
-
     }
 }

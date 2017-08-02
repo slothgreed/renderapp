@@ -38,6 +38,7 @@ namespace RenderApp.ViewModel
                 result = null;
                 return false;
             }
+
             result = property.GetValue(model, null);
 
             return true;
@@ -51,6 +52,7 @@ namespace RenderApp.ViewModel
             {
                 return false;
             }
+
             property.SetValue(model, value, null);
             OnPropertyChanged(propertyName);
             return true;

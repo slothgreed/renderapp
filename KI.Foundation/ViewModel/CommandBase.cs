@@ -24,6 +24,7 @@ namespace KI.Foundation.ViewModel
             _Command = command;
             _CanExecute = canExecute;
         }
+
         private CommandBase(Action command)
         {
             if (command == null)
@@ -33,6 +34,7 @@ namespace KI.Foundation.ViewModel
 
             _Command = command;
         }
+
         private CommandBase(Action<object> command)
         {
             if (command == null)
@@ -63,6 +65,7 @@ namespace KI.Foundation.ViewModel
             {
                 _Command();
             }
+
             if (_CommandParam != null)
             {
                 _CommandParam(parameter);

@@ -107,10 +107,12 @@ namespace RenderApp.RAControl
                     selectGeometry = geometry;
                 }
             }
+
             if (selectIndex == -1)
             {
                 return false;
             }
+
             return true;
         }
     }

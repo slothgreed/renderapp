@@ -22,6 +22,7 @@ namespace RenderApp.ViewModel
             {
                 return _name;
             }
+
             private set
             {
                 SetValue<string>(ref _name, value);

@@ -21,31 +21,31 @@ namespace KI.Foundation.Command
 
     public class CommandStack
     {
-        private Stack<CommandInfo> Commands;
+        private Stack<CommandInfo> commands;
 
         public CommandStack()
         {
-            Commands = new Stack<CommandInfo>();
+            commands = new Stack<CommandInfo>();
         }
 
         public void Clear()
         {
-            Commands.Clear();
+            commands.Clear();
         }
 
         public void Push(CommandInfo info)
         {
-            Commands.Push(info);
+            commands.Push(info);
         }
 
         public void Push(ICommand command, string commandArg)
         {
-            Commands.Push(new CommandInfo(command, commandArg));
+            commands.Push(new CommandInfo(command, commandArg));
         }
 
         public CommandInfo Pop()
         {
-            return Commands.Pop();
+            return commands.Pop();
         }
     }
 }

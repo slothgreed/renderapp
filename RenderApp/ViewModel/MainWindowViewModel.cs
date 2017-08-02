@@ -51,6 +51,7 @@ namespace RenderApp.ViewModel
                 {
                     return false;
                 }
+
                 return Workspace.RenderSystem.PostProcessMode;
             }
         }
@@ -368,6 +369,7 @@ namespace RenderApp.ViewModel
                     ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.SelectPoint;
                     break;
             }
+
             OnPropertyChanged("ControlMode");
         }
 
@@ -400,6 +402,7 @@ namespace RenderApp.ViewModel
             {
                 viewport.Dispose();
             }
+
             WindowCloseCommand();
             GC.Collect();
         }

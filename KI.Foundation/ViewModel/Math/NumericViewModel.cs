@@ -20,6 +20,7 @@ namespace KI.Foundation.ViewModel
             get { return Model; }
             set { SetValue<float>(ref Model, value); }
         }
+
         public override void UpdateProperty()
         {
 

@@ -24,32 +24,20 @@ namespace KI.Analyzer
 
         public float Distance { get; set; }
 
-        private HalfEdge _halfEdge = null;
+        private HalfEdge halfEdge = null;
 
         public DijkstraAlgorithm()
         {
             Reset();
         }
 
-        private bool DistanceDijkstra(int index1, int index2)
-        {
-            Node[] nodeArray = new Node[_halfEdge.m_Vertex.Count];
-
-            for (int i = 0; i < nodeArray.Length; i++)
-            {
-                nodeArray[i] = new Node(false, -1, _halfEdge.m_Vertex[i]);
-            }
-
-            CalcDijkstra(nodeArray, index1, index2);
-            return true;
-        }
 
         public string CanExecute(string commandArg = null)
         {
             if (StartIndex < 0 ||
                 EndIndex < 0 ||
-                StartIndex > _halfEdge.m_Vertex.Count ||
-                EndIndex > _halfEdge.m_Vertex.Count)
+                StartIndex > halfEdge.m_Vertex.Count ||
+                EndIndex > halfEdge.m_Vertex.Count)
             {
                 return "init value error";
             }
@@ -59,12 +47,12 @@ namespace KI.Analyzer
 
         public void SetGeometry(HalfEdge halfEdge)
         {
-            _halfEdge = halfEdge;
+            this.halfEdge = halfEdge;
         }
 
         public string Execute(string commandArg = null)
         {
-            if (_halfEdge == null)
+            if (halfEdge == null)
             {
                 return string.Empty;
             }
@@ -72,6 +60,7 @@ namespace KI.Analyzer
             DistanceDijkstra(StartIndex, EndIndex);
             return string.Empty;
         }
+
         public bool Reset()
         {
             StartIndex = -1;
@@ -83,6 +72,19 @@ namespace KI.Analyzer
         public string Undo(string commandArg = null)
         {
             return "Failed";
+        }
+
+        private bool DistanceDijkstra(int index1, int index2)
+        {
+            Node[] nodeArray = new Node[halfEdge.m_Vertex.Count];
+
+            for (int i = 0; i < nodeArray.Length; i++)
+            {
+                nodeArray[i] = new Node(false, -1, halfEdge.m_Vertex[i]);
+            }
+
+            CalcDijkstra(nodeArray, index1, index2);
+            return true;
         }
 
         private void CalcDijkstra(Node[] nodes, int start, int end)

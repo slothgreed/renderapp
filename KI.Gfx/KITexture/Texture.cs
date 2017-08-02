@@ -132,24 +132,6 @@ namespace KI.Gfx.KITexture
 
         public static readonly Texture Empty;
 
-        private void BindWrapMode(TextureWrapMode wrapMode)
-        {
-            TextureBuffer.BindBuffer();
-            GL.TexParameter(TextureBuffer.Target, TextureParameterName.TextureWrapS, Convert.ToInt32(wrapMode));
-            GL.TexParameter(TextureBuffer.Target, TextureParameterName.TextureWrapT, Convert.ToInt32(wrapMode));
-            TextureBuffer.UnBindBuffer();
-            Logger.GLLog(Logger.LogLevel.Error);
-        }
-
-        private void BindFilter(TextureMinFilter filter)
-        {
-            TextureBuffer.BindBuffer();
-            GL.TexParameter(TextureBuffer.Target, TextureParameterName.TextureMinFilter, (int)filter);
-            GL.TexParameter(TextureBuffer.Target, TextureParameterName.TextureMagFilter, (int)filter);
-            TextureBuffer.UnBindBuffer();
-            Logger.GLLog(Logger.LogLevel.Error);
-        }
-
         /// <summary>
         /// 解放処理
         /// </summary>
@@ -209,6 +191,7 @@ namespace KI.Gfx.KITexture
             {
                 image.LoadImageData();
             }
+
             TextureBuffer.BindBuffer();
             TextureBuffer.Width = image.Width;
             TextureBuffer.Height = image.Height;
@@ -223,7 +206,7 @@ namespace KI.Gfx.KITexture
         /// <summary>
         /// 配列からのテクスチャ生成
         /// </summary>
-        /// <param name=""></param>
+        /// <param name="rgba">色情報</param>
         public void GenTexture(float[,,] rgba)
         {
             TextureBuffer.BindBuffer();
@@ -272,6 +255,24 @@ namespace KI.Gfx.KITexture
                 GL.TexImage2D(target, 0, PixelInternalFormat.Rgba, image.Width, image.Height,
                                 0, OpenTK.Graphics.OpenGL.PixelFormat.ColorIndex, PixelType.UnsignedByte, image.Scan0);
             }
+        }
+
+        private void BindWrapMode(TextureWrapMode wrapMode)
+        {
+            TextureBuffer.BindBuffer();
+            GL.TexParameter(TextureBuffer.Target, TextureParameterName.TextureWrapS, Convert.ToInt32(wrapMode));
+            GL.TexParameter(TextureBuffer.Target, TextureParameterName.TextureWrapT, Convert.ToInt32(wrapMode));
+            TextureBuffer.UnBindBuffer();
+            Logger.GLLog(Logger.LogLevel.Error);
+        }
+
+        private void BindFilter(TextureMinFilter filter)
+        {
+            TextureBuffer.BindBuffer();
+            GL.TexParameter(TextureBuffer.Target, TextureParameterName.TextureMinFilter, (int)filter);
+            GL.TexParameter(TextureBuffer.Target, TextureParameterName.TextureMagFilter, (int)filter);
+            TextureBuffer.UnBindBuffer();
+            Logger.GLLog(Logger.LogLevel.Error);
         }
 
         #endregion

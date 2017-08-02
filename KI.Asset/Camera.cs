@@ -13,27 +13,28 @@ namespace KI.Asset
         /// <summary>
         /// カメラからの距離
         /// </summary>
-        private float ZoomLength;
+        private float zoomLength;
 
         /// <summary>
         /// ズームイン倍率
         /// </summary>
-        private float ZoomInRatio = 1.1f;
+        private float zoomInRatio = 1.1f;
 
         /// <summary>
         /// ズームアウト倍率
         /// </summary>
-        private float ZoomOutRatio = 0.9f;
+        private float zoomOutRatio = 0.9f;
 
         /// <summary>
         /// ズームの最小値
         /// </summary>
-        private float ZoomMin = 1;
+        private float zoomMin = 1;
 
         /// <summary>
         /// ズームの最大値
         /// </summary>
-        private float ZoomMax = 600;
+        private float zoomMax = 600;
+
         /// <summary>
         /// 注視点の平行移動量
         /// </summary>
@@ -52,12 +53,7 @@ namespace KI.Asset
         /// <summary>
         /// 平行移動量の倍率設定
         /// </summary>
-        private float PanRatio = 10.0f;
-
-        /// <summary>
-        /// projectionのnear
-        /// </summary>
-        private float Near { get; set; } = 1;
+        private float panRatio = 10.0f;
 
         /// <summary>
         /// 回転倍率
@@ -73,6 +69,11 @@ namespace KI.Asset
         /// 球面座標の角度
         /// </summary>
         private float theta;
+
+        /// <summary>
+        /// projectionのnear
+        /// </summary>
+        private float Near { get; set; } = 1;
 
         /// <summary>
         /// コンストラクタ
@@ -181,7 +182,7 @@ namespace KI.Asset
             Pan = new Vector3(0.0f, 22.5f, 0.0f);
             LookAt = Vector3.Zero;
             Up = Vector3.UnitY;
-            ZoomLength = ZoomMax;
+            zoomLength = zoomMax;
             Theta = 90.0f;
             Phi = 0.0f;
             UpdateCamera();
@@ -252,7 +253,7 @@ namespace KI.Asset
         /// <summary>
         /// Viewの平行移動
         /// </summary>
-        /// <param name="Middle"></param>
+        /// <param name="move">移動量</param>
         public void Translate(Vector3 move)
         {
             Vector3 vectorX = new Vector3();
@@ -265,7 +266,7 @@ namespace KI.Asset
                 vectorY = new Vector3(Matrix.Column1);
                 vectorX *= orient.X;
                 vectorY *= orient.Y;
-                SetPan((vectorX + vectorY) * PanRatio);
+                SetPan((vectorX + vectorY) * panRatio);
             }
         }
         #endregion
@@ -290,21 +291,21 @@ namespace KI.Asset
         /// <summary>
         /// Viewのズーム[詳:m_ZoomMin,m_ZoomMax,m_ZoomInRatio,m_ZoomOutRatio]
         /// </summary>
-        /// <param name="Delta">正のときズームイン負のときズームアウト</param>
-        public void Zoom(int Delta)
+        /// <param name="celta">正のときズームイン負のときズームアウト</param>
+        public void Zoom(int celta)
         {
             float ratio;
             //倍率決め
-            if (Delta > 0)
+            if (celta > 0)
             {
-                ratio = ZoomInRatio;
+                ratio = zoomInRatio;
             }
             else
             {
-                ratio = ZoomOutRatio;
+                ratio = zoomOutRatio;
             }
             //拡大縮小
-            ZoomLength *= ratio;
+            zoomLength *= ratio;
             //if (m_ZoomLength < m_ZoomMin)
             //{
             //    m_ZoomLength = m_ZoomMin;
@@ -323,7 +324,7 @@ namespace KI.Asset
         private void UpdateCamera()
         {
             Vector3 q_Move = GetSphericalMove();
-            Position = Pan + (q_Move * ZoomLength);
+            Position = Pan + (q_Move * zoomLength);
             LookAt = Pan;
             Matrix = Matrix4.LookAt(Position, LookAt, Up);
         }

@@ -11,6 +11,22 @@ namespace KI.Asset
     public abstract class Geometry : KIObject
     {
         #region Propety
+
+        private Vector3 translate = Vector3.Zero;
+        private Vector3 scale = Vector3.One;
+        private Vector3 rotate = Vector3.Zero;
+
+        public Geometry()
+        {
+        }
+
+        public Geometry(string name)
+            : base(name)
+        {
+            Initialize(name);
+
+        }
+
         public int ID { get; set; }
         public GeometryInfo geometryInfo { get; set; }
         public bool Visible { get; set; } = true;
@@ -19,7 +35,6 @@ namespace KI.Asset
 
         public Matrix4 ModelMatrix { get; set; }
 
-        private Vector3 translate = Vector3.Zero;
         public Vector3 Translate
         {
             get
@@ -34,7 +49,6 @@ namespace KI.Asset
             }
         }
 
-        private Vector3 scale = Vector3.One;
         public Vector3 Scale
         {
             get
@@ -49,7 +63,6 @@ namespace KI.Asset
             }
         }
 
-        private Vector3 rotate = Vector3.Zero;
         public Vector3 Rotate
         {
             get
@@ -80,16 +93,7 @@ namespace KI.Asset
         #endregion
 
         #region [Initializer disposer]
-        public Geometry()
-        {
-        }
 
-        public Geometry(string name)
-            : base(name)
-        {
-            Initialize(name);
-
-        }
 
         private void Initialize(string name = null)
         {
@@ -211,6 +215,7 @@ namespace KI.Asset
 
             return false;
         }
+
         /// <summary>
         /// 初期形状から一括変換する用
         /// </summary>
@@ -261,6 +266,7 @@ namespace KI.Asset
             {
                 ModelMatrix = ModelMatrix.ClearRotation();
             }
+
             ModelMatrix = ModelMatrix.ClearTranslation();
 
             ModelMatrix *= quart;

@@ -42,30 +42,6 @@ namespace KI.Analyzer
         /// <summary>
         /// BDBの算出
         /// </summary>
-        private void SetBoundBox(List<Vector3> position)
-        {
-            Vector3 min = new Vector3(float.MaxValue);
-            Vector3 max = new Vector3(float.MinValue);
-            Vector3 sum = new Vector3();
-            for (int i = 0; i < position.Count; i++)
-            {
-                if (min.X > position[i].X) { min.X = position[i].X; }
-                if (min.Y > position[i].Y) { min.Y = position[i].Y; }
-                if (min.Z > position[i].Z) { min.Z = position[i].Z; }
-                if (max.X < position[i].X) { max.X = position[i].X; }
-                if (max.Y < position[i].Y) { max.Y = position[i].Y; }
-                if (max.Z < position[i].Z) { max.Z = position[i].Z; }
-                sum += position[i];
-            }
-            Min = new Vector3(min.X, min.Y, min.Z);
-            Max = new Vector3(max.X, max.Y, max.Z);
-            Center = new Vector3((Max - Min) / 2);
-            Mean = new Vector3(sum.X / position.Count, sum.Y / position.Count, sum.Z / position.Count);
-        }
-
-        /// <summary>
-        /// BDBの算出
-        /// </summary>
         public static void GetBoundBox(List<Vector3> position, out Vector3 Min, out Vector3 Max)
         {
             Vector3 min = new Vector3(float.MaxValue);
@@ -178,14 +154,6 @@ namespace KI.Analyzer
         }
 
         /// <summary>
-        /// 四角形の取得
-        /// </summary>
-        private static Vector3 GetTriNormal(Vector3 v0, Vector3 v1, Vector3 v2)
-        {
-            return KICalc.Normal(v1 - v0, v2 - v0);
-        }
-
-        /// <summary>
         /// BDBの三角形群を取得
         /// </summary>
         /// <param name="normal"></param>
@@ -252,6 +220,39 @@ namespace KI.Analyzer
             normalList.Add(normal);
             normalList.Add(normal);
             normalList.Add(normal);
+        }
+
+        /// <summary>
+        /// 四角形の取得
+        /// </summary>
+        private static Vector3 GetTriNormal(Vector3 v0, Vector3 v1, Vector3 v2)
+        {
+            return KICalc.Normal(v1 - v0, v2 - v0);
+        }
+
+        /// <summary>
+        /// BDBの算出
+        /// </summary>
+        private void SetBoundBox(List<Vector3> position)
+        {
+            Vector3 min = new Vector3(float.MaxValue);
+            Vector3 max = new Vector3(float.MinValue);
+            Vector3 sum = new Vector3();
+            for (int i = 0; i < position.Count; i++)
+            {
+                if (min.X > position[i].X) { min.X = position[i].X; }
+                if (min.Y > position[i].Y) { min.Y = position[i].Y; }
+                if (min.Z > position[i].Z) { min.Z = position[i].Z; }
+                if (max.X < position[i].X) { max.X = position[i].X; }
+                if (max.Y < position[i].Y) { max.Y = position[i].Y; }
+                if (max.Z < position[i].Z) { max.Z = position[i].Z; }
+                sum += position[i];
+            }
+
+            Min = new Vector3(min.X, min.Y, min.Z);
+            Max = new Vector3(max.X, max.Y, max.Z);
+            Center = new Vector3((Max - Min) / 2);
+            Mean = new Vector3(sum.X / position.Count, sum.Y / position.Count, sum.Z / position.Count);
         }
     }
 }

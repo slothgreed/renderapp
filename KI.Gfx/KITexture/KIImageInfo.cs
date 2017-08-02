@@ -79,7 +79,6 @@ namespace KI.Gfx.KITexture
             NowLock = true;
             bmpData = bmpImage.LockBits(new Rectangle(0, 0, Width, Height),
                 ImageLockMode.ReadOnly, Format);
-
         }
 
         public IntPtr Scan0
@@ -90,6 +89,7 @@ namespace KI.Gfx.KITexture
                 {
                     Logger.Log(Logger.LogLevel.Warning, "Not Lock");
                 }
+
                 return bmpData.Scan0;
             }
         }

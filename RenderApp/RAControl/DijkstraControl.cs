@@ -12,7 +12,7 @@ namespace RenderApp.RAControl
 {
     class DijkstraControl : IControl
     {
-        private DijkstraAlgorithm Dijkstra;
+        private DijkstraAlgorithm dijkstra;
 
         private KIObject SelectGeometry;
 
@@ -28,16 +28,17 @@ namespace RenderApp.RAControl
                 var SelectObjectController = ControlManager.Instance.Controllers[ControlManager.CONTROL_MODE.SelectTriangle] as SelectTriangleControl;
                 if (SelectObjectController.PickTriangle(LeftMouse.Click, ref geometry, ref vertex_Index))
                 {
-                    Dijkstra.SetGeometry(geometry.HalfEdge as HalfEdge);
+                    dijkstra.SetGeometry(geometry.HalfEdge as HalfEdge);
 
-                    if (Dijkstra.StartIndex == -1)
+                    if (dijkstra.StartIndex == -1)
                     {
-                        Dijkstra.StartIndex = vertex_Index;
+                        dijkstra.StartIndex = vertex_Index;
                     }
                     else
                     {
-                        Dijkstra.EndIndex = vertex_Index;
+                        dijkstra.EndIndex = vertex_Index;
                     }
+
                     tri1 = geometry.geometryInfo.Position[vertex_Index];
                     tri2 = geometry.geometryInfo.Position[vertex_Index + 1];
                     tri3 = geometry.geometryInfo.Position[vertex_Index + 2];
@@ -64,17 +65,18 @@ namespace RenderApp.RAControl
                         else
                         {
                             picking.AddVertex(new List<Vector3>() { tri1, tri2, tri3 }, KICalc.RandomColor());
-                            Dijkstra.Execute();
+                            dijkstra.Execute();
                         }
                     }
                 }
             }
+
             return true;
         }
 
         public override bool Binding()
         {
-            Dijkstra = new DijkstraAlgorithm();
+            dijkstra = new DijkstraAlgorithm();
             return true;
         }
 
@@ -90,7 +92,7 @@ namespace RenderApp.RAControl
 
         public override bool Reset()
         {
-            return Dijkstra.Reset();
+            return dijkstra.Reset();
         }
 
         /// <summary>

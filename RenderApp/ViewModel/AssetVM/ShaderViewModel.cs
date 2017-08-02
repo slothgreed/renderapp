@@ -17,22 +17,27 @@ namespace RenderApp.ViewModel
                 {
                     PropertyItem.Add(loop.Name, (Vector2)loop.variable);
                 }
+
                 if (loop.variable is Vector3)
                 {
                     PropertyItem.Add(loop.Name, (Vector3)loop.variable);
                 }
+
                 if (loop.variable is Vector4)
                 {
                     PropertyItem.Add(loop.Name, (Vector4)loop.variable);
                 }
+
                 if (loop.variable is Matrix3)
                 {
                     PropertyItem.Add(loop.Name, (Matrix3)loop.variable);
                 }
+
                 if (loop.variable is Matrix4)
                 {
                     PropertyItem.Add(loop.Name, (Matrix4)loop.variable);
                 }
+
                 if (loop.variable is Texture)
                 {
                     PropertyItem.Add(loop.Name, (Texture)loop.variable);

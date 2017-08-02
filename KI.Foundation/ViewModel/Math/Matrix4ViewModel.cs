@@ -82,6 +82,7 @@ namespace KI.Foundation.ViewModel
                 SetValue<Matrix4>(updateFunc, new Matrix4(M11, M12, M13, M14, M21, M22, value, M24, M31, M32, M33, M34, M41, M42, M43, M44));
             }
         }
+
         public float M24
         {
             get { return Model.M24; }

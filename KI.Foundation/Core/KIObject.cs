@@ -12,7 +12,7 @@ namespace KI.Foundation.Core
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">名前</param>
         public KIObject(string name)
         {
             Name = name;

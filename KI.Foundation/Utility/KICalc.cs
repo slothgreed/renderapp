@@ -20,6 +20,7 @@ namespace KI.Foundation.Utility
                     RGB[i].Z = 255 / 255.0f;
                     continue;
                 }
+
                 if (i <= 127)
                 {
                     RGB[i].X = 0 / 255.0f;
@@ -27,6 +28,7 @@ namespace KI.Foundation.Utility
                     RGB[i].Z = (255 - (scale * (i - 64))) / 255.0f;
                     continue;
                 }
+
                 if (i <= 191)
                 {
                     RGB[i].X = (scale * (i - 127)) / 255.0f;
@@ -34,6 +36,7 @@ namespace KI.Foundation.Utility
                     RGB[i].Z = 0 / 255.0f;
                     continue;
                 }
+
                 if (i <= 255)
                 {
                     RGB[i].X = 255 / 255.0f;
@@ -53,14 +56,17 @@ namespace KI.Foundation.Utility
                 {
                     return RGB[255];
                 }
+
                 if (min >= value)
                 {
                     return RGB[0];
                 }
+
                 if (max - min == 0)
                 {
                     return RGB[0];
                 }
+
                 float length = max - min;
                 float scale = 255 * (value - min) / length;
 
@@ -214,7 +220,6 @@ namespace KI.Foundation.Utility
             }
             else if ((dotPA >= 0 && dotPB <= 0) || (dotPA <= 0 && dotPB >= 0))
             {
-
             }
             else
             {
@@ -321,12 +326,14 @@ namespace KI.Foundation.Utility
                 posit.Y = 0;
                 posit.Z = 0;
             }
+
             if (plane.Y != 0)
             {
                 posit.X = 0;
                 posit.Y = plane.W / plane.Y;
                 posit.Z = 0;
             }
+
             if (plane.Z != 0)
             {
                 posit.X = 0;
@@ -405,6 +412,7 @@ namespace KI.Foundation.Utility
             {
                 return true;
             }
+
             return false;
         }
 
@@ -418,6 +426,7 @@ namespace KI.Foundation.Utility
             {
                 return true;
             }
+
             return false;
 
         }
@@ -451,7 +460,6 @@ namespace KI.Foundation.Utility
         /// <returns></returns>
         public static Vector3 NormalMultiply(Matrix4 matrix, Vector3 vector)
         {
-
             Vector3 result = new Vector3();
             result.X = matrix.Column0[0] * vector.X + matrix.Column0[1] * vector.Y + matrix.Column0[2] * vector.Z;
             result.Y = matrix.Column1[0] * vector.X + matrix.Column1[1] * vector.Y + matrix.Column1[2] * vector.Z;
@@ -482,8 +490,8 @@ namespace KI.Foundation.Utility
         /// <summary>
         /// 誤差除去0~1
         /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <param name="value">値</param>
+        /// <returns>丸め値</returns>
         public static float Round(float value)
         {
             int tmp = (int)value;
@@ -515,8 +523,8 @@ namespace KI.Foundation.Utility
         /// <summary>
         /// 誤差除去0~1
         /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <param name="value">値</param>
+        /// <returns>丸め値</returns>
         public static Vector3 Round(Vector3 value)
         {
             Vector3 ret = new Vector3();
@@ -586,6 +594,7 @@ namespace KI.Foundation.Utility
                 result = (inner * SF) + start;
                 return true;
             }
+
             return false;
         }
 

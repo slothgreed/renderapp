@@ -85,11 +85,13 @@ namespace RenderApp
             ActiveScene.MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
             ActiveScene.AddObject(ActiveScene.MainCamera);
         }
+
         public void CreateSceneLight()
         {
             ActiveScene.SunLight = AssetFactory.Instance.CreateLight("SunLight");
             ActiveScene.AddObject(ActiveScene.SunLight);
         }
+
         public void AddObject(string filePath)
         {
             //var model = AssetFactory.Instance.CreateLoad3DModel(filePath);

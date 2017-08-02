@@ -13,38 +13,38 @@ namespace KI.Foundation.Command
     public class CommandManager
     {
         /// <summary>
-        /// シングルトン
-        /// </summary>
-        public static CommandManager Instance { get; } = new CommandManager();
-        
-        /// <summary>
         /// Listで管理、各ツールでenumで設定できる
         /// </summary>
-        private List<CommandStack> CommandList;
+        private List<CommandStack> commandList;
 
         /// <summary>
         /// UndoList
         /// </summary>
-        private List<CommandStack> UndoList;
+        private List<CommandStack> undoList;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public CommandManager()
         {
-            CommandList = new List<CommandStack>();
-            CommandList.Add(new CommandStack());
-            UndoList = new List<CommandStack>();
-            UndoList.Add(new CommandStack());
+            commandList = new List<CommandStack>();
+            commandList.Add(new CommandStack());
+            undoList = new List<CommandStack>();
+            undoList.Add(new CommandStack());
         }
+
+        /// <summary>
+        /// シングルトン
+        /// </summary>
+        public static CommandManager Instance { get; } = new CommandManager();
 
         /// <summary>
         /// コマンドスタックの追加
         /// </summary>
         public void AddCommandStack()
         {
-            CommandList.Add(new CommandStack());
-            UndoList.Add(new CommandStack());
+            commandList.Add(new CommandStack());
+            undoList.Add(new CommandStack());
         }
 
         /// <summary>
@@ -53,10 +53,10 @@ namespace KI.Foundation.Command
         /// <param name="stack">コマンドリスト番号</param>
         public void Clear(int stack = 0)
         {
-            if (CommandList.Count < stack)
+            if (commandList.Count < stack)
             {
-                CommandList[stack].Clear();
-                UndoList[stack].Clear();
+                commandList[stack].Clear();
+                undoList[stack].Clear();
             }
         }
 
@@ -64,12 +64,13 @@ namespace KI.Foundation.Command
         /// コマンドの実行
         /// </summary>
         /// <param name="command">コマンド</param>
+        /// <param name="commandArg">コマンド引数</param>
         /// <param name="undo">undoできるか</param>
         /// <param name="stack">コマンドリスト番号</param>
         /// <returns>成功したか</returns>
         public string Execute(ICommand command, string commandArg = null, bool undo = true, int stack = 0)
         {
-            if (CommandList.Count < stack)
+            if (commandList.Count < stack)
             {
                 Logger.Log(Logger.LogLevel.Error, "command Stack Error");
             }
@@ -91,7 +92,7 @@ namespace KI.Foundation.Command
 
             if (undo == true)
             {
-                CommandList[stack].Push(command, commandArg);
+                commandList[stack].Push(command, commandArg);
             }
 
             return CommandResource.Success;
@@ -103,16 +104,16 @@ namespace KI.Foundation.Command
         /// <param name="stack">コマンドリスト番号</param>
         public void Undo(int stack = 0)
         {
-            if (CommandList.Count < stack)
+            if (commandList.Count < stack)
             {
-                CommandInfo info = CommandList[stack].Pop();
+                CommandInfo info = commandList[stack].Pop();
                 if (info.Command.Undo(info.CommandArg) == CommandResource.Failed)
                 {
                     Logger.Log(Logger.LogLevel.Warning, "Undo Error");
                 }
                 else
                 {
-                    UndoList[stack].Push(info);
+                    undoList[stack].Push(info);
                 }
             }
         }
@@ -123,9 +124,9 @@ namespace KI.Foundation.Command
         /// <param name="stack">コマンドリスト番号</param>
         public void Redo(int stack = 0)
         {
-            if (UndoList.Count < stack)
+            if (undoList.Count < stack)
             {
-                CommandInfo info = UndoList[stack].Pop();
+                CommandInfo info = undoList[stack].Pop();
                 Execute(info.Command, info.CommandArg, true, stack);
             }
         }

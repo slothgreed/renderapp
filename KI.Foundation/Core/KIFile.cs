@@ -17,9 +17,11 @@ namespace KI.Foundation.Core
                 {
                     _directoryPath = System.IO.Path.GetDirectoryName(FilePath);
                 }
+
                 return _directoryPath;
             }
         }
+
         /// <summary>
         /// ファイルパス
         /// </summary>
@@ -28,6 +30,7 @@ namespace KI.Foundation.Core
             get;
             private set;
         }
+
         /// <summary>
         /// ファイル名
         /// </summary>

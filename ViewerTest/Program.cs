@@ -310,7 +310,6 @@ namespace ViewerTest
             //}
             //GL.End();
 
-
             GL.BindTexture(TextureTarget.Texture2D, 0);
 
             GL.BindTexture(TextureTarget.Texture2D, noizeId);

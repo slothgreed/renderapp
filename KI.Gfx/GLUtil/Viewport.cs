@@ -23,18 +23,6 @@ namespace KI.Gfx.GLUtil
     /// </summary>
     public class Viewport
     {
-        private static Viewport m_Instance;
-        public static Viewport Instance
-        {
-            get
-            {
-                if (m_Instance == null)
-                {
-                    m_Instance = new Viewport();
-                }
-                return m_Instance;
-            }
-        }
 
         #region [member]
         /// <summary>
@@ -57,11 +45,6 @@ namespace KI.Gfx.GLUtil
         /// </summary>
         public int RenderingMillSec = 0;
 
-        /// <summary>
-        /// glControlのゲッタ
-        /// </summary>
-        public GLControl glControl { get { return m_glControl; } }
-
         public event OnLoadedHandler OnLoaded;
         public event OnMouseDownHandler OnMouseDown;
         public event OnMouseMoveHandler OnMouseMove;
@@ -79,6 +62,17 @@ namespace KI.Gfx.GLUtil
         {
             Initialize();
         }
+
+        public static Viewport Instance { get; } = new Viewport();
+
+        /// <summary>
+        /// glControlのゲッタ
+        /// </summary>
+        public GLControl glControl { get { return m_glControl; } }
+
+        /// <summary>
+        /// 初期化
+        /// </summary>
         private void Initialize()
         {
             GraphicsMode mode = new GraphicsMode(
@@ -132,6 +126,7 @@ namespace KI.Gfx.GLUtil
             {
                 m_glControl.Size = new Size(128, 128);
             }
+
             if (m_AppstartUp)
             {
                 DeviceContext.Instance.SizeChanged(m_glControl.Size.Width, m_glControl.Size.Height);
@@ -139,6 +134,7 @@ namespace KI.Gfx.GLUtil
                 {
                     OnResize(sender, e);
                 }
+
                 Logger.GLLog(Logger.LogLevel.Error);
                 glControl_Paint(null, null);
             }
