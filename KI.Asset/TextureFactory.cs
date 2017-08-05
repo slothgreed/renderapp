@@ -23,10 +23,15 @@ namespace KI.Asset
         /// <returns>テクスチャ</returns>
         public Texture CreateTexture(string path)
         {
-            return CreateTexture(path, SelectImageKind(path));
+            return CreateTexture(path, GettImageKind(path));
         }
 
-        public ImageKind SelectImageKind(string path)
+        /// <summary>
+        /// 画像種類の取得
+        /// </summary>
+        /// <param name="path">パス</param>
+        /// <returns>画像種類</returns>
+        public ImageKind GettImageKind(string path)
         {
             string extension = System.IO.Path.GetExtension(path);
             extension = extension.ToLower();
@@ -62,7 +67,7 @@ namespace KI.Asset
                 return find;
             }
 
-            KIImageInfo image = CreateImageInfo(path, kind);
+            ImageInfo image = CreateImageInfo(path, kind);
             Texture texture = new Texture(KIFile.GetNameFromPath(path), TextureType.Texture2D);
             AddItem(texture);
             texture.GenTexture(image);
@@ -95,14 +100,14 @@ namespace KI.Asset
         /// <returns>テクスチャ</returns>
         public Texture CreateCubemapTexture(string px, string py, string pz, string nx, string ny, string nz)
         {
-            List<KIImageInfo> images = new List<KIImageInfo>();
+            List<ImageInfo> images = new List<ImageInfo>();
 
-            images.Add(CreateImageInfo(px, SelectImageKind(px)));
-            images.Add(CreateImageInfo(py, SelectImageKind(py)));
-            images.Add(CreateImageInfo(pz, SelectImageKind(pz)));
-            images.Add(CreateImageInfo(nx, SelectImageKind(nx)));
-            images.Add(CreateImageInfo(ny, SelectImageKind(ny)));
-            images.Add(CreateImageInfo(nz, SelectImageKind(nz)));
+            images.Add(CreateImageInfo(px, GettImageKind(px)));
+            images.Add(CreateImageInfo(py, GettImageKind(py)));
+            images.Add(CreateImageInfo(pz, GettImageKind(pz)));
+            images.Add(CreateImageInfo(nx, GettImageKind(nx)));
+            images.Add(CreateImageInfo(ny, GettImageKind(ny)));
+            images.Add(CreateImageInfo(nz, GettImageKind(nz)));
             Texture texture = new Texture("Cubemap" + KIFile.GetNameFromPath(px), TextureType.Cubemap);
             AddItem(texture);
             texture.GenCubemapTexture(images);
@@ -115,14 +120,14 @@ namespace KI.Asset
         /// <param name="path">ファイルパス</param>
         /// <param name="kind">画像の種類</param>
         /// <returns>画像</returns>
-        private KIImageInfo CreateImageInfo(string path, ImageKind kind)
+        private ImageInfo CreateImageInfo(string path, ImageKind kind)
         {
             switch (kind)
             {
                 case ImageKind.PNG:
                 case ImageKind.JPG:
                 case ImageKind.BMP:
-                    return new KIImageInfo(path);
+                    return new ImageInfo(path);
                 case ImageKind.TGA:
                     return new TGAImage(path);
                 case ImageKind.HDR:

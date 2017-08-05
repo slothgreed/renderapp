@@ -31,20 +31,20 @@ namespace RenderApp.ViewModel
             private set;
         }
 
-        public string Thumbnail
-        {
-            get
-            {
-                if (Model == null)
-                {
-                    return null;
-                }
-                else
-                {
-                    return Model.ImageInfo.FilePath;
-                }
-            }
-        }
+        //public string Thumbnail
+        //{
+        //    get
+        //    {
+        //        if (Model == null)
+        //        {
+        //            return null;
+        //        }
+        //        else
+        //        {
+        //            return Model.ImageInfo.FilePath;
+        //        }
+        //    }
+        //}
 
         public Texture Model
         {

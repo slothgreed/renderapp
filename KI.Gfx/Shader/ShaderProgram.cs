@@ -9,6 +9,9 @@ namespace KI.Gfx
     /// </summary>
     public class ShaderProgram : KIFile
     {
+        /// <summary>
+        /// シェーダ種類
+        /// </summary>
         private ShaderType? shaderType;
         
         /// <summary>
@@ -23,6 +26,9 @@ namespace KI.Gfx
             reader.Close();
         }
 
+        /// <summary>
+        /// シェーダ種類
+        /// </summary>
         public ShaderType ShaderType
         {
             get

@@ -27,118 +27,118 @@ namespace KI.Renderer
                 switch (info.Name)
                 {
                     case "position":
-                        info.variable = renderObject.PositionBuffer;
+                        info.Variable = renderObject.PositionBuffer;
                         break;
                     case "normal":
-                        info.variable = renderObject.NormalBuffer;
+                        info.Variable = renderObject.NormalBuffer;
                         break;
                     case "color":
-                        info.variable = renderObject.ColorBuffer;
+                        info.Variable = renderObject.ColorBuffer;
                         break;
                     case "texcoord":
-                        info.variable = renderObject.TexCoordBuffer;
+                        info.Variable = renderObject.TexCoordBuffer;
                         break;
                     case "index":
-                        info.variable = renderObject.IndexBuffer;
+                        info.Variable = renderObject.IndexBuffer;
                         break;
                     case "uGeometryID":
-                        info.variable = renderObject.Geometry.ID;
+                        info.Variable = renderObject.Geometry.ID;
                         break;
                     case "uWidth":
-                        info.variable = DeviceContext.Instance.Width;
+                        info.Variable = DeviceContext.Instance.Width;
                         break;
                     case "uHeight":
-                        info.variable = DeviceContext.Instance.Height;
+                        info.Variable = DeviceContext.Instance.Height;
                         break;
                     case "uMVP":
                         Matrix4 vp = scene.MainCamera.CameraProjMatrix;
-                        info.variable = renderObject.Geometry.ModelMatrix * vp;
+                        info.Variable = renderObject.Geometry.ModelMatrix * vp;
                         break;
                     case "uSMVP":
                         Matrix4 light = scene.SunLight.Matrix;
                         Matrix4 proj = scene.MainCamera.ProjMatrix;
-                        info.variable = renderObject.Geometry.ModelMatrix * light * proj;
+                        info.Variable = renderObject.Geometry.ModelMatrix * light * proj;
                         break;
                     case "uModelMatrix":
-                        info.variable = renderObject.Geometry.ModelMatrix;
+                        info.Variable = renderObject.Geometry.ModelMatrix;
                         break;
                     case "uNormalMatrix":
-                        info.variable = renderObject.Geometry.NormalMatrix;
+                        info.Variable = renderObject.Geometry.NormalMatrix;
                         break;
                     case "uProjectMatrix":
-                        info.variable = scene.MainCamera.ProjMatrix;
+                        info.Variable = scene.MainCamera.ProjMatrix;
                         break;
                     case "uUnProjectMatrix":
-                        info.variable = scene.MainCamera.UnProject;
+                        info.Variable = scene.MainCamera.UnProject;
                         break;
                     case "uCameraPosition":
-                        info.variable = scene.MainCamera.Position;
+                        info.Variable = scene.MainCamera.Position;
                         break;
                     case "uCameraMatrix":
-                        info.variable = scene.MainCamera.Matrix;
+                        info.Variable = scene.MainCamera.Matrix;
                         break;
                     case "uLightPosition":
-                        info.variable = scene.SunLight.Position;
+                        info.Variable = scene.SunLight.Position;
                         break;
                     case "uLightDirection":
-                        info.variable = scene.SunLight.Direction;
+                        info.Variable = scene.SunLight.Direction;
                         break;
                     case "uLightMatrix":
-                        info.variable = scene.SunLight.Matrix;
+                        info.Variable = scene.SunLight.Matrix;
                         break;
                     case "uAlbedoMap":
                         if (textures.ContainsKey(TextureKind.Albedo))
                         {
-                            info.variable = textures[TextureKind.Albedo].DeviceID;
+                            info.Variable = textures[TextureKind.Albedo].DeviceID;
                         }
 
                         break;
                     case "uCubeMap":
                         if (textures.ContainsKey(TextureKind.Cubemap))
                         {
-                            info.variable = textures[TextureKind.Cubemap].DeviceID;
+                            info.Variable = textures[TextureKind.Cubemap].DeviceID;
                         }
 
                         break;
                     case "uSpecularMap":
                         if (textures.ContainsKey(TextureKind.Specular))
                         {
-                            info.variable = textures[TextureKind.Specular].DeviceID;
+                            info.Variable = textures[TextureKind.Specular].DeviceID;
                         }
 
                         break;
                     case "uWorldMap":
                         if (textures.ContainsKey(TextureKind.World))
                         {
-                            info.variable = textures[TextureKind.World].DeviceID;
+                            info.Variable = textures[TextureKind.World].DeviceID;
                         }
 
                         break;
                     case "uLightingMap":
                         if (textures.ContainsKey(TextureKind.Lighting))
                         {
-                            info.variable = textures[TextureKind.Lighting].DeviceID;
+                            info.Variable = textures[TextureKind.Lighting].DeviceID;
                         }
 
                         break;
                     case "uNormalMap":
                         if (textures.ContainsKey(TextureKind.Normal))
                         {
-                            info.variable = textures[TextureKind.Normal].DeviceID;
+                            info.Variable = textures[TextureKind.Normal].DeviceID;
                         }
 
                         break;
                     case "uHeightMap":
                         if (textures.ContainsKey(TextureKind.Height))
                         {
-                            info.variable = textures[TextureKind.Height].DeviceID;
+                            info.Variable = textures[TextureKind.Height].DeviceID;
                         }
 
                         break;
                     case "uEmissiveMap":
                         if (textures.ContainsKey(TextureKind.Emissive))
                         {
-                            info.variable = textures[TextureKind.Emissive].DeviceID;
+                            info.Variable = textures[TextureKind.Emissive].DeviceID;
                         }
 
                         break;

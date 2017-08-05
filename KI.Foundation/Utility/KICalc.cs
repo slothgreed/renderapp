@@ -646,5 +646,22 @@ namespace KI.Foundation.Utility
 
             return color;
         }
+
+        /// <summary>
+        /// 平面と線分の交点
+        /// </summary>
+        /// <param name="surface">平面の公式</param>
+        /// <param name="near">始点</param>
+        /// <param name="far">終点</param>
+        /// <returns>交点</returns>
+        public static Vector3 CrossPoint(Vector4 surface, Vector3 near, Vector3 far)
+        {
+            Vector3 line = far - near;
+            Vector3 result = new Vector3();
+
+            result = KICalc.CrossPlanetoLine(near, far, surface);
+
+            return result;
+        }
     }
 }

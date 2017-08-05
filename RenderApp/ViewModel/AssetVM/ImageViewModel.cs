@@ -30,41 +30,41 @@ namespace RenderApp.ViewModel
             }
         }
 
-        public string ImagePath
-        {
-            get
-            {
-                if (Model.ImageInfo == null)
-                {
-                    return @"C:\Users\ido\Desktop\RenderApp-clone\RenderApp\Thumbnail\noimage.png";
-                }
+        //public string ImagePath
+        //{
+        //    get
+        //    {
+        //        if (Model.ImageInfo == null)
+        //        {
+        //            return @"C:\Users\ido\Desktop\RenderApp-clone\RenderApp\Thumbnail\noimage.png";
+        //        }
 
-                if (Model.ImageInfo.FilePath == null)
-                {
-                    return @"C:\Users\ido\Desktop\RenderApp-clone\RenderApp\Thumbnail\noimage.png";
-                }
+        //        if (Model.ImageInfo.FilePath == null)
+        //        {
+        //            return @"C:\Users\ido\Desktop\RenderApp-clone\RenderApp\Thumbnail\noimage.png";
+        //        }
 
-                return Model.ImageInfo.FilePath;
-            }
-        }
+        //        return Model.ImageInfo.FilePath;
+        //    }
+        //}
 
-        public string FileName
-        {
-            get
-            {
-                if (Model.ImageInfo == null)
-                {
-                    return string.Empty;
-                }
+        //public string FileName
+        //{
+        //    get
+        //    {
+        //        if (Model.ImageInfo == null)
+        //        {
+        //            return string.Empty;
+        //        }
 
-                if (Model.ImageInfo.FilePath == null)
-                {
-                    return string.Empty;
-                }
+        //        if (Model.ImageInfo.FilePath == null)
+        //        {
+        //            return string.Empty;
+        //        }
 
-                return Model.ImageInfo.FileName;
-            }
-        }
+        //        return Model.ImageInfo.FileName;
+        //    }
+        //}
 
         public List<string> Items
         {

@@ -4,7 +4,7 @@ using KI.Gfx.KITexture;
 
 namespace KI.Asset
 {
-    public class HDRImage : KIImageInfo
+    public class HDRImage : ImageInfo
     {
         public HDRImage(string path)
             : base(path)

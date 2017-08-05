@@ -13,34 +13,34 @@ namespace RenderApp.ViewModel
             PropertyItem = new Dictionary<string, object>();
             foreach (ShaderProgramInfo loop in shader.GetShaderVariable())
             {
-                if (loop.variable is Vector2)
+                if (loop.Variable is Vector2)
                 {
-                    PropertyItem.Add(loop.Name, (Vector2)loop.variable);
+                    PropertyItem.Add(loop.Name, (Vector2)loop.Variable);
                 }
 
-                if (loop.variable is Vector3)
+                if (loop.Variable is Vector3)
                 {
-                    PropertyItem.Add(loop.Name, (Vector3)loop.variable);
+                    PropertyItem.Add(loop.Name, (Vector3)loop.Variable);
                 }
 
-                if (loop.variable is Vector4)
+                if (loop.Variable is Vector4)
                 {
-                    PropertyItem.Add(loop.Name, (Vector4)loop.variable);
+                    PropertyItem.Add(loop.Name, (Vector4)loop.Variable);
                 }
 
-                if (loop.variable is Matrix3)
+                if (loop.Variable is Matrix3)
                 {
-                    PropertyItem.Add(loop.Name, (Matrix3)loop.variable);
+                    PropertyItem.Add(loop.Name, (Matrix3)loop.Variable);
                 }
 
-                if (loop.variable is Matrix4)
+                if (loop.Variable is Matrix4)
                 {
-                    PropertyItem.Add(loop.Name, (Matrix4)loop.variable);
+                    PropertyItem.Add(loop.Name, (Matrix4)loop.Variable);
                 }
 
-                if (loop.variable is Texture)
+                if (loop.Variable is Texture)
                 {
-                    PropertyItem.Add(loop.Name, (Texture)loop.variable);
+                    PropertyItem.Add(loop.Name, (Texture)loop.Variable);
                 }
             }
         }

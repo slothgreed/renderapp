@@ -9,7 +9,7 @@ namespace KI.Asset
     /// <summary>
     /// TGA画像
     /// </summary>
-    public class TGAImage : KIImageInfo
+    public class TGAImage : ImageInfo
     {
         struct TGAStruct
         {
@@ -86,22 +86,21 @@ namespace KI.Asset
             if (BitPerPixel == 24)
             {
                 Format = PixelFormat.Format24bppRgb;
-                bmpImage = new Bitmap(Width, Height, Width * 3, Format, Marshal.UnsafeAddrOfPinnedArrayElement(rgb, 0));
+                BmpImage = new Bitmap(Width, Height, Width * 3, Format, Marshal.UnsafeAddrOfPinnedArrayElement(rgb, 0));
             }
             else if (BitPerPixel == 32)
             {
                 Format = PixelFormat.Format32bppArgb;
-                bmpImage = new Bitmap(Width, Height, Width * 4, Format, Marshal.UnsafeAddrOfPinnedArrayElement(rgb, 0));
+                BmpImage = new Bitmap(Width, Height, Width * 4, Format, Marshal.UnsafeAddrOfPinnedArrayElement(rgb, 0));
             }
             else if (BitPerPixel == 8)
             {
                 Format = PixelFormat.Format8bppIndexed;
-                bmpImage = new Bitmap(Width, Height, Width, Format, Marshal.UnsafeAddrOfPinnedArrayElement(rgb, 0));
+                BmpImage = new Bitmap(Width, Height, Width, Format, Marshal.UnsafeAddrOfPinnedArrayElement(rgb, 0));
             }
 
             binary.Close();
             fp.Close();
-            Loaded = true;
             return true;
         }
 

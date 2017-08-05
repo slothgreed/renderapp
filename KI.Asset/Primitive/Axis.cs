@@ -36,7 +36,7 @@ namespace KI.Asset
         /// <summary>
         /// 形状情報
         /// </summary>
-        public Geometry[] GeometryInfos { get; private set; }
+        public Geometry[] Geometrys { get; private set; }
 
         /// <summary>
         /// 軸作成
@@ -60,7 +60,7 @@ namespace KI.Asset
             color.Add(new Vector3(0, 0, 1));
 
             Geometry info = new Geometry(position, null, color, null, null, Gfx.GLUtil.GeometryType.Line);
-            GeometryInfos = new Geometry[] { info };
+            Geometrys = new Geometry[] { info };
         }
     }
 }

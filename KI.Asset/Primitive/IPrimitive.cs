@@ -1,5 +1,8 @@
 ﻿namespace KI.Asset
 {
+    /// <summary>
+    /// 形状のプリミティブ種類
+    /// </summary>
     public enum PrimitiveType
     {
         Axis,
@@ -12,7 +15,10 @@
     /// </summary>
     public interface IGeometry
     {
-        Geometry[] GeometryInfos
+        /// <summary>
+        /// 形状
+        /// </summary>
+        Geometry[] Geometrys
         {
             get;
         }

@@ -10,13 +10,27 @@ using OpenTK.Graphics.OpenGL;
 namespace KI.Gfx.KITexture
 {
     /// <summary>
+    /// テクスチャ種類
+    /// </summary>
+    public enum TextureKind
+    {
+        None = -1,
+        Albedo,
+        Normal,
+        Specular,
+        Height,
+        Emissive,
+        World,
+        Lighting,
+        Cubemap
+    }
+
+    /// <summary>
     /// テクスチャ
     /// </summary>
     public class Texture : KIObject
     {
         #region [constructor]
-
-        public static readonly Texture Empty;
 
         /// <summary>
         /// MinMag兼ねたフィルタ
@@ -28,10 +42,14 @@ namespace KI.Gfx.KITexture
         /// </summary>
         private TextureWrapMode wrapMode = TextureWrapMode.Repeat;
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <param name="type">テクスチャ種類</param>
         public Texture(string name, TextureType type)
             : base(name)
         {
-            ImageInfos = new List<KIImageInfo>();
             CreateTextureBuffer(type);
         }
 
@@ -40,12 +58,11 @@ namespace KI.Gfx.KITexture
         /// </summary>
         /// <param name="name">テクスチャ名</param>
         /// <param name="type">テクスチャタイプ</param>
-        /// <param name="width">横<param>
+        /// <param name="width">横</param>
         /// <param name="height">縦</param>
         public Texture(string name, TextureType type, int width, int height)
             : base(name)
         {
-            ImageInfos = new List<KIImageInfo>();
             CreateTextureBuffer(type);
             TextureBuffer.SetEmpty(width, height);
         }
@@ -75,22 +92,10 @@ namespace KI.Gfx.KITexture
             }
         }
 
+        /// <summary>
+        /// テクスチャバッファ
+        /// </summary>
         public TextureBuffer TextureBuffer { get; set; }
-
-        public List<KIImageInfo> ImageInfos { get; private set; }
-
-        public KIImageInfo ImageInfo
-        {
-            get
-            {
-                if (ImageInfos == null)
-                {
-                    return null;
-                }
-
-                return ImageInfos.FirstOrDefault();
-            }
-        }
 
         /// <summary>
         /// テクスチャID
@@ -142,7 +147,11 @@ namespace KI.Gfx.KITexture
         }
         #region [テクスチャ周り]
 
-        public void GenCubemapTexture(List<KIImageInfo> images)
+        /// <summary>
+        /// キューブマップテクスチャの作成
+        /// </summary>
+        /// <param name="images">画像</param>
+        public void GenCubemapTexture(List<ImageInfo> images)
         {
             if (images == null)
             {
@@ -165,17 +174,11 @@ namespace KI.Gfx.KITexture
 
             for (int i = 0; i < 6; i++)
             {
-                KIImageInfo image = images[i];
-                if (!image.Loaded)
-                {
-                    image.LoadImageData();
-                }
-
+                ImageInfo image = images[i];
                 image.Lock();
                 //targetのPX～は、cubemapの2つ目以降から
                 SetupTexImage2D(target[i], image);
                 image.UnLock();
-                ImageInfos.Add(image);
             }
 
             TextureBuffer.UnBindBuffer();
@@ -185,20 +188,14 @@ namespace KI.Gfx.KITexture
         /// ファイルからのテクスチャ生成
         /// </summary>
         /// <param name="image">画像ファイル情報</param>
-        public void GenTexture(KIImageInfo image)
+        public void GenTexture(ImageInfo image)
         {
-            if (!image.Loaded)
-            {
-                image.LoadImageData();
-            }
-
             TextureBuffer.BindBuffer();
             TextureBuffer.Width = image.Width;
             TextureBuffer.Height = image.Height;
 
             image.Lock();
             SetupTexImage2D(TextureBuffer.Target, image);
-            ImageInfos.Add(image);
             image.UnLock();
             TextureBuffer.UnBindBuffer();
         }
@@ -233,34 +230,45 @@ namespace KI.Gfx.KITexture
             Logger.GLLog(Logger.LogLevel.Error);
         }
 
+        /// <summary>
+        /// テクスチャのセット
+        /// </summary>
+        /// <param name="target">ターゲット</param>
+        /// <param name="pixelFormat">フォーマット</param>
+        /// <param name="rgba">色</param>
         private void SetupTexImage2D(TextureTarget target, PixelInternalFormat pixelFormat, float[,,] rgba)
         {
-            GL.TexImage2D(target, 0, pixelFormat, Width, Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.Float, rgba);
+            GL.TexImage2D(target, 0, pixelFormat, Width, Height, 0, PixelFormat.Rgba, PixelType.Float, rgba);
         }
 
-        private void SetupTexImage2D(TextureTarget target, KIImageInfo image)
+        /// <summary>
+        /// テクスチャのセット
+        /// </summary>
+        /// <param name="target">ターゲット</param>
+        /// <param name="image">画像</param>
+        private void SetupTexImage2D(TextureTarget target, ImageInfo image)
         {
             if (image.Format == System.Drawing.Imaging.PixelFormat.Format24bppRgb)
             {
                 GL.TexImage2D(target, 0, PixelInternalFormat.Rgba, image.Width, image.Height,
-                                0, OpenTK.Graphics.OpenGL.PixelFormat.Bgr, PixelType.UnsignedByte, image.Scan0);
+                                0, PixelFormat.Bgr, PixelType.UnsignedByte, image.Scan0);
             }
             else if (image.Format == System.Drawing.Imaging.PixelFormat.Format32bppArgb)
             {
                 GL.TexImage2D(target, 0, PixelInternalFormat.Rgba, image.Width, image.Height,
-                                0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, image.Scan0);
+                                0, PixelFormat.Bgra, PixelType.UnsignedByte, image.Scan0);
             }
             else
             {
                 GL.TexImage2D(target, 0, PixelInternalFormat.Rgba, image.Width, image.Height,
-                                0, OpenTK.Graphics.OpenGL.PixelFormat.ColorIndex, PixelType.UnsignedByte, image.Scan0);
+                                0, PixelFormat.ColorIndex, PixelType.UnsignedByte, image.Scan0);
             }
         }
 
         /// <summary>
         /// wrapmodeの設定
         /// </summary>
-        /// <param name="wrapMode"></param>
+        /// <param name="wrapMode">wrap種類</param>
         private void BindWrapMode(TextureWrapMode wrapMode)
         {
             TextureBuffer.BindBuffer();
@@ -273,7 +281,7 @@ namespace KI.Gfx.KITexture
         /// <summary>
         /// フィルタの設定
         /// </summary>
-        /// <param name="filter"></param>
+        /// <param name="filter">テクスチャフィルタ</param>
         private void BindFilter(TextureMinFilter filter)
         {
             TextureBuffer.BindBuffer();

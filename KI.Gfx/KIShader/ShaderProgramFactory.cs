@@ -2,13 +2,25 @@
 
 namespace KI.Gfx.KIShader
 {
-    class ShaderProgramFactory : KIFactoryBase<ShaderProgram>
+    /// <summary>
+    /// シェーダプログラムファクトリ
+    /// </summary>
+    public class ShaderProgramFactory : KIFactoryBase<ShaderProgram>
     {
+        /// <summary>
+        /// インスタンス
+        /// </summary>
         public static ShaderProgramFactory Instance { get; } = new ShaderProgramFactory();
 
-        public ShaderProgram CreateShaderProgram(string key, string path)
+        /// <summary>
+        /// シェーダの作成
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <param name="path">パス</param>
+        /// <returns>シェーダプログラム</returns>
+        public ShaderProgram CreateShaderProgram(string name, string path)
         {
-            var program = FindByKey(key);
+            var program = FindByKey(name);
 
             if (program != null)
             {

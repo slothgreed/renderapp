@@ -19,6 +19,9 @@ namespace KI.Asset
         VertexArray //VertexArray状態で入っている
     }
 
+    /// <summary>
+    /// 形状
+    /// </summary>
     public class Geometry : KIObject
     {
         #region Propety
@@ -80,7 +83,6 @@ namespace KI.Asset
             Initialize();
         }
 
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -128,6 +130,7 @@ namespace KI.Asset
         /// モデルマトリックス
         /// </summary>
         public Matrix4 ModelMatrix { get; set; }
+
         /// <summary>
         /// 形状種類
         /// </summary>
@@ -203,6 +206,85 @@ namespace KI.Asset
                 {
                     return Index.Count / 3;
                 }
+            }
+        }
+
+        /// <summary>
+        /// 移動情報
+        /// </summary>
+        public Vector3 Translate
+        {
+            get
+            {
+                return translate;
+            }
+
+            set
+            {
+                translate = value;
+                CalcTranslate(translate);
+            }
+        }
+
+        /// <summary>
+        /// スケール情報
+        /// </summary>
+        public Vector3 Scale
+        {
+            get
+            {
+                return scale;
+            }
+
+            set
+            {
+                scale = value;
+                CalcScale(scale);
+            }
+        }
+
+        /// <summary>
+        /// 回転情報
+        /// </summary>
+        public Vector3 Rotate
+        {
+            get
+            {
+                return rotate;
+            }
+
+            set
+            {
+                rotate = value;
+                RotateXYZ(rotate.X, rotate.Y, rotate.Z);
+            }
+        }
+
+        /// <summary>
+        /// 法線行列
+        /// </summary>
+        public Matrix3 NormalMatrix
+        {
+            get
+            {
+                Matrix4 norm = ModelMatrix.ClearScale();
+                return new Matrix3(norm);
+            }
+        }
+
+        /// <summary>
+        /// テクスチャ
+        /// </summary>
+        public Dictionary<TextureKind, Texture> Textures { get; private set; } = new Dictionary<TextureKind, Texture>();
+
+        /// <summary>
+        /// テクスチャ枚数
+        /// </summary>
+        public int TextureNum
+        {
+            get
+            {
+                return Textures.Count;
             }
         }
 
@@ -292,7 +374,7 @@ namespace KI.Asset
         /// <summary>
         /// Triangle毎に変換
         /// </summary>
-        protected void ConvertPerTriangle()
+        public void ConvertPerTriangle()
         {
             if (Index.Count == 0)
                 return;
@@ -421,114 +503,6 @@ namespace KI.Asset
         }
         #endregion
 
-        /// <summary>
-        /// 法線の算出
-        /// </summary>
-        /// <param name="position">位置</param>
-        /// <param name="type">種類</param>
-        private void CalcNormal(List<Vector3> position, GeometryType type)
-        {
-            switch (type)
-            {
-                case GeometryType.None:
-                case GeometryType.Point:
-                case GeometryType.Line:
-                case GeometryType.Mix:
-                    return;
-                case GeometryType.Triangle:
-                    for (int i = 0; i < position.Count; i += 3)
-                    {
-                        Vector3 normal = Vector3.Cross(position[i + 2] - position[i + 1], position[i] - position[i + 1]).Normalized();
-                        GeometryInfo.Normal.Add(normal);
-                        GeometryInfo.Normal.Add(normal);
-                        GeometryInfo.Normal.Add(normal);
-                    }
-
-                    break;
-                case GeometryType.Quad:
-                    for (int i = 0; i < position.Count; i += 4)
-                    {
-                        Vector3 normal = Vector3.Cross(position[i + 2] - position[i + 1], position[i] - position[i + 1]).Normalized();
-                        GeometryInfo.Normal.Add(normal);
-                        GeometryInfo.Normal.Add(normal);
-                        GeometryInfo.Normal.Add(normal);
-                        GeometryInfo.Normal.Add(normal);
-                    }
-
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// 移動情報
-        /// </summary>
-        public Vector3 Translate
-        {
-            get
-            {
-                return translate;
-            }
-
-            set
-            {
-                translate = value;
-                CalcTranslate(translate);
-            }
-        }
-
-        /// <summary>
-        /// スケール情報
-        /// </summary>
-        public Vector3 Scale
-        {
-            get
-            {
-                return scale;
-            }
-
-            set
-            {
-                scale = value;
-                CalcScale(scale);
-            }
-        }
-
-        /// <summary>
-        /// 回転情報
-        /// </summary>
-        public Vector3 Rotate
-        {
-            get
-            {
-                return rotate;
-            }
-
-            set
-            {
-                rotate = value;
-                RotateXYZ(rotate.X, rotate.Y, rotate.Z);
-            }
-        }
-
-        /// <summary>
-        /// 法線行列
-        /// </summary>
-        public Matrix3 NormalMatrix
-        {
-            get
-            {
-                Matrix4 norm = ModelMatrix.ClearScale();
-                return new Matrix3(norm);
-            }
-        }
-
-        /// <summary>
-        /// テクスチャ
-        /// </summary>
-        public Dictionary<TextureKind, Texture> Textures { get; private set; } = new Dictionary<TextureKind, Texture>();
-        
         #endregion
 
         #region [Initializer disposer]
@@ -546,21 +520,21 @@ namespace KI.Asset
         }
         #endregion
 
+        /// <summary>
+        /// テクスチャの追加
+        /// </summary>
+        /// <param name="kind">種類</param>
+        /// <param name="texture">テクスチャ</param>
         public void AddTexture(TextureKind kind, Texture texture)
         {
             Textures[kind] = texture;
         }
 
-        public int TextureNum()
-        {
-            if (Textures == null)
-            {
-                return 0;
-            }
-
-            return Textures.Count;
-        }
-
+        /// <summary>
+        /// テクスチャのゲッタ
+        /// </summary>
+        /// <param name="kind">種類</param>
+        /// <returns>テクスチャ</returns>
         public Texture GetTexture(TextureKind kind)
         {
             if (Textures.ContainsKey(kind))
@@ -608,6 +582,13 @@ namespace KI.Asset
             SetModelViewRotateXYZ(rotate, init);
         }
 
+        /// <summary>
+        /// xyzの順で回転
+        /// </summary>
+        /// <param name="angleX">X角度</param>
+        /// <param name="angleY">Y角度</param>
+        /// <param name="angleZ">Z角度</param>
+        /// <param name="init">初期角度に対してか</param>
         public void RotateXYZ(float angleX, float angleY, float angleZ, bool init = false)
         {
             Matrix4 rotateX = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(angleX));
@@ -649,12 +630,11 @@ namespace KI.Asset
         /// <summary>
         /// 初期形状から一括変換する用
         /// </summary>
-        /// <param name="matrix">matrix</param>
-        public bool Transformation(Matrix4 matrix)
+        /// <param name="matrix">適用行列</param>
+        public void Transformation(Matrix4 matrix)
         {
             ModelMatrix = Matrix4.Identity;
             ModelMatrix *= matrix;
-            return true;
         }
         #endregion
 
@@ -682,6 +662,7 @@ namespace KI.Asset
         /// <summary>
         /// モデルビューに拡大縮小を適用
         /// </summary>
+        /// <param name="scale">スケール</param>
         private void CalcScale(Vector3 scale)
         {
             ModelMatrix = ModelMatrix.ClearScale();
@@ -715,6 +696,46 @@ namespace KI.Asset
             //基点分元に戻す
             ModelMatrix = ModelMatrix.ClearTranslation();
             ModelMatrix *= Matrix4.CreateTranslation(translate);
+        }
+
+        /// <summary>
+        /// 法線の算出
+        /// </summary>
+        /// <param name="position">位置</param>
+        /// <param name="type">種類</param>
+        private void CalcNormal(List<Vector3> position, GeometryType type)
+        {
+            switch (type)
+            {
+                case GeometryType.None:
+                case GeometryType.Point:
+                case GeometryType.Line:
+                case GeometryType.Mix:
+                    return;
+                case GeometryType.Triangle:
+                    for (int i = 0; i < position.Count; i += 3)
+                    {
+                        Vector3 normal = Vector3.Cross(position[i + 2] - position[i + 1], position[i] - position[i + 1]).Normalized();
+                        GeometryInfo.Normal.Add(normal);
+                        GeometryInfo.Normal.Add(normal);
+                        GeometryInfo.Normal.Add(normal);
+                    }
+
+                    break;
+                case GeometryType.Quad:
+                    for (int i = 0; i < position.Count; i += 4)
+                    {
+                        Vector3 normal = Vector3.Cross(position[i + 2] - position[i + 1], position[i] - position[i + 1]).Normalized();
+                        GeometryInfo.Normal.Add(normal);
+                        GeometryInfo.Normal.Add(normal);
+                        GeometryInfo.Normal.Add(normal);
+                        GeometryInfo.Normal.Add(normal);
+                    }
+
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

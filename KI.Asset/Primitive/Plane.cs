@@ -48,7 +48,7 @@ namespace KI.Asset
         /// <summary>
         /// 形状情報
         /// </summary>
-        public Geometry[] GeometryInfos { get; private set; }
+        public Geometry[] Geometrys { get; private set; }
 
         #region [形状の作成]
         /// <summary>
@@ -82,24 +82,7 @@ namespace KI.Asset
 
             var info = new Geometry(position, normal, Vector3.UnitX, texcoord, null, Gfx.GLUtil.GeometryType.Quad);
 
-            GeometryInfos = new Geometry[] { info };
-        }
-        #endregion
-
-        #region [線分との交点検出]
-        /// <summary>
-        /// 平面と線分の交点
-        /// </summary>
-        /// <param name="near">始点</param>
-        /// <param name="far">終点</param>
-        public Vector3 CrossPoint(Vector3 near, Vector3 far)
-        {
-            Vector3 line = far - near;
-            Vector3 result = new Vector3();
-
-            result = KICalc.CrossPlanetoLine(near, far, surface);
-
-            return result;
+            Geometrys = new Geometry[] { info };
         }
         #endregion
     }

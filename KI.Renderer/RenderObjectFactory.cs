@@ -36,7 +36,7 @@ namespace KI.Renderer
         /// <returns>描画オブジェクト</returns>
         public RenderObject CreateRenderObject(string name, IGeometry primitive)
         {
-            return new RenderObject(name, primitive.GeometryInfos.First());
+            return new RenderObject(name, primitive.Geometrys.First());
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace KI.Renderer
         public IEnumerable<RenderObject> CreateRenderObjects(string name, IGeometry primitive)
         {
             var list = new List<RenderObject>();
-            foreach (var info in primitive.GeometryInfos)
+            foreach (var info in primitive.Geometrys)
             {
                 list.Add(new RenderObject(name, info));
             }

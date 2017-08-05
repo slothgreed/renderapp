@@ -1,15 +1,15 @@
-﻿using OpenTK;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using KI.Asset.Loader.Loader;
 using KI.Gfx.GLUtil;
+using OpenTK;
 
 namespace KI.Asset
 {
     /// <summary>
     /// plyファイルデータを独自形式に変換
     /// </summary>
-    class PLYConverter : IGeometry
+    public class PLYConverter : IGeometry
     {
         /// <summary>
         /// plyファイルのローダ
@@ -24,7 +24,7 @@ namespace KI.Asset
         /// <summary>
         /// 形状情報
         /// </summary>
-        public Geometry[] GeometryInfos { get; private set; }
+        public Geometry[] Geometrys { get; private set; }
 
         /// <summary>
         /// 形状情報の作成
@@ -51,7 +51,7 @@ namespace KI.Asset
             List<int> index = plyData.FaceIndex.ToList();
 
             Geometry info = new Geometry(position, null, Vector3.UnitX, null, index, GeometryType.Triangle);
-            GeometryInfos = new Geometry[] { info };
+            Geometrys = new Geometry[] { info };
         }
     }
 }

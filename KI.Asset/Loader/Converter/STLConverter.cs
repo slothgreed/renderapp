@@ -17,13 +17,13 @@ namespace KI.Asset
         {
             var stlData = new STLLoader(filePath);
             Geometry info = new Geometry(stlData.Position, stlData.Normal, Vector3.One, null, null, GeometryType.Triangle);
-            GeometryInfos = new Geometry[] { info };
+            Geometrys = new Geometry[] { info };
         }
 
         /// <summary>
         /// 形状情報
         /// </summary>
-        public Geometry[] GeometryInfos
+        public Geometry[] Geometrys
         {
             get;
             private set;

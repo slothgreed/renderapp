@@ -45,7 +45,7 @@ namespace RenderApp.RACommand
         {
             var half = AssetFactory.Instance.CreateHalfEdge(geometry.GeometryInfo.Position, geometry.GeometryInfo.Index);
             RenderObject halfEdge = RenderObjectFactory.Instance.CreateRenderObject("HalfEdge :" + geometry.Name);
-            halfEdge.SetGeometryInfo(half.GeometryInfos[0]);
+            halfEdge.SetGeometryInfo(half.Geometrys[0]);
             halfEdge.Geometry.ModelMatrix = geometry.ModelMatrix;
             Workspace.SceneManager.ActiveScene.AddObject(halfEdge);
 

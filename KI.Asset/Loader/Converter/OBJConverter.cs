@@ -28,12 +28,17 @@ namespace KI.Asset
         /// <summary>
         /// 形状情報
         /// </summary>
-        public Geometry[] GeometryInfos
+        public Geometry[] Geometrys
         {
             get;
             private set;
         }
 
+        /// <summary>
+        /// マテリアルのセット
+        /// </summary>
+        /// <param name="geometry">形状</param>
+        /// <param name="material">マテリアル</param>
         public void SetMaterial(Geometry geometry, OBJMaterial material)
         {
             if (material.map_Kd != null)
@@ -55,6 +60,9 @@ namespace KI.Asset
             }
         }
 
+        /// <summary>
+        /// レンダリング形状の作成
+        /// </summary>
         public void CreateRenderObject()
         {
             List<Geometry> geometrys = new List<Geometry>();
@@ -87,9 +95,8 @@ namespace KI.Asset
 
                 if (position.Count != 0)
                 {
-                    Geometry info = new Geometry(position, normal, null, texCoord, null, GeometryType.Triangle);
-                    //geometry.CreateGeometryInfo(objData.vertexInfo, PrimitiveType.Triangles);
-                    //SetMaterial(geometry, material);
+                    geometry = new Geometry(position, normal, null, texCoord, null, GeometryType.Triangle);
+                    SetMaterial(geometry, material);
                     if (geometry != null)
                     {
                         geometrys.Add(geometry);
@@ -97,7 +104,7 @@ namespace KI.Asset
                 }
             }
 
-            GeometryInfos = geometrys.ToArray();
+            Geometrys = geometrys.ToArray();
         }
     }
 }

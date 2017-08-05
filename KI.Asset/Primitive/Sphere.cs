@@ -27,11 +27,15 @@ namespace KI.Asset
         /// <summary>
         /// 形状情報
         /// </summary>
-        public Geometry[] GeometryInfos { get; private set; }
+        public Geometry[] Geometrys { get; private set; }
 
         /// <summary>
         /// 球面座標の取得
         /// </summary>
+        /// <param name="radial">半径</param>
+        /// <param name="theta">横角度</param>
+        /// <param name="phi">縦角度</param>
+        /// <returns>球面座標値</returns>
         private Vector3 GetSphericalPolarCoordinates(float radial, float theta, float phi)
         {
             Vector3 pos = new Vector3();
@@ -41,6 +45,11 @@ namespace KI.Asset
             return pos;
         }
 
+        /// <summary>
+        /// テクスチャ座標の取得
+        /// </summary>
+        /// <param name="position">位置</param>
+        /// <returns>テクスチャ座標</returns>
         private Vector2 GetSphericalTexCoord(Vector3 position)
         {
             Vector2 texcoord = Vector2.Zero;
@@ -58,6 +67,13 @@ namespace KI.Asset
             return texcoord;
         }
 
+        /// <summary>
+        /// オブジェクトの設定
+        /// </summary>
+        /// <param name="radial">半径</param>
+        /// <param name="hpartition">高さ分割数</param>
+        /// <param name="wpartition">横分割数</param>
+        /// <param name="orient">面の方向true=外向きfalse=内向き</param>
         private void SetObjectData(float radial, int hpartition, int wpartition, bool orient)
         {
             float theta = (float)Math.PI / hpartition;
@@ -166,7 +182,7 @@ namespace KI.Asset
 
             info.ConvertVertexArray();
 
-            GeometryInfos = new Geometry[] { info };
+            Geometrys = new Geometry[] { info };
         }
     }
 }

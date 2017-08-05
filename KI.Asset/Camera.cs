@@ -68,6 +68,7 @@ namespace KI.Asset
         /// <summary>
         /// コンストラクタ
         /// </summary>
+        /// <param name="name">名前</param>
         public Camera(string name)
             : base(name)
         {
@@ -121,6 +122,9 @@ namespace KI.Asset
             }
         }
 
+        /// <summary>
+        /// 投影*カメラマトリクス
+        /// </summary>
         public Matrix4 UnProject
         {
             get
@@ -130,6 +134,10 @@ namespace KI.Asset
         }
 
         #endregion
+
+        /// <summary>
+        /// 遠景
+        /// </summary>
         public float Far { get; set; } = 1000;
 
         #region [回転関連]
@@ -264,6 +272,12 @@ namespace KI.Asset
             UpdateCamera();
         }
 
+        /// <summary>
+        /// 平行移動
+        /// </summary>
+        /// <param name="x">x座標</param>
+        /// <param name="y">y座標</param>
+        /// <param name="z">z座標</param>
         public void Translate(float x, float y, float z)
         {
             Translate(new Vector3(x, y, z));
@@ -290,6 +304,13 @@ namespace KI.Asset
         }
         #endregion
         #region [カメラの回転]
+
+        /// <summary>
+        /// 回転
+        /// </summary>
+        /// <param name="x">x座標</param>
+        /// <param name="y">y座標</param>
+        /// <param name="z">z座標</param>
         public void Rotate(float x, float y, float z)
         {
             Rotate(new Vector3(x, y, z));
@@ -351,14 +372,14 @@ namespace KI.Asset
         /// <summary>
         /// カメラの球面移動
         /// </summary>
-        /// <returns></returns>
+        /// <returns>移動後の値</returns>
         private Vector3 GetSphericalMove()
         {
             Vector3 move = new Vector3();
             double theta = MathHelper.DegreesToRadians(Theta);
             double phi = MathHelper.DegreesToRadians(Phi);
             move.X = (float)(Math.Cos(theta) * Math.Cos(phi));
-            move.Y = (float)(Math.Sin(phi));
+            move.Y = (float)Math.Sin(phi);
             move.Z = (float)(Math.Sin(theta) * Math.Cos(phi));
 
             return move;
