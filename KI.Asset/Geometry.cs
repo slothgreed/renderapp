@@ -129,7 +129,7 @@ namespace KI.Asset
         /// <summary>
         /// モデルマトリックス
         /// </summary>
-        public Matrix4 ModelMatrix { get; set; }
+        public Matrix4 ModelMatrix { get; set; } = Matrix4.Identity;
 
         /// <summary>
         /// 形状種類
