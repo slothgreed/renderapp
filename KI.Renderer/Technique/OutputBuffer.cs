@@ -39,8 +39,8 @@ namespace KI.Renderer
         /// <summary>
         /// 描画テクスチャの設定
         /// </summary>
-        /// <param name="textureKind"></param>
-        /// <param name="outputTexture"></param>
+        /// <param name="textureKind">テクスチャ種類</param>
+        /// <param name="outputTexture">出力テクスチャ</param>
         public void SetOutputTarget(TextureKind textureKind, Texture outputTexture)
         {
             Plane.AddTexture(textureKind, outputTexture);

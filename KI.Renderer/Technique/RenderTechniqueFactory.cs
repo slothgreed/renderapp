@@ -30,7 +30,7 @@ namespace KI.Renderer
         /// <summary>
         /// シングルトン
         /// </summary>
-        public static RenderTechniqueFactory Instance { get; } =  new RenderTechniqueFactory();
+        public static RenderTechniqueFactory Instance { get; } = new RenderTechniqueFactory();
 
         /// <summary>
         /// レンダーテクニックの作成

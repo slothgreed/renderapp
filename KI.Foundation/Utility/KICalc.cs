@@ -406,7 +406,7 @@ namespace KI.Foundation.Utility
 
             double dot12 = Vector3.Dot(c1, c2);
             double dot13 = Vector3.Dot(c1, c3);
-            if ((dot12 > 0 && dot13 > 0))
+            if (dot12 > 0 && dot13 > 0)
             {
                 return true;
             }

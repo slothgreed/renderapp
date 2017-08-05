@@ -19,7 +19,7 @@ namespace RenderApp.RAControl
 
             if (PickPoint(LeftMouse.Click, ref geometry, ref vertex_Index))
             {
-                Vector3 pos = geometry.geometryInfo.Position[vertex_Index];
+                Vector3 pos = geometry.GeometryInfo.Position[vertex_Index];
                 RenderObject point = RenderObjectFactory.Instance.CreateRenderObject("SelectPoint :" + geometry.Name + ":" + vertex_Index.ToString());
                 point.SetGeometryInfo(new GeometryInfo(new List<Vector3>() { pos }, null, KICalc.RandomColor(), null, null, GeometryType.Point));
                 point.ModelMatrix = geometry.ModelMatrix;
@@ -73,9 +73,9 @@ namespace RenderApp.RAControl
         {
             bool select = false;
             Vector3 crossPos = Vector3.Zero;
-            for (int i = 0; i < geometry.geometryInfo.Position.Count; i++)
+            for (int i = 0; i < geometry.GeometryInfo.Position.Count; i++)
             {
-                Vector3 point = geometry.geometryInfo.Position[i];
+                Vector3 point = geometry.GeometryInfo.Position[i];
                 point = KICalc.Multiply(geometry.ModelMatrix, point);
 
                 if (KICalc.PerpendicularPoint(point, near, far, out crossPos))

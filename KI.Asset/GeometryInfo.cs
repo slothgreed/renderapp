@@ -4,6 +4,9 @@ using OpenTK;
 
 namespace KI.Asset
 {
+    /// <summary>
+    /// 頂点格納種類
+    /// </summary>
     public enum VertexStoreType
     {
         None,       //入っていない
@@ -41,8 +44,6 @@ namespace KI.Asset
         /// </summary>
         private List<int> index = new List<int>();
 
-        public GeometryType GeometryType;
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -70,6 +71,11 @@ namespace KI.Asset
         {
             Update(pos, nor, col, tex, idx, type);
         }
+
+        /// <summary>
+        /// 形状種類
+        /// </summary>
+        public GeometryType GeometryType { get; set; }
 
         /// <summary>
         /// 頂点リスト

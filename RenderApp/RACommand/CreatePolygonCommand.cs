@@ -25,9 +25,9 @@ namespace RenderApp.RACommand
 
         public string Execute(string commandArg)
         {
-            List<Vector3> position = new List<Vector3>(geometry.geometryInfo.Position);
-            List<Vector3> normal = new List<Vector3>(geometry.geometryInfo.Normal);
-            List<int> index = new List<int>(geometry.geometryInfo.Index);
+            List<Vector3> position = new List<Vector3>(geometry.GeometryInfo.Position);
+            List<Vector3> normal = new List<Vector3>(geometry.GeometryInfo.Normal);
+            List<int> index = new List<int>(geometry.GeometryInfo.Index);
             RenderObject polygon = RenderObjectFactory.Instance.CreateRenderObject("Polygon :" + geometry.Name);
             polygon.SetGeometryInfo(new GeometryInfo(position, normal, new Vector3(0.7f, 0.7f, 0.7f), null, index, GeometryType.Triangle));
             Workspace.SceneManager.ActiveScene.AddObject(polygon);

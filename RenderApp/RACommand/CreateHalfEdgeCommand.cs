@@ -25,7 +25,7 @@ namespace RenderApp.RACommand
 
         public string Execute(string commandArg)
         {
-            var half = AssetFactory.Instance.CreateHalfEdge(geometry.geometryInfo.Position, geometry.geometryInfo.Index);
+            var half = AssetFactory.Instance.CreateHalfEdge(geometry.GeometryInfo.Position, geometry.GeometryInfo.Index);
             RenderObject halfEdge = RenderObjectFactory.Instance.CreateRenderObject("HalfEdge :" + geometry.Name);
             halfEdge.SetGeometryInfo(half.GeometryInfos[0]);
             halfEdge.ModelMatrix = geometry.ModelMatrix;

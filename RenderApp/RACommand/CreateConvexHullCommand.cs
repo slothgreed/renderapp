@@ -34,7 +34,7 @@ namespace RenderApp.RACommand
 
         public string Execute(string commandArg)
         {
-            ConvexHullAlgorithm convexHull = new ConvexHullAlgorithm(geometry.geometryInfo.Position);
+            ConvexHullAlgorithm convexHull = new ConvexHullAlgorithm(geometry.GeometryInfo.Position);
             List<Vector3> position = new List<Vector3>();
             foreach (var mesh in convexHull.Meshs)
             {

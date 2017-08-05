@@ -30,7 +30,7 @@ namespace RenderApp.RACommand
 
         public string Execute(string commandArg)
         {
-            VoxelSpace voxel = new VoxelSpace(geometry.geometryInfo.Position, geometry.geometryInfo.Index, Partition);
+            VoxelSpace voxel = new VoxelSpace(geometry.GeometryInfo.Position, geometry.GeometryInfo.Index, Partition);
             RenderObject voxelObject = RenderObjectFactory.Instance.CreateRenderObject("Voxel :" + geometry.Name);
             GeometryInfo info = new GeometryInfo(voxel.vPosition, voxel.vNormal, KICalc.RandomColor(), null, null, GeometryType.Quad);
             voxelObject.SetGeometryInfo(info);

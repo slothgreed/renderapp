@@ -56,11 +56,6 @@ namespace KI.Asset
         private float panRatio = 10.0f;
 
         /// <summary>
-        /// 回転倍率
-        /// </summary>
-        private float RotateRatio;
-
-        /// <summary>
         /// 球面座標の角度
         /// </summary>
         private float phi;
@@ -228,7 +223,7 @@ namespace KI.Asset
         /// <summary>
         /// falseの時は+=、trueは=基本は＋＝
         /// </summary>
-        /// <param name="move"></param>
+        /// <param name="move">移動量</param>
         /// <param name="type">move分動かすのか,move位置に移動するのか</param>
         public void SetPan(Vector3 move, bool type = false)
         {
@@ -303,11 +298,11 @@ namespace KI.Asset
         /// <summary>
         /// Viewの回転
         /// </summary>
-        /// <param name="Right"></param>
-        public void Rotate(Vector3 move)
+        /// <param name="delta">移動量</param>
+        public void Rotate(Vector3 delta)
         {
-            Theta += move.X;
-            Phi += move.Y;
+            Theta += delta.X;
+            Phi += delta.Y;
             UpdateCamera();
         }
         #endregion

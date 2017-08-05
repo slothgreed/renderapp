@@ -39,9 +39,9 @@ namespace RenderApp.RAControl
                         dijkstra.EndIndex = vertex_Index;
                     }
 
-                    tri1 = geometry.geometryInfo.Position[vertex_Index];
-                    tri2 = geometry.geometryInfo.Position[vertex_Index + 1];
-                    tri3 = geometry.geometryInfo.Position[vertex_Index + 2];
+                    tri1 = geometry.GeometryInfo.Position[vertex_Index];
+                    tri2 = geometry.GeometryInfo.Position[vertex_Index + 1];
+                    tri3 = geometry.GeometryInfo.Position[vertex_Index + 2];
 
                     if (tri1 != Vector3.Zero && tri2 != Vector3.Zero && tri3 != Vector3.Zero)
                     {
@@ -57,14 +57,14 @@ namespace RenderApp.RAControl
                             triangle.SetGeometryInfo(info);
                             Workspace.SceneManager.ActiveScene.AddObject(triangle);
                         }
-                        else if (picking.geometryInfo.TriangleNum == 2)
+                        else if (picking.GeometryInfo.TriangleNum == 2)
                         {
                             picking.Dispose();
-                            picking.AddVertex(new List<Vector3>() { tri1, tri2, tri3 }, KICalc.RandomColor());
+                            //picking.AddVertex(new List<Vector3>() { tri1, tri2, tri3 }, KICalc.RandomColor());
                         }
                         else
                         {
-                            picking.AddVertex(new List<Vector3>() { tri1, tri2, tri3 }, KICalc.RandomColor());
+                            //picking.AddVertex(new List<Vector3>() { tri1, tri2, tri3 }, KICalc.RandomColor());
                             dijkstra.Execute();
                         }
                     }

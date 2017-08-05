@@ -53,7 +53,7 @@ namespace KI.Renderer
 
             for (int i = 0; i < weight.Length; i++)
             {
-                weight[i] /= (sum);
+                weight[i] /= sum;
             }
 
             uWeight = weight;

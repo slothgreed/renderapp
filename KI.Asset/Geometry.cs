@@ -2,6 +2,7 @@
 using KI.Analyzer;
 using KI.Foundation.Core;
 using KI.Foundation.Utility;
+using KI.Gfx.GLUtil;
 using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
 using OpenTK;
@@ -35,12 +36,24 @@ namespace KI.Asset
             Initialize();
         }
 
+        /// <summary>
+        /// 形状ID
+        /// </summary>
         public int ID { get; set; }
 
-        public GeometryInfo geometryInfo { get; set; }
+        /// <summary>
+        /// 形状情報
+        /// </summary>
+        public GeometryInfo GeometryInfo { get; protected set; }
 
+        /// <summary>
+        /// 可視不可視
+        /// </summary>
         public bool Visible { get; set; } = true;
 
+        /// <summary>
+        /// ハーフエッジ
+        /// </summary>
         public HalfEdge HalfEdge { get; set; }
 
         /// <summary>
@@ -48,6 +61,50 @@ namespace KI.Asset
         /// </summary>
         public Matrix4 ModelMatrix { get; set; }
 
+
+        /// <summary>
+        /// 法線の算出
+        /// </summary>
+        /// <param name="position">位置</param>
+        /// <param name="type">種類</param>
+        private void CalcNormal(List<Vector3> position, GeometryType type)
+        {
+            switch (type)
+            {
+                case GeometryType.None:
+                case GeometryType.Point:
+                case GeometryType.Line:
+                case GeometryType.Mix:
+                    return;
+                case GeometryType.Triangle:
+                    for (int i = 0; i < position.Count; i += 3)
+                    {
+                        Vector3 normal = Vector3.Cross(position[i + 2] - position[i + 1], position[i] - position[i + 1]).Normalized();
+                        GeometryInfo.Normal.Add(normal);
+                        GeometryInfo.Normal.Add(normal);
+                        GeometryInfo.Normal.Add(normal);
+                    }
+
+                    break;
+                case GeometryType.Quad:
+                    for (int i = 0; i < position.Count; i += 4)
+                    {
+                        Vector3 normal = Vector3.Cross(position[i + 2] - position[i + 1], position[i] - position[i + 1]).Normalized();
+                        GeometryInfo.Normal.Add(normal);
+                        GeometryInfo.Normal.Add(normal);
+                        GeometryInfo.Normal.Add(normal);
+                        GeometryInfo.Normal.Add(normal);
+                    }
+
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// 移動情報
+        /// </summary>
         public Vector3 Translate
         {
             get
@@ -62,6 +119,9 @@ namespace KI.Asset
             }
         }
 
+        /// <summary>
+        /// スケール情報
+        /// </summary>
         public Vector3 Scale
         {
             get
@@ -76,6 +136,9 @@ namespace KI.Asset
             }
         }
 
+        /// <summary>
+        /// 回転情報
+        /// </summary>
         public Vector3 Rotate
         {
             get
@@ -90,6 +153,9 @@ namespace KI.Asset
             }
         }
 
+        /// <summary>
+        /// 法線行列
+        /// </summary>
         public Matrix3 NormalMatrix
         {
             get
@@ -112,7 +178,7 @@ namespace KI.Asset
         /// </summary>
         public override void Dispose()
         {
-            geometryInfo.Dispose();
+            GeometryInfo.Dispose();
             ModelMatrix = Matrix4.Identity;
             Translate = Vector3.Zero;
             Scale = Vector3.One;
@@ -154,10 +220,10 @@ namespace KI.Asset
         /// </summary>
         /// <param name="angle">Degree</param>
         /// <param name="init">初期形状に対してか否か</param>
-        public virtual bool RotateX(float angle, bool init = false)
+        public virtual void RotateX(float angle, bool init = false)
         {
             Matrix4 rotate = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(angle));
-            return SetModelViewRotateXYZ(rotate, init);
+            SetModelViewRotateXYZ(rotate, init);
         }
 
         /// <summary>
@@ -165,10 +231,10 @@ namespace KI.Asset
         /// </summary>
         /// <param name="angle">Degree</param>
         /// <param name="init">初期形状に対してか否か</param>
-        public virtual bool RotateY(float angle, bool init = false)
+        public virtual void RotateY(float angle, bool init = false)
         {
             Matrix4 rotate = Matrix4.CreateRotationY(MathHelper.DegreesToRadians(angle));
-            return SetModelViewRotateXYZ(rotate, init);
+            SetModelViewRotateXYZ(rotate, init);
         }
 
         /// <summary>
@@ -176,18 +242,18 @@ namespace KI.Asset
         /// </summary>
         /// <param name="angle">Degree</param>
         /// <param name="init">初期形状に対してか否か</param>
-        public virtual bool RotateZ(float angle, bool init = false)
+        public virtual void RotateZ(float angle, bool init = false)
         {
             Matrix4 rotate = Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(angle));
-            return SetModelViewRotateXYZ(rotate, init);
+            SetModelViewRotateXYZ(rotate, init);
         }
 
-        public bool RotateXYZ(float angleX, float angleY, float angleZ, bool init = false)
+        public void RotateXYZ(float angleX, float angleY, float angleZ, bool init = false)
         {
             Matrix4 rotateX = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(angleX));
             Matrix4 rotateY = Matrix4.CreateRotationY(MathHelper.DegreesToRadians(angleY));
             Matrix4 rotateZ = Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(angleZ));
-            return SetModelViewRotateXYZ(rotateX * rotateY * rotateZ, init);
+            SetModelViewRotateXYZ(rotateX * rotateY * rotateZ, init);
         }
 
         /// <summary>
@@ -196,18 +262,18 @@ namespace KI.Asset
         /// <param name="vector1">vector1</param>
         /// <param name="vector2">vector2</param>
         /// <param name="init">初期形状に対してか否か</param>
-        public virtual bool RotateQuaternion(Vector3 vector1, Vector3 vector2, bool init = false)
+        public void RotateQuaternion(Vector3 vector1, Vector3 vector2, bool init = false)
         {
             Vector3 exterior = Vector3.Cross(vector1, vector2);
             if (vector1.Z == -1.0f)
             {
                 RotateY(180, init);
-                return true;
+                return;
             }
             else if (vector1.Z == 1.0f)
             {
                 RotateY(0, init);
-                return true;
+                return;
             }
 
             if (exterior.Length != 0)
@@ -215,10 +281,9 @@ namespace KI.Asset
                 exterior.Normalize();
                 float angle = KICalc.Angle(vector1, vector2, exterior);
                 Matrix4 mat = Matrix4.CreateFromAxisAngle(exterior, angle);
-                return SetModelViewRotateXYZ(mat, init);
+                SetModelViewRotateXYZ(mat, init);
+                return;
             }
-
-            return false;
         }
 
         /// <summary>
@@ -236,7 +301,6 @@ namespace KI.Asset
         /// <summary>
         /// 初期化
         /// </summary>
-        /// <param name="name"></param>
         private void Initialize()
         {
             ModelMatrix = Matrix4.Identity;
@@ -275,7 +339,7 @@ namespace KI.Asset
         /// <summary>
         /// 形状に回転を適用(初期の向きに対して)
         /// </summary>
-        private bool SetModelViewRotateXYZ(Matrix4 quart, bool init)
+        private void SetModelViewRotateXYZ(Matrix4 quart, bool init)
         {
             //移動量を消して、回転後移動
             Vector3 translate = ModelMatrix.ExtractTranslation();
@@ -291,8 +355,6 @@ namespace KI.Asset
             //基点分元に戻す
             ModelMatrix = ModelMatrix.ClearTranslation();
             ModelMatrix *= Matrix4.CreateTranslation(translate);
-
-            return true;
         }
     }
 }

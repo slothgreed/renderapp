@@ -14,17 +14,17 @@ namespace KI.Renderer
     /// </summary>
     public abstract class RenderTechnique : KIObject
     {
-        public enum RenderType
-        {
-            Original,
-            OffScreen
-        }
-
         /// <summary>
         /// 描画タイプ
         /// </summary>
         private RenderType renderType;
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <param name="tech">レンダーテクニックの種類</param>
+        /// <param name="type">レンダリングタイプ</param>
         public RenderTechnique(string name, RenderTechniqueType tech, RenderType type)
             : base(name)
         {
@@ -33,6 +33,14 @@ namespace KI.Renderer
             Init();
         }
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <param name="vertexShader">頂点シェーダ</param>
+        /// <param name="fragShader">フラグシェーダ</param>
+        /// <param name="tech">レンダーテクニックの種類</param>
+        /// <param name="type">レンダリングタイプ</param>
         public RenderTechnique(string name, string vertexShader, string fragShader, RenderTechniqueType tech, RenderType type)
             : base(name)
         {
@@ -42,12 +50,27 @@ namespace KI.Renderer
         }
 
         /// <summary>
+        /// レンダリングタイプ
+        /// </summary>
+        public enum RenderType
+        {
+            Original,
+            OffScreen
+        }
+
+        /// <summary>
         /// レンダーテクニックの種類
         /// </summary>
         public RenderTechniqueType Technique { get; private set; }
 
+        /// <summary>
+        /// シェーダ
+        /// </summary>
         public Shader ShaderItem { get; set; }
 
+        /// <summary>
+        /// レンダリングターゲット
+        /// </summary>
         public RenderTarget RenderTarget { get; set; }
 
         /// <summary>
@@ -60,6 +83,9 @@ namespace KI.Renderer
         /// </summary>
         protected RenderObject Plane { get; set; }
 
+        /// <summary>
+        /// バッファのクリア
+        /// </summary>
         public void ClearBuffer()
         {
             RenderTarget.ClearBuffer();
@@ -131,6 +157,10 @@ namespace KI.Renderer
         /// <summary>
         /// シェーダへ値のセット
         /// </summary>
+        /// <typeparam name="T">型</typeparam>
+        /// <param name="member">変数</param>
+        /// <param name="value">値</param>
+        /// <param name="memberName">シェーダ変数名</param>
         protected void SetValue<T>(ref T member, T value, [CallerMemberName]string memberName = "")
         {
             if (ShaderItem.SetValue(memberName, value))

@@ -9,20 +9,23 @@ namespace KI.Renderer
     /// </summary>
     public class GBuffer : RenderTechnique
     {
-        public enum GBufferOutputType
-        {
-            Posit = 0,
-            Normal,
-            Color,
-            Light
-        }
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public GBuffer()
             : base("GBuffer", RenderTechniqueType.GBuffer, RenderType.Original)
         {
+        }
+
+        /// <summary>
+        /// GBufferの入力値
+        /// </summary>
+        public enum GBufferOutputType
+        {
+            Posit = 0,
+            Normal,
+            Color,
+            Light
         }
 
         /// <summary>

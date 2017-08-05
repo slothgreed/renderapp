@@ -3,6 +3,9 @@ using KI.Gfx.KITexture;
 
 namespace KI.Renderer
 {
+    /// <summary>
+    /// レンダリングシステム
+    /// </summary>
     public class RenderSystem
     {
         /// <summary>

@@ -14,7 +14,7 @@ namespace RenderApp.RACommand
             }
 
             Geometry geometry = asset as Geometry;
-            if (geometry.geometryInfo.GeometryType != GeometryType.Triangle)
+            if (geometry.GeometryInfo.GeometryType != GeometryType.Triangle)
             {
                 return RACommandResource.Failed;
             }

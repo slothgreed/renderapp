@@ -44,16 +44,16 @@ namespace KI.Asset
         private Vector2 GetSphericalTexCoord(Vector3 position)
         {
             Vector2 texcoord = Vector2.Zero;
-            float PI = (float)Math.PI;
+            float pi = (float)Math.PI;
             position.Normalize();
 
             float atan2 = (float)Math.Atan2(position.Z, position.X);
             float asin = (float)Math.Asin(position.Y);
 
             texcoord.X = 0.5f;
-            texcoord.X += atan2 / (2 * PI);
+            texcoord.X += atan2 / (2 * pi);
             texcoord.Y = 0.5f;
-            texcoord.Y -= asin / PI;
+            texcoord.Y -= asin / pi;
 
             return texcoord;
         }

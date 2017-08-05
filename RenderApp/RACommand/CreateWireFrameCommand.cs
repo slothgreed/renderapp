@@ -27,32 +27,32 @@ namespace RenderApp.RACommand
         public string Execute(string commandArg)
         {
             List<Vector3> position = new List<Vector3>();
-            if (geometry.geometryInfo.Index.Count != 0)
+            if (geometry.GeometryInfo.Index.Count != 0)
             {
-                for (int i = 0; i < geometry.geometryInfo.Index.Count / 3; i++)
+                for (int i = 0; i < geometry.GeometryInfo.Index.Count / 3; i++)
                 {
-                    position.Add(geometry.geometryInfo.Position[geometry.geometryInfo.Index[3 * i]]);
-                    position.Add(geometry.geometryInfo.Position[geometry.geometryInfo.Index[3 * i + 1]]);
+                    position.Add(geometry.GeometryInfo.Position[geometry.GeometryInfo.Index[3 * i]]);
+                    position.Add(geometry.GeometryInfo.Position[geometry.GeometryInfo.Index[3 * i + 1]]);
 
-                    position.Add(geometry.geometryInfo.Position[geometry.geometryInfo.Index[3 * i + 1]]);
-                    position.Add(geometry.geometryInfo.Position[geometry.geometryInfo.Index[3 * i + 2]]);
+                    position.Add(geometry.GeometryInfo.Position[geometry.GeometryInfo.Index[3 * i + 1]]);
+                    position.Add(geometry.GeometryInfo.Position[geometry.GeometryInfo.Index[3 * i + 2]]);
 
-                    position.Add(geometry.geometryInfo.Position[geometry.geometryInfo.Index[3 * i + 2]]);
-                    position.Add(geometry.geometryInfo.Position[geometry.geometryInfo.Index[3 * i]]);
+                    position.Add(geometry.GeometryInfo.Position[geometry.GeometryInfo.Index[3 * i + 2]]);
+                    position.Add(geometry.GeometryInfo.Position[geometry.GeometryInfo.Index[3 * i]]);
                 }
             }
             else
             {
-                for (int i = 0; i < geometry.geometryInfo.Position.Count / 3; i++)
+                for (int i = 0; i < geometry.GeometryInfo.Position.Count / 3; i++)
                 {
-                    position.Add(geometry.geometryInfo.Position[3 * i]);
-                    position.Add(geometry.geometryInfo.Position[3 * i + 1]);
+                    position.Add(geometry.GeometryInfo.Position[3 * i]);
+                    position.Add(geometry.GeometryInfo.Position[3 * i + 1]);
 
-                    position.Add(geometry.geometryInfo.Position[3 * i + 1]);
-                    position.Add(geometry.geometryInfo.Position[3 * i + 2]);
+                    position.Add(geometry.GeometryInfo.Position[3 * i + 1]);
+                    position.Add(geometry.GeometryInfo.Position[3 * i + 2]);
 
-                    position.Add(geometry.geometryInfo.Position[3 * i + 2]);
-                    position.Add(geometry.geometryInfo.Position[3 * i]);
+                    position.Add(geometry.GeometryInfo.Position[3 * i + 2]);
+                    position.Add(geometry.GeometryInfo.Position[3 * i]);
                 }
             }
 
