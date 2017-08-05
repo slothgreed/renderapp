@@ -59,11 +59,11 @@ namespace RenderApp.AssetModel
                 }
             }
 
-            var info = new GeometryInfo(position, null, color, null, null, GeometryType.Line);
-            GeometryInfos = new GeometryInfo[] { info };
+            var info = new Geometry(position, null, color, null, null, GeometryType.Line);
+            GeometryInfos = new Geometry[] { info };
         }
 
-        public GeometryInfo[] GeometryInfos
+        public Geometry[] GeometryInfos
         {
             get;
             private set;

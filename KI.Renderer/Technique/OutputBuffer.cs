@@ -25,7 +25,7 @@ namespace KI.Renderer
             : base("OutputBuffer", vertexShader, fragShader, RenderTechniqueType.Output, RenderType.Original)
         {
             Plane = RenderObjectFactory.Instance.CreateRenderObject("OutputBuffer", AssetFactory.Instance.CreatePlane("OutputPlane"));
-            Plane.AddTexture(TextureKind.Normal, Global.RenderSystem.GBufferStage.OutputTexture[2]);
+            Plane.Geometry.AddTexture(TextureKind.Normal, Global.RenderSystem.GBufferStage.OutputTexture[2]);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace KI.Renderer
         /// <param name="outputTexture">出力テクスチャ</param>
         public void SetOutputTarget(TextureKind textureKind, Texture outputTexture)
         {
-            Plane.AddTexture(textureKind, outputTexture);
+            Plane.Geometry.AddTexture(textureKind, outputTexture);
         }
 
         /// <summary>

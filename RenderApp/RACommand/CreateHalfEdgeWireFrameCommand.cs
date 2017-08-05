@@ -15,11 +15,20 @@ namespace RenderApp.RACommand
     {
         private Geometry geometry;
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="asset">作成するオブジェクト</param>
         public CreateHalfEdgeWireFrameCommand(KIObject asset)
         {
             geometry = asset as Geometry;
         }
 
+        /// <summary>
+        /// 実行できるか
+        /// </summary>
+        /// <param name="commandArg">コマンド引数</param>
+        /// <returns>成功値</returns>
         public string CanExecute(string commandArg)
         {
             if (geometry == null)
@@ -35,9 +44,15 @@ namespace RenderApp.RACommand
             return CanCreateGeometry(geometry);
         }
 
-        private static GeometryInfo info2;
+        private static Geometry info2;
         private static int counter = -1;
         private static RenderObject obj;
+
+        /// <summary>
+        /// 実行
+        /// </summary>
+        /// <param name="commandArg">コマンド引数</param>
+        /// <returns>成功値</returns>
         public string Execute(string commandArg)
         {
             if (counter > -1)
@@ -130,6 +145,11 @@ namespace RenderApp.RACommand
             return RACommandResource.Success;
         }
 
+        /// <summary>
+        /// 元に戻す
+        /// </summary>
+        /// <param name="commandArg">コマンド引数</param>
+        /// <returns>成功値</returns>
         public string Undo(string commandArg)
         {
             throw new NotImplementedException();

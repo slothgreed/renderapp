@@ -28,7 +28,7 @@ namespace KI.Asset
         /// <summary>
         /// 形状情報
         /// </summary>
-        public GeometryInfo[] GeometryInfos
+        public Geometry[] GeometryInfos
         {
             get;
             private set;
@@ -57,11 +57,11 @@ namespace KI.Asset
 
         public void CreateRenderObject()
         {
-            List<GeometryInfo> geometrys = new List<GeometryInfo>();
+            List<Geometry> geometrys = new List<Geometry>();
 
             foreach (var material in objData.mtlList.Values)
             {
-                GeometryInfo geometry = null;
+                Geometry geometry = null;
                 var position = new List<Vector3>();
                 var normal = new List<Vector3>();
                 var texCoord = new List<Vector2>();
@@ -87,7 +87,7 @@ namespace KI.Asset
 
                 if (position.Count != 0)
                 {
-                    GeometryInfo info = new GeometryInfo(position, normal, null, texCoord, null, GeometryType.Triangle);
+                    Geometry info = new Geometry(position, normal, null, texCoord, null, GeometryType.Triangle);
                     //geometry.CreateGeometryInfo(objData.vertexInfo, PrimitiveType.Triangles);
                     //SetMaterial(geometry, material);
                     if (geometry != null)

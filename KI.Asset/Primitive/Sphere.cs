@@ -27,7 +27,7 @@ namespace KI.Asset
         /// <summary>
         /// 形状情報
         /// </summary>
-        public GeometryInfo[] GeometryInfos { get; private set; }
+        public Geometry[] GeometryInfos { get; private set; }
 
         /// <summary>
         /// 球面座標の取得
@@ -162,11 +162,11 @@ namespace KI.Asset
                 }
             }
 
-            var info = new GeometryInfo(position, normal, null, texcoord, null, Gfx.GLUtil.GeometryType.Triangle);
+            var info = new Geometry(position, normal, null, texcoord, null, Gfx.GLUtil.GeometryType.Triangle);
 
             info.ConvertVertexArray();
 
-            GeometryInfos = new GeometryInfo[] { info };
+            GeometryInfos = new Geometry[] { info };
         }
     }
 }

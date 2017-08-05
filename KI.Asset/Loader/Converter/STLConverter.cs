@@ -16,14 +16,14 @@ namespace KI.Asset
         public STLConverter(string filePath)
         {
             var stlData = new STLLoader(filePath);
-            GeometryInfo info = new GeometryInfo(stlData.Position, stlData.Normal, Vector3.One, null, null, GeometryType.Triangle);
-            GeometryInfos = new GeometryInfo[] { info };
+            Geometry info = new Geometry(stlData.Position, stlData.Normal, Vector3.One, null, null, GeometryType.Triangle);
+            GeometryInfos = new Geometry[] { info };
         }
 
         /// <summary>
         /// 形状情報
         /// </summary>
-        public GeometryInfo[] GeometryInfos
+        public Geometry[] GeometryInfos
         {
             get;
             private set;

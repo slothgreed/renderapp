@@ -18,31 +18,31 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="scene">シーン</param>
         /// <param name="shader">シェーダ</param>
-        /// <param name="geometry">形状</param>
+        /// <param name="renderObject">形状</param>
         /// <param name="textures">テクスチャ</param>
-        public static void InitializeState(Scene scene, Shader shader, RenderObject geometry, Dictionary<TextureKind, Texture> textures)
+        public static void InitializeState(Scene scene, Shader shader, RenderObject renderObject, Dictionary<TextureKind, Texture> textures)
         {
             foreach (ShaderProgramInfo info in shader.GetShaderVariable())
             {
                 switch (info.Name)
                 {
                     case "position":
-                        info.variable = geometry.PositionBuffer;
+                        info.variable = renderObject.PositionBuffer;
                         break;
                     case "normal":
-                        info.variable = geometry.NormalBuffer;
+                        info.variable = renderObject.NormalBuffer;
                         break;
                     case "color":
-                        info.variable = geometry.ColorBuffer;
+                        info.variable = renderObject.ColorBuffer;
                         break;
                     case "texcoord":
-                        info.variable = geometry.TexCoordBuffer;
+                        info.variable = renderObject.TexCoordBuffer;
                         break;
                     case "index":
-                        info.variable = geometry.IndexBuffer;
+                        info.variable = renderObject.IndexBuffer;
                         break;
                     case "uGeometryID":
-                        info.variable = geometry.ID;
+                        info.variable = renderObject.Geometry.ID;
                         break;
                     case "uWidth":
                         info.variable = DeviceContext.Instance.Width;
@@ -52,18 +52,18 @@ namespace KI.Renderer
                         break;
                     case "uMVP":
                         Matrix4 vp = scene.MainCamera.CameraProjMatrix;
-                        info.variable = geometry.ModelMatrix * vp;
+                        info.variable = renderObject.Geometry.ModelMatrix * vp;
                         break;
                     case "uSMVP":
                         Matrix4 light = scene.SunLight.Matrix;
                         Matrix4 proj = scene.MainCamera.ProjMatrix;
-                        info.variable = geometry.ModelMatrix * light * proj;
+                        info.variable = renderObject.Geometry.ModelMatrix * light * proj;
                         break;
                     case "uModelMatrix":
-                        info.variable = geometry.ModelMatrix;
+                        info.variable = renderObject.Geometry.ModelMatrix;
                         break;
                     case "uNormalMatrix":
-                        info.variable = geometry.NormalMatrix;
+                        info.variable = renderObject.Geometry.NormalMatrix;
                         break;
                     case "uProjectMatrix":
                         info.variable = scene.MainCamera.ProjMatrix;

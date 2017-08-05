@@ -14,8 +14,11 @@ namespace RenderApp.RACommand
     /// <summary>
     /// Convexhullの作成コマンド
     /// </summary>
-    class CreateConvexHullCommand : CreateModelCommandBase, ICommand
+    public class CreateConvexHullCommand : CreateModelCommandBase, ICommand
     {
+        /// <summary>
+        /// 形状
+        /// </summary>
         private Geometry geometry;
 
         /// <summary>
@@ -27,11 +30,21 @@ namespace RenderApp.RACommand
             geometry = asset as Geometry;
         }
 
+        /// <summary>
+        /// 実行できるか
+        /// </summary>
+        /// <param name="commandArg">コマンド引数</param>
+        /// <returns>成功値</returns>
         public string CanExecute(string commandArg)
         {
             return CanCreateGeometry(geometry);
         }
 
+        /// <summary>
+        /// 実行
+        /// </summary>
+        /// <param name="commandArg">コマンド引数</param>
+        /// <returns>成功値</returns>
         public string Execute(string commandArg)
         {
             ConvexHullAlgorithm convexHull = new ConvexHullAlgorithm(geometry.GeometryInfo.Position);
@@ -72,21 +85,26 @@ namespace RenderApp.RACommand
                 position.Add(pos0);
             }
 
-            GeometryInfo info = new GeometryInfo(position, null, Vector3.UnitZ, null, null, GeometryType.Line);
+            Geometry info = new Geometry(position, null, Vector3.UnitZ, null, null, GeometryType.Line);
             RenderObject convex = RenderObjectFactory.Instance.CreateRenderObject("ConvexHull :" + geometry.Name);
             convex.SetGeometryInfo(info);
-            convex.ModelMatrix = geometry.ModelMatrix;
+            convex.Geometry.ModelMatrix = geometry.ModelMatrix;
             Workspace.SceneManager.ActiveScene.AddObject(convex);
 
             RenderObject point = RenderObjectFactory.Instance.CreateRenderObject("ConvexHull : Points" + geometry.Name);
-            GeometryInfo info2 = new GeometryInfo(convexHull.Points, null, null, null, null, GeometryType.Point);
+            Geometry info2 = new Geometry(convexHull.Points, null, null, null, null, GeometryType.Point);
             point.SetGeometryInfo(info2);
-            point.ModelMatrix = geometry.ModelMatrix;
+            point.Geometry.ModelMatrix = geometry.ModelMatrix;
             Workspace.SceneManager.ActiveScene.AddObject(point);
 
             return RACommandResource.Success;
         }
 
+        /// <summary>
+        /// 元に戻す
+        /// </summary>
+        /// <param name="commandArg">コマンド引数</param>
+        /// <returns>成功値</returns>
         public string Undo(string commandArg)
         {
             throw new NotImplementedException();

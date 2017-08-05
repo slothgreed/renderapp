@@ -53,11 +53,11 @@ namespace RenderApp.RAControl
                         if (picking == null)
                         {
                             RenderObject triangle = RenderObjectFactory.Instance.CreateRenderObject("Picking");
-                            GeometryInfo info = new GeometryInfo(new List<Vector3>() { tri1, tri2, tri3 }, null, KICalc.RandomColor(), null, null, GeometryType.Triangle);
+                            Geometry info = new Geometry(new List<Vector3>() { tri1, tri2, tri3 }, null, KICalc.RandomColor(), null, null, GeometryType.Triangle);
                             triangle.SetGeometryInfo(info);
                             Workspace.SceneManager.ActiveScene.AddObject(triangle);
                         }
-                        else if (picking.GeometryInfo.TriangleNum == 2)
+                        else if (picking.Geometry.TriangleNum == 2)
                         {
                             picking.Dispose();
                             //picking.AddVertex(new List<Vector3>() { tri1, tri2, tri3 }, KICalc.RandomColor());

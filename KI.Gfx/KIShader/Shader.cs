@@ -351,6 +351,9 @@ namespace KI.Gfx.KIShader
         /// </summary>
         public void Initialize()
         {
+
+            ActiveShader = new List<ShaderProgram>();
+
             if (VertexShader != null)
             {
                 ActiveShader.Add(VertexShader);

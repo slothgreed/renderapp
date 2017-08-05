@@ -21,8 +21,8 @@ namespace RenderApp.RAControl
             {
                 Vector3 pos = geometry.GeometryInfo.Position[vertex_Index];
                 RenderObject point = RenderObjectFactory.Instance.CreateRenderObject("SelectPoint :" + geometry.Name + ":" + vertex_Index.ToString());
-                point.SetGeometryInfo(new GeometryInfo(new List<Vector3>() { pos }, null, KICalc.RandomColor(), null, null, GeometryType.Point));
-                point.ModelMatrix = geometry.ModelMatrix;
+                point.SetGeometryInfo(new Geometry(new List<Vector3>() { pos }, null, KICalc.RandomColor(), null, null, GeometryType.Point));
+                point.Geometry.ModelMatrix = geometry.ModelMatrix;
                 Workspace.SceneManager.ActiveScene.AddObject(point);
             }
 

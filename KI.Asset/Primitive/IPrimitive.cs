@@ -12,7 +12,7 @@
     /// </summary>
     public interface IGeometry
     {
-        GeometryInfo[] GeometryInfos
+        Geometry[] GeometryInfos
         {
             get;
         }

@@ -44,7 +44,7 @@ namespace KI.Asset.Loader
         /// <summary>
         /// 形状情報
         /// </summary>
-        public GeometryInfo[] GeometryInfos { get; private set; }
+        public Geometry[] GeometryInfos { get; private set; }
 
         /// <summary>
         /// 頂点

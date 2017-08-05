@@ -25,7 +25,7 @@ namespace KI.Asset
             CreateGeometryInfo(half);
         }
 
-        public GeometryInfo[] GeometryInfos
+        public Geometry[] GeometryInfos
         {
             get;
             private set;
@@ -54,8 +54,8 @@ namespace KI.Asset
                 }
             }
 
-            GeometryInfo info = new GeometryInfo(position, normal, color, null, index, Gfx.GLUtil.GeometryType.Triangle);
-            GeometryInfos = new GeometryInfo[] { info };
+            Geometry info = new Geometry(position, normal, color, null, index, Gfx.GLUtil.GeometryType.Triangle);
+            GeometryInfos = new Geometry[] { info };
         }
     }
 }

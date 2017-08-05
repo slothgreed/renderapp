@@ -45,7 +45,7 @@ namespace KI.Asset
         /// <returns>ファイルパス</returns>
         public string GetVertexShader(RenderObject renderObject)
         {
-            string shaderPath = GetTextureFragShader(renderObject);
+            string shaderPath = GetTextureFragShader(renderObject.Geometry);
             if (shaderPath != null)
             {
                 return shaderPath;

@@ -12,29 +12,54 @@ using RenderApp.Globals;
 
 namespace RenderApp.RACommand
 {
-    class CreateVoxelCommand : CreateModelCommandBase, ICommand
+    /// <summary>
+    /// ボクセルの作成
+    /// </summary>
+    public class CreateVoxelCommand : CreateModelCommandBase, ICommand
     {
+        /// <summary>
+        /// 形状
+        /// </summary>
         private Geometry geometry = null;
-        private int Partition = 0;
 
-        public CreateVoxelCommand(KIObject asset, int partition)
+        /// <summary>
+        /// 分割数
+        /// </summary>
+        private int partition = 0;
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="asset">作成するオブジェクト</param>
+        /// <param name="part">分割数</param>
+        public CreateVoxelCommand(KIObject asset, int part)
         {
             geometry = asset as Geometry;
-            Partition = partition;
+            partition = part;
         }
 
+        /// <summary>
+        /// 実行できるか
+        /// </summary>
+        /// <param name="commandArg">コマンド引数</param>
+        /// <returns>成功値</returns>
         public string CanExecute(string commandArg)
         {
             return CanCreateGeometry(geometry);
         }
 
+        /// <summary>
+        /// 実行
+        /// </summary>
+        /// <param name="commandArg">コマンド引数</param>
+        /// <returns>成功値</returns>
         public string Execute(string commandArg)
         {
-            VoxelSpace voxel = new VoxelSpace(geometry.GeometryInfo.Position, geometry.GeometryInfo.Index, Partition);
+            VoxelSpace voxel = new VoxelSpace(geometry.GeometryInfo.Position, geometry.GeometryInfo.Index, partition);
             RenderObject voxelObject = RenderObjectFactory.Instance.CreateRenderObject("Voxel :" + geometry.Name);
-            GeometryInfo info = new GeometryInfo(voxel.vPosition, voxel.vNormal, KICalc.RandomColor(), null, null, GeometryType.Quad);
+            Geometry info = new Geometry(voxel.vPosition, voxel.vNormal, KICalc.RandomColor(), null, null, GeometryType.Quad);
             voxelObject.SetGeometryInfo(info);
-            voxelObject.Transformation(geometry.ModelMatrix);
+            voxelObject.Geometry.Transformation(geometry.ModelMatrix);
             Workspace.SceneManager.ActiveScene.AddObject(voxelObject);
 
             RenderObject innerObject = RenderObjectFactory.Instance.CreateRenderObject("Voxel Inner : " + geometry.Name);
@@ -46,14 +71,19 @@ namespace RenderApp.RACommand
                 colors.Add(KICalc.GetPseudoColor(v.Value, 0, 100));
             }
 
-            GeometryInfo innerInfo = new GeometryInfo(voxel.GetPoint(VoxelSpace.VoxelState.Inner), null, colors, null, null, GeometryType.Point);
+            Geometry innerInfo = new Geometry(voxel.GetPoint(VoxelSpace.VoxelState.Inner), null, colors, null, null, GeometryType.Point);
             innerObject.SetGeometryInfo(innerInfo);
-            innerObject.Transformation(geometry.ModelMatrix);
+            innerObject.Geometry.Transformation(geometry.ModelMatrix);
             Workspace.SceneManager.ActiveScene.AddObject(innerObject);
 
             return RACommandResource.Success;
         }
 
+        /// <summary>
+        /// 元に戻す
+        /// </summary>
+        /// <param name="commandArg">コマンド引数</param>
+        /// <returns>成功値</returns>
         public string Undo(string commandArg)
         {
             throw new NotImplementedException();

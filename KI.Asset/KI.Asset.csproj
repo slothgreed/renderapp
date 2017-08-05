@@ -55,7 +55,6 @@
     <Compile Include="Camera.cs" />
     <Compile Include="EnvironmentProbe.cs" />
     <Compile Include="Geometry.cs" />
-    <Compile Include="GeometryInfo.cs" />
     <Compile Include="Light\DirectionLight.cs" />
     <Compile Include="Light\Light.cs" />
     <Compile Include="Light\PointLight.cs" />

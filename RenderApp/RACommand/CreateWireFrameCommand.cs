@@ -10,20 +10,40 @@ using RenderApp.Globals;
 
 namespace RenderApp.RACommand
 {
-    class CreateWireFrameCommand : CreateModelCommandBase, ICommand
+    /// <summary>
+    /// ワイヤフレームの作成
+    /// </summary>
+    public class CreateWireFrameCommand : CreateModelCommandBase, ICommand
     {
+        /// <summary>
+        /// 形状
+        /// </summary>
         private Geometry geometry;
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="asset">作成するオブジェクト</param>
         public CreateWireFrameCommand(KIObject asset)
         {
             geometry = asset as Geometry;
         }
 
+        /// <summary>
+        /// 実行できるか
+        /// </summary>
+        /// <param name="commandArg">コマンド引数</param>
+        /// <returns>成功値</returns>
         public string CanExecute(string commandArg)
         {
             return CanCreateGeometry(geometry);
         }
 
+        /// <summary>
+        /// 実行
+        /// </summary>
+        /// <param name="commandArg">コマンド引数</param>
+        /// <returns>成功値</returns>
         public string Execute(string commandArg)
         {
             List<Vector3> position = new List<Vector3>();
@@ -57,13 +77,18 @@ namespace RenderApp.RACommand
             }
 
             RenderObject wireframe = RenderObjectFactory.Instance.CreateRenderObject("WireFrame :" + geometry.Name);
-            wireframe.SetGeometryInfo(new GeometryInfo(position, null, KICalc.RandomColor(), null, null, GeometryType.Line));
-            wireframe.ModelMatrix = geometry.ModelMatrix;
+            wireframe.SetGeometryInfo(new Geometry(position, null, KICalc.RandomColor(), null, null, GeometryType.Line));
+            wireframe.Geometry.ModelMatrix = geometry.ModelMatrix;
             Workspace.SceneManager.ActiveScene.AddObject(wireframe);
 
             return RACommandResource.Success;
         }
 
+        /// <summary>
+        /// 元に戻す
+        /// </summary>
+        /// <param name="commandArg">コマンド引数</param>
+        /// <returns>成功値</returns>
         public string Undo(string commandArg)
         {
             return RACommand.RACommandResource.Failed;

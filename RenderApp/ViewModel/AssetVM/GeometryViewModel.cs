@@ -17,11 +17,11 @@ namespace RenderApp.ViewModel
         {
             Model = model;
             PropertyItem = new Dictionary<string, object>();
-            PropertyItem.Add("Translate", new Vector3ViewModel(Model, "Translate", model.Translate));
-            PropertyItem.Add("Scale", new Vector3ViewModel(Model, "Scale", model.Scale));
-            PropertyItem.Add("Rotate", new Vector3ViewModel(Model, "Rotate", model.Rotate));
-            PropertyItem.Add("Shader", new ComboItemViewModel(Model, "Shader", RenderApp.Globals.Project.ActiveProject.GetObject(RAAsset.Shader), 0));
-            PropertyItem.Add("Visible", new CheckBoxViewModel(Model, "Visible", model.Visible));
+            //PropertyItem.Add("Translate", new Vector3ViewModel(Model, "Translate", model.Translate));
+            //PropertyItem.Add("Scale", new Vector3ViewModel(Model, "Scale", model.Scale));
+            //PropertyItem.Add("Rotate", new Vector3ViewModel(Model, "Rotate", model.Rotate));
+            //PropertyItem.Add("Shader", new ComboItemViewModel(Model, "Shader", RenderApp.Globals.Project.ActiveProject.GetObject(RAAsset.Shader), 0));
+            //PropertyItem.Add("Visible", new CheckBoxViewModel(Model, "Visible", model.Visible));
         }
 
         public override string Title

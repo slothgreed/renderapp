@@ -24,7 +24,7 @@ namespace KI.Asset
         /// <summary>
         /// 形状情報
         /// </summary>
-        public GeometryInfo[] GeometryInfos { get; private set; }
+        public Geometry[] GeometryInfos { get; private set; }
 
         /// <summary>
         /// 形状情報の作成
@@ -50,8 +50,8 @@ namespace KI.Asset
 
             List<int> index = plyData.FaceIndex.ToList();
 
-            GeometryInfo info = new GeometryInfo(position, null, Vector3.UnitX, null, index, GeometryType.Triangle);
-            GeometryInfos = new GeometryInfo[] { info };
+            Geometry info = new Geometry(position, null, Vector3.UnitX, null, index, GeometryType.Triangle);
+            GeometryInfos = new Geometry[] { info };
         }
     }
 }

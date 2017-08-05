@@ -50,10 +50,10 @@ namespace KI.Renderer
         /// </summary>
         public override void Initialize()
         {
-            Plane.AddTexture(TextureKind.Albedo, Global.RenderSystem.GBufferStage.OutputTexture[2]);
-            Plane.AddTexture(TextureKind.Normal, Global.RenderSystem.GBufferStage.OutputTexture[1]);
-            Plane.AddTexture(TextureKind.World, Global.RenderSystem.GBufferStage.OutputTexture[0]);
-            Plane.AddTexture(TextureKind.Lighting, Global.RenderSystem.GBufferStage.OutputTexture[3]);
+            Plane.Geometry.AddTexture(TextureKind.Albedo, Global.RenderSystem.GBufferStage.OutputTexture[2]);
+            Plane.Geometry.AddTexture(TextureKind.Normal, Global.RenderSystem.GBufferStage.OutputTexture[1]);
+            Plane.Geometry.AddTexture(TextureKind.World, Global.RenderSystem.GBufferStage.OutputTexture[0]);
+            Plane.Geometry.AddTexture(TextureKind.Lighting, Global.RenderSystem.GBufferStage.OutputTexture[3]);
         }
     }
 }
