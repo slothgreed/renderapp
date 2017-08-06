@@ -11,6 +11,26 @@ namespace KI.Asset
     public class Sphere : KIObject, IGeometry
     {
         /// <summary>
+        /// 半径
+        /// </summary>
+        private float radial;
+
+        /// <summary>
+        /// 高さ分割数
+        /// </summary>
+        private int hpartition;
+
+        /// <summary>
+        /// 横分割数
+        /// </summary>
+        private int wpartition;
+
+        /// <summary>
+        /// 面の方向true=外向きfalse=内向き
+        /// </summary>
+        private bool orient;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
@@ -21,7 +41,11 @@ namespace KI.Asset
         public Sphere(string name, float radial, int hpartition, int wpartition, bool orient)
             : base(name)
         {
-            SetObjectData(radial, hpartition, wpartition, orient);
+            this.radial = radial;
+            this.hpartition = hpartition;
+            this.wpartition = wpartition;
+            this.orient = orient;
+            CreateGeometry();
         }
 
         /// <summary>
@@ -70,11 +94,7 @@ namespace KI.Asset
         /// <summary>
         /// オブジェクトの設定
         /// </summary>
-        /// <param name="radial">半径</param>
-        /// <param name="hpartition">高さ分割数</param>
-        /// <param name="wpartition">横分割数</param>
-        /// <param name="orient">面の方向true=外向きfalse=内向き</param>
-        private void SetObjectData(float radial, int hpartition, int wpartition, bool orient)
+        public void CreateGeometry()
         {
             float theta = (float)Math.PI / hpartition;
             float phi = (float)Math.PI / wpartition;

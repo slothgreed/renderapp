@@ -12,13 +12,18 @@ namespace KI.Asset
     public class PLYConverter : IGeometry
     {
         /// <summary>
+        /// plyファイルデータ
+        /// </summary>
+        private PLYLoader plyData;
+
+        /// <summary>
         /// plyファイルのローダ
         /// </summary>
         /// <param name="filePath">ファイルパス</param>
         public PLYConverter(string filePath)
         {
-            var plyData = new PLYLoader(filePath);
-            CreateGeometryInfo(plyData);
+            plyData = new PLYLoader(filePath);
+            CreateGeometry();
         }
 
         /// <summary>
@@ -27,10 +32,9 @@ namespace KI.Asset
         public Geometry[] Geometrys { get; private set; }
 
         /// <summary>
-        /// 形状情報の作成
+        /// 形状の作成
         /// </summary>
-        /// <param name="plyData">plyデータ</param>
-        public void CreateGeometryInfo(PLYLoader plyData)
+        public void CreateGeometry()
         {
             var position = new List<Vector3>();
 

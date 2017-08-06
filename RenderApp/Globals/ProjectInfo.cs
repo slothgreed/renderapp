@@ -8,7 +8,6 @@ namespace RenderApp
     /// </summary>
     public class ProjectInfo
     {
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -20,7 +19,6 @@ namespace RenderApp
         /// 開いたか
         /// </summary>
         public static bool IsOpen { get; set; }
-
 
         public static string ProjectDirectory
         {

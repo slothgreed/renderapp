@@ -61,9 +61,9 @@ namespace KI.Asset
         }
 
         /// <summary>
-        /// レンダリング形状の作成
+        /// 形状の作成
         /// </summary>
-        public void CreateRenderObject()
+        public void CreateGeometry()
         {
             List<Geometry> geometrys = new List<Geometry>();
 

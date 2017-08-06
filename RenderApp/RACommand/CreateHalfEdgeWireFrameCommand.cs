@@ -58,13 +58,13 @@ namespace RenderApp.RACommand
             if (counter > -1)
             {
                 //geometry.HalfEdge.VertexDecimation(geometry.HalfEdge.m_Edge[counter]);
-                geometry.HalfEdge.EdgeFlips(geometry.HalfEdge.edges[counter]);
+                geometry.HalfEdge.EdgeFlips(geometry.HalfEdge.Edges[counter]);
             }
 
             counter++;
             List<Vector3> position = new List<Vector3>();
             var color = new List<Vector3>();
-            foreach (var mesh in geometry.HalfEdge.meshs)
+            foreach (var mesh in geometry.HalfEdge.Meshs)
             {
                 foreach (var edge in mesh.AroundEdge)
                 {
@@ -108,7 +108,7 @@ namespace RenderApp.RACommand
                     //    color.Add(Vector3.UnitX);
                     //}
 
-                    if (edge == geometry.HalfEdge.edges[counter])
+                    if (edge == geometry.HalfEdge.Edges[counter])
                     {
                         color.Add(Vector3.UnitY);
                         color.Add(Vector3.UnitX);

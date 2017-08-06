@@ -1,13 +1,37 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
+
 namespace RenderApp.RAControl
 {
+    /// <summary>
+    /// コントロールマネージャ
+    /// </summary>
     public class ControlManager : IControl
     {
-        public Dictionary<CONTROL_MODE, IControl> Controllers = new Dictionary<CONTROL_MODE, IControl>();
-
+        /// <summary>
+        /// カメラコントローラ
+        /// </summary>
         private IControl cameraController = new CameraControl();
 
+        /// <summary>
+        /// コントローラの現在のモード
+        /// </summary>
+        private CONTROL_MODE mode = CONTROL_MODE.SelectTriangle;
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        private ControlManager()
+        {
+            Controllers.Add(CONTROL_MODE.SelectTriangle, new SelectTriangleControl());
+            Controllers.Add(CONTROL_MODE.Dijkstra, new DijkstraControl());
+            Controllers.Add(CONTROL_MODE.SelectPoint, new SelectPointControl());
+            cameraController = new CameraControl();
+        }
+
+        /// <summary>
+        /// コントローラのモード
+        /// </summary>
         public enum CONTROL_MODE
         {
             SelectTriangle,
@@ -15,6 +39,9 @@ namespace RenderApp.RAControl
             SelectPoint
         }
 
+        /// <summary>
+        /// マウスの状態
+        /// </summary>
         public enum MOUSE_STATE
         {
             DOWN,
@@ -24,8 +51,19 @@ namespace RenderApp.RAControl
             WHEEL,
         }
 
-        CONTROL_MODE mode = CONTROL_MODE.SelectTriangle;
+        /// <summary>
+        /// シングルトンインスタンス
+        /// </summary>
+        public static ControlManager Instance { get; } = new ControlManager();
 
+        /// <summary>
+        /// コントロールリスト
+        /// </summary>
+        public Dictionary<CONTROL_MODE, IControl> Controllers { get; set; } = new Dictionary<CONTROL_MODE, IControl>();
+
+        /// <summary>
+        /// コントローラの現在のモード
+        /// </summary>
         public CONTROL_MODE Mode
         {
             get
@@ -41,19 +79,11 @@ namespace RenderApp.RAControl
             }
         }
 
-        public static ControlManager Instance = new ControlManager();
-
         /// <summary>
-        /// コンストラクタ
+        /// 入力
         /// </summary>
-        private ControlManager()
-        {
-            Controllers.Add(CONTROL_MODE.SelectTriangle, new SelectTriangleControl());
-            Controllers.Add(CONTROL_MODE.Dijkstra, new DijkstraControl());
-            Controllers.Add(CONTROL_MODE.SelectPoint, new SelectPointControl());
-            cameraController = new CameraControl();
-        }
-
+        /// <param name="mouse">マウス情報</param>
+        /// <param name="state">状態</param>
         public void ProcessInput(MouseEventArgs mouse, MOUSE_STATE state)
         {
             switch (state)

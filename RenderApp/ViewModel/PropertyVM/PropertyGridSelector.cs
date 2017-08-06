@@ -8,12 +8,19 @@ namespace RenderApp.ViewModel
     class PropertyGridTemplate : DataTemplateSelector
     {
         public DataTemplate DefaultTemplate { get; set; }
+
         public DataTemplate Vector2Template { get; set; }
+
         public DataTemplate Vector3Template { get; set; }
+
         public DataTemplate Vector4Template { get; set; }
+
         public DataTemplate Matrix3Template { get; set; }
+
         public DataTemplate Matrix4Template { get; set; }
+
         public DataTemplate CheckBoxTemplate { get; set; }
+
         public DataTemplate ComboItemTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)

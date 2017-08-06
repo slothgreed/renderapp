@@ -18,7 +18,7 @@ namespace KI.Analyzer.Algorithm
 
         private void Calculate(HalfEdge half)
         {
-            foreach (var vertex in half.vertexs)
+            foreach (var vertex in half.Vertexs)
             {
                 SetGaussianParameter(vertex);
                 SetMeanCurvature(vertex);

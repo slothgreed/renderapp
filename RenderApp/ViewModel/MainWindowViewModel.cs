@@ -66,7 +66,9 @@ namespace RenderApp.ViewModel
         }
 
         private Viewport viewport;
+
         private string taskBarText;
+
         public string TaskBarText
         {
             get

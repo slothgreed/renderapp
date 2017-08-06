@@ -15,19 +15,23 @@ namespace RenderApp.AssetModel
         /// <summary>
         /// グリッドの幅
         /// </summary>
-        private float space;
+        private float delta;
+
+        public Geometry[] Geometrys { get; private set; }
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
+        /// <param name="area">大きさ</param>
+        /// <param name="space">間隔</param>
         public GridPlane(float area, float space)
         {
             this.area = area;
-            this.space = space;
-            Create();
+            this.delta = space;
+            CreateGeometry();
         }
 
-        public void Create()
+        public void CreateGeometry()
         {
             List<Vector3> position = new List<Vector3>();
             List<Vector3> color = new List<Vector3>();
@@ -38,7 +42,7 @@ namespace RenderApp.AssetModel
             Vector3 line_fin2 = new Vector3();
             float world = area;
 
-            for (float i = -world; i < world; i += space)
+            for (float i = -world; i < world; i += delta)
             {
                 if (i != 0)
                 {
@@ -61,12 +65,6 @@ namespace RenderApp.AssetModel
 
             var info = new Geometry(position, null, color, null, null, GeometryType.Line);
             Geometrys = new Geometry[] { info };
-        }
-
-        public Geometry[] Geometrys
-        {
-            get;
-            private set;
         }
     }
 }

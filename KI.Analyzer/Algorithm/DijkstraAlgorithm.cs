@@ -35,8 +35,8 @@ namespace KI.Analyzer
         {
             if (StartIndex < 0 ||
                 EndIndex < 0 ||
-                StartIndex > halfEdge.vertexs.Count ||
-                EndIndex > halfEdge.vertexs.Count)
+                StartIndex > halfEdge.Vertexs.Count ||
+                EndIndex > halfEdge.Vertexs.Count)
             {
                 return "init value error";
             }
@@ -75,11 +75,11 @@ namespace KI.Analyzer
 
         private bool DistanceDijkstra(int index1, int index2)
         {
-            Node[] nodeArray = new Node[halfEdge.vertexs.Count];
+            Node[] nodeArray = new Node[halfEdge.Vertexs.Count];
 
             for (int i = 0; i < nodeArray.Length; i++)
             {
-                nodeArray[i] = new Node(false, -1, halfEdge.vertexs[i]);
+                nodeArray[i] = new Node(false, -1, halfEdge.Vertexs[i]);
             }
 
             CalcDijkstra(nodeArray, index1, index2);

@@ -14,14 +14,19 @@ namespace KI.Asset
     public class HalfEdgeConverter : IGeometry
     {
         /// <summary>
+        /// ハーフエッジ
+        /// </summary>
+        private HalfEdge half;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="filePath">ファイルパス</param>
         public HalfEdgeConverter(string filePath)
         {
-            var half = new HalfEdge();
+            half = new HalfEdge();
             HalfEdgeIO.ReadFile(filePath, half);
-            CreateGeometryInfo(half);
+            CreateGeometry();
         }
 
         /// <summary>
@@ -30,7 +35,7 @@ namespace KI.Asset
         /// <param name="half">ハーフエッジ</param>
         public HalfEdgeConverter(HalfEdge half)
         {
-            CreateGeometryInfo(half);
+            CreateGeometry();
         }
 
         /// <summary>
@@ -45,8 +50,7 @@ namespace KI.Asset
         /// <summary>
         /// 形状の作成
         /// </summary>
-        /// <param name="half">ハーフエッジ</param>
-        public void CreateGeometryInfo(HalfEdge half)
+        public void CreateGeometry()
         {
             var position = new List<Vector3>();
             var normal = new List<Vector3>();
@@ -54,14 +58,14 @@ namespace KI.Asset
             var index = new List<int>();
 
             var gray = new Vector3(0.8f);
-            foreach (var vertex in half.vertexs)
+            foreach (var vertex in half.Vertexs)
             {
                 position.Add(vertex.Position);
                 normal.Add(vertex.Normal);
                 color.Add(gray);
             }
 
-            foreach (var mesh in half.meshs)
+            foreach (var mesh in half.Meshs)
             {
                 foreach (var vertex in mesh.AroundVertex)
                 {

@@ -33,6 +33,7 @@ namespace RenderApp.RAControl
         {
             return true;
         }
+
         /// <summary>
         /// コントローラ開始処理
         /// </summary>

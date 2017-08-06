@@ -8,10 +8,10 @@ namespace KI.Analyzer
 {
     public class HalfEdge
     {
-        public List<Mesh> meshs = new List<Mesh>();
-        public List<Edge> edges = new List<Edge>();
-        public List<Vertex> vertexs = new List<Vertex>();
-        public List<int> indexs = new List<int>();
+        public List<Mesh> Meshs = new List<Mesh>();
+        public List<Edge> Edges = new List<Edge>();
+        public List<Vertex> Vertexs = new List<Vertex>();
+        public List<int> Indexs = new List<int>();
 
         public HalfEdge()
         {
@@ -33,7 +33,7 @@ namespace KI.Analyzer
         /// <returns></returns>
         public bool ErrorHalfEdge()
         {
-            foreach (var vertex in vertexs)
+            foreach (var vertex in Vertexs)
             {
                 if (vertex.ErrorVertex)
                 {
@@ -95,19 +95,19 @@ namespace KI.Analyzer
             DeleteEdge(deleteEdge);
             DeleteVertex(deleteVertex);
 
-            for (int i = 0; i < meshs.Count; i++)
+            for (int i = 0; i < Meshs.Count; i++)
             {
-                meshs[i].Index = i;
+                Meshs[i].Index = i;
             }
 
-            for (int i = 0; i < edges.Count; i++)
+            for (int i = 0; i < Edges.Count; i++)
             {
-                edges[i].Index = i;
+                Edges[i].Index = i;
             }
 
-            for (int i = 0; i < vertexs.Count; i++)
+            for (int i = 0; i < Vertexs.Count; i++)
             {
-                vertexs[i].Index = i;
+                Vertexs[i].Index = i;
             }
 
 # if CHECKHALFEDGE
@@ -122,18 +122,18 @@ namespace KI.Analyzer
             var delMesh1 = edge.Mesh;
             var delMesh2 = opposite.Mesh;
 
-            var vertex = new Vertex((edge.Start.Position + edge.End.Position) / 2, vertexs.Count);
+            var vertex = new Vertex((edge.Start.Position + edge.End.Position) / 2, Vertexs.Count);
 
-            var right = new Edge(vertex, edge.End, edges.Count);
-            var oppoRight = new Edge(edge.End, vertex, edges.Count + 1);
+            var right = new Edge(vertex, edge.End, Edges.Count);
+            var oppoRight = new Edge(edge.End, vertex, Edges.Count + 1);
             Edge.SetupOpposite(right, oppoRight);
 
-            var left = new Edge(edge.Start, vertex, edges.Count + 2);
-            var oppoLeft = new Edge(vertex, edge.Start, edges.Count + 3);
+            var left = new Edge(edge.Start, vertex, Edges.Count + 2);
+            var oppoLeft = new Edge(vertex, edge.Start, Edges.Count + 3);
             Edge.SetupOpposite(left, oppoLeft);
 
-            var up = new Edge(vertex, edge.Next.End, edges.Count + 4);
-            var oppoup = new Edge(edge.Next.End, vertex, edges.Count + 5);
+            var up = new Edge(vertex, edge.Next.End, Edges.Count + 4);
+            var oppoup = new Edge(edge.Next.End, vertex, Edges.Count + 5);
             Edge.SetupOpposite(up, oppoup);
 
             var down = new Edge(vertex, opposite.Next.End, edge.Index);
@@ -142,20 +142,20 @@ namespace KI.Analyzer
 
             var rightUp = new Mesh(right, edge.Next, oppoup, delMesh1.Index);
             var leftUp = new Mesh(up, edge.Before, left, delMesh2.Index);
-            var rightDown = new Mesh(down, opposite.Before, oppoRight, meshs.Count);
-            var leftDown = new Mesh(oppoLeft, opposite.Next, oppodown, meshs.Count + 1);
+            var rightDown = new Mesh(down, opposite.Before, oppoRight, Meshs.Count);
+            var leftDown = new Mesh(oppoLeft, opposite.Next, oppodown, Meshs.Count + 1);
 
-            vertexs.Add(vertex);
+            Vertexs.Add(vertex);
 
-            edges.Add(right); edges.Add(oppoRight);
-            edges.Add(left); edges.Add(oppoLeft);
-            edges.Add(up); edges.Add(oppoup);
-            edges.Add(down); edges.Add(oppodown);
+            Edges.Add(right); Edges.Add(oppoRight);
+            Edges.Add(left); Edges.Add(oppoLeft);
+            Edges.Add(up); Edges.Add(oppoup);
+            Edges.Add(down); Edges.Add(oppodown);
 
-            meshs.Add(rightUp);
-            meshs.Add(leftUp);
-            meshs.Add(rightDown);
-            meshs.Add(leftDown);
+            Meshs.Add(rightUp);
+            Meshs.Add(leftUp);
+            Meshs.Add(rightDown);
+            Meshs.Add(leftDown);
 
             DeleteEdge(new List<Edge>() { edge, opposite });
             DeleteMesh(new List<Mesh>() { delMesh1, delMesh2 });
@@ -181,10 +181,10 @@ namespace KI.Analyzer
             var createMeshOpposite = new Mesh(createEdgeOpposite, edge.Before, opposite.Next, delMesh2.Index);
             Edge.SetupOpposite(createEdge, createEdgeOpposite);
 
-            meshs.Add(createMesh);
-            meshs.Add(createMeshOpposite);
-            edges.Add(createEdge);
-            edges.Add(createEdgeOpposite);
+            Meshs.Add(createMesh);
+            Meshs.Add(createMeshOpposite);
+            Edges.Add(createEdge);
+            Edges.Add(createEdgeOpposite);
 
             DeleteEdge(new List<Edge>() { edge, opposite });
             DeleteMesh(new List<Mesh>() { delMesh1, delMesh2 });
@@ -196,7 +196,7 @@ namespace KI.Analyzer
         #endregion
         public bool HasError()
         {
-            foreach (var edge in edges)
+            foreach (var edge in Edges)
             {
                 if (edge.ErrorEdge)
                 {
@@ -205,7 +205,7 @@ namespace KI.Analyzer
                 }
             }
 
-            foreach (var mesh in meshs)
+            foreach (var mesh in Meshs)
             {
                 if (mesh.ErrorMesh)
                 {
@@ -214,7 +214,7 @@ namespace KI.Analyzer
                 }
             }
 
-            foreach (var vertex in vertexs)
+            foreach (var vertex in Vertexs)
             {
                 if (vertex.ErrorVertex)
                 {
@@ -302,7 +302,7 @@ namespace KI.Analyzer
             foreach (var mesh in deleteMesh)
             {
                 mesh.Dispose();
-                meshs.Remove(mesh);
+                Meshs.Remove(mesh);
             }
         }
 
@@ -311,7 +311,7 @@ namespace KI.Analyzer
             foreach (var edge in deleteEdge)
             {
                 edge.Dispose();
-                edges.Remove(edge);
+                Edges.Remove(edge);
             }
         }
 
@@ -321,7 +321,7 @@ namespace KI.Analyzer
             foreach (var vertex in deleteVertex)
             {
                 vertex.Dispose();
-                vertexs.Remove(vertex);
+                Vertexs.Remove(vertex);
             }
         }
         #endregion
@@ -337,7 +337,7 @@ namespace KI.Analyzer
             for (int i = 0; i < vertex_List.Count; i++)
             {
                 Vertex vertex = new Vertex(vertex_List[i], i);
-                vertexs.Add(vertex);
+                Vertexs.Add(vertex);
             }
         }
 
@@ -346,11 +346,11 @@ namespace KI.Analyzer
         /// </summary>
         private void CreateVertexIndex()
         {
-            foreach (var mesh in meshs)
+            foreach (var mesh in Meshs)
             {
                 foreach (var index in mesh.AroundVertex)
                 {
-                    indexs.Add(index.Index);
+                    Indexs.Add(index.Index);
                 }
             }
         }
@@ -366,11 +366,11 @@ namespace KI.Analyzer
             for (int i = 0; i < vertex_List.Count; i++)
             {
                 //ないVertexを調査
-                Vertex vertex = vertexs.Find(p => p.Position == vertex_List[i]);
+                Vertex vertex = Vertexs.Find(p => p.Position == vertex_List[i]);
                 if (vertex == null)
                 {
-                    vertex = new Vertex(vertex_List[i], vertexs.Count);
-                    vertexs.Add(vertex);
+                    vertex = new Vertex(vertex_List[i], Vertexs.Count);
+                    Vertexs.Add(vertex);
                 }
 
                 if (v1 == null)
@@ -394,18 +394,18 @@ namespace KI.Analyzer
 
         private void CreateMesh(Vertex v1, Vertex v2, Vertex v3)
         {
-            Mesh mesh = new Mesh(meshs.Count);
-            Edge edge1 = new Edge(mesh, v1, v2, edges.Count);
-            Edge edge2 = new Edge(mesh, v2, v3, edges.Count + 1);
-            Edge edge3 = new Edge(mesh, v3, v1, edges.Count + 2);
+            Mesh mesh = new Mesh(Meshs.Count);
+            Edge edge1 = new Edge(mesh, v1, v2, Edges.Count);
+            Edge edge2 = new Edge(mesh, v2, v3, Edges.Count + 1);
+            Edge edge3 = new Edge(mesh, v3, v1, Edges.Count + 2);
 
             //メッシュにエッジを格納
             mesh.SetEdge(edge1, edge2, edge3);
-            meshs.Add(mesh);
+            Meshs.Add(mesh);
 
-            edges.Add(edge1);
-            edges.Add(edge2);
-            edges.Add(edge3);
+            Edges.Add(edge1);
+            Edges.Add(edge2);
+            Edges.Add(edge3);
         }
 
         /// <summary>
@@ -416,9 +416,9 @@ namespace KI.Analyzer
             int poly_Num = poly_Index.Count / 3;
             for (int num = 0; num < poly_Num; num++)
             {
-                Vertex v1 = vertexs[poly_Index[3 * num]];
-                Vertex v2 = vertexs[poly_Index[3 * num + 1]];
-                Vertex v3 = vertexs[poly_Index[3 * num + 2]];
+                Vertex v1 = Vertexs[poly_Index[3 * num]];
+                Vertex v2 = Vertexs[poly_Index[3 * num + 1]];
+                Vertex v3 = Vertexs[poly_Index[3 * num + 2]];
                 CreateMesh(v1, v2, v3);
             }
         }
@@ -428,7 +428,7 @@ namespace KI.Analyzer
         /// </summary>
         private void SetOppositeEdge()
         {
-            foreach (var vertex in vertexs)
+            foreach (var vertex in Vertexs)
             {
                 foreach (var edge in vertex.AroundEdge)
                 {
@@ -473,7 +473,7 @@ namespace KI.Analyzer
         {
             int ok_flag = 0;
             Edge opposite;
-            foreach (var edge in edges)
+            foreach (var edge in Edges)
             {
                 opposite = edge.Opposite;
                 if (edge == opposite)

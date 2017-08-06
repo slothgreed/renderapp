@@ -22,5 +22,10 @@
         {
             get;
         }
+
+        /// <summary>
+        /// 形状の作成
+        /// </summary>
+        void CreateGeometry();
     }
 }

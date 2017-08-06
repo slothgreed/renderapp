@@ -1,4 +1,5 @@
-﻿using KI.Asset.Loader;
+﻿using System;
+using KI.Asset.Loader;
 using KI.Gfx.GLUtil;
 using OpenTK;
 
@@ -10,14 +11,17 @@ namespace KI.Asset
     public class STLConverter : IGeometry
     {
         /// <summary>
+        /// stlファイルのローダ
+        /// </summary>
+        private STLLoader stlData;
+
+        /// <summary>
         /// STLのローダ。
         /// </summary>
         /// <param name="filePath">ファイルパス</param>
         public STLConverter(string filePath)
         {
-            var stlData = new STLLoader(filePath);
-            Geometry info = new Geometry(stlData.Position, stlData.Normal, Vector3.One, null, null, GeometryType.Triangle);
-            Geometrys = new Geometry[] { info };
+            stlData = new STLLoader(filePath);
         }
 
         /// <summary>
@@ -27,6 +31,15 @@ namespace KI.Asset
         {
             get;
             private set;
+        }
+
+        /// <summary>
+        /// 形状の作成
+        /// </summary>
+        public void CreateGeometry()
+        {
+            Geometry info = new Geometry(stlData.Position, stlData.Normal, Vector3.One, null, null, GeometryType.Triangle);
+            Geometrys = new Geometry[] { info };
         }
     }
 }

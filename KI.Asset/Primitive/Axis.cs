@@ -30,7 +30,7 @@ namespace KI.Asset
         {
             this.min = min;
             this.max = max;
-            CreateObject();
+            CreateGeometry();
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace KI.Asset
         /// <summary>
         /// 軸作成
         /// </summary>
-        private void CreateObject()
+        public void CreateGeometry()
         {
             var position = new List<Vector3>();
             var color = new List<Vector3>();
