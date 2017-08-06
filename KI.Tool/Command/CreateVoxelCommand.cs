@@ -31,7 +31,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="asset">作成するオブジェクト</param>
         /// <param name="part">分割数</param>
-        public CreateVoxelCommand(KIObject asset, int part)
+        public CreateVoxelCommand(RenderObject asset, int part)
         {
             renderObject = asset as RenderObject;
             partition = part;
@@ -42,7 +42,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandState CanExecute(string commandArg)
+        public CommandResult CanExecute(string commandArg)
         {
             return CanCreateGeometry(renderObject);
         }
@@ -52,9 +52,9 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandState Execute(string commandArg)
+        public CommandResult Execute(string commandArg)
         {
-            VoxelSpace voxel = new VoxelSpace(renderObject.Geometry.GeometryInfo.Position, renderObject.Geometry.GeometryInfo.Index, partition);
+            VoxelSpace voxel = new VoxelSpace(renderObject.Geometry.Position, renderObject.Geometry.Index, partition);
             RenderObject voxelObject = RenderObjectFactory.Instance.CreateRenderObject("Voxel :" + renderObject.Name);
             Geometry info = new Geometry("Voxel :" + renderObject.Name, voxel.vPosition, voxel.vNormal, KICalc.RandomColor(), null, null, GeometryType.Quad);
             voxelObject.SetGeometryInfo(info);
@@ -75,7 +75,7 @@ namespace KI.Tool.Command
             innerObject.Transformation(renderObject.ModelMatrix);
             Global.Scene.AddObject(innerObject);
 
-            return CommandState.Success;
+            return CommandResult.Success;
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandState Undo(string commandArg)
+        public CommandResult Undo(string commandArg)
         {
             throw new NotImplementedException();
         }

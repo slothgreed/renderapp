@@ -7,16 +7,81 @@ using OpenTK.Graphics;
 
 namespace KI.Gfx.GLUtil
 {
+    /// <summary>
+    /// 読み込み後イベント
+    /// </summary>
+    /// <param name="sender">発生元</param>
+    /// <param name="e">イベント</param>
     public delegate void OnLoadedHandler(object sender, EventArgs e);
+
+    /// <summary>
+    /// マウス押下イベント
+    /// </summary>
+    /// <param name="sender">発生元</param>
+    /// <param name="e">イベント</param>
     public delegate void OnMouseDownHandler(object sender, MouseEventArgs e);
+
+    /// <summary>
+    /// マウス移動イベント
+    /// </summary>
+    /// <param name="sender">発生元</param>
+    /// <param name="e">イベント</param>
     public delegate void OnMouseMoveHandler(object sender, MouseEventArgs e);
+
+    /// <summary>
+    /// マウス押上げイベント
+    /// </summary>
+    /// <param name="sender">発生元</param>
+    /// <param name="e">イベント</param>
     public delegate void OnMouseUpHandler(object sender, MouseEventArgs e);
+
+    /// <summary>
+    /// マウスホイールイベント
+    /// </summary>
+    /// <param name="sender">発生元</param>
+    /// <param name="e">イベント</param>
     public delegate void OnMouseWheelHandler(object sender, MouseEventArgs e);
+
+    /// <summary>
+    /// レンダリングイベント
+    /// </summary>
+    /// <param name="sender">発生元</param>
+    /// <param name="e">イベント</param>
     public delegate void OnRenderHandler(object sender, PaintEventArgs e);
+
+    /// <summary>
+    /// リサイズイベント
+    /// </summary>
+    /// <param name="sender">発生元</param>
+    /// <param name="e">イベント</param>
     public delegate void OnResizeHandler(object sender, EventArgs e);
+
+    /// <summary>
+    /// ドラッグドロップイベント
+    /// </summary>
+    /// <param name="sender">発生元</param>
+    /// <param name="e">イベント</param>
     public delegate void OnDragDropHandler(object sender, DragEventArgs e);
+
+    /// <summary>
+    /// ドラッグ中にマウスがViewportに入ってきたイベント
+    /// </summary>
+    /// <param name="sender">発生元</param>
+    /// <param name="e">イベント</param>
     public delegate void OnDragEnterHandler(object sender, DragEventArgs e);
+
+    /// <summary>
+    /// ドラッグ中にマウスがViewportから出たイベント
+    /// </summary>
+    /// <param name="sender">発生元</param>
+    /// <param name="e">イベント</param>
     public delegate void OnDragLeaveHandler(object sender, EventArgs e);
+
+    /// <summary>
+    /// ドラッグ中にマウスが移動したイベント
+    /// </summary>
+    /// <param name="sender">発生元</param>
+    /// <param name="e">イベント</param>
     public delegate void OnDragOverHandler(object sender, DragEventArgs e);
 
     /// <summary>
@@ -25,50 +90,182 @@ namespace KI.Gfx.GLUtil
     public class Viewport
     {
         #region [member]
-        /// <summary>
-        /// glControl
-        /// </summary>
-        private GLControl m_glControl;
 
         /// <summary>
         /// レンダリング中か
         /// </summary>
-        private bool m_NowRender;
+        private bool nowRender;
 
         /// <summary>
         /// 起動後か
         /// </summary>
-        private bool m_AppstartUp = false;
+        private bool appstartUp = false;
 
         /// <summary>
-        /// レンダリング時間(mm)
+        /// コンストラクタ
         /// </summary>
-        public int RenderingMillSec = 0;
-
-        public event OnLoadedHandler OnLoaded;
-        public event OnMouseDownHandler OnMouseDown;
-        public event OnMouseMoveHandler OnMouseMove;
-        public event OnMouseUpHandler OnMouseUp;
-        public event OnMouseWheelHandler OnMouseWheel;
-        public event OnRenderHandler OnRender;
-        public event OnResizeHandler OnResize;
-        public event OnDragEnterHandler OnDragEnter;
-        public event OnDragLeaveHandler OnDragLeave;
-        public event OnDragOverHandler OnDragOver;
-
-        #endregion
-        #region [initialize method]
         private Viewport()
         {
             Initialize();
         }
 
+        /// <summary>
+        /// 読み込み後イベント
+        /// </summary>
+        public event OnLoadedHandler OnLoaded;
+        
+        /// <summary>
+        /// マウス押下イベント
+        /// </summary>
+        public event OnMouseDownHandler OnMouseDown;
+
+        /// <summary>
+        /// マウス移動イベント
+        /// </summary>
+        public event OnMouseMoveHandler OnMouseMove;
+        
+        /// <summary>
+        /// マウス押上げイベント
+        /// </summary>
+        public event OnMouseUpHandler OnMouseUp;
+
+        /// <summary>
+        /// マウスホイールイベント
+        /// </summary>
+        public event OnMouseWheelHandler OnMouseWheel;
+
+        /// <summary>
+        /// レンダリングイベント
+        /// </summary>
+        public event OnRenderHandler OnRender;
+
+        /// <summary>
+        /// リサイズイベント
+        /// </summary>
+        public event OnResizeHandler OnResize;
+
+        /// <summary>
+        /// ドラッグ中にマウスがViewportに入ってきたイベント
+        /// </summary>
+        public event OnDragEnterHandler OnDragEnter;
+
+        /// <summary>
+        /// ドラッグ中にマウスがViewportから出たイベント
+        /// </summary>
+        public event OnDragLeaveHandler OnDragLeave;
+
+        /// <summary>
+        /// ドラッグ中にマウスが移動したイベント
+        /// </summary>
+        public event OnDragOverHandler OnDragOver;
+
+        #endregion
+        #region [initialize method]
+
+        /// <summary>
+        /// インスタンス
+        /// </summary>
         public static Viewport Instance { get; } = new Viewport();
 
         /// <summary>
-        /// glControlのゲッタ
+        /// レンダリング時間(mm)
         /// </summary>
-        public GLControl glControl { get { return m_glControl; } }
+        public int RenderingMillSec { get; private set; }
+
+        /// <summary>
+        /// GLControlのゲッタ
+        /// </summary>
+        public GLControl GLControl { get; private set; }
+
+        #endregion
+        #region [context event]
+
+        /// <summary>
+        /// GLControlの描画時に実行される
+        /// </summary>
+        /// <param name="sender">発生元</param>
+        /// <param name="e">イベント</param>
+        public void GLControl_Paint(object sender, PaintEventArgs e)
+        {
+            if (!appstartUp)
+                return;
+
+            if (nowRender)
+                return;
+
+            DeviceContext.Instance.Clear();
+
+            if (OnRender != null)
+            {
+                OnRender(sender, e);
+            }
+
+            nowRender = true;
+            GLControl.SwapBuffers();
+            nowRender = false;
+        }
+        #endregion
+        #region [mouse event]
+
+        /// <summary>
+        /// ドラッグイベント
+        /// </summary>
+        /// <param name="sender">発生元</param>
+        /// <param name="e">イベント</param>
+        public void GLControl_DragOver(object sender, DragEventArgs e)
+        {
+            if (OnDragOver != null)
+            {
+                OnDragOver(sender, e);
+            }
+
+            GLControl_Paint(null, null);
+        }
+
+        /// <summary>
+        /// ドラッグ中に離れた
+        /// </summary>
+        /// <param name="sender">発生元</param>
+        /// <param name="e">イベント</param>
+        public void GLControl_DragLeave(object sender, EventArgs e)
+        {
+            if (OnDragLeave != null)
+            {
+                OnDragLeave(sender, e);
+            }
+
+            GLControl_Paint(null, null);
+        }
+
+        /// <summary>
+        /// ドラッグ中にviewportに入った
+        /// </summary>
+        /// <param name="sender">発生元</param>
+        /// <param name="e">イベント</param>
+        public void GLControl_DragEnter(object sender, DragEventArgs e)
+        {
+            if (OnDragEnter != null)
+            {
+                OnDragEnter(sender, e);
+            }
+
+            GLControl_Paint(null, null);
+        }
+
+        /// <summary>
+        /// 解放処理
+        /// </summary>
+        public void Dispose()
+        {
+            GLControl.Load -= GLControl_Load;
+            GLControl.MouseDown -= GLControl_MouseDown;
+            GLControl.MouseMove -= GLControl_MouseMove;
+            GLControl.MouseUp -= GLControl_MouseUp;
+            GLControl.MouseWheel -= GLControl_MouseWheel;
+            GLControl.Paint -= GLControl_Paint;
+            GLControl.Resize -= GLControl_Resize;
+            GLControl = null;
+        }
 
         /// <summary>
         /// 初期化
@@ -90,31 +287,29 @@ namespace KI.Gfx.GLUtil
                                                  GraphicsMode.Default.Buffers,
                                                  //ステレオ投影をするかどうか
                                                  GraphicsMode.Default.Stereo);
-            m_glControl = new GLControl(mode);
-            m_glControl.Load += glControl_Load;
-            m_glControl.MouseDown += glControl_MouseDown;
-            m_glControl.MouseMove += glControl_MouseMove;
-            m_glControl.MouseUp += glControl_MouseUp;
-            m_glControl.MouseWheel += glControl_MouseWheel;
-            m_glControl.Paint += glControl_Paint;
-            m_glControl.Resize += glControl_Resize;
-            m_glControl.DragEnter += glControl_DragEnter;
-            m_glControl.DragLeave += glControl_DragLeave;
-            m_glControl.DragOver += glControl_DragOver;
-            m_glControl.AllowDrop = true;
+            GLControl = new GLControl(mode);
+            GLControl.Load += GLControl_Load;
+            GLControl.MouseDown += GLControl_MouseDown;
+            GLControl.MouseMove += GLControl_MouseMove;
+            GLControl.MouseUp += GLControl_MouseUp;
+            GLControl.MouseWheel += GLControl_MouseWheel;
+            GLControl.Paint += GLControl_Paint;
+            GLControl.Resize += GLControl_Resize;
+            GLControl.DragEnter += GLControl_DragEnter;
+            GLControl.DragLeave += GLControl_DragLeave;
+            GLControl.DragOver += GLControl_DragOver;
+            GLControl.AllowDrop = true;
         }
 
-        #endregion
-        #region [context event]
         /// <summary>
-        /// glControlの起動時に実行される
+        /// GLControlの起動時に実行される
         /// </summary>
         /// <param name="sender">発生元</param>
         /// <param name="e">イベント</param>
-        private void glControl_Load(object sender, EventArgs e)
+        private void GLControl_Load(object sender, EventArgs e)
         {
-            DeviceContext.Instance.Initialize(m_glControl.Size.Width, m_glControl.Size.Height);
-            m_AppstartUp = true;
+            DeviceContext.Instance.Initialize(GLControl.Size.Width, GLControl.Size.Height);
+            appstartUp = true;
             Logger.GLLog(Logger.LogLevel.Error);
             if (OnLoaded != null)
             {
@@ -124,100 +319,28 @@ namespace KI.Gfx.GLUtil
 
         /// <summary>
         /// Loadより先に呼ばれる
-        /// glControlのサイズ変更時に実行される
+        /// GLControlのサイズ変更時に実行される
         /// </summary>
         /// <param name="sender">発生元</param>
         /// <param name="e">イベント</param>
-        private void glControl_Resize(object sender, EventArgs e)
+        private void GLControl_Resize(object sender, EventArgs e)
         {
-            if (m_glControl.Size.Width == 0 || m_glControl.Size.Height == 0)
+            if (GLControl.Size.Width == 0 || GLControl.Size.Height == 0)
             {
-                m_glControl.Size = new Size(128, 128);
+                GLControl.Size = new Size(128, 128);
             }
 
-            if (m_AppstartUp)
+            if (appstartUp)
             {
-                DeviceContext.Instance.SizeChanged(m_glControl.Size.Width, m_glControl.Size.Height);
+                DeviceContext.Instance.SizeChanged(GLControl.Size.Width, GLControl.Size.Height);
                 if (OnResize != null)
                 {
                     OnResize(sender, e);
                 }
 
                 Logger.GLLog(Logger.LogLevel.Error);
-                glControl_Paint(null, null);
+                GLControl_Paint(null, null);
             }
-        }
-
-        /// <summary>
-        /// glControlの描画時に実行される
-        /// </summary>
-        /// <param name="sender">発生元</param>
-        /// <param name="e">イベント</param>
-        public void glControl_Paint(object sender, PaintEventArgs e)
-        {
-            if (!m_AppstartUp)
-                return;
-
-            if (m_NowRender)
-                return;
-
-            DeviceContext.Instance.Clear();
-
-            if (OnRender != null)
-            {
-                OnRender(sender, e);
-            }
-
-            m_NowRender = true;
-            m_glControl.SwapBuffers();
-            m_NowRender = false;
-        }
-        #endregion
-        #region [mouse event]
-
-        /// <summary>
-        /// ドラッグイベント
-        /// </summary>
-        /// <param name="sender">発生元</param>
-        /// <param name="e">イベント</param>
-        public void glControl_DragOver(object sender, DragEventArgs e)
-        {
-            if (OnDragOver != null)
-            {
-                OnDragOver(sender, e);
-            }
-
-            glControl_Paint(null, null);
-        }
-
-        /// <summary>
-        /// ドラッグ中に離れた
-        /// </summary>
-        /// <param name="sender">発生元</param>
-        /// <param name="e">イベント</param>
-        public void glControl_DragLeave(object sender, EventArgs e)
-        {
-            if (OnDragLeave != null)
-            {
-                OnDragLeave(sender, e);
-            }
-
-            glControl_Paint(null, null);
-        }
-
-        /// <summary>
-        /// ドラッグ中にviewportに入った
-        /// </summary>
-        /// <param name="sender">発生元</param>
-        /// <param name="e">イベント</param>
-        public void glControl_DragEnter(object sender, DragEventArgs e)
-        {
-            if (OnDragEnter != null)
-            {
-                OnDragEnter(sender, e);
-            }
-
-            glControl_Paint(null, null);
         }
 
         /// <summary>
@@ -225,14 +348,14 @@ namespace KI.Gfx.GLUtil
         /// </summary>
         /// <param name="sender">発生元</param>
         /// <param name="e">イベント</param>
-        private void glControl_MouseWheel(object sender, MouseEventArgs e)
+        private void GLControl_MouseWheel(object sender, MouseEventArgs e)
         {
             if (OnMouseWheel != null)
             {
                 OnMouseWheel(sender, e);
             }
 
-            glControl_Paint(null, null);
+            GLControl_Paint(null, null);
         }
 
         /// <summary>
@@ -240,14 +363,14 @@ namespace KI.Gfx.GLUtil
         /// </summary>
         /// <param name="sender">発生元</param>
         /// <param name="e">イベント</param>
-        private void glControl_MouseDown(object sender, MouseEventArgs e)
+        private void GLControl_MouseDown(object sender, MouseEventArgs e)
         {
             if (OnMouseDown != null)
             {
                 OnMouseDown(sender, e);
             }
 
-            glControl_Paint(null, null);
+            GLControl_Paint(null, null);
         }
 
         /// <summary>
@@ -255,14 +378,14 @@ namespace KI.Gfx.GLUtil
         /// </summary>
         /// <param name="sender">発生元</param>
         /// <param name="e">イベント</param>
-        private void glControl_MouseUp(object sender, MouseEventArgs e)
+        private void GLControl_MouseUp(object sender, MouseEventArgs e)
         {
             if (OnMouseUp != null)
             {
                 OnMouseUp(sender, e);
             }
 
-            glControl_Paint(null, null);
+            GLControl_Paint(null, null);
         }
 
         /// <summary>
@@ -270,14 +393,14 @@ namespace KI.Gfx.GLUtil
         /// </summary>
         /// <param name="sender">発生元</param>
         /// <param name="e">イベント</param>
-        private void glControl_MouseMove(object sender, MouseEventArgs e)
+        private void GLControl_MouseMove(object sender, MouseEventArgs e)
         {
-            if (!m_AppstartUp)
+            if (!appstartUp)
             {
                 return;
             }
 
-            m_glControl.Focus();
+            GLControl.Focus();
             if (OnMouseMove != null)
             {
                 OnMouseMove(sender, e);
@@ -285,38 +408,24 @@ namespace KI.Gfx.GLUtil
 
             if (e.Button != MouseButtons.None)
             {
-                glControl_Paint(null, null);
+                GLControl_Paint(null, null);
             }
         }
         #endregion
 
         #region [Main Window Event]
-        /// <summary>
-        /// 解放処理
-        /// </summary>
-        public void Dispose()
-        {
-            m_glControl.Load -= glControl_Load;
-            m_glControl.MouseDown -= glControl_MouseDown;
-            m_glControl.MouseMove -= glControl_MouseMove;
-            m_glControl.MouseUp -= glControl_MouseUp;
-            m_glControl.MouseWheel -= glControl_MouseWheel;
-            m_glControl.Paint -= glControl_Paint;
-            m_glControl.Resize -= glControl_Resize;
-            m_glControl = null;
-        }
 
         /// <summary>
         /// スクリーンショット
         /// </summary>
-        /// <returns></returns>
+        /// <returns>ビットマップデータ</returns>
         private Bitmap GetColorBufferData()
         {
             if (GraphicsContext.CurrentContext == null)
                 throw new GraphicsContextMissingException();
 
-            System.Drawing.Rectangle r = new System.Drawing.Rectangle(glControl.Location, glControl.Size);
-            Bitmap bmp = new Bitmap(glControl.Width, glControl.Height);
+            System.Drawing.Rectangle r = new Rectangle(GLControl.Location, GLControl.Size);
+            Bitmap bmp = new Bitmap(GLControl.Width, GLControl.Height);
             System.Drawing.Imaging.BitmapData data = bmp.LockBits(r, System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
             DeviceContext.Instance.ReadPixel(data);
             bmp.UnlockBits(data);

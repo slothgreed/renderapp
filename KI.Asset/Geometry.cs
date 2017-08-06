@@ -89,11 +89,6 @@ namespace KI.Asset
         public int ID { get; set; }
 
         /// <summary>
-        /// 形状情報
-        /// </summary>
-        public Geometry GeometryInfo { get; protected set; }
-
-        /// <summary>
         /// ハーフエッジ
         /// </summary>
         public HalfEdge HalfEdge { get; set; }
@@ -409,17 +404,6 @@ namespace KI.Asset
 
         #endregion
 
-        #region [Initializer disposer]
-
-        /// <summary>
-        /// 解放処理
-        /// </summary>
-        public override void Dispose()
-        {
-            GeometryInfo.Dispose();
-        }
-        #endregion
-
         /// <summary>
         /// テクスチャの追加
         /// </summary>
@@ -473,9 +457,9 @@ namespace KI.Asset
                     for (int i = 0; i < position.Count; i += 3)
                     {
                         Vector3 normal = Vector3.Cross(position[i + 2] - position[i + 1], position[i] - position[i + 1]).Normalized();
-                        GeometryInfo.Normal.Add(normal);
-                        GeometryInfo.Normal.Add(normal);
-                        GeometryInfo.Normal.Add(normal);
+                        Normal.Add(normal);
+                        Normal.Add(normal);
+                        Normal.Add(normal);
                     }
 
                     break;
@@ -483,10 +467,10 @@ namespace KI.Asset
                     for (int i = 0; i < position.Count; i += 4)
                     {
                         Vector3 normal = Vector3.Cross(position[i + 2] - position[i + 1], position[i] - position[i + 1]).Normalized();
-                        GeometryInfo.Normal.Add(normal);
-                        GeometryInfo.Normal.Add(normal);
-                        GeometryInfo.Normal.Add(normal);
-                        GeometryInfo.Normal.Add(normal);
+                        Normal.Add(normal);
+                        Normal.Add(normal);
+                        Normal.Add(normal);
+                        Normal.Add(normal);
                     }
 
                     break;

@@ -31,17 +31,17 @@ namespace KI.Analyzer
             Reset();
         }
 
-        public string CanExecute(string commandArg = null)
+        public CommandResult CanExecute(string commandArg = null)
         {
             if (StartIndex < 0 ||
                 EndIndex < 0 ||
                 StartIndex > halfEdge.Vertexs.Count ||
                 EndIndex > halfEdge.Vertexs.Count)
             {
-                return "init value error";
+                return CommandResult.Failed;
             }
 
-            return string.Empty;
+            return CommandResult.Success;
         }
 
         public void SetGeometry(HalfEdge halfEdge)
@@ -49,15 +49,15 @@ namespace KI.Analyzer
             this.halfEdge = halfEdge;
         }
 
-        public string Execute(string commandArg = null)
+        public CommandResult Execute(string commandArg = null)
         {
             if (halfEdge == null)
             {
-                return string.Empty;
+                return CommandResult.Failed;
             }
 
             DistanceDijkstra(StartIndex, EndIndex);
-            return string.Empty;
+            return CommandResult.Success;
         }
 
         public bool Reset()
@@ -68,9 +68,9 @@ namespace KI.Analyzer
             return true;
         }
 
-        public string Undo(string commandArg = null)
+        public CommandResult Undo(string commandArg = null)
         {
-            return "Failed";
+            return CommandResult.Failed;
         }
 
         private bool DistanceDijkstra(int index1, int index2)

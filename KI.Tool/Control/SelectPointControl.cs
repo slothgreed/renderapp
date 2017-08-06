@@ -71,9 +71,9 @@ namespace KI.Tool.Control
         {
             bool select = false;
             Vector3 crossPos = Vector3.Zero;
-            for (int i = 0; i < renderObject.Geometry.GeometryInfo.Position.Count; i++)
+            for (int i = 0; i < renderObject.Geometry.Position.Count; i++)
             {
-                Vector3 point = renderObject.Geometry.GeometryInfo.Position[i];
+                Vector3 point = renderObject.Geometry.Position[i];
                 point = KICalc.Multiply(renderObject.ModelMatrix, point);
 
                 if (KICalc.PerpendicularPoint(point, near, far, out crossPos))

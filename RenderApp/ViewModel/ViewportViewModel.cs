@@ -27,7 +27,7 @@ namespace RenderApp.ViewModel
                 {
                     glContext = new WindowsFormsHost()
                     {
-                        Child = Viewport.Instance.glControl
+                        Child = Viewport.Instance.GLControl
                     };
                 }
 

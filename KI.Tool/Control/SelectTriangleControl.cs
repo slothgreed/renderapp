@@ -30,31 +30,31 @@ namespace KI.Tool.Control
         {
             bool select = false;
             //頂点配列の時
-            if (renderObject.Geometry.GeometryInfo.Index.Count != 0)
+            if (renderObject.Geometry.Index.Count != 0)
             {
-                for (int i = 0; i < renderObject.Geometry.GeometryInfo.Index.Count; i += 3)
+                for (int i = 0; i < renderObject.Geometry.Index.Count; i += 3)
                 {
-                    Vector3 vertex1 = renderObject.Geometry.GeometryInfo.Position[renderObject.Geometry.GeometryInfo.Index[i]];
-                    Vector3 vertex2 = renderObject.Geometry.GeometryInfo.Position[renderObject.Geometry.GeometryInfo.Index[i + 1]];
-                    Vector3 vertex3 = renderObject.Geometry.GeometryInfo.Position[renderObject.Geometry.GeometryInfo.Index[i + 2]];
+                    Vector3 vertex1 = renderObject.Geometry.Position[renderObject.Geometry.Index[i]];
+                    Vector3 vertex2 = renderObject.Geometry.Position[renderObject.Geometry.Index[i + 1]];
+                    Vector3 vertex3 = renderObject.Geometry.Position[renderObject.Geometry.Index[i + 2]];
                     vertex1 = KICalc.Multiply(renderObject.ModelMatrix, vertex1);
                     vertex2 = KICalc.Multiply(renderObject.ModelMatrix, vertex2);
                     vertex3 = KICalc.Multiply(renderObject.ModelMatrix, vertex3);
                     Vector3 result = Vector3.Zero;
                     if (KICalc.CrossPlanetoLinePos(vertex1, vertex2, vertex3, near, far, ref minLength, out result))
                     {
-                        selectIndex = renderObject.Geometry.GeometryInfo.Index[i];
+                        selectIndex = renderObject.Geometry.Index[i];
                         select = true;
                     }
                 }
             }
             else
             {
-                for (int i = 0; i < renderObject.Geometry.GeometryInfo.Position.Count / 3; i++)
+                for (int i = 0; i < renderObject.Geometry.Position.Count / 3; i++)
                 {
-                    Vector3 vertex1 = KICalc.Multiply(renderObject.ModelMatrix, renderObject.Geometry.GeometryInfo.Position[3 * i]);
-                    Vector3 vertex2 = KICalc.Multiply(renderObject.ModelMatrix, renderObject.Geometry.GeometryInfo.Position[3 * i + 1]);
-                    Vector3 vertex3 = KICalc.Multiply(renderObject.ModelMatrix, renderObject.Geometry.GeometryInfo.Position[3 * i + 2]);
+                    Vector3 vertex1 = KICalc.Multiply(renderObject.ModelMatrix, renderObject.Geometry.Position[3 * i]);
+                    Vector3 vertex2 = KICalc.Multiply(renderObject.ModelMatrix, renderObject.Geometry.Position[3 * i + 1]);
+                    Vector3 vertex3 = KICalc.Multiply(renderObject.ModelMatrix, renderObject.Geometry.Position[3 * i + 2]);
                     Vector3 result = Vector3.Zero;
                     if (KICalc.CrossPlanetoLinePos(vertex1, vertex2, vertex3, near, far, ref minLength, out result))
                     {

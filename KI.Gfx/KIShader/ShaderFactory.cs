@@ -13,7 +13,7 @@ namespace KI.Gfx.KIShader
         /// </summary>
         public static ShaderFactory Instance { get; } = new ShaderFactory();
 
-        public Dictionary<string, Shader> ShaderList = new Dictionary<string, Shader>();
+        public Dictionary<string, Shader> Shaders { get; } = new Dictionary<string, Shader>();
 
         /// <summary>
         /// 同一シェーダの確認
@@ -23,7 +23,7 @@ namespace KI.Gfx.KIShader
         /// <returns>シェーダ</returns>
         public Shader FindShader(string vert, string frag)
         {
-            foreach (var sh in ShaderList.Values)
+            foreach (var sh in Shaders.Values)
             {
                 if (sh.FindShaderCombi(vert, frag))
                 {
@@ -47,7 +47,8 @@ namespace KI.Gfx.KIShader
         /// <summary>
         /// vert,frag専用ファイル名は同一のもの
         /// </summary>
-        /// <param name="path">ファイルパス</param>
+        /// <param name="vPath">頂点パス</param>
+        /// <param name="fPath">フラグパス</param>
         /// <returns>シェーダ</returns>
         public Shader CreateShaderVF(string vPath, string fPath)
         {
@@ -64,7 +65,7 @@ namespace KI.Gfx.KIShader
                 ShaderProgram vert = ShaderProgramFactory.Instance.CreateShaderProgram(vPath, vPath);
                 ShaderProgram frag = ShaderProgramFactory.Instance.CreateShaderProgram(fPath, fPath);
                 shader = new Shader(vert, frag);
-                ShaderList.Add(vname + fname, shader);
+                Shaders.Add(vname + fname, shader);
             }
 
             return shader;
@@ -75,7 +76,7 @@ namespace KI.Gfx.KIShader
         /// </summary>
         public void Dispose()
         {
-            foreach (var shader in ShaderList.Values)
+            foreach (var shader in Shaders.Values)
             {
                 shader.Dispose();
             }

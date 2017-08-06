@@ -1,5 +1,6 @@
 ﻿using System;
 using KI.Foundation.Command;
+using KI.Renderer;
 using KI.Tool.Command;
 using RenderApp.Globals;
 
@@ -40,7 +41,7 @@ namespace RenderApp.ViewModel
 
         private void ExecuteCommand()
         {
-            ICommand command = new CreateVoxelCommand(Workspace.SceneManager.ActiveScene.SelectAsset, PartitionNum);
+            ICommand command = new CreateVoxelCommand(Workspace.SceneManager.ActiveScene.SelectNode as RenderObject, PartitionNum);
             CommandManager.Instance.Execute(command, null, true);
         }
 

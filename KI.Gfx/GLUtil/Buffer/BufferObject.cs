@@ -3,6 +3,9 @@ using KI.Foundation.Utility;
 
 namespace KI.Gfx.GLUtil
 {
+    /// <summary>
+    /// 配列の種類
+    /// </summary>
     public enum EArrayType
     {
         None,
@@ -14,6 +17,9 @@ namespace KI.Gfx.GLUtil
         Vec4Array,
     }
 
+    /// <summary>
+    /// バッファの種類
+    /// </summary>
     public enum BufferType
     {
         Array,
@@ -23,26 +29,63 @@ namespace KI.Gfx.GLUtil
         Texture
     }
 
+    /// <summary>
+    /// バッファ
+    /// </summary>
     public abstract class BufferObject : KIObject
     {
+        /// <summary>
+        /// 生成した数
+        /// </summary>
         private static int createNum = 0;
 
-        protected bool NowBind;
-        public abstract void PreGenBuffer();
-        public abstract void PreDispose();
-        public abstract void PreBindBuffer();
-        public abstract void PreUnBindBuffer();
-
-        public BufferObject()
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        protected BufferObject()
             : base("BufferObject")
         {
             DeviceID = -1;
         }
 
+        /// <summary>
+        /// 有効
+        /// </summary>
         public bool Enable { get; set; }
 
+        /// <summary>
+        /// デバイスID
+        /// </summary>
         public int DeviceID { get; protected set; }
 
+        /// <summary>
+        /// バインド中か
+        /// </summary>
+        protected bool NowBind { get; set; }
+
+        /// <summary>
+        /// バッファの生成
+        /// </summary>
+        public abstract void GenBufferCore();
+
+        /// <summary>
+        /// バッファの解放
+        /// </summary>
+        public abstract void DisposeCore();
+
+        /// <summary>
+        /// バッファのバインド
+        /// </summary>
+        public abstract void BindBufferCore();
+
+        /// <summary>
+        /// バッファのバインド解除
+        /// </summary>
+        public abstract void UnBindBufferCore();
+
+        /// <summary>
+        /// バッファの生成
+        /// </summary>
         public virtual void GenBuffer()
         {
             createNum++;
@@ -51,13 +94,16 @@ namespace KI.Gfx.GLUtil
                 Dispose();
             }
 
-            PreGenBuffer();
+            GenBufferCore();
             Logger.GLLog(Logger.LogLevel.Error);
         }
 
+        /// <summary>
+        /// バッファのバインド
+        /// </summary>
         public virtual void BindBuffer()
         {
-            PreBindBuffer();
+            BindBufferCore();
             if (NowBind)
             {
                 Logger.Log(Logger.LogLevel.Warning, "Duplicate Bind Error");
@@ -67,20 +113,23 @@ namespace KI.Gfx.GLUtil
             Logger.GLLog(Logger.LogLevel.Error);
         }
 
+        /// <summary>
+        /// バッファのバインド解除
+        /// </summary>
         public virtual void UnBindBuffer()
         {
-            PreUnBindBuffer();
+            UnBindBufferCore();
             NowBind = false;
             Logger.GLLog(Logger.LogLevel.Error);
         }
 
         /// <summary>
-        /// 解放処理
+        /// バッファの解放
         /// </summary>
         public override void Dispose()
         {
             createNum--;
-            PreDispose();
+            DisposeCore();
             DeviceID = -1;
         }
     }

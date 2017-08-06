@@ -2,6 +2,9 @@
 
 namespace KI.Gfx.GLUtil
 {
+    /// <summary>
+    /// フレームバッファ
+    /// </summary>
     public class FrameBuffer : BufferObject
     {
         /// <summary>
@@ -13,26 +16,42 @@ namespace KI.Gfx.GLUtil
             this.Name = name;
         }
 
-        public override void PreBindBuffer()
+        /// <summary>
+        /// バッファのバインド
+        /// </summary>
+        public override void BindBufferCore()
         {
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, DeviceID);
         }
 
-        public override void PreUnBindBuffer()
+        /// <summary>
+        /// バッファのバインド解除
+        /// </summary>
+        public override void UnBindBufferCore()
         {
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
         }
 
-        public override void PreGenBuffer()
+        /// <summary>
+        /// バッファの生成
+        /// </summary>
+        public override void GenBufferCore()
         {
             DeviceID = GL.GenFramebuffer();
         }
 
-        public override void PreDispose()
+        /// <summary>
+        /// バッファの解放
+        /// </summary>
+        public override void DisposeCore()
         {
             GL.DeleteFramebuffer(DeviceID);
         }
 
+        /// <summary>
+        /// 文字列
+        /// </summary>
+        /// <returns>文字列</returns>
         public override string ToString()
         {
             return this.Name;

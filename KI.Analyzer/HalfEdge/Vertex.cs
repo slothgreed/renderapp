@@ -6,6 +6,9 @@ using OpenTK;
 
 namespace KI.Analyzer
 {
+    /// <summary>
+    /// 頂点パラメータ
+    /// </summary>
     public enum VertexParam
     {
         MinCurvature,
@@ -125,47 +128,6 @@ namespace KI.Analyzer
         }
 
         /// <summary>
-        /// パラメータの追加
-        /// </summary>
-        /// <param name="param">パラメータのタイプ</param>
-        /// <param name="value">値</param>
-        public void AddParameter(VertexParam param, float value)
-        {
-            parameter.Add(param, value);
-        }
-
-        /// <summary>
-        /// パラメータの取得
-        /// </summary>
-        /// <param name="param">パラメータのタイプ</param>
-        /// <returns>値</returns>
-        public object GetParameter(VertexParam param)
-        {
-            return parameter[param];
-        }
-
-        /// <summary>
-        /// エッジのセッタ
-        /// </summary>
-        /// <param name="edge">エッジ</param>
-        public void AddEdge(Edge edge)
-        {
-            if (!aroundEdge.Contains(edge))
-            {
-                aroundEdge.Add(edge);
-            }
-        }
-
-        /// <summary>
-        /// 周辺エッジの削除
-        /// </summary>
-        /// <param name="edge">エッジ</param>
-        public void RemoveAroundEdge(Edge edge)
-        {
-            aroundEdge.Remove(edge);
-        }
-
-        /// <summary>
         /// 法線
         /// </summary>
         public Vector3 Normal
@@ -192,15 +154,6 @@ namespace KI.Analyzer
 
                 return normal;
             }
-        }
-
-        /// <summary>
-        /// 解放処理
-        /// </summary>
-        public void Dispose()
-        {
-            DeleteFlag = true;
-            aroundEdge = null;
         }
 
         #region [operator]
@@ -253,7 +206,56 @@ namespace KI.Analyzer
         {
             return !(v1 == v2);
         }
-
         #endregion
+
+        /// <summary>
+        /// パラメータの追加
+        /// </summary>
+        /// <param name="param">パラメータのタイプ</param>
+        /// <param name="value">値</param>
+        public void AddParameter(VertexParam param, float value)
+        {
+            parameter.Add(param, value);
+        }
+
+        /// <summary>
+        /// パラメータの取得
+        /// </summary>
+        /// <param name="param">パラメータのタイプ</param>
+        /// <returns>値</returns>
+        public object GetParameter(VertexParam param)
+        {
+            return parameter[param];
+        }
+
+        /// <summary>
+        /// エッジのセッタ
+        /// </summary>
+        /// <param name="edge">エッジ</param>
+        public void AddEdge(Edge edge)
+        {
+            if (!aroundEdge.Contains(edge))
+            {
+                aroundEdge.Add(edge);
+            }
+        }
+
+        /// <summary>
+        /// 周辺エッジの削除
+        /// </summary>
+        /// <param name="edge">エッジ</param>
+        public void RemoveAroundEdge(Edge edge)
+        {
+            aroundEdge.Remove(edge);
+        }
+
+        /// <summary>
+        /// 解放処理
+        /// </summary>
+        public void Dispose()
+        {
+            DeleteFlag = true;
+            aroundEdge = null;
+        }
     }
 }

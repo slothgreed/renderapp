@@ -33,7 +33,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandState CanExecute(string commandArg)
+        public CommandResult CanExecute(string commandArg)
         {
             return CanCreateGeometry(renderObject);
         }
@@ -43,35 +43,35 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandState Execute(string commandArg)
+        public CommandResult Execute(string commandArg)
         {
             List<Vector3> position = new List<Vector3>();
-            if (renderObject.Geometry.GeometryInfo.Index.Count != 0)
+            if (renderObject.Geometry.Index.Count != 0)
             {
-                for (int i = 0; i < renderObject.Geometry.GeometryInfo.Index.Count / 3; i++)
+                for (int i = 0; i < renderObject.Geometry.Index.Count / 3; i++)
                 {
-                    position.Add(renderObject.Geometry.GeometryInfo.Position[renderObject.Geometry.GeometryInfo.Index[3 * i]]);
-                    position.Add(renderObject.Geometry.GeometryInfo.Position[renderObject.Geometry.GeometryInfo.Index[3 * i + 1]]);
+                    position.Add(renderObject.Geometry.Position[renderObject.Geometry.Index[3 * i]]);
+                    position.Add(renderObject.Geometry.Position[renderObject.Geometry.Index[3 * i + 1]]);
 
-                    position.Add(renderObject.Geometry.GeometryInfo.Position[renderObject.Geometry.GeometryInfo.Index[3 * i + 1]]);
-                    position.Add(renderObject.Geometry.GeometryInfo.Position[renderObject.Geometry.GeometryInfo.Index[3 * i + 2]]);
+                    position.Add(renderObject.Geometry.Position[renderObject.Geometry.Index[3 * i + 1]]);
+                    position.Add(renderObject.Geometry.Position[renderObject.Geometry.Index[3 * i + 2]]);
 
-                    position.Add(renderObject.Geometry.GeometryInfo.Position[renderObject.Geometry.GeometryInfo.Index[3 * i + 2]]);
-                    position.Add(renderObject.Geometry.GeometryInfo.Position[renderObject.Geometry.GeometryInfo.Index[3 * i]]);
+                    position.Add(renderObject.Geometry.Position[renderObject.Geometry.Index[3 * i + 2]]);
+                    position.Add(renderObject.Geometry.Position[renderObject.Geometry.Index[3 * i]]);
                 }
             }
             else
             {
-                for (int i = 0; i < renderObject.Geometry.GeometryInfo.Position.Count / 3; i++)
+                for (int i = 0; i < renderObject.Geometry.Position.Count / 3; i++)
                 {
-                    position.Add(renderObject.Geometry.GeometryInfo.Position[3 * i]);
-                    position.Add(renderObject.Geometry.GeometryInfo.Position[3 * i + 1]);
+                    position.Add(renderObject.Geometry.Position[3 * i]);
+                    position.Add(renderObject.Geometry.Position[3 * i + 1]);
 
-                    position.Add(renderObject.Geometry.GeometryInfo.Position[3 * i + 1]);
-                    position.Add(renderObject.Geometry.GeometryInfo.Position[3 * i + 2]);
+                    position.Add(renderObject.Geometry.Position[3 * i + 1]);
+                    position.Add(renderObject.Geometry.Position[3 * i + 2]);
 
-                    position.Add(renderObject.Geometry.GeometryInfo.Position[3 * i + 2]);
-                    position.Add(renderObject.Geometry.GeometryInfo.Position[3 * i]);
+                    position.Add(renderObject.Geometry.Position[3 * i + 2]);
+                    position.Add(renderObject.Geometry.Position[3 * i]);
                 }
             }
 
@@ -80,7 +80,7 @@ namespace KI.Tool.Command
             wireframe.ModelMatrix = renderObject.ModelMatrix;
             Global.Scene.AddObject(wireframe);
 
-            return CommandState.Success;
+            return CommandResult.Success;
         }
 
         /// <summary>
@@ -88,9 +88,9 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandState Undo(string commandArg)
+        public CommandResult Undo(string commandArg)
         {
-            return CommandState.Failed;
+            return CommandResult.Failed;
         }
     }
 }

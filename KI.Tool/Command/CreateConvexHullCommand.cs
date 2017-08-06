@@ -34,7 +34,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandState CanExecute(string commandArg)
+        public CommandResult CanExecute(string commandArg)
         {
             return CanCreateGeometry(renderObject);
         }
@@ -44,9 +44,9 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandState Execute(string commandArg)
+        public CommandResult Execute(string commandArg)
         {
-            ConvexHullAlgorithm convexHull = new ConvexHullAlgorithm(renderObject.Geometry.GeometryInfo.Position);
+            ConvexHullAlgorithm convexHull = new ConvexHullAlgorithm(renderObject.Geometry.Position);
             List<Vector3> position = new List<Vector3>();
             foreach (var mesh in convexHull.Meshs)
             {
@@ -96,7 +96,7 @@ namespace KI.Tool.Command
             point.ModelMatrix = renderObject.ModelMatrix;
             Global.Scene.AddObject(point);
 
-            return CommandState.Success;
+            return CommandResult.Success;
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandState Undo(string commandArg)
+        public CommandResult Undo(string commandArg)
         {
             throw new NotImplementedException();
         }

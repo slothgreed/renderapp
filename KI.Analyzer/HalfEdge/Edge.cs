@@ -87,30 +87,9 @@ namespace KI.Analyzer
         /// </summary>
         public object CalcFlag { get; set; }
 
-        #region [operator] 
-        public static bool operator ==(Edge edge1, Edge edge2)
-        {
-            //参照が同じならTrue
-            if (object.ReferenceEquals(edge1, edge2))
-            {
-                return true;
-            }
-
-            if ((object)edge1 == null || (object)edge2 == null)
-            {
-                return false;
-            }
-            //共有EdgeでもTrue
-            return (edge1.Start == edge2.End && edge1.End == edge2.Start);
-        }
-
-        public static bool operator !=(Edge edge1, Edge edge2)
-        {
-            return !(edge1 == edge2);
-        }
-
-        #endregion
-
+        /// <summary>
+        /// 角度
+        /// </summary>
         public float Angle
         {
             get
@@ -147,6 +126,9 @@ namespace KI.Analyzer
             }
         }
 
+        /// <summary>
+        /// エラーエッジ
+        /// </summary>
         public bool ErrorEdge
         {
             get
@@ -163,6 +145,58 @@ namespace KI.Analyzer
             }
         }
 
+        #region [operator] 
+        public static bool operator ==(Edge edge1, Edge edge2)
+        {
+            //参照が同じならTrue
+            if (object.ReferenceEquals(edge1, edge2))
+            {
+                return true;
+            }
+
+            if ((object)edge1 == null || (object)edge2 == null)
+            {
+                return false;
+            }
+            //共有EdgeでもTrue
+            return (edge1.Start == edge2.End && edge1.End == edge2.Start);
+        }
+
+        public static bool operator !=(Edge edge1, Edge edge2)
+        {
+            return !(edge1 == edge2);
+        }
+
+        #endregion
+
+        /// <summary>
+        /// 次と前のエッジの設定
+        /// </summary>
+        /// <param name="edge1">エッジ1</param>
+        /// <param name="edge2">エッジ2</param>
+        /// <param name="edge3">エッジ3</param>
+        public static void SetupNextBefore(Edge edge1, Edge edge2, Edge edge3)
+        {
+            edge1.Next = edge2;
+            edge2.Next = edge3;
+            edge3.Next = edge1;
+
+            edge1.Before = edge3;
+            edge2.Before = edge1;
+            edge3.Before = edge2;
+        }
+
+        /// <summary>
+        /// 反対エッジの設定
+        /// </summary>
+        /// <param name="edge">エッジ</param>
+        /// <param name="oppo">反対</param>
+        public static void SetupOpposite(Edge edge, Edge oppo)
+        {
+            edge.Opposite = oppo;
+            oppo.Opposite = edge;
+        }
+
         /// <summary>
         /// 解放処理
         /// </summary>
@@ -176,23 +210,6 @@ namespace KI.Analyzer
             Mesh = null;
             Before = null;
             Opposite = null;
-        }
-
-        public static void SetupNextBefore(Edge edge1, Edge edge2, Edge edge3)
-        {
-            edge1.Next = edge2;
-            edge2.Next = edge3;
-            edge3.Next = edge1;
-
-            edge1.Before = edge3;
-            edge2.Before = edge1;
-            edge3.Before = edge2;
-        }
-
-        public static void SetupOpposite(Edge edge, Edge oppo)
-        {
-            edge.Opposite = oppo;
-            oppo.Opposite = edge;
         }
     }
 }

@@ -33,7 +33,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandState CanExecute(string commandArg)
+        public CommandResult CanExecute(string commandArg)
         {
             return CanCreateGeometry(geometry);
         }
@@ -43,16 +43,16 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandState Execute(string commandArg)
+        public CommandResult Execute(string commandArg)
         {
-            List<Vector3> position = new List<Vector3>(geometry.GeometryInfo.Position);
-            List<Vector3> normal = new List<Vector3>(geometry.GeometryInfo.Normal);
-            List<int> index = new List<int>(geometry.GeometryInfo.Index);
+            List<Vector3> position = new List<Vector3>(geometry.Position);
+            List<Vector3> normal = new List<Vector3>(geometry.Normal);
+            List<int> index = new List<int>(geometry.Index);
             RenderObject polygon = RenderObjectFactory.Instance.CreateRenderObject("Polygon :" + geometry.Name);
             polygon.SetGeometryInfo(new Geometry("Polygon :" + geometry.Name, position, normal, new Vector3(0.7f, 0.7f, 0.7f), null, index, GeometryType.Triangle));
             Global.Scene.AddObject(polygon);
 
-            return CommandState.Success;
+            return CommandResult.Success;
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandState Undo(string commandArg)
+        public CommandResult Undo(string commandArg)
         {
             throw new NotImplementedException();
         }

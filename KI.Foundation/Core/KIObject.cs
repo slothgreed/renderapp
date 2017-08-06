@@ -1,8 +1,15 @@
 ﻿using KI.Foundation.Utility;
+
 namespace KI.Foundation.Core
 {
+    /// <summary>
+    /// オブジェクト
+    /// </summary>
     public abstract class KIObject
     {
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public KIObject()
         {
             Name = this.GetType().ToString();
@@ -31,6 +38,10 @@ namespace KI.Foundation.Core
         {
         }
 
+        /// <summary>
+        /// 文字列
+        /// </summary>
+        /// <returns>文字列</returns>
         public override string ToString()
         {
             return Name;

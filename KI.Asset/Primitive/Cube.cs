@@ -57,7 +57,7 @@ namespace KI.Asset
             Vector3 v6 = new Vector3(max.X, max.Y, max.Z);
             Vector3 v7 = new Vector3(min.X, max.Y, max.Z);
 
-            List<Vector2> TexCoord = new List<Vector2>()
+            List<Vector2> texCoord = new List<Vector2>()
             {
                 Vector2.Zero,
                 Vector2.UnitY,
@@ -69,24 +69,24 @@ namespace KI.Asset
             {
                 Geometrys = new Geometry[6]
                     {
-                        new Geometry("Front", new List<Vector3> { v0, v3, v2, v1 }, null, null, TexCoord, null, GeometryType.Quad),
-                        new Geometry("Left", new List<Vector3> { v0, v4, v7, v3 }, null, null, TexCoord, null, GeometryType.Quad),
-                        new Geometry("Back", new List<Vector3> { v4, v5, v6, v7 }, null, null, TexCoord, null, GeometryType.Quad),
-                        new Geometry("Right", new List<Vector3> { v1, v2, v6, v5 }, null, null, TexCoord, null, GeometryType.Quad),
-                        new Geometry("Top", new List<Vector3> { v2, v3, v7, v6 }, null, null, TexCoord, null, GeometryType.Quad),
-                        new Geometry("Bottom", new List<Vector3> { v1, v5, v4, v0 }, null, null, TexCoord, null, GeometryType.Quad),
+                        new Geometry("Front", new List<Vector3> { v0, v3, v2, v1 }, null, null, texCoord, null, GeometryType.Quad),
+                        new Geometry("Left", new List<Vector3> { v0, v4, v7, v3 }, null, null, texCoord, null, GeometryType.Quad),
+                        new Geometry("Back", new List<Vector3> { v4, v5, v6, v7 }, null, null, texCoord, null, GeometryType.Quad),
+                        new Geometry("Right", new List<Vector3> { v1, v2, v6, v5 }, null, null, texCoord, null, GeometryType.Quad),
+                        new Geometry("Top", new List<Vector3> { v2, v3, v7, v6 }, null, null, texCoord, null, GeometryType.Quad),
+                        new Geometry("Bottom", new List<Vector3> { v1, v5, v4, v0 }, null, null, texCoord, null, GeometryType.Quad),
                     };
             }
             else
             {
                 Geometrys = new Geometry[6]
                     {
-                        new Geometry("Front", new List<Vector3> { v3, v0, v1, v2 }, null, null, TexCoord, null, GeometryType.Quad),
-                        new Geometry("Left", new List<Vector3> { v7, v4, v0, v3 }, null, null, TexCoord, null, GeometryType.Quad),
-                        new Geometry("Back", new List<Vector3> { v6, v5, v4, v7 }, null, null, TexCoord, null, GeometryType.Quad),
-                        new Geometry("Right", new List<Vector3> { v2, v1, v5, v6 }, null, null, TexCoord, null, GeometryType.Quad),
-                        new Geometry("Top", new List<Vector3> { v2, v6, v7, v3 }, null, null, TexCoord, null, GeometryType.Quad),
-                        new Geometry("Bottom", new List<Vector3> { v1, v0, v4, v5 }, null, null, TexCoord, null, GeometryType.Quad),
+                        new Geometry("Front", new List<Vector3> { v3, v0, v1, v2 }, null, null, texCoord, null, GeometryType.Quad),
+                        new Geometry("Left", new List<Vector3> { v7, v4, v0, v3 }, null, null, texCoord, null, GeometryType.Quad),
+                        new Geometry("Back", new List<Vector3> { v6, v5, v4, v7 }, null, null, texCoord, null, GeometryType.Quad),
+                        new Geometry("Right", new List<Vector3> { v2, v1, v5, v6 }, null, null, texCoord, null, GeometryType.Quad),
+                        new Geometry("Top", new List<Vector3> { v2, v6, v7, v3 }, null, null, texCoord, null, GeometryType.Quad),
+                        new Geometry("Bottom", new List<Vector3> { v1, v0, v4, v5 }, null, null, texCoord, null, GeometryType.Quad),
                     };
             }
         }

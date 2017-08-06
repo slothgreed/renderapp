@@ -30,7 +30,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandState CanExecute(string commandArg)
+        public CommandResult CanExecute(string commandArg)
         {
             return CanCreateGeometry(renderObject);
         }
@@ -40,15 +40,15 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandState Execute(string commandArg)
+        public CommandResult Execute(string commandArg)
         {
-            var half = AssetFactory.Instance.CreateHalfEdge(renderObject.Geometry.GeometryInfo.Position, renderObject.Geometry.GeometryInfo.Index);
+            var half = AssetFactory.Instance.CreateHalfEdge(renderObject.Geometry.Position, renderObject.Geometry.Index);
             RenderObject halfEdge = RenderObjectFactory.Instance.CreateRenderObject("HalfEdge :" + renderObject.Name);
             halfEdge.SetGeometryInfo(half.Geometrys[0]);
             halfEdge.ModelMatrix = renderObject.ModelMatrix;
             Global.Scene.AddObject(halfEdge);
 
-            return CommandState.Success;
+            return CommandResult.Success;
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandState Undo(string commandArg)
+        public CommandResult Undo(string commandArg)
         {
             throw new NotImplementedException();
         }

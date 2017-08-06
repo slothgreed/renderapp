@@ -4,6 +4,9 @@ using OpenTK;
 
 namespace KI.Analyzer
 {
+    /// <summary>
+    /// バウンディングボックス
+    /// </summary>
     public class BDB : IAnalyzer
     {
         /// <summary>

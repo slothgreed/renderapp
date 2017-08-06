@@ -10,12 +10,12 @@ namespace RenderApp.Globals
         /// <summary>
         /// シーンマネージャ
         /// </summary>
-        public static SceneManager SceneManager = new SceneManager();
+        public static SceneManager SceneManager { get; } = new SceneManager();
 
         /// <summary>
         /// レンダーシステム
         /// </summary>
-        public static RenderSystem RenderSystem = new RenderSystem();
+        public static RenderSystem RenderSystem { get; } = new RenderSystem();
 
         /// <summary>
         /// コンストラクタ

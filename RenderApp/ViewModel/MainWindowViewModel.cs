@@ -10,6 +10,7 @@ using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
 using KI.Gfx.Render;
+using KI.Renderer;
 using KI.Tool.Command;
 using KI.Tool.Control;
 using RenderApp.Globals;
@@ -164,7 +165,7 @@ namespace RenderApp.ViewModel
         private void OpenProjectCommand()
         {
             ProjectInfo.IsOpen = true;
-            System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
+            OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
             dlg.InitialDirectory = ProjectInfo.ResourceDirectory;
             dlg.Filter = "projファイル(*.@proj)|*.proj;";
             dlg.FilterIndex = 1;
@@ -294,27 +295,27 @@ namespace RenderApp.ViewModel
                     CreatePlaneCommand();
                     break;
                 case RAGeometry.WireFrame:
-                    command = new CreateWireFrameCommand(Workspace.SceneManager.ActiveScene.SelectAsset);
+                    command = new CreateWireFrameCommand(Workspace.SceneManager.ActiveScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.Polygon:
-                    command = new CreatePolygonCommand(Workspace.SceneManager.ActiveScene.SelectAsset);
+                    command = new CreatePolygonCommand(Workspace.SceneManager.ActiveScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.HalfEdge:
-                    command = new CreateHalfEdgeCommand(Workspace.SceneManager.ActiveScene.SelectAsset);
+                    command = new CreateHalfEdgeCommand(Workspace.SceneManager.ActiveScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.ConvexHull:
-                    command = new CreateConvexHullCommand(Workspace.SceneManager.ActiveScene.SelectAsset);
+                    command = new CreateConvexHullCommand(Workspace.SceneManager.ActiveScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.MarchingCube:
-                    command = new CreateMarchingCubeCommand(Workspace.SceneManager.ActiveScene.SelectAsset, 64);
+                    command = new CreateMarchingCubeCommand(Workspace.SceneManager.ActiveScene.SelectNode, 64);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.HalfEdgeWireFrame:
-                    command = new CreateHalfEdgeWireFrameCommand(Workspace.SceneManager.ActiveScene.SelectAsset);
+                    command = new CreateHalfEdgeWireFrameCommand(Workspace.SceneManager.ActiveScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                     //select = Workspace.SceneManager.ActiveScene.SelectAsset;
                     break;
@@ -476,10 +477,10 @@ namespace RenderApp.ViewModel
             }
 
             TabItemViewModel vm = null;
-            if (node.KIObject is Geometry)
+            if (node.KIObject is SceneNode)
             {
-                vm = new GeometryViewModel((Geometry)node.KIObject);
-                Workspace.SceneManager.ActiveScene.SelectAsset = (Geometry)node.KIObject;
+                //vm = new GeometryViewModel((Geometry)node.KIObject);
+                Workspace.SceneManager.ActiveScene.SelectNode = (SceneNode)node.KIObject;
             }
             else if (node.KIObject is ShaderProgram)
             {
@@ -506,7 +507,7 @@ namespace RenderApp.ViewModel
 
         public override void UpdateProperty()
         {
-            Viewport.Instance.glControl_Paint(null, null);
+            Viewport.Instance.GLControl_Paint(null, null);
         }
         #endregion
     }

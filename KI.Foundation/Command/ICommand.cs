@@ -1,6 +1,9 @@
 ﻿namespace KI.Foundation.Command
 {
-    public enum CommandState
+    /// <summary>
+    /// コマンドの結果
+    /// </summary>
+    public enum CommandResult
     {
         None,
         Success,
@@ -17,20 +20,20 @@
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        CommandState CanExecute(string commandArg);
+        CommandResult CanExecute(string commandArg);
 
         /// <summary>
         /// 処理の実行
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        CommandState Execute(string commandArg);
+        CommandResult Execute(string commandArg);
 
         /// <summary>
         /// Undo
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        CommandState Undo(string commandArg);
+        CommandResult Undo(string commandArg);
     }
 }

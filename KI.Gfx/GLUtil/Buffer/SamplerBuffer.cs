@@ -1,40 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK.Graphics.OpenGL;
+﻿using OpenTK.Graphics.OpenGL;
 
 namespace KI.Gfx.GLUtil
 {
+    /// <summary>
+    /// サンプラバッファ
+    /// </summary>
     public class SamplerBuffer : BufferObject
     {
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         internal SamplerBuffer()
         {
         }
 
-        public int ActiveTexture
-        {
-            get;
-            set;
-        }
+        public int ActiveTexture { get; set; }
 
-        public override void PreGenBuffer()
+        /// <summary>
+        /// バッファの生成
+        /// </summary>
+        public override void GenBufferCore()
         {
             DeviceID = GL.GenSampler();
         }
 
-        public override void PreDispose()
+        /// <summary>
+        /// バッファの解放
+        /// </summary>
+        public override void DisposeCore()
         {
             GL.DeleteSampler(DeviceID);
         }
 
-        public override void PreBindBuffer()
+        /// <summary>
+        /// バッファのバインド
+        /// </summary>
+        public override void BindBufferCore()
         {
             GL.BindSampler(ActiveTexture, DeviceID);
         }
 
-        public override void PreUnBindBuffer()
+        /// <summary>
+        /// バッファのバインド解除
+        /// </summary>
+        public override void UnBindBufferCore()
         {
             GL.BindSampler(ActiveTexture, DeviceID);
         }

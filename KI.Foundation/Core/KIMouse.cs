@@ -7,56 +7,39 @@ namespace KI.Foundation.Core
     /// </summary>
     public class KIMouse
     {
-        #region [メンバ変数]
-        /// <summary>
-        /// クリック位置
-        /// </summary>
-        public Vector2 Click
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// 前回のクリック位置
-        /// </summary>
-        public Vector2 ClickBefore
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// 現在のマウス位置
-        /// </summary>
-        public Vector2 Current
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// 前回のマウス位置
-        /// </summary>
-        public Vector2 Before
-        {
-            get;
-            private set;
-        }
-
-        public Vector2 Delta
-        {
-            get;
-            private set;
-        }
-        #endregion
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public KIMouse()
         {
         }
+
+        #region [メンバ変数]
+        /// <summary>
+        /// クリック位置
+        /// </summary>
+        public Vector2 Click { get; private set; }
+
+        /// <summary>
+        /// 前回のクリック位置
+        /// </summary>
+        public Vector2 ClickBefore { get; private set; }
+
+        /// <summary>
+        /// 現在のマウス位置
+        /// </summary>
+        public Vector2 Current { get; private set; }
+
+        /// <summary>
+        /// 前回のマウス位置
+        /// </summary>
+        public Vector2 Before { get; private set; }
+
+        /// <summary>
+        /// 移動量
+        /// </summary>
+        public Vector2 Delta { get; private set; }
+        #endregion
 
         /// <summary>
         /// クリック値

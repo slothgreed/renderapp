@@ -54,44 +54,6 @@ namespace KI.Asset
         public Geometry[] Geometrys { get; private set; }
 
         /// <summary>
-        /// 球面座標の取得
-        /// </summary>
-        /// <param name="radial">半径</param>
-        /// <param name="theta">横角度</param>
-        /// <param name="phi">縦角度</param>
-        /// <returns>球面座標値</returns>
-        private Vector3 GetSphericalPolarCoordinates(float radial, float theta, float phi)
-        {
-            Vector3 pos = new Vector3();
-            pos.X = (float)(radial * Math.Sin(theta) * Math.Cos(phi));
-            pos.Y = (float)(radial * Math.Sin(theta) * Math.Sin(phi));
-            pos.Z = (float)(radial * Math.Cos(theta));
-            return pos;
-        }
-
-        /// <summary>
-        /// テクスチャ座標の取得
-        /// </summary>
-        /// <param name="position">位置</param>
-        /// <returns>テクスチャ座標</returns>
-        private Vector2 GetSphericalTexCoord(Vector3 position)
-        {
-            Vector2 texcoord = Vector2.Zero;
-            float pi = (float)Math.PI;
-            position.Normalize();
-
-            float atan2 = (float)Math.Atan2(position.Z, position.X);
-            float asin = (float)Math.Asin(position.Y);
-
-            texcoord.X = 0.5f;
-            texcoord.X += atan2 / (2 * pi);
-            texcoord.Y = 0.5f;
-            texcoord.Y -= asin / pi;
-
-            return texcoord;
-        }
-
-        /// <summary>
         /// オブジェクトの設定
         /// </summary>
         public void CreateGeometry()
@@ -204,5 +166,44 @@ namespace KI.Asset
 
             Geometrys = new Geometry[] { info };
         }
+
+        /// <summary>
+        /// 球面座標の取得
+        /// </summary>
+        /// <param name="radial">半径</param>
+        /// <param name="theta">横角度</param>
+        /// <param name="phi">縦角度</param>
+        /// <returns>球面座標値</returns>
+        private Vector3 GetSphericalPolarCoordinates(float radial, float theta, float phi)
+        {
+            Vector3 pos = new Vector3();
+            pos.X = (float)(radial * Math.Sin(theta) * Math.Cos(phi));
+            pos.Y = (float)(radial * Math.Sin(theta) * Math.Sin(phi));
+            pos.Z = (float)(radial * Math.Cos(theta));
+            return pos;
+        }
+
+        /// <summary>
+        /// テクスチャ座標の取得
+        /// </summary>
+        /// <param name="position">位置</param>
+        /// <returns>テクスチャ座標</returns>
+        private Vector2 GetSphericalTexCoord(Vector3 position)
+        {
+            Vector2 texcoord = Vector2.Zero;
+            float pi = (float)Math.PI;
+            position.Normalize();
+
+            float atan2 = (float)Math.Atan2(position.Z, position.X);
+            float asin = (float)Math.Asin(position.Y);
+
+            texcoord.X = 0.5f;
+            texcoord.X += atan2 / (2 * pi);
+            texcoord.Y = 0.5f;
+            texcoord.Y -= asin / pi;
+
+            return texcoord;
+        }
+
     }
 }

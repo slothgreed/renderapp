@@ -8,20 +8,20 @@ namespace KI.Tool.Command
 {
     public class CreateModelCommandBase
     {
-        protected CommandState CanCreateGeometry(KIObject asset)
+        protected CommandResult CanCreateGeometry(KIObject asset)
         {
             if (!(asset is RenderObject))
             {
-                return CommandState.Failed;
+                return CommandResult.Failed;
             }
 
             RenderObject renderObject = asset as RenderObject;
-            if (renderObject.Geometry.GeometryInfo.GeometryType != GeometryType.Triangle)
+            if (renderObject.Geometry.GeometryType != GeometryType.Triangle)
             {
-                return CommandState.Failed;
+                return CommandResult.Failed;
             }
 
-            return CommandState.Success;
+            return CommandResult.Success;
         }
     }
 }

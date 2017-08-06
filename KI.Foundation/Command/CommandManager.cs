@@ -68,23 +68,23 @@ namespace KI.Foundation.Command
         /// <param name="undo">undoできるか</param>
         /// <param name="stack">コマンドリスト番号</param>
         /// <returns>成功したか</returns>
-        public CommandState Execute(ICommand command, string commandArg = null, bool undo = true, int stack = 0)
+        public CommandResult Execute(ICommand command, string commandArg = null, bool undo = true, int stack = 0)
         {
             if (commandList.Count < stack)
             {
                 Logger.Log(Logger.LogLevel.Error, "command Stack Error");
             }
 
-            CommandState error = CommandState.None;
+            CommandResult error = CommandResult.None;
             error = command.CanExecute(commandArg);
-            if (error != CommandState.Success)
+            if (error != CommandResult.Success)
             {
                 Logger.Log(Logger.LogLevel.Warning, "Command CanExecute Error", error.ToString());
                 return error;
             }
 
             error = command.Execute(commandArg);
-            if (error != CommandState.Success)
+            if (error != CommandResult.Success)
             {
                 Logger.Log(Logger.LogLevel.Warning, "Command Execute Error", error.ToString());
                 return error;
@@ -95,7 +95,7 @@ namespace KI.Foundation.Command
                 commandList[stack].Push(command, commandArg);
             }
 
-            return CommandState.Success;
+            return CommandResult.Success;
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace KI.Foundation.Command
             if (commandList.Count < stack)
             {
                 CommandInfo info = commandList[stack].Pop();
-                if (info.Command.Undo(info.CommandArg) == CommandState.Failed)
+                if (info.Command.Undo(info.CommandArg) == CommandResult.Failed)
                 {
                     Logger.Log(Logger.LogLevel.Warning, "Undo Error");
                 }

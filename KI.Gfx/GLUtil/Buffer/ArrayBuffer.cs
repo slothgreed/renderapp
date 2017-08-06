@@ -8,8 +8,14 @@ using OpenTK.Graphics.OpenGL;
 
 namespace KI.Gfx.GLUtil
 {
+    /// <summary>
+    /// 配列バッファ
+    /// </summary>
     public class ArrayBuffer : BufferObject
     {
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         internal ArrayBuffer()
         {
             Target = BufferTarget.ArrayBuffer;
@@ -17,6 +23,10 @@ namespace KI.Gfx.GLUtil
             Enable = true;
         }
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="target">バッファターゲット</param>
         internal ArrayBuffer(BufferTarget target)
         {
             Target = target;
@@ -32,7 +42,10 @@ namespace KI.Gfx.GLUtil
 
         public EArrayType ArrayType { get; set; }
 
-        public override void PreGenBuffer()
+        /// <summary>
+        /// バッファの生成
+        /// </summary>
+        public override void GenBufferCore()
         {
             this.DeviceID = GL.GenBuffer();
         }
@@ -77,17 +90,26 @@ namespace KI.Gfx.GLUtil
             UnBindBuffer();
         }
 
-        public override void PreBindBuffer()
+        /// <summary>
+        /// バッファのバインド
+        /// </summary>
+        public override void BindBufferCore()
         {
             GL.BindBuffer(Target, DeviceID);
         }
 
-        public override void PreUnBindBuffer()
+        /// <summary>
+        /// バッファのバインド解除
+        /// </summary>
+        public override void UnBindBufferCore()
         {
             GL.BindBuffer(Target, 0);
         }
 
-        public override void PreDispose()
+        /// <summary>
+        /// バッファの解放
+        /// </summary>
+        public override void DisposeCore()
         {
             GL.DeleteBuffer(DeviceID);
         }

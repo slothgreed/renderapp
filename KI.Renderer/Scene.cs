@@ -39,7 +39,7 @@ namespace KI.Renderer
         /// <summary>
         /// 選択中のアセット
         /// </summary>
-        public KIObject SelectAsset { get; set; }
+        public SceneNode SelectNode { get; set; }
 
         /// <summary>
         /// メインカメラ

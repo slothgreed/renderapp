@@ -3,25 +3,40 @@ using OpenTK.Graphics.OpenGL;
 
 namespace KI.Gfx.GLUtil
 {
+    /// <summary>
+    /// レンダーバッファ
+    /// </summary>
     public class RenderBuffer : BufferObject
     {
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         internal RenderBuffer()
         {
         }
 
         RenderbufferStorage BufferStorage { get; set; }
 
-        public override void PreGenBuffer()
+        /// <summary>
+        /// バッファの生成
+        /// </summary>
+        public override void GenBufferCore()
         {
             DeviceID = GL.GenRenderbuffer();
         }
 
-        public override void PreBindBuffer()
+        /// <summary>
+        /// バッファのバインド
+        /// </summary>
+        public override void BindBufferCore()
         {
             GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, DeviceID);
         }
 
-        public override void PreUnBindBuffer()
+        /// <summary>
+        /// バッファのバインド解除
+        /// </summary>
+        public override void UnBindBufferCore()
         {
             GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, 0);
         }
@@ -45,7 +60,10 @@ namespace KI.Gfx.GLUtil
             Logger.GLLog(Logger.LogLevel.Error);
         }
 
-        public override void PreDispose()
+        /// <summary>
+        /// バッファの解放
+        /// </summary>
+        public override void DisposeCore()
         {
             GL.DeleteRenderbuffer(DeviceID);
         }

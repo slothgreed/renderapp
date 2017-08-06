@@ -40,12 +40,12 @@ namespace KI.Renderer
         /// </summary>
         public void SelectObject()
         {
-            if (Global.Scene.SelectAsset != null)
+            if (Global.Scene.SelectNode != null)
             {
-                if (Global.Scene.SelectAsset is Geometry)
+                if (Global.Scene.SelectNode is RenderObject)
                 {
-                    var geometry = Global.Scene.SelectAsset as Geometry;
-                    uID = geometry.ID;
+                    var renderObject = Global.Scene.SelectNode as RenderObject;
+                    uID = renderObject.Geometry.ID;
                 }
                 else
                 {

@@ -32,16 +32,16 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandState CanExecute(string commandArg)
+        public CommandResult CanExecute(string commandArg)
         {
             if (geometry == null)
             {
-                return CommandState.Failed;
+                return CommandResult.Failed;
             }
 
             if (geometry.HalfEdge == null)
             {
-                return CommandState.Failed;
+                return CommandResult.Failed;
             }
 
             return CanCreateGeometry(geometry);
@@ -56,7 +56,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandState Execute(string commandArg)
+        public CommandResult Execute(string commandArg)
         {
             if (counter > -1)
             {
@@ -145,7 +145,7 @@ namespace KI.Tool.Command
             //info2 = info;
             //obj = halfWire;
 
-            return CommandState.Success;
+            return CommandResult.Success;
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandState Undo(string commandArg)
+        public CommandResult Undo(string commandArg)
         {
             throw new NotImplementedException();
         }

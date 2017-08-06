@@ -13,7 +13,9 @@ namespace KI.Analyzer
         /// <summary>
         /// 読み込み
         /// </summary>
-        /// <param name="inputFile"></param>
+        /// <param name="inputFile">入力</param>
+        /// <param name="halfEdge">ハーフエッジインスタンス</param>
+        /// <returns>成功</returns>
         public static bool ReadFile(string inputFile, HalfEdge halfEdge)
         {
             if (!File.Exists(inputFile))
@@ -43,6 +45,62 @@ namespace KI.Analyzer
             }
         }
 
+        /// <summary>
+        /// 書き込み
+        /// </summary>
+        /// <param name="outputFile">出力ファイル</param>
+        /// <param name="halfEdge">ハーフエッジインスタンス</param>
+        public static void WriteFile(string outputFile, HalfEdge halfEdge)
+        {
+            StreamWriter write = new StreamWriter(outputFile);
+
+            write.WriteLine("HalfEdge Data Structure");
+            write.WriteLine("Vertex : Position");
+            foreach (var vertex in halfEdge.Vertexs)
+            {
+                write.WriteLine("v" + " " + vertex.Position.X + " " + vertex.Position.Y + " " + vertex.Position.Z);
+            }
+
+            write.WriteLine("Edge : Start Vetex Index, End Vertex Index");
+            foreach (var edge in halfEdge.Edges)
+            {
+                write.WriteLine("e" + " " + edge.Start.Index + " " + edge.End.Index);
+            }
+
+            write.WriteLine("Mesh : Vertex Index");
+            foreach (var mesh in halfEdge.Meshs)
+            {
+                string edgeIdx = string.Empty;
+                foreach (var edge in mesh.AroundEdge)
+                {
+                    if (edge == mesh.AroundEdge.Last())
+                    {
+                        edgeIdx += edge.Index.ToString();
+                    }
+                    else
+                    {
+                        edgeIdx += edge.Index.ToString() + " ";
+                    }
+                }
+
+                write.WriteLine("m" + " " + edgeIdx);
+            }
+
+            write.WriteLine("Edge Info : Next Edge Index,Before Edge, Opposite Edge Index, Incident Face ");
+            foreach (var edge in halfEdge.Edges)
+            {
+                write.WriteLine("ei" + " " + edge.Next.Index + " " + edge.Before.Index + " " + edge.Opposite.Index + " " + edge.Mesh.Index);
+            }
+
+            write.WriteLine("end");
+            write.Close();
+        }
+
+        /// <summary>
+        /// データの読み込み
+        /// </summary>
+        /// <param name="fileData">ファイルデータ</param>
+        /// <param name="halfEdge">ハーフエッジインスタンス</param>
         private static void ReadHalfEdgeData(string[] fileData, HalfEdge halfEdge)
         {
             int lineNumber = 0;
@@ -128,56 +186,6 @@ namespace KI.Analyzer
             //    throw;
             //}
             //halfEdge.HasError();
-        }
-
-        /// <summary>
-        /// 書き込み
-        /// </summary>
-        /// <param name="outputFile"></param>
-        public static void WriteFile(string outputFile, HalfEdge halfEdge)
-        {
-            StreamWriter write = new StreamWriter(outputFile);
-
-            write.WriteLine("HalfEdge Data Structure");
-            write.WriteLine("Vertex : Position");
-            foreach (var vertex in halfEdge.Vertexs)
-            {
-                write.WriteLine("v" + " " + vertex.Position.X + " " + vertex.Position.Y + " " + vertex.Position.Z);
-            }
-
-            write.WriteLine("Edge : Start Vetex Index, End Vertex Index");
-            foreach (var edge in halfEdge.Edges)
-            {
-                write.WriteLine("e" + " " + edge.Start.Index + " " + edge.End.Index);
-            }
-
-            write.WriteLine("Mesh : Vertex Index");
-            foreach (var mesh in halfEdge.Meshs)
-            {
-                string edgeIdx = string.Empty;
-                foreach (var edge in mesh.AroundEdge)
-                {
-                    if (edge == mesh.AroundEdge.Last())
-                    {
-                        edgeIdx += edge.Index.ToString();
-                    }
-                    else
-                    {
-                        edgeIdx += edge.Index.ToString() + " ";
-                    }
-                }
-
-                write.WriteLine("m" + " " + edgeIdx);
-            }
-
-            write.WriteLine("Edge Info : Next Edge Index,Before Edge, Opposite Edge Index, Incident Face ");
-            foreach (var edge in halfEdge.Edges)
-            {
-                write.WriteLine("ei" + " " + edge.Next.Index + " " + edge.Before.Index + " " + edge.Opposite.Index + " " + edge.Mesh.Index);
-            }
-
-            write.WriteLine("end");
-            write.Close();
         }
     }
 }

@@ -33,9 +33,9 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandState CanExecute(string commandArg)
+        public CommandResult CanExecute(string commandArg)
         {
-            return CommandState.Success;
+            return CommandResult.Success;
         }
 
         /// <summary>
@@ -43,14 +43,14 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandState Execute(string commandArg)
+        public CommandResult Execute(string commandArg)
         {
             var marching = new MarchingCubesAlgorithm(200, 50);
             RenderObject marchingObject = RenderObjectFactory.Instance.CreateRenderObject("Marching Sphere");
             Geometry info = new Geometry("Marching Sphere", marching.PositionList, null, marching.ColorList, null, null, GeometryType.Triangle);
             marchingObject.SetGeometryInfo(info);
             Global.Scene.AddObject(marchingObject);
-            return CommandState.Success;
+            return CommandResult.Success;
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandState Undo(string commandArg)
+        public CommandResult Undo(string commandArg)
         {
             throw new NotImplementedException();
         }

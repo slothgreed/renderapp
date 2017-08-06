@@ -6,6 +6,9 @@ using OpenTK;
 
 namespace KI.Analyzer.Algorithm
 {
+    /// <summary>
+    /// 凸包の作成
+    /// </summary>
     public class ConvexHullAlgorithm
     {
         /// <summary>
@@ -114,7 +117,7 @@ namespace KI.Analyzer.Algorithm
         /// <summary>
         /// QuickHullMeshの作成
         /// </summary>
-        /// <param name="farPoint"></param>
+        /// <param name="farPoint">最も遠い点</param>
         private void CreateQuickHullMesh(Vector3 farPoint)
         {
             var visibleMesh = FindVisibleMesh(meshList, farPoint);
@@ -243,9 +246,9 @@ namespace KI.Analyzer.Algorithm
         /// <summary>
         /// 最も遠い点の取得
         /// </summary>
-        /// <param name="mesh"></param>
-        /// <param name="posit"></param>
-        /// <returns></returns>
+        /// <param name="mesh">面</param>
+        /// <param name="posit">点</param>
+        /// <returns>成功</returns>
         private bool FindFarPoint(Mesh mesh, out Vector3 posit)
         {
             float maxDist = float.MinValue;

@@ -5,6 +5,9 @@ using OpenTK;
 
 namespace KI.Analyzer
 {
+    /// <summary>
+    /// メッシュ
+    /// </summary>
     public class Mesh
     {
         /// <summary>
@@ -26,6 +29,28 @@ namespace KI.Analyzer
         /// 重心
         /// </summary>
         private Vector3 gravity = Vector3.Zero;
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="index">要素番号</param>
+        public Mesh(int index = -1)
+        {
+            Index = index;
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="edge1">エッジ1</param>
+        /// <param name="edge2">エッジ2</param>
+        /// <param name="edge3">エッジ3</param>
+        /// <param name="index">要素番号</param>
+        public Mesh(Edge edge1, Edge edge2, Edge edge3, int index = -1)
+        {
+            SetEdge(edge1, edge2, edge3);
+            Index = index;
+        }
 
         /// <summary>
         /// 要素番号
@@ -53,14 +78,16 @@ namespace KI.Analyzer
                 {
                     normal = KICalc.Normal(
                         edges[1].Start.Position - edges[0].Start.Position,
-                        edges[2].Start.Position - edges[0].Start.Position
-                    );
+                        edges[2].Start.Position - edges[0].Start.Position);
                 }
 
                 return normal;
             }
         }
 
+        /// <summary>
+        /// 平面の公式
+        /// </summary>
         public Vector4 Plane
         {
             get
@@ -98,6 +125,9 @@ namespace KI.Analyzer
             }
         }
 
+        /// <summary>
+        /// 重心
+        /// </summary>
         public Vector3 Gravity
         {
             get
@@ -116,39 +146,9 @@ namespace KI.Analyzer
             }
         }
 
-        public Mesh(int index = -1)
-        {
-            Index = index;
-        }
-
-        public Mesh(Edge edge1, Edge edge2, Edge edge3, int index = -1)
-        {
-            SetEdge(edge1, edge2, edge3);
-            Index = index;
-        }
-
-        public void SetEdge(Edge edge1, Edge edge2, Edge edge3)
-        {
-            edges.Add(edge1);
-            edges.Add(edge2);
-            edges.Add(edge3);
-
-            Edge.SetupNextBefore(edge1, edge2, edge3);
-            edge1.Mesh = this;
-            edge2.Mesh = this;
-            edge3.Mesh = this;
-        }
-
-        public Edge GetEdge(int index)
-        {
-            if (edges.Count < index)
-            {
-                return null;
-            }
-
-            return edges[index];
-        }
-
+        /// <summary>
+        /// 周囲のエッジ
+        /// </summary>
         public IEnumerable<Edge> AroundEdge
         {
             get
@@ -157,6 +157,9 @@ namespace KI.Analyzer
             }
         }
 
+        /// <summary>
+        /// 頂点
+        /// </summary>
         public IEnumerable<Vertex> AroundVertex
         {
             get
@@ -169,6 +172,50 @@ namespace KI.Analyzer
         }
 
         /// <summary>
+        /// エラーメッシュ
+        /// </summary>
+        public bool ErrorMesh
+        {
+            get
+            {
+                return AroundEdge.Any(p => p.DeleteFlag) || DeleteFlag;
+            }
+        }
+
+        /// <summary>
+        /// エッジのセッタ
+        /// </summary>
+        /// <param name="edge1">エッジ1</param>
+        /// <param name="edge2">エッジ2</param>
+        /// <param name="edge3">エッジ3</param>
+        public void SetEdge(Edge edge1, Edge edge2, Edge edge3)
+        {
+            edges.Add(edge1);
+            edges.Add(edge2);
+            edges.Add(edge3);
+
+            Edge.SetupNextBefore(edge1, edge2, edge3);
+            edge1.Mesh = this;
+            edge2.Mesh = this;
+            edge3.Mesh = this;
+        }
+
+        /// <summary>
+        /// エッジのゲッタ
+        /// </summary>
+        /// <param name="index">番号</param>
+        /// <returns>エッジ</returns>
+        public Edge GetEdge(int index)
+        {
+            if (edges.Count < index)
+            {
+                return null;
+            }
+
+            return edges[index];
+        }
+
+        /// <summary>
         /// 解放処理
         /// </summary>
         public void Dispose()
@@ -176,14 +223,6 @@ namespace KI.Analyzer
             DeleteFlag = true;
             edges.Clear();
             edges = null;
-        }
-
-        public bool ErrorMesh
-        {
-            get
-            {
-                return AroundEdge.Any(p => p.DeleteFlag) || DeleteFlag;
-            }
         }
     }
 }

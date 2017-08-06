@@ -13,21 +13,38 @@ namespace KI.Gfx.GLUtil
         Mix
     }
 
+    /// <summary>
+    /// デバイスコンテキスト
+    /// </summary>
     public class DeviceContext
     {
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         private DeviceContext()
         {
         }
         
         /// <summary>
-        /// Multi化はしない
+        /// インスタンス
         /// </summary>
         public static DeviceContext Instance { get; } = new DeviceContext();
 
+        /// <summary>
+        /// 横
+        /// </summary>
         public int Width { get; set; }
 
+        /// <summary>
+        /// 縦
+        /// </summary>
         public int Height { get; set; }
 
+        /// <summary>
+        /// 初期化
+        /// </summary>
+        /// <param name="width">横</param>
+        /// <param name="height">縦</param>
         public void Initialize(int width, int height)
         {
             GL.ClearColor(1, 1, 1, 1);

@@ -6,6 +6,9 @@ using OpenTK;
 
 namespace KI.Analyzer
 {
+    /// <summary>
+    /// ハーフエッジ
+    /// </summary>
     public class HalfEdge
     {
         public List<Mesh> Meshs = new List<Mesh>();
@@ -194,37 +197,6 @@ namespace KI.Analyzer
 #endif
         }
         #endregion
-        public bool HasError()
-        {
-            foreach (var edge in Edges)
-            {
-                if (edge.ErrorEdge)
-                {
-                    Logger.Log(Logger.LogLevel.Error, "Edge : HasError");
-                    return true;
-                }
-            }
-
-            foreach (var mesh in Meshs)
-            {
-                if (mesh.ErrorMesh)
-                {
-                    Logger.Log(Logger.LogLevel.Error, "Mesh : HasError");
-                    return true;
-                }
-            }
-
-            foreach (var vertex in Vertexs)
-            {
-                if (vertex.ErrorVertex)
-                {
-                    Logger.Log(Logger.LogLevel.Error, "Vertex : HasError");
-                    return true;
-                }
-            }
-
-            return false;
-        }
 
         /// <summary>
         /// エッジの取得
@@ -392,6 +364,48 @@ namespace KI.Analyzer
             }
         }
 
+        /// <summary>
+        /// エラーがあるか
+        /// </summary>
+        /// <returns>ある</returns>
+        private bool HasError()
+        {
+            foreach (var edge in Edges)
+            {
+                if (edge.ErrorEdge)
+                {
+                    Logger.Log(Logger.LogLevel.Error, "Edge : HasError");
+                    return true;
+                }
+            }
+
+            foreach (var mesh in Meshs)
+            {
+                if (mesh.ErrorMesh)
+                {
+                    Logger.Log(Logger.LogLevel.Error, "Mesh : HasError");
+                    return true;
+                }
+            }
+
+            foreach (var vertex in Vertexs)
+            {
+                if (vertex.ErrorVertex)
+                {
+                    Logger.Log(Logger.LogLevel.Error, "Vertex : HasError");
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 面の作成
+        /// </summary>
+        /// <param name="v1">頂点1</param>
+        /// <param name="v2">頂点2</param>
+        /// <param name="v3">頂点3</param>
         private void CreateMesh(Vertex v1, Vertex v2, Vertex v3)
         {
             Mesh mesh = new Mesh(Meshs.Count);
@@ -448,8 +462,7 @@ namespace KI.Analyzer
         ///       ↑
         ///  共有エッジの取得
         /// </summary>
-        /// <param name="index">元となるエッジ</param>
-        /// <returns></returns>
+        /// <param name="edge">元となるエッジ</param>
         private void SetOppositeEdge2(Edge edge)
         {
             Vertex start = edge.Start;
@@ -468,7 +481,7 @@ namespace KI.Analyzer
         /// <summary>
         /// 反対エッジがきちんとできているかチェック
         /// </summary>
-        /// <returns></returns>
+        /// <returns>正常か</returns>
         private bool CheckOppositeEdge()
         {
             int ok_flag = 0;

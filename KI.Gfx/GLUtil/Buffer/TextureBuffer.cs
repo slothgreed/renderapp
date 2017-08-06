@@ -6,6 +6,9 @@ using OpenTK.Graphics.OpenGL;
 
 namespace KI.Gfx.GLUtil
 {
+    /// <summary>
+    /// テクスチャ種類
+    /// </summary>
     public enum TextureType
     {
         Texture1D,
@@ -20,8 +23,15 @@ namespace KI.Gfx.GLUtil
         CubemapNZ,
     }
 
+    /// <summary>
+    /// テクスチャバッファ
+    /// </summary>
     public class TextureBuffer : BufferObject
     {
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="type">テクスチャ種類</param>
         internal TextureBuffer(TextureType type)
         {
             if (type != TextureType.Cubemap)
@@ -42,23 +52,19 @@ namespace KI.Gfx.GLUtil
             Format = PixelInternalFormat.Rgba8;
         }
 
-        public int Width
-        {
-            get;
-            set;
-        }
+        /// <summary>
+        /// 横
+        /// </summary>
+        public int Width { get; set; }
 
-        public int Height
-        {
-            get;
-            set;
-        }
+        /// <summary>
+        /// 縦
+        /// </summary>
+        public int Height { get; set; }
 
-        public List<TextureTarget> Targets
-        {
-            get;
-            private set;
-        }
+        public List<TextureTarget> Targets { get; private set; }
+
+        public PixelInternalFormat Format { get; private set; }
 
         public TextureTarget Target
         {
@@ -68,13 +74,11 @@ namespace KI.Gfx.GLUtil
             }
         }
 
-        public PixelInternalFormat Format
-        {
-            get;
-            private set;
-        }
-
-        public override void PreGenBuffer()
+        
+        /// <summary>
+        /// バッファの生成
+        /// </summary>
+        public override void GenBufferCore()
         {
             DeviceID = GL.GenTexture();
         }
@@ -83,6 +87,10 @@ namespace KI.Gfx.GLUtil
         {
         }
 
+        /// <summary>
+        /// バッファのバインド
+        /// </summary>
+        /// <param name="i"></param>
         public void BindBuffer(int i)
         {
             GL.BindTexture(Targets[i], DeviceID);
@@ -95,17 +103,26 @@ namespace KI.Gfx.GLUtil
             Logger.GLLog(Logger.LogLevel.Error);
         }
 
-        public override void PreBindBuffer()
+        /// <summary>
+        /// バッファのバインド
+        /// </summary>
+        public override void BindBufferCore()
         {
             GL.BindTexture(Target, DeviceID);
         }
 
-        public override void PreUnBindBuffer()
+        /// <summary>
+        /// バッファのバインド解除
+        /// </summary>
+        public override void UnBindBufferCore()
         {
             GL.BindTexture(Target, 0);
         }
 
-        public override void PreDispose()
+        /// <summary>
+        /// バッファの解放
+        /// </summary>
+        public override void DisposeCore()
         {
             GL.DeleteTexture(DeviceID);
         }
@@ -124,6 +141,11 @@ namespace KI.Gfx.GLUtil
             UnBindBuffer();
         }
 
+        /// <summary>
+        /// 空バッファの作成
+        /// </summary>
+        /// <param name="width">横</param>
+        /// <param name="height">縦</param>
         public void SetEmpty(int width, int height)
         {
             BindBuffer();
@@ -133,6 +155,10 @@ namespace KI.Gfx.GLUtil
             UnBindBuffer();
         }
 
+        /// <summary>
+        /// テクスチャターゲットの設定
+        /// </summary>
+        /// <param name="type"></param>
         private void SetTextureTargte(TextureType type)
         {
             if (Targets == null)

@@ -38,9 +38,9 @@ namespace KI.Tool.Control
                         dijkstra.EndIndex = vertex_Index;
                     }
 
-                    tri1 = renderObject.Geometry.GeometryInfo.Position[vertex_Index];
-                    tri2 = renderObject.Geometry.GeometryInfo.Position[vertex_Index + 1];
-                    tri3 = renderObject.Geometry.GeometryInfo.Position[vertex_Index + 2];
+                    tri1 = renderObject.Geometry.Position[vertex_Index];
+                    tri2 = renderObject.Geometry.Position[vertex_Index + 1];
+                    tri3 = renderObject.Geometry.Position[vertex_Index + 2];
 
                     if (tri1 != Vector3.Zero && tri2 != Vector3.Zero && tri3 != Vector3.Zero)
                     {
