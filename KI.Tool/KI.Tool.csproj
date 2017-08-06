@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8BDA5035-5778-4460-8166-E6B2BD477E29}</ProjectGuid>
+    <ProjectGuid>{C8DF6069-E673-4957-A173-2BFCA883B102}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KI.Renderer</RootNamespace>
-    <AssemblyName>KI.Renderer</AssemblyName>
+    <RootNamespace>KI.Tool</RootNamespace>
+    <AssemblyName>KI.Tool</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -42,6 +42,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,48 +51,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Scene.cs" />
-    <Compile Include="SceneManager.cs" />
-    <Compile Include="Technique\DeferredBuffer.cs" />
-    <Compile Include="Technique\GBuffer.cs" />
-    <Compile Include="Global.cs" />
-    <Compile Include="Technique\ImageBasedLighting.cs" />
-    <Compile Include="Technique\OutputBuffer.cs" />
-    <Compile Include="Technique\PostEffect\PostEffectManager.cs" />
-    <Compile Include="Technique\PostEffect\Bloom.cs" />
-    <Compile Include="Technique\PostEffect\DOF.cs" />
-    <Compile Include="Technique\RenderTechnique.cs" />
-    <Compile Include="Technique\RenderTechniqueT4.cs">
-      <DependentUpon>RenderTechniqueT4.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Technique\PostEffect\Selection.cs" />
-    <Compile Include="Technique\PostEffect\Sobel.cs" />
-    <Compile Include="Technique\PostEffect\SSAO.cs" />
+    <Compile Include="Command\CreateConvexHullCommand.cs" />
+    <Compile Include="Command\CreateHalfEdgeCommand.cs" />
+    <Compile Include="Command\CreateHalfEdgeWireFrameCommand.cs" />
+    <Compile Include="Command\CreateMarchingCubeCommand.cs" />
+    <Compile Include="Command\CreateModelCommandBase.cs" />
+    <Compile Include="Command\CreatePolygonCommand.cs" />
+    <Compile Include="Command\CreateVoxelCommand.cs" />
+    <Compile Include="Command\CreateWireFrameCommand.cs" />
+    <Compile Include="Control\CameraControl.cs" />
+    <Compile Include="Control\ControlManager.cs" />
+    <Compile Include="Control\DijkstraControl.cs" />
+    <Compile Include="Control\IControl.cs" />
+    <Compile Include="Control\SelectPointControl.cs" />
+    <Compile Include="Control\SelectTriangleControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RenderObject.cs" />
-    <Compile Include="RenderObjectFactory.cs" />
-    <Compile Include="RenderQueue.cs" />
-    <Compile Include="RenderSystem.cs" />
-    <Compile Include="Technique\RenderTechniqueFactory.cs" />
-    <Compile Include="Utility\ShaderCreater.cs" />
-    <Compile Include="Utility\ShaderHelper.cs" />
-    <Compile Include="Technique\ShadowMap.cs" />
-    <Compile Include="Technique\SSLIC.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Technique\RenderTechniqueT4.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>RenderTechniqueT4.cs</LastGenOutput>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\KI.Analyzer\KI.Analyzer.csproj">
+      <Project>{e8959545-0813-4d45-8c9f-1ade07f3a21f}</Project>
+      <Name>KI.Analyzer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KI.Asset\KI.Asset.csproj">
       <Project>{197a747a-9d2b-4273-bdc6-02941c876cb2}</Project>
       <Name>KI.Asset</Name>
@@ -104,6 +84,17 @@
       <Project>{f5e989a2-028f-4e60-869c-ec57413376c6}</Project>
       <Name>KI.Gfx</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KI.Renderer\KI.Renderer.csproj">
+      <Project>{8bda5035-5778-4460-8166-e6b2bd477e29}</Project>
+      <Name>KI.Renderer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

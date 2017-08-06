@@ -1,11 +1,27 @@
 ﻿using System;
-using OpenTK.Graphics.OpenGL;
 using System.Runtime.CompilerServices;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Foundation.Utility
 {
+    /// <summary>
+    /// ログクラス
+    /// </summary>
     public class Logger
     {
+        /// <summary>
+        /// 標準エラー
+        /// </summary>
+        private static LogLevel outputLogLevel = LogLevel.Error;
+
+        /// <summary>
+        /// GLエラー
+        /// </summary>
+        private static LogLevel glLogLevel = LogLevel.Error;
+
+        /// <summary>
+        /// ログレベル
+        /// </summary>
         public enum LogLevel
         {
             None,
@@ -15,8 +31,12 @@ namespace KI.Foundation.Utility
             Descript
         }
 
-        public static LogLevel outputLogLevel = LogLevel.Error;
-        public static LogLevel glLogLevel = LogLevel.Error;
+        /// <summary>
+        /// ログ
+        /// </summary>
+        /// <param name="level">エラーレベル</param>
+        /// <param name="message">メッセージ</param>
+        /// <param name="methodName">関数名</param>
         public static void Log(LogLevel level, string message, [CallerMemberName]string methodName = "")
         {
             if (level == LogLevel.Descript)
@@ -36,6 +56,11 @@ namespace KI.Foundation.Utility
             }
         }
 
+        /// <summary>
+        /// GLログ
+        /// </summary>
+        /// <param name="level">エラーレベル</param>
+        /// <param name="methodName">関数名</param>
         public static void GLLog(LogLevel level, [CallerMemberName]string methodName = "")
         {
             if (glLogLevel == LogLevel.None)

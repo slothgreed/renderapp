@@ -8,9 +8,8 @@ using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
 using KI.Renderer;
 using OpenTK;
-using RenderApp.Globals;
 
-namespace RenderApp.RACommand
+namespace KI.Tool.Command
 {
     /// <summary>
     /// ボクセルの作成
@@ -43,7 +42,7 @@ namespace RenderApp.RACommand
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public string CanExecute(string commandArg)
+        public CommandState CanExecute(string commandArg)
         {
             return CanCreateGeometry(geometry);
         }
@@ -53,14 +52,14 @@ namespace RenderApp.RACommand
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public string Execute(string commandArg)
+        public CommandState Execute(string commandArg)
         {
             VoxelSpace voxel = new VoxelSpace(geometry.GeometryInfo.Position, geometry.GeometryInfo.Index, partition);
             RenderObject voxelObject = RenderObjectFactory.Instance.CreateRenderObject("Voxel :" + geometry.Name);
-            Geometry info = new Geometry(voxel.vPosition, voxel.vNormal, KICalc.RandomColor(), null, null, GeometryType.Quad);
+            Geometry info = new Geometry("Voxel :" + geometry.Name, voxel.vPosition, voxel.vNormal, KICalc.RandomColor(), null, null, GeometryType.Quad);
             voxelObject.SetGeometryInfo(info);
             voxelObject.Geometry.Transformation(geometry.ModelMatrix);
-            Workspace.SceneManager.ActiveScene.AddObject(voxelObject);
+            Global.Scene.AddObject(voxelObject);
 
             RenderObject innerObject = RenderObjectFactory.Instance.CreateRenderObject("Voxel Inner : " + geometry.Name);
 
@@ -71,12 +70,12 @@ namespace RenderApp.RACommand
                 colors.Add(KICalc.GetPseudoColor(v.Value, 0, 100));
             }
 
-            Geometry innerInfo = new Geometry(voxel.GetPoint(VoxelSpace.VoxelState.Inner), null, colors, null, null, GeometryType.Point);
+            Geometry innerInfo = new Geometry("Voxel Inner : " + geometry.Name, voxel.GetPoint(VoxelSpace.VoxelState.Inner), null, colors, null, null, GeometryType.Point);
             innerObject.SetGeometryInfo(innerInfo);
             innerObject.Geometry.Transformation(geometry.ModelMatrix);
-            Workspace.SceneManager.ActiveScene.AddObject(innerObject);
+            Global.Scene.AddObject(innerObject);
 
-            return RACommandResource.Success;
+            return CommandState.Success;
         }
 
         /// <summary>
@@ -84,7 +83,7 @@ namespace RenderApp.RACommand
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public string Undo(string commandArg)
+        public CommandState Undo(string commandArg)
         {
             throw new NotImplementedException();
         }

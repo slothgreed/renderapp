@@ -10,9 +10,10 @@ namespace KI.Asset
     /// </summary>
     public class EnvironmentProbe : KIObject
     {
+        /// <summary>
+        /// テクスチャパスリスト
+        /// </summary>
         private List<string> texturePath;
-
-        public Texture Cubemap { get; private set; }
 
         /// <summary>
         /// 環境プローブ
@@ -24,6 +25,15 @@ namespace KI.Asset
             texturePath = new List<string>();
         }
 
+        /// <summary>
+        /// 環境マップ
+        /// </summary>
+        public Texture Cubemap { get; private set; }
+
+        /// <summary>
+        /// Cubemapの作成
+        /// </summary>
+        /// <param name="paths">テクスチャパス</param>
         public void GenCubemap(string[] paths)
         {
             if (paths.Length != 6)
@@ -35,6 +45,15 @@ namespace KI.Asset
             GenCubemap(paths[0], paths[1], paths[2], paths[3], paths[4], paths[5]);
         }
 
+        /// <summary>
+        /// Cubemapの作成
+        /// </summary>
+        /// <param name="px">テクスチャPX</param>
+        /// <param name="py">テクスチャPY</param>
+        /// <param name="pz">テクスチャPZ</param>
+        /// <param name="nx">テクスチャNX</param>
+        /// <param name="ny">テクスチャNY</param>
+        /// <param name="nz">テクスチャNZ</param>
         public void GenCubemap(string px, string py, string pz, string nx, string ny, string nz)
         {
             Cubemap = TextureFactory.Instance.CreateCubemapTexture(px, py, pz, nx, ny, nz);

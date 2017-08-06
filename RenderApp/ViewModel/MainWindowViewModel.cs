@@ -10,9 +10,9 @@ using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
 using KI.Gfx.Render;
+using KI.Tool.Command;
+using KI.Tool.Control;
 using RenderApp.Globals;
-using RenderApp.RACommand;
-using RenderApp.RAControl;
 
 namespace RenderApp.ViewModel
 {

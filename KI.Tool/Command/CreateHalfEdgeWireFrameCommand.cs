@@ -6,13 +6,16 @@ using KI.Foundation.Core;
 using KI.Renderer;
 using OpenTK;
 
-namespace RenderApp.RACommand
+namespace KI.Tool.Command
 {
     /// <summary>
     /// ハーフエッジのワイヤフレーム作成
     /// </summary>
-    class CreateHalfEdgeWireFrameCommand : CreateModelCommandBase, ICommand
+    public class CreateHalfEdgeWireFrameCommand : CreateModelCommandBase, ICommand
     {
+        /// <summary>
+        /// 形状
+        /// </summary>
         private Geometry geometry;
 
         /// <summary>
@@ -29,16 +32,16 @@ namespace RenderApp.RACommand
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public string CanExecute(string commandArg)
+        public CommandState CanExecute(string commandArg)
         {
             if (geometry == null)
             {
-                return RACommandResource.Failed;
+                return CommandState.Failed;
             }
 
             if (geometry.HalfEdge == null)
             {
-                return RACommandResource.Failed;
+                return CommandState.Failed;
             }
 
             return CanCreateGeometry(geometry);
@@ -53,7 +56,7 @@ namespace RenderApp.RACommand
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public string Execute(string commandArg)
+        public CommandState Execute(string commandArg)
         {
             if (counter > -1)
             {
@@ -132,17 +135,17 @@ namespace RenderApp.RACommand
             //    geometry.geometryInfo.Update(update.Position, update.Normal, update.Color, null, update.Index, GeometryType.Triangle);
             //    ((RenderObject)geometry).SetupBuffer();
 
-            //    return RACommandResource.Success;
+            //    return "Success";
             //}
             //GeometryInfo info = new GeometryInfo(position, null, color, null, null, GeometryType.Line);
             //RenderObject halfWire = RenderObjectFactory.Instance.CreateRenderObject("HalfEdgeWireFrame :" + geometry.Name);
             //halfWire.SetGeometryInfo(info);
             //halfWire.ModelMatrix = geometry.ModelMatrix;
-            //Workspace.SceneManager.ActiveScene.AddObject(halfWire);
+            //Global.Scene.AddObject(halfWire);
             //info2 = info;
             //obj = halfWire;
 
-            return RACommandResource.Success;
+            return CommandState.Success;
         }
 
         /// <summary>
@@ -150,7 +153,7 @@ namespace RenderApp.RACommand
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public string Undo(string commandArg)
+        public CommandState Undo(string commandArg)
         {
             throw new NotImplementedException();
         }

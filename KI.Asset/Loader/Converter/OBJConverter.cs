@@ -95,7 +95,7 @@ namespace KI.Asset
 
                 if (position.Count != 0)
                 {
-                    geometry = new Geometry(position, normal, null, texCoord, null, GeometryType.Triangle);
+                    geometry = new Geometry(objData.FileName, position, normal, null, texCoord, null, GeometryType.Triangle);
                     SetMaterial(geometry, material);
                     if (geometry != null)
                     {

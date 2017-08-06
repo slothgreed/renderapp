@@ -6,9 +6,8 @@ using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
 using KI.Renderer;
 using OpenTK;
-using RenderApp.Globals;
 
-namespace RenderApp.RACommand
+namespace KI.Tool.Command
 {
     /// <summary>
     /// ワイヤフレームの作成
@@ -34,7 +33,7 @@ namespace RenderApp.RACommand
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public string CanExecute(string commandArg)
+        public CommandState CanExecute(string commandArg)
         {
             return CanCreateGeometry(geometry);
         }
@@ -44,7 +43,7 @@ namespace RenderApp.RACommand
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public string Execute(string commandArg)
+        public CommandState Execute(string commandArg)
         {
             List<Vector3> position = new List<Vector3>();
             if (geometry.GeometryInfo.Index.Count != 0)
@@ -77,11 +76,11 @@ namespace RenderApp.RACommand
             }
 
             RenderObject wireframe = RenderObjectFactory.Instance.CreateRenderObject("WireFrame :" + geometry.Name);
-            wireframe.SetGeometryInfo(new Geometry(position, null, KICalc.RandomColor(), null, null, GeometryType.Line));
+            wireframe.SetGeometryInfo(new Geometry("WireFrame :" + geometry.Name, position, null, KICalc.RandomColor(), null, null, GeometryType.Line));
             wireframe.Geometry.ModelMatrix = geometry.ModelMatrix;
-            Workspace.SceneManager.ActiveScene.AddObject(wireframe);
+            Global.Scene.AddObject(wireframe);
 
-            return RACommandResource.Success;
+            return CommandState.Success;
         }
 
         /// <summary>
@@ -89,9 +88,9 @@ namespace RenderApp.RACommand
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public string Undo(string commandArg)
+        public CommandState Undo(string commandArg)
         {
-            return RACommand.RACommandResource.Failed;
+            return CommandState.Failed;
         }
     }
 }

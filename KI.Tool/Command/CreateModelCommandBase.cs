@@ -1,25 +1,26 @@
 ﻿using KI.Asset;
+using KI.Foundation.Command;
 using KI.Foundation.Core;
 using KI.Gfx.GLUtil;
 
-namespace RenderApp.RACommand
+namespace KI.Tool.Command
 {
     public class CreateModelCommandBase
     {
-        protected string CanCreateGeometry(KIObject asset)
+        protected CommandState CanCreateGeometry(KIObject asset)
         {
             if (!(asset is Geometry))
             {
-                return RACommandResource.Failed;
+                return CommandState.Failed;
             }
 
             Geometry geometry = asset as Geometry;
             if (geometry.GeometryInfo.GeometryType != GeometryType.Triangle)
             {
-                return RACommandResource.Failed;
+                return CommandState.Failed;
             }
 
-            return RACommandResource.Success;
+            return CommandState.Success;
         }
     }
 }

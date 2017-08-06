@@ -59,7 +59,7 @@ namespace KI.Asset
             color.Add(new Vector3(0, 0, 1));
             color.Add(new Vector3(0, 0, 1));
 
-            Geometry info = new Geometry(position, null, color, null, null, Gfx.GLUtil.GeometryType.Line);
+            Geometry info = new Geometry("Axis", position, null, color, null, null, Gfx.GLUtil.GeometryType.Line);
             Geometrys = new Geometry[] { info };
         }
     }

@@ -100,7 +100,7 @@ namespace KI.Asset
             texcoord.Add(Vector2.UnitX + Vector2.UnitY);
             texcoord.Add(Vector2.UnitY);
 
-            var info = new Geometry(position, normal, Vector3.UnitX, texcoord, null, Gfx.GLUtil.GeometryType.Quad);
+            var info = new Geometry(this.Name, position, normal, Vector3.UnitX, texcoord, null, Gfx.GLUtil.GeometryType.Quad);
 
             Geometrys = new Geometry[] { info };
         }

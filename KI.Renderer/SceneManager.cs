@@ -4,27 +4,38 @@ using KI.Renderer;
 
 namespace RenderApp
 {
+    /// <summary>
+    /// シーンマネージャ
+    /// </summary>
     public class SceneManager
     {
-        public List<Scene> SceneList = new List<Scene>();
+        /// <summary>
+        /// シーンリスト
+        /// </summary>
+        public List<Scene> Scenes = new List<Scene>();
 
-        public Scene ActiveScene
-        {
-            get;
-            set;
-        }
+        /// <summary>
+        /// アクティブなシーン
+        /// </summary>
+        public Scene ActiveScene { get; set; }
 
-        public void Create(string name)
+        /// <summary>
+        /// シーンの作成
+        /// </summary>
+        /// <param name="name">名前</param>
+        public Scene Create(string name)
         {
             var scene = new Scene(name);
-            SceneList.Add(scene);
+            Scenes.Add(scene);
+            Global.Scene = scene;
             ActiveScene = scene;
-            Global.Scene = ActiveScene;
             Initialize();
-            CreateMainCamera();
-            CreateSceneLight();
+            return scene;
         }
 
+        /// <summary>
+        /// 初期化
+        /// </summary>
         public void Initialize()
         {
             //List<RenderObject> axis = AssetFactory.Instance.CreateAxis("axis", Vector3.Zero, ActiveScene.WorldMax);
@@ -73,29 +84,21 @@ namespace RenderApp
             //    ActiveScene.AddObject(b);
             //}
 
-            var bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/bunny.half");
+            var bunny = AssetFactory.Instance.CreateLoad3DModel(Global.KIDirectory + @"\renderapp\resource\model\bunny.half");
             //List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/Sphere.stl");
 
             var renderBunny = RenderObjectFactory.Instance.CreateRenderObject("bunny", bunny);
             ActiveScene.AddObject(renderBunny);
         }
 
-        public void CreateMainCamera()
-        {
-            ActiveScene.MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
-            ActiveScene.AddObject(ActiveScene.MainCamera);
-        }
-
-        public void CreateSceneLight()
-        {
-            ActiveScene.SunLight = AssetFactory.Instance.CreateLight("SunLight");
-            ActiveScene.AddObject(ActiveScene.SunLight);
-        }
-
         public void AddObject(string filePath)
         {
-            //var model = AssetFactory.Instance.CreateLoad3DModel(filePath);
-            //ActiveScene.AddObject(model.FirstOrDefault());
+            var model = AssetFactory.Instance.CreateLoad3DModel(filePath);
+            var renderObject = RenderObjectFactory.Instance.CreateRenderObjects(filePath, model);
+            foreach (var obj in renderObject)
+            {
+                ActiveScene.AddObject(obj);
+            }
         }
     }
 }

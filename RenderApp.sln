@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenderApp", "RenderApp\RenderApp.csproj", "{C3F6BAD0-F298-468B-A33B-220D78FD1048}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KI.Asset", "KI.Asset\KI.Asset.csproj", "{197A747A-9D2B-4273-BDC6-02941C876CB2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KI.Renderer", "KI.Renderer\KI.Renderer.csproj", "{8BDA5035-5778-4460-8166-E6B2BD477E29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KI.Tool", "KI.Tool\KI.Tool.csproj", "{C8DF6069-E673-4957-A173-2BFCA883B102}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -147,6 +149,22 @@ Global
 		{8BDA5035-5778-4460-8166-E6B2BD477E29}.Release|x64.Build.0 = Release|Any CPU
 		{8BDA5035-5778-4460-8166-E6B2BD477E29}.Release|x86.ActiveCfg = Release|Any CPU
 		{8BDA5035-5778-4460-8166-E6B2BD477E29}.Release|x86.Build.0 = Release|Any CPU
+		{C8DF6069-E673-4957-A173-2BFCA883B102}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8DF6069-E673-4957-A173-2BFCA883B102}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8DF6069-E673-4957-A173-2BFCA883B102}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{C8DF6069-E673-4957-A173-2BFCA883B102}.Debug|ARM.Build.0 = Debug|Any CPU
+		{C8DF6069-E673-4957-A173-2BFCA883B102}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C8DF6069-E673-4957-A173-2BFCA883B102}.Debug|x64.Build.0 = Debug|Any CPU
+		{C8DF6069-E673-4957-A173-2BFCA883B102}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C8DF6069-E673-4957-A173-2BFCA883B102}.Debug|x86.Build.0 = Debug|Any CPU
+		{C8DF6069-E673-4957-A173-2BFCA883B102}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8DF6069-E673-4957-A173-2BFCA883B102}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8DF6069-E673-4957-A173-2BFCA883B102}.Release|ARM.ActiveCfg = Release|Any CPU
+		{C8DF6069-E673-4957-A173-2BFCA883B102}.Release|ARM.Build.0 = Release|Any CPU
+		{C8DF6069-E673-4957-A173-2BFCA883B102}.Release|x64.ActiveCfg = Release|Any CPU
+		{C8DF6069-E673-4957-A173-2BFCA883B102}.Release|x64.Build.0 = Release|Any CPU
+		{C8DF6069-E673-4957-A173-2BFCA883B102}.Release|x86.ActiveCfg = Release|Any CPU
+		{C8DF6069-E673-4957-A173-2BFCA883B102}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

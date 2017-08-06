@@ -68,25 +68,25 @@ namespace KI.Foundation.Command
         /// <param name="undo">undoできるか</param>
         /// <param name="stack">コマンドリスト番号</param>
         /// <returns>成功したか</returns>
-        public string Execute(ICommand command, string commandArg = null, bool undo = true, int stack = 0)
+        public CommandState Execute(ICommand command, string commandArg = null, bool undo = true, int stack = 0)
         {
             if (commandList.Count < stack)
             {
                 Logger.Log(Logger.LogLevel.Error, "command Stack Error");
             }
 
-            string error = string.Empty;
+            CommandState error = CommandState.None;
             error = command.CanExecute(commandArg);
-            if (error != CommandResource.Success)
+            if (error != CommandState.Success)
             {
-                Logger.Log(Logger.LogLevel.Warning, "Command CanExecute Error", error);
+                Logger.Log(Logger.LogLevel.Warning, "Command CanExecute Error", error.ToString());
                 return error;
             }
 
             error = command.Execute(commandArg);
-            if (error != CommandResource.Success)
+            if (error != CommandState.Success)
             {
-                Logger.Log(Logger.LogLevel.Warning, "Command Execute Error", error);
+                Logger.Log(Logger.LogLevel.Warning, "Command Execute Error", error.ToString());
                 return error;
             }
 
@@ -95,7 +95,7 @@ namespace KI.Foundation.Command
                 commandList[stack].Push(command, commandArg);
             }
 
-            return CommandResource.Success;
+            return CommandState.Success;
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace KI.Foundation.Command
             if (commandList.Count < stack)
             {
                 CommandInfo info = commandList[stack].Pop();
-                if (info.Command.Undo(info.CommandArg) == CommandResource.Failed)
+                if (info.Command.Undo(info.CommandArg) == CommandState.Failed)
                 {
                     Logger.Log(Logger.LogLevel.Warning, "Undo Error");
                 }

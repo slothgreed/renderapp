@@ -2,10 +2,10 @@
 using KI.Foundation.Tree;
 using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
+using KI.Renderer;
 using OpenTK;
-using RenderApp.Globals;
 
-namespace RenderApp.RAControl
+namespace KI.Tool.Control
 {
     class SelectTriangleControl : IControl
     {
@@ -83,14 +83,13 @@ namespace RenderApp.RAControl
             viewport[2] = DeviceContext.Instance.Width;
             viewport[3] = DeviceContext.Instance.Height;
 
-            Scene activeScene = Workspace.SceneManager.ActiveScene;
             KICalc.GetClickPos(
-                activeScene.MainCamera.Matrix,
-                activeScene.MainCamera.ProjMatrix,
+                Global.Scene.MainCamera.Matrix,
+                Global.Scene.MainCamera.ProjMatrix,
                 viewport, mouse, out near, out far);
 
             Geometry geometry;
-            foreach (KINode geometryNode in activeScene.RootNode.AllChildren())
+            foreach (KINode geometryNode in Global.Scene.RootNode.AllChildren())
             {
                 geometry = null;
                 if (geometryNode.KIObject is Geometry)

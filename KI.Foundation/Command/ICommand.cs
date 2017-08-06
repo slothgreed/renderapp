@@ -1,24 +1,36 @@
-﻿
-namespace KI.Foundation.Command
+﻿namespace KI.Foundation.Command
 {
+    public enum CommandState
+    {
+        None,
+        Success,
+        Failed
+    }
+
+    /// <summary>
+    /// コマンドのインタフェースクラス
+    /// </summary>
     public interface ICommand
     {
         /// <summary>
         /// 処理できるか？
         /// </summary>
-        /// <returns></returns>
-        string CanExecute(string commandArg);
-        
+        /// <param name="commandArg">コマンド引数</param>
+        /// <returns>成功値</returns>
+        CommandState CanExecute(string commandArg);
+
         /// <summary>
         /// 処理の実行
         /// </summary>
-        /// <returns></returns>
-        string Execute(string commandArg);
-        
+        /// <param name="commandArg">コマンド引数</param>
+        /// <returns>成功値</returns>
+        CommandState Execute(string commandArg);
+
         /// <summary>
         /// Undo
         /// </summary>
-        /// <returns></returns>
-        string Undo(string commandArg);
+        /// <param name="commandArg">コマンド引数</param>
+        /// <returns>成功値</returns>
+        CommandState Undo(string commandArg);
     }
 }

@@ -5,7 +5,7 @@ namespace KI.Asset
     /// <summary>
     /// 平行光源
     /// </summary>
-    class DirectionLight : Light
+    public class DirectionLight : Light
     {
         /// <summary>
         /// コンストラクタ

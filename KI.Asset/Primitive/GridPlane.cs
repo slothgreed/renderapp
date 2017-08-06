@@ -3,8 +3,11 @@ using KI.Asset;
 using KI.Gfx.GLUtil;
 using OpenTK;
 
-namespace RenderApp.AssetModel
+namespace KI.Asset.Primitive
 {
+    /// <summary>
+    /// グリッド付き平面
+    /// </summary>
     class GridPlane : IGeometry
     {
         /// <summary>
@@ -16,8 +19,6 @@ namespace RenderApp.AssetModel
         /// グリッドの幅
         /// </summary>
         private float delta;
-
-        public Geometry[] Geometrys { get; private set; }
 
         /// <summary>
         /// コンストラクタ
@@ -31,6 +32,14 @@ namespace RenderApp.AssetModel
             CreateGeometry();
         }
 
+        /// <summary>
+        /// 形状
+        /// </summary>
+        public Geometry[] Geometrys { get; private set; }
+
+        /// <summary>
+        /// 形状の作成
+        /// </summary>
         public void CreateGeometry()
         {
             List<Vector3> position = new List<Vector3>();
@@ -63,7 +72,7 @@ namespace RenderApp.AssetModel
                 }
             }
 
-            var info = new Geometry(position, null, color, null, null, GeometryType.Line);
+            var info = new Geometry("GridPlane", position, null, color, null, null, GeometryType.Line);
             Geometrys = new Geometry[] { info };
         }
     }

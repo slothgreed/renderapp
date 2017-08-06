@@ -38,7 +38,7 @@ namespace KI.Asset
         /// </summary>
         public void CreateGeometry()
         {
-            Geometry info = new Geometry(stlData.Position, stlData.Normal, Vector3.One, null, null, GeometryType.Triangle);
+            Geometry info = new Geometry(stlData.FileName, stlData.Position, stlData.Normal, Vector3.One, null, null, GeometryType.Triangle);
             Geometrys = new Geometry[] { info };
         }
     }

@@ -41,11 +41,7 @@ namespace KI.Asset
         /// <summary>
         /// 形状
         /// </summary>
-        public Geometry[] Geometrys
-        {
-            get;
-            private set;
-        }
+        public Geometry[] Geometrys { get; private set; }
 
         /// <summary>
         /// 形状の作成
@@ -73,7 +69,7 @@ namespace KI.Asset
                 }
             }
 
-            Geometry info = new Geometry(position, normal, color, null, index, Gfx.GLUtil.GeometryType.Triangle);
+            Geometry info = new Geometry("HalfEdge", position, normal, color, null, index, Gfx.GLUtil.GeometryType.Triangle);
             Geometrys = new Geometry[] { info };
         }
     }

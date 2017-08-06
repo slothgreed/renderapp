@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace RenderApp.RAControl
+namespace KI.Tool.Control
 {
     /// <summary>
     /// コントロールマネージャ

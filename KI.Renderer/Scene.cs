@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using KI.Asset;
 using KI.Foundation.Core;
 using KI.Foundation.Tree;
 using OpenTK;
 
-namespace KI.Asset
+namespace KI.Renderer
 {
     /// <summary>
     /// シーンクラス
@@ -27,7 +28,7 @@ namespace KI.Asset
         public Scene(string name)
             : base(name)
         {
-            RootNode = new KINode("ROOT");
+            Initialize();
         }
 
         /// <summary>
@@ -51,6 +52,14 @@ namespace KI.Asset
         public Light SunLight { get; set; }
 
         #region [public scene method]
+        private void Initialize()
+        {
+            RootNode = new KINode("ROOT");
+            MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
+            SunLight = AssetFactory.Instance.CreateLight("SunLight");
+            AddObject(MainCamera);
+            AddObject(SunLight);
+        }
         /// <summary>
         /// シーンのオブジェクトの取得
         /// </summary>
@@ -106,14 +115,8 @@ namespace KI.Asset
         {
             RootNode.RemoveRecursiveChild(key);
         }
-        #endregion
 
-        /// <summary>
-        /// 解放処理
-        /// </summary>
-        public override void Dispose()
-        {
-        }
+        #endregion
 
         /// <summary>
         /// 新しいキーの作成

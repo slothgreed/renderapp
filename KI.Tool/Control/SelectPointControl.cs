@@ -5,9 +5,8 @@ using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
 using KI.Renderer;
 using OpenTK;
-using RenderApp.Globals;
 
-namespace RenderApp.RAControl
+namespace KI.Tool.Control
 {
     class SelectPointControl : IControl
     {
@@ -17,13 +16,13 @@ namespace RenderApp.RAControl
             Geometry geometry = null;
             int vertex_Index = 0;
 
-            if (PickPoint(LeftMouse.Click, ref geometry, ref vertex_Index))
+            if (PickPoint(leftMouse.Click, ref geometry, ref vertex_Index))
             {
                 Vector3 pos = geometry.GeometryInfo.Position[vertex_Index];
                 RenderObject point = RenderObjectFactory.Instance.CreateRenderObject("SelectPoint :" + geometry.Name + ":" + vertex_Index.ToString());
-                point.SetGeometryInfo(new Geometry(new List<Vector3>() { pos }, null, KICalc.RandomColor(), null, null, GeometryType.Point));
+                point.SetGeometryInfo(new Geometry("select", new List<Vector3>() { pos }, null, KICalc.RandomColor(), null, null, GeometryType.Point));
                 point.Geometry.ModelMatrix = geometry.ModelMatrix;
-                Workspace.SceneManager.ActiveScene.AddObject(point);
+                Global.Scene.AddObject(point);
             }
 
             return true;
@@ -41,14 +40,13 @@ namespace RenderApp.RAControl
             viewport[2] = DeviceContext.Instance.Width;
             viewport[3] = DeviceContext.Instance.Height;
 
-            Scene activeScene = Workspace.SceneManager.ActiveScene;
             KICalc.GetClickPos(
-                activeScene.MainCamera.Matrix,
-                activeScene.MainCamera.ProjMatrix,
+                Global.Scene.MainCamera.Matrix,
+                Global.Scene.MainCamera.ProjMatrix,
                 viewport, mouse, out near, out far);
 
             Geometry geometry = null;
-            foreach (KINode geometryNode in activeScene.RootNode.AllChildren())
+            foreach (KINode geometryNode in Global.Scene.RootNode.AllChildren())
             {
                 if (geometryNode.KIObject is Geometry)
                 {

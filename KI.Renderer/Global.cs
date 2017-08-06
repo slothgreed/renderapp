@@ -1,5 +1,4 @@
 ﻿using System;
-using KI.Asset;
 
 namespace KI.Renderer
 {

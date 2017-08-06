@@ -6,9 +6,8 @@ using KI.Foundation.Core;
 using KI.Gfx.GLUtil;
 using KI.Renderer;
 using OpenTK;
-using RenderApp.Globals;
 
-namespace RenderApp.RACommand
+namespace KI.Tool.Command
 {
     /// <summary>
     /// ポリゴンの作成
@@ -34,7 +33,7 @@ namespace RenderApp.RACommand
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public string CanExecute(string commandArg)
+        public CommandState CanExecute(string commandArg)
         {
             return CanCreateGeometry(geometry);
         }
@@ -44,16 +43,16 @@ namespace RenderApp.RACommand
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public string Execute(string commandArg)
+        public CommandState Execute(string commandArg)
         {
             List<Vector3> position = new List<Vector3>(geometry.GeometryInfo.Position);
             List<Vector3> normal = new List<Vector3>(geometry.GeometryInfo.Normal);
             List<int> index = new List<int>(geometry.GeometryInfo.Index);
             RenderObject polygon = RenderObjectFactory.Instance.CreateRenderObject("Polygon :" + geometry.Name);
-            polygon.SetGeometryInfo(new Geometry(position, normal, new Vector3(0.7f, 0.7f, 0.7f), null, index, GeometryType.Triangle));
-            Workspace.SceneManager.ActiveScene.AddObject(polygon);
+            polygon.SetGeometryInfo(new Geometry("Polygon :" + geometry.Name, position, normal, new Vector3(0.7f, 0.7f, 0.7f), null, index, GeometryType.Triangle));
+            Global.Scene.AddObject(polygon);
 
-            return RACommandResource.Success;
+            return CommandState.Success;
         }
 
         /// <summary>
@@ -61,7 +60,7 @@ namespace RenderApp.RACommand
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public string Undo(string commandArg)
+        public CommandState Undo(string commandArg)
         {
             throw new NotImplementedException();
         }

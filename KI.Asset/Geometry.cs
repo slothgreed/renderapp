@@ -69,30 +69,15 @@ namespace KI.Asset
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public Geometry()
-        {
-        }
-
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
         /// <param name="name">名前</param>
-        public Geometry(string name)
-            : base(name)
-        {
-            Initialize();
-        }
-
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
         /// <param name="pos">頂点</param>
         /// <param name="nor">法線</param>
         /// <param name="col">色</param>
         /// <param name="tex">テクスチャ座標</param>
         /// <param name="idx">頂点Index</param>
         /// <param name="type">形状タイプ</param>
-        public Geometry(List<Vector3> pos, List<Vector3> nor, List<Vector3> col, List<Vector2> tex, List<int> idx, GeometryType type)
+        public Geometry(string name, List<Vector3> pos, List<Vector3> nor, List<Vector3> col, List<Vector2> tex, List<int> idx, GeometryType type)
+            : base(name)
         {
             Update(pos, nor, col, tex, idx, type);
         }
@@ -100,13 +85,15 @@ namespace KI.Asset
         /// <summary>
         /// コンストラクタ
         /// </summary>
+        /// <param name="name">名前</param>
         /// <param name="pos">頂点</param>
         /// <param name="nor">法線</param>
         /// <param name="col">色</param>
         /// <param name="tex">テクスチャ座標</param>
         /// <param name="idx">頂点Index</param>
         /// <param name="type">形状タイプ</param>
-        public Geometry(List<Vector3> pos, List<Vector3> nor, Vector3 col, List<Vector2> tex, List<int> idx, GeometryType type)
+        public Geometry(string name, List<Vector3> pos, List<Vector3> nor, Vector3 col, List<Vector2> tex, List<int> idx, GeometryType type)
+            : base(name)
         {
             Update(pos, nor, col, tex, idx, type);
         }

@@ -69,11 +69,12 @@
     <Compile Include="Loader\Image\HDRImage.cs" />
     <Compile Include="Loader\Image\TGAImage.cs" />
     <Compile Include="Primitive\Axis.cs" />
+    <Compile Include="Primitive\Cube.cs" />
+    <Compile Include="Primitive\GridPlane.cs" />
     <Compile Include="Primitive\IPrimitive.cs" />
     <Compile Include="Primitive\Plane.cs" />
     <Compile Include="Primitive\Sphere.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scene.cs" />
     <Compile Include="TextureFactory.cs" />
   </ItemGroup>
   <ItemGroup>

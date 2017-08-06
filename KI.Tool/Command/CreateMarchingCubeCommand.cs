@@ -5,9 +5,8 @@ using KI.Foundation.Command;
 using KI.Foundation.Core;
 using KI.Gfx.GLUtil;
 using KI.Renderer;
-using RenderApp.Globals;
 
-namespace RenderApp.RACommand
+namespace KI.Tool.Command
 {
     /// <summary>
     /// Marching Cube の作成
@@ -34,9 +33,9 @@ namespace RenderApp.RACommand
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public string CanExecute(string commandArg)
+        public CommandState CanExecute(string commandArg)
         {
-            return RACommandResource.Success;
+            return CommandState.Success;
         }
 
         /// <summary>
@@ -44,14 +43,14 @@ namespace RenderApp.RACommand
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public string Execute(string commandArg)
+        public CommandState Execute(string commandArg)
         {
             var marching = new MarchingCubesAlgorithm(200, 50);
             RenderObject marchingObject = RenderObjectFactory.Instance.CreateRenderObject("Marching Sphere");
-            Geometry info = new Geometry(marching.PositionList, null, marching.ColorList, null, null, GeometryType.Triangle);
+            Geometry info = new Geometry("Marching Sphere", marching.PositionList, null, marching.ColorList, null, null, GeometryType.Triangle);
             marchingObject.SetGeometryInfo(info);
-            Workspace.SceneManager.ActiveScene.AddObject(marchingObject);
-            return RACommandResource.Success;
+            Global.Scene.AddObject(marchingObject);
+            return CommandState.Success;
         }
 
         /// <summary>
@@ -59,7 +58,7 @@ namespace RenderApp.RACommand
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public string Undo(string commandArg)
+        public CommandState Undo(string commandArg)
         {
             throw new NotImplementedException();
         }

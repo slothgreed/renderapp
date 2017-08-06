@@ -54,7 +54,7 @@ namespace KI.Asset
 
             List<int> index = plyData.FaceIndex.ToList();
 
-            Geometry info = new Geometry(position, null, Vector3.UnitX, null, index, GeometryType.Triangle);
+            Geometry info = new Geometry(plyData.FileName, position, null, Vector3.UnitX, null, index, GeometryType.Triangle);
             Geometrys = new Geometry[] { info };
         }
     }

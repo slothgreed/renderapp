@@ -6,9 +6,8 @@ using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
 using KI.Renderer;
 using OpenTK;
-using RenderApp.Globals;
 
-namespace RenderApp.RAControl
+namespace KI.Tool.Control
 {
     class DijkstraControl : IControl
     {
@@ -26,7 +25,7 @@ namespace RenderApp.RAControl
             if (mouse.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 var SelectObjectController = ControlManager.Instance.Controllers[ControlManager.CONTROL_MODE.SelectTriangle] as SelectTriangleControl;
-                if (SelectObjectController.PickTriangle(LeftMouse.Click, ref geometry, ref vertex_Index))
+                if (SelectObjectController.PickTriangle(leftMouse.Click, ref geometry, ref vertex_Index))
                 {
                     dijkstra.SetGeometry(geometry.HalfEdge as HalfEdge);
 
@@ -49,13 +48,13 @@ namespace RenderApp.RAControl
                         tri1 += normal * 0.01f;
                         tri2 += normal * 0.01f;
                         tri3 += normal * 0.01f;
-                        var picking = Workspace.SceneManager.ActiveScene.FindObject("Picking") as RenderObject;
+                        var picking = Global.Scene.FindObject("Picking") as RenderObject;
                         if (picking == null)
                         {
                             RenderObject triangle = RenderObjectFactory.Instance.CreateRenderObject("Picking");
-                            Geometry info = new Geometry(new List<Vector3>() { tri1, tri2, tri3 }, null, KICalc.RandomColor(), null, null, GeometryType.Triangle);
+                            Geometry info = new Geometry("Picking", new List<Vector3>() { tri1, tri2, tri3 }, null, KICalc.RandomColor(), null, null, GeometryType.Triangle);
                             triangle.SetGeometryInfo(info);
-                            Workspace.SceneManager.ActiveScene.AddObject(triangle);
+                            Global.Scene.AddObject(triangle);
                         }
                         else if (picking.Geometry.TriangleNum == 2)
                         {
@@ -101,7 +100,7 @@ namespace RenderApp.RAControl
         /// <returns></returns>
         public override bool UnBinding()
         {
-            Workspace.SceneManager.ActiveScene.DeleteObject("Picking");
+            Global.Scene.DeleteObject("Picking");
             return true;
         }
 

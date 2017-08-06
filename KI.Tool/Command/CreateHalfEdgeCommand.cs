@@ -3,9 +3,8 @@ using KI.Asset;
 using KI.Foundation.Command;
 using KI.Foundation.Core;
 using KI.Renderer;
-using RenderApp.Globals;
 
-namespace RenderApp.RACommand
+namespace KI.Tool.Command
 {
     /// <summary>
     /// ハーフエッジの作成
@@ -31,7 +30,7 @@ namespace RenderApp.RACommand
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public string CanExecute(string commandArg)
+        public CommandState CanExecute(string commandArg)
         {
             return CanCreateGeometry(geometry);
         }
@@ -41,15 +40,15 @@ namespace RenderApp.RACommand
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public string Execute(string commandArg)
+        public CommandState Execute(string commandArg)
         {
             var half = AssetFactory.Instance.CreateHalfEdge(geometry.GeometryInfo.Position, geometry.GeometryInfo.Index);
             RenderObject halfEdge = RenderObjectFactory.Instance.CreateRenderObject("HalfEdge :" + geometry.Name);
             halfEdge.SetGeometryInfo(half.Geometrys[0]);
             halfEdge.Geometry.ModelMatrix = geometry.ModelMatrix;
-            Workspace.SceneManager.ActiveScene.AddObject(halfEdge);
+            Global.Scene.AddObject(halfEdge);
 
-            return RACommandResource.Success;
+            return CommandState.Success;
         }
 
         /// <summary>
@@ -57,7 +56,7 @@ namespace RenderApp.RACommand
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public string Undo(string commandArg)
+        public CommandState Undo(string commandArg)
         {
             throw new NotImplementedException();
         }

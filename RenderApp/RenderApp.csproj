@@ -142,31 +142,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppSystem.cs" />
-    <Compile Include="AssetModel\Geometry\IRenderObjectConverter.cs" />
     <Compile Include="Globals\Workspace.cs" />
-    <Compile Include="RACommand\CreateConvexHullCommand.cs" />
-    <Compile Include="RACommand\CreateHalfEdgeCommand.cs" />
-    <Compile Include="RACommand\CreateHalfEdgeWireFrameCommand.cs" />
-    <Compile Include="RACommand\CreateMarchingCubeCommand.cs" />
-    <Compile Include="RACommand\CreateModelCommandBase.cs" />
-    <Compile Include="RACommand\CreatePolygonCommand.cs" />
-    <Compile Include="RACommand\CreateVoxelCommand.cs" />
-    <Compile Include="RACommand\CreateWireFrameCommand.cs" />
-    <Compile Include="RACommand\RACommandResource.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RACommandResource.resx</DependentUpon>
-    </Compile>
-    <Compile Include="RAControl\SelectPointControl.cs" />
-    <Compile Include="Scene\SceneManager.cs" />
-    <Compile Include="RAControl\CameraControl.cs" />
     <Compile Include="ViewModel\Converter\EnumConverter.cs" />
     <Compile Include="Globals\Project.cs" />
     <Compile Include="Globals\Enum.cs" />
-    <Compile Include="RAControl\DijkstraControl.cs" />
-    <Compile Include="RAControl\IControl.cs" />
-    <Compile Include="RAControl\SelectTriangleControl.cs" />
-    <Compile Include="RAControl\ControlManager.cs" />
     <Compile Include="Utility\ActiveItems.cs" />
     <Compile Include="ViewModel\Controller\ControllerViewModelT4.cs">
       <AutoGen>True</AutoGen>
@@ -254,8 +233,6 @@
     <Compile Include="Scene\Shader\Diffuse\CDiffuse.cs" />
     <Compile Include="Scene\Shader\DisplaceMent\DisplaceMentMap.cs" />
     <Compile Include="Scene\Shader\ColorRender\CColorShader.cs" />
-    <Compile Include="AssetModel\Geometry\Primitive\Cube.cs" />
-    <Compile Include="AssetModel\Geometry\Primitive\GridPlane.cs" />
     <Compile Include="Scene\Shader\OffScreen\DOF\DOF.cs" />
     <Compile Include="Scene\Shader\Luminous\Luminous.cs" />
     <Compile Include="Scene\Shader\OffScreen\Sobel\CSobel.cs" />
@@ -437,10 +414,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="RACommand\RACommandResource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>RACommandResource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Thumbnail\noimage.png" />
   </ItemGroup>
   <ItemGroup>
@@ -473,6 +446,10 @@
     <ProjectReference Include="..\KI.Renderer\KI.Renderer.csproj">
       <Project>{8bda5035-5778-4460-8166-e6b2bd477e29}</Project>
       <Name>KI.Renderer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KI.Tool\KI.Tool.csproj">
+      <Project>{c8df6069-e673-4957-a173-2bfca883b102}</Project>
+      <Name>KI.Tool</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
