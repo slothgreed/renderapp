@@ -2,6 +2,7 @@
 using KI.Foundation.Command;
 using KI.Foundation.Core;
 using KI.Gfx.GLUtil;
+using KI.Renderer;
 
 namespace KI.Tool.Command
 {
@@ -9,13 +10,13 @@ namespace KI.Tool.Command
     {
         protected CommandState CanCreateGeometry(KIObject asset)
         {
-            if (!(asset is Geometry))
+            if (!(asset is RenderObject))
             {
                 return CommandState.Failed;
             }
 
-            Geometry geometry = asset as Geometry;
-            if (geometry.GeometryInfo.GeometryType != GeometryType.Triangle)
+            RenderObject renderObject = asset as RenderObject;
+            if (renderObject.Geometry.GeometryInfo.GeometryType != GeometryType.Triangle)
             {
                 return CommandState.Failed;
             }

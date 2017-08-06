@@ -18,7 +18,7 @@ namespace KI.Tool.Command
         /// <summary>
         /// 形状
         /// </summary>
-        private Geometry geometry;
+        private RenderObject renderObject;
 
         /// <summary>
         /// コンストラクタ
@@ -26,7 +26,7 @@ namespace KI.Tool.Command
         /// <param name="asset">作成するオブジェクト</param>
         public CreateConvexHullCommand(KIObject asset)
         {
-            geometry = asset as Geometry;
+            renderObject = asset as RenderObject;
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace KI.Tool.Command
         /// <returns>成功値</returns>
         public CommandState CanExecute(string commandArg)
         {
-            return CanCreateGeometry(geometry);
+            return CanCreateGeometry(renderObject);
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace KI.Tool.Command
         /// <returns>成功値</returns>
         public CommandState Execute(string commandArg)
         {
-            ConvexHullAlgorithm convexHull = new ConvexHullAlgorithm(geometry.GeometryInfo.Position);
+            ConvexHullAlgorithm convexHull = new ConvexHullAlgorithm(renderObject.Geometry.GeometryInfo.Position);
             List<Vector3> position = new List<Vector3>();
             foreach (var mesh in convexHull.Meshs)
             {
@@ -84,16 +84,16 @@ namespace KI.Tool.Command
                 position.Add(pos0);
             }
 
-            Geometry info = new Geometry("ConvexHull:" + geometry.Name, position, null, Vector3.UnitZ, null, null, GeometryType.Line);
-            RenderObject convex = RenderObjectFactory.Instance.CreateRenderObject("ConvexHull :" + geometry.Name);
+            Geometry info = new Geometry("ConvexHull:" + renderObject.Name, position, null, Vector3.UnitZ, null, null, GeometryType.Line);
+            RenderObject convex = RenderObjectFactory.Instance.CreateRenderObject("ConvexHull :" + renderObject.Name);
             convex.SetGeometryInfo(info);
-            convex.Geometry.ModelMatrix = geometry.ModelMatrix;
+            convex.ModelMatrix = renderObject.ModelMatrix;
             Global.Scene.AddObject(convex);
 
-            RenderObject point = RenderObjectFactory.Instance.CreateRenderObject("ConvexHull : Points" + geometry.Name);
-            Geometry info2 = new Geometry("ConvexHull:Points" + geometry.Name, convexHull.Points, null, null, null, null, GeometryType.Point);
+            RenderObject point = RenderObjectFactory.Instance.CreateRenderObject("ConvexHull : Points" + renderObject.Name);
+            Geometry info2 = new Geometry("ConvexHull:Points" + renderObject.Name, convexHull.Points, null, null, null, null, GeometryType.Point);
             point.SetGeometryInfo(info2);
-            point.Geometry.ModelMatrix = geometry.ModelMatrix;
+            point.ModelMatrix = renderObject.ModelMatrix;
             Global.Scene.AddObject(point);
 
             return CommandState.Success;

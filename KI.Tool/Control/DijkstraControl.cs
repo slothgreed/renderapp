@@ -21,13 +21,13 @@ namespace KI.Tool.Control
             Vector3 tri1 = Vector3.Zero;
             Vector3 tri2 = Vector3.Zero;
             Vector3 tri3 = Vector3.Zero;
-            Geometry geometry = null;
+            RenderObject renderObject = null;
             if (mouse.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 var SelectObjectController = ControlManager.Instance.Controllers[ControlManager.CONTROL_MODE.SelectTriangle] as SelectTriangleControl;
-                if (SelectObjectController.PickTriangle(leftMouse.Click, ref geometry, ref vertex_Index))
+                if (SelectObjectController.PickTriangle(leftMouse.Click, ref renderObject, ref vertex_Index))
                 {
-                    dijkstra.SetGeometry(geometry.HalfEdge as HalfEdge);
+                    dijkstra.SetGeometry(renderObject.Geometry.HalfEdge as HalfEdge);
 
                     if (dijkstra.StartIndex == -1)
                     {
@@ -38,9 +38,9 @@ namespace KI.Tool.Control
                         dijkstra.EndIndex = vertex_Index;
                     }
 
-                    tri1 = geometry.GeometryInfo.Position[vertex_Index];
-                    tri2 = geometry.GeometryInfo.Position[vertex_Index + 1];
-                    tri3 = geometry.GeometryInfo.Position[vertex_Index + 2];
+                    tri1 = renderObject.Geometry.GeometryInfo.Position[vertex_Index];
+                    tri2 = renderObject.Geometry.GeometryInfo.Position[vertex_Index + 1];
+                    tri3 = renderObject.Geometry.GeometryInfo.Position[vertex_Index + 2];
 
                     if (tri1 != Vector3.Zero && tri2 != Vector3.Zero && tri3 != Vector3.Zero)
                     {

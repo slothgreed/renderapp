@@ -52,18 +52,18 @@ namespace KI.Renderer
                         break;
                     case "uMVP":
                         Matrix4 vp = scene.MainCamera.CameraProjMatrix;
-                        info.Variable = renderObject.Geometry.ModelMatrix * vp;
+                        info.Variable = renderObject.ModelMatrix * vp;
                         break;
                     case "uSMVP":
                         Matrix4 light = scene.SunLight.Matrix;
                         Matrix4 proj = scene.MainCamera.ProjMatrix;
-                        info.Variable = renderObject.Geometry.ModelMatrix * light * proj;
+                        info.Variable = renderObject.ModelMatrix * light * proj;
                         break;
                     case "uModelMatrix":
-                        info.Variable = renderObject.Geometry.ModelMatrix;
+                        info.Variable = renderObject.ModelMatrix;
                         break;
                     case "uNormalMatrix":
-                        info.Variable = renderObject.Geometry.NormalMatrix;
+                        info.Variable = renderObject.NormalMatrix;
                         break;
                     case "uProjectMatrix":
                         info.Variable = scene.MainCamera.ProjMatrix;

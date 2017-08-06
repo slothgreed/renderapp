@@ -17,7 +17,7 @@ namespace KI.Tool.Command
         /// <summary>
         /// 形状
         /// </summary>
-        private Geometry geometry;
+        private RenderObject renderObject;
 
         /// <summary>
         /// コンストラクタ
@@ -25,7 +25,7 @@ namespace KI.Tool.Command
         /// <param name="asset">作成するオブジェクト</param>
         public CreateWireFrameCommand(KIObject asset)
         {
-            geometry = asset as Geometry;
+            renderObject = asset as RenderObject;
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace KI.Tool.Command
         /// <returns>成功値</returns>
         public CommandState CanExecute(string commandArg)
         {
-            return CanCreateGeometry(geometry);
+            return CanCreateGeometry(renderObject);
         }
 
         /// <summary>
@@ -46,38 +46,38 @@ namespace KI.Tool.Command
         public CommandState Execute(string commandArg)
         {
             List<Vector3> position = new List<Vector3>();
-            if (geometry.GeometryInfo.Index.Count != 0)
+            if (renderObject.Geometry.GeometryInfo.Index.Count != 0)
             {
-                for (int i = 0; i < geometry.GeometryInfo.Index.Count / 3; i++)
+                for (int i = 0; i < renderObject.Geometry.GeometryInfo.Index.Count / 3; i++)
                 {
-                    position.Add(geometry.GeometryInfo.Position[geometry.GeometryInfo.Index[3 * i]]);
-                    position.Add(geometry.GeometryInfo.Position[geometry.GeometryInfo.Index[3 * i + 1]]);
+                    position.Add(renderObject.Geometry.GeometryInfo.Position[renderObject.Geometry.GeometryInfo.Index[3 * i]]);
+                    position.Add(renderObject.Geometry.GeometryInfo.Position[renderObject.Geometry.GeometryInfo.Index[3 * i + 1]]);
 
-                    position.Add(geometry.GeometryInfo.Position[geometry.GeometryInfo.Index[3 * i + 1]]);
-                    position.Add(geometry.GeometryInfo.Position[geometry.GeometryInfo.Index[3 * i + 2]]);
+                    position.Add(renderObject.Geometry.GeometryInfo.Position[renderObject.Geometry.GeometryInfo.Index[3 * i + 1]]);
+                    position.Add(renderObject.Geometry.GeometryInfo.Position[renderObject.Geometry.GeometryInfo.Index[3 * i + 2]]);
 
-                    position.Add(geometry.GeometryInfo.Position[geometry.GeometryInfo.Index[3 * i + 2]]);
-                    position.Add(geometry.GeometryInfo.Position[geometry.GeometryInfo.Index[3 * i]]);
+                    position.Add(renderObject.Geometry.GeometryInfo.Position[renderObject.Geometry.GeometryInfo.Index[3 * i + 2]]);
+                    position.Add(renderObject.Geometry.GeometryInfo.Position[renderObject.Geometry.GeometryInfo.Index[3 * i]]);
                 }
             }
             else
             {
-                for (int i = 0; i < geometry.GeometryInfo.Position.Count / 3; i++)
+                for (int i = 0; i < renderObject.Geometry.GeometryInfo.Position.Count / 3; i++)
                 {
-                    position.Add(geometry.GeometryInfo.Position[3 * i]);
-                    position.Add(geometry.GeometryInfo.Position[3 * i + 1]);
+                    position.Add(renderObject.Geometry.GeometryInfo.Position[3 * i]);
+                    position.Add(renderObject.Geometry.GeometryInfo.Position[3 * i + 1]);
 
-                    position.Add(geometry.GeometryInfo.Position[3 * i + 1]);
-                    position.Add(geometry.GeometryInfo.Position[3 * i + 2]);
+                    position.Add(renderObject.Geometry.GeometryInfo.Position[3 * i + 1]);
+                    position.Add(renderObject.Geometry.GeometryInfo.Position[3 * i + 2]);
 
-                    position.Add(geometry.GeometryInfo.Position[3 * i + 2]);
-                    position.Add(geometry.GeometryInfo.Position[3 * i]);
+                    position.Add(renderObject.Geometry.GeometryInfo.Position[3 * i + 2]);
+                    position.Add(renderObject.Geometry.GeometryInfo.Position[3 * i]);
                 }
             }
 
-            RenderObject wireframe = RenderObjectFactory.Instance.CreateRenderObject("WireFrame :" + geometry.Name);
-            wireframe.SetGeometryInfo(new Geometry("WireFrame :" + geometry.Name, position, null, KICalc.RandomColor(), null, null, GeometryType.Line));
-            wireframe.Geometry.ModelMatrix = geometry.ModelMatrix;
+            RenderObject wireframe = RenderObjectFactory.Instance.CreateRenderObject("WireFrame :" + renderObject.Name);
+            wireframe.SetGeometryInfo(new Geometry("WireFrame :" + renderObject.Name, position, null, KICalc.RandomColor(), null, null, GeometryType.Line));
+            wireframe.ModelMatrix = renderObject.ModelMatrix;
             Global.Scene.AddObject(wireframe);
 
             return CommandState.Success;

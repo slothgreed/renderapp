@@ -13,22 +13,22 @@ namespace KI.Tool.Control
         readonly float THRESHOLD = 1.0f;
         public override bool Down(System.Windows.Forms.MouseEventArgs mouse)
         {
-            Geometry geometry = null;
+            RenderObject renderObject = null;
             int vertex_Index = 0;
 
-            if (PickPoint(leftMouse.Click, ref geometry, ref vertex_Index))
+            if (PickPoint(leftMouse.Click, ref renderObject, ref vertex_Index))
             {
-                Vector3 pos = geometry.GeometryInfo.Position[vertex_Index];
-                RenderObject point = RenderObjectFactory.Instance.CreateRenderObject("SelectPoint :" + geometry.Name + ":" + vertex_Index.ToString());
+                Vector3 pos = renderObject.Geometry.Position[vertex_Index];
+                RenderObject point = RenderObjectFactory.Instance.CreateRenderObject("SelectPoint :" + renderObject.Name + ":" + vertex_Index.ToString());
                 point.SetGeometryInfo(new Geometry("select", new List<Vector3>() { pos }, null, KICalc.RandomColor(), null, null, GeometryType.Point));
-                point.Geometry.ModelMatrix = geometry.ModelMatrix;
+                point.ModelMatrix = renderObject.ModelMatrix;
                 Global.Scene.AddObject(point);
             }
 
             return true;
         }
 
-        public bool PickPoint(Vector2 mouse, ref Geometry selectGeometry, ref int selectIndex)
+        public bool PickPoint(Vector2 mouse, ref RenderObject selectGeometry, ref int selectIndex)
         {
             bool select = false;
             float minLength = float.MaxValue;
@@ -45,21 +45,21 @@ namespace KI.Tool.Control
                 Global.Scene.MainCamera.ProjMatrix,
                 viewport, mouse, out near, out far);
 
-            Geometry geometry = null;
+            RenderObject renderObject = null;
             foreach (KINode geometryNode in Global.Scene.RootNode.AllChildren())
             {
                 if (geometryNode.KIObject is Geometry)
                 {
-                    geometry = geometryNode.KIObject as Geometry;
+                    renderObject = geometryNode.KIObject as RenderObject;
                 }
                 else
                 {
                     continue;
                 }
 
-                if (PickPointCore(near, far, geometry, ref minLength, ref selectIndex))
+                if (PickPointCore(near, far, renderObject, ref minLength, ref selectIndex))
                 {
-                    selectGeometry = geometry;
+                    selectGeometry = renderObject;
                     select = true;
                 }
             }
@@ -67,14 +67,14 @@ namespace KI.Tool.Control
             return select;
         }
 
-        private bool PickPointCore(Vector3 near, Vector3 far, Geometry geometry, ref float minLength, ref int selectIndex)
+        private bool PickPointCore(Vector3 near, Vector3 far, RenderObject renderObject, ref float minLength, ref int selectIndex)
         {
             bool select = false;
             Vector3 crossPos = Vector3.Zero;
-            for (int i = 0; i < geometry.GeometryInfo.Position.Count; i++)
+            for (int i = 0; i < renderObject.Geometry.GeometryInfo.Position.Count; i++)
             {
-                Vector3 point = geometry.GeometryInfo.Position[i];
-                point = KICalc.Multiply(geometry.ModelMatrix, point);
+                Vector3 point = renderObject.Geometry.GeometryInfo.Position[i];
+                point = KICalc.Multiply(renderObject.ModelMatrix, point);
 
                 if (KICalc.PerpendicularPoint(point, near, far, out crossPos))
                 {

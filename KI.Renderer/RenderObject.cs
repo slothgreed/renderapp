@@ -11,7 +11,7 @@ namespace KI.Renderer
     /// <summary>
     /// 任意形状(triangle,quad,line,patchのみ対応)
     /// </summary>
-    public class RenderObject : KIObject
+    public class RenderObject : SceneNode
     {
         /// <summary>
         /// コンストラクタ
@@ -64,11 +64,6 @@ namespace KI.Renderer
         public Geometry Geometry { get; private set; }
 
         /// <summary>
-        /// 可視不可視
-        /// </summary>
-        public bool Visible { get; set; } = true;
-
-        /// <summary>
         /// シェーダ
         /// </summary>
         public Shader Shader { get; set; }
@@ -77,13 +72,8 @@ namespace KI.Renderer
         /// 描画
         /// </summary>
         /// <param name="scene">シーン</param>
-        public virtual void Render(Scene scene)
+        public override void RenderCore(Scene scene)
         {
-            if (!Visible)
-            {
-                return;
-            }
-
             if (Shader == null)
             {
                 Logger.Log(Logger.LogLevel.Error, "not set shader");

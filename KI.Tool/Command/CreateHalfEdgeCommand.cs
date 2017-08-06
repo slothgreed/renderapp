@@ -14,7 +14,7 @@ namespace KI.Tool.Command
         /// <summary>
         /// 形状
         /// </summary>
-        private Geometry geometry;
+        private RenderObject renderObject;
 
         /// <summary>
         /// コンストラクタ
@@ -22,7 +22,7 @@ namespace KI.Tool.Command
         /// <param name="asset">作成するオブジェクト</param>
         public CreateHalfEdgeCommand(KIObject asset)
         {
-            geometry = asset as Geometry;
+            renderObject = asset as RenderObject;
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace KI.Tool.Command
         /// <returns>成功値</returns>
         public CommandState CanExecute(string commandArg)
         {
-            return CanCreateGeometry(geometry);
+            return CanCreateGeometry(renderObject);
         }
 
         /// <summary>
@@ -42,10 +42,10 @@ namespace KI.Tool.Command
         /// <returns>成功値</returns>
         public CommandState Execute(string commandArg)
         {
-            var half = AssetFactory.Instance.CreateHalfEdge(geometry.GeometryInfo.Position, geometry.GeometryInfo.Index);
-            RenderObject halfEdge = RenderObjectFactory.Instance.CreateRenderObject("HalfEdge :" + geometry.Name);
+            var half = AssetFactory.Instance.CreateHalfEdge(renderObject.Geometry.GeometryInfo.Position, renderObject.Geometry.GeometryInfo.Index);
+            RenderObject halfEdge = RenderObjectFactory.Instance.CreateRenderObject("HalfEdge :" + renderObject.Name);
             halfEdge.SetGeometryInfo(half.Geometrys[0]);
-            halfEdge.Geometry.ModelMatrix = geometry.ModelMatrix;
+            halfEdge.ModelMatrix = renderObject.ModelMatrix;
             Global.Scene.AddObject(halfEdge);
 
             return CommandState.Success;
