@@ -35,18 +35,19 @@ namespace KI.Renderer
         /// <summary>
         /// 描画
         /// </summary>
-        public override void Render()
+        /// <param name="scene">シーン</param>
+        public override void Render(Scene scene)
         {
             ClearBuffer();
             RenderTarget.BindRenderTarget(OutputTexture.ToArray());
-            foreach (var asset in Global.Scene.RootNode.AllChildren())
+            foreach (var asset in scene.RootNode.AllChildren())
             {
                 if (asset.KIObject is RenderObject)
                 {
                     var geometry = asset.KIObject as RenderObject;
                     var old = geometry.Shader;
                     geometry.Shader = ShaderItem;
-                    geometry.Render(Global.Scene);
+                    geometry.Render(scene);
                     geometry.Shader = old;
                 }
             }

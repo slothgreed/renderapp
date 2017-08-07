@@ -53,7 +53,8 @@ namespace KI.Renderer
         /// <summary>
         /// 描画
         /// </summary>
-        public override void Render()
+        /// <param name="scene">シーン</param>
+        public override void Render(Scene scene)
         {
             if (Plane != null)
             {
@@ -63,7 +64,7 @@ namespace KI.Renderer
                 RenderTarget.ClearBuffer();
                 RenderTarget.BindRenderTarget(OutputTexture.ToArray());
                 Plane.Shader = ShaderItem;
-                Plane.Render(Global.Scene);
+                Plane.Render(scene);
                 RenderTarget.UnBindRenderTarget();
                 GL.Disable(EnableCap.Blend);
             }

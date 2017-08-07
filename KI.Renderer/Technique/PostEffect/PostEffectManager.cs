@@ -37,11 +37,12 @@ namespace KI.Renderer
         /// <summary>
         /// 描画
         /// </summary>
-        public void Render()
+        /// <param name="scene">シーン</param>
+        public void Render(Scene scene)
         {
             foreach (var post in postEffects)
             {
-                post.Render();
+                post.Render(scene);
             }
         }
 

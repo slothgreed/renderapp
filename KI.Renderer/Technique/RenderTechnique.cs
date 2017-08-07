@@ -104,7 +104,8 @@ namespace KI.Renderer
         /// <summary>
         /// 描画
         /// </summary>
-        public virtual void Render()
+        /// <param name="scene">シーン</param>
+        public virtual void Render(Scene scene)
         {
             if (renderType == RenderType.Original)
             {
@@ -118,7 +119,7 @@ namespace KI.Renderer
                     RenderTarget.ClearBuffer();
                     RenderTarget.BindRenderTarget(OutputTexture.ToArray());
                     Plane.Shader = ShaderItem;
-                    Plane.Render(Global.Scene);
+                    Plane.Render(scene);
                     RenderTarget.UnBindRenderTarget();
                 }
             }

@@ -27,6 +27,7 @@ namespace KI.Renderer
         /// <summary>
         /// コンストラクタ
         /// </summary>
+        /// <param name="name">ノード名</param>
         public SceneNode(string name)
             : base(name)
         {
@@ -249,6 +250,8 @@ namespace KI.Renderer
         /// <summary>
         /// 形状に回転を適用(初期の向きに対して)
         /// </summary>
+        /// <param name="quart">クオータニオン</param>
+        /// <param name="init">初期に対してか</param>
         private void SetModelViewRotateXYZ(Matrix4 quart, bool init)
         {
             //移動量を消して、回転後移動

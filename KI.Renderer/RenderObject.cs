@@ -124,25 +124,25 @@ namespace KI.Renderer
         {
             if (Geometry.Position.Count != 0)
             {
-                PositionBuffer = BufferFactory.Instance.CreateArrayBuffer();
+                PositionBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
                 PositionBuffer.GenBuffer();
             }
 
             if (Geometry.Normal.Count != 0)
             {
-                NormalBuffer = BufferFactory.Instance.CreateArrayBuffer();
+                NormalBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
                 NormalBuffer.GenBuffer();
             }
 
             if (Geometry.Color.Count != 0)
             {
-                ColorBuffer = BufferFactory.Instance.CreateArrayBuffer();
+                ColorBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
                 ColorBuffer.GenBuffer();
             }
 
             if (Geometry.TexCoord.Count != 0)
             {
-                TexCoordBuffer = BufferFactory.Instance.CreateArrayBuffer();
+                TexCoordBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
                 TexCoordBuffer.GenBuffer();
             }
 

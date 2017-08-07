@@ -48,13 +48,13 @@ namespace KI.Tool.Control
                         tri1 += normal * 0.01f;
                         tri2 += normal * 0.01f;
                         tri3 += normal * 0.01f;
-                        var picking = Global.Scene.FindObject("Picking") as RenderObject;
+                        var picking = Global.RenderSystem.ActiveScene.FindObject("Picking") as RenderObject;
                         if (picking == null)
                         {
                             RenderObject triangle = RenderObjectFactory.Instance.CreateRenderObject("Picking");
                             Geometry info = new Geometry("Picking", new List<Vector3>() { tri1, tri2, tri3 }, null, KICalc.RandomColor(), null, null, GeometryType.Triangle);
                             triangle.SetGeometryInfo(info);
-                            Global.Scene.AddObject(triangle);
+                            Global.RenderSystem.ActiveScene.AddObject(triangle);
                         }
                         else if (picking.Geometry.TriangleNum == 2)
                         {
@@ -100,7 +100,7 @@ namespace KI.Tool.Control
         /// <returns></returns>
         public override bool UnBinding()
         {
-            Global.Scene.DeleteObject("Picking");
+            Global.RenderSystem.ActiveScene.DeleteObject("Picking");
             return true;
         }
 

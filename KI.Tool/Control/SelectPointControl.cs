@@ -22,7 +22,7 @@ namespace KI.Tool.Control
                 RenderObject point = RenderObjectFactory.Instance.CreateRenderObject("SelectPoint :" + renderObject.Name + ":" + vertex_Index.ToString());
                 point.SetGeometryInfo(new Geometry("select", new List<Vector3>() { pos }, null, KICalc.RandomColor(), null, null, GeometryType.Point));
                 point.ModelMatrix = renderObject.ModelMatrix;
-                Global.Scene.AddObject(point);
+                Global.RenderSystem.ActiveScene.AddObject(point);
             }
 
             return true;
@@ -41,12 +41,12 @@ namespace KI.Tool.Control
             viewport[3] = DeviceContext.Instance.Height;
 
             KICalc.GetClickPos(
-                Global.Scene.MainCamera.Matrix,
-                Global.Scene.MainCamera.ProjMatrix,
+                Global.RenderSystem.ActiveScene.MainCamera.Matrix,
+                Global.RenderSystem.ActiveScene.MainCamera.ProjMatrix,
                 viewport, mouse, out near, out far);
 
             RenderObject renderObject = null;
-            foreach (KINode geometryNode in Global.Scene.RootNode.AllChildren())
+            foreach (KINode geometryNode in Global.RenderSystem.ActiveScene.RootNode.AllChildren())
             {
                 if (geometryNode.KIObject is Geometry)
                 {

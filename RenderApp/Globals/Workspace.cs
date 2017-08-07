@@ -22,8 +22,8 @@ namespace RenderApp.Globals
         /// </summary>
         static Workspace()
         {
-            Global.Scene = SceneManager.ActiveScene;
             Global.RenderSystem = RenderSystem;
+            Global.RenderSystem.ActiveScene = SceneManager.ActiveScene;
         }
     }
 }

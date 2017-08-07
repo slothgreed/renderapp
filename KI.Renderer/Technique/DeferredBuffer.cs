@@ -29,16 +29,17 @@ namespace KI.Renderer
         /// <summary>
         /// 描画
         /// </summary>
-        public override void Render()
+        /// <param name="scene">シーン</param>
+        public override void Render(Scene scene)
         {
             RenderTarget.ClearBuffer();
             RenderTarget.BindRenderTarget(OutputTexture.ToArray());
-            foreach (var light in Global.Scene.RootNode.AllChildren())
+            foreach (var light in scene.RootNode.AllChildren())
             {
                 if (light.KIObject is Light)
                 {
                     Plane.Shader = ShaderItem;
-                    Plane.Render(Global.Scene);
+                    Plane.Render(scene);
                 }
             }
 

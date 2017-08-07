@@ -84,12 +84,12 @@ namespace KI.Tool.Control
             viewport[3] = DeviceContext.Instance.Height;
 
             KICalc.GetClickPos(
-                Global.Scene.MainCamera.Matrix,
-                Global.Scene.MainCamera.ProjMatrix,
+                Global.RenderSystem.ActiveScene.MainCamera.Matrix,
+                Global.RenderSystem.ActiveScene.MainCamera.ProjMatrix,
                 viewport, mouse, out near, out far);
 
             RenderObject renderObject;
-            foreach (KINode geometryNode in Global.Scene.RootNode.AllChildren())
+            foreach (KINode geometryNode in Global.RenderSystem.ActiveScene.RootNode.AllChildren())
             {
                 renderObject = null;
                 if (geometryNode.KIObject is Geometry)

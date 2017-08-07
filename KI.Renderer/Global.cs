@@ -18,11 +18,6 @@ namespace KI.Renderer
         public static RenderSystem RenderSystem { get; set; }
 
         /// <summary>
-        /// シーン
-        /// </summary>
-        public static Scene Scene { get; set; }
-
-        /// <summary>
         /// KIProjectDirecoty
         /// </summary>
         public static string KIDirectory

@@ -49,7 +49,7 @@ namespace KI.Gfx.GLUtil
         }
 
         /// <summary>
-        /// 文字列
+        /// オブジェクトを表す文字列
         /// </summary>
         /// <returns>文字列</returns>
         public override string ToString()

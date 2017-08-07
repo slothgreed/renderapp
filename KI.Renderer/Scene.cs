@@ -52,14 +52,7 @@ namespace KI.Renderer
         public Light SunLight { get; set; }
 
         #region [public scene method]
-        private void Initialize()
-        {
-            RootNode = new KINode("ROOT");
-            MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
-            SunLight = AssetFactory.Instance.CreateLight("SunLight");
-            AddObject(MainCamera);
-            AddObject(SunLight);
-        }
+
         /// <summary>
         /// シーンのオブジェクトの取得
         /// </summary>
@@ -67,8 +60,7 @@ namespace KI.Renderer
         /// <returns>オブジェクト</returns>
         public KIObject FindObject(string key)
         {
-            KINode obj;
-            obj = RootNode.FindChild(key);
+            KINode obj = RootNode.FindChild(key);
             if (obj == null)
             {
                 return null;
@@ -140,6 +132,18 @@ namespace KI.Renderer
                     return newKey;
                 }
             }
+        }
+
+        /// <summary>
+        /// 初期化
+        /// </summary>
+        private void Initialize()
+        {
+            RootNode = new KINode("ROOT");
+            MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
+            SunLight = AssetFactory.Instance.CreateLight("SunLight");
+            AddObject(MainCamera);
+            AddObject(SunLight);
         }
     }
 }

@@ -2,6 +2,9 @@
 
 namespace KI.Gfx.GLUtil
 {
+    /// <summary>
+    /// 形状の種類
+    /// </summary>
     public enum GeometryType
     {
         None,
@@ -49,44 +52,37 @@ namespace KI.Gfx.GLUtil
         {
             GL.ClearColor(1, 1, 1, 1);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            Enable(EnableCap.DepthTest);
-            Enable(EnableCap.CullFace);
-            Enable(EnableCap.AlphaTest);
-            Enable(EnableCap.PolygonOffsetFill);
-            Enable(EnableCap.Texture2D);
-            Enable(EnableCap.TextureCubeMap);
+            GL.Enable(EnableCap.DepthTest);
+            GL.Enable(EnableCap.CullFace);
+            GL.Enable(EnableCap.AlphaTest);
+            GL.Enable(EnableCap.PolygonOffsetFill);
+            GL.Enable(EnableCap.Texture2D);
+            GL.Enable(EnableCap.TextureCubeMap);
             GL.PointSize(2.0f);
-            PolygonOffset(1.0f, 1.0f);
-            FrontFace(FrontFaceDirection.Ccw);
+            GL.PolygonOffset(1.0f, 1.0f);
+            GL.FrontFace(FrontFaceDirection.Ccw);
 
             SizeChanged(width, height);
         }
 
-        public void CullFace(CullFaceMode value)
-        {
-            GL.CullFace(value);
-        }
-
-        public void PolygonOffset(float factor, float value)
-        {
-            GL.PolygonOffset(factor, value);
-        }
-
-        public void FrontFace(FrontFaceDirection value)
-        {
-            GL.FrontFace(value);
-        }
-
-        public void Enable(EnableCap enable)
-        {
-            GL.Enable(enable);
-        }
-
+        /// <summary>
+        /// 描画
+        /// </summary>
+        /// <param name="type">形状タイプ</param>
+        /// <param name="first">開始番号</param>
+        /// <param name="count">数</param>
         public void DrawArrays(GeometryType type, int first, int count)
         {
             GL.DrawArrays(ConvertToPrimitiveType(type), first, count);
         }
 
+        /// <summary>
+        /// 描画
+        /// </summary>
+        /// <param name="type">形状タイプ</param>
+        /// <param name="count">数</param>
+        /// <param name="elementType">要素の型</param>
+        /// <param name="indices">ポインタの場所</param>
         public void DrawElements(GeometryType type, int count, DrawElementsType elementType, int indices)
         {
             GL.DrawElements(ConvertToPrimitiveType(type), count, elementType, indices);
@@ -104,16 +100,28 @@ namespace KI.Gfx.GLUtil
             GL.Viewport(0, 0, Width, Height);
         }
 
+        /// <summary>
+        /// ピクセルデータの取得
+        /// </summary>
+        /// <param name="data">ビットマップデータ</param>
         public void ReadPixel(System.Drawing.Imaging.BitmapData data)
         {
             GL.ReadPixels(0, 0, Width, Height, PixelFormat.Bgr, PixelType.UnsignedByte, data.Scan0);
         }
 
+        /// <summary>
+        /// バッファをクリアします。
+        /// </summary>
         public void Clear()
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         }
 
+        /// <summary>
+        /// 描画種類をプリミティブ種類に変換します。
+        /// </summary>
+        /// <param name="type">描画種類</param>
+        /// <returns>プリミティブ種類</returns>
         private PrimitiveType ConvertToPrimitiveType(GeometryType type)
         {
             switch (type)

@@ -12,7 +12,7 @@ namespace RenderApp
         /// <summary>
         /// シーンリスト
         /// </summary>
-        public List<Scene> Scenes = new List<Scene>();
+        public List<Scene> Scenes { get; set; } = new List<Scene>();
 
         /// <summary>
         /// アクティブなシーン
@@ -23,11 +23,12 @@ namespace RenderApp
         /// シーンの作成
         /// </summary>
         /// <param name="name">名前</param>
+        /// <returns>シーン</returns>
         public Scene Create(string name)
         {
             var scene = new Scene(name);
             Scenes.Add(scene);
-            Global.Scene = scene;
+            Global.RenderSystem.ActiveScene = scene;
             ActiveScene = scene;
             Initialize();
             return scene;
@@ -91,6 +92,10 @@ namespace RenderApp
             ActiveScene.AddObject(renderBunny);
         }
 
+        /// <summary>
+        /// オブジェクトの追加
+        /// </summary>
+        /// <param name="filePath">ファイルパス</param>
         public void AddObject(string filePath)
         {
             var model = AssetFactory.Instance.CreateLoad3DModel(filePath);

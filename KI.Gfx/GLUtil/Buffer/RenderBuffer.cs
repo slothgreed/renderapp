@@ -9,13 +9,16 @@ namespace KI.Gfx.GLUtil
     public class RenderBuffer : BufferObject
     {
         /// <summary>
+        /// バッファストレージ
+        /// </summary>
+        private RenderbufferStorage bufferStorage;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         internal RenderBuffer()
         {
         }
-
-        RenderbufferStorage BufferStorage { get; set; }
 
         /// <summary>
         /// バッファの生成
@@ -41,9 +44,15 @@ namespace KI.Gfx.GLUtil
             GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, 0);
         }
 
+        /// <summary>
+        /// ストレージの設定
+        /// </summary>
+        /// <param name="storage">ストレージ</param>
+        /// <param name="width">横</param>
+        /// <param name="height">縦</param>
         public void Storage(RenderbufferStorage storage, int width, int height)
         {
-            BufferStorage = storage;
+            bufferStorage = storage;
             SizeChanged(width, height);
         }
 
@@ -55,7 +64,7 @@ namespace KI.Gfx.GLUtil
         public void SizeChanged(int width, int height)
         {
             BindBuffer();
-            GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, BufferStorage, width, height);
+            GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, bufferStorage, width, height);
             UnBindBuffer();
             Logger.GLLog(Logger.LogLevel.Error);
         }

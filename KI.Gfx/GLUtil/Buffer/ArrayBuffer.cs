@@ -16,16 +16,6 @@ namespace KI.Gfx.GLUtil
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        internal ArrayBuffer()
-        {
-            Target = BufferTarget.ArrayBuffer;
-            UsageHint = BufferUsageHint.StaticDraw;
-            Enable = true;
-        }
-
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
         /// <param name="target">バッファターゲット</param>
         internal ArrayBuffer(BufferTarget target)
         {

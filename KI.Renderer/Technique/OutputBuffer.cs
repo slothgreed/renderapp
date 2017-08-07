@@ -49,11 +49,12 @@ namespace KI.Renderer
         /// <summary>
         /// 描画
         /// </summary>
-        public override void Render()
+        /// <param name="scene">シーン</param>
+        public override void Render(Scene scene)
         {
             //最終出力フレームバッファのバインドの必要なし
             Plane.Shader = ShaderItem;
-            Plane.Render(Global.Scene);
+            Plane.Render(scene);
         }
     }
 }

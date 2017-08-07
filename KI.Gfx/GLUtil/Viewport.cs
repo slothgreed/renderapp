@@ -424,7 +424,7 @@ namespace KI.Gfx.GLUtil
             if (GraphicsContext.CurrentContext == null)
                 throw new GraphicsContextMissingException();
 
-            System.Drawing.Rectangle r = new Rectangle(GLControl.Location, GLControl.Size);
+            Rectangle r = new Rectangle(GLControl.Location, GLControl.Size);
             Bitmap bmp = new Bitmap(GLControl.Width, GLControl.Height);
             System.Drawing.Imaging.BitmapData data = bmp.LockBits(r, System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
             DeviceContext.Instance.ReadPixel(data);

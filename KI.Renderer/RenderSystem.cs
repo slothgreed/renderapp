@@ -31,6 +31,11 @@ namespace KI.Renderer
         }
 
         /// <summary>
+        /// 描画するシーン
+        /// </summary>
+        public Scene ActiveScene { get; set; }
+        
+        /// <summary>
         /// 出力テクスチャ
         /// </summary>
         public Texture OutputTexture { get; set; }
@@ -113,16 +118,16 @@ namespace KI.Renderer
         public void Render()
         {
             //PreRenderStage.Render();
-            GBufferStage.Render();
-            IBLStage.Render();
-            DeferredStage.Render();
+            GBufferStage.Render(ActiveScene);
+            IBLStage.Render(ActiveScene);
+            DeferredStage.Render(ActiveScene);
             //SelectionStage.ClearBuffer();
             //SelectionStage.Render();
 
-            postEffect.Render();
+            postEffect.Render(ActiveScene);
             outputStage.uSelectMap = selectionStage.OutputTexture[0];
             outputStage.uTarget = OutputTexture;
-            outputStage.Render();
+            outputStage.Render(ActiveScene);
         }
 
         /// <summary>

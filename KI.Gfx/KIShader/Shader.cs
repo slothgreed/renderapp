@@ -15,6 +15,16 @@ namespace KI.Gfx.KIShader
     {
         #region [constructor]
         /// <summary>
+        /// シェーダ変数
+        /// </summary>
+        private Dictionary<string, ShaderProgramInfo> shaderVariable = new Dictionary<string, ShaderProgramInfo>();
+
+        /// <summary>
+        /// アクティブテクスチャのカウンタ
+        /// </summary>
+        private int activeTextureCounter;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="vert">頂点シェーダ</param>
@@ -52,6 +62,14 @@ namespace KI.Gfx.KIShader
             Initialize();
         }
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="vert">頂点シェーダ</param>
+        /// <param name="frag">フラグシェーダ</param>
+        /// <param name="geom">ジオメトリシェーダ</param>
+        /// <param name="tcs">テッセレーション制御シェーダ</param>
+        /// <param name="tes">テッセレーション評価シェーダ</param>
         public Shader(ShaderProgram vert, ShaderProgram frag, ShaderProgram geom, ShaderProgram tcs, ShaderProgram tes)
         {
             if (vert.ShaderType == ShaderType.VertexShader &&
@@ -70,6 +88,13 @@ namespace KI.Gfx.KIShader
             Initialize();
         }
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="vert">頂点シェーダ</param>
+        /// <param name="frag">フラグシェーダ</param>
+        /// <param name="tcs">テッセレーション制御シェーダ</param>
+        /// <param name="tes">テッセレーション評価シェーダ</param>
         public Shader(ShaderProgram vert, ShaderProgram frag, ShaderProgram tcs, ShaderProgram tes)
         {
             if (vert.ShaderType == ShaderType.VertexShader &&
@@ -88,11 +113,6 @@ namespace KI.Gfx.KIShader
         }
         #endregion
         #region [member value]
-
-        /// <summary>
-        /// 利用しているシェーダ
-        /// </summary>
-        private List<ShaderProgram> ActiveShader { get; set; }
 
         /// <summary>
         /// シェーダプログラム
@@ -119,9 +139,20 @@ namespace KI.Gfx.KIShader
         /// </summary>
         public ShaderProgram GeomShader { get; private set; }
 
+        /// <summary>
+        /// テッセレーション制御シェーダ
+        /// </summary>
         public ShaderProgram TcsShader { get; private set; }
 
+        /// <summary>
+        /// テッセレーション評価シェーダ
+        /// </summary>
         public ShaderProgram TesShader { get; private set; }
+
+        /// <summary>
+        /// 利用しているシェーダ
+        /// </summary>
+        private List<ShaderProgram> ActiveShader { get; set; }
 
         #endregion
 
@@ -199,8 +230,6 @@ namespace KI.Gfx.KIShader
         }
         #region [bind buffer]
 
-        private int activeTextureCounter;
-
         /// <summary>
         /// シェーダの値をバインド
         /// </summary>
@@ -209,7 +238,7 @@ namespace KI.Gfx.KIShader
             GL.UseProgram(Program);
 
             activeTextureCounter = 0;
-            foreach (ShaderProgramInfo loop in _shaderVariable.Values)
+            foreach (ShaderProgramInfo loop in shaderVariable.Values)
             {
                 if (loop.ShaderID == -1)
                 {
@@ -231,8 +260,8 @@ namespace KI.Gfx.KIShader
         /// <summary>
         /// AttributeのBinding
         /// </summary>
-        /// <param name="attribute"></param>
-        public static void BindAttributeState(ShaderProgramInfo attribute)
+        /// <param name="attribute">アトリビュート変数情報</param>
+        public void BindAttributeState(ShaderProgramInfo attribute)
         {
             if (attribute.ShaderID == -1)
             {
@@ -279,9 +308,12 @@ namespace KI.Gfx.KIShader
             Logger.GLLog(Logger.LogLevel.Error);
         }
 
+        /// <summary>
+        /// バインドの解除
+        /// </summary>
         public void UnBindBuffer()
         {
-            foreach (ShaderProgramInfo loop in _shaderVariable.Values)
+            foreach (ShaderProgramInfo loop in shaderVariable.Values)
             {
                 if (loop.ShaderVariableType == ShaderVariableType.Uniform)
                 {
@@ -303,14 +335,20 @@ namespace KI.Gfx.KIShader
             Logger.GLLog(Logger.LogLevel.Error);
         }
 
-        public bool SetValue(string key, object value)
+        /// <summary>
+        /// 値の設定
+        /// </summary>
+        /// <param name="name">変数名</param>
+        /// <param name="value">値</param>
+        /// <returns>成功</returns>
+        public bool SetValue(string name, object value)
         {
-            if (_shaderVariable.ContainsKey(key))
+            if (shaderVariable.ContainsKey(name))
             {
                 if (value is Texture)
                 {
                     var texture = value as Texture;
-                    _shaderVariable[key].Variable = texture.DeviceID;
+                    shaderVariable[name].Variable = texture.DeviceID;
                     return true;
                 }
 
@@ -319,17 +357,17 @@ namespace KI.Gfx.KIShader
                     var bValue = (bool)value;
                     if (bValue)
                     {
-                        _shaderVariable[key].Variable = 1;
+                        shaderVariable[name].Variable = 1;
                     }
                     else
                     {
-                        _shaderVariable[key].Variable = 0;
+                        shaderVariable[name].Variable = 0;
                     }
 
                     return true;
                 }
 
-                _shaderVariable[key].Variable = value;
+                shaderVariable[name].Variable = value;
                 return true;
             }
 
@@ -338,11 +376,13 @@ namespace KI.Gfx.KIShader
 
         #endregion
 
-        private Dictionary<string, ShaderProgramInfo> _shaderVariable = new Dictionary<string, ShaderProgramInfo>();
-
+        /// <summary>
+        /// シェーダ変数の取得
+        /// </summary>
+        /// <returns>シェーダ変数</returns>
         public IEnumerable<object> GetShaderVariable()
         {
-            foreach (var loop in _shaderVariable)
+            foreach (var loop in shaderVariable)
             {
                 yield return loop.Value;
             }
@@ -354,7 +394,6 @@ namespace KI.Gfx.KIShader
         /// </summary>
         public void Initialize()
         {
-
             ActiveShader = new List<ShaderProgram>();
 
             if (VertexShader != null)
@@ -385,6 +424,10 @@ namespace KI.Gfx.KIShader
             AnalyzeShaderProgram();
         }
 
+        /// <summary>
+        /// オブジェクトを表す文字列
+        /// </summary>
+        /// <returns>文字列</returns>
         public override string ToString()
         {
             string name = string.Empty;
@@ -419,9 +462,13 @@ namespace KI.Gfx.KIShader
         #endregion
 
         #region [analyze shader code]
+
+        /// <summary>
+        /// シェーダプログラムの解析
+        /// </summary>
         public void AnalyzeShaderProgram()
         {
-            _shaderVariable.Clear();
+            shaderVariable.Clear();
             GL.UseProgram(Program);
 
             foreach (ShaderProgram loop in ActiveShader)
@@ -436,7 +483,7 @@ namespace KI.Gfx.KIShader
             info.Name = "index";
             info.Variable = new List<int>();
             info.ShaderVariableType = ShaderVariableType.Attribute;
-            _shaderVariable.Add(info.Name, info);
+            shaderVariable.Add(info.Name, info);
         }
 
         /// <summary>
@@ -452,10 +499,13 @@ namespace KI.Gfx.KIShader
         /// <summary>
         /// シェーダの作成
         /// </summary>
+        /// <param name="vertexShaderCode">頂点シェーダ</param>
+        /// <param name="fragmentShaderCode">フラグシェーダ</param>
+        /// <returns>プログラムID</returns>
         protected int CreateShaderProgram(string vertexShaderCode, string fragmentShaderCode)
         {
-            int vshader = CompailShader(ShaderType.VertexShader, vertexShaderCode);
-            int fshader = CompailShader(ShaderType.FragmentShader, fragmentShaderCode);
+            int vshader = CompileShader(ShaderType.VertexShader, vertexShaderCode);
+            int fshader = CompileShader(ShaderType.FragmentShader, fragmentShaderCode);
 
             int program = GL.CreateProgram();
             GL.AttachShader(program, vshader);
@@ -487,11 +537,18 @@ namespace KI.Gfx.KIShader
         /// <summary>
         /// ジオメトリシェーダ用
         /// </summary>
+        /// <param name="vertexShaderCode">頂点シェーダ</param>
+        /// <param name="fragmentShaderCode">フラグシェーダ</param>
+        /// <param name="geometryShaderCode">ジオメトリシェーダ</param>
+        /// <param name="inType"></param>
+        /// <param name="outType"></param>
+        /// <param name="outVertexNum"></param>
+        /// <returns>プログラムID</returns>
         protected int CreateShaderProgram(string vertexShaderCode, string geometryShaderCode, string fragmentShaderCode, int inType, int outType, int outVertexNum = -1)
         {
-            int vshader = CompailShader(ShaderType.VertexShader, vertexShaderCode);
-            int fshader = CompailShader(ShaderType.FragmentShader, fragmentShaderCode);
-            int gshader = CompailShader(ShaderType.GeometryShader, geometryShaderCode);
+            int vshader = CompileShader(ShaderType.VertexShader, vertexShaderCode);
+            int fshader = CompileShader(ShaderType.FragmentShader, fragmentShaderCode);
+            int gshader = CompileShader(ShaderType.GeometryShader, geometryShaderCode);
 
             if (outVertexNum < 0)
             {
@@ -532,13 +589,19 @@ namespace KI.Gfx.KIShader
         /// <summary>
         /// テッセレーションシェーダ用
         /// </summary>
+        /// <param name="vertexShaderCode">頂点シェーダ</param>
+        /// <param name="fragmentShaderCode">フラグシェーダ</param>
+        /// <param name="geometryShaderCode">ジオメトリシェーダ</param>
+        /// <param name="tcsShaderCode">テッセレーション制御シェーダ</param>
+        /// <param name="tesShaderCode">テッセレーション評価シェーダ</param>
+        /// <returns>プログラムID</returns>
         protected int CreateShaderProgram(string vertexShaderCode, string fragmentShaderCode, string geometryShaderCode, string tcsShaderCode, string tesShaderCode)
         {
-            int vshader = CompailShader(ShaderType.VertexShader, vertexShaderCode);
-            int fshader = CompailShader(ShaderType.FragmentShader, fragmentShaderCode);
-            int gshader = CompailShader(ShaderType.GeometryShader, geometryShaderCode);
-            int tesshader = CompailShader(ShaderType.TessEvaluationShader, tesShaderCode);
-            int tcsshader = CompailShader(ShaderType.TessControlShader, tcsShaderCode);
+            int vshader = CompileShader(ShaderType.VertexShader, vertexShaderCode);
+            int fshader = CompileShader(ShaderType.FragmentShader, fragmentShaderCode);
+            int gshader = CompileShader(ShaderType.GeometryShader, geometryShaderCode);
+            int tesshader = CompileShader(ShaderType.TessEvaluationShader, tesShaderCode);
+            int tcsshader = CompileShader(ShaderType.TessControlShader, tcsShaderCode);
 
             int outVertexNum = -1;
 
@@ -588,12 +651,17 @@ namespace KI.Gfx.KIShader
         /// <summary>
         /// テッセレーションシェーダ用
         /// </summary>
+        /// <param name="vertexShaderCode">頂点シェーダ</param>
+        /// <param name="fragmentShaderCode">フラグシェーダ</param>
+        /// <param name="tcsShaderCode">テッセレーション制御シェーダ</param>
+        /// <param name="tesShaderCode">テッセレーション評価シェーダ</param>
+        /// <returns>プログラムID</returns>
         protected int CreateShaderProgram(string vertexShaderCode, string fragmentShaderCode, string tcsShaderCode, string tesShaderCode)
         {
-            int vshader = CompailShader(ShaderType.VertexShader, vertexShaderCode);
-            int fshader = CompailShader(ShaderType.FragmentShader, fragmentShaderCode);
-            int tesshader = CompailShader(ShaderType.TessEvaluationShader, tesShaderCode);
-            int tcsshader = CompailShader(ShaderType.TessControlShader, tcsShaderCode);
+            int vshader = CompileShader(ShaderType.VertexShader, vertexShaderCode);
+            int fshader = CompileShader(ShaderType.FragmentShader, fragmentShaderCode);
+            int tesshader = CompileShader(ShaderType.TessEvaluationShader, tesShaderCode);
+            int tcsshader = CompileShader(ShaderType.TessControlShader, tcsShaderCode);
 
             int program = GL.CreateProgram();
             GL.AttachShader(program, vshader);
@@ -708,7 +776,7 @@ namespace KI.Gfx.KIShader
         private void SetShaderVariableID()
         {
             GL.UseProgram(Program);
-            foreach (ShaderProgramInfo loop in _shaderVariable.Values)
+            foreach (ShaderProgramInfo loop in shaderVariable.Values)
             {
                 switch (loop.ShaderVariableType)
                 {
@@ -727,8 +795,8 @@ namespace KI.Gfx.KIShader
         /// <summary>
         /// attributeをDictionaryに追加
         /// </summary>
-        /// <param name="info"></param>
-        /// <param name="code"></param>
+        /// <param name="info">シェーダ情報</param>
+        /// <param name="code">コードの1行</param>
         private void AttributeParameter(ShaderProgramInfo info, string[] code)
         {
             if (code[0] == "attribute" || code[0] == "in")
@@ -745,7 +813,8 @@ namespace KI.Gfx.KIShader
         /// <summary>
         /// uniformをDictionaryに追加
         /// </summary>
-        /// <param name="code"></param>
+        /// <param name="info">シェーダ情報</param>
+        /// <param name="code">コードの1行</param>
         private void UniformParameter(ShaderProgramInfo info, string[] code)
         {
             if (code[0] != "uniform")
@@ -759,7 +828,8 @@ namespace KI.Gfx.KIShader
         /// <summary>
         /// シェーダ解析
         /// </summary>
-        /// <param name="variable"></param>
+        /// <param name="info">シェーダ情報</param>
+        /// <param name="variable">型</param>
         /// <param name="name">名前</param>
         private void GetAttributeVariableCode(ShaderProgramInfo info, string variable, string name)
         {
@@ -792,7 +862,8 @@ namespace KI.Gfx.KIShader
         /// <summary>
         /// シェーダ解析
         /// </summary>
-        /// <param name="variable"></param>
+        /// <param name="info">シェーダ情報</param>
+        /// <param name="variable">型</param>
         /// <param name="name">名前</param>
         private void GetUniformVariableCode(ShaderProgramInfo info, string variable, string name)
         {
@@ -868,6 +939,7 @@ namespace KI.Gfx.KIShader
         /// <summary>
         /// UniformとAttributeの指定
         /// </summary>
+        /// <param name="shader">シェーダプログラム</param>
         private void AnalyzeShaderProgram(ShaderProgram shader)
         {
             if (shader == null)
@@ -916,11 +988,11 @@ namespace KI.Gfx.KIShader
                     case "attribute":
                     case "in":
                         AttributeParameter(info, code);
-                        if (info.VariableType != VariableType.None && !_shaderVariable.ContainsKey(code[2]))
+                        if (info.VariableType != VariableType.None && !shaderVariable.ContainsKey(code[2]))
                         {
                             info.Name = code[2];
                             info.ShaderVariableType = ShaderVariableType.Attribute;
-                            _shaderVariable.Add(info.Name, info);
+                            shaderVariable.Add(info.Name, info);
                         }
 
                         Logger.GLLog(Logger.LogLevel.Error);
@@ -928,7 +1000,7 @@ namespace KI.Gfx.KIShader
                         break;
                     case "uniform":
                         UniformParameter(info, code);
-                        if (info.VariableType != VariableType.None && !_shaderVariable.ContainsKey(code[2]))
+                        if (info.VariableType != VariableType.None && !shaderVariable.ContainsKey(code[2]))
                         {
                             if (code[2].Contains("["))
                             {
@@ -946,7 +1018,7 @@ namespace KI.Gfx.KIShader
 
                             info.Name = code[2];
                             info.ShaderVariableType = ShaderVariableType.Uniform;
-                            _shaderVariable.Add(info.Name, info);
+                            shaderVariable.Add(info.Name, info);
                         }
 
                         Logger.GLLog(Logger.LogLevel.Error);
@@ -958,7 +1030,13 @@ namespace KI.Gfx.KIShader
         }
         #endregion
 
-        private int CompailShader(ShaderType shaderType, string shaderCode)
+        /// <summary>
+        /// シェーダのコンパイル
+        /// </summary>
+        /// <param name="shaderType">シェーダの種類</param>
+        /// <param name="shaderCode">シェーダコード</param>
+        /// <returns>シェーダID</returns>
+        private int CompileShader(ShaderType shaderType, string shaderCode)
         {
             int shader = GL.CreateShader(shaderType);
             string info;

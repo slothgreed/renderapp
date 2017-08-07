@@ -29,18 +29,19 @@ namespace KI.Renderer
         /// <summary>
         /// 描画
         /// </summary>
-        public override void Render()
+        /// <param name="scene">シーン</param>
+        public override void Render(Scene scene)
         {
             RenderTarget.ClearBuffer();
             RenderTarget.BindRenderTarget(OutputTexture.ToArray());
-            foreach (var probe in Global.Scene.RootNode.AllChildren())
+            foreach (var probe in scene.RootNode.AllChildren())
             {
                 if (probe.KIObject is EnvironmentProbe)
                 {
                     EnvironmentProbe env = probe.KIObject as EnvironmentProbe;
                     Plane.Geometry.AddTexture(TextureKind.Cubemap, env.Cubemap);
                     Plane.Shader = ShaderItem;
-                    Plane.Render(Global.Scene);
+                    Plane.Render(scene);
                 }
             }
 
