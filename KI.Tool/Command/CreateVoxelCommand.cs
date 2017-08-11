@@ -59,7 +59,7 @@ namespace KI.Tool.Command
             Geometry info = new Geometry("Voxel :" + renderObject.Name, voxel.vPosition, voxel.vNormal, KICalc.RandomColor(), null, null, GeometryType.Quad);
             voxelObject.SetGeometryInfo(info);
             voxelObject.Transformation(renderObject.ModelMatrix);
-            Global.Scene.AddObject(voxelObject);
+            Global.RenderSystem.ActiveScene.AddObject(voxelObject);
 
             RenderObject innerObject = RenderObjectFactory.Instance.CreateRenderObject("Voxel Inner : " + renderObject.Name);
 
@@ -73,7 +73,7 @@ namespace KI.Tool.Command
             Geometry innerInfo = new Geometry("Voxel Inner : " + renderObject.Name, voxel.GetPoint(VoxelSpace.VoxelState.Inner), null, colors, null, null, GeometryType.Point);
             innerObject.SetGeometryInfo(innerInfo);
             innerObject.Transformation(renderObject.ModelMatrix);
-            Global.Scene.AddObject(innerObject);
+            Global.RenderSystem.ActiveScene.AddObject(innerObject);
 
             return CommandResult.Success;
         }

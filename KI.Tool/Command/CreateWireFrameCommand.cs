@@ -78,7 +78,7 @@ namespace KI.Tool.Command
             RenderObject wireframe = RenderObjectFactory.Instance.CreateRenderObject("WireFrame :" + renderObject.Name);
             wireframe.SetGeometryInfo(new Geometry("WireFrame :" + renderObject.Name, position, null, KICalc.RandomColor(), null, null, GeometryType.Line));
             wireframe.ModelMatrix = renderObject.ModelMatrix;
-            Global.Scene.AddObject(wireframe);
+            Global.RenderSystem.ActiveScene.AddObject(wireframe);
 
             return CommandResult.Success;
         }

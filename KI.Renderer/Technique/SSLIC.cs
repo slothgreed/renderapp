@@ -54,11 +54,12 @@ namespace KI.Renderer
         /// 描画
         /// </summary>
         /// <param name="scene">シーン</param>
-        public override void Render(Scene scene)
+        public override void Render(IScene scene)
         {
             if (Plane != null)
             {
-                var vector = Global.RenderSystem.GBufferStage.OutputTexture[2];
+                var textures = Global.RenderSystem.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
+                var vector = textures[(int)GBuffer.GBufferOutputType.Color];
                 GL.Enable(EnableCap.Blend);
                 GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
                 RenderTarget.ClearBuffer();

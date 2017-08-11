@@ -698,7 +698,8 @@ namespace KI.Gfx.KIShader
         /// <summary>
         /// Uniform変数のBinding
         /// </summary>
-        /// <param name="uniform"></param>
+        /// <param name="uniform">バインドするuniform情報</param>
+        /// <param name="activeCount">テクスチャのアクティブカウント</param>
         private void BindUniformState(ShaderProgramInfo uniform, ref int activeCount)
         {
             if (uniform.Variable == null)

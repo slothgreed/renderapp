@@ -28,9 +28,15 @@ namespace KI.Gfx.GLUtil
 
         public BufferTarget Target { get; set; }
 
-        public object Data { get; set; }
+        /// <summary>
+        /// データ
+        /// </summary>
+        public object Data { get; private set; }
 
-        public EArrayType ArrayType { get; set; }
+        /// <summary>
+        /// 配列の型
+        /// </summary>
+        public EArrayType ArrayType { get; private set; }
 
         /// <summary>
         /// バッファの生成
@@ -40,6 +46,11 @@ namespace KI.Gfx.GLUtil
             this.DeviceID = GL.GenBuffer();
         }
 
+        /// <summary>
+        /// バッファにデータの入力
+        /// </summary>
+        /// <param name="data">データ</param>
+        /// <param name="arrayType">配列の型</param>
         public void SetData(object data, EArrayType arrayType)
         {
             Data = data;

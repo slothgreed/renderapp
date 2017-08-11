@@ -112,15 +112,14 @@ namespace RenderApp.ViewModel
         public void OnLoadedEvent(object sender, EventArgs e)
         {
             Workspace.RenderSystem.Initialize(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
-            Workspace.SceneManager.Create("MainScene");
-
-            LeftUpDockPanel.Add(new RootNodeViewModel(Workspace.SceneManager.ActiveScene.RootNode, "Scene"));
+            Workspace.MainScene.Initialize();
+            LeftUpDockPanel.Add(new RootNodeViewModel(Workspace.MainScene.RootNode, "Scene"));
             LeftDownDockPanel.Add(new RenderSystemViewModel(Workspace.RenderSystem));
         }
 
         private void OnResizeEvent(object sender, EventArgs e)
         {
-            Workspace.SceneManager.ActiveScene.MainCamera.SetProjMatrix((float)DeviceContext.Instance.Width / DeviceContext.Instance.Height);
+            Workspace.MainScene.MainCamera.SetProjMatrix((float)DeviceContext.Instance.Width / DeviceContext.Instance.Height);
             Workspace.RenderSystem.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
         }
 
@@ -295,27 +294,27 @@ namespace RenderApp.ViewModel
                     CreatePlaneCommand();
                     break;
                 case RAGeometry.WireFrame:
-                    command = new CreateWireFrameCommand(Workspace.SceneManager.ActiveScene.SelectNode);
+                    command = new CreateWireFrameCommand(Workspace.MainScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.Polygon:
-                    command = new CreatePolygonCommand(Workspace.SceneManager.ActiveScene.SelectNode);
+                    command = new CreatePolygonCommand(Workspace.MainScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.HalfEdge:
-                    command = new CreateHalfEdgeCommand(Workspace.SceneManager.ActiveScene.SelectNode);
+                    command = new CreateHalfEdgeCommand(Workspace.MainScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.ConvexHull:
-                    command = new CreateConvexHullCommand(Workspace.SceneManager.ActiveScene.SelectNode);
+                    command = new CreateConvexHullCommand(Workspace.MainScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.MarchingCube:
-                    command = new CreateMarchingCubeCommand(Workspace.SceneManager.ActiveScene.SelectNode, 64);
+                    command = new CreateMarchingCubeCommand(Workspace.MainScene.SelectNode, 64);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.HalfEdgeWireFrame:
-                    command = new CreateHalfEdgeWireFrameCommand(Workspace.SceneManager.ActiveScene.SelectNode);
+                    command = new CreateHalfEdgeWireFrameCommand(Workspace.MainScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                     //select = Workspace.SceneManager.ActiveScene.SelectAsset;
                     break;
@@ -378,8 +377,7 @@ namespace RenderApp.ViewModel
         #region [MainWindow Event Command]
         private void WindowCloseCommand()
         {
-            Workspace.SceneManager.ActiveScene.Dispose();
-            Project.ActiveProject.Dispose();
+            Workspace.RenderSystem.Dispose();
             ShaderFactory.Instance.Dispose();
             RenderTargetFactory.Instance.Dispose();
             TextureFactory.Instance.Dispose();
@@ -480,7 +478,7 @@ namespace RenderApp.ViewModel
             if (node.KIObject is SceneNode)
             {
                 //vm = new GeometryViewModel((Geometry)node.KIObject);
-                Workspace.SceneManager.ActiveScene.SelectNode = (SceneNode)node.KIObject;
+                Workspace.MainScene.SelectNode = (SceneNode)node.KIObject;
             }
             else if (node.KIObject is ShaderProgram)
             {

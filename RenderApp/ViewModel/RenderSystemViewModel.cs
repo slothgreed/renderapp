@@ -4,7 +4,7 @@ namespace RenderApp.ViewModel
 {
     public class RenderSystemViewModel : TabItemViewModel
     {
-        public RenderSystem Model
+        public IRenderer Model
         {
             get;
             set;
@@ -26,7 +26,7 @@ namespace RenderApp.ViewModel
             }
         }
 
-        public RenderSystemViewModel(RenderSystem model)
+        public RenderSystemViewModel(IRenderer model)
         {
             Model = model;
             TextureIndex = Model.ProcessingTexture.IndexOf(Model.OutputTexture);

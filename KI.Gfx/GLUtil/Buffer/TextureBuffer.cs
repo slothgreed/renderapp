@@ -62,10 +62,19 @@ namespace KI.Gfx.GLUtil
         /// </summary>
         public int Height { get; set; }
 
+        /// <summary>
+        /// テクスチャの種類
+        /// </summary>
         public List<TextureTarget> Targets { get; private set; }
 
+        /// <summary>
+        /// テクスチャフォーマット
+        /// </summary>
         public PixelInternalFormat Format { get; private set; }
 
+        /// <summary>
+        /// テクスチャの種類
+        /// </summary>
         public TextureTarget Target
         {
             get
@@ -74,7 +83,6 @@ namespace KI.Gfx.GLUtil
             }
         }
 
-        
         /// <summary>
         /// バッファの生成
         /// </summary>
@@ -158,7 +166,7 @@ namespace KI.Gfx.GLUtil
         /// <summary>
         /// テクスチャターゲットの設定
         /// </summary>
-        /// <param name="type"></param>
+        /// <param name="type">テクスチャの種類</param>
         private void SetTextureTargte(TextureType type)
         {
             if (Targets == null)

@@ -20,7 +20,7 @@ namespace KI.Renderer
         /// <param name="shader">シェーダ</param>
         /// <param name="renderObject">形状</param>
         /// <param name="textures">テクスチャ</param>
-        public static void InitializeState(Scene scene, Shader shader, RenderObject renderObject, Dictionary<TextureKind, Texture> textures)
+        public static void InitializeState(IScene scene, Shader shader, RenderObject renderObject, Dictionary<TextureKind, Texture> textures)
         {
             foreach (ShaderProgramInfo info in shader.GetShaderVariable())
             {

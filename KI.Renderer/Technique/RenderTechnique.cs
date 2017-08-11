@@ -105,7 +105,7 @@ namespace KI.Renderer
         /// 描画
         /// </summary>
         /// <param name="scene">シーン</param>
-        public virtual void Render(Scene scene)
+        public virtual void Render(IScene scene)
         {
             if (renderType == RenderType.Original)
             {

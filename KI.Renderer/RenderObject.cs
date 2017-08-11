@@ -72,7 +72,7 @@ namespace KI.Renderer
         /// 描画
         /// </summary>
         /// <param name="scene">シーン</param>
-        public override void RenderCore(Scene scene)
+        public override void RenderCore(IScene scene)
         {
             if (Shader == null)
             {

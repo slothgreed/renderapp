@@ -50,15 +50,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Scene.cs" />
-    <Compile Include="SceneManager.cs" />
+    <Compile Include="IScene.cs" />
     <Compile Include="SceneNode.cs" />
     <Compile Include="Technique\DeferredBuffer.cs" />
     <Compile Include="Technique\GBuffer.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Technique\ImageBasedLighting.cs" />
     <Compile Include="Technique\OutputBuffer.cs" />
-    <Compile Include="Technique\PostEffect\PostEffectManager.cs" />
     <Compile Include="Technique\PostEffect\Bloom.cs" />
     <Compile Include="Technique\PostEffect\DOF.cs" />
     <Compile Include="Technique\RenderTechnique.cs" />
@@ -75,7 +73,7 @@
     <Compile Include="RenderObject.cs" />
     <Compile Include="RenderObjectFactory.cs" />
     <Compile Include="RenderQueue.cs" />
-    <Compile Include="RenderSystem.cs" />
+    <Compile Include="IRenderer.cs" />
     <Compile Include="Technique\RenderTechniqueFactory.cs" />
     <Compile Include="Utility\ShaderCreater.cs" />
     <Compile Include="Utility\ShaderHelper.cs" />

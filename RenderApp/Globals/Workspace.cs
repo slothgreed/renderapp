@@ -8,22 +8,23 @@ namespace RenderApp.Globals
     public static class Workspace
     {
         /// <summary>
-        /// シーンマネージャ
-        /// </summary>
-        public static SceneManager SceneManager { get; } = new SceneManager();
-
-        /// <summary>
-        /// レンダーシステム
-        /// </summary>
-        public static RenderSystem RenderSystem { get; } = new RenderSystem();
-
-        /// <summary>
         /// コンストラクタ
         /// </summary>
         static Workspace()
         {
+            RenderSystem.ActiveScene = MainScene;
             Global.RenderSystem = RenderSystem;
-            Global.RenderSystem.ActiveScene = SceneManager.ActiveScene;
         }
+
+        /// <summary>
+        /// シーンマネージャ
+        /// </summary>
+        public static IScene MainScene { get; } = new MainScene();
+
+        /// <summary>
+        /// レンダーシステム
+        /// </summary>
+        public static IRenderer RenderSystem { get; } = new RenderSystem();
+
     }
 }

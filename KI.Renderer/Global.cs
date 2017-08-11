@@ -15,7 +15,7 @@ namespace KI.Renderer
         /// <summary>
         /// レンダリングシステム
         /// </summary>
-        public static RenderSystem RenderSystem { get; set; }
+        public static IRenderer RenderSystem { get; set; }
 
         /// <summary>
         /// KIProjectDirecoty

@@ -13,6 +13,9 @@ namespace KI.Gfx.KIShader
         /// </summary>
         public static ShaderFactory Instance { get; } = new ShaderFactory();
 
+        /// <summary>
+        /// シェーダ
+        /// </summary>
         public Dictionary<string, Shader> Shaders { get; } = new Dictionary<string, Shader>();
 
         /// <summary>

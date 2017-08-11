@@ -80,57 +80,5 @@ namespace KI.Renderer
             AddItem(technique);
             return technique;
         }
-
-        /// <summary>
-        /// 指定したレンダーテクニックのテクスチャを取得
-        /// </summary>
-        /// <param name="type">テクニックのタイプ</param>
-        /// <returns>出力テクスチャ</returns>
-        public List<Texture> OutputTexture(RenderTechniqueType type)
-        {
-            foreach (var technique in AllItem)
-            {
-                if (technique.Technique == type)
-                {
-                    return technique.OutputTexture;
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// 全ての出力テクスチャの取得
-        /// </summary>
-        /// <returns>出力テクスチャ</returns>
-        public IEnumerable<Texture> OutputTextures()
-        {
-            foreach (var technique in AllItem)
-            {
-                //出力用のは返さない
-                if (technique is OutputBuffer)
-                {
-                    continue;
-                }
-
-                foreach (var texture in technique.OutputTexture)
-                {
-                    yield return texture;
-                }
-            }
-        }
-
-        /// <summary>
-        /// サイズ変更
-        /// </summary>
-        /// <param name="width">横</param>
-        /// <param name="height">縦</param>
-        public void SizeChanged(int width, int height)
-        {
-            foreach (var technique in AllItem)
-            {
-                technique.SizeChanged(width, height);
-            }
-        }
     }
 }

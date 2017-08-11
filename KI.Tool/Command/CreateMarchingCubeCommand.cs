@@ -49,7 +49,7 @@ namespace KI.Tool.Command
             RenderObject marchingObject = RenderObjectFactory.Instance.CreateRenderObject("Marching Sphere");
             Geometry info = new Geometry("Marching Sphere", marching.PositionList, null, marching.ColorList, null, null, GeometryType.Triangle);
             marchingObject.SetGeometryInfo(info);
-            Global.Scene.AddObject(marchingObject);
+            Global.RenderSystem.ActiveScene.AddObject(marchingObject);
             return CommandResult.Success;
         }
 

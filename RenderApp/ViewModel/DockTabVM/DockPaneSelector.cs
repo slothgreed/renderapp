@@ -1,23 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+
 namespace RenderApp.ViewModel
 {
-    class DockPaneStyleSelector : StyleSelector
-    {
-        public Style AnchorableStyle { get; set; }
-        public Style DocumentStyle { get; set; }
-
-        public override Style SelectStyle(object item, DependencyObject container)
-        {
-            if (item is RootNodeViewModel)
-            {
-                return AnchorableStyle;
-            }
-
-            return AnchorableStyle;
-        }
-    }
-
     class DockPaneTemplateSelector : DataTemplateSelector
     {
         public DataTemplate AssetTemplate { get; set; }

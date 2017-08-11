@@ -11,6 +11,7 @@ namespace KI.Tool.Control
     class SelectPointControl : IControl
     {
         readonly float THRESHOLD = 1.0f;
+
         public override bool Down(System.Windows.Forms.MouseEventArgs mouse)
         {
             RenderObject renderObject = null;

@@ -30,7 +30,7 @@ namespace KI.Renderer
         /// 描画
         /// </summary>
         /// <param name="scene">シーン</param>
-        public override void Render(Scene scene)
+        public override void Render(IScene scene)
         {
             RenderTarget.ClearBuffer();
             RenderTarget.BindRenderTarget(OutputTexture.ToArray());
@@ -51,10 +51,11 @@ namespace KI.Renderer
         /// </summary>
         public override void Initialize()
         {
-            Plane.Geometry.AddTexture(TextureKind.Albedo, Global.RenderSystem.GBufferStage.OutputTexture[2]);
-            Plane.Geometry.AddTexture(TextureKind.Normal, Global.RenderSystem.GBufferStage.OutputTexture[1]);
-            Plane.Geometry.AddTexture(TextureKind.World, Global.RenderSystem.GBufferStage.OutputTexture[0]);
-            Plane.Geometry.AddTexture(TextureKind.Lighting, Global.RenderSystem.GBufferStage.OutputTexture[3]);
+            var textures = Global.RenderSystem.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
+            Plane.Geometry.AddTexture(TextureKind.Albedo, textures[(int)GBuffer.GBufferOutputType.Posit]);
+            Plane.Geometry.AddTexture(TextureKind.Normal, textures[(int)GBuffer.GBufferOutputType.Normal]);
+            Plane.Geometry.AddTexture(TextureKind.World, textures[(int)GBuffer.GBufferOutputType.Color]);
+            Plane.Geometry.AddTexture(TextureKind.Lighting, textures[(int)GBuffer.GBufferOutputType.Light]);
         }
     }
 }

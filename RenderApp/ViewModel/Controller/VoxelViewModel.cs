@@ -41,7 +41,7 @@ namespace RenderApp.ViewModel
 
         private void ExecuteCommand()
         {
-            ICommand command = new CreateVoxelCommand(Workspace.SceneManager.ActiveScene.SelectNode as RenderObject, PartitionNum);
+            ICommand command = new CreateVoxelCommand(Workspace.MainScene.SelectNode as RenderObject, PartitionNum);
             CommandManager.Instance.Execute(command, null, true);
         }
 

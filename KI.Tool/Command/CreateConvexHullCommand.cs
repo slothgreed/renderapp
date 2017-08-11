@@ -88,13 +88,13 @@ namespace KI.Tool.Command
             RenderObject convex = RenderObjectFactory.Instance.CreateRenderObject("ConvexHull :" + renderObject.Name);
             convex.SetGeometryInfo(info);
             convex.ModelMatrix = renderObject.ModelMatrix;
-            Global.Scene.AddObject(convex);
+            Global.RenderSystem.ActiveScene.AddObject(convex);
 
             RenderObject point = RenderObjectFactory.Instance.CreateRenderObject("ConvexHull : Points" + renderObject.Name);
             Geometry info2 = new Geometry("ConvexHull:Points" + renderObject.Name, convexHull.Points, null, null, null, null, GeometryType.Point);
             point.SetGeometryInfo(info2);
             point.ModelMatrix = renderObject.ModelMatrix;
-            Global.Scene.AddObject(point);
+            Global.RenderSystem.ActiveScene.AddObject(point);
 
             return CommandResult.Success;
         }

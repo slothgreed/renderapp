@@ -1,43 +1,26 @@
-﻿using System.Collections.Generic;
-using KI.Asset;
+﻿using KI.Asset;
 using KI.Renderer;
 
-namespace RenderApp
+namespace RenderApp.Globals
 {
     /// <summary>
-    /// シーンマネージャ
+    /// メインのシーン
     /// </summary>
-    public class SceneManager
+    public class MainScene : IScene
     {
         /// <summary>
-        /// シーンリスト
+        /// コンストラクタ
         /// </summary>
-        public List<Scene> Scenes { get; set; } = new List<Scene>();
-
-        /// <summary>
-        /// アクティブなシーン
-        /// </summary>
-        public Scene ActiveScene { get; set; }
-
-        /// <summary>
-        /// シーンの作成
-        /// </summary>
-        /// <param name="name">名前</param>
-        /// <returns>シーン</returns>
-        public Scene Create(string name)
+        public MainScene()
+            : base("MainScene")
         {
-            var scene = new Scene(name);
-            Scenes.Add(scene);
-            Global.RenderSystem.ActiveScene = scene;
-            ActiveScene = scene;
-            Initialize();
-            return scene;
+
         }
 
         /// <summary>
         /// 初期化
         /// </summary>
-        public void Initialize()
+        public override void Initialize()
         {
             //List<RenderObject> axis = AssetFactory.Instance.CreateAxis("axis", Vector3.Zero, ActiveScene.WorldMax);
             //foreach(var a in axis)
@@ -89,21 +72,7 @@ namespace RenderApp
             //List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/Sphere.stl");
 
             var renderBunny = RenderObjectFactory.Instance.CreateRenderObject("bunny", bunny);
-            ActiveScene.AddObject(renderBunny);
-        }
-
-        /// <summary>
-        /// オブジェクトの追加
-        /// </summary>
-        /// <param name="filePath">ファイルパス</param>
-        public void AddObject(string filePath)
-        {
-            var model = AssetFactory.Instance.CreateLoad3DModel(filePath);
-            var renderObject = RenderObjectFactory.Instance.CreateRenderObjects(filePath, model);
-            foreach (var obj in renderObject)
-            {
-                ActiveScene.AddObject(obj);
-            }
+            AddObject(renderBunny);
         }
     }
 }

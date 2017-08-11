@@ -9,7 +9,7 @@ namespace KI.Renderer
     /// <summary>
     /// シーンクラス
     /// </summary>
-    public class Scene : KIObject
+    public abstract class IScene
     {
         /// <summary>
         /// 空間の最大値
@@ -25,10 +25,13 @@ namespace KI.Renderer
         /// コンストラクタ
         /// </summary>
         /// <param name="name">シーン名</param>
-        public Scene(string name)
-            : base(name)
+        public IScene(string name)
         {
-            Initialize();
+            RootNode = new KINode("ROOT");
+            MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
+            SunLight = AssetFactory.Instance.CreateLight("SunLight");
+            AddObject(MainCamera);
+            AddObject(SunLight);
         }
 
         /// <summary>
@@ -52,6 +55,21 @@ namespace KI.Renderer
         public Light SunLight { get; set; }
 
         #region [public scene method]
+
+
+        /// <summary>
+        /// オブジェクトの追加
+        /// </summary>
+        /// <param name="filePath">ファイルパス</param>
+        public void AddObject(string filePath)
+        {
+            var model = AssetFactory.Instance.CreateLoad3DModel(filePath);
+            var renderObject = RenderObjectFactory.Instance.CreateRenderObjects(filePath, model);
+            foreach (var obj in renderObject)
+            {
+                AddObject(obj);
+            }
+        }
 
         /// <summary>
         /// シーンのオブジェクトの取得
@@ -137,13 +155,6 @@ namespace KI.Renderer
         /// <summary>
         /// 初期化
         /// </summary>
-        private void Initialize()
-        {
-            RootNode = new KINode("ROOT");
-            MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
-            SunLight = AssetFactory.Instance.CreateLight("SunLight");
-            AddObject(MainCamera);
-            AddObject(SunLight);
-        }
+        public abstract void Initialize();
     }
 }

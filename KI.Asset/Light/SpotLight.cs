@@ -5,7 +5,7 @@ namespace KI.Asset
     /// <summary>
     /// スポットライト
     /// </summary>
-    class SpotLight : Light
+    public class SpotLight : Light
     {
         /// <summary>
         /// スポットライト

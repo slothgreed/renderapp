@@ -50,7 +50,7 @@ namespace KI.Tool.Command
             List<int> index = new List<int>(geometry.Index);
             RenderObject polygon = RenderObjectFactory.Instance.CreateRenderObject("Polygon :" + geometry.Name);
             polygon.SetGeometryInfo(new Geometry("Polygon :" + geometry.Name, position, normal, new Vector3(0.7f, 0.7f, 0.7f), null, index, GeometryType.Triangle));
-            Global.Scene.AddObject(polygon);
+            Global.RenderSystem.ActiveScene.AddObject(polygon);
 
             return CommandResult.Success;
         }

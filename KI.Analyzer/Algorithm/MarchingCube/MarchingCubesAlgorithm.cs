@@ -113,6 +113,9 @@ namespace KI.Analyzer.Algorithm.MarchingCube
             }
         }
 
+        /// <summary>
+        /// 陰関数球の中心
+        /// </summary>
         public Vector3 SphereCenter
         {
             get

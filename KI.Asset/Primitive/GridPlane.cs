@@ -8,7 +8,7 @@ namespace KI.Asset.Primitive
     /// <summary>
     /// グリッド付き平面
     /// </summary>
-    class GridPlane : IGeometry
+    public  class GridPlane : IGeometry
     {
         /// <summary>
         /// グリッドの範囲

@@ -9,69 +9,83 @@ namespace RenderApp.Globals
 {
     public class Project
     {
-        private KINode GeometryRoot;
+        /// <summary>
+        /// 形状ルート
+        /// </summary>
+        private KINode geometryRoot;
 
         /// <summary>
         /// Textureオブジェクト
         /// </summary>
-        private KINode TextureRoot;
+        private KINode textureRoot;
 
         /// <summary>
         /// シェーダオブジェクト
         /// </summary>
-        private KINode ShaderProgramRoot;
+        private KINode shaderProgramRoot;
 
         public static Project ActiveProject = new Project();
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         private Project()
         {
             RootNode = new KINode("ROOT");
-            GeometryRoot = new KINode("Geometry");
-            TextureRoot = new KINode("Texture");
-            ShaderProgramRoot = new KINode("ShaderProgram");
-            RootNode.AddChild(GeometryRoot);
-            RootNode.AddChild(TextureRoot);
-            RootNode.AddChild(ShaderProgramRoot);
+            geometryRoot = new KINode("Geometry");
+            textureRoot = new KINode("Texture");
+            shaderProgramRoot = new KINode("ShaderProgram");
+            RootNode.AddChild(geometryRoot);
+            RootNode.AddChild(textureRoot);
+            RootNode.AddChild(shaderProgramRoot);
         }
 
+        /// <summary>
+        /// ルートノード
+        /// </summary>
         public KINode RootNode { get; private set; }
 
-        internal void AddChild(KIObject value)
+        /// <summary>
+        /// 子供の追加
+        /// </summary>
+        /// <param name="child">子供</param>
+        internal void AddChild(KIObject child)
         {
-            if (value is Geometry)
+            if (child is Geometry)
             {
-                GeometryRoot.AddChild(value);
-                Workspace.SceneManager.ActiveScene.AddObject(value);
+                geometryRoot.AddChild(child);
+                Workspace.MainScene.AddObject(child);
             }
 
-            if (value is Texture)
+            if (child is Texture)
             {
-                TextureRoot.AddChild(value);
+                textureRoot.AddChild(child);
             }
 
-            if (value is ShaderProgram)
+            if (child is ShaderProgram)
             {
-                ShaderProgramRoot.AddChild(value);
+                shaderProgramRoot.AddChild(child);
             }
         }
 
+        /// <summary>
+        /// アセットの取得
+        /// </summary>
+        /// <param name="assetType">アセット種類</param>
+        /// <returns>アセットリスト</returns>
         internal IEnumerable<KIObject> GetObject(RAAsset assetType)
         {
             switch (assetType)
             {
                 case RAAsset.Model:
-                    return GeometryRoot.AllChildrenObject();
+                    return geometryRoot.AllChildrenObject();
                 case RAAsset.Texture:
-                    return TextureRoot.AllChildrenObject();
+                    return textureRoot.AllChildrenObject();
                 case RAAsset.ShaderProgram:
-                    return ShaderProgramRoot.AllChildrenObject();
+                    return shaderProgramRoot.AllChildrenObject();
             }
 
             return null;
-        }
-
-        internal void Dispose()
-        {
         }
     }
 }

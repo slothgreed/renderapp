@@ -46,7 +46,7 @@ namespace KI.Tool.Command
             RenderObject halfEdge = RenderObjectFactory.Instance.CreateRenderObject("HalfEdge :" + renderObject.Name);
             halfEdge.SetGeometryInfo(half.Geometrys[0]);
             halfEdge.ModelMatrix = renderObject.ModelMatrix;
-            Global.Scene.AddObject(halfEdge);
+            Global.RenderSystem.ActiveScene.AddObject(halfEdge);
 
             return CommandResult.Success;
         }
