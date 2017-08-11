@@ -110,8 +110,12 @@ namespace KI.Renderer
         /// </summary>
         private void Initialize()
         {
-            GenBuffer();
+            if (Geometry.Normal.Count == 0)
+            {
+                Geometry.CalcNormal();
+            }
 
+            GenBuffer();
             string vert = ShaderCreater.Instance.GetVertexShader(this);
             string frag = ShaderCreater.Instance.GetFragShader(this);
             this.Shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);

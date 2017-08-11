@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using KI.Asset;
 using KI.Foundation.Command;
 using KI.Foundation.Core;
+using KI.Gfx.GLUtil;
 using KI.Renderer;
 using OpenTK;
 
@@ -16,7 +17,7 @@ namespace KI.Tool.Command
         /// <summary>
         /// 形状
         /// </summary>
-        private Geometry geometry;
+        private RenderObject renderObject;
 
         /// <summary>
         /// コンストラクタ
@@ -24,7 +25,7 @@ namespace KI.Tool.Command
         /// <param name="asset">作成するオブジェクト</param>
         public CreateHalfEdgeWireFrameCommand(KIObject asset)
         {
-            geometry = asset as Geometry;
+            renderObject = asset as RenderObject;
         }
 
         /// <summary>
@@ -34,22 +35,18 @@ namespace KI.Tool.Command
         /// <returns>成功値</returns>
         public CommandResult CanExecute(string commandArg)
         {
-            if (geometry == null)
+            if (renderObject == null)
             {
                 return CommandResult.Failed;
             }
 
-            if (geometry.HalfEdge == null)
+            if (renderObject.Geometry.HalfEdge == null)
             {
                 return CommandResult.Failed;
             }
 
-            return CanCreateGeometry(geometry);
+            return CanCreateGeometry(renderObject);
         }
-
-        private static Geometry info2;
-        private static int counter = -1;
-        private static RenderObject obj;
 
         /// <summary>
         /// 実行
@@ -58,16 +55,9 @@ namespace KI.Tool.Command
         /// <returns>成功値</returns>
         public CommandResult Execute(string commandArg)
         {
-            if (counter > -1)
-            {
-                //geometry.HalfEdge.VertexDecimation(geometry.HalfEdge.m_Edge[counter]);
-                geometry.HalfEdge.EdgeFlips(geometry.HalfEdge.Edges[counter]);
-            }
-
-            counter++;
             List<Vector3> position = new List<Vector3>();
             var color = new List<Vector3>();
-            foreach (var mesh in geometry.HalfEdge.Meshs)
+            foreach (var mesh in renderObject.Geometry.HalfEdge.Meshs)
             {
                 foreach (var edge in mesh.AroundEdge)
                 {
@@ -77,73 +67,15 @@ namespace KI.Tool.Command
                     position.Add(start + mesh.Gravity);
                     position.Add(end + mesh.Gravity);
 
-                    //position.Add(start + mesh.Gravity + mesh.Normal * 0.1f);
-                    //position.Add(end + mesh.Gravity + mesh.Normal * 0.1f);
-
-                    //if (geometry.HalfEdge.m_Edge[counter].Mesh.Index == mesh.Index
-                    //    || geometry.HalfEdge.m_Edge[counter].Opposite.Mesh.Index == mesh.Index)
-                    //{
-                    //    if (edge.Index == geometry.HalfEdge.m_Edge[counter].Index)
-                    //    {
-                    //        color.Add(Vector3.UnitX + Vector3.UnitY);
-                    //        color.Add(Vector3.UnitX + Vector3.UnitY);
-                    //    }
-                    //    else
-                    //    {
-                    //        color.Add(Vector3.UnitX);
-                    //        color.Add(Vector3.UnitX);
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    color.Add(Vector3.UnitZ);
-                    //    color.Add(Vector3.UnitZ);
-                    //}
-
-                    //if (edge.Start.Index == geometry.HalfEdge.m_Edge[0].Start.Index && edge.End.Index == geometry.HalfEdge.m_Edge[0].End.Index)
-                    //{
-                    //    color.Add(Vector3.UnitZ);
-                    //    color.Add(Vector3.UnitZ);
-                    //}
-                    //else
-                    //{
-                    //    color.Add(Vector3.UnitX);
-                    //    color.Add(Vector3.UnitX);
-                    //}
-
-                    if (edge == geometry.HalfEdge.Edges[counter])
-                    {
-                        color.Add(Vector3.UnitY);
-                        color.Add(Vector3.UnitX);
-                    }
-                    else
-                    {
-                        color.Add(Vector3.UnitZ);
-                        color.Add(Vector3.UnitZ);
-                    }
+                    color.Add(Vector3.UnitZ);
+                    color.Add(Vector3.UnitZ);
                 }
             }
 
-            //if(info2 != null)
-            //{
-            //    info2.Color = color;
-            //    info2.Position = position;
-            //    info2.Update(position, info2.Normal, info2.Color, null, null, GeometryType.Line);
-            //    obj.SetupBuffer();
-
-            //    var update = ((HalfEdge)geometry.HalfEdge).CreateGeometryInfo();
-            //    geometry.geometryInfo.Update(update.Position, update.Normal, update.Color, null, update.Index, GeometryType.Triangle);
-            //    ((RenderObject)geometry).SetupBuffer();
-
-            //    return "Success";
-            //}
-            //GeometryInfo info = new GeometryInfo(position, null, color, null, null, GeometryType.Line);
-            //RenderObject halfWire = RenderObjectFactory.Instance.CreateRenderObject("HalfEdgeWireFrame :" + geometry.Name);
-            //halfWire.SetGeometryInfo(info);
-            //halfWire.ModelMatrix = geometry.ModelMatrix;
-            //Global.Scene.AddObject(halfWire);
-            //info2 = info;
-            //obj = halfWire;
+            RenderObject wireframe = RenderObjectFactory.Instance.CreateRenderObject("HalfEdgeWireFrame :" + renderObject.Name);
+            wireframe.SetGeometryInfo(new Geometry("HalfEdgeWireFrame :" + renderObject.Name, position, null, color, null, null, GeometryType.Line));
+            wireframe.ModelMatrix = renderObject.ModelMatrix;
+            Global.RenderSystem.ActiveScene.AddObject(wireframe);
 
             return CommandResult.Success;
         }

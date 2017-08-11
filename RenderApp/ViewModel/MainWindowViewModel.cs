@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using KI.Asset;
 using KI.Foundation.Command;
 using KI.Foundation.Tree;
-using KI.Foundation.ViewModel;
+using KI.UI.ViewModel;
 using KI.Gfx;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;

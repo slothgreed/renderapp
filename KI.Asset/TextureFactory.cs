@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using KI.Foundation.Core;
 using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
@@ -61,14 +62,14 @@ namespace KI.Asset
         /// <returns>テクスチャ</returns>
         public Texture CreateTexture(string path, ImageKind kind)
         {
-            Texture find = FindByKey(path);
+            Texture find = FindByName(path);
             if (find != null)
             {
                 return find;
             }
 
             ImageInfo image = CreateImageInfo(path, kind);
-            Texture texture = new Texture(KIFile.GetNameFromPath(path), TextureType.Texture2D);
+            Texture texture = new Texture(Path.GetFileName(path), TextureType.Texture2D);
             AddItem(texture);
             texture.GenTexture(image);
             return texture;
@@ -108,7 +109,7 @@ namespace KI.Asset
             images.Add(CreateImageInfo(nx, GettImageKind(nx)));
             images.Add(CreateImageInfo(ny, GettImageKind(ny)));
             images.Add(CreateImageInfo(nz, GettImageKind(nz)));
-            Texture texture = new Texture("Cubemap" + KIFile.GetNameFromPath(px), TextureType.Cubemap);
+            Texture texture = new Texture("Cubemap" + Path.GetFileName(px), TextureType.Cubemap);
             AddItem(texture);
             texture.GenCubemapTexture(images);
             return texture;

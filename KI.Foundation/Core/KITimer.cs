@@ -4,36 +4,60 @@ using OpenTK;
 
 namespace KI.Foundation.Core
 {
+    /// <summary>
+    /// タイマー
+    /// </summary>
     public class KITimer
     {
-        public delegate void OnTimerEvent(object source, EventArgs e);
-
-        DispatcherTimer m_Timer;
-        private int m_TimerCount;
-        public int Count { get { return m_TimerCount; } }
-        public int AngleCount { get { return m_TimerCount % 360; } }
-        public float RadianCount { get { return (float)MathHelper.DegreesToRadians(m_TimerCount % 360); } }
-        public bool IsEnable
-        {
-            get
-            {
-                if (m_Timer == null)
-                {
-                    return false;
-                }
-
-                return m_Timer.IsEnabled;
-            }
-        }
+        /// <summary>
+        /// タイマー
+        /// </summary>
+        private DispatcherTimer timer;
 
         /// <summary>
         /// タイマーの初期化
         /// </summary>
+        /// <param name="interval">間隔</param>
+        /// <param name="timer">タイマーイベント</param>
         public KITimer(int interval, OnTimerEvent timer)
         {
-            m_Timer = new DispatcherTimer();
-            m_Timer.Interval = TimeSpan.FromMilliseconds(32);
-            m_Timer.Tick += new EventHandler(timer);
+            this.timer = new DispatcherTimer();
+            this.timer.Interval = TimeSpan.FromMilliseconds(interval);
+            this.timer.Tick += new EventHandler(timer);
+        }
+
+        /// <summary>
+        /// タイマーイベント
+        /// </summary>
+        /// <param name="source">イベント元</param>
+        /// <param name="e">イベント</param>
+        public delegate void OnTimerEvent(object source, EventArgs e);
+
+        /// <summary>
+        /// カウンター
+        /// </summary>
+        public int TimerCount { get; private set; }
+
+        /// <summary>
+        /// 角度カウンター
+        /// </summary>
+        public int AngleCount
+        {
+            get
+            {
+                return TimerCount % 360;
+            }
+        }
+
+        /// <summary>
+        /// ラジアンカウンタ
+        /// </summary>
+        public float RadianCount
+        {
+            get
+            {
+                return (float)MathHelper.DegreesToRadians(TimerCount % 360);
+            }
         }
 
         /// <summary>
@@ -41,12 +65,12 @@ namespace KI.Foundation.Core
         /// </summary>
         public void Start()
         {
-            if (!m_Timer.IsEnabled)
+            if (!timer.IsEnabled)
             {
-                m_Timer.Start();
+                timer.Start();
             }
 
-            m_TimerCount = 0;
+            TimerCount = 0;
         }
 
         /// <summary>
@@ -54,15 +78,10 @@ namespace KI.Foundation.Core
         /// </summary>
         public void Stop()
         {
-            if (m_Timer.IsEnabled)
+            if (timer.IsEnabled)
             {
-                m_Timer.Stop();
+                timer.Stop();
             }
-        }
-
-        public void AddTimer()
-        {
-            m_TimerCount++;
         }
     }
 }

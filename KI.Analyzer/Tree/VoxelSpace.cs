@@ -47,23 +47,30 @@ namespace KI.Analyzer
             All
         }
 
-        public Vector3 Min;
+        /// <summary>
+        /// 間隔
+        /// </summary>
+        private float interval;
 
-        public Vector3 Max;
+        /// <summary>
+        /// 分割数
+        /// </summary>
+        private int partition;
 
-        public List<Vector3> vPosition = new List<Vector3>();
-
-        public List<Vector3> vNormal = new List<Vector3>();
+        /// <summary>
+        /// ボクセル
+        /// </summary>
+        private Voxel[,,] voxels;
 
         public VoxelSpace(List<Vector3> position, List<int> posIndex, int partition)
         {
-            Partition = partition;
+            this.partition = partition;
             CalcMinMax(position);
             SetInterval(partition);
-            Voxels = new Voxel[partition, partition, partition];
+            voxels = new Voxel[partition, partition, partition];
             Action<int, int, int> initializeVoxels = (int i, int j, int k) =>
               {
-                  Voxels[i, j, k] = new Voxel(i, j, k, VoxelState.None);
+                  voxels[i, j, k] = new Voxel(i, j, k, VoxelState.None);
               };
 
             AllVoxelAction(initializeVoxels);
@@ -88,27 +95,41 @@ namespace KI.Analyzer
             CalcDistanceField();
         }
 
-        public float Interval { get; private set; }
+        /// <summary>
+        /// 最小値
+        /// </summary>
+        public Vector3 Min;
 
-        public int Partition { get; private set; }
+        /// <summary>
+        /// 最大値
+        /// </summary>
+        public Vector3 Max;
 
-        private Voxel[,,] Voxels { get; set; }
+        /// <summary>
+        /// 位置情報
+        /// </summary>
+        public List<Vector3> Position { get; private set; } = new List<Vector3>();
+
+        /// <summary>
+        /// 法線情報
+        /// </summary>
+        public List<Vector3> Normal { get; private set; } = new List<Vector3>();
 
         public void GetVoxel(out List<Vector3> position, out List<Vector3> normal)
         {
-            position = vPosition;
-            normal = vNormal;
+            position = Position;
+            normal = Normal;
         }
 
         public List<Vector3> GetPoint(VoxelState state)
         {
             List<Vector3> point = new List<Vector3>();
             var index = Vector3.Zero;
-            var mid = Interval / 2;
+            var mid = interval / 2;
 
             Action<int, int, int> addPoint = (int i, int j, int k) =>
             {
-                if (Voxels[i, j, k].State == state)
+                if (voxels[i, j, k].State == state)
                 {
                     index.X = i;
                     index.Y = j;
@@ -130,13 +151,13 @@ namespace KI.Analyzer
         {
             List<Voxel> voxels = new List<Voxel>();
             var index = Vector3.Zero;
-            var mid = Interval / 2;
+            var mid = interval / 2;
 
             Action<int, int, int> addList = (int i, int j, int k) =>
             {
-                if (Voxels[i, j, k].State == state)
+                if (this.voxels[i, j, k].State == state)
                 {
-                    voxels.Add(Voxels[i, j, k]);
+                    voxels.Add(this.voxels[i, j, k]);
                 }
             };
 
@@ -168,8 +189,8 @@ namespace KI.Analyzer
 
                 minIndex -= Min;
                 maxIndex -= Min;
-                minIndex /= Interval;
-                maxIndex /= Interval;
+                minIndex /= interval;
+                maxIndex /= interval;
 
                 for (vIndex.X = (int)minIndex.X; vIndex.X < maxIndex.X; vIndex.X++)
                 {
@@ -177,14 +198,14 @@ namespace KI.Analyzer
                     {
                         for (vIndex.Z = (int)minIndex.Z; vIndex.Z < maxIndex.Z; vIndex.Z++)
                         {
-                            if (Voxels[(int)vIndex.X, (int)vIndex.Y, (int)vIndex.Z].State == VoxelState.Border)
+                            if (voxels[(int)vIndex.X, (int)vIndex.Y, (int)vIndex.Z].State == VoxelState.Border)
                             {
                                 continue;
                             }
 
                             if (CheckVoxel(tri1, tri2, tri3, vIndex))
                             {
-                                Voxels[(int)vIndex.X, (int)vIndex.Y, (int)vIndex.Z].State = VoxelState.Border;
+                                voxels[(int)vIndex.X, (int)vIndex.Y, (int)vIndex.Z].State = VoxelState.Border;
                                 SetVoxel(vIndex);
                             }
                         }
@@ -202,9 +223,9 @@ namespace KI.Analyzer
         private Vector3 GetVoxelPosition(Voxel voxel)
         {
             Vector3 minVoxel = Min;
-            minVoxel.X += voxel.i * Interval;
-            minVoxel.Y += voxel.j * Interval;
-            minVoxel.Z += voxel.k * Interval;
+            minVoxel.X += voxel.i * interval;
+            minVoxel.Y += voxel.j * interval;
+            minVoxel.Z += voxel.k * interval;
             return minVoxel;
         }
 
@@ -216,7 +237,7 @@ namespace KI.Analyzer
         private Vector3 GetVoxelPosition(Vector3 index)
         {
             Vector3 minVoxel = Min;
-            minVoxel += index * new Vector3(Interval);
+            minVoxel += index * new Vector3(interval);
             return minVoxel;
         }
 
@@ -232,7 +253,7 @@ namespace KI.Analyzer
             if (tmpmax - tmpmin < Max.Y - Min.Y) { tmpmax = Max.Y; tmpmin = Min.Y; }
             if (tmpmax - tmpmin < Max.Z - Min.Z) { tmpmax = Max.Z; tmpmin = Min.Z; }
 
-            Interval = (tmpmax - tmpmin) / partition;
+            interval = (tmpmax - tmpmin) / partition;
         }
 
         private void CalcMinMax(List<Vector3> position)
@@ -298,7 +319,7 @@ namespace KI.Analyzer
         private bool CheckVoxel(Vector3 tri1, Vector3 tri2, Vector3 tri3, Vector3 voxelIndex)
         {
             Vector3 minVoxel = GetVoxelPosition(voxelIndex);
-            Vector3 maxVoxel = minVoxel + new Vector3(Interval);
+            Vector3 maxVoxel = minVoxel + new Vector3(interval);
 
             //点によるチェック
             if (InBox(tri1, minVoxel, maxVoxel)) { return true; }
@@ -310,14 +331,14 @@ namespace KI.Analyzer
             Vector3 tmp = new Vector3();
             //左下手前から反時計周り
             Vector3 v0 = minVoxel;
-            Vector3 v1 = new Vector3(minVoxel.X + Interval, minVoxel.Y, minVoxel.Z);
-            Vector3 v2 = new Vector3(minVoxel.X + Interval, minVoxel.Y + Interval, minVoxel.Z);
-            Vector3 v3 = new Vector3(minVoxel.X, minVoxel.Y + Interval, minVoxel.Z);
+            Vector3 v1 = new Vector3(minVoxel.X + interval, minVoxel.Y, minVoxel.Z);
+            Vector3 v2 = new Vector3(minVoxel.X + interval, minVoxel.Y + interval, minVoxel.Z);
+            Vector3 v3 = new Vector3(minVoxel.X, minVoxel.Y + interval, minVoxel.Z);
 
-            Vector3 v4 = new Vector3(minVoxel.X, minVoxel.Y, maxVoxel.Z + Interval);
-            Vector3 v5 = new Vector3(minVoxel.X + Interval, minVoxel.Y, minVoxel.Z + Interval);
-            Vector3 v6 = new Vector3(minVoxel.X + Interval, minVoxel.Y + Interval, minVoxel.Z + Interval);
-            Vector3 v7 = new Vector3(minVoxel.X, minVoxel.Y + Interval, minVoxel.Z + Interval);
+            Vector3 v4 = new Vector3(minVoxel.X, minVoxel.Y, maxVoxel.Z + interval);
+            Vector3 v5 = new Vector3(minVoxel.X + interval, minVoxel.Y, minVoxel.Z + interval);
+            Vector3 v6 = new Vector3(minVoxel.X + interval, minVoxel.Y + interval, minVoxel.Z + interval);
+            Vector3 v7 = new Vector3(minVoxel.X, minVoxel.Y + interval, minVoxel.Z + interval);
 
             //手前
             if (KICalc.CrossPlanetoLinePos(tri1, tri2, tri3, v0, v1, ref maxValue, out tmp)) { return true; }
@@ -421,11 +442,11 @@ namespace KI.Analyzer
         /// <returns>最初に成功したボクセル</returns>
         private Voxel SearchAllVoxel(Func<int, int, int, Voxel> condition)
         {
-            for (int i = 0; i < Partition; i++)
+            for (int i = 0; i < partition; i++)
             {
-                for (int j = 0; j < Partition; j++)
+                for (int j = 0; j < partition; j++)
                 {
-                    for (int k = 0; k < Partition; k++)
+                    for (int k = 0; k < partition; k++)
                     {
                         Voxel value = condition(i, j, k);
                         if (value != null)
@@ -445,11 +466,11 @@ namespace KI.Analyzer
         /// <param name="action">処理</param>
         private void AllVoxelAction(Action<int, int, int> action)
         {
-            for (int i = 0; i < Partition; i++)
+            for (int i = 0; i < partition; i++)
             {
-                for (int j = 0; j < Partition; j++)
+                for (int j = 0; j < partition; j++)
                 {
-                    for (int k = 0; k < Partition; k++)
+                    for (int k = 0; k < partition; k++)
                     {
                         action(i, j, k);
                     }
@@ -475,9 +496,9 @@ namespace KI.Analyzer
 
             Func<int, int, int, Voxel> neightInner = (int i, int j, int k) =>
              {
-                 if (Voxels[i, j, k].State == VoxelState.Border)
+                 if (voxels[i, j, k].State == VoxelState.Border)
                  {
-                     var hit = SearchNeightVoxel(Voxels[i, j, k], checkInner, NeightType.All);
+                     var hit = SearchNeightVoxel(voxels[i, j, k], checkInner, NeightType.All);
                      if (hit.Any())
                      {
                          return hit.FirstOrDefault();
@@ -502,14 +523,14 @@ namespace KI.Analyzer
             var inners = new List<Voxel>();
             Action<int, int, int> initializeField = (int i, int j, int k) =>
             {
-                if (Voxels[i, j, k].State == VoxelState.Inner)
+                if (voxels[i, j, k].State == VoxelState.Inner)
                 {
-                    Voxels[i, j, k].Value = float.MaxValue;
-                    inners.Add(Voxels[i, j, k]);
+                    voxels[i, j, k].Value = float.MaxValue;
+                    inners.Add(voxels[i, j, k]);
                 }
                 else
                 {
-                    Voxels[i, j, k].Value = 0;
+                    voxels[i, j, k].Value = 0;
                 }
             };
 
@@ -711,25 +732,25 @@ namespace KI.Analyzer
                 voxel.State = VoxelState.Exterior;
             };
 
-            for (int i = 0; i < Partition; i++)
+            for (int i = 0; i < partition; i++)
             {
-                for (int j = 0; j < Partition; j++)
+                for (int j = 0; j < partition; j++)
                 {
-                    var max = Partition - 1;
-                    RegionGrowing(Voxels[0, i, j], condition, action);
-                    RegionGrowing(Voxels[i, 0, j], condition, action);
-                    RegionGrowing(Voxels[i, j, 0], condition, action);
-                    RegionGrowing(Voxels[max, i, j], condition, action);
-                    RegionGrowing(Voxels[i, max, j], condition, action);
-                    RegionGrowing(Voxels[i, j, max], condition, action);
+                    var max = partition - 1;
+                    RegionGrowing(voxels[0, i, j], condition, action);
+                    RegionGrowing(voxels[i, 0, j], condition, action);
+                    RegionGrowing(voxels[i, j, 0], condition, action);
+                    RegionGrowing(voxels[max, i, j], condition, action);
+                    RegionGrowing(voxels[i, max, j], condition, action);
+                    RegionGrowing(voxels[i, j, max], condition, action);
                 }
             }
 
             Action<int, int, int> setInner = (int i, int j, int k) =>
               {
-                  if (Voxels[i, j, k].State == VoxelState.None)
+                  if (voxels[i, j, k].State == VoxelState.None)
                   {
-                      Voxels[i, j, k].State = VoxelState.Inner;
+                      voxels[i, j, k].State = VoxelState.Inner;
                   }
               };
 
@@ -739,15 +760,15 @@ namespace KI.Analyzer
         private Voxel GetVoxel(int i, int j, int k)
         {
             if (i < 0 || j < 0 || k < 0 ||
-                i >= Partition ||
-                j >= Partition ||
-                k >= Partition)
+                i >= partition ||
+                j >= partition ||
+                k >= partition)
             {
                 return null;
             }
             else
             {
-                return Voxels[i, j, k];
+                return voxels[i, j, k];
             }
         }
 
@@ -758,7 +779,7 @@ namespace KI.Analyzer
         private void SetVoxel(Vector3 voxelIndex)
         {
             Vector3 minVoxel = GetVoxelPosition(voxelIndex);
-            Vector3 maxVoxel = minVoxel + new Vector3(Interval);
+            Vector3 maxVoxel = minVoxel + new Vector3(interval);
             //minVoxel += new Vector3(m_Length * 0.1f);
             //maxVoxel -= new Vector3(m_Length * 0.1f);
             Vector3 v0 = new Vector3(minVoxel.X, minVoxel.Y, minVoxel.Z);
@@ -786,12 +807,12 @@ namespace KI.Analyzer
         private void SetQuad(Vector3 q0, Vector3 q1, Vector3 q2, Vector3 q3)
         {
             Vector3 normal;
-            vPosition.Add(q0); vPosition.Add(q1); vPosition.Add(q2); vPosition.Add(q3);
+            Position.Add(q0); Position.Add(q1); Position.Add(q2); Position.Add(q3);
             normal = KICalc.Normal(q1 - q0, q2 - q0);
-            vNormal.Add(normal);
-            vNormal.Add(normal);
-            vNormal.Add(normal);
-            vNormal.Add(normal);
+            Normal.Add(normal);
+            Normal.Add(normal);
+            Normal.Add(normal);
+            Normal.Add(normal);
         }
 
         #endregion

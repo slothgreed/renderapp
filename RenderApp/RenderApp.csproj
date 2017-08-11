@@ -453,6 +453,10 @@
       <Project>{c8df6069-e673-4957-a173-2bfca883b102}</Project>
       <Name>KI.Tool</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KI.UI\KI.UI.csproj">
+      <Project>{35f238b1-820c-4487-9081-a4af3952219c}</Project>
+      <Name>KI.UI</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">

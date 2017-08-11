@@ -52,23 +52,14 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandResource.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CommandResource.resx</DependentUpon>
-    </Compile>
     <Compile Include="Command\CommandManager.cs" />
     <Compile Include="Command\CommandStack.cs" />
     <Compile Include="Command\ICommand.cs" />
-    <Compile Include="Control\DirectoryAccessor.cs" />
-    <Compile Include="Control\DragBehavior.cs" />
-    <Compile Include="Control\DropBehavior.cs" />
     <Compile Include="Core\KIFactoryBase.cs" />
     <Compile Include="Core\KIObject.cs" />
     <Compile Include="Core\KIFile.cs" />
     <Compile Include="Core\KITimer.cs" />
     <Compile Include="Core\KIMouse.cs" />
-    <Compile Include="Control\ThumbnailFile.cs" />
     <Compile Include="Tree\KINode.cs" />
     <Compile Include="Tree\NotifyNodeChangedEventArgs.cs">
       <DependentUpon>NotifyNodeChangedEventArgs.tt</DependentUpon>
@@ -79,84 +70,6 @@
     <Compile Include="Utility\KICalc.cs" />
     <Compile Include="Utility\Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\CheckBoxViewModel.cs" />
-    <Compile Include="ViewModel\CommandBase.cs" />
-    <Compile Include="ViewModel\Math\Matrix3ViewModel.cs" />
-    <Compile Include="ViewModel\Math\Matrix4ViewModel.cs" />
-    <Compile Include="ViewModel\Math\NumericViewModel.cs" />
-    <Compile Include="ViewModel\Math\Vector2ViewModel.cs" />
-    <Compile Include="ViewModel\Math\Vector3ViewModel.cs" />
-    <Compile Include="ViewModel\Math\Vector4ViewModel.cs" />
-    <Compile Include="ViewModel\PropertyViewModelBase.cs" />
-    <Compile Include="ViewModel\ThumbnailFileViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Compile Include="View\Math\Matrix3View.xaml.cs">
-      <DependentUpon>Matrix3View.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Math\Matrix4View.xaml.cs">
-      <DependentUpon>Matrix4View.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Math\NumericView.xaml.cs">
-      <DependentUpon>NumericView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Math\CheckBoxView.xaml.cs">
-      <DependentUpon>CheckBoxView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Math\Vector2View.xaml.cs">
-      <DependentUpon>Vector2View.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Math\Vector3View.xaml.cs">
-      <DependentUpon>Vector3View.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Math\Vector4View.xaml.cs">
-      <DependentUpon>Vector4View.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Resource.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Generic.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\DirectoryAccessorView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\ThumbnailFileView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Math\Matrix3View.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Math\Matrix4View.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Math\NumericView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Math\CheckBoxView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Math\Vector2View.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Math\Vector3View.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Math\Vector4View.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Tree\NotifyNodeChangedEventArgs.tt">
@@ -167,12 +80,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="CommandResource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>CommandResource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -56,6 +56,10 @@ namespace KI.Renderer
 
         #region [public scene method]
 
+        /// <summary>
+        /// 初期化
+        /// </summary>
+        public abstract void Initialize();
 
         /// <summary>
         /// オブジェクトの追加
@@ -151,10 +155,5 @@ namespace KI.Renderer
                 }
             }
         }
-
-        /// <summary>
-        /// 初期化
-        /// </summary>
-        public abstract void Initialize();
     }
 }

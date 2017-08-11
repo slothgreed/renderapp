@@ -1,6 +1,4 @@
-﻿#define  CHECKHALFEDGE
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using KI.Foundation.Utility;
 using OpenTK;
 
@@ -11,14 +9,17 @@ namespace KI.Analyzer
     /// </summary>
     public class HalfEdge
     {
-        public List<Mesh> Meshs = new List<Mesh>();
-        public List<Edge> Edges = new List<Edge>();
-        public List<Vertex> Vertexs = new List<Vertex>();
-        public List<int> Indexs = new List<int>();
-
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public HalfEdge()
         {
         }
+
+        public List<Mesh> Meshs { get; set; } = new List<Mesh>();
+        public List<Edge> Edges { get; set; } = new List<Edge>();
+        public List<Vertex> Vertexs { get; set; } = new List<Vertex>();
+        public List<int> Indexs { get; set; } = new List<int>();
 
         /// <summary>
         /// メッシュのインデックスと、頂点を受け取る
@@ -47,156 +48,7 @@ namespace KI.Analyzer
             return false;
         }
 
-        #region [edit method]
-        #region [vertex decimation]
-        /// <summary>
-        /// マージによる頂点削除削除後、頂点位置移動
-        /// </summary>
-        public void VertexDecimation(Edge edge)
-        {
-            Vertex delV = edge.Start;
-            Vertex remV = edge.End;
 
-            #region [create delete list]
-            //削除するメッシュ
-            var deleteMesh = new List<Mesh>();
-            //削除するエッジ
-            var deleteEdge = new List<Edge>();
-            //削除する頂点
-            var deleteVertex = new List<Vertex>();
-
-            deleteVertex.Add(delV);
-
-            //頂点とエッジの格納
-            deleteEdge.Add(edge);
-            deleteEdge.Add(edge.Next);
-            deleteEdge.Add(edge.Next.Next);
-            deleteMesh.Add(edge.Mesh);
-            //頂点とエッジの格納
-            deleteEdge.Add(edge.Opposite);
-            deleteEdge.Add(edge.Opposite.Next);
-            deleteEdge.Add(edge.Opposite.Next.Next);
-            deleteMesh.Add(edge.Opposite.Mesh);
-            #endregion
-
-            //頂点が削除対象なら、残す方に移動
-            foreach (var around in delV.AroundEdge)
-            {
-                if (around.Start == delV)
-                {
-                    around.Start = remV;
-                    around.Opposite.End = remV;
-                }
-            }
-
-            //remV.Position = (remV.Position + delV.Position) / 2;
-            //エッジ情報の切り替え
-            Edge.SetupOpposite(edge.Next.Opposite, edge.Before.Opposite);
-            Edge.SetupOpposite(edge.Opposite.Next.Opposite, edge.Opposite.Before.Opposite);
-
-            DeleteMesh(deleteMesh);
-            DeleteEdge(deleteEdge);
-            DeleteVertex(deleteVertex);
-
-            for (int i = 0; i < Meshs.Count; i++)
-            {
-                Meshs[i].Index = i;
-            }
-
-            for (int i = 0; i < Edges.Count; i++)
-            {
-                Edges[i].Index = i;
-            }
-
-            for (int i = 0; i < Vertexs.Count; i++)
-            {
-                Vertexs[i].Index = i;
-            }
-
-# if CHECKHALFEDGE
-            HasError();
-#endif
-        }
-        #endregion
-
-        public void EdgeSplit(Edge edge)
-        {
-            var opposite = edge.Opposite;
-            var delMesh1 = edge.Mesh;
-            var delMesh2 = opposite.Mesh;
-
-            var vertex = new Vertex((edge.Start.Position + edge.End.Position) / 2, Vertexs.Count);
-
-            var right = new Edge(vertex, edge.End, Edges.Count);
-            var oppoRight = new Edge(edge.End, vertex, Edges.Count + 1);
-            Edge.SetupOpposite(right, oppoRight);
-
-            var left = new Edge(edge.Start, vertex, Edges.Count + 2);
-            var oppoLeft = new Edge(vertex, edge.Start, Edges.Count + 3);
-            Edge.SetupOpposite(left, oppoLeft);
-
-            var up = new Edge(vertex, edge.Next.End, Edges.Count + 4);
-            var oppoup = new Edge(edge.Next.End, vertex, Edges.Count + 5);
-            Edge.SetupOpposite(up, oppoup);
-
-            var down = new Edge(vertex, opposite.Next.End, edge.Index);
-            var oppodown = new Edge(opposite.Next.End, vertex, opposite.Index);
-            Edge.SetupOpposite(down, oppodown);
-
-            var rightUp = new Mesh(right, edge.Next, oppoup, delMesh1.Index);
-            var leftUp = new Mesh(up, edge.Before, left, delMesh2.Index);
-            var rightDown = new Mesh(down, opposite.Before, oppoRight, Meshs.Count);
-            var leftDown = new Mesh(oppoLeft, opposite.Next, oppodown, Meshs.Count + 1);
-
-            Vertexs.Add(vertex);
-
-            Edges.Add(right); Edges.Add(oppoRight);
-            Edges.Add(left); Edges.Add(oppoLeft);
-            Edges.Add(up); Edges.Add(oppoup);
-            Edges.Add(down); Edges.Add(oppodown);
-
-            Meshs.Add(rightUp);
-            Meshs.Add(leftUp);
-            Meshs.Add(rightDown);
-            Meshs.Add(leftDown);
-
-            DeleteEdge(new List<Edge>() { edge, opposite });
-            DeleteMesh(new List<Mesh>() { delMesh1, delMesh2 });
-
-# if CHECKHALFEDGE
-            //HasError();
-#endif
-        }
-
-        public void EdgeFlips(Edge edge)
-        {
-            // delete edge & mesh
-            var opposite = edge.Opposite;
-            var delMesh1 = edge.Mesh;
-            var delMesh2 = opposite.Mesh;
-
-            var startPos = edge.Next.End;
-            var endPos = opposite.Next.End;
-
-            var createEdge = new Edge(startPos, endPos, edge.Index);
-            var createEdgeOpposite = new Edge(endPos, startPos, opposite.Index);
-            var createMesh = new Mesh(createEdge, opposite.Before, edge.Next, delMesh1.Index);
-            var createMeshOpposite = new Mesh(createEdgeOpposite, edge.Before, opposite.Next, delMesh2.Index);
-            Edge.SetupOpposite(createEdge, createEdgeOpposite);
-
-            Meshs.Add(createMesh);
-            Meshs.Add(createMeshOpposite);
-            Edges.Add(createEdge);
-            Edges.Add(createEdgeOpposite);
-
-            DeleteEdge(new List<Edge>() { edge, opposite });
-            DeleteMesh(new List<Mesh>() { delMesh1, delMesh2 });
-
-# if CHECKHALFEDGE
-            HasError();
-#endif
-        }
-        #endregion
 
         /// <summary>
         /// エッジの取得
@@ -268,35 +120,6 @@ namespace KI.Analyzer
             }
         }
 
-        #region [delete object]
-        private void DeleteMesh(List<Mesh> deleteMesh)
-        {
-            foreach (var mesh in deleteMesh)
-            {
-                mesh.Dispose();
-                Meshs.Remove(mesh);
-            }
-        }
-
-        private void DeleteEdge(List<Edge> deleteEdge)
-        {
-            foreach (var edge in deleteEdge)
-            {
-                edge.Dispose();
-                Edges.Remove(edge);
-            }
-        }
-
-        private void DeleteVertex(List<Vertex> deleteVertex)
-        {
-            //エッジ削除
-            foreach (var vertex in deleteVertex)
-            {
-                vertex.Dispose();
-                Vertexs.Remove(vertex);
-            }
-        }
-        #endregion
 
         #region [make halfedge data structure]
         /// <summary>
@@ -362,42 +185,6 @@ namespace KI.Analyzer
                     v3 = null;
                 }
             }
-        }
-
-        /// <summary>
-        /// エラーがあるか
-        /// </summary>
-        /// <returns>ある</returns>
-        private bool HasError()
-        {
-            foreach (var edge in Edges)
-            {
-                if (edge.ErrorEdge)
-                {
-                    Logger.Log(Logger.LogLevel.Error, "Edge : HasError");
-                    return true;
-                }
-            }
-
-            foreach (var mesh in Meshs)
-            {
-                if (mesh.ErrorMesh)
-                {
-                    Logger.Log(Logger.LogLevel.Error, "Mesh : HasError");
-                    return true;
-                }
-            }
-
-            foreach (var vertex in Vertexs)
-            {
-                if (vertex.ErrorVertex)
-                {
-                    Logger.Log(Logger.LogLevel.Error, "Vertex : HasError");
-                    return true;
-                }
-            }
-
-            return false;
         }
 
         /// <summary>

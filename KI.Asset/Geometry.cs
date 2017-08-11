@@ -432,21 +432,13 @@ namespace KI.Asset
         }
 
         /// <summary>
-        /// 初期化
-        /// </summary>
-        private void Initialize()
-        {
-            Textures = new Dictionary<TextureKind, Texture>();
-        }
-
-        /// <summary>
         /// 法線の算出
         /// </summary>
-        /// <param name="position">位置</param>
-        /// <param name="type">種類</param>
-        private void CalcNormal(List<Vector3> position, GeometryType type)
+        public void CalcNormal()
         {
-            switch (type)
+            Normal.Clear();
+
+            switch (GeometryType)
             {
                 case GeometryType.None:
                 case GeometryType.Point:
@@ -454,9 +446,9 @@ namespace KI.Asset
                 case GeometryType.Mix:
                     return;
                 case GeometryType.Triangle:
-                    for (int i = 0; i < position.Count; i += 3)
+                    for (int i = 0; i < Position.Count; i += 3)
                     {
-                        Vector3 normal = Vector3.Cross(position[i + 2] - position[i + 1], position[i] - position[i + 1]).Normalized();
+                        Vector3 normal = Vector3.Cross(Position[i + 2] - Position[i + 1], Position[i] - Position[i + 1]).Normalized();
                         Normal.Add(normal);
                         Normal.Add(normal);
                         Normal.Add(normal);
@@ -466,7 +458,7 @@ namespace KI.Asset
                 case GeometryType.Quad:
                     for (int i = 0; i < position.Count; i += 4)
                     {
-                        Vector3 normal = Vector3.Cross(position[i + 2] - position[i + 1], position[i] - position[i + 1]).Normalized();
+                        Vector3 normal = Vector3.Cross(Position[i + 2] - Position[i + 1], Position[i] - Position[i + 1]).Normalized();
                         Normal.Add(normal);
                         Normal.Add(normal);
                         Normal.Add(normal);

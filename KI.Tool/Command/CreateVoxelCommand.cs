@@ -56,7 +56,7 @@ namespace KI.Tool.Command
         {
             VoxelSpace voxel = new VoxelSpace(renderObject.Geometry.Position, renderObject.Geometry.Index, partition);
             RenderObject voxelObject = RenderObjectFactory.Instance.CreateRenderObject("Voxel :" + renderObject.Name);
-            Geometry info = new Geometry("Voxel :" + renderObject.Name, voxel.vPosition, voxel.vNormal, KICalc.RandomColor(), null, null, GeometryType.Quad);
+            Geometry info = new Geometry("Voxel :" + renderObject.Name, voxel.Position, voxel.Normal, KICalc.RandomColor(), null, null, GeometryType.Quad);
             voxelObject.SetGeometryInfo(info);
             voxelObject.Transformation(renderObject.ModelMatrix);
             Global.RenderSystem.ActiveScene.AddObject(voxelObject);

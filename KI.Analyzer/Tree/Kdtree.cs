@@ -36,6 +36,37 @@ namespace KI.Analyzer
             MakeKdtree(position, level);
         }
         #endregion
+        #region [Getter Method]
+        /// <summary>
+        /// Kdtreeの葉のBDB取得
+        /// </summary>
+        /// <returns></returns>
+        public void GetRenderPosit(out List<Vector3> bdbPosition, out List<Vector3> bdbNormal)
+        {
+            bdbPosition = new List<Vector3>();
+            bdbNormal = new List<Vector3>();
+            List<Vector3> posit = new List<Vector3>();
+            List<Vector3> normal = new List<Vector3>();
+            List<KdList> leaf = GetLeaf();
+            for (int i = 0; i < leaf.Count; i++)
+            {
+                leaf[i].GetTriPos(out posit, out normal);
+                bdbPosition.AddRange(posit);
+                bdbNormal.AddRange(normal);
+            }
+        }
+
+        /// <summary>
+        /// 木の探索
+        /// </summary>
+        public List<KdList> GetLeaf()
+        {
+            List<KdList> leaf = new List<KdList>();
+            KdList list = rootNode;
+            SearchLeaf(leaf, rootNode);
+            return leaf;
+        }
+        #endregion
         #region [MakeKdTree]
         /// <summary>
         /// Kdtreeを作る
@@ -128,37 +159,6 @@ namespace KI.Analyzer
             return Vector3.Zero;
         }
         #endregion
-        #region [Getter Method]
-        /// <summary>
-        /// Kdtreeの葉のBDB取得
-        /// </summary>
-        /// <returns></returns>
-        public void GetRenderPosit(out List<Vector3> bdbPosition, out List<Vector3> bdbNormal)
-        {
-            bdbPosition = new List<Vector3>();
-            bdbNormal = new List<Vector3>();
-            List<Vector3> posit = new List<Vector3>();
-            List<Vector3> normal = new List<Vector3>();
-            List<KdList> leaf = GetLeaf();
-            for (int i = 0; i < leaf.Count; i++)
-            {
-                leaf[i].GetTriPos(out posit, out normal);
-                bdbPosition.AddRange(posit);
-                bdbNormal.AddRange(normal);
-            }
-        }
-
-        /// <summary>
-        /// 木の探索
-        /// </summary>
-        public List<KdList> GetLeaf()
-        {
-            List<KdList> leaf = new List<KdList>();
-            KdList list = rootNode;
-            SearchLeaf(leaf, rootNode);
-            return leaf;
-        }
-        #endregion
         #region [Option Method]
         /// <summary>
         /// 葉の探索再帰関数
@@ -192,55 +192,39 @@ namespace KI.Analyzer
     /// </summary>
     public class KdList : BDB
     {
-        /// <summary>
-        /// 頂点リスト
-        /// </summary>
-        private List<Vector3> positon;
-
-        /// <summary>
-        /// 左の枝
-        /// </summary>
-        public KdList Left;
-
-        /// <summary>
-        /// 右の枝
-        /// </summary>
-        public KdList Right;
+        public KdList(List<Vector3> posit, int level)
+            : base(posit)
+        {
+            Level = level;
+            Position = posit;
+        }
 
         /// <summary>
         /// 階層のレベル
         /// </summary>
-        private int m_Level;
-
-        public KdList(List<Vector3> posit, int level)
-            : base(posit)
-        {
-            m_Level = level;
-            positon = posit;
-        }
-
-        public int Level
-        {
-            get
-            {
-                return m_Level;
-            }
-        }
-
-        public List<Vector3> Position
-        {
-            get
-            {
-                return positon;
-            }
-        }
+        public int Level { get; private set; }
 
         /// <summary>
-        /// リストの削除
+        /// 位置情報
+        /// </summary>
+        public List<Vector3> Position { get; private set; }
+
+        /// <summary>
+        /// 左の枝
+        /// </summary>
+        public KdList Left { get; set; }
+
+        /// <summary>
+        /// 右の枝
+        /// </summary>
+        public KdList Right { get; set; }
+
+        /// <summary>
+        /// 位置情報の削除
         /// </summary>
         public void ClearList()
         {
-            positon.Clear();
+            Position.Clear();
         }
     }
 }

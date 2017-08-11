@@ -2,7 +2,7 @@
 using System.Linq;
 using KI.Foundation.Tree;
 using KI.Foundation.Utility;
-using KI.Foundation.ViewModel;
+using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel
 {
@@ -151,8 +151,8 @@ namespace RenderApp.ViewModel
                 Parent = parent;
             }
 
-            node.InsertNodeEvent += InsertNodeEvent;
-            node.RemoveNodeEvent += RemoveNodeEvent;
+            node.NodeInserted += InsertNodeEvent;
+            node.NodeRemoved += RemoveNodeEvent;
             DisplayName = node.Name;
             Model = node;
         }

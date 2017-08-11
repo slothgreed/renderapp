@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using KI.Asset;
 using KI.Foundation.Core;
 using KI.Foundation.Tree;
@@ -78,11 +79,11 @@ namespace RenderApp.Globals
             switch (assetType)
             {
                 case RAAsset.Model:
-                    return geometryRoot.AllChildrenObject();
+                    return geometryRoot.AllChildren().Select(p => p.KIObject);
                 case RAAsset.Texture:
-                    return textureRoot.AllChildrenObject();
+                    return textureRoot.AllChildren().Select(p => p.KIObject);
                 case RAAsset.ShaderProgram:
-                    return shaderProgramRoot.AllChildrenObject();
+                    return shaderProgramRoot.AllChildren().Select(p => p.KIObject);
             }
 
             return null;

@@ -4,11 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:RenderApp.ViewModel"
-             xmlns:vmath="clr-namespace:KI.Foundation.View;assembly=KI.Foundation"
-             xmlns:v="clr-namespace:RenderApp.View"
-             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-             xmlns:opentk="clr-namespace:OpenTK;assembly=OpenTK"
-             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:vmath="clr-namespace:KI.UI.View;assembly=KI.UI"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel>

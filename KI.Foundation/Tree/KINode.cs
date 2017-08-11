@@ -1,70 +1,86 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using KI.Foundation.Core;
 
 namespace KI.Foundation.Tree
 {
+    /// <summary>
+    /// ノード
+    /// </summary>
     public class KINode
     {
-        public delegate void InsertNodeEventHandler(object sender, NotifyNodeChangedEventArgs e);
-        public InsertNodeEventHandler InsertNodeEvent;
-
-        public delegate void RemoveNodeEventHandler(object sender, NotifyNodeChangedEventArgs e);
-        public RemoveNodeEventHandler RemoveNodeEvent;
-        private string emptyName;
-        private KINode Parent;
-
-        public KINode(KIObject _kiobject)
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="kiobject">ノードの中身</param>
+        public KINode(KIObject kiobject)
         {
-            KIObject = _kiobject;
+            KIObject = kiobject;
+            Name = kiobject.Name;
             Children = new List<KINode>();
         }
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="name">ノードの名前</param>
         public KINode(string name)
         {
-            emptyName = name;
+            Name = name;
             Children = new List<KINode>();
         }
 
-        public List<KINode> Children
-        {
-            get;
-            private set;
-        }
+        /// <summary>
+        /// ノード挿入イベント
+        /// </summary>
+        public EventHandler<NotifyNodeChangedEventArgs> NodeInserted { get; set; }
 
-        public string Name
-        {
-            get
-            {
-                if (KIObject == null)
-                {
-                    return emptyName;
-                }
+        /// <summary>
+        /// ノード削除イベント
+        /// </summary>
+        public EventHandler<NotifyNodeChangedEventArgs> NodeRemoved { get; set; }
 
-                return KIObject.Name;
-            }
-        }
+        /// <summary>
+        /// ノードの名前
+        /// </summary>
+        public string Name { get; private set; }
 
-        public KIObject KIObject
-        {
-            get;
-            private set;
-        }
+        /// <summary>
+        /// 親ノード
+        /// </summary>
+        public KINode Parent { get; private set; }
+
+        /// <summary>
+        /// 子供
+        /// </summary>
+        public List<KINode> Children { get; private set; }
+
+        /// <summary>
+        /// ノードの中身
+        /// </summary>
+        public KIObject KIObject { get; private set; }
 
         #region [add child]
+
+        /// <summary>
+        /// 子供の追加
+        /// </summary>
+        /// <param name="node">ノード</param>
         public void AddChild(KINode node)
         {
             if (FindChild(node.Name) == null)
             {
                 node.Parent = this;
                 Children.Add(node);
-                if (InsertNodeEvent != null)
-                {
-                    InsertNodeEvent(node, new NotifyNodeChangedEventArgs(NotifyNodeChangedAction.Add, node, Children.Count));
-                }
+                OnNodeInserted(Children.Count, node);
             }
         }
 
+        /// <summary>
+        /// 子供の追加
+        /// </summary>
+        /// <param name="child">ノード</param>
         public void AddChild(KIObject child)
         {
             if (child == null)
@@ -77,105 +93,51 @@ namespace KI.Foundation.Tree
                 KINode node = new KINode(child);
                 node.Parent = this;
                 Children.Add(node);
-                if (InsertNodeEvent != null)
-                {
-                    InsertNodeEvent(node, new NotifyNodeChangedEventArgs(NotifyNodeChangedAction.Add, node, Children.Count));
-                }
-            }
-        }
-
-        public void AddChild(string name)
-        {
-            if (FindChild(name) == null)
-            {
-                KINode node = new KINode(name);
-                node.Parent = this;
-                Children.Add(node);
-                if (InsertNodeEvent != null)
-                {
-                    InsertNodeEvent(node, new NotifyNodeChangedEventArgs(NotifyNodeChangedAction.Add, node, Children.Count));
-                }
-            }
-        }
-
-        public void Insert(int index, string name)
-        {
-            if (Children.Count < index)
-            {
-                AddChild(name);
-                return;
-            }
-
-            if (FindChild(name) == null)
-            {
-                var node = new KINode(name);
-                Children.Insert(index, node);
-                if (InsertNodeEvent != null)
-                {
-                    InsertNodeEvent(node, new NotifyNodeChangedEventArgs(NotifyNodeChangedAction.Add, node, index));
-                }
-            }
-        }
-
-        public void Insert(int index, KIObject child)
-        {
-            if (Children.Count < index)
-            {
-                AddChild(child);
-                return;
-            }
-
-            if (FindChild(child.Name) == null)
-            {
-                var node = new KINode(child.Name);
-                Children.Insert(index, node);
-                if (InsertNodeEvent != null)
-                {
-                    InsertNodeEvent(node, new NotifyNodeChangedEventArgs(NotifyNodeChangedAction.Add, node, index));
-                }
+                OnNodeInserted(Children.Count, node);
             }
         }
 
         #endregion
         #region [remove method]
+
+        /// <summary>
+        /// 子供の削除
+        /// </summary>
+        /// <param name="child">子供</param>
         public void RemoveChild(KINode child)
         {
             if (Children.Contains(child))
             {
                 Children.Remove(child);
-                if (RemoveNodeEvent != null)
-                {
-                    RemoveNodeEvent(child, new NotifyNodeChangedEventArgs(NotifyNodeChangedAction.Remove, child));
-                }
+                OnNodeRemoved(child);
             }
         }
 
-        public void RemoveChild(KIObject child)
+        /// <summary>
+        /// 子供の削除
+        /// </summary>
+        /// <param name="name">名前</param>
+        public void RemoveChild(string name)
         {
-            var remove = FindChild(child.Name);
+            var remove = FindChild(name);
             if (remove != null)
             {
                 RemoveChild(remove);
             }
         }
 
-        public void RemoveChild(string key)
-        {
-            var remove = FindChild(key);
-            if (remove != null)
-            {
-                RemoveChild(remove);
-            }
-        }
-
-        public void RemoveRecursiveChild(string key)
+        /// <summary>
+        /// 再帰的に子供を削除
+        /// </summary>
+        /// <param name="name">名前</param>
+        public void RemoveRecursiveChild(string name)
         {
             foreach (var child in Children)
             {
-                var item = FindChild(key);
+                var item = FindChild(name);
                 if (item == null)
                 {
-                    child.FindRecursiveChild(key);
+                    child.FindRecursiveChild(name);
                 }
                 else
                 {
@@ -186,6 +148,12 @@ namespace KI.Foundation.Tree
         }
         #endregion
         #region [check child]
+
+        /// <summary>
+        /// 子供がいるか確認
+        /// </summary>
+        /// <param name="child">子供</param>
+        /// <returns>いるか</returns>
         public bool ExistChild(KIObject child)
         {
             if (FindChild(child.Name) != null)
@@ -196,19 +164,29 @@ namespace KI.Foundation.Tree
             return false;
         }
 
-        public KINode FindChild(string key)
+        /// <summary>
+        /// ノードを取得
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <returns>ノード</returns>
+        public KINode FindChild(string name)
         {
-            return Children.Where(p => p.Name == key).FirstOrDefault();
+            return Children.Where(p => p.Name == name).FirstOrDefault();
         }
 
-        public KINode FindRecursiveChild(string key)
+        /// <summary>
+        /// ノードを取得
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <returns>ノード</returns>
+        public KINode FindRecursiveChild(string name)
         {
             foreach (var child in Children)
             {
-                var item = FindChild(key);
+                var item = FindChild(name);
                 if (item == null)
                 {
-                    child.FindRecursiveChild(key);
+                    child.FindRecursiveChild(name);
                 }
                 else
                 {
@@ -220,12 +198,6 @@ namespace KI.Foundation.Tree
         }
 
         #endregion
-        public override string ToString()
-        {
-            if (KIObject != null)
-                return KIObject.Name;
-            return emptyName;
-        }
 
         /// <summary>
         /// 解放処理
@@ -243,6 +215,10 @@ namespace KI.Foundation.Tree
             }
         }
         #region [getter]
+        /// <summary>
+        /// 全てのノードを取得
+        /// </summary>
+        /// <returns>全てのノード</returns>
         public IEnumerable<KINode> AllChildren()
         {
             foreach (var child in Children)
@@ -256,18 +232,34 @@ namespace KI.Foundation.Tree
             }
         }
 
-        public IEnumerable<KIObject> AllChildrenObject()
-        {
-            foreach (var child in Children)
-            {
-                yield return child.KIObject;
-
-                foreach (var grand in child.Children)
-                {
-                    yield return grand.KIObject;
-                }
-            }
-        }
         #endregion
+
+        /// <summary>
+        /// オブジェクトを表す文字列
+        /// </summary>
+        /// <returns>文字列</returns>
+        public override string ToString()
+        {
+            return Name;
+        }
+
+        /// <summary>
+        /// ノード削除イベント
+        /// </summary>
+        /// <param name="removeNode">削除したノード</param>
+        private void OnNodeRemoved(KINode removeNode)
+        {
+            NodeRemoved?.Invoke(this, new NotifyNodeChangedEventArgs(NotifyNodeChangedAction.Remove, removeNode));
+        }
+
+        /// <summary>
+        /// ノード挿入イベント
+        /// </summary>
+        /// <param name="index">追加した番号</param>
+        /// <param name="insertNode">追加したノード</param>
+        private void OnNodeInserted(int index, KINode insertNode)
+        {
+            NodeInserted?.Invoke(insertNode, new NotifyNodeChangedEventArgs(NotifyNodeChangedAction.Add, insertNode, index));
+        }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using KI.Foundation.ViewModel;
+using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel
 {

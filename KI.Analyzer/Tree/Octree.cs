@@ -7,18 +7,66 @@ using OpenTK;
 
 namespace KI.Analyzer
 {
+    /// <summary>
+    /// オクトツリー
+    /// </summary>
     public class Octree : IAnalyzer
     {
-        Octant m_root;
+        /// <summary>
+        /// ルート
+        /// </summary>
+        private Octant root;
 
-        public int MaxLevel { get; private set; } 
+        /// <summary>
+        /// 最大レベル
+        /// </summary>
+        public int maxLevel;
 
+        /// <summary>
+        /// オクトツリー
+        /// </summary>
+        /// <param name="position">位置情報</param>
+        /// <param name="level">最大レベル</param>
         public Octree(List<Vector3> position, int level)
         {
-            MaxLevel = level;
+            maxLevel = level;
 
             MakeOctree(position);
         }
+
+        
+        #region [geteer method ]
+        /// <summary>
+        /// レンダリング位置
+        /// </summary>
+        /// <param name="posList"></param>
+        /// <param name="norList"></param>
+        public void GetRenderPosition(out List<Vector3> posList, out List<Vector3> norList)
+        {
+            List<Octant> leafs = GetLeaf();
+            posList = new List<Vector3>();
+            norList = new List<Vector3>();
+            List<Vector3> posit = new List<Vector3>();
+            List<Vector3> normal = new List<Vector3>();
+            for (int i = 0; i < leafs.Count; i++)
+            {
+                BDB.GetTriPos(leafs[i].BDBMin, leafs[i].BDBMax, out posit, out normal);
+                posList.AddRange(posit);
+                norList.AddRange(normal);
+            }
+        }
+
+        /// <summary>
+        /// 葉の取得
+        /// </summary>
+        /// <returns></returns>
+        public List<Octant> GetLeaf()
+        {
+            List<Octant> leafs = new List<Octant>();
+            SearchLeaf(leafs, root);
+            return leafs;
+        }
+        #endregion
 
         #region [Make Octree]
         /// <summary>
@@ -30,8 +78,8 @@ namespace KI.Analyzer
             Vector3 bdbMax;
             List<Vector3> copy = new List<Vector3>(position);
             BDB.GetBoundBox(copy, out bdbMin, out bdbMax);
-            m_root = new Octant(copy, bdbMin, bdbMax, 0);
-            MakeOctant(m_root, 0);
+            root = new Octant(copy, bdbMin, bdbMax, 0);
+            MakeOctant(root, 0);
         }
 
         /// <summary>
@@ -41,7 +89,7 @@ namespace KI.Analyzer
         /// <param name="level"></param>
         private void MakeOctant(Octant parent, int level)
         {
-            if (MaxLevel == level)
+            if (maxLevel == level)
                 return;
 
             List<Vector3> octantMin;
@@ -123,39 +171,6 @@ namespace KI.Analyzer
             octantMax.Add(new Vector3(bdbMax.X, bdbMax.Y, bdbMax.Z));
         }
 
-        #region [geteer method ]
-        /// <summary>
-        /// レンダリング位置
-        /// </summary>
-        /// <param name="posList"></param>
-        /// <param name="norList"></param>
-        public void GetRenderPosition(out List<Vector3> posList, out List<Vector3> norList)
-        {
-            List<Octant> leafs = GetLeaf();
-            posList = new List<Vector3>();
-            norList = new List<Vector3>();
-            List<Vector3> posit = new List<Vector3>();
-            List<Vector3> normal = new List<Vector3>();
-            for (int i = 0; i < leafs.Count; i++)
-            {
-                BDB.GetTriPos(leafs[i].BDBMin, leafs[i].BDBMax, out posit, out normal);
-                posList.AddRange(posit);
-                norList.AddRange(normal);
-            }
-        }
-
-        /// <summary>
-        /// 葉の取得
-        /// </summary>
-        /// <returns></returns>
-        public List<Octant> GetLeaf()
-        {
-            List<Octant> leafs = new List<Octant>();
-            SearchLeaf(leafs, m_root);
-            return leafs;
-        }
-        #endregion
-
         #region [option method]
         /// <summary>
         /// 葉ノードの探索
@@ -206,6 +221,14 @@ namespace KI.Analyzer
     /// </summary>
     public class Octant
     {
+        public Octant(List<Vector3> position, Vector3 min, Vector3 max, int level)
+        {
+            BDBMax = max;
+            BDBMin = min;
+            Position = position;
+            Level = level;
+        }
+
         //左下、右下、左上、右上その後奥の順
         public Octant[] octant = new Octant[8];
 
@@ -215,16 +238,14 @@ namespace KI.Analyzer
 
         public Vector3 BDBMax { get; private set; }
 
+        /// <summary>
+        /// 位置情報
+        /// </summary>
         public List<Vector3> Position { get; private set; }
 
-        public Octant(List<Vector3> position, Vector3 min, Vector3 max, int level)
-        {
-            BDBMax = max;
-            BDBMin = min;
-            Position = position;
-            Level = level;
-        }
-
+        /// <summary>
+        /// 位置情報の削除
+        /// </summary>
         public void ClearList()
         {
             Position.Clear();

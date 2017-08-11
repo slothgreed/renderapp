@@ -83,6 +83,7 @@ namespace KI.Foundation.Core
         /// </summary>
         /// <param name="x">x座標</param>
         /// <param name="y">y座標</param>
+        /// <returns>移動量</returns>
         private Vector2 Drag(int x, int y)
         {
             Vector2 move;

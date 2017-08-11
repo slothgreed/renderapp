@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using KI.Foundation.ViewModel;
+using KI.UI.ViewModel;
 using KI.Gfx.KITexture;
 
 namespace RenderApp.ViewModel

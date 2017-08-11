@@ -3,11 +3,14 @@ using OpenTK;
 
 namespace KI.Foundation.Utility
 {
+    /// <summary>
+    /// 計算用Utility関数
+    /// </summary>
     public class KICalc
     {
-        public const float THRESHOLD05 = 0.00001f;          // 誤差範囲 0.00001
-        public static Vector3[] RGB = new Vector3[256];
-
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         static KICalc()
         {
             float scale = 4;
@@ -47,7 +50,24 @@ namespace KI.Foundation.Utility
             }
         }
 
+        /// <summary>
+        /// 誤差範囲 0.00001
+        /// </summary>
+        public const float THRESHOLD05 = 0.00001f;
+
+        /// <summary>
+        /// 疑似カラー
+        /// </summary>
+        public static Vector3[] RGB { get; set; } = new Vector3[256];
+
         #region [疑似カラー]
+        /// <summary>
+        /// 疑似カラーの取得
+        /// </summary>
+        /// <param name="value">値</param>
+        /// <param name="min">最小値</param>
+        /// <param name="max">最大値</param>
+        /// <returns>疑似カラー</returns>
         public static Vector3 GetPseudoColor(float value, float min, float max)
         {
             try
@@ -78,11 +98,13 @@ namespace KI.Foundation.Utility
             }
         }
         #endregion
+
         /// <summary>
         /// 法線の算出
         /// </summary>
-        /// <param name="point"></param>
-        /// <param name="point2"></param>
+        /// <param name="vertex1"></param>
+        /// <param name="vertex2"></param>
+        /// <param name="vertex3"></param>
         /// <returns></returns>
         public static Vector3 Normal(Vector3 vertex1, Vector3 vertex2, Vector3 vertex3)
         {
@@ -199,7 +221,7 @@ namespace KI.Foundation.Utility
         {
             Vector3 result = new Vector3();
             Vector4 plane = new Vector4();
-            plane = normalizePlane(plane1);
+            plane = NormalizePlane(plane1);
             Vector3 plane3 = new Vector3(plane);
             Vector3 planeV = new Vector3(plane.X * plane.W, plane.Y * plane.W, plane.Z * plane.W);
             Vector3 PA = new Vector3();
@@ -315,7 +337,7 @@ namespace KI.Foundation.Utility
         /// </summary>
         /// <param name="plane">平面の公式</param>
         /// <returns>正規化後</returns>
-        public static Vector4 normalizePlane(Vector4 plane)
+        public static Vector4 NormalizePlane(Vector4 plane)
         {
             Vector4 result = new Vector4();
             Vector3 posit = Vector3.Zero;

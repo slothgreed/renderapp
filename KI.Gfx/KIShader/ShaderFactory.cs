@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using KI.Foundation.Core;
 
 namespace KI.Gfx.KIShader
@@ -63,8 +64,8 @@ namespace KI.Gfx.KIShader
             Shader shader = FindShader(vPath, fPath);
             if (shader == null)
             {
-                string vname = KIFile.GetNameFromPath(vPath);
-                string fname = KIFile.GetNameFromPath(fPath);
+                string vname = Path.GetFileName(vPath);
+                string fname = Path.GetFileName(fPath);
                 ShaderProgram vert = ShaderProgramFactory.Instance.CreateShaderProgram(vPath, vPath);
                 ShaderProgram frag = ShaderProgramFactory.Instance.CreateShaderProgram(fPath, fPath);
                 shader = new Shader(vert, frag);

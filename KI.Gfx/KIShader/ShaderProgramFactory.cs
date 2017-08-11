@@ -20,7 +20,7 @@ namespace KI.Gfx.KIShader
         /// <returns>シェーダプログラム</returns>
         public ShaderProgram CreateShaderProgram(string name, string path)
         {
-            var program = FindByKey(name);
+            var program = FindByName(name);
 
             if (program != null)
             {

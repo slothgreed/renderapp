@@ -16,7 +16,7 @@ namespace KI.Asset
         /// <summary>
         /// ハーフエッジ
         /// </summary>
-        private HalfEdge half;
+        private HalfEdge halfEdge;
 
         /// <summary>
         /// コンストラクタ
@@ -24,8 +24,8 @@ namespace KI.Asset
         /// <param name="filePath">ファイルパス</param>
         public HalfEdgeConverter(string filePath)
         {
-            half = new HalfEdge();
-            HalfEdgeIO.ReadFile(filePath, half);
+            halfEdge = new HalfEdge();
+            HalfEdgeIO.ReadFile(filePath, halfEdge);
             CreateGeometry();
         }
 
@@ -35,6 +35,7 @@ namespace KI.Asset
         /// <param name="half">ハーフエッジ</param>
         public HalfEdgeConverter(HalfEdge half)
         {
+            halfEdge = half;
             CreateGeometry();
         }
 
@@ -54,14 +55,14 @@ namespace KI.Asset
             var index = new List<int>();
 
             var gray = new Vector3(0.8f);
-            foreach (var vertex in half.Vertexs)
+            foreach (var vertex in halfEdge.Vertexs)
             {
                 position.Add(vertex.Position);
                 normal.Add(vertex.Normal);
                 color.Add(gray);
             }
 
-            foreach (var mesh in half.Meshs)
+            foreach (var mesh in halfEdge.Meshs)
             {
                 foreach (var vertex in mesh.AroundVertex)
                 {
@@ -69,8 +70,9 @@ namespace KI.Asset
                 }
             }
 
-            Geometry info = new Geometry("HalfEdge", position, normal, color, null, index, Gfx.GLUtil.GeometryType.Triangle);
-            Geometrys = new Geometry[] { info };
+            Geometry geometry = new Geometry("HalfEdge", position, normal, color, null, index, Gfx.GLUtil.GeometryType.Triangle);
+            geometry.HalfEdge = halfEdge;
+            Geometrys = new Geometry[] { geometry };
         }
     }
 }

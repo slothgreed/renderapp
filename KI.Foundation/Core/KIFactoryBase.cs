@@ -1,16 +1,31 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace KI.Foundation.Core
 {
+    /// <summary>
+    /// ファクトリーのベースクラス
+    /// </summary>
+    /// <typeparam name="T">KIObject</typeparam>
     public abstract class KIFactoryBase<T> where T : KIObject
     {
-        List<T> Items;
-
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public KIFactoryBase()
         {
             Items = new List<T>();
         }
 
+        /// <summary>
+        /// アイテムリスト
+        /// </summary>
+        public List<T> Items { get; }
+
+        /// <summary>
+        /// アイテムの追加
+        /// </summary>
+        /// <param name="value">アイテム</param>
         public void AddItem(T value)
         {
             if (value != null)
@@ -22,6 +37,7 @@ namespace KI.Foundation.Core
         /// <summary>
         /// 一致key全削除
         /// </summary>
+        /// <param name="name">名前</param>
         public void RemoveByKey(string name)
         {
             for (int i = 0; i < Items.Count; i++)
@@ -34,37 +50,32 @@ namespace KI.Foundation.Core
             }
         }
 
-        public T FindByKey(string name)
+        /// <summary>
+        /// 同一名の探索
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <returns>オブジェクト</returns>
+        public T FindByName(string name)
         {
-            foreach (var item in Items)
-            {
-                if (item.Name == name)
-                {
-                    return item;
-                }
-            }
-
-            return null;
+            return Items.Where(p => p.Name == name).FirstOrDefault();
         }
 
+        /// <summary>
+        /// 同値の探索
+        /// </summary>
+        /// <param name="value">オブジェクト</param>
+        /// <returns>名前</returns>
         public string FindByValue(T value)
         {
-            foreach (var item in Items)
+            var item = Items.Where(p => p == value).FirstOrDefault();
+
+            if (item == null)
             {
-                if (item == value)
-                {
-                    return item.Name;
-                }
+                return string.Empty;
             }
-
-            return string.Empty;
-        }
-
-        public IEnumerable<T> AllItem
-        {
-            get
+            else
             {
-                return Items;
+                return item.Name;
             }
         }
 
@@ -73,9 +84,9 @@ namespace KI.Foundation.Core
         /// </summary>
         public void Dispose()
         {
-            foreach (var v in Items)
+            foreach (var item in Items)
             {
-                v.Dispose();
+                item.Dispose();
             }
 
             Items.Clear();

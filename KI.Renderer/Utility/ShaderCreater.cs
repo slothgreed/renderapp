@@ -76,18 +76,18 @@ namespace KI.Asset
             if (CheckBufferEnable(renderObject.PositionBuffer) &&
                 CheckBufferEnable(renderObject.ColorBuffer))
             {
-                return Directory + @"GBuffer\GeneralPC.vert";
+                return Directory + @"GBuffer\GeneralPCN.vert";
             }
 
             if (CheckBufferEnable(renderObject.PositionBuffer) &&
                 CheckBufferEnable(renderObject.TexCoordBuffer))
             {
-                return Directory + @"GBuffer\GeneralPT.vert";
+                return Directory + @"GBuffer\GeneralPCN.vert";
             }
 
             if (CheckBufferEnable(renderObject.PositionBuffer))
             {
-                return Directory + @"GBuffer\GeneralP.vert";
+                return Directory + @"GBuffer\GeneralPCN.vert";
             }
 
             return null;
@@ -115,12 +115,6 @@ namespace KI.Asset
             }
 
             if (CheckBufferEnable(renderObject.PositionBuffer) &&
-                CheckBufferEnable(renderObject.ColorBuffer))
-            {
-                return Directory + @"GBuffer\GeneralPC.frag";
-            }
-
-            if (CheckBufferEnable(renderObject.PositionBuffer) &&
                 CheckBufferEnable(renderObject.NormalBuffer))
             {
                 return Directory + @"GBuffer\GeneralPN.frag";
@@ -130,6 +124,13 @@ namespace KI.Asset
             {
                 return Directory + @"GBuffer\GeneralPN.frag";
             }
+
+            if (CheckBufferEnable(renderObject.PositionBuffer) &&
+                CheckBufferEnable(renderObject.ColorBuffer))
+            {
+                return Directory + @"GBuffer\GeneralPCN.frag";
+            }
+
 
             return null;
         }

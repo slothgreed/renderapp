@@ -53,10 +53,5 @@ namespace KI.Foundation.Core
         /// ファイル名
         /// </summary>
         public string FileName { get; private set; }
-
-        public static string GetNameFromPath(string path)
-        {
-            return Path.GetFileName(path);
-        }
     }
 }
