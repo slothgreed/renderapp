@@ -54,6 +54,7 @@
             <MenuItem Header="Controller">
                 <MenuItem Header="Default" Command="{Binding Controller}" CommandParameter="{x:Static local:RAController.Default}"/>
                 <MenuItem Header="SelectPoint" Command="{Binding Controller}" CommandParameter="{x:Static local:RAController.SelectPoint}"/>
+                <MenuItem Header="SelectTriangle" Command="{Binding Controller}" CommandParameter="{x:Static local:RAController.SelectTriangle}"/>
                 <MenuItem Header="Dijkstra" Command="{Binding Controller}" CommandParameter="{x:Static local:RAController.Dijkstra}"/>
             </MenuItem>
 

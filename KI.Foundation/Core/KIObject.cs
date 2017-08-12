@@ -39,7 +39,7 @@ namespace KI.Foundation.Core
         }
 
         /// <summary>
-        /// 文字列
+        /// インスタンスを表す文字列
         /// </summary>
         /// <returns>文字列</returns>
         public override string ToString()

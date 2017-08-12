@@ -85,6 +85,7 @@ namespace RenderApp.ViewModel
         public void DeleteCommand()
         {
             var parent = ActiveNode.Parent;
+            ActiveNode.Model.Dispose();
             parent.Model.RemoveChild(ActiveNode.Model);
             parent.Children.Remove(ActiveNode);
         }

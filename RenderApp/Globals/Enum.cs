@@ -71,6 +71,7 @@
     {
         Default,
         Dijkstra,
-        SelectPoint
+        SelectPoint,
+        SelectTriangle
     }
 }

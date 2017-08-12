@@ -14,16 +14,16 @@ namespace RenderApp.Globals
     {
         public override void Initialize(int width, int height)
         {
-            RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Shadow));
+            //RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Shadow));
             RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer));
-            RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.IBL));
-            RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Deferred));
-            RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Selection));
-            RenderQueue.AddTechnique((OutputBuffer)RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output));
+            //RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.IBL));
+            //RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Deferred));
+            //RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Selection));
+            //RenderQueue.AddTechnique((OutputBuffer)RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output));
             OutputBuffer = new OutputBuffer();
             OutputTexture = RenderQueue.OutputTexture(RenderTechniqueType.GBuffer).ToArray()[(int)GBuffer.GBufferOutputType.Color];
 
-            var textures = RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
+            //var textures = RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
             //Bloom bloom = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Bloom) as Bloom;
             //bloom.uTarget = textures[3];
             //PostEffect.AddTechnique(bloom);
@@ -37,9 +37,9 @@ namespace RenderApp.Globals
             //ssao.uTarget = textures[0];
             //PostEffect.AddTechnique(ssao);
 
-            SSLIC sslic = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.SSLIC) as SSLIC;
-            sslic.uVector = textures[2];
-            PostEffect.AddTechnique(sslic);
+            //SSLIC sslic = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.SSLIC) as SSLIC;
+            //sslic.uVector = textures[2];
+            //PostEffect.AddTechnique(sslic);
         }
     }
 }

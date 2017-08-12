@@ -195,5 +195,13 @@ namespace KI.Renderer
                 IndexBuffer.SetData(Geometry.Index, EArrayType.IntArray);
             }
         }
+
+        public override void Dispose()
+        {
+            BufferFactory.Instance.RemoveByValue(PositionBuffer);
+            BufferFactory.Instance.RemoveByValue(ColorBuffer);
+            BufferFactory.Instance.RemoveByValue(TexCoordBuffer);
+            BufferFactory.Instance.RemoveByValue(NormalBuffer);
+        }
     }
 }

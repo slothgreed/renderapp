@@ -451,6 +451,13 @@ namespace KI.Foundation.Utility
         }
         #endregion
         #region [行列 * ベクトル]
+
+        /// <summary>
+        /// 行列の掛け算
+        /// </summary>
+        /// <param name="matrix">マトリクス</param>
+        /// <param name="vector">ベクトル</param>
+        /// <returns>ベクトル</returns>
         public static Vector3 Multiply(Matrix4 matrix, Vector3 vector)
         {
             Vector3 result = new Vector3();
@@ -459,16 +466,6 @@ namespace KI.Foundation.Utility
             result.Z = matrix.Column2[0] * vector.X + matrix.Column2[1] * vector.Y + matrix.Column2[2] * vector.Z + matrix.Column2[3];
 
             return Round(result);
-        }
-
-        public static Vector4 Multiply(Matrix4 matrix, Vector4 vector)
-        {
-            Vector4 result = new Vector4();
-            result.X = matrix.Column0[0] * vector.X + matrix.Column0[1] * vector.Y + matrix.Column0[2] * vector.Z + matrix.Column0[3] * vector.W;
-            result.Y = matrix.Column1[0] * vector.X + matrix.Column1[1] * vector.Y + matrix.Column1[2] * vector.Z + matrix.Column1[3] * vector.W;
-            result.Z = matrix.Column2[0] * vector.X + matrix.Column2[1] * vector.Y + matrix.Column2[2] * vector.Z + matrix.Column2[3] * vector.W;
-            result.W = matrix.Column3[0] * vector.X + matrix.Column3[1] * vector.Y + matrix.Column3[2] * vector.Z + matrix.Column3[3] * vector.W;
-            return result;
         }
 
         /// <summary>
@@ -484,13 +481,31 @@ namespace KI.Foundation.Utility
             result.Y = matrix.Column1[0] * vector.X + matrix.Column1[1] * vector.Y + matrix.Column1[2] * vector.Z;
             result.Z = matrix.Column2[0] * vector.X + matrix.Column2[1] * vector.Y + matrix.Column2[2] * vector.Z;
 
-            result.X = Round(result.X);
-            result.Y = Round(result.Y);
-            result.Z = Round(result.Z);
+            return Round(result);
+        }
 
+        /// <summary>
+        /// 行列の掛け算
+        /// </summary>
+        /// <param name="matrix">マトリクス</param>
+        /// <param name="vector">ベクトル</param>
+        /// <returns>ベクトル</returns>
+        public static Vector4 Multiply(Matrix4 matrix, Vector4 vector)
+        {
+            Vector4 result = new Vector4();
+            result.X = matrix.Column0[0] * vector.X + matrix.Column0[1] * vector.Y + matrix.Column0[2] * vector.Z + matrix.Column0[3] * vector.W;
+            result.Y = matrix.Column1[0] * vector.X + matrix.Column1[1] * vector.Y + matrix.Column1[2] * vector.Z + matrix.Column1[3] * vector.W;
+            result.Z = matrix.Column2[0] * vector.X + matrix.Column2[1] * vector.Y + matrix.Column2[2] * vector.Z + matrix.Column2[3] * vector.W;
+            result.W = matrix.Column3[0] * vector.X + matrix.Column3[1] * vector.Y + matrix.Column3[2] * vector.Z + matrix.Column3[3] * vector.W;
             return result;
         }
 
+        /// <summary>
+        /// 行列の掛け算
+        /// </summary>
+        /// <param name="matrix">マトリクス</param>
+        /// <param name="vector">ベクトル</param>
+        /// <returns>ベクトル</returns>
         public static Vector3 Multiply(Matrix3 matrix, Vector3 vector)
         {
             Vector3 result = new Vector3();
@@ -569,6 +584,12 @@ namespace KI.Foundation.Utility
             return up / low;
         }
 
+        /// <summary>
+        /// 平面と点の距離
+        /// </summary>
+        /// <param name="plane">平面</param>
+        /// <param name="point">点</param>
+        /// <returns>距離</returns>
         public static float DistancePlane(Vector4 plane, Vector3 point)
         {
             float[] p = new float[4];
@@ -658,6 +679,10 @@ namespace KI.Foundation.Utility
             far = UnProject(new Vector3(mouse.X, mouse.Y, 1.0f), cameraMatrix, projMatrix, viewport);
         }
 
+        /// <summary>
+        /// ランダムの色値
+        /// </summary>
+        /// <returns></returns>
         public static Vector3 RandomColor()
         {
             Vector3 color = new Vector3();

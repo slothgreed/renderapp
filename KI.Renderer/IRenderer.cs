@@ -73,7 +73,7 @@ namespace KI.Renderer
         {
             RenderQueue.SizeChanged(width, height);
             PostEffect.SizeChanged(width, height);
-            OutputBuffer.SizeChanged(width, height);
+            //OutputBuffer.SizeChanged(width, height);
         }
 
         /// <summary>

@@ -19,23 +19,15 @@ namespace KI.Gfx.GLUtil
         /// <summary>
         /// バッファの生成
         /// </summary>
-        public override void GenBufferCore()
+        protected override void GenBufferCore()
         {
             DeviceID = GL.GenSampler();
         }
 
         /// <summary>
-        /// バッファの解放
-        /// </summary>
-        public override void DisposeCore()
-        {
-            GL.DeleteSampler(DeviceID);
-        }
-
-        /// <summary>
         /// バッファのバインド
         /// </summary>
-        public override void BindBufferCore()
+        protected override void BindBufferCore()
         {
             GL.BindSampler(ActiveTexture, DeviceID);
         }
@@ -43,9 +35,17 @@ namespace KI.Gfx.GLUtil
         /// <summary>
         /// バッファのバインド解除
         /// </summary>
-        public override void UnBindBufferCore()
+        protected override void UnBindBufferCore()
         {
             GL.BindSampler(ActiveTexture, DeviceID);
+        }
+
+        /// <summary>
+        /// バッファの解放
+        /// </summary>
+        protected override void DisposeCore()
+        {
+            GL.DeleteSampler(DeviceID);
         }
     }
 }

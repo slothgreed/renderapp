@@ -38,7 +38,7 @@ namespace KI.Foundation.Core
         /// 一致key全削除
         /// </summary>
         /// <param name="name">名前</param>
-        public void RemoveByKey(string name)
+        public void RemoveByName(string name)
         {
             for (int i = 0; i < Items.Count; i++)
             {
@@ -58,6 +58,14 @@ namespace KI.Foundation.Core
         public T FindByName(string name)
         {
             return Items.Where(p => p.Name == name).FirstOrDefault();
+        }
+
+        public void RemoveByValue(T value)
+        {
+            if (this.Items.Contains(value))
+            {
+                Items.Remove(value);
+            }
         }
 
         /// <summary>

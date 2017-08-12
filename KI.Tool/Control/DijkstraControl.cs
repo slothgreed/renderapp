@@ -2,6 +2,7 @@
 using KI.Analyzer;
 using KI.Asset;
 using KI.Foundation.Core;
+using KI.Foundation.KIMath;
 using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
 using KI.Renderer;
@@ -17,15 +18,12 @@ namespace KI.Tool.Control
 
         public override bool Down(System.Windows.Forms.MouseEventArgs mouse)
         {
-            int vertex_Index = 0;
-            Vector3 tri1 = Vector3.Zero;
-            Vector3 tri2 = Vector3.Zero;
-            Vector3 tri3 = Vector3.Zero;
             RenderObject renderObject = null;
             if (mouse.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                var SelectObjectController = ControlManager.Instance.Controllers[ControlManager.CONTROL_MODE.SelectTriangle] as SelectTriangleControl;
-                if (SelectObjectController.PickTriangle(leftMouse.Click, ref renderObject, ref vertex_Index))
+                var SelectObjectController = ControlManager.Instance.Controllers[ControlManager.CONTROL_MODE.SelectPoint] as SelectPointControl;
+                var vertex_Index = 0;
+                if (SelectObjectController.PickPoint(leftMouse.Click, ref renderObject, ref vertex_Index))
                 {
                     dijkstra.SetGeometry(renderObject.Geometry.HalfEdge as HalfEdge);
 
@@ -38,21 +36,15 @@ namespace KI.Tool.Control
                         dijkstra.EndIndex = vertex_Index;
                     }
 
-                    tri1 = renderObject.Geometry.Position[vertex_Index];
-                    tri2 = renderObject.Geometry.Position[vertex_Index + 1];
-                    tri3 = renderObject.Geometry.Position[vertex_Index + 2];
+                    Vector3 tri1 = renderObject.Geometry.Position[vertex_Index];
 
-                    if (tri1 != Vector3.Zero && tri2 != Vector3.Zero && tri3 != Vector3.Zero)
+                    if (tri1 != Vector3.Zero)
                     {
-                        Vector3 normal = KICalc.Normal(tri1, tri2, tri3);
-                        tri1 += normal * 0.01f;
-                        tri2 += normal * 0.01f;
-                        tri3 += normal * 0.01f;
                         var picking = Global.RenderSystem.ActiveScene.FindObject("Picking") as RenderObject;
                         if (picking == null)
                         {
                             RenderObject triangle = RenderObjectFactory.Instance.CreateRenderObject("Picking");
-                            Geometry info = new Geometry("Picking", new List<Vector3>() { tri1, tri2, tri3 }, null, KICalc.RandomColor(), null, null, GeometryType.Triangle);
+                            Geometry info = new Geometry("Picking", new List<Vector3>() { tri1 }, null, KICalc.RandomColor(), null, null, GeometryType.Point);
                             triangle.SetGeometryInfo(info);
                             Global.RenderSystem.ActiveScene.AddObject(triangle);
                         }

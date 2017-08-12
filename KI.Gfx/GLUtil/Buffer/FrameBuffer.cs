@@ -19,7 +19,7 @@ namespace KI.Gfx.GLUtil
         /// <summary>
         /// バッファのバインド
         /// </summary>
-        public override void BindBufferCore()
+        protected override void BindBufferCore()
         {
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, DeviceID);
         }
@@ -27,7 +27,7 @@ namespace KI.Gfx.GLUtil
         /// <summary>
         /// バッファのバインド解除
         /// </summary>
-        public override void UnBindBufferCore()
+        protected override void UnBindBufferCore()
         {
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
         }
@@ -35,7 +35,7 @@ namespace KI.Gfx.GLUtil
         /// <summary>
         /// バッファの生成
         /// </summary>
-        public override void GenBufferCore()
+        protected override void GenBufferCore()
         {
             DeviceID = GL.GenFramebuffer();
         }
@@ -43,7 +43,7 @@ namespace KI.Gfx.GLUtil
         /// <summary>
         /// バッファの解放
         /// </summary>
-        public override void DisposeCore()
+        protected override void DisposeCore()
         {
             GL.DeleteFramebuffer(DeviceID);
         }

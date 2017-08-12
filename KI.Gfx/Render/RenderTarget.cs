@@ -89,8 +89,8 @@ namespace KI.Gfx.Render
         /// </summary>
         public override void Dispose()
         {
-            RenderBuffer.Dispose();
-            FrameBuffer.Dispose();
+            BufferFactory.Instance.RemoveByValue(RenderBuffer);
+            BufferFactory.Instance.RemoveByValue(FrameBuffer);
         }
 
         /// <summary>

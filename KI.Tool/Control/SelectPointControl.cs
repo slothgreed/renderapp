@@ -49,7 +49,7 @@ namespace KI.Tool.Control
             RenderObject renderObject = null;
             foreach (KINode geometryNode in Global.RenderSystem.ActiveScene.RootNode.AllChildren())
             {
-                if (geometryNode.KIObject is Geometry)
+                if (geometryNode.KIObject is RenderObject)
                 {
                     renderObject = geometryNode.KIObject as RenderObject;
                 }

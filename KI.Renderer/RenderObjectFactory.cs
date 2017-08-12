@@ -25,7 +25,9 @@ namespace KI.Renderer
         /// <returns>描画オブジェクト</returns>
         public RenderObject CreateRenderObject(string name)
         {
-            return new RenderObject(name);
+            var renderObject = new RenderObject(name);
+            AddItem(renderObject);
+            return renderObject;
         }
 
         /// <summary>
@@ -36,7 +38,9 @@ namespace KI.Renderer
         /// <returns>描画オブジェクト</returns>
         public RenderObject CreateRenderObject(string name, IGeometry primitive)
         {
-            return new RenderObject(name, primitive.Geometrys.First());
+            var renderObject = new RenderObject(name, primitive.Geometrys.First());
+            AddItem(renderObject);
+            return renderObject;
         }
 
         /// <summary>
@@ -50,7 +54,9 @@ namespace KI.Renderer
             var list = new List<RenderObject>();
             foreach (var info in primitive.Geometrys)
             {
-                list.Add(new RenderObject(name, info));
+                var renderObject = new RenderObject(name, info);
+                list.Add(renderObject);
+                AddItem(renderObject);
             }
 
             return list;

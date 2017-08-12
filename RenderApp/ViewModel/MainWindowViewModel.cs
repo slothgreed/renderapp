@@ -367,6 +367,9 @@ namespace RenderApp.ViewModel
                 case RAController.SelectPoint:
                     ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.SelectPoint;
                     break;
+                case RAController.SelectTriangle:
+                    ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.SelectTriangle;
+                    break;
             }
 
             OnPropertyChanged("ControlMode");

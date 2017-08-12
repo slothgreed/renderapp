@@ -88,7 +88,7 @@ namespace KI.Foundation.Tree
                 return;
             }
 
-            if (FindChild(child.Name) == null)
+            //if (FindChild(child.Name) == null)
             {
                 KINode node = new KINode(child);
                 node.Parent = this;
