@@ -16,7 +16,7 @@ namespace KI.Asset
         /// <summary>
         /// ハーフエッジ
         /// </summary>
-        private HalfEdge halfEdge;
+        private Polyhedron halfEdge;
 
         /// <summary>
         /// コンストラクタ
@@ -24,7 +24,7 @@ namespace KI.Asset
         /// <param name="filePath">ファイルパス</param>
         public HalfEdgeConverter(string filePath)
         {
-            halfEdge = new HalfEdge();
+            halfEdge = new Polyhedron();
             HalfEdgeIO.ReadFile(filePath, halfEdge);
             CreateGeometry();
         }
@@ -33,7 +33,7 @@ namespace KI.Asset
         /// コンストラクタ
         /// </summary>
         /// <param name="half">ハーフエッジ</param>
-        public HalfEdgeConverter(HalfEdge half)
+        public HalfEdgeConverter(Polyhedron half)
         {
             halfEdge = half;
             CreateGeometry();

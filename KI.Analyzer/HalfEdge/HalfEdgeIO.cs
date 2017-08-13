@@ -16,7 +16,7 @@ namespace KI.Analyzer
         /// <param name="inputFile">入力</param>
         /// <param name="halfEdge">ハーフエッジインスタンス</param>
         /// <returns>成功</returns>
-        public static bool ReadFile(string inputFile, HalfEdge halfEdge)
+        public static bool ReadFile(string inputFile, Polyhedron halfEdge)
         {
             if (!File.Exists(inputFile))
             {
@@ -50,7 +50,7 @@ namespace KI.Analyzer
         /// </summary>
         /// <param name="outputFile">出力ファイル</param>
         /// <param name="halfEdge">ハーフエッジインスタンス</param>
-        public static void WriteFile(string outputFile, HalfEdge halfEdge)
+        public static void WriteFile(string outputFile, Polyhedron halfEdge)
         {
             StreamWriter write = new StreamWriter(outputFile);
 
@@ -101,7 +101,7 @@ namespace KI.Analyzer
         /// </summary>
         /// <param name="fileData">ファイルデータ</param>
         /// <param name="halfEdge">ハーフエッジインスタンス</param>
-        private static void ReadHalfEdgeData(string[] fileData, HalfEdge halfEdge)
+        private static void ReadHalfEdgeData(string[] fileData, Polyhedron halfEdge)
         {
             int lineNumber = 0;
             string line;
@@ -130,7 +130,7 @@ namespace KI.Analyzer
                 {
                     int startIndex = int.Parse(lineInfos[1]);
                     int endIndex = int.Parse(lineInfos[2]);
-                    var edge = new Edge(halfEdge.Vertexs[startIndex], halfEdge.Vertexs[endIndex], halfEdge.Edges.Count);
+                    var edge = new HalfEdge(halfEdge.Vertexs[startIndex], halfEdge.Vertexs[endIndex], halfEdge.Edges.Count);
                     halfEdge.Edges.Add(edge);
                 }
 

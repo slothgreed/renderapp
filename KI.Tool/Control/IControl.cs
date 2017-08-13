@@ -90,23 +90,5 @@ namespace KI.Tool.Control
         {
             return true;
         }
-
-        /// <summary>
-        /// 実行
-        /// </summary>
-        /// <returns>成功</returns>
-        public virtual bool Execute()
-        {
-            return true;
-        }
-
-        /// <summary>
-        /// リセット
-        /// </summary>
-        /// <returns>成功</returns>
-        public virtual bool Reset()
-        {
-            return true;
-        }
     }
 }

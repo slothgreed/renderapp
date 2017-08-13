@@ -204,6 +204,5 @@ namespace KI.Asset
 
             return texcoord;
         }
-
     }
 }

@@ -161,8 +161,7 @@ namespace RenderApp.ViewModel
         {
             if (sender is KINode)
             {
-                KINode node = sender as KINode;
-                NodeItemViewModel nodeVM = Children.Where(p => p.DisplayName == node.Name).FirstOrDefault();
+                NodeItemViewModel nodeVM = Children.Where(p => p.DisplayName == e.NewItems.Name).FirstOrDefault();
                 if (nodeVM != null)
                 {
                     Children.Remove(nodeVM);

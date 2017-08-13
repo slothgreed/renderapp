@@ -34,7 +34,6 @@ namespace KI.Analyzer
             MakeOctree(position);
         }
 
-        
         #region [geteer method ]
         /// <summary>
         /// レンダリング位置

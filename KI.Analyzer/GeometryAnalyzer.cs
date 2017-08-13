@@ -15,13 +15,13 @@ namespace KI.Analyzer
     {
         public Dictionary<string, IAnalyzer> Storage = new Dictionary<string, IAnalyzer>();
 
-        private HalfEdge HalfEdge
+        private Polyhedron HalfEdge
         {
             get;
             set;    
         }
 
-        public GeometryAnalyzer(HalfEdge half)
+        public GeometryAnalyzer(Polyhedron half)
         {
             HalfEdge = half;
         }

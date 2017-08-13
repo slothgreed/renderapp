@@ -31,7 +31,7 @@ namespace KI.Analyzer
         /// <summary>
         /// temporaryEdgeforopposite
         /// </summary>
-        private List<Edge> aroundEdge = new List<Edge>();
+        private List<HalfEdge> aroundEdge = new List<HalfEdge>();
 
         /// <summary>
         /// パラメータ
@@ -84,7 +84,7 @@ namespace KI.Analyzer
         /// <summary>
         /// 周辺エッジ
         /// </summary>
-        public IEnumerable<Edge> AroundEdge
+        public IEnumerable<HalfEdge> AroundEdge
         {
             get
             {
@@ -232,7 +232,7 @@ namespace KI.Analyzer
         /// エッジのセッタ
         /// </summary>
         /// <param name="edge">エッジ</param>
-        public void AddEdge(Edge edge)
+        public void AddEdge(HalfEdge edge)
         {
             if (!aroundEdge.Contains(edge))
             {
@@ -244,7 +244,7 @@ namespace KI.Analyzer
         /// 周辺エッジの削除
         /// </summary>
         /// <param name="edge">エッジ</param>
-        public void RemoveAroundEdge(Edge edge)
+        public void RemoveAroundEdge(HalfEdge edge)
         {
             aroundEdge.Remove(edge);
         }

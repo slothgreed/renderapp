@@ -13,7 +13,7 @@ namespace KI.Analyzer
         /// <summary>
         /// エッジ
         /// </summary>
-        private List<Edge> edges = new List<Edge>();
+        private List<HalfEdge> edges = new List<HalfEdge>();
 
         /// <summary>
         /// 法線
@@ -46,7 +46,7 @@ namespace KI.Analyzer
         /// <param name="edge2">エッジ2</param>
         /// <param name="edge3">エッジ3</param>
         /// <param name="index">要素番号</param>
-        public Mesh(Edge edge1, Edge edge2, Edge edge3, int index = -1)
+        public Mesh(HalfEdge edge1, HalfEdge edge2, HalfEdge edge3, int index = -1)
         {
             SetEdge(edge1, edge2, edge3);
             Index = index;
@@ -149,7 +149,7 @@ namespace KI.Analyzer
         /// <summary>
         /// 周囲のエッジ
         /// </summary>
-        public IEnumerable<Edge> AroundEdge
+        public IEnumerable<HalfEdge> AroundEdge
         {
             get
             {
@@ -188,13 +188,13 @@ namespace KI.Analyzer
         /// <param name="edge1">エッジ1</param>
         /// <param name="edge2">エッジ2</param>
         /// <param name="edge3">エッジ3</param>
-        public void SetEdge(Edge edge1, Edge edge2, Edge edge3)
+        public void SetEdge(HalfEdge edge1, HalfEdge edge2, HalfEdge edge3)
         {
             edges.Add(edge1);
             edges.Add(edge2);
             edges.Add(edge3);
 
-            Edge.SetupNextBefore(edge1, edge2, edge3);
+            HalfEdge.SetupNextBefore(edge1, edge2, edge3);
             edge1.Mesh = this;
             edge2.Mesh = this;
             edge3.Mesh = this;
@@ -205,7 +205,7 @@ namespace KI.Analyzer
         /// </summary>
         /// <param name="index">番号</param>
         /// <returns>エッジ</returns>
-        public Edge GetEdge(int index)
+        public HalfEdge GetEdge(int index)
         {
             if (edges.Count < index)
             {

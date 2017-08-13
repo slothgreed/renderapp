@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using KI.Analyzer;
 using KI.Asset;
 using KI.Foundation.Core;
@@ -6,58 +7,89 @@ using KI.Foundation.KIMath;
 using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
 using KI.Renderer;
+using KI.Tool.Utility;
 using OpenTK;
 
 namespace KI.Tool.Control
 {
-    class DijkstraControl : IControl
+    /// <summary>
+    /// ダイクストラ用のコントローラ
+    /// </summary>
+    public class DijkstraControl : IControl
     {
+        /// <summary>
+        /// ダイクストラアルゴリズム
+        /// </summary>
         private DijkstraAlgorithm dijkstra;
 
-        private KIObject SelectGeometry;
+        /// <summary>
+        /// 形状の選択
+        /// </summary>
+        private RenderObject selectObject;
 
+        /// <summary>
+        /// 選択した形状の頂点1
+        /// </summary>
+        private int selectStartIndex = -1;
+
+        /// <summary>
+        /// 選択した形状の頂点2
+        /// </summary>
+        private int selectEndIndex = -1;
+
+        /// <summary>
+        /// マウス押下
+        /// </summary>
+        /// <param name="mouse">マウス</param>
+        /// <returns>成功</returns>
         public override bool Down(System.Windows.Forms.MouseEventArgs mouse)
         {
             RenderObject renderObject = null;
             if (mouse.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                var SelectObjectController = ControlManager.Instance.Controllers[ControlManager.CONTROL_MODE.SelectPoint] as SelectPointControl;
                 var vertex_Index = 0;
-                if (SelectObjectController.PickPoint(leftMouse.Click, ref renderObject, ref vertex_Index))
+                if (Selector.PickPoint(leftMouse.Click, ref renderObject, ref vertex_Index))
                 {
-                    dijkstra.SetGeometry(renderObject.Geometry.HalfEdge as HalfEdge);
-
-                    if (dijkstra.StartIndex == -1)
+                    // 初回
+                    if (selectObject == null)
                     {
-                        dijkstra.StartIndex = vertex_Index;
+                        selectObject = renderObject;
+                        selectStartIndex = vertex_Index;
+                    }
+                    else if (selectObject != renderObject)
+                    {
+                        Global.RenderSystem.ActiveScene.DeleteObject("Picking");
+                        // 前回と選択した形状が違う
+                        selectObject = renderObject;
+                        selectStartIndex = vertex_Index;
                     }
                     else
                     {
-                        dijkstra.EndIndex = vertex_Index;
-                    }
-
-                    Vector3 tri1 = renderObject.Geometry.Position[vertex_Index];
-
-                    if (tri1 != Vector3.Zero)
-                    {
-                        var picking = Global.RenderSystem.ActiveScene.FindObject("Picking") as RenderObject;
-                        if (picking == null)
+                        // 前回と選択した形状が同じ
+                        if (selectStartIndex == -1)
                         {
-                            RenderObject triangle = RenderObjectFactory.Instance.CreateRenderObject("Picking");
-                            Geometry info = new Geometry("Picking", new List<Vector3>() { tri1 }, null, KICalc.RandomColor(), null, null, GeometryType.Point);
-                            triangle.SetGeometryInfo(info);
-                            Global.RenderSystem.ActiveScene.AddObject(triangle);
-                        }
-                        else if (picking.Geometry.TriangleNum == 2)
-                        {
-                            picking.Dispose();
-                            //picking.AddVertex(new List<Vector3>() { tri1, tri2, tri3 }, KICalc.RandomColor());
+                            selectStartIndex = vertex_Index;
                         }
                         else
                         {
-                            //picking.AddVertex(new List<Vector3>() { tri1, tri2, tri3 }, KICalc.RandomColor());
-                            dijkstra.Execute();
+                            selectEndIndex = vertex_Index;
                         }
+                    }
+
+                    Vector3 vertex = renderObject.Geometry.Position[vertex_Index];
+                    RenderObject point = RenderObjectFactory.Instance.CreateRenderObject("Picking");
+                    Geometry geometry = new Geometry("Picking", new List<Vector3>() { vertex }, null, KICalc.RandomColor(), null, null, GeometryType.Point);
+                    point.SetGeometryInfo(geometry);
+                    point.ModelMatrix = selectObject.ModelMatrix;
+                    Global.RenderSystem.ActiveScene.AddObject(point);
+
+                    if (selectStartIndex != -1 && selectEndIndex != -1)
+                    {
+                        Execute();
+                        selectObject = null;
+                        selectStartIndex = -1;
+                        selectEndIndex = -1;
+                        Global.RenderSystem.ActiveScene.DeleteObject("Picking");
                     }
                 }
             }
@@ -65,40 +97,31 @@ namespace KI.Tool.Control
             return true;
         }
 
-        public override bool Binding()
+        /// <summary>
+        /// 実行
+        /// </summary>
+        /// <returns>成功</returns>
+        private bool Execute()
         {
-            dijkstra = new DijkstraAlgorithm();
+            dijkstra = new DijkstraAlgorithm(selectObject.Geometry.HalfEdge, selectStartIndex, selectEndIndex);
+            dijkstra.Execute();
+
+            RenderObject lines = RenderObjectFactory.Instance.CreateRenderObject("DijkstraLine");
+            Geometry geometry = new Geometry("DijkstraLine", dijkstra.DijkstraLine().ToList(), null, Vector3.UnitZ, null, null, GeometryType.Line);
+            lines.SetGeometryInfo(geometry);
+            lines.ModelMatrix = selectObject.ModelMatrix;
+            Global.RenderSystem.ActiveScene.AddObject(lines);
             return true;
-        }
-
-        public override bool Execute()
-        {
-            //if(Dijkstra.CanExecute())
-            //{
-            //    return Dijkstra.Execute();
-            //}
-            //return false;
-            return false;
-        }
-
-        public override bool Reset()
-        {
-            return dijkstra.Reset();
         }
 
         /// <summary>
         /// ピッキング終了処理
         /// </summary>
-        /// <returns></returns>
+        /// <returns>成功</returns>
         public override bool UnBinding()
         {
             Global.RenderSystem.ActiveScene.DeleteObject("Picking");
             return true;
-        }
-
-        private void SelectObject(KIObject select)
-        {
-            SelectGeometry = select;
         }
     }
 }

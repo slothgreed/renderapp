@@ -66,26 +66,6 @@ namespace KI.Gfx.GLUtil
         /// <summary>
         /// バッファの生成
         /// </summary>
-        protected abstract void GenBufferCore();
-
-        /// <summary>
-        /// バッファの解放
-        /// </summary>
-        protected abstract void DisposeCore();
-
-        /// <summary>
-        /// バッファのバインド
-        /// </summary>
-        protected abstract void BindBufferCore();
-
-        /// <summary>
-        /// バッファのバインド解除
-        /// </summary>
-        protected abstract void UnBindBufferCore();
-
-        /// <summary>
-        /// バッファの生成
-        /// </summary>
         public virtual void GenBuffer()
         {
             createNum++;
@@ -131,10 +111,30 @@ namespace KI.Gfx.GLUtil
             createNum--;
             DisposeCore();
             DeviceID = -1;
-            if(createNum < 0)
+            if (createNum < 0)
             {
                 Logger.Log(Logger.LogLevel.Error, "Dispose Error");
             }
         }
+
+        /// <summary>
+        /// バッファの生成
+        /// </summary>
+        protected abstract void GenBufferCore();
+
+        /// <summary>
+        /// バッファの解放
+        /// </summary>
+        protected abstract void DisposeCore();
+
+        /// <summary>
+        /// バッファのバインド
+        /// </summary>
+        protected abstract void BindBufferCore();
+
+        /// <summary>
+        /// バッファのバインド解除
+        /// </summary>
+        protected abstract void UnBindBufferCore();
     }
 }

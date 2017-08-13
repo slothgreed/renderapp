@@ -10,13 +10,13 @@ namespace KI.Analyzer
     /// <summary>
     /// ハーフエッジを編集するクラス
     /// </summary>
-    public class HalfEdgeEditor
+    public class PolyhedronEditor
     {
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="half">ハーフエッジ</param>
-        public HalfEdgeEditor(HalfEdge half)
+        public PolyhedronEditor(Polyhedron half)
         {
             HalfEdge = half;
         }
@@ -24,7 +24,7 @@ namespace KI.Analyzer
         /// <summary>
         /// ハーフエッジ
         /// </summary>
-        public HalfEdge HalfEdge { get; private set; }
+        public Polyhedron HalfEdge { get; private set; }
 
         #region [edit method]
         #region [vertex decimation]
@@ -32,7 +32,7 @@ namespace KI.Analyzer
         /// マージによる頂点削除削除後、頂点位置移動
         /// </summary>
         /// <param name="edge">削除するエッジ</param>
-        public void VertexDecimation(Edge edge)
+        public void VertexDecimation(HalfEdge edge)
         {
             Vertex delV = edge.Start;
             Vertex remV = edge.End;
@@ -41,7 +41,7 @@ namespace KI.Analyzer
             //削除するメッシュ
             var deleteMesh = new List<Mesh>();
             //削除するエッジ
-            var deleteEdge = new List<Edge>();
+            var deleteEdge = new List<HalfEdge>();
             //削除する頂点
             var deleteVertex = new List<Vertex>();
 
@@ -71,8 +71,8 @@ namespace KI.Analyzer
 
             //remV.Position = (remV.Position + delV.Position) / 2;
             //エッジ情報の切り替え
-            Edge.SetupOpposite(edge.Next.Opposite, edge.Before.Opposite);
-            Edge.SetupOpposite(edge.Opposite.Next.Opposite, edge.Opposite.Before.Opposite);
+            Analyzer.HalfEdge.SetupOpposite(edge.Next.Opposite, edge.Before.Opposite);
+            Analyzer.HalfEdge.SetupOpposite(edge.Opposite.Next.Opposite, edge.Opposite.Before.Opposite);
 
             DeleteMesh(deleteMesh);
             DeleteEdge(deleteEdge);
@@ -97,7 +97,7 @@ namespace KI.Analyzer
         }
         #endregion
 
-        public void EdgeSplit(Edge edge)
+        public void EdgeSplit(HalfEdge edge)
         {
             var opposite = edge.Opposite;
             var delMesh1 = edge.Mesh;
@@ -105,21 +105,21 @@ namespace KI.Analyzer
 
             var vertex = new Vertex((edge.Start.Position + edge.End.Position) / 2, HalfEdge.Vertexs.Count);
 
-            var right = new Edge(vertex, edge.End, HalfEdge.Edges.Count);
-            var oppoRight = new Edge(edge.End, vertex, HalfEdge.Edges.Count + 1);
-            Edge.SetupOpposite(right, oppoRight);
+            var right = new HalfEdge(vertex, edge.End, HalfEdge.Edges.Count);
+            var oppoRight = new HalfEdge(edge.End, vertex, HalfEdge.Edges.Count + 1);
+            Analyzer.HalfEdge.SetupOpposite(right, oppoRight);
 
-            var left = new Edge(edge.Start, vertex, HalfEdge.Edges.Count + 2);
-            var oppoLeft = new Edge(vertex, edge.Start, HalfEdge.Edges.Count + 3);
-            Edge.SetupOpposite(left, oppoLeft);
+            var left = new HalfEdge(edge.Start, vertex, HalfEdge.Edges.Count + 2);
+            var oppoLeft = new HalfEdge(vertex, edge.Start, HalfEdge.Edges.Count + 3);
+            Analyzer.HalfEdge.SetupOpposite(left, oppoLeft);
 
-            var up = new Edge(vertex, edge.Next.End, HalfEdge.Edges.Count + 4);
-            var oppoup = new Edge(edge.Next.End, vertex, HalfEdge.Edges.Count + 5);
-            Edge.SetupOpposite(up, oppoup);
+            var up = new HalfEdge(vertex, edge.Next.End, HalfEdge.Edges.Count + 4);
+            var oppoup = new HalfEdge(edge.Next.End, vertex, HalfEdge.Edges.Count + 5);
+            Analyzer.HalfEdge.SetupOpposite(up, oppoup);
 
-            var down = new Edge(vertex, opposite.Next.End, edge.Index);
-            var oppodown = new Edge(opposite.Next.End, vertex, opposite.Index);
-            Edge.SetupOpposite(down, oppodown);
+            var down = new HalfEdge(vertex, opposite.Next.End, edge.Index);
+            var oppodown = new HalfEdge(opposite.Next.End, vertex, opposite.Index);
+            Analyzer.HalfEdge.SetupOpposite(down, oppodown);
 
             var rightUp = new Mesh(right, edge.Next, oppoup, delMesh1.Index);
             var leftUp = new Mesh(up, edge.Before, left, delMesh2.Index);
@@ -138,13 +138,13 @@ namespace KI.Analyzer
             HalfEdge.Meshs.Add(rightDown);
             HalfEdge.Meshs.Add(leftDown);
 
-            DeleteEdge(new List<Edge>() { edge, opposite });
+            DeleteEdge(new List<HalfEdge>() { edge, opposite });
             DeleteMesh(new List<Mesh>() { delMesh1, delMesh2 });
 
             //HasError();
         }
 
-        public void EdgeFlips(Edge edge)
+        public void EdgeFlips(HalfEdge edge)
         {
             // delete edge & mesh
             var opposite = edge.Opposite;
@@ -154,18 +154,18 @@ namespace KI.Analyzer
             var startPos = edge.Next.End;
             var endPos = opposite.Next.End;
 
-            var createEdge = new Edge(startPos, endPos, edge.Index);
-            var createEdgeOpposite = new Edge(endPos, startPos, opposite.Index);
+            var createEdge = new HalfEdge(startPos, endPos, edge.Index);
+            var createEdgeOpposite = new HalfEdge(endPos, startPos, opposite.Index);
             var createMesh = new Mesh(createEdge, opposite.Before, edge.Next, delMesh1.Index);
             var createMeshOpposite = new Mesh(createEdgeOpposite, edge.Before, opposite.Next, delMesh2.Index);
-            Edge.SetupOpposite(createEdge, createEdgeOpposite);
+            Analyzer.HalfEdge.SetupOpposite(createEdge, createEdgeOpposite);
 
             HalfEdge.Meshs.Add(createMesh);
             HalfEdge.Meshs.Add(createMeshOpposite);
             HalfEdge.Edges.Add(createEdge);
             HalfEdge.Edges.Add(createEdgeOpposite);
 
-            DeleteEdge(new List<Edge>() { edge, opposite });
+            DeleteEdge(new List<HalfEdge>() { edge, opposite });
             DeleteMesh(new List<Mesh>() { delMesh1, delMesh2 });
 
             //HasError();
@@ -190,7 +190,7 @@ namespace KI.Analyzer
         /// エッジ削除
         /// </summary>
         /// <param name="deleteMesh">削除するエッジ</param>
-        private void DeleteEdge(List<Edge> deleteEdge)
+        private void DeleteEdge(List<HalfEdge> deleteEdge)
         {
             foreach (var edge in deleteEdge)
             {

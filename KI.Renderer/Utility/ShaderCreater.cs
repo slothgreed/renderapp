@@ -76,13 +76,13 @@ namespace KI.Asset
             if (CheckBufferEnable(renderObject.PositionBuffer) &&
                 CheckBufferEnable(renderObject.ColorBuffer))
             {
-                return Directory + @"GBuffer\GeneralPCN.vert";
+                return Directory + @"GBuffer\GeneralPC.vert";
             }
 
             if (CheckBufferEnable(renderObject.PositionBuffer) &&
                 CheckBufferEnable(renderObject.TexCoordBuffer))
             {
-                return Directory + @"GBuffer\GeneralPCN.vert";
+                return Directory + @"GBuffer\GeneralPNT.vert";
             }
 
             if (CheckBufferEnable(renderObject.PositionBuffer))
@@ -120,17 +120,16 @@ namespace KI.Asset
                 return Directory + @"GBuffer\GeneralPN.frag";
             }
 
+            if (CheckBufferEnable(renderObject.PositionBuffer) &&
+                CheckBufferEnable(renderObject.ColorBuffer))
+            {
+                return Directory + @"GBuffer\GeneralPC.frag";
+            }
+
             if (CheckBufferEnable(renderObject.PositionBuffer))
             {
                 return Directory + @"GBuffer\GeneralPN.frag";
             }
-
-            if (CheckBufferEnable(renderObject.PositionBuffer) &&
-                CheckBufferEnable(renderObject.ColorBuffer))
-            {
-                return Directory + @"GBuffer\GeneralPCN.frag";
-            }
-
 
             return null;
         }
@@ -207,18 +206,5 @@ namespace KI.Asset
 
             return buffer.Enable;
         }
-
-        //private Shader _defaultShader;
-        //public Shader DefaultShader
-        //{
-        //    get
-        //    {
-        //        if (_defaultShader == null)
-        //        {
-        //            _defaultShader = ShaderFactory.Instance.CreateShaderVF(ProjectInfo.ShaderDirectory + @"\GBuffer\ConstantGeometry");
-        //        }
-        //        return _defaultShader;
-        //    }
-        //}
     }
 }

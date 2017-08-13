@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
+using KI.Foundation.Utility;
 
 namespace KI.Tool.Control
 {
@@ -90,23 +91,43 @@ namespace KI.Tool.Control
             {
                 case MOUSE_STATE.DOWN:
                     cameraController.Down(mouse);
-                    Controllers[Mode].Down(mouse);
+                    if (!Controllers[Mode].Down(mouse))
+                    {
+                        Logger.Log(Logger.LogLevel.Warning, "Failed Command" + Mode.ToString());
+                    }
+
                     break;
                 case MOUSE_STATE.CLICK:
                     cameraController.Click(mouse);
-                    Controllers[Mode].Click(mouse);
+                    if (!Controllers[Mode].Click(mouse))
+                    {
+                        Logger.Log(Logger.LogLevel.Warning, "Failed Command" + Mode.ToString());
+                    }
+
                     break;
                 case MOUSE_STATE.MOVE:
                     cameraController.Move(mouse);
-                    Controllers[Mode].Move(mouse);
+                    if (!Controllers[Mode].Move(mouse))
+                    {
+                        Logger.Log(Logger.LogLevel.Warning, "Failed Command" + Mode.ToString());
+                    }
+
                     break;
                 case MOUSE_STATE.UP:
                     cameraController.Up(mouse);
-                    Controllers[Mode].Up(mouse);
+                    if (!Controllers[Mode].Up(mouse))
+                    {
+                        Logger.Log(Logger.LogLevel.Warning, "Failed Command" + Mode.ToString());
+                    }
+
                     break;
                 case MOUSE_STATE.WHEEL:
                     cameraController.Wheel(mouse);
-                    Controllers[Mode].Wheel(mouse);
+                    if (!Controllers[Mode].Wheel(mouse))
+                    {
+                        Logger.Log(Logger.LogLevel.Warning, "Failed Command" + Mode.ToString());
+                    }
+
                     break;
             }
         }

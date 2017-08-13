@@ -138,7 +138,6 @@ namespace KI.Renderer
             }
         }
 
-
         /// <summary>
         /// 指定したレンダーテクニックのテクスチャを取得
         /// </summary>
@@ -193,6 +192,5 @@ namespace KI.Renderer
         {
             TechniqueRemoved?.Invoke(this, new RenderQueueEventArgs(technique));
         }
-
     }
 }

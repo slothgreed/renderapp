@@ -60,9 +60,9 @@
     <Compile Include="Algorithm\VertexNormalAlgorithm.cs" />
     <Compile Include="Algorithm\VertexSaliencyAlgorithm.cs" />
     <Compile Include="GeometryAnalyzer.cs" />
-    <Compile Include="HalfEdge\Edge.cs" />
     <Compile Include="HalfEdge\HalfEdge.cs" />
-    <Compile Include="HalfEdge\HalfEdgeEditor.cs" />
+    <Compile Include="HalfEdge\Polyhedron.cs" />
+    <Compile Include="HalfEdge\PolyhedronEditor.cs" />
     <Compile Include="HalfEdge\HalfEdgeIO.cs" />
     <Compile Include="HalfEdge\Mesh.cs" />
     <Compile Include="HalfEdge\Vertex.cs" />

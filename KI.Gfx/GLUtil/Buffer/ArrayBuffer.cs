@@ -39,14 +39,6 @@ namespace KI.Gfx.GLUtil
         public EArrayType ArrayType { get; private set; }
 
         /// <summary>
-        /// バッファの生成
-        /// </summary>
-        protected override void GenBufferCore()
-        {
-            this.DeviceID = GL.GenBuffer();
-        }
-
-        /// <summary>
         /// バッファにデータの入力
         /// </summary>
         /// <param name="data">データ</param>
@@ -89,6 +81,14 @@ namespace KI.Gfx.GLUtil
             }
 
             UnBindBuffer();
+        }
+
+        /// <summary>
+        /// バッファの生成
+        /// </summary>
+        protected override void GenBufferCore()
+        {
+            this.DeviceID = GL.GenBuffer();
         }
 
         /// <summary>

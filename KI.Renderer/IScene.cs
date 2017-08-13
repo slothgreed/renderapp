@@ -82,7 +82,7 @@ namespace KI.Renderer
         /// <returns>オブジェクト</returns>
         public KIObject FindObject(string key)
         {
-            KINode obj = RootNode.FindChild(key);
+            KINode obj = RootNode.FindRecursiveChild(key);
             if (obj == null)
             {
                 return null;

@@ -48,6 +48,9 @@ namespace KI.Analyzer.Algorithm.MarchingCube
         public Dictionary<CubeVertex, float> Neight { get; set; }
     }
 
+    /// <summary>
+    /// マーチンキューブアルゴリズム
+    /// </summary>
     public class MarchingCubesAlgorithm
     {
         private float Size;

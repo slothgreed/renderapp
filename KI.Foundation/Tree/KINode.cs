@@ -69,12 +69,9 @@ namespace KI.Foundation.Tree
         /// <param name="node">ノード</param>
         public void AddChild(KINode node)
         {
-            if (FindChild(node.Name) == null)
-            {
-                node.Parent = this;
-                Children.Add(node);
-                OnNodeInserted(Children.Count, node);
-            }
+            node.Parent = this;
+            Children.Add(node);
+            OnNodeInserted(Children.Count, node);
         }
 
         /// <summary>
@@ -108,6 +105,7 @@ namespace KI.Foundation.Tree
         {
             if (Children.Contains(child))
             {
+                child.Dispose();
                 Children.Remove(child);
                 OnNodeRemoved(child);
             }
@@ -119,7 +117,7 @@ namespace KI.Foundation.Tree
         /// <param name="name">名前</param>
         public void RemoveChild(string name)
         {
-            var remove = FindChild(name);
+            var remove = Children.Where(p => p.Name == name).FirstOrDefault();
             if (remove != null)
             {
                 RemoveChild(remove);
@@ -132,47 +130,26 @@ namespace KI.Foundation.Tree
         /// <param name="name">名前</param>
         public void RemoveRecursiveChild(string name)
         {
-            foreach (var child in Children)
+            var removeList = new List<KINode>();
+            for (int i = 0; i < Children.Count; i++)
             {
-                var item = FindChild(name);
-                if (item == null)
+                var child = Children[i];
+                if (child.Children.Count > 0)
                 {
-                    child.FindRecursiveChild(name);
+                    child.RemoveRecursiveChild(name);
                 }
                 else
                 {
-                    RemoveChild(item);
-                    return;
+                    if (child.Name == name)
+                    {
+                        RemoveChild(child);
+                        i--;
+                    }
                 }
             }
         }
         #endregion
         #region [check child]
-
-        /// <summary>
-        /// 子供がいるか確認
-        /// </summary>
-        /// <param name="child">子供</param>
-        /// <returns>いるか</returns>
-        public bool ExistChild(KIObject child)
-        {
-            if (FindChild(child.Name) != null)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// ノードを取得
-        /// </summary>
-        /// <param name="name">名前</param>
-        /// <returns>ノード</returns>
-        public KINode FindChild(string name)
-        {
-            return Children.Where(p => p.Name == name).FirstOrDefault();
-        }
 
         /// <summary>
         /// ノードを取得
@@ -183,14 +160,16 @@ namespace KI.Foundation.Tree
         {
             foreach (var child in Children)
             {
-                var item = FindChild(name);
-                if (item == null)
+                if (child.Children.Count > 0)
                 {
                     child.FindRecursiveChild(name);
                 }
                 else
                 {
-                    return item;
+                    if (child.KIObject.Name == name)
+                    {
+                        return child;
+                    }
                 }
             }
 

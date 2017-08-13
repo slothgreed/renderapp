@@ -5,7 +5,7 @@ namespace KI.Analyzer.Algorithm
 {
     public class VertexCurvatureAlgorithm : IAnalyzer
     {
-        public VertexCurvatureAlgorithm(HalfEdge half)
+        public VertexCurvatureAlgorithm(Polyhedron half)
         {
             Calculate(half);
             ScalarParameter param = new ScalarParameter();
@@ -16,7 +16,7 @@ namespace KI.Analyzer.Algorithm
             Parameters.Add(VertexParam.MinCurvature, new ScalarParameter());
         }
 
-        private void Calculate(HalfEdge half)
+        private void Calculate(Polyhedron half)
         {
             foreach (var vertex in half.Vertexs)
             {
@@ -33,7 +33,7 @@ namespace KI.Analyzer.Algorithm
         private void SetVoronoiRagion(Vertex vertex)
         {
             float angle;
-            Edge opposite;
+            HalfEdge opposite;
             float alpha;
             float beta;
             float length;
@@ -76,7 +76,7 @@ namespace KI.Analyzer.Algorithm
         private void SetMeanCurvature(Vertex vertex)
         {
             float angle;
-            Edge opposite;
+            HalfEdge opposite;
             float alpha;
             float beta;
             float length;

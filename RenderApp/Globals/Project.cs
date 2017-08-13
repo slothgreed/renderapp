@@ -8,6 +8,9 @@ using KI.Gfx.KITexture;
 
 namespace RenderApp.Globals
 {
+    /// <summary>
+    /// プロジェクト
+    /// </summary>
     public class Project
     {
         /// <summary>
@@ -25,7 +28,10 @@ namespace RenderApp.Globals
         /// </summary>
         private KINode shaderProgramRoot;
 
-        public static Project ActiveProject = new Project();
+        /// <summary>
+        /// 現在のプロジェクト
+        /// </summary>
+        public static Project ActiveProject { get; set; } = new Project();
 
         /// <summary>
         /// コンストラクタ

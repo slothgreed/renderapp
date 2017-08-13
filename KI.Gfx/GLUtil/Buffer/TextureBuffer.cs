@@ -84,58 +84,6 @@ namespace KI.Gfx.GLUtil
         }
 
         /// <summary>
-        /// バッファの生成
-        /// </summary>
-        protected override void GenBufferCore()
-        {
-            DeviceID = GL.GenTexture();
-        }
-
-        public void SetData()
-        {
-        }
-
-        /// <summary>
-        /// バッファのバインド
-        /// </summary>
-        /// <param name="i"></param>
-        public void BindBuffer(int i)
-        {
-            GL.BindTexture(Targets[i], DeviceID);
-            if (NowBind)
-            {
-                Logger.Log(Logger.LogLevel.Warning, "Duplicate Bind Error");
-            }
-
-            NowBind = true;
-            Logger.GLLog(Logger.LogLevel.Error);
-        }
-
-        /// <summary>
-        /// バッファのバインド
-        /// </summary>
-        protected override void BindBufferCore()
-        {
-            GL.BindTexture(Target, DeviceID);
-        }
-
-        /// <summary>
-        /// バッファのバインド解除
-        /// </summary>
-        protected override void UnBindBufferCore()
-        {
-            GL.BindTexture(Target, 0);
-        }
-
-        /// <summary>
-        /// バッファの解放
-        /// </summary>
-        protected override void DisposeCore()
-        {
-            GL.DeleteTexture(DeviceID);
-        }
-
-        /// <summary>
         /// サイズ変更
         /// </summary>
         /// <param name="width">横</param>
@@ -161,6 +109,54 @@ namespace KI.Gfx.GLUtil
             Width = width;
             Height = height;
             UnBindBuffer();
+        }
+
+        /// <summary>
+        /// バッファのバインド
+        /// </summary>
+        /// <param name="i"></param>
+        public void BindBuffer(int i)
+        {
+            GL.BindTexture(Targets[i], DeviceID);
+            if (NowBind)
+            {
+                Logger.Log(Logger.LogLevel.Warning, "Duplicate Bind Error");
+            }
+
+            NowBind = true;
+            Logger.GLLog(Logger.LogLevel.Error);
+        }
+
+        /// <summary>
+        /// バッファの生成
+        /// </summary>
+        protected override void GenBufferCore()
+        {
+            DeviceID = GL.GenTexture();
+        }
+
+        /// <summary>
+        /// バッファのバインド
+        /// </summary>
+        protected override void BindBufferCore()
+        {
+            GL.BindTexture(Target, DeviceID);
+        }
+
+        /// <summary>
+        /// バッファのバインド解除
+        /// </summary>
+        protected override void UnBindBufferCore()
+        {
+            GL.BindTexture(Target, 0);
+        }
+
+        /// <summary>
+        /// バッファの解放
+        /// </summary>
+        protected override void DisposeCore()
+        {
+            GL.DeleteTexture(DeviceID);
         }
 
         /// <summary>

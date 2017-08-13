@@ -67,6 +67,7 @@
     <Compile Include="Control\SelectPointControl.cs" />
     <Compile Include="Control\SelectTriangleControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\Selector.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KI.Analyzer\KI.Analyzer.csproj">

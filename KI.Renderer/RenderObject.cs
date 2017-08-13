@@ -106,6 +106,17 @@ namespace KI.Renderer
         }
 
         /// <summary>
+        /// 解放処理
+        /// </summary>
+        public override void Dispose()
+        {
+            BufferFactory.Instance.RemoveByValue(PositionBuffer);
+            BufferFactory.Instance.RemoveByValue(ColorBuffer);
+            BufferFactory.Instance.RemoveByValue(TexCoordBuffer);
+            BufferFactory.Instance.RemoveByValue(NormalBuffer);
+        }
+
+        /// <summary>
         /// 初期化
         /// </summary>
         private void Initialize()
@@ -194,14 +205,6 @@ namespace KI.Renderer
 
                 IndexBuffer.SetData(Geometry.Index, EArrayType.IntArray);
             }
-        }
-
-        public override void Dispose()
-        {
-            BufferFactory.Instance.RemoveByValue(PositionBuffer);
-            BufferFactory.Instance.RemoveByValue(ColorBuffer);
-            BufferFactory.Instance.RemoveByValue(TexCoordBuffer);
-            BufferFactory.Instance.RemoveByValue(NormalBuffer);
         }
     }
 }

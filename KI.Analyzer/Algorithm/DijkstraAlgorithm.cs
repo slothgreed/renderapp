@@ -1,113 +1,249 @@
-﻿using KI.Foundation.Command;
+﻿using System.Collections.Generic;
+using System.Linq;
+using OpenTK;
 
 namespace KI.Analyzer
 {
-    public struct Node
+    /// <summary>
+    /// ノード
+    /// </summary>
+    public class Node
     {
-        public bool Done;
-        public float Cost;
-        public Vertex Vertex;
-
+        /// <summary>
+        /// ノード
+        /// </summary>
+        /// <param name="done">計算したか</param>
+        /// <param name="cost">重み</param>
+        /// <param name="vertex">頂点座標</param>
         public Node(bool done, int cost, Vertex vertex)
         {
             Done = done;
             Cost = cost;
             Vertex = vertex;
         }
+
+        /// <summary>
+        /// 計算したか
+        /// </summary>
+        public bool Done { get; set; }
+
+        /// <summary>
+        /// 重み
+        /// </summary>
+        public float Cost { get; set; }
+
+        /// <summary>
+        /// 頂点座標
+        /// </summary>
+        public Vertex Vertex { get; private set; }
     }
 
-    public class DijkstraAlgorithm : ICommand
+    /// <summary>
+    /// ダイクストラアルゴリズム
+    /// </summary>
+    public class DijkstraAlgorithm
     {
-        public int StartIndex { get; set; }
+        /// <summary>
+        /// ハーフエッジ
+        /// </summary>
+        private Polyhedron halfEdge;
 
-        public int EndIndex { get; set; }
+        /// <summary>
+        /// 開始位置
+        /// </summary>
+        private int startIndex;
 
-        public float Distance { get; set; }
+        /// <summary>
+        /// 終了位置
+        /// </summary>
+        private int endIndex;
 
-        private HalfEdge halfEdge = null;
+        /// <summary>
+        /// ノード配列
+        /// </summary>
+        private Node[] nodes;
 
-        public DijkstraAlgorithm()
+        /// <summary>
+        /// 線リスト
+        /// </summary>
+        public List<Vector3> Lines;
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="half">ハーフエッジ</param>
+        /// <param name="start">開始位置</param>
+        /// <param name="end">終了位置</param>
+        public DijkstraAlgorithm(Polyhedron half, int start, int end)
         {
-            Reset();
+            halfEdge = half;
+            startIndex = start;
+            endIndex = end; 
         }
 
-        public CommandResult CanExecute(string commandArg = null)
+        /// <summary>
+        /// 総和距離
+        /// </summary>
+        public float Distance { get; private set; }
+
+        /// <summary>
+        /// 実行
+        /// </summary>
+        /// <returns>成功</returns>
+        public bool Execute()
         {
-            if (StartIndex < 0 ||
-                EndIndex < 0 ||
-                StartIndex > halfEdge.Vertexs.Count ||
-                EndIndex > halfEdge.Vertexs.Count)
+            if (!CanExecute())
             {
-                return CommandResult.Failed;
+                return false;
             }
 
-            return CommandResult.Success;
-        }
+            Initialize();
+            List<Node> noConfirms = new List<Node>();
+            CalcCost(nodes[startIndex], noConfirms);
 
-        public void SetGeometry(HalfEdge halfEdge)
-        {
-            this.halfEdge = halfEdge;
-        }
-
-        public CommandResult Execute(string commandArg = null)
-        {
-            if (halfEdge == null)
-            {
-                return CommandResult.Failed;
-            }
-
-            DistanceDijkstra(StartIndex, EndIndex);
-            return CommandResult.Success;
-        }
-
-        public bool Reset()
-        {
-            StartIndex = -1;
-            EndIndex = -1;
-            Distance = -1;
             return true;
         }
 
-        public CommandResult Undo(string commandArg = null)
+        /// <summary>
+        /// ダイクストラの初期化処理
+        /// </summary>
+        private void Initialize()
         {
-            return CommandResult.Failed;
-        }
+            nodes = new Node[halfEdge.Vertexs.Count];
 
-        private bool DistanceDijkstra(int index1, int index2)
-        {
-            Node[] nodeArray = new Node[halfEdge.Vertexs.Count];
-
-            for (int i = 0; i < nodeArray.Length; i++)
+            for (int i = 0; i < nodes.Length; i++)
             {
-                nodeArray[i] = new Node(false, -1, halfEdge.Vertexs[i]);
+                nodes[i] = new Node(false, -1, halfEdge.Vertexs[i]);
             }
 
-            CalcDijkstra(nodeArray, index1, index2);
-            return true;
-        }
-
-        private void CalcDijkstra(Node[] nodes, int start, int end)
-        {
             //initialize
-            Node current = nodes[start];
-            current.Done = true;
-            current.Cost = 0;
+            nodes[startIndex].Cost = 0;
+        }
 
-            //calc start
-            foreach (var aroundVertex in nodes[start].Vertex.AroundVertex)
+        /// <summary>
+        /// 確定ノードの探索
+        /// </summary>
+        /// <param name="candidate">候補</param>
+        /// <returns>確定ノード</returns>
+        private Node FindConfirmNode(IEnumerable<Node> candidate)
+        {
+            float minValue = float.MaxValue;
+            Node node = null;
+            foreach (var item in candidate.Where(p => !p.Done))
             {
-                Node around = nodes[aroundVertex.Index];
-
-                if (around.Done)
+                if (minValue > item.Cost)
                 {
-                    float newCost = around.Cost;
-                    newCost += (current.Vertex - around.Vertex).Length;
-                    if (around.Cost > newCost)
-                    {
-                        around.Cost = newCost;
-                    }
+                    minValue = item.Cost;
+                    node = item;
                 }
             }
+
+            return node;
+        }
+
+        /// <summary>
+        /// コストの計算
+        /// </summary>
+        /// <param name="current">コストを計算するノード</param>
+        /// <param name="noConfirm">計算後の未確定ノード</param>
+        private void CalcCost(Node current, List<Node> noConfirm)
+        {
+            while (true)
+            {
+                if (current == null)
+                {
+                    return;
+                }
+
+                //calc start
+                current.Done = true;
+
+                if (current == nodes[endIndex])
+                {
+                    return;
+                }
+
+                float minValue = float.MaxValue;
+                Node minNode = null;
+
+                foreach (var aroundVertex in current.Vertex.AroundVertex)
+                {
+                    Node around = nodes[aroundVertex.Index];
+
+                    if (!around.Done)
+                    {
+                        float newCost = 0;
+                        newCost = current.Cost + (current.Vertex - around.Vertex).Length;
+
+                        if (around.Cost > newCost || around.Cost == -1)
+                        {
+                            around.Cost = newCost;
+
+                            if (minValue > newCost)
+                            {
+                                minValue = newCost;
+                                minNode = nodes[aroundVertex.Index];
+                            }
+                        }
+
+                        if (!noConfirm.Contains(around))
+                        {
+                            noConfirm.Add(around);
+                        }
+                    }
+                }
+
+                current = FindConfirmNode(noConfirm);
+            }
+        }
+
+        /// <summary>
+        /// ダイクストラの算出結果
+        /// </summary>
+        public IEnumerable<Vector3> DijkstraLine()
+        {
+            List<Vector3> line = new List<Vector3>();
+
+            Node current = nodes[endIndex];
+
+            while (current != nodes[startIndex])
+            {
+                var minCost = float.MaxValue;
+                Node minNode = null;
+                foreach (var vertex in current.Vertex.AroundVertex)
+                {
+                    if (minCost > nodes[vertex.Index].Cost && nodes[vertex.Index].Cost != -1)
+                    {
+                        minCost = nodes[vertex.Index].Cost;
+                        minNode = nodes[vertex.Index];
+                    }
+                }
+
+                line.Add(current.Vertex.Position);
+                line.Add(minNode.Vertex.Position);
+
+                current = minNode;
+            }
+
+            return line;
+        }
+
+        /// <summary>
+        /// 実行できるか
+        /// </summary>
+        /// <returns>できる</returns>
+        private bool CanExecute()
+        {
+            if (startIndex < 0 ||
+                endIndex < 0 ||
+                startIndex > halfEdge.Vertexs.Count ||
+                endIndex > halfEdge.Vertexs.Count ||
+                halfEdge == null)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

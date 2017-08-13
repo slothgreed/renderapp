@@ -17,6 +17,15 @@ namespace KI.Gfx.GLUtil
         }
 
         /// <summary>
+        /// オブジェクトを表す文字列
+        /// </summary>
+        /// <returns>文字列</returns>
+        public override string ToString()
+        {
+            return this.Name;
+        }
+
+        /// <summary>
         /// バッファのバインド
         /// </summary>
         protected override void BindBufferCore()
@@ -46,15 +55,6 @@ namespace KI.Gfx.GLUtil
         protected override void DisposeCore()
         {
             GL.DeleteFramebuffer(DeviceID);
-        }
-
-        /// <summary>
-        /// オブジェクトを表す文字列
-        /// </summary>
-        /// <returns>文字列</returns>
-        public override string ToString()
-        {
-            return this.Name;
         }
     }
 }

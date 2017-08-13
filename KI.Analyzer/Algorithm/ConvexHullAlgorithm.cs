@@ -158,9 +158,9 @@ namespace KI.Analyzer.Algorithm
         /// </summary>
         /// <param name="visibleMesh">可視面</param>
         /// <returns>境界エッジ</returns>
-        private List<Edge> FindBoundaryEdge(List<Mesh> visibleMesh)
+        private List<HalfEdge> FindBoundaryEdge(List<Mesh> visibleMesh)
         {
-            var boundaryList = new List<Edge>();
+            var boundaryList = new List<HalfEdge>();
             foreach (var mesh in visibleMesh)
             {
                 foreach (var edge in mesh.AroundEdge)
@@ -174,7 +174,7 @@ namespace KI.Analyzer.Algorithm
             }
 
             //select sort.
-            Edge tmpEdge = null;
+            HalfEdge tmpEdge = null;
             for (int i = 0; i < boundaryList.Count; i++)
             {
                 for (int j = i + 1; j < boundaryList.Count; j++)
@@ -205,7 +205,7 @@ namespace KI.Analyzer.Algorithm
         /// </summary>
         /// <param name="boundaryList">境界リスト</param>
         /// <param name="vertex">頂点</param>
-        private void CreateMesh(List<Edge> boundaryList, Vertex vertex)
+        private void CreateMesh(List<HalfEdge> boundaryList, Vertex vertex)
         {
             //反対エッジ作成用に
             var newMesh = new List<Mesh>();
@@ -213,8 +213,8 @@ namespace KI.Analyzer.Algorithm
             //境界エッジからポリゴンの作成
             foreach (var boundary in boundaryList)
             {
-                Edge edge1 = new Edge(vertex, boundary.Start);
-                Edge edge2 = new Edge(boundary.End, vertex);
+                HalfEdge edge1 = new HalfEdge(vertex, boundary.Start);
+                HalfEdge edge2 = new HalfEdge(boundary.End, vertex);
                 Mesh mesh = new Mesh(edge1, boundary, edge2);
                 mesh.CalcFlag = false;
                 newMesh.Add(mesh);
@@ -226,20 +226,20 @@ namespace KI.Analyzer.Algorithm
             {
                 if (i == 0)
                 {
-                    Edge.SetupOpposite(newMesh[newMesh.Count - 1].GetEdge(2), newMesh[i].GetEdge(0));
-                    Edge.SetupOpposite(newMesh[i].GetEdge(2), newMesh[i + 1].GetEdge(0));
+                    HalfEdge.SetupOpposite(newMesh[newMesh.Count - 1].GetEdge(2), newMesh[i].GetEdge(0));
+                    HalfEdge.SetupOpposite(newMesh[i].GetEdge(2), newMesh[i + 1].GetEdge(0));
                     continue;
                 }
 
                 if (i == newMesh.Count - 1)
                 {
-                    Edge.SetupOpposite(newMesh[i - 1].GetEdge(2), newMesh[i].GetEdge(0));
-                    Edge.SetupOpposite(newMesh[i].GetEdge(2), newMesh[0].GetEdge(0));
+                    HalfEdge.SetupOpposite(newMesh[i - 1].GetEdge(2), newMesh[i].GetEdge(0));
+                    HalfEdge.SetupOpposite(newMesh[i].GetEdge(2), newMesh[0].GetEdge(0));
                     continue;
                 }
 
-                Edge.SetupOpposite(newMesh[i - 1].GetEdge(2), newMesh[i].GetEdge(0));
-                Edge.SetupOpposite(newMesh[i].GetEdge(2), newMesh[i + 1].GetEdge(0));
+                HalfEdge.SetupOpposite(newMesh[i - 1].GetEdge(2), newMesh[i].GetEdge(0));
+                HalfEdge.SetupOpposite(newMesh[i].GetEdge(2), newMesh[i + 1].GetEdge(0));
             }
         }
 
@@ -307,17 +307,17 @@ namespace KI.Analyzer.Algorithm
             Vertex vertex1 = new Vertex(min);
             Vertex vertex2 = new Vertex(max);
             Vertex vertex3 = new Vertex(xyMinzMax);
-            Edge edge1 = new Edge(vertex1, vertex2);
-            Edge edge2 = new Edge(vertex2, vertex3);
-            Edge edge3 = new Edge(vertex3, vertex1);
+            HalfEdge edge1 = new HalfEdge(vertex1, vertex2);
+            HalfEdge edge2 = new HalfEdge(vertex2, vertex3);
+            HalfEdge edge3 = new HalfEdge(vertex3, vertex1);
 
-            Edge oppo1 = new Edge(vertex2, vertex1);
-            Edge oppo2 = new Edge(vertex1, vertex3);
-            Edge oppo3 = new Edge(vertex3, vertex2);
+            HalfEdge oppo1 = new HalfEdge(vertex2, vertex1);
+            HalfEdge oppo2 = new HalfEdge(vertex1, vertex3);
+            HalfEdge oppo3 = new HalfEdge(vertex3, vertex2);
 
-            Edge.SetupOpposite(edge1, oppo1);
-            Edge.SetupOpposite(edge2, oppo3);
-            Edge.SetupOpposite(edge3, oppo2);
+            HalfEdge.SetupOpposite(edge1, oppo1);
+            HalfEdge.SetupOpposite(edge2, oppo3);
+            HalfEdge.SetupOpposite(edge3, oppo2);
 
             var mesh1 = new Mesh(edge1, edge2, edge3);
             var mesh2 = new Mesh(oppo1, oppo2, oppo3);

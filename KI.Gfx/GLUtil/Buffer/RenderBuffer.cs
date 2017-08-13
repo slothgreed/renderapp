@@ -21,30 +21,6 @@ namespace KI.Gfx.GLUtil
         }
 
         /// <summary>
-        /// バッファの生成
-        /// </summary>
-        protected override void GenBufferCore()
-        {
-            DeviceID = GL.GenRenderbuffer();
-        }
-
-        /// <summary>
-        /// バッファのバインド
-        /// </summary>
-        protected override void BindBufferCore()
-        {
-            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, DeviceID);
-        }
-
-        /// <summary>
-        /// バッファのバインド解除
-        /// </summary>
-        protected override void UnBindBufferCore()
-        {
-            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, 0);
-        }
-
-        /// <summary>
         /// ストレージの設定
         /// </summary>
         /// <param name="storage">ストレージ</param>
@@ -75,6 +51,30 @@ namespace KI.Gfx.GLUtil
         protected override void DisposeCore()
         {
             GL.DeleteRenderbuffer(DeviceID);
+        }
+
+        /// <summary>
+        /// バッファの生成
+        /// </summary>
+        protected override void GenBufferCore()
+        {
+            DeviceID = GL.GenRenderbuffer();
+        }
+
+        /// <summary>
+        /// バッファのバインド
+        /// </summary>
+        protected override void BindBufferCore()
+        {
+            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, DeviceID);
+        }
+
+        /// <summary>
+        /// バッファのバインド解除
+        /// </summary>
+        protected override void UnBindBufferCore()
+        {
+            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, 0);
         }
     }
 }
