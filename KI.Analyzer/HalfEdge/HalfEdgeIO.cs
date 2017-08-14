@@ -16,7 +16,7 @@ namespace KI.Analyzer
         /// <param name="inputFile">入力</param>
         /// <param name="halfEdge">ハーフエッジインスタンス</param>
         /// <returns>成功</returns>
-        public static bool ReadFile(string inputFile, Polyhedron halfEdge)
+        public static bool ReadFile(string inputFile, HalfEdgeDS halfEdge)
         {
             if (!File.Exists(inputFile))
             {
@@ -50,7 +50,7 @@ namespace KI.Analyzer
         /// </summary>
         /// <param name="outputFile">出力ファイル</param>
         /// <param name="halfEdge">ハーフエッジインスタンス</param>
-        public static void WriteFile(string outputFile, Polyhedron halfEdge)
+        public static void WriteFile(string outputFile, HalfEdgeDS halfEdge)
         {
             StreamWriter write = new StreamWriter(outputFile);
 
@@ -101,7 +101,7 @@ namespace KI.Analyzer
         /// </summary>
         /// <param name="fileData">ファイルデータ</param>
         /// <param name="halfEdge">ハーフエッジインスタンス</param>
-        private static void ReadHalfEdgeData(string[] fileData, Polyhedron halfEdge)
+        private static void ReadHalfEdgeData(string[] fileData, HalfEdgeDS halfEdge)
         {
             int lineNumber = 0;
             string line;

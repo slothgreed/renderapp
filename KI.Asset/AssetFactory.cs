@@ -119,7 +119,7 @@ namespace KI.Asset
         /// <returns>ハーフエッジ</returns>
         public IGeometry CreateHalfEdge(List<Vector3> position, List<int> index)
         {
-            return new HalfEdgeConverter(new Polyhedron(position, index));
+            return new HalfEdgeConverter(new HalfEdgeDS(position, index));
         }
     }
 }

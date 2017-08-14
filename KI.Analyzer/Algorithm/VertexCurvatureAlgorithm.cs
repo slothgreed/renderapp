@@ -5,21 +5,22 @@ namespace KI.Analyzer.Algorithm
 {
     public class VertexCurvatureAlgorithm : IAnalyzer
     {
-        public VertexCurvatureAlgorithm(Polyhedron half)
+        public VertexCurvatureAlgorithm(HalfEdgeDS half)
         {
-            Calculate(half);
             ScalarParameter param = new ScalarParameter();
             Parameters.Add(VertexParam.Voronoi, new ScalarParameter());
             Parameters.Add(VertexParam.GaussCurvature, new ScalarParameter());
             Parameters.Add(VertexParam.MeanCurvature, new ScalarParameter());
             Parameters.Add(VertexParam.MaxCurvature, new ScalarParameter());
             Parameters.Add(VertexParam.MinCurvature, new ScalarParameter());
+            Calculate(half);
         }
 
-        private void Calculate(Polyhedron half)
+        private void Calculate(HalfEdgeDS half)
         {
             foreach (var vertex in half.Vertexs)
             {
+                SetVoronoiRagion(vertex);
                 SetGaussianParameter(vertex);
                 SetMeanCurvature(vertex);
                 SetMaxMinCurvature(vertex);
@@ -91,8 +92,8 @@ namespace KI.Analyzer.Algorithm
             }
 
             float value = (angle / (float)vertex.GetParameter(VertexParam.Voronoi) * 2);
-            Parameters[VertexParam.Voronoi].AddValue(value);
-            vertex.AddParameter(VertexParam.Voronoi, value);
+            Parameters[VertexParam.MeanCurvature].AddValue(value);
+            vertex.AddParameter(VertexParam.MeanCurvature, value);
         }
 
         /// <summary>

@@ -16,7 +16,7 @@ namespace KI.Analyzer
         /// コンストラクタ
         /// </summary>
         /// <param name="half">ハーフエッジ</param>
-        public PolyhedronEditor(Polyhedron half)
+        public PolyhedronEditor(HalfEdgeDS half)
         {
             HalfEdge = half;
         }
@@ -24,7 +24,7 @@ namespace KI.Analyzer
         /// <summary>
         /// ハーフエッジ
         /// </summary>
-        public Polyhedron HalfEdge { get; private set; }
+        public HalfEdgeDS HalfEdge { get; private set; }
 
         #region [edit method]
         #region [vertex decimation]

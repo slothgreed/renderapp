@@ -46,7 +46,7 @@ namespace KI.Analyzer
         /// <summary>
         /// ハーフエッジ
         /// </summary>
-        private Polyhedron halfEdge;
+        private HalfEdgeDS halfEdge;
 
         /// <summary>
         /// 開始位置
@@ -74,7 +74,7 @@ namespace KI.Analyzer
         /// <param name="half">ハーフエッジ</param>
         /// <param name="start">開始位置</param>
         /// <param name="end">終了位置</param>
-        public DijkstraAlgorithm(Polyhedron half, int start, int end)
+        public DijkstraAlgorithm(HalfEdgeDS half, int start, int end)
         {
             halfEdge = half;
             startIndex = start;

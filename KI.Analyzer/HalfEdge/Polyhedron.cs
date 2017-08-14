@@ -7,26 +7,25 @@ namespace KI.Analyzer
     /// <summary>
     /// ポリへドロン
     /// </summary>
-    public class Polyhedron
+    public class HalfEdgeDS
     {
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public Polyhedron()
+        public HalfEdgeDS()
         {
         }
 
         public List<Mesh> Meshs { get; set; } = new List<Mesh>();
         public List<HalfEdge> Edges { get; set; } = new List<HalfEdge>();
         public List<Vertex> Vertexs { get; set; } = new List<Vertex>();
-        public List<int> Indexs { get; set; } = new List<int>();
 
         /// <summary>
         /// メッシュのインデックスと、頂点を受け取る
         /// </summary>
         /// <param name="position">頂点座標リスト</param>
         /// <param name="polyIndex">「三角形を構成する頂点番号を格納したVector3」のリスト</param>
-        public Polyhedron(List<Vector3> position, List<int> polyIndex = null)
+        public HalfEdgeDS(List<Vector3> position, List<int> polyIndex = null)
         {
             Initialize(position, polyIndex);
         }
@@ -97,7 +96,6 @@ namespace KI.Analyzer
             if (poly_Index == null || poly_Index.Count == 0)
             {
                 CreateHalfEdgeData(position);
-                CreateVertexIndex();
             }
             else
             {
@@ -122,46 +120,32 @@ namespace KI.Analyzer
         /// <summary>
         /// ハーフエッジ用のリストに頂点を格納
         /// </summary>
-        /// <param name="vertex_List"></param>
+        /// <param name="vertexList"></param>
         /// <param name="checkOverlap">重複チェック</param>
-        private void MakeVertexListByVertexIndex(List<Vector3> vertex_List)
+        private void MakeVertexListByVertexIndex(List<Vector3> vertexList)
         {
-            for (int i = 0; i < vertex_List.Count; i++)
+            for (int i = 0; i < vertexList.Count; i++)
             {
-                Vertex vertex = new Vertex(vertex_List[i], i);
+                Vertex vertex = new Vertex(vertexList[i], i);
                 Vertexs.Add(vertex);
-            }
-        }
-
-        /// <summary>
-        /// 頂点インデックスの作成
-        /// </summary>
-        private void CreateVertexIndex()
-        {
-            foreach (var mesh in Meshs)
-            {
-                foreach (var index in mesh.AroundVertex)
-                {
-                    Indexs.Add(index.Index);
-                }
             }
         }
 
         /// <summary>
         /// ハーフエッジデータ構造のために、重複する頂点情報を一つに.メッシュ情報も生成
         /// </summary>
-        /// <param name="vertex_List"></param>
-        private void CreateHalfEdgeData(List<Vector3> vertex_List)
+        /// <param name="vertexlist">三角形の頂点リスト</param>
+        private void CreateHalfEdgeData(List<Vector3> vertexlist)
         {
             Vertex v1 = null, v2 = null, v3 = null;
             //最終的にポリゴンに格納する頂点
-            for (int i = 0; i < vertex_List.Count; i++)
+            for (int i = 0; i < vertexlist.Count; i++)
             {
                 //ないVertexを調査
-                Vertex vertex = Vertexs.Find(p => p.Position == vertex_List[i]);
+                Vertex vertex = Vertexs.Find(p => p.Position == vertexlist[i]);
                 if (vertex == null)
                 {
-                    vertex = new Vertex(vertex_List[i], Vertexs.Count);
+                    vertex = new Vertex(vertexlist[i], Vertexs.Count);
                     Vertexs.Add(vertex);
                 }
 

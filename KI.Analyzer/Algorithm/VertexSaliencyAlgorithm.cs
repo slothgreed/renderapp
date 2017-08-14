@@ -3,12 +3,12 @@ namespace KI.Analyzer.Algorithm
 {
     public class VertexSaliencyAlgorithm : IAnalyzer
     {
-        public VertexSaliencyAlgorithm(Polyhedron half)
+        public VertexSaliencyAlgorithm(HalfEdgeDS half)
         {
             Calculate(half);
         }
 
-        public void Calculate(Polyhedron half)
+        public void Calculate(HalfEdgeDS half)
         {
         }
     }

@@ -1,98 +1,137 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using KI.Foundation.Utility;
 
 namespace KI.Analyzer
 {
+    /// <summary>
+    /// 値のパラメータ
+    /// </summary>
     public class ScalarParameter : IParameter
     {
         /// <summary>
         /// 曲率最大値最小値平均値分散確率密度関数
         /// </summary>
-        public List<float> m_value = null;
-        private float m_Max = float.MinValue;
-        private float m_Min = float.MaxValue;
-        private float m_Mean = 0;       //相加平均
-        private float m_Valiance = 0;   //σ^2
+        private List<float> values = null;
 
+        /// <summary>
+        /// 最大値
+        /// </summary>
+        private float maxValue = float.MaxValue;
+
+        /// <summary>
+        /// 最小値
+        /// </summary>
+        private float minValue = float.MaxValue;
+
+        /// <summary>
+        /// 相加平均
+        /// </summary>
+        private float meanValue = float.MaxValue;
+
+        /// <summary>
+        /// σ^2
+        /// </summary>
+        private float valianceValue = float.MaxValue;
+
+        /// <summary>
+        /// 最大値
+        /// </summary>
         public float Max
         {
             get
             {
-                if (m_Max == float.MinValue)
+                if (maxValue == float.MaxValue)
                 {
-                    m_Max = m_value.Max();
+                    maxValue = values.Max();
                 }
 
-                return m_Max;
+                return maxValue;
             }
         }
 
+        /// <summary>
+        /// 最小値
+        /// </summary>
         public float Min
         {
             get
             {
-                if (m_Min == float.MaxValue)
+                if (minValue == float.MaxValue)
                 {
-                    m_Min = m_value.Min();
+                    minValue = values.Min();
                 }
 
-                return m_Min;
+                return minValue;
             }
         }
 
+        /// <summary>
+        /// 平均値
+        /// </summary>
         public float Mean
         {
             get
             {
-                if (m_Mean == 0)
+                if (meanValue == float.MaxValue)
                 {
-                    float sum = m_value.Sum();
-                    m_Mean = sum / m_value.Count;
+                    float sum = values.Sum();
+                    meanValue = sum / values.Count;
                 }
 
-                return m_Mean;
+                return meanValue;
             }
         }
 
+        /// <summary>
+        /// σ^2
+        /// </summary>
         public float Valiance
         {
             get
             {
-                if (m_Valiance == 0)
+                if (valianceValue == float.MaxValue)
                 {
-                    for (int i = 0; i < m_value.Count; i++)
+                    for (int i = 0; i < values.Count; i++)
                     {
-                        m_Valiance += (m_Mean - m_value[i]) * (m_Mean - m_value[i]);
+                        valianceValue += (meanValue - values[i]) * (meanValue - values[i]);
                     }
 
-                    m_Valiance /= m_value.Count;
+                    valianceValue /= values.Count;
                 }
 
-                return m_Valiance;
+                return valianceValue;
             }
         }
 
         /// <summary>
         /// パラメータを加える
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">値</param>
         public void AddValue(object value)
         {
-            if (m_value == null)
+            if (values == null)
             {
-                m_value = new List<float>();
+                values = new List<float>();
             }
 
-            m_value.Add((float)value);
+            values.Add((float)value);
+
+            maxValue = float.MaxValue;
+            minValue = float.MaxValue;
+            meanValue = float.MaxValue;
+            valianceValue = float.MaxValue;
         }
 
+        /// <summary>
+        /// 値の取得
+        /// </summary>
+        /// <param name="index">要素番号</param>
+        /// <returns>値</returns>
         public object GetValue(int index)
         {
-            if (m_value.Count < index)
+            if (values.Count < index)
             {
                 Logger.Log(Logger.LogLevel.Warning, "Not Found Value:" + index);
                 return 0;
@@ -104,7 +143,7 @@ namespace KI.Analyzer
                 return 0;
             }
 
-            return m_value[index];
+            return values[index];
         }
 
         /// <summary>
@@ -114,8 +153,8 @@ namespace KI.Analyzer
         /// <returns>確率密度値</returns>
         public float GetPDF(float value)
         {
-            float k = 1 / (float)Math.Sqrt((double)(2 * Math.PI * m_Valiance));
-            float e = -((value - m_Mean) * (value - m_Mean)) / (2 * m_Valiance);
+            float k = 1 / (float)Math.Sqrt((double)(2 * Math.PI * valianceValue));
+            float e = -((value - meanValue) * (value - meanValue)) / (2 * valianceValue);
             return k * (float)Math.Exp((double)e);
         }
     }

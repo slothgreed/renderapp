@@ -91,7 +91,7 @@ namespace KI.Asset
         /// <summary>
         /// ハーフエッジ
         /// </summary>
-        public Polyhedron HalfEdge { get; set; }
+        public HalfEdgeDS HalfEdgeDS { get; set; }
 
         /// <summary>
         /// 形状種類

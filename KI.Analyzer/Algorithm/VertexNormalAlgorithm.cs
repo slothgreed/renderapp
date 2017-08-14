@@ -7,12 +7,12 @@ namespace KI.Analyzer.Algorithm
     {
         public List<Vector3> Normal = new List<Vector3>();
 
-        public VertexNormalAlgorithm(Polyhedron half)
+        public VertexNormalAlgorithm(HalfEdgeDS half)
         {
             Calculate(half);
         }
 
-        private void Calculate(Polyhedron halfedge)
+        private void Calculate(HalfEdgeDS halfedge)
         {
             Normal.Clear();
             foreach (var vertex in halfedge.Vertexs)

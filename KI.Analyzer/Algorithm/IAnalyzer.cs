@@ -10,5 +10,6 @@ namespace KI.Analyzer
     public abstract class IAnalyzer : KIObject
     {
         public Dictionary<Enum, IParameter> Parameters = new Dictionary<Enum, IParameter>();
+
     }
 }

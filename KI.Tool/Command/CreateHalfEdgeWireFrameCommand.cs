@@ -40,7 +40,7 @@ namespace KI.Tool.Command
                 return CommandResult.Failed;
             }
 
-            if (renderObject.Geometry.HalfEdge == null)
+            if (renderObject.Geometry.HalfEdgeDS == null)
             {
                 return CommandResult.Failed;
             }
@@ -57,7 +57,7 @@ namespace KI.Tool.Command
         {
             List<Vector3> position = new List<Vector3>();
             var color = new List<Vector3>();
-            foreach (var mesh in renderObject.Geometry.HalfEdge.Meshs)
+            foreach (var mesh in renderObject.Geometry.HalfEdgeDS.Meshs)
             {
                 foreach (var edge in mesh.AroundEdge)
                 {

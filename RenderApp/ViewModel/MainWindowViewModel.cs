@@ -313,6 +313,10 @@ namespace RenderApp.ViewModel
                     command = new CreateMarchingCubeCommand(Workspace.MainScene.SelectNode, 64);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
+                case RAGeometry.CalculateVertexParameter:
+                    command = new CalculateVertexCurvature(Workspace.MainScene.SelectNode);
+                    CommandManager.Instance.Execute(command, null, true);
+                    break;
                 case RAGeometry.HalfEdgeWireFrame:
                     command = new CreateHalfEdgeWireFrameCommand(Workspace.MainScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);

@@ -103,7 +103,7 @@ namespace KI.Tool.Control
         /// <returns>成功</returns>
         private bool Execute()
         {
-            dijkstra = new DijkstraAlgorithm(selectObject.Geometry.HalfEdge, selectStartIndex, selectEndIndex);
+            dijkstra = new DijkstraAlgorithm(selectObject.Geometry.HalfEdgeDS, selectStartIndex, selectEndIndex);
             dijkstra.Execute();
 
             RenderObject lines = RenderObjectFactory.Instance.CreateRenderObject("DijkstraLine");

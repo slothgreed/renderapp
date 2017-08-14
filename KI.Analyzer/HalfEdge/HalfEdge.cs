@@ -1,4 +1,5 @@
 ﻿using KI.Foundation.Utility;
+using OpenTK;
 
 namespace KI.Analyzer
 {
@@ -96,13 +97,8 @@ namespace KI.Analyzer
             {
                 if (angle == 0.0f)
                 {
-                    if (Start == null || End == null || Before == null || Opposite == null)
-                    {
-                        Logger.GLLog(Logger.LogLevel.Error, "half edge angle error");
-                        return angle = 0.0f;
-                    }
-
                     angle = KICalc.Angle((End - Start).Normalized(), (Before.Opposite.Start - Before.Opposite.End).Normalized());
+                    angle = MathHelper.DegreesToRadians(angle);
                 }
 
                 return angle;
@@ -116,12 +112,6 @@ namespace KI.Analyzer
         {
             get
             {
-                if (Start == null || End == null)
-                {
-                    Logger.GLLog(Logger.LogLevel.Error, "half edge Length error");
-                    return 0.0f;
-                }
-
                 return (Start - End).Length;
             }
         }

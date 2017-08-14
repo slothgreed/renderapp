@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Command\CalculateVertexCurvature.cs" />
     <Compile Include="Command\CreateConvexHullCommand.cs" />
     <Compile Include="Command\CreateHalfEdgeCommand.cs" />
     <Compile Include="Command\CreateHalfEdgeWireFrameCommand.cs" />
