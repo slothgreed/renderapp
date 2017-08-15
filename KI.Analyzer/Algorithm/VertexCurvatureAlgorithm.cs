@@ -1,10 +1,19 @@
 ﻿using OpenTK;
 using System;
+using KI.Foundation.Utility;
+using System.Linq;
 
 namespace KI.Analyzer.Algorithm
 {
+    /// <summary>
+    /// 頂点曲率のアルゴリズム
+    /// </summary>
     public class VertexCurvatureAlgorithm : IAnalyzer
     {
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="half">ハーフエッジ</param>
         public VertexCurvatureAlgorithm(HalfEdgeDS half)
         {
             ScalarParameter param = new ScalarParameter();
@@ -16,6 +25,10 @@ namespace KI.Analyzer.Algorithm
             Calculate(half);
         }
 
+        /// <summary>
+        /// 計算処理
+        /// </summary>
+        /// <param name="half">ハーフエッジ</param>
         private void Calculate(HalfEdgeDS half)
         {
             foreach (var vertex in half.Vertexs)
@@ -30,39 +43,77 @@ namespace KI.Analyzer.Algorithm
         /// <summary>
         /// ボロノイ領域
         /// </summary>
-        /// <param name="v_index"></param>
+        /// <param name="vertex">頂点</param>
         private void SetVoronoiRagion(Vertex vertex)
         {
-            float angle;
-            HalfEdge opposite;
-            float alpha;
-            float beta;
-            float length;
-            angle = 0;
-
+            float voronoi = 0;
             foreach (var edge in vertex.AroundEdge)
             {
-                length = edge.Length;
-                opposite = edge.Opposite;
-                alpha = edge.Next.Next.Angle;
-                beta = opposite.Next.Next.Angle;
-                angle += (float)((1 / Math.Cos(alpha)) + (1 / Math.Cos(beta))) * length;
+                //float length = edge.Length;
+                //HalfEdge opposite = edge.Opposite;
+                //float alpha = edge.Next.Next.Radian;
+                //float beta = opposite.Next.Next.Radian;
+                //if (!edge.Mesh.IsObtuse)
+                //{
+                //    alpha = (float)(Math.Cos(alpha) / Math.Sin(alpha));
+                //    beta = (float)(Math.Cos(beta) / Math.Sin(beta));
+
+                //    voronoi += ((float)(alpha + beta) * length * length) / 8;
+                //}
+                //else
+                //{
+                //    if (edge.Radian > MathHelper.PiOver2)
+                //    {
+                //        voronoi += edge.Mesh.Area / 2;
+                //    }
+                //    else
+                //    {
+                //        voronoi += edge.Mesh.Area / 4;
+                //    }
+                //}
+
+                Vector3 midPoint1;
+                Vector3 midPoint2;
+                if (edge.Radian < MathHelper.PiOver2)
+                {
+                    midPoint1 = edge.Mesh.Gravity;
+                }
+                else
+                {
+                    midPoint1 = (edge.End.Position + edge.Next.End.Position) / 2;
+                }
+
+                var area2Edge = edge.Opposite.Next;
+                if (area2Edge.Radian < MathHelper.PiOver2)
+                {
+                    midPoint2 = area2Edge.Mesh.Gravity;
+                }
+                else
+                {
+                    midPoint2 = (area2Edge.End.Position + area2Edge.Next.End.Position) / 2;
+                }
+
+                var area1 = KICalc.Area(midPoint1, edge.Start.Position, (edge.Start.Position + edge.End.Position) / 2);
+                var area2 = KICalc.Area(midPoint2, edge.Start.Position, (edge.Start.Position + edge.End.Position) / 2);
+
+                voronoi += area1 + area2;
             }
 
-            Parameters[VertexParam.Voronoi].AddValue(angle / 8);
-            vertex.AddParameter(VertexParam.Voronoi, angle / 8);
+            Console.WriteLine(voronoi);
+            Parameters[VertexParam.Voronoi].AddValue(voronoi);
+            vertex.AddParameter(VertexParam.Voronoi, voronoi);
         }
 
         /// <summary>
         /// ガウス曲率
         /// </summary>
-        /// <param name="vertex"></param>
+        /// <param name="vertex">頂点</param>
         private void SetGaussianParameter(Vertex vertex)
         {
             float angle = 0;
             foreach (var edge in vertex.AroundEdge)
             {
-                angle += edge.Angle;
+                angle += edge.Radian;
             }
 
             float value = (2 * MathHelper.Pi - angle) / (float)vertex.GetParameter(VertexParam.Voronoi);
@@ -73,33 +124,34 @@ namespace KI.Analyzer.Algorithm
         /// <summary>
         /// 平均曲率
         /// </summary>
-        /// <param name="v_index"></param>
+        /// <param name="vertex">頂点</param>
         private void SetMeanCurvature(Vertex vertex)
         {
-            float angle;
-            HalfEdge opposite;
-            float alpha;
-            float beta;
-            float length;
-            angle = 0;
+            float value = 0;
             foreach (var edge in vertex.AroundEdge)
             {
-                length = edge.Length;
-                opposite = edge.Opposite;
-                alpha = edge.Next.Next.Angle;
-                beta = opposite.Next.Next.Angle;
-                angle += (float)((1 / Math.Cos(alpha)) + (1 / Math.Cos(beta))) * length;
+                float length = edge.Length;
+                length = length * length;
+                HalfEdge opposite = edge.Opposite;
+                float alpha = edge.Next.Next.Radian;
+                float beta = opposite.Next.Next.Radian;
+                alpha = (float)(Math.Cos(alpha) / Math.Sin(alpha));
+                beta = (float)(Math.Cos(beta) / Math.Sin(beta));
+
+                float angle =  (float)(alpha + beta) * length / 8;
+                float kapper = 2 * Vector3.Dot((edge.Start - edge.End), edge.Start.Normal) / length;
+                value += angle * kapper;
             }
 
-            float value = (angle / (float)vertex.GetParameter(VertexParam.Voronoi) * 2);
+            value /= (float)vertex.GetParameter(VertexParam.Voronoi);
             Parameters[VertexParam.MeanCurvature].AddValue(value);
             vertex.AddParameter(VertexParam.MeanCurvature, value);
         }
 
         /// <summary>
-        /// 最小主曲率
+        /// 最大・最小主曲率
         /// </summary>
-        /// <param name="v_index"></param>
+        /// <param name="vertex"></param>
         private void SetMaxMinCurvature(Vertex vertex)
         {
             float mean = (float)vertex.GetParameter(VertexParam.MeanCurvature);
@@ -108,7 +160,7 @@ namespace KI.Analyzer.Algorithm
             float delta = (mean * mean) - gauss;
             if (delta > 0)
             {
-                delta = (float)Math.Sqrt((double)delta);
+                delta = (float)Math.Sqrt(delta);
             }
             else
             {

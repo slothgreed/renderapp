@@ -149,12 +149,13 @@ namespace KI.Analyzer
         /// <summary>
         /// 確率密度関数の値
         /// </summary>
-        /// <param name="value">値</param>
+        /// <param name="value">要素番号</param>
         /// <returns>確率密度値</returns>
-        public float GetPDF(float value)
+        public float GetPDF(int index)
         {
-            float k = 1 / (float)Math.Sqrt((double)(2 * Math.PI * valianceValue));
-            float e = -((value - meanValue) * (value - meanValue)) / (2 * valianceValue);
+            float value = (float)GetValue(index);
+            float k = 1 / (float)Math.Sqrt((double)(2 * Math.PI * Valiance));
+            float e = -((value - Mean) * (value - Mean)) / (2 * Valiance);
             return k * (float)Math.Exp((double)e);
         }
     }

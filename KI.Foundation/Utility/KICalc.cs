@@ -70,32 +70,25 @@ namespace KI.Foundation.Utility
         /// <returns>疑似カラー</returns>
         public static Vector3 GetPseudoColor(float value, float min, float max)
         {
-            try
+            if (max <= value)
             {
-                if (max <= value)
-                {
-                    return RGB[255];
-                }
-
-                if (min >= value)
-                {
-                    return RGB[0];
-                }
-
-                if (max - min == 0)
-                {
-                    return RGB[0];
-                }
-
-                float length = max - min;
-                float scale = 255 * (value - min) / length;
-
-                return RGB[(int)scale];
+                return RGB[255];
             }
-            catch (Exception)
+
+            if (min >= value)
             {
                 return RGB[0];
             }
+
+            if (max - min == 0)
+            {
+                return RGB[0];
+            }
+
+            float length = max - min;
+            float scale = 255 * (value - min) / length;
+
+            return RGB[(int)scale];
         }
         #endregion
 
@@ -131,12 +124,12 @@ namespace KI.Foundation.Utility
 
         #region [角度の算出]
         /// <summary>
-        /// 0~180
+        /// radian 0 ~ 180
         /// </summary>
         /// <param name="vector1">ベクトル1</param>
         /// <param name="vector2">ベクトル2</param>
         /// <returns>Radian</returns>
-        public static float Angle(Vector3 vector1, Vector3 vector2)
+        public static float Radian(Vector3 vector1, Vector3 vector2)
         {
             float cos = 0;
 
@@ -148,7 +141,7 @@ namespace KI.Foundation.Utility
             return cos;
         }
 
-        public static float Angle(Vector3 a, Vector3 b, Vector3 axis)
+        public static float Radian(Vector3 a, Vector3 b, Vector3 axis)
         {
             float cos = 0;
             Vector3 v1 = new Vector3(a);
@@ -172,6 +165,24 @@ namespace KI.Foundation.Utility
         }
 
         #endregion
+        /// <summary>
+        /// 三角形の面積の算出
+        /// </summary>
+        /// <param name="tri1">頂点1</param>
+        /// <param name="tri2">頂点2</param>
+        /// <param name="tri3">頂点3</param>
+        /// <returns>面積</returns>
+        public static float Area(Vector3 tri1, Vector3 tri2, Vector3 tri3)
+        {
+            float edge1 = (tri1 - tri2).Length;
+            float edge2 = (tri2 - tri3).Length;
+            float edge3 = (tri3 - tri1).Length;
+            float sum = (edge1 + edge2 + edge3) / 2;
+
+            float value = sum * (sum - edge1) * (sum - edge2) * (sum - edge3);
+
+            return (float)Math.Sqrt(value);
+        }
 
         ///// <summary>
         ///// 平面の公式から平面の点を求める

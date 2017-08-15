@@ -22,6 +22,7 @@ namespace KI.Asset
         public STLConverter(string filePath)
         {
             stlData = new STLLoader(filePath);
+            CreateGeometry();
         }
 
         /// <summary>

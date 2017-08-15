@@ -193,7 +193,7 @@ namespace KI.Gfx.KITexture
             TextureBuffer.BindBuffer();
             TextureBuffer.Width = image.Width;
             TextureBuffer.Height = image.Height;
-
+            image.LoadImageData();
             image.Lock();
             SetupTexImage2D(TextureBuffer.Target, image);
             image.UnLock();

@@ -23,6 +23,7 @@ namespace KI.Asset
         public OBJConverter(string filePath)
         {
             objData = new OBJLoader(filePath);
+            CreateGeometry();
         }
 
         /// <summary>

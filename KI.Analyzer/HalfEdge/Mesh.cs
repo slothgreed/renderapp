@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using KI.Foundation.Utility;
 using OpenTK;
@@ -6,7 +7,7 @@ using OpenTK;
 namespace KI.Analyzer
 {
     /// <summary>
-    /// メッシュ
+    /// メッシュ (Triangle only)
     /// </summary>
     public class Mesh
     {
@@ -30,6 +31,11 @@ namespace KI.Analyzer
         /// </summary>
         private Vector3 gravity = Vector3.Zero;
 
+        /// <summary>
+        /// 面積
+        /// </summary>
+        private float area = float.MinValue;
+        
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -143,6 +149,34 @@ namespace KI.Analyzer
                 }
 
                 return gravity;
+            }
+        }
+
+        /// <summary>
+        /// 鈍角三角形ならtrue
+        /// </summary>
+        public bool IsObtuse
+        {
+            get
+            {
+                return edges.Any(p => p.Radian >= MathHelper.PiOver2);
+            }
+        }
+
+        /// <summary>
+        /// 面積
+        /// </summary>
+        public float Area
+        {
+            get
+            {
+                if (area == float.MinValue)
+                {
+                    var edge = edges.ToArray();
+                    area = KICalc.Area(edge[0].Start.Position, edge[1].Start.Position, edge[2].Start.Position);
+                }
+
+                return area;
             }
         }
 

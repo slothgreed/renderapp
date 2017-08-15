@@ -219,15 +219,13 @@ namespace RenderApp.ViewModel
             dlg.Title = "開くファイルを選択してください。";
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                //foreach (var filename in dlg.FileNames)
-                //{
-                //    List<RenderObject> geometrys = AssetFactory.Instance.CreateLoad3DModel(filename);
-                //    foreach(var geometry in geometrys)
-                //    {
-                //        Workspace.SceneManager.ActiveScene.AddObject(geometry);
-                //        Project.ActiveProject.AddChild(geometry);
-                //    }
-                //}
+                foreach (var filename in dlg.FileNames)
+                {
+                    var geometrys = AssetFactory.Instance.CreateLoad3DModel(filename);
+                    var renderObject = RenderObjectFactory.Instance.CreateRenderObject(filename, geometrys);
+                    renderObject.Scale = new OpenTK.Vector3(10);
+                    Workspace.MainScene.AddObject(renderObject);
+                }
             }
         }
 

@@ -11,7 +11,7 @@ namespace KI.Analyzer
         /// <summary>
         /// 三角形を構成するエッジの角度thisと前のエッジの反対の角度
         /// </summary>
-        private float angle = 0.0f;
+        private float radian = 0.0f;
 
         /// <summary>
         /// コンストラクタ
@@ -89,19 +89,18 @@ namespace KI.Analyzer
         public object CalcFlag { get; set; }
 
         /// <summary>
-        /// 角度
+        /// degree エッジと、前のエッジの角度
         /// </summary>
-        public float Angle
+        public float Radian
         {
             get
             {
-                if (angle == 0.0f)
+                if (radian == 0.0f)
                 {
-                    angle = KICalc.Angle((End - Start).Normalized(), (Before.Opposite.Start - Before.Opposite.End).Normalized());
-                    angle = MathHelper.DegreesToRadians(angle);
+                    radian = KICalc.Radian((End - Start), (Before.Opposite.End - Before.Opposite.Start));
                 }
 
-                return angle;
+                return radian;
             }
         }
 
