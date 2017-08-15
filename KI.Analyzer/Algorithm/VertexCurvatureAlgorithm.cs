@@ -99,7 +99,6 @@ namespace KI.Analyzer.Algorithm
                 voronoi += area1 + area2;
             }
 
-            Console.WriteLine(voronoi);
             Parameters[VertexParam.Voronoi].AddValue(voronoi);
             vertex.AddParameter(VertexParam.Voronoi, voronoi);
         }
