@@ -12,7 +12,7 @@ namespace KI.Analyzer
         /// <summary>
         /// ノード
         /// </summary>
-        /// <param name="done">計算したか</param>
+        /// <param name="done">確定したか</param>
         /// <param name="cost">重み</param>
         /// <param name="vertex">頂点座標</param>
         public Node(bool done, int cost, Vertex vertex)
@@ -23,9 +23,14 @@ namespace KI.Analyzer
         }
 
         /// <summary>
-        /// 計算したか
+        /// 確定したか
         /// </summary>
         public bool Done { get; set; }
+
+        /// <summary>
+        /// 最小経路を辿った一つ前のノード
+        /// </summary>
+        public Node MinRouteNode { get; set; }
 
         /// <summary>
         /// 重み
@@ -64,11 +69,6 @@ namespace KI.Analyzer
         private Node[] nodes;
 
         /// <summary>
-        /// 線リスト
-        /// </summary>
-        public List<Vector3> Lines;
-
-        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="half">ハーフエッジ</param>
@@ -99,9 +99,28 @@ namespace KI.Analyzer
 
             Initialize();
             List<Node> noConfirms = new List<Node>();
-            CalcCost(nodes[startIndex], noConfirms);
+            CalculateCost(nodes[startIndex], noConfirms);
 
             return true;
+        }
+
+        /// <summary>
+        /// ダイクストラの算出結果
+        /// </summary>
+        /// <returns>ダイクストラの線算出</returns>
+        public List<Vector3> DijkstraLine()
+        {
+            List<Vector3> line = new List<Vector3>();
+            Node current = nodes[endIndex];
+            while (current != nodes[startIndex])
+            {
+                line.Add(current.Vertex.Position);
+                line.Add(current.MinRouteNode.Vertex.Position);
+
+                current = current.MinRouteNode;
+            }
+
+            return line;
         }
 
         /// <summary>
@@ -146,7 +165,7 @@ namespace KI.Analyzer
         /// </summary>
         /// <param name="current">コストを計算するノード</param>
         /// <param name="noConfirm">計算後の未確定ノード</param>
-        private void CalcCost(Node current, List<Node> noConfirm)
+        private void CalculateCost(Node current, List<Node> noConfirm)
         {
             while (true)
             {
@@ -178,6 +197,7 @@ namespace KI.Analyzer
                         if (around.Cost > newCost || around.Cost == -1)
                         {
                             around.Cost = newCost;
+                            around.MinRouteNode = current;
 
                             if (minValue > newCost)
                             {
@@ -195,37 +215,6 @@ namespace KI.Analyzer
 
                 current = FindConfirmNode(noConfirm);
             }
-        }
-
-        /// <summary>
-        /// ダイクストラの算出結果
-        /// </summary>
-        public IEnumerable<Vector3> DijkstraLine()
-        {
-            List<Vector3> line = new List<Vector3>();
-
-            Node current = nodes[endIndex];
-
-            while (current != nodes[startIndex])
-            {
-                var minCost = float.MaxValue;
-                Node minNode = null;
-                foreach (var vertex in current.Vertex.AroundVertex)
-                {
-                    if (minCost > nodes[vertex.Index].Cost && nodes[vertex.Index].Cost != -1)
-                    {
-                        minCost = nodes[vertex.Index].Cost;
-                        minNode = nodes[vertex.Index];
-                    }
-                }
-
-                line.Add(current.Vertex.Position);
-                line.Add(minNode.Vertex.Position);
-
-                current = minNode;
-            }
-
-            return line;
         }
 
         /// <summary>

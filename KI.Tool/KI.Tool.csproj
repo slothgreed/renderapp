@@ -61,7 +61,6 @@
     <Compile Include="Command\CreatePolygonCommand.cs" />
     <Compile Include="Command\CreateVoxelCommand.cs" />
     <Compile Include="Command\CreateWireFrameCommand.cs" />
-    <Compile Include="Command\RemeshingByMarchingCubeCommand.cs" />
     <Compile Include="Control\CameraControl.cs" />
     <Compile Include="Control\ControlManager.cs" />
     <Compile Include="Control\DijkstraControl.cs" />

@@ -98,6 +98,16 @@ namespace KI.Tool.Control
         }
 
         /// <summary>
+        /// ピッキング終了処理
+        /// </summary>
+        /// <returns>成功</returns>
+        public override bool UnBinding()
+        {
+            Global.RenderSystem.ActiveScene.DeleteObject("Picking");
+            return true;
+        }
+
+        /// <summary>
         /// 実行
         /// </summary>
         /// <returns>成功</returns>
@@ -107,20 +117,10 @@ namespace KI.Tool.Control
             dijkstra.Execute();
 
             RenderObject lines = RenderObjectFactory.Instance.CreateRenderObject("DijkstraLine");
-            Geometry geometry = new Geometry("DijkstraLine", dijkstra.DijkstraLine().ToList(), null, Vector3.UnitZ, null, null, GeometryType.Line);
+            Geometry geometry = new Geometry("DijkstraLine", dijkstra.DijkstraLine(), null, Vector3.UnitZ, null, null, GeometryType.Line);
             lines.SetGeometryInfo(geometry);
             lines.ModelMatrix = selectObject.ModelMatrix;
             Global.RenderSystem.ActiveScene.AddObject(lines);
-            return true;
-        }
-
-        /// <summary>
-        /// ピッキング終了処理
-        /// </summary>
-        /// <returns>成功</returns>
-        public override bool UnBinding()
-        {
-            Global.RenderSystem.ActiveScene.DeleteObject("Picking");
             return true;
         }
     }
