@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using KI.UI.ViewModel;
 using KI.Gfx.KITexture;
+using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel
 {

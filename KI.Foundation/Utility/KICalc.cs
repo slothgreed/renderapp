@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using OpenTK;
 
 namespace KI.Foundation.Utility
@@ -91,6 +93,69 @@ namespace KI.Foundation.Utility
             return RGB[(int)scale];
         }
         #endregion
+
+        /// <summary>
+        /// v1,v2の各要素を比較して、小さいほうを返します。
+        /// </summary>
+        /// <param name="v1">vector1</param>
+        /// <param name="v2">vector2</param>
+        /// <returns>ベクトル</returns>
+        public static Vector3 MinVector(Vector3 v1, Vector3 v2)
+        {
+            Vector3 result = new Vector3(v1);
+            if (result.X > v2.X) { result.X = v2.X; }
+            if (result.Y > v2.Y) { result.Y = v2.Y; }
+            if (result.Z > v2.Z) { result.Z = v2.Z; }
+
+            return result;
+        }
+
+
+        /// <summary>
+        /// 頂点リストから、最小値最大値を算出
+        /// </summary>
+        /// <param name="position">頂点</param>
+        /// <param name="min">最小値</param>
+        /// <param name="max">最大値</param>
+        public static void MinMax(IEnumerable<Vector3> position, out Vector3 min, out Vector3 max)
+        {
+            if(!position.Any())
+            {
+                min = Vector3.Zero;
+                max = Vector3.Zero;
+                return;
+            }
+
+            min = position.First();
+            max = position.First();
+            foreach (var pos in position)
+            {
+                if (min.X > pos.X) { min.X = pos.X; }
+                if (min.Y > pos.Y) { min.Y = pos.Y; }
+                if (min.Z > pos.Z) { min.Z = pos.Z; }
+
+                if (max.X < pos.X) { max.X = pos.X; }
+                if (max.Y < pos.Y) { max.Y = pos.Y; }
+                if (max.Z < pos.Z) { max.Z = pos.Z; }
+            }
+        }
+
+
+        /// <summary>
+        /// v1,v2の各要素を比較して、大きいほうを返します。
+        /// </summary>
+        /// <param name="v1">vector1</param>
+        /// <param name="v2">vector2</param>
+        /// <returns>ベクトル</returns>
+        public static Vector3 MaxVector(Vector3 v1, Vector3 v2)
+        {
+            Vector3 result = new Vector3(v1);
+            if (result.X < v2.X) { result.X = v2.X; }
+            if (result.Y < v2.Y) { result.Y = v2.Y; }
+            if (result.Z < v2.Z) { result.Z = v2.Z; }
+
+            return result;
+        }
 
         /// <summary>
         /// 法線の算出
@@ -272,6 +337,30 @@ namespace KI.Foundation.Utility
 
             return result;
         }
+
+        /// <summary>
+        /// ボックス内にあるか
+        /// </summary>
+        /// <param name="point">頂点</param>
+        /// <param name="min">最小値</param>
+        /// <param name="max">最大値</param>
+        /// <returns></returns>
+        public static bool InBox(Vector3 point, Vector3 min, Vector3 max)
+        {
+            if (min.X < point.X && point.X < max.X)
+            {
+                if (min.Y < point.Y && point.Y < max.Y)
+                {
+                    if (min.Z < point.Z && point.Z < max.Z)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
 
         /// <summary>
         /// 線と平面の交差位置

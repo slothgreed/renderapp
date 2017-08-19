@@ -3,7 +3,7 @@ using OpenTK;
 
 namespace KI.Analyzer.Algorithm
 {
-    public class VertexNormalAlgorithm : IAnalyzer
+    public class VertexNormalAlgorithm
     {
         public List<Vector3> Normal = new List<Vector3>();
 

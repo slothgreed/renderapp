@@ -10,13 +10,13 @@ namespace KI.Analyzer
     /// <summary>
     /// ハーフエッジを編集するクラス
     /// </summary>
-    public class PolyhedronEditor
+    public class HalfEdgeDSEditor
     {
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="half">ハーフエッジ</param>
-        public PolyhedronEditor(HalfEdgeDS half)
+        public HalfEdgeDSEditor(HalfEdgeDS half)
         {
             HalfEdge = half;
         }
@@ -28,12 +28,18 @@ namespace KI.Analyzer
 
         #region [edit method]
         #region [vertex decimation]
+
         /// <summary>
         /// マージによる頂点削除削除後、頂点位置移動
         /// </summary>
         /// <param name="edge">削除するエッジ</param>
-        public void VertexDecimation(HalfEdge edge)
+        public void EdgeCollapse(HalfEdge edge)
         {
+            if (!CanEdgeCollapse(edge))
+            {
+                return;
+            }
+
             Vertex delV = edge.Start;
             Vertex remV = edge.End;
 
@@ -97,6 +103,10 @@ namespace KI.Analyzer
         }
         #endregion
 
+        /// <summary>
+        /// エッジの中点に頂点の追加
+        /// </summary>
+        /// <param name="edge">エッジ</param>
         public void EdgeSplit(HalfEdge edge)
         {
             var opposite = edge.Opposite;
@@ -144,8 +154,16 @@ namespace KI.Analyzer
             //HasError();
         }
 
+        /// <summary>
+        /// エッジの入れ替え
+        /// </summary>
+        /// <param name="edge">入れ替えるエッジ</param>
         public void EdgeFlips(HalfEdge edge)
         {
+            if (!CanEdgeFlips(edge))
+            {
+                return;
+            }
             // delete edge & mesh
             var opposite = edge.Opposite;
             var delMesh1 = edge.Mesh;
@@ -172,6 +190,79 @@ namespace KI.Analyzer
         }
         #endregion
 
+        /// <summary>
+        /// EdgeFlipsできるか
+        /// すでに同一エッジがある場合はできない。
+        /// </summary>
+        /// <param name="edge">エッジ</param>
+        /// <returns>できる</returns>
+        private bool CanEdgeFlips(HalfEdge edge)
+        {
+            var createStart = edge.Next.End;
+            var createEnd = edge.Opposite.Next.End;
+
+            foreach (var vertex in edge.Start.AroundVertex)
+            {
+                foreach (var arouond in vertex.AroundEdge)
+                {
+                    if (arouond.Start == createStart && arouond.End == createEnd)
+                    {
+                        return false;
+                    }
+
+                    if (arouond.Start == createEnd && arouond.End == createStart)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// エッジを削除できるか
+        /// edge.Startと、edge.Endを持つ頂点が3つ以上あったらfalse
+        /// </summary>
+        /// <param name="edge">エッジ</param>
+        /// <returns>できる</returns>
+        private bool CanEdgeCollapse(HalfEdge edge)
+        {
+            int commonNum = 0;
+            foreach (var neightVertex in edge.Start.AroundVertex)
+            {
+                bool existStart = false;
+                bool existEnd = false;
+                //隣接する頂点の周囲のエッジ
+                foreach (var around in neightVertex.AroundEdge)
+                {
+                    if (around.End == edge.Start)
+                    {
+                        existStart = true;
+                    }
+
+                    if (around.End == edge.End)
+                    {
+                        existEnd = true;
+                    }
+                }
+
+                if (existStart && existEnd)
+                {
+                    commonNum++;
+                }
+            }
+
+            if (commonNum > 2)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         #region [delete object]
         /// <summary>
         /// メッシュ削除
@@ -189,7 +280,7 @@ namespace KI.Analyzer
         /// <summary>
         /// エッジ削除
         /// </summary>
-        /// <param name="deleteMesh">削除するエッジ</param>
+        /// <param name="deleteEdge">削除するエッジ</param>
         private void DeleteEdge(List<HalfEdge> deleteEdge)
         {
             foreach (var edge in deleteEdge)

@@ -1,10 +1,13 @@
 ﻿using System;
+using KI.Analyzer;
 using KI.Analyzer.Algorithm.MarchingCube;
 using KI.Asset;
 using KI.Foundation.Command;
 using KI.Foundation.Core;
+using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
 using KI.Renderer;
+using OpenTK;
 
 namespace KI.Tool.Command
 {
@@ -14,9 +17,14 @@ namespace KI.Tool.Command
     public class CreateMarchingCubeCommand : CreateModelCommandBase, ICommand
     {
         /// <summary>
+        /// 形状
+        /// </summary>
+        private RenderObject renderObject;
+
+        /// <summary>
         /// 分割数
         /// </summary>
-        private int partition = 0;
+        private int partition;
 
         /// <summary>
         /// コンストラクタ
@@ -25,6 +33,7 @@ namespace KI.Tool.Command
         /// <param name="part">分割数</param>
         public CreateMarchingCubeCommand(KIObject asset, int part)
         {
+            renderObject = asset as RenderObject;
             partition = part;
         }
 
@@ -35,6 +44,16 @@ namespace KI.Tool.Command
         /// <returns>成功値</returns>
         public CommandResult CanExecute(string commandArg)
         {
+            if (renderObject == null)
+            {
+                return CommandResult.Failed;
+            }
+
+            if (renderObject.Geometry.GeometryType != Gfx.GLUtil.GeometryType.Triangle)
+            {
+                return CommandResult.Failed;
+            }
+
             return CommandResult.Success;
         }
 
@@ -45,11 +64,20 @@ namespace KI.Tool.Command
         /// <returns>成功値</returns>
         public CommandResult Execute(string commandArg)
         {
-            var marching = new MarchingCubesAlgorithm(200, 50);
-            RenderObject marchingObject = RenderObjectFactory.Instance.CreateRenderObject("Marching Sphere");
-            Geometry info = new Geometry("Marching Sphere", marching.PositionList, null, marching.ColorList, null, null, GeometryType.Triangle);
-            marchingObject.SetGeometryInfo(info);
-            Global.RenderSystem.ActiveScene.AddObject(marchingObject);
+            Vector3 min;
+            Vector3 max;
+            KICalc.MinMax(renderObject.Geometry.Position, out min, out max);
+            min -= Vector3.One * 10;
+            max += Vector3.One * 10;
+            var voxel = new VoxelSpace(renderObject.Geometry.Position, renderObject.Geometry.Index, partition, min, max);
+            var marching = new MarchingCubesAlgorithm(voxel, 0.8f);
+
+            RenderObject marghingObject = RenderObjectFactory.Instance.CreateRenderObject("MarchingCube :" + renderObject.Name);
+            var geometry = new Geometry(marghingObject.Name, marching.PositionList, null, marching.ColorList, null, null, Gfx.GLUtil.GeometryType.Triangle);
+            marghingObject.SetGeometryInfo(geometry);
+            marghingObject.ModelMatrix = renderObject.ModelMatrix;
+            Global.RenderSystem.ActiveScene.AddObject(marghingObject);
+
             return CommandResult.Success;
         }
 

@@ -10,7 +10,7 @@ namespace KI.Analyzer
     /// <summary>
     /// kdtree
     /// </summary>
-    public class Kdtree : IAnalyzer
+    public class Kdtree
     {
         #region [Member]
 

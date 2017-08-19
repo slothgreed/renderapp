@@ -4,12 +4,12 @@ using System.Windows.Forms;
 using KI.Asset;
 using KI.Foundation.Command;
 using KI.Foundation.Tree;
-using KI.UI.ViewModel;
 using KI.Gfx;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
 using KI.Gfx.Render;
+using KI.UI.ViewModel;
 using KI.Renderer;
 using KI.Tool.Command;
 using KI.Tool.Control;
@@ -58,6 +58,7 @@ namespace RenderApp.ViewModel
         #region [Member]
 
         private static MainWindowViewModel instance;
+
         public static MainWindowViewModel Instance
         {
             get

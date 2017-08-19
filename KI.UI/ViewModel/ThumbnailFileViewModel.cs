@@ -5,6 +5,7 @@ namespace KI.UI.ViewModel
     public class ThumbnailFileViewModel : ViewModelBase
     {
         private string filePath;
+
         public string FilePath
         {
             get
@@ -19,6 +20,7 @@ namespace KI.UI.ViewModel
         }
 
         private string imagePath;
+
         public string ImagePath
         {
             get

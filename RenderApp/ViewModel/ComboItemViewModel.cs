@@ -7,7 +7,7 @@ namespace RenderApp.ViewModel
 {
     class ComboItemViewModel : ViewModelBase
     {
-        Action<int> action;
+        private Action<int> action;
         private object Owner;
         private List<KIObject> items;
         private int selectIndex = 0;

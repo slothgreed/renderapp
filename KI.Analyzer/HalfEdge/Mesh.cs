@@ -100,31 +100,8 @@ namespace KI.Analyzer
             {
                 if (plane == Vector4.Zero)
                 {
-                    Vector3 pos1 = Vector3.Zero;
-                    Vector3 pos2 = Vector3.Zero;
-                    Vector3 pos3 = Vector3.Zero;
-                    foreach (var position in AroundVertex)
-                    {
-                        if (pos1 == Vector3.Zero)
-                        {
-                            pos1 = position.Position;
-                            continue;
-                        }
-
-                        if (pos2 == Vector3.Zero)
-                        {
-                            pos2 = position.Position;
-                            continue;
-                        }
-
-                        if (pos3 == Vector3.Zero)
-                        {
-                            pos3 = position.Position;
-                            break;
-                        }
-                    }
-
-                    plane = KICalc.GetPlaneFormula(pos1, pos2, pos3);
+                    var positions = AroundVertex.Select(p => p.Position).ToArray();
+                    plane = KICalc.GetPlaneFormula(positions[0], positions[1], positions[2]);
                 }
 
                 return plane;

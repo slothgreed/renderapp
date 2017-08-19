@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
+
 namespace KI.UI.ViewModel
 {
     public class Matrix4ViewModel : PropertyViewModelBase

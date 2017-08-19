@@ -5,6 +5,7 @@ namespace RenderApp.ViewModel
     public class DynamicViewModelBase<T> : DynamicObject, INotifyPropertyChanged where T : class
     {
         private T model;
+
         protected T Model
         {
             get
@@ -20,6 +21,7 @@ namespace RenderApp.ViewModel
 
         // INotifyPropertyChangedの実装
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected virtual void OnPropertyChanged(string name)
         {
             var h = PropertyChanged;

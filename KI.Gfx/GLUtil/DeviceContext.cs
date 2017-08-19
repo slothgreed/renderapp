@@ -59,6 +59,7 @@ namespace KI.Gfx.GLUtil
             GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.TextureCubeMap);
             GL.PointSize(10.0f);
+            GL.LineWidth(1);
             GL.PolygonOffset(1.0f, 1.0f);
             GL.FrontFace(FrontFaceDirection.Ccw);
 

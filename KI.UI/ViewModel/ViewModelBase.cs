@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Windows.Input;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace KI.UI.ViewModel
 {

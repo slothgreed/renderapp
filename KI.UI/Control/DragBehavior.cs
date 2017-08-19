@@ -11,6 +11,7 @@ namespace KI.UI.Control
         private bool isMouseDown;
 
         public static readonly DependencyProperty DragDataProperty = DependencyProperty.Register("DragData", typeof(object), typeof(DragBehavior), new PropertyMetadata(null));
+
         public object DragData
         {
             get { return GetValue(DragDataProperty); }

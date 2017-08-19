@@ -9,6 +9,7 @@ namespace KI.UI.ViewModel
     public class NumericViewModel : PropertyViewModelBase
     {
         public float Model;
+
         public NumericViewModel(string name, float value)
         {
             this.Name = name;

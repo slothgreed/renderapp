@@ -10,6 +10,7 @@ namespace KI.UI.ViewModel
     {
         Func<bool, bool> updateFunc;
         private bool Model;
+
         public CheckBoxViewModel(object owner, string name, bool value)
         {
             Owner = owner;

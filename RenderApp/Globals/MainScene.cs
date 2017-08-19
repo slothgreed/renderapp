@@ -14,7 +14,6 @@ namespace RenderApp.Globals
         public MainScene()
             : base("MainScene")
         {
-
         }
 
         /// <summary>
@@ -72,6 +71,7 @@ namespace RenderApp.Globals
             //List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/Sphere.stl");
             var renderBunny = RenderObjectFactory.Instance.CreateRenderObject("bunny", bunny);
             renderBunny.RotateX(-90);
+            //renderBunny.Scale = new OpenTK.Vector3(100);
             AddObject(renderBunny);
         }
     }

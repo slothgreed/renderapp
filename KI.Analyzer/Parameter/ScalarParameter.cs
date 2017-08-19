@@ -8,12 +8,12 @@ namespace KI.Analyzer
     /// <summary>
     /// 値のパラメータ
     /// </summary>
-    public class ScalarParameter : IParameter
+    public class ScalarParameter
     {
         /// <summary>
         /// 曲率最大値最小値平均値分散確率密度関数
         /// </summary>
-        private List<float> values = null;
+        private float[] values;
 
         /// <summary>
         /// 最大値
@@ -35,6 +35,10 @@ namespace KI.Analyzer
         /// </summary>
         private float valianceValue = float.MaxValue;
 
+        public ScalarParameter(float[] parameters)
+        {
+            values = parameters.ToArray();
+        }
         /// <summary>
         /// 最大値
         /// </summary>
@@ -77,7 +81,7 @@ namespace KI.Analyzer
                 if (meanValue == float.MaxValue)
                 {
                     float sum = values.Sum();
-                    meanValue = sum / values.Count;
+                    meanValue = sum / values.Length;
                 }
 
                 return meanValue;
@@ -93,12 +97,12 @@ namespace KI.Analyzer
             {
                 if (valianceValue == float.MaxValue)
                 {
-                    for (int i = 0; i < values.Count; i++)
+                    foreach (var val in values)
                     {
-                        valianceValue += (meanValue - values[i]) * (meanValue - values[i]);
+                        valianceValue += (meanValue - val) * (meanValue - val);
                     }
 
-                    valianceValue /= values.Count;
+                    valianceValue /= values.Length;
                 }
 
                 return valianceValue;
@@ -106,32 +110,13 @@ namespace KI.Analyzer
         }
 
         /// <summary>
-        /// パラメータを加える
-        /// </summary>
-        /// <param name="value">値</param>
-        public void AddValue(object value)
-        {
-            if (values == null)
-            {
-                values = new List<float>();
-            }
-
-            values.Add((float)value);
-
-            maxValue = float.MaxValue;
-            minValue = float.MaxValue;
-            meanValue = float.MaxValue;
-            valianceValue = float.MaxValue;
-        }
-
-        /// <summary>
         /// 値の取得
         /// </summary>
         /// <param name="index">要素番号</param>
         /// <returns>値</returns>
-        public object GetValue(int index)
+        public float GetValue(int index)
         {
-            if (values.Count < index)
+            if (values.Length < index)
             {
                 Logger.Log(Logger.LogLevel.Warning, "Not Found Value:" + index);
                 return 0;

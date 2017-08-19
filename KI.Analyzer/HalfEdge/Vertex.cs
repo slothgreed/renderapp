@@ -15,7 +15,9 @@ namespace KI.Analyzer
         MaxCurvature,
         MeanCurvature,
         GaussCurvature,
-        Voronoi
+        Voronoi,
+        MaxVector,
+        MinVector
     }
 
     /// <summary>
@@ -228,7 +230,7 @@ namespace KI.Analyzer
         /// </summary>
         /// <param name="param">パラメータのタイプ</param>
         /// <param name="value">値</param>
-        public void AddParameter(VertexParam param, float value)
+        public void AddParameter(VertexParam param, object value)
         {
             parameter.Add(param, value);
         }

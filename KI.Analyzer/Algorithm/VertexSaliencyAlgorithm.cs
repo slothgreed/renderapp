@@ -1,7 +1,7 @@
 ﻿
 namespace KI.Analyzer.Algorithm
 {
-    public class VertexSaliencyAlgorithm : IAnalyzer
+    public class VertexSaliencyAlgorithm
     {
         public VertexSaliencyAlgorithm(HalfEdgeDS half)
         {

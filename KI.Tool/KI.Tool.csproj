@@ -61,6 +61,7 @@
     <Compile Include="Command\CreatePolygonCommand.cs" />
     <Compile Include="Command\CreateVoxelCommand.cs" />
     <Compile Include="Command\CreateWireFrameCommand.cs" />
+    <Compile Include="Command\RemeshingByMarchingCubeCommand.cs" />
     <Compile Include="Control\CameraControl.cs" />
     <Compile Include="Control\ControlManager.cs" />
     <Compile Include="Control\DijkstraControl.cs" />
@@ -91,6 +92,9 @@
       <Project>{8bda5035-5778-4460-8166-e6b2bd477e29}</Project>
       <Name>KI.Renderer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

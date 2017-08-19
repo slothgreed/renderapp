@@ -17,7 +17,9 @@ namespace KI.Analyzer
         }
 
         public List<Mesh> Meshs { get; set; } = new List<Mesh>();
+
         public List<HalfEdge> Edges { get; set; } = new List<HalfEdge>();
+
         public List<Vertex> Vertexs { get; set; } = new List<Vertex>();
 
         /// <summary>

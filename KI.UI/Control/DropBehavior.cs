@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Interactivity;
+
 namespace KI.UI.Control
 {
     public class DropAcceptDescription
@@ -13,6 +14,7 @@ namespace KI.UI.Control
         }
 
         public event Action<DragEventArgs> DragDrop;
+
         public void OnDrop(DragEventArgs dragEventArgs)
         {
             DragDrop?.Invoke(dragEventArgs);
@@ -22,6 +24,7 @@ namespace KI.UI.Control
     public class DropBehavior : Behavior<FrameworkElement>
     {
         public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(DropAcceptDescription), typeof(DropBehavior), new PropertyMetadata(null));
+
         public DropAcceptDescription Description
         {
             get { return (DropAcceptDescription)GetValue(DescriptionProperty); }

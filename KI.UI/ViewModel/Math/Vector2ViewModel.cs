@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
+
 namespace KI.UI.ViewModel
 {
     public class Vector2ViewModel : PropertyViewModelBase
     {
         Func<Vector2, bool> updateFunc;
+
         private Vector2 Model;
 
         public Vector2ViewModel(object owner, string name, Vector2 value)

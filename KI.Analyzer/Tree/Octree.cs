@@ -10,7 +10,7 @@ namespace KI.Analyzer
     /// <summary>
     /// オクトツリー
     /// </summary>
-    public class Octree : IAnalyzer
+    public class Octree
     {
         /// <summary>
         /// ルート

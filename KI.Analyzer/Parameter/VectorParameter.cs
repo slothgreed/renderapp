@@ -7,16 +7,18 @@ using OpenTK;
 
 namespace KI.Analyzer
 {
-    class VectorParameter : IParameter
+    public class VectorParameter<T>
     {
-        public void AddValue(object value)
+        private T[] values;
+
+        public VectorParameter(T[] val)
         {
-            throw new NotImplementedException();
+            values = val;
         }
 
-        public object GetValue(int index)
+        public T GetValue(int index)
         {
-            throw new NotImplementedException();
+            return values[index];
         }
     }
 }

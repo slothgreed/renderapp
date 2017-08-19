@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
+
 namespace KI.UI.ViewModel
 {
     public class Matrix3ViewModel : PropertyViewModelBase
     {
         Func<Matrix3, bool> updateFunc;
+
         private Matrix3 Model;
+
         public Matrix3ViewModel(object owner, string name, Matrix3 value)
         {
             Owner = owner;

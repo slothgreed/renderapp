@@ -25,6 +25,5 @@ namespace RenderApp.Globals
         /// レンダーシステム
         /// </summary>
         public static IRenderer RenderSystem { get; } = new RenderSystem();
-
     }
 }

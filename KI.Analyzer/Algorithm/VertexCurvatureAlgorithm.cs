@@ -1,14 +1,15 @@
-﻿using OpenTK;
-using System;
-using KI.Foundation.Utility;
+﻿using System;
 using System.Linq;
+using KI.Foundation.Utility;
+using OpenCvSharp;
+using OpenTK;
 
 namespace KI.Analyzer.Algorithm
 {
     /// <summary>
     /// 頂点曲率のアルゴリズム
     /// </summary>
-    public class VertexCurvatureAlgorithm : IAnalyzer
+    public class VertexCurvatureAlgorithm
     {
         /// <summary>
         /// コンストラクタ
@@ -16,12 +17,6 @@ namespace KI.Analyzer.Algorithm
         /// <param name="half">ハーフエッジ</param>
         public VertexCurvatureAlgorithm(HalfEdgeDS half)
         {
-            ScalarParameter param = new ScalarParameter();
-            Parameters.Add(VertexParam.Voronoi, new ScalarParameter());
-            Parameters.Add(VertexParam.GaussCurvature, new ScalarParameter());
-            Parameters.Add(VertexParam.MeanCurvature, new ScalarParameter());
-            Parameters.Add(VertexParam.MaxCurvature, new ScalarParameter());
-            Parameters.Add(VertexParam.MinCurvature, new ScalarParameter());
             Calculate(half);
         }
 
@@ -37,6 +32,7 @@ namespace KI.Analyzer.Algorithm
                 SetGaussianParameter(vertex);
                 SetMeanCurvature(vertex);
                 SetMaxMinCurvature(vertex);
+                SetPrincipalCurvature(vertex);
             }
         }
 
@@ -99,7 +95,8 @@ namespace KI.Analyzer.Algorithm
                 voronoi += area1 + area2;
             }
 
-            Parameters[VertexParam.Voronoi].AddValue(voronoi);
+            // TODO: not 1
+            voronoi = 1;
             vertex.AddParameter(VertexParam.Voronoi, voronoi);
         }
 
@@ -116,7 +113,6 @@ namespace KI.Analyzer.Algorithm
             }
 
             float value = (2 * MathHelper.Pi - angle) / (float)vertex.GetParameter(VertexParam.Voronoi);
-            Parameters[VertexParam.GaussCurvature].AddValue(value);
             vertex.AddParameter(VertexParam.GaussCurvature, value);
         }
 
@@ -137,20 +133,19 @@ namespace KI.Analyzer.Algorithm
                 alpha = (float)(Math.Cos(alpha) / Math.Sin(alpha));
                 beta = (float)(Math.Cos(beta) / Math.Sin(beta));
 
-                float angle =  (float)(alpha + beta) * length / 8;
-                float kapper = 2 * Vector3.Dot((edge.Start - edge.End), edge.Start.Normal) / length;
+                float angle = (alpha + beta) * length / 8;
+                float kapper = 2 * Vector3.Dot(edge.Start - edge.End, edge.Start.Normal) / length;
                 value += angle * kapper;
             }
 
             value /= (float)vertex.GetParameter(VertexParam.Voronoi);
-            Parameters[VertexParam.MeanCurvature].AddValue(value);
             vertex.AddParameter(VertexParam.MeanCurvature, value);
         }
 
         /// <summary>
         /// 最大・最小主曲率
         /// </summary>
-        /// <param name="vertex"></param>
+        /// <param name="vertex">頂点</param>
         private void SetMaxMinCurvature(Vertex vertex)
         {
             float mean = (float)vertex.GetParameter(VertexParam.MeanCurvature);
@@ -166,8 +161,6 @@ namespace KI.Analyzer.Algorithm
                 delta = 0;
             }
 
-            Parameters[VertexParam.MaxCurvature].AddValue(mean + delta);
-            Parameters[VertexParam.MinCurvature].AddValue(mean - delta);
             vertex.AddParameter(VertexParam.MaxCurvature, mean + delta);
             vertex.AddParameter(VertexParam.MinCurvature, mean - delta);
         }
@@ -175,94 +168,92 @@ namespace KI.Analyzer.Algorithm
         /// <summary>
         /// 接平面に投影した時のベクトル
         /// </summary>
-        /// <param name="v_index"></param>
-        private void SetPrincipalCurvature(int v_index)
+        /// <param name="vertex">頂点</param>
+        private void SetPrincipalCurvature(Vertex vertex)
         {
-            //List<Edge> around = GetAroundEdge(v_index);
-            //Vector3 edge;
-            //Vector3 numer;
-            //Vector3 denom;
-            //Vector3 tangent;
-            //Vector2 TangentUV;
-            //Matrix3 ellipse = new Matrix3();
-            //Vector3 kapper = new Vector3();
-            //edge = around[0].End.GetPosition() - around[0].Start.GetPosition();
-            //numer = edge - (Vector3.Dot(edge, m_Vertex[v_index].Normal) * m_Vertex[v_index].Normal);
-            //denom = new Vector3(numer.Length);
-            //float edge_Kapper;
-            ////基底Z方向ベクトル
-            //Vector3 Normal = m_Vertex[v_index].Normal;
-            ////基底U方向ベクトル
-            //Vector3 baseU = new Vector3(numer.X / denom.X, numer.Y / denom.Y, numer.Z / denom.Z);
-            //baseU.Normalize();
+            Vector3 edge = vertex.AroundEdge.First().End.Position - vertex.AroundEdge.First().Start.Position;
+            Vector3 numer = edge - (Vector3.Dot(edge, vertex.Normal) * vertex.Normal);
+            Vector3 denom = new Vector3(numer.Length);
+            Vector3 tangent;
+            Vector2 tangentUV;
+            Matrix3 ellipse = new Matrix3();
+            Vector3 kapper = new Vector3();
+            float edge_Kapper;
+            //基底Z方向ベクトル
+            Vector3 normal = vertex.Normal;
+            //基底U方向ベクトル
+            Vector3 baseU = new Vector3(numer.X / denom.X, numer.Y / denom.Y, numer.Z / denom.Z);
+            baseU.Normalize();
 
-            //float inner = Vector3.Dot(baseU, Normal);
-            ////基底V方向ベクトル
-            //Vector3 baseV = Vector3.Cross(baseU, Normal);
-            //baseV.Normalize();
+            float inner = Vector3.Dot(baseU, normal);
+            //基底V方向ベクトル
+            Vector3 baseV = Vector3.Cross(baseU, normal);
+            baseV.Normalize();
 
-            //for (int i = 0; i < around.Count; i++)
-            //{
-            //    edge = around[i].End.GetPosition() - around[i].Start.GetPosition();
-            //    numer = edge - (Vector3.Dot(edge, Normal) * Normal);
-            //    denom = new Vector3(numer.Length);
-            //    tangent = new Vector3(numer.X / denom.X, numer.Y / denom.Y, numer.Z / denom.Z);
-            //    TangentUV = new Vector2(Vector3.Dot(baseU, tangent), Vector3.Dot(baseV, tangent));
-            //    edge_Kapper = 2 * Vector3.Dot(-edge, Normal) / (edge).Length * (edge).Length;
+            foreach (var around in vertex.AroundEdge)
+            {
+                edge = around.End.Position - around.Start.Position;
+                numer = edge - (Vector3.Dot(edge, normal) * normal);
+                denom = new Vector3(numer.Length);
+                tangent = new Vector3(numer.X / denom.X, numer.Y / denom.Y, numer.Z / denom.Z);
+                tangentUV = new Vector2(Vector3.Dot(baseU, tangent), Vector3.Dot(baseV, tangent));
+                edge_Kapper = 2 * Vector3.Dot(-edge, normal) / edge.Length * edge.Length;
 
-            //    ellipse.M11 += (TangentUV.X * TangentUV.X * TangentUV.X * TangentUV.X);
-            //    ellipse.M12 += (TangentUV.X * TangentUV.X * TangentUV.X * TangentUV.Y);
-            //    ellipse.M13 += (TangentUV.X * TangentUV.X * TangentUV.Y * TangentUV.Y);
+                ellipse.M11 += tangentUV.X * tangentUV.X * tangentUV.X * tangentUV.X;
+                ellipse.M12 += tangentUV.X * tangentUV.X * tangentUV.X * tangentUV.Y;
+                ellipse.M13 += tangentUV.X * tangentUV.X * tangentUV.Y * tangentUV.Y;
 
-            //    ellipse.M21 += (TangentUV.X * TangentUV.X * TangentUV.X * TangentUV.Y);
-            //    ellipse.M22 += (TangentUV.X * TangentUV.X * TangentUV.Y * TangentUV.Y);
-            //    ellipse.M23 += (TangentUV.X * TangentUV.Y * TangentUV.Y * TangentUV.Y);
+                ellipse.M21 += tangentUV.X * tangentUV.X * tangentUV.X * tangentUV.Y;
+                ellipse.M22 += tangentUV.X * tangentUV.X * tangentUV.Y * tangentUV.Y;
+                ellipse.M23 += tangentUV.X * tangentUV.Y * tangentUV.Y * tangentUV.Y;
 
-            //    ellipse.M31 += (TangentUV.X * TangentUV.X * TangentUV.Y * TangentUV.Y);
-            //    ellipse.M32 += (TangentUV.X * TangentUV.Y * TangentUV.Y * TangentUV.Y);
-            //    ellipse.M33 += (TangentUV.Y * TangentUV.Y * TangentUV.Y * TangentUV.Y);
+                ellipse.M31 += tangentUV.X * tangentUV.X * tangentUV.Y * tangentUV.Y;
+                ellipse.M32 += tangentUV.X * tangentUV.Y * tangentUV.Y * tangentUV.Y;
+                ellipse.M33 += tangentUV.Y * tangentUV.Y * tangentUV.Y * tangentUV.Y;
 
-            //    kapper.X += edge_Kapper * TangentUV.X * TangentUV.X;
-            //    kapper.Y += edge_Kapper * TangentUV.X * TangentUV.Y;
-            //    kapper.Z += edge_Kapper * TangentUV.Y * TangentUV.Y;
+                kapper.X += edge_Kapper * tangentUV.X * tangentUV.X;
+                kapper.Y += edge_Kapper * tangentUV.X * tangentUV.Y;
+                kapper.Z += edge_Kapper * tangentUV.Y * tangentUV.Y;
+            }
 
-            //}
+            ellipse.Invert();
+            Vector3 result = KICalc.Multiply(ellipse, kapper);
+            float a = result.X;
+            float b = result.Y / 2;
+            float c = result.Z;
 
-            //ellipse.Invert();
-            //Vector3 result = CCalc.Multiply(ellipse, kapper);
-            //float a = result.X;
-            //float b = result.Y / 2;
-            //float c = result.Z;
-            //CvMat eigenVector;
-            //CvMat eigenValue;
-            //CvMat matEplise = Cv.CreateMat(2, 2, MatrixType.F32C1);
-            //matEplise.Set2D(0, 0, a);
-            //matEplise.Set2D(0, 1, b);
-            //matEplise.Set2D(1, 0, b);
-            //matEplise.Set2D(1, 1, c);
-            //eigenVector = Cv.CreateMat(2, 2, MatrixType.F32C1);
-            //eigenValue = Cv.CreateMat(1, 2, MatrixType.F32C1);
-            //Cv.Zero(eigenVector);
-            //Cv.Zero(eigenValue);
-            //Cv.EigenVV(matEplise, eigenVector, eigenValue);
+            CvMat eigenVector;
+            CvMat eigenValue;
+            CvMat matEplise = Cv.CreateMat(2, 2, MatrixType.F32C1);
+            matEplise.Set2D(0, 0, a);
+            matEplise.Set2D(0, 1, b);
+            matEplise.Set2D(1, 0, b);
+            matEplise.Set2D(1, 1, c);
+            eigenVector = Cv.CreateMat(2, 2, MatrixType.F32C1);
+            eigenValue = Cv.CreateMat(1, 2, MatrixType.F32C1);
+            Cv.Zero(eigenVector);
+            Cv.Zero(eigenValue);
+            Cv.EigenVV(matEplise, eigenVector, eigenValue);
 
-            //float max1 = (float)eigenVector.Get2D(0, 0).Val0;
-            //float max2 = (float)eigenVector.Get2D(0, 1).Val0;
-            //float min1 = (float)eigenVector.Get2D(1, 0).Val0;
-            //float min2 = (float)eigenVector.Get2D(1, 1).Val0;
+            float max1 = (float)eigenVector.Get2D(0, 0).Val0;
+            float max2 = (float)eigenVector.Get2D(0, 1).Val0;
+            float min1 = (float)eigenVector.Get2D(1, 0).Val0;
+            float min2 = (float)eigenVector.Get2D(1, 1).Val0;
 
-            //m_Vertex[v_index].MaxVector = new Vector3(
-            //    baseU.X * max1 + baseV.X * max2,
-            //    baseU.Y * max1 + baseV.Y * max2,
-            //    baseU.Z * max1 + baseV.Z * max2
-            //    ).Normalized();
-            //m_Vertex[v_index].MinVector = new Vector3(
-            //   baseU.X * min1 + baseV.X * min2,
-            //   baseU.Y * min1 + baseV.Y * min2,
-            //   baseU.Z * min1 + baseV.Z * min2
-            //   ).Normalized();
-            //float in1 = Vector3.Dot(m_Vertex[v_index].Normal, m_Vertex[v_index].MaxVector);
-            //float in2 = Vector3.Dot(m_Vertex[v_index].Normal, m_Vertex[v_index].MaxVector);
+            var maxVector = new Vector3(
+                baseU.X * max1 + baseV.X * max2,
+                baseU.Y * max1 + baseV.Y * max2,
+                baseU.Z * max1 + baseV.Z * max2).Normalized();
+
+            var minVector = new Vector3(
+               baseU.X * min1 + baseV.X * min2,
+               baseU.Y * min1 + baseV.Y * min2,
+               baseU.Z * min1 + baseV.Z * min2).Normalized();
+
+            vertex.AddParameter(VertexParam.MaxVector, maxVector);
+            vertex.AddParameter(VertexParam.MinVector, minVector);
+            //float in1 = Vector3.Dot(vertex.Normal, vertex.MaxVector);
+            //float in2 = Vector3.Dot(vertex.Normal, vertex.MinVector);
         }
     }
 }

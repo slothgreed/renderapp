@@ -7,7 +7,7 @@ namespace KI.Analyzer
     /// <summary>
     /// バウンディングボックス
     /// </summary>
-    public class BDB : IAnalyzer
+    public class BDB
     {
         /// <summary>
         /// コンストラクタ
@@ -41,10 +41,10 @@ namespace KI.Analyzer
         /// <summary>
         /// BDBの算出
         /// </summary>
-        public static void GetBoundBox(List<Vector3> position, out Vector3 Min, out Vector3 Max)
+        public static void GetBoundBox(List<Vector3> position, out Vector3 min, out Vector3 max)
         {
-            Vector3 min = new Vector3(float.MaxValue);
-            Vector3 max = new Vector3(float.MinValue);
+            min = new Vector3(float.MaxValue);
+            max = new Vector3(float.MinValue);
 
             for (int i = 0; i < position.Count; i++)
             {
@@ -55,9 +55,6 @@ namespace KI.Analyzer
                 if (max.Y < position[i].Y) { max.Y = position[i].Y; }
                 if (max.Z < position[i].Z) { max.Z = position[i].Z; }
             }
-
-            Min = new Vector3(min.X, min.Y, min.Z);
-            Max = new Vector3(max.X, max.Y, max.Z);
         }
 
         /// <summary>
