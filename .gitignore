@@ -1,6 +1,7 @@
 Resource/
 bin/
 obj/
+packages/
 *.suo
 *.Cache
 RenderApp.v12.suo
