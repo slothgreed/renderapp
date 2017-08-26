@@ -226,7 +226,7 @@ namespace KI.Analyzer.Algorithm.MarchingCube
                 return 1;
             }
 
-            if (voxel.State == Analyzer.VoxelState.Inner || voxel.State == Analyzer.VoxelState.Border)
+            if (voxel.State == Analyzer.VoxelState.Border)
             {
                 return 0.5f;
             }

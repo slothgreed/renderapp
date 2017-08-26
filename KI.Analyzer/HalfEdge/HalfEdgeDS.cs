@@ -15,6 +15,7 @@ namespace KI.Analyzer
         /// </summary>
         public HalfEdgeDS()
         {
+            Editor = new HalfEdgeDSEditor(this);
         }
 
         /// <summary>
@@ -23,9 +24,15 @@ namespace KI.Analyzer
         /// <param name="position">頂点座標リスト</param>
         /// <param name="polyIndex">「三角形を構成する頂点番号を格納したVector3」のリスト</param>
         public HalfEdgeDS(List<Vector3> position, List<int> polyIndex = null)
+            :this()
         {
             Initialize(position, polyIndex);
         }
+
+        /// <summary>
+        /// ハーフエッジのエディタ
+        /// </summary>
+        public HalfEdgeDSEditor Editor { get; private set; }
 
         /// <summary>
         /// メッシュリスト
