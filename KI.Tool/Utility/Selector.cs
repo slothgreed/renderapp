@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KI.Analyzer;
 using KI.Foundation.KIMath;
 using KI.Foundation.Tree;
 using KI.Foundation.Utility;
@@ -13,9 +14,9 @@ using OpenTK;
 namespace KI.Tool.Utility
 {
     /// <summary>
-    /// 選択関連のクラス
+    /// ハーフエッジの選択関連クラス
     /// </summary>
-    public static class Selector
+    public static class HalfEdgeDSSelector
     {
         /// <summary>
         /// 選択範囲閾値
@@ -27,9 +28,9 @@ namespace KI.Tool.Utility
         /// </summary>
         /// <param name="mouse">マウス座標</param>
         /// <param name="selectObject">選択形状</param>
-        /// <param name="selectIndex">選択頂点番号</param>
+        /// <param name="vertex">選択頂点番号</param>
         /// <returns>成功か</returns>
-        public static bool PickPoint(Vector2 mouse, ref RenderObject selectObject, ref int selectIndex)
+        public static bool PickPoint(Vector2 mouse, ref RenderObject selectObject, ref Vertex vertex)
         {
             bool select = false;
             float minLength = float.MaxValue;
@@ -49,7 +50,7 @@ namespace KI.Tool.Utility
                     continue;
                 }
 
-                if (PickPointCore(near, far, renderObject, ref minLength, ref selectIndex))
+                if (PickPointCore(near, far, renderObject, ref minLength, ref vertex))
                 {
                     selectObject = renderObject;
                     select = true;
@@ -64,9 +65,9 @@ namespace KI.Tool.Utility
         /// </summary>
         /// <param name="mouse">マウス</param>
         /// <param name="selectObject">選択形状</param>
-        /// <param name="line">線情報</param>
+        /// <param name="halfEdge">線情報</param>
         /// <returns>成功したか</returns>
-        public static bool PickLine(Vector2 mouse, ref RenderObject selectObject, ref Line line)
+        public static bool PickLine(Vector2 mouse, ref RenderObject selectObject, ref HalfEdge halfEdge)
         {
             float minLength = float.MaxValue;
             Vector3 near = Vector3.Zero;
@@ -86,7 +87,7 @@ namespace KI.Tool.Utility
                     continue;
                 }
 
-                if (PickLineCore(near, far, renderObject, ref minLength, ref line))
+                if (PickLineCore(near, far, renderObject, ref minLength, ref halfEdge))
                 {
                     selectObject = renderObject;
                 }
@@ -105,9 +106,9 @@ namespace KI.Tool.Utility
         /// </summary>
         /// <param name="mouse">マウス座標</param>
         /// <param name="selectObject">選択形状</param>
-        /// <param name="triangle">選択した三角形</param>
+        /// <param name="mesh">選択した三角形</param>
         /// <returns>成功か</returns>
-        public static bool PickTriangle(Vector2 mouse, ref RenderObject selectObject, ref Triangle triangle)
+        public static bool PickTriangle(Vector2 mouse, ref RenderObject selectObject, ref Mesh mesh)
         {
             float minLength = float.MaxValue;
             Vector3 near = Vector3.Zero;
@@ -127,13 +128,33 @@ namespace KI.Tool.Utility
                     continue;
                 }
 
-                if (PickTriangleCore(near, far, renderObject, ref minLength, ref triangle))
+                if (PickTriangleCore(near, far, renderObject, ref minLength, ref mesh))
                 {
                     selectObject = renderObject;
                 }
             }
 
             if (selectObject == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// 選択できるか
+        /// </summary>
+        /// <param name="selectObject">形状</param>
+        /// <returns></returns>
+        private static bool CanSelect(RenderObject selectObject)
+        {
+            if(selectObject == null)
+            {
+                return false;
+            }
+
+            if (selectObject.Geometry.HalfEdgeDS == null)
             {
                 return false;
             }
@@ -168,15 +189,20 @@ namespace KI.Tool.Utility
         /// <param name="far">遠クリップ面</param>
         /// <param name="renderObject">選択形状</param>
         /// <param name="minLength">この長さ以下の頂点を取得</param>
-        /// <param name="selectIndex">選択Index</param>
+        /// <param name="vertex">選択Index</param>
         /// <returns>成功か</returns>
-        private static bool PickPointCore(Vector3 near, Vector3 far, RenderObject renderObject, ref float minLength, ref int selectIndex)
+        private static bool PickPointCore(Vector3 near, Vector3 far, RenderObject renderObject, ref float minLength, ref Vertex vertex)
         {
+            if (!CanSelect(renderObject))
+            {
+                return false;
+            }
+
             bool select = false;
             Vector3 crossPos = Vector3.Zero;
-            for (int i = 0; i < renderObject.Geometry.Position.Count; i++)
+            for (int i = 0; i < renderObject.Geometry.HalfEdgeDS.Vertexs.Count; i++)
             {
-                Vector3 point = renderObject.Geometry.Position[i];
+                Vector3 point = renderObject.Geometry.HalfEdgeDS.Vertexs[i].Position;
                 point = KICalc.Multiply(renderObject.ModelMatrix, point);
 
                 if (KICalc.PerpendicularPoint(point, near, far, out crossPos))
@@ -189,7 +215,7 @@ namespace KI.Tool.Utility
                         if (length < minLength)
                         {
                             minLength = length;
-                            selectIndex = i;
+                            vertex = renderObject.Geometry.HalfEdgeDS.Vertexs[i];
                             select = true;
                         }
                     }
@@ -206,54 +232,28 @@ namespace KI.Tool.Utility
         /// <param name="far">遠クリップ面</param>
         /// <param name="renderObject">選択形状</param>
         /// <param name="minLength">この長さ以下の頂点を取得</param>
-        /// <param name="line">選択Line</param>
+        /// <param name="halfEdge">選択Line</param>
         /// <returns></returns>
-        private static bool PickLineCore(Vector3 near, Vector3 far, RenderObject renderObject, ref float minLength, ref Line line)
+        private static bool PickLineCore(Vector3 near, Vector3 far, RenderObject renderObject, ref float minLength, ref HalfEdge halfEdge)
         {
+            if (!CanSelect(renderObject))
+            {
+                return false;
+            }
+
             bool select = false;
             float distance = 0;
 
             if (renderObject.Geometry.Index.Count != 0)
             {
-                for (int i = 0; i < renderObject.Geometry.Index.Count; i += 3)
+                for (int i = 0; i < renderObject.Geometry.HalfEdgeDS.Edges.Count; i++)
                 {
-                    Vector3 vertex1 = renderObject.Geometry.Position[renderObject.Geometry.Index[i]];
-                    Vector3 vertex2 = renderObject.Geometry.Position[renderObject.Geometry.Index[i + 1]];
-                    Vector3 vertex3 = renderObject.Geometry.Position[renderObject.Geometry.Index[i + 2]];
-                    Vector3 multiVertex1 = KICalc.Multiply(renderObject.ModelMatrix, vertex1);
-                    Vector3 multiVertex2 = KICalc.Multiply(renderObject.ModelMatrix, vertex2);
-                    Vector3 multiVertex3 = KICalc.Multiply(renderObject.ModelMatrix, vertex3);
-                    if (KICalc.DistanceLineToLine(near, far, multiVertex1, multiVertex2, out distance))
-                    {
-                        //線分から点までの距離が範囲内の頂点のうち
-                        if (distance < THRESHOLD)
-                        {
-                            //最も視点に近い点を取得
-                            if (distance < minLength)
-                            {
-                                minLength = distance;
-                                line = new Line(vertex1, vertex2);
-                                select = true;
-                            }
-                        }
-                    }
+                    HalfEdge edge = renderObject.Geometry.HalfEdgeDS.Edges[i];
 
-                    if (KICalc.DistanceLineToLine(near, far, multiVertex2, multiVertex3, out distance))
-                    {
-                        //線分から点までの距離が範囲内の頂点のうち
-                        if (distance < THRESHOLD)
-                        {
-                            //最も視点に近い点を取得
-                            if (distance < minLength)
-                            {
-                                minLength = distance;
-                                line = new Line(vertex2, vertex3);
-                                select = true;
-                            }
-                        }
-                    }
+                    Vector3 startPos = KICalc.Multiply(renderObject.ModelMatrix, edge.Start.Position);
+                    Vector3 endPos = KICalc.Multiply(renderObject.ModelMatrix, edge.End.Position);
 
-                    if (KICalc.DistanceLineToLine(near, far, multiVertex3, multiVertex1, out distance))
+                    if (KICalc.DistanceLineToLine(near, far, startPos, endPos, out distance))
                     {
                         //線分から点までの距離が範囲内の頂点のうち
                         if (distance < THRESHOLD)
@@ -262,64 +262,7 @@ namespace KI.Tool.Utility
                             if (distance < minLength)
                             {
                                 minLength = distance;
-                                line = new Line(vertex3, vertex1);
-                                select = true;
-                            }
-                        }
-                    }
-                }
-            }
-            else
-            {
-                for (int i = 0; i < renderObject.Geometry.Position.Count / 3; i++)
-                {
-                    Vector3 vertex1 = renderObject.Geometry.Position[3 * i];
-                    Vector3 vertex2 = renderObject.Geometry.Position[3 * i + 1];
-                    Vector3 vertex3 = renderObject.Geometry.Position[3 * i + 2];
-                    Vector3 multiVertex1 = KICalc.Multiply(renderObject.ModelMatrix, vertex1);
-                    Vector3 multiVertex2 = KICalc.Multiply(renderObject.ModelMatrix, vertex2);
-                    Vector3 multiVertex3 = KICalc.Multiply(renderObject.ModelMatrix, vertex3);
-
-                    if (KICalc.DistanceLineToLine(near, far, multiVertex1, multiVertex2, out distance))
-                    {
-                        //線分から点までの距離が範囲内の頂点のうち
-                        if (distance < THRESHOLD)
-                        {
-                            //最も視点に近い点を取得
-                            if (distance < minLength)
-                            {
-                                minLength = distance;
-                                line = new Line(vertex1, vertex2);
-                                select = true;
-                            }
-                        }
-                    }
-
-                    if (KICalc.DistanceLineToLine(near, far, multiVertex2, multiVertex3, out distance))
-                    {
-                        //線分から点までの距離が範囲内の頂点のうち
-                        if (distance < THRESHOLD)
-                        {
-                            //最も視点に近い点を取得
-                            if (distance < minLength)
-                            {
-                                minLength = distance;
-                                line = new Line(vertex2, vertex3);
-                                select = true;
-                            }
-                        }
-                    }
-
-                    if (KICalc.DistanceLineToLine(near, far, multiVertex3, multiVertex1, out distance))
-                    {
-                        //線分から点までの距離が範囲内の頂点のうち
-                        if (distance < THRESHOLD)
-                        {
-                            //最も視点に近い点を取得
-                            if (distance < minLength)
-                            {
-                                minLength = distance;
-                                line = new Line(vertex3, vertex1);
+                                halfEdge = edge;
                                 select = true;
                             }
                         }
@@ -337,44 +280,29 @@ namespace KI.Tool.Utility
         /// <param name="far">遠クリップ面</param>
         /// <param name="renderObject">選択形状</param>
         /// <param name="minLength">この長さ以下の頂点を取得</param>
-        /// <param name="triangle">選択Triangle</param>
+        /// <param name="mesh">選択Triangle</param>
         /// <returns>成功か</returns>
-        private static bool PickTriangleCore(Vector3 near, Vector3 far, RenderObject renderObject, ref float minLength, ref Triangle triangle)
+        private static bool PickTriangleCore(Vector3 near, Vector3 far, RenderObject renderObject, ref float minLength, ref Mesh mesh)
         {
+            if (!CanSelect(renderObject))
+            {
+                return false;
+            }
+
             bool select = false;
             //頂点配列の時
             if (renderObject.Geometry.Index.Count != 0)
             {
-                for (int i = 0; i < renderObject.Geometry.Index.Count; i += 3)
+                for (int i = 0; i < renderObject.Geometry.HalfEdgeDS.Meshs.Count; i++)
                 {
-                    Vector3 vertex1 = renderObject.Geometry.Position[renderObject.Geometry.Index[i]];
-                    Vector3 vertex2 = renderObject.Geometry.Position[renderObject.Geometry.Index[i + 1]];
-                    Vector3 vertex3 = renderObject.Geometry.Position[renderObject.Geometry.Index[i + 2]];
-                    Vector3 multiVertex1 = KICalc.Multiply(renderObject.ModelMatrix, vertex1);
-                    Vector3 multiVertex2 = KICalc.Multiply(renderObject.ModelMatrix, vertex2);
-                    Vector3 multiVertex3 = KICalc.Multiply(renderObject.ModelMatrix, vertex3);
+                    var vertexs = renderObject.Geometry.HalfEdgeDS.Meshs[i].AroundVertex.ToArray();
+                    Vector3 multiVertex1 = KICalc.Multiply(renderObject.ModelMatrix, vertexs[0].Position);
+                    Vector3 multiVertex2 = KICalc.Multiply(renderObject.ModelMatrix, vertexs[1].Position);
+                    Vector3 multiVertex3 = KICalc.Multiply(renderObject.ModelMatrix, vertexs[2].Position);
                     Vector3 result = Vector3.Zero;
                     if (KICalc.CrossPlanetoLinePos(multiVertex1, multiVertex2, multiVertex3, near, far, ref minLength, out result))
                     {
-                        triangle = new Triangle(vertex1, vertex2, vertex3);
-                        select = true;
-                    }
-                }
-            }
-            else
-            {
-                for (int i = 0; i < renderObject.Geometry.Position.Count / 3; i++)
-                {
-                    Vector3 vertex1 = renderObject.Geometry.Position[3 * i];
-                    Vector3 vertex2 = renderObject.Geometry.Position[3 * i + 1];
-                    Vector3 vertex3 = renderObject.Geometry.Position[3 * i + 2];
-                    Vector3 multiVertex1 = KICalc.Multiply(renderObject.ModelMatrix, vertex1);
-                    Vector3 multiVertex2 = KICalc.Multiply(renderObject.ModelMatrix, vertex2);
-                    Vector3 multiVertex3 = KICalc.Multiply(renderObject.ModelMatrix, vertex3);
-                    Vector3 result = Vector3.Zero;
-                    if (KICalc.CrossPlanetoLinePos(multiVertex1, multiVertex2, multiVertex3, near, far, ref minLength, out result))
-                    {
-                        triangle = new Triangle(vertex1, vertex2, vertex3);
+                        mesh = renderObject.Geometry.HalfEdgeDS.Meshs[i];
                         select = true;
                     }
                 }

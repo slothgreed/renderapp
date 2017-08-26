@@ -1,4 +1,5 @@
-﻿using KI.Asset;
+﻿using System;
+using KI.Asset;
 using KI.Foundation.Core;
 using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
@@ -101,7 +102,10 @@ namespace KI.Renderer
         /// <param name="geometry">形状情報</param>
         public void SetGeometryInfo(Geometry geometry)
         {
+            geometry.GeometryUpdate -= UpdateGeometry;
             Geometry = geometry;
+            Geometry.GeometryUpdate += UpdateGeometry;
+
             Initialize();
         }
 
@@ -205,6 +209,11 @@ namespace KI.Renderer
 
                 IndexBuffer.SetData(Geometry.Index, EArrayType.IntArray);
             }
+        }
+
+        private void UpdateGeometry(object sender, EventArgs e)
+        {
+            SetupBuffer();
         }
     }
 }

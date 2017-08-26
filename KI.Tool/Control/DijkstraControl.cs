@@ -30,12 +30,12 @@ namespace KI.Tool.Control
         /// <summary>
         /// 選択した形状の頂点1
         /// </summary>
-        private int selectStartIndex = -1;
+        private Vertex selectStart = null;
 
         /// <summary>
         /// 選択した形状の頂点2
         /// </summary>
-        private int selectEndIndex = -1;
+        private Vertex selectEnd = null;
 
         /// <summary>
         /// マウス押下
@@ -47,48 +47,47 @@ namespace KI.Tool.Control
             RenderObject renderObject = null;
             if (mouse.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                var vertex_Index = 0;
-                if (Selector.PickPoint(leftMouse.Click, ref renderObject, ref vertex_Index))
+                Vertex vertex = null;
+                if (HalfEdgeDSSelector.PickPoint(leftMouse.Click, ref renderObject, ref vertex))
                 {
                     // 初回
                     if (selectObject == null)
                     {
                         selectObject = renderObject;
-                        selectStartIndex = vertex_Index;
+                        selectStart = vertex;
                     }
                     else if (selectObject != renderObject)
                     {
                         Global.RenderSystem.ActiveScene.DeleteObject("Picking");
                         // 前回と選択した形状が違う
                         selectObject = renderObject;
-                        selectStartIndex = vertex_Index;
+                        selectStart = vertex;
                     }
                     else
                     {
                         // 前回と選択した形状が同じ
-                        if (selectStartIndex == -1)
+                        if (selectStart == null)
                         {
-                            selectStartIndex = vertex_Index;
+                            selectStart = vertex;
                         }
                         else
                         {
-                            selectEndIndex = vertex_Index;
+                            selectEnd = vertex;
                         }
                     }
 
-                    Vector3 vertex = renderObject.Geometry.Position[vertex_Index];
-                    RenderObject point = RenderObjectFactory.Instance.CreateRenderObject("Picking");
-                    Geometry geometry = new Geometry("Picking", new List<Vector3>() { vertex }, null, KICalc.RandomColor(), null, null, GeometryType.Point);
-                    point.SetGeometryInfo(geometry);
-                    point.ModelMatrix = selectObject.ModelMatrix;
-                    Global.RenderSystem.ActiveScene.AddObject(point);
+                    RenderObject pointObject = RenderObjectFactory.Instance.CreateRenderObject("Picking");
+                    Geometry geometry = new Geometry("Picking", new List<Vector3>() { vertex.Position }, null, KICalc.RandomColor(), null, null, GeometryType.Point);
+                    pointObject.SetGeometryInfo(geometry);
+                    pointObject.ModelMatrix = selectObject.ModelMatrix;
+                    Global.RenderSystem.ActiveScene.AddObject(pointObject);
 
-                    if (selectStartIndex != -1 && selectEndIndex != -1)
+                    if (selectStart != null && selectEnd != null)
                     {
                         Execute();
                         selectObject = null;
-                        selectStartIndex = -1;
-                        selectEndIndex = -1;
+                        selectStart = null;
+                        selectEnd = null;
                         Global.RenderSystem.ActiveScene.DeleteObject("Picking");
                     }
                 }
@@ -113,7 +112,7 @@ namespace KI.Tool.Control
         /// <returns>成功</returns>
         private bool Execute()
         {
-            dijkstra = new DijkstraAlgorithm(selectObject.Geometry.HalfEdgeDS, selectStartIndex, selectEndIndex);
+            dijkstra = new DijkstraAlgorithm(selectObject.Geometry.HalfEdgeDS, selectStart, selectEnd);
             dijkstra.Execute();
 
             RenderObject lines = RenderObjectFactory.Instance.CreateRenderObject("DijkstraLine");

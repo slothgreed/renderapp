@@ -97,7 +97,7 @@ namespace KI.Analyzer
             {
                 if (radian == 0.0f)
                 {
-                    radian = KICalc.Radian((End - Start), (Before.Opposite.End - Before.Opposite.Start));
+                    radian = KICalc.Radian(End - Start, Before.Opposite.End - Before.Opposite.Start);
                 }
 
                 return radian;

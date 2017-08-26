@@ -53,21 +53,12 @@ namespace KI.Asset
             var normal = new List<Vector3>();
             var color = new List<Vector3>();
             var index = new List<int>();
-
-            var gray = new Vector3(0.8f);
-            foreach (var vertex in halfEdge.Vertexs)
-            {
-                position.Add(vertex.Position);
-                normal.Add(vertex.Normal);
-                color.Add(gray);
-            }
-
+            position = halfEdge.Vertexs.Select(p => p.Position).ToList();
+            normal = halfEdge.Vertexs.Select(p => p.Normal).ToList();
+            color = halfEdge.Vertexs.Select(p => p.Color).ToList();
             foreach (var mesh in halfEdge.Meshs)
             {
-                foreach (var vertex in mesh.AroundVertex)
-                {
-                    index.Add(vertex.Index);
-                }
+                index.AddRange(mesh.AroundVertex.Select(p => p.Index));
             }
 
             Geometry geometry = new Geometry("HalfEdge", position, normal, color, null, index, Gfx.GLUtil.GeometryType.Triangle);

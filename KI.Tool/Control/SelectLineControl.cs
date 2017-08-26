@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using KI.Analyzer;
 using KI.Asset;
 using KI.Foundation.KIMath;
 using KI.Gfx.GLUtil;
@@ -23,15 +24,14 @@ namespace KI.Tool.Control
             if (mouse.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 RenderObject renderObject = null;
-                Line line = null;
+                HalfEdge halfEdge = null;
 
-                if (Selector.PickLine(leftMouse.Click, ref renderObject, ref line))
+                if (HalfEdgeDSSelector.PickLine(leftMouse.Click, ref renderObject, ref halfEdge))
                 {
-                    RenderObject lineObject = RenderObjectFactory.Instance.CreateRenderObject("selectLine :" + renderObject.Name);
+                    halfEdge.Start.IsSelect = true;
+                    halfEdge.End.IsSelect = true;
 
-                    lineObject.SetGeometryInfo(new Geometry("select", new List<Vector3>() { line.Start,line.End }, null, Vector3.UnitX, null, null, GeometryType.Line));
-                    lineObject.ModelMatrix = renderObject.ModelMatrix;
-                    Global.RenderSystem.ActiveScene.AddObject(lineObject);
+                    renderObject.Geometry.UpdateHalfEdge();
                 }
             }
 

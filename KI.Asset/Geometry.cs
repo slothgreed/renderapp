@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using KI.Analyzer;
 using KI.Foundation.Core;
 using KI.Foundation.Utility;
@@ -25,6 +27,11 @@ namespace KI.Asset
     public class Geometry : KIObject
     {
         #region Propety
+
+        /// <summary>
+        /// 形状情報更新イベント
+        /// </summary>
+        public EventHandler GeometryUpdate { get; set; }
 
         /// <summary>
         /// 頂点リスト
@@ -187,6 +194,30 @@ namespace KI.Asset
             }
         }
 
+        public void UpdateHalfEdge()
+        {
+            if(HalfEdgeDS == null)
+            {
+                return;
+            }
+
+            position.Clear();
+            normal.Clear();
+            color.Clear();
+            index.Clear();
+
+            position = HalfEdgeDS.Vertexs.Select(p => p.Position).ToList();
+            normal = HalfEdgeDS.Vertexs.Select(p => p.Normal).ToList();
+            color = HalfEdgeDS.Vertexs.Select(p => p.Color).ToList();
+
+            foreach (var mesh in HalfEdgeDS.Meshs)
+            {
+                index.AddRange(mesh.AroundVertex.Select(p => p.Index));
+            }
+
+            OnUpdate();
+        }
+
         /// <summary>
         /// 更新
         /// </summary>
@@ -224,6 +255,8 @@ namespace KI.Asset
             }
 
             GeometryType = type;
+
+            OnUpdate();
         }
 
         /// <summary>
@@ -267,6 +300,8 @@ namespace KI.Asset
             }
 
             GeometryType = type;
+
+            OnUpdate();
         }
 
         #region [convert mesh]
@@ -469,6 +504,14 @@ namespace KI.Asset
                 default:
                     break;
             }
+        }
+
+        /// <summary>
+        /// 形状情報更新イベント
+        /// </summary>
+        private void OnUpdate()
+        {
+            GeometryUpdate?.Invoke(this, EventArgs.Empty);
         }
     }
 }

@@ -26,6 +26,16 @@ namespace KI.Analyzer
     public class Vertex
     {
         /// <summary>
+        /// 選択色
+        /// </summary>
+        public readonly Vector3 SELECT_COLOR = Vector3.UnitY;
+
+        /// <summary>
+        /// 選択中か
+        /// </summary>
+        private bool isSelect = false;
+        
+        /// <summary>
         /// 法線
         /// </summary>
         private Vector3 normal = Vector3.Zero;
@@ -49,6 +59,7 @@ namespace KI.Analyzer
         {
             parameter = new Dictionary<VertexParam, object>();
             Position = pos;
+            Color = new Vector3(0.8f);
             Index = index;
         }
 
@@ -57,6 +68,11 @@ namespace KI.Analyzer
         /// </summary>
         public Vector3 Position { get; set; }
 
+        /// <summary>
+        /// 色情報
+        /// </summary>
+        public Vector3 Color { get;　private set; }
+        
         /// <summary>
         /// HalfEdgeでもつm_VertexのIndex番号
         /// </summary>
@@ -71,6 +87,26 @@ namespace KI.Analyzer
         /// 削除フラグ。Updateが走ると必ず削除するべきもの
         /// </summary>
         public bool DeleteFlag { get; set; }
+
+        /// <summary>
+        /// 選択中か
+        /// </summary>
+        public bool IsSelect
+        {
+            get
+            {
+                return isSelect;
+            }
+
+            set
+            {
+                isSelect = value;
+                if (isSelect == true)
+                {
+                    Color = SELECT_COLOR;
+                }
+            }
+        }
 
         /// <summary>
         /// 頂点に不正があるか

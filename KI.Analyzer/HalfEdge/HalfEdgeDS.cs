@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using KI.Foundation.Utility;
 using OpenTK;
 
@@ -16,12 +17,6 @@ namespace KI.Analyzer
         {
         }
 
-        public List<Mesh> Meshs { get; set; } = new List<Mesh>();
-
-        public List<HalfEdge> Edges { get; set; } = new List<HalfEdge>();
-
-        public List<Vertex> Vertexs { get; set; } = new List<Vertex>();
-
         /// <summary>
         /// メッシュのインデックスと、頂点を受け取る
         /// </summary>
@@ -33,21 +28,19 @@ namespace KI.Analyzer
         }
 
         /// <summary>
-        /// ハーフエッジがエラーを持つかチェック
+        /// メッシュリスト
         /// </summary>
-        /// <returns></returns>
-        public bool ErrorHalfEdge()
-        {
-            foreach (var vertex in Vertexs)
-            {
-                if (vertex.ErrorVertex)
-                {
-                    return true;
-                }
-            }
+        public List<Mesh> Meshs { get; set; } = new List<Mesh>();
 
-            return false;
-        }
+        /// <summary>
+        /// エッジリスト
+        /// </summary>
+        public List<HalfEdge> Edges { get; set; } = new List<HalfEdge>();
+        
+        /// <summary>
+        /// 頂点リスト
+        /// </summary>
+        public List<Vertex> Vertexs { get; set; } = new List<Vertex>();
 
         /// <summary>
         /// エッジの取得
@@ -57,15 +50,7 @@ namespace KI.Analyzer
         /// <returns>エッジ</returns>
         public HalfEdge GetEdge(Vertex start, Vertex end)
         {
-            foreach (var edge in start.AroundEdge)
-            {
-                if (edge.Start == start && edge.End == end)
-                {
-                    return edge;
-                }
-            }
-
-            return null;
+            return start.AroundEdge.Where(p => p.Start == start && p.End == end).FirstOrDefault();
         }
 
         /// <summary>
@@ -89,6 +74,19 @@ namespace KI.Analyzer
         }
 
         /// <summary>
+        /// 選択頂点を削除
+        /// </summary>
+        public void ClearSelection()
+        {
+            foreach (var vertex in Vertexs)
+            {
+                vertex.IsSelect = false;
+            }
+        }
+
+        #region [make halfedge data structure]
+
+        /// <summary>
         /// 初期化
         /// </summary>
         /// <param name="position">頂点</param>
@@ -107,23 +105,16 @@ namespace KI.Analyzer
 
             SetOppositeEdge();
 
-            //for (int i = 0; i < m_Vertex.Count; i++ )
-            //{
-            //    VertexDecimation(m_Vertex[i].m_Edge.Start, m_Vertex[i].m_Edge.End);
-            //}
-
             if (CheckOppositeEdge())
             {
                 Logger.Log(Logger.LogLevel.Debug, "Create Half Edge OK!");
             }
         }
 
-        #region [make halfedge data structure]
         /// <summary>
         /// ハーフエッジ用のリストに頂点を格納
         /// </summary>
-        /// <param name="vertexList"></param>
-        /// <param name="checkOverlap">重複チェック</param>
+        /// <param name="vertexList">頂点リスト</param>
         private void MakeVertexListByVertexIndex(List<Vector3> vertexList)
         {
             for (int i = 0; i < vertexList.Count; i++)
@@ -195,14 +186,15 @@ namespace KI.Analyzer
         /// <summary>
         /// 頂点番号を持つエッジと面を生成
         /// </summary>
-        private void MakeEdgeListByVertexIndex(List<int> poly_Index)
+        /// <param name="polyIndex">頂点配列</param>
+        private void MakeEdgeListByVertexIndex(List<int> polyIndex)
         {
-            int poly_Num = poly_Index.Count / 3;
+            int poly_Num = polyIndex.Count / 3;
             for (int num = 0; num < poly_Num; num++)
             {
-                Vertex v1 = Vertexs[poly_Index[3 * num]];
-                Vertex v2 = Vertexs[poly_Index[3 * num + 1]];
-                Vertex v3 = Vertexs[poly_Index[3 * num + 2]];
+                Vertex v1 = Vertexs[polyIndex[3 * num]];
+                Vertex v2 = Vertexs[polyIndex[3 * num + 1]];
+                Vertex v3 = Vertexs[polyIndex[3 * num + 2]];
                 CreateMesh(v1, v2, v3);
             }
         }

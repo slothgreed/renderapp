@@ -74,11 +74,11 @@ namespace KI.Analyzer
         /// <param name="half">ハーフエッジ</param>
         /// <param name="start">開始位置</param>
         /// <param name="end">終了位置</param>
-        public DijkstraAlgorithm(HalfEdgeDS half, int start, int end)
+        public DijkstraAlgorithm(HalfEdgeDS half, Vertex start, Vertex end)
         {
             halfEdge = half;
-            startIndex = start;
-            endIndex = end; 
+            startIndex = start.Index;
+            endIndex = end.Index; 
         }
 
         /// <summary>

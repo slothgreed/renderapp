@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using KI.Analyzer;
 using KI.Asset;
 using KI.Foundation.KIMath;
 using KI.Gfx.GLUtil;
@@ -23,18 +24,15 @@ namespace KI.Tool.Control
             if (mouse.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 RenderObject renderObject = null;
-                Triangle triangle = null;
+                Mesh mesh = null;
 
-                if (Selector.PickTriangle(leftMouse.Click, ref renderObject, ref triangle))
+                if (HalfEdgeDSSelector.PickTriangle(leftMouse.Click, ref renderObject, ref mesh))
                 {
-                    RenderObject point = RenderObjectFactory.Instance.CreateRenderObject("SelectTriangle :" + renderObject.Name);
-                    Vector3 tri0 = triangle.Vertex0 + triangle.Normal * 0.01f;
-                    Vector3 tri1 = triangle.Vertex1 + triangle.Normal * 0.01f;
-                    Vector3 tri2 = triangle.Vertex2 + triangle.Normal * 0.01f;
-
-                    point.SetGeometryInfo(new Geometry("select", new List<Vector3>() { tri0, tri1, tri2 }, null, Vector3.UnitX, null, null, GeometryType.Triangle));
-                    point.ModelMatrix = renderObject.ModelMatrix;
-                    Global.RenderSystem.ActiveScene.AddObject(point);
+                    foreach (var vertex in mesh.AroundVertex)
+                    {
+                        vertex.IsSelect = true;
+                        renderObject.Geometry.UpdateHalfEdge();
+                    }
                 }
             }
 

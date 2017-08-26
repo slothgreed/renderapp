@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using KI.Analyzer;
 using KI.Asset;
 using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
@@ -21,15 +22,13 @@ namespace KI.Tool.Control
         public override bool Down(System.Windows.Forms.MouseEventArgs mouse)
         {
             RenderObject renderObject = null;
-            int vertex_Index = 0;
+            Vertex vertex = null;
 
-            if (Selector.PickPoint(leftMouse.Click, ref renderObject, ref vertex_Index))
+            if (HalfEdgeDSSelector.PickPoint(leftMouse.Click, ref renderObject, ref vertex))
             {
-                Vector3 pos = renderObject.Geometry.Position[vertex_Index];
-                RenderObject point = RenderObjectFactory.Instance.CreateRenderObject("SelectPoint :" + renderObject.Name + ":" + vertex_Index.ToString());
-                point.SetGeometryInfo(new Geometry("select", new List<Vector3>() { pos }, null, KICalc.RandomColor(), null, null, GeometryType.Point));
-                point.ModelMatrix = renderObject.ModelMatrix;
-                Global.RenderSystem.ActiveScene.AddObject(point);
+                vertex.IsSelect = true;
+                renderObject.Geometry.UpdateHalfEdge();
+
             }
 
             return true;
