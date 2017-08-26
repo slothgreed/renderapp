@@ -73,6 +73,8 @@
         Default,
         Dijkstra,
         SelectPoint,
-        SelectTriangle
+        SelectTriangle,
+        SelectLine,
+        EdgeFlips
     }
 }

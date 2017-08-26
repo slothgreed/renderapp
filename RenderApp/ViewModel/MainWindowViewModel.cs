@@ -373,6 +373,12 @@ namespace RenderApp.ViewModel
                 case RAController.SelectTriangle:
                     ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.SelectTriangle;
                     break;
+                case RAController.SelectLine:
+                    ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.SelectLine;
+                    break;
+                case RAController.EdgeFlips:
+                    ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.EdgeFlips;
+                    break;
             }
 
             OnPropertyChanged("ControlMode");
