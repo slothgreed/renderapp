@@ -64,7 +64,9 @@
     <Compile Include="Control\CameraControl.cs" />
     <Compile Include="Control\ControlManager.cs" />
     <Compile Include="Control\DijkstraControl.cs" />
+    <Compile Include="Control\EdgeFlipsControl.cs" />
     <Compile Include="Control\IControl.cs" />
+    <Compile Include="Control\SelectLineControl.cs" />
     <Compile Include="Control\SelectPointControl.cs" />
     <Compile Include="Control\SelectTriangleControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

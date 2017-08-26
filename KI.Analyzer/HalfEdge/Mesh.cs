@@ -7,7 +7,7 @@ using OpenTK;
 namespace KI.Analyzer
 {
     /// <summary>
-    /// メッシュ (Triangle only)
+    /// メッシュ
     /// </summary>
     public class Mesh
     {

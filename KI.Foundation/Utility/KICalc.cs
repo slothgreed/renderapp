@@ -701,6 +701,63 @@ namespace KI.Foundation.Utility
         }
 
         /// <summary>
+        /// 線と線の距離
+        /// </summary>
+        /// <param name="start0">始点0</param>
+        /// <param name="end0">終点0</param>
+        /// <param name="start1">始点1</param>
+        /// <param name="end1">終点1</param>
+        /// <param name="distance">距離</param>
+        /// <returns>成功</returns>
+        public static bool DistanceLineToLine(Vector3 start0, Vector3 end0, Vector3 start1, Vector3 end1,out float distance)
+        {
+            distance = float.MaxValue;
+
+            Vector3 result0 = Vector3.Zero;
+            Vector3 result1 = Vector3.Zero;
+
+            Vector3 p1 = start0;
+            Vector3 p2 = end0;
+            Vector3 p3 = start1;
+            Vector3 p4 = end1;
+            Vector3 p13 = p1 - p3;
+            Vector3 p43 = p4 - p3;
+
+            if (p43.Length < THRESHOLD05)
+            {
+                return false;
+            }
+
+            Vector3 p21 = p2 - p1;
+            if (p21.Length < THRESHOLD05)
+            {
+                return false;
+            }
+
+            float d1343 = p13.X * p43.X + p13.Y * p43.Y + p13.Z * p43.Z;
+            float d4321 = p43.X * p21.X + p43.Y * p21.Y + p43.Z * p21.Z;
+            float d1321 = p13.X * p21.X + p13.Y * p21.Y + p13.Z * p21.Z;
+            float d4343 = p43.X * p43.X + p43.Y * p43.Y + p43.Z * p43.Z;
+            float d2121 = p21.X * p21.X + p21.Y * p21.Y + p21.Z * p21.Z;
+
+            float denom = d2121 * d4343 - d4321 * d4321;
+            if (Math.Abs(denom) < THRESHOLD05)
+            {
+                return false;
+            }
+            float numer = d1343 * d4321 - d1321 * d4343;
+
+            float mua = numer / denom;
+            float mub = (d1343 + d4321 * (mua)) / d4343;
+
+            result0 = (p1 + mua * p21);
+            result1 = (p3 + mub * p43);
+
+            distance = (result0 - result1).Length;
+            return true;
+        }
+
+        /// <summary>
         /// 垂線の足を算出する
         /// </summary>
         /// <param name="result">結果</param>

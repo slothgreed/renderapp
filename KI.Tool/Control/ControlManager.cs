@@ -25,6 +25,7 @@ namespace KI.Tool.Control
         private ControlManager()
         {
             Controllers.Add(CONTROL_MODE.SelectTriangle, new SelectTriangleControl());
+            Controllers.Add(CONTROL_MODE.SelectLine, new SelectLineControl());
             Controllers.Add(CONTROL_MODE.Dijkstra, new DijkstraControl());
             Controllers.Add(CONTROL_MODE.SelectPoint, new SelectPointControl());
             cameraController = new CameraControl();
@@ -36,8 +37,9 @@ namespace KI.Tool.Control
         public enum CONTROL_MODE
         {
             SelectTriangle,
-            Dijkstra,
-            SelectPoint
+            SelectLine,
+            SelectPoint,
+            Dijkstra
         }
 
         /// <summary>
