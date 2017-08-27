@@ -46,7 +46,7 @@ namespace KI.Tool.Command
         /// <returns>成功値</returns>
         public CommandResult Execute(string commandArg)
         {
-            ConvexHullAlgorithm convexHull = new ConvexHullAlgorithm(renderObject.Geometry.Position);
+            ConvexHullAlgorithm convexHull = new ConvexHullAlgorithm(renderObject.Geometry.Vertexs);
             List<Vector3> position = new List<Vector3>();
             foreach (var mesh in convexHull.Meshs)
             {

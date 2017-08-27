@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using KI.Foundation.KIMath;
 using KI.Foundation.Utility;
 using OpenTK;
 
@@ -23,7 +24,7 @@ namespace KI.Analyzer
     /// <summary>
     /// 頂点クラス
     /// </summary>
-    public class Vertex
+    public class HalfEdgeVertex : Vertex
     {
         /// <summary>
         /// 選択色
@@ -55,28 +56,14 @@ namespace KI.Analyzer
         /// </summary>
         /// <param name="pos">座標</param>
         /// <param name="index">要素番号</param>
-        public Vertex(Vector3 pos, int index = -1)
+        public HalfEdgeVertex(Vector3 pos, int index = -1)
+            : base(pos, Vector3.Zero, Vector3.Zero, Vector2.Zero, index)
         {
             parameter = new Dictionary<VertexParam, object>();
             Position = pos;
             Color = new Vector3(0.8f);
             Index = index;
         }
-
-        /// <summary>
-        /// 座標
-        /// </summary>
-        public Vector3 Position { get; set; }
-
-        /// <summary>
-        /// 色情報
-        /// </summary>
-        public Vector3 Color { get;　private set; }
-        
-        /// <summary>
-        /// HalfEdgeでもつm_VertexのIndex番号
-        /// </summary>
-        public int Index { get; set; }
 
         /// <summary>
         /// テンポラリ計算用フラグ
@@ -154,7 +141,7 @@ namespace KI.Analyzer
         /// <summary>
         /// 周辺頂点
         /// </summary>
-        public IEnumerable<Vertex> AroundVertex
+        public IEnumerable<HalfEdgeVertex> AroundVertex
         {
             get
             {
@@ -168,7 +155,7 @@ namespace KI.Analyzer
         /// <summary>
         /// 法線
         /// </summary>
-        public Vector3 Normal
+        public override Vector3 Normal
         {
             get
             {
@@ -210,22 +197,22 @@ namespace KI.Analyzer
         }
 
         #region [operator]
-        public static Vector3 operator +(Vertex v1, Vertex v2)
+        public static Vector3 operator +(HalfEdgeVertex v1, HalfEdgeVertex v2)
         {
             return new Vector3(v1.Position + v2.Position);
         }
 
-        public static Vector3 operator -(Vertex v1, Vertex v2)
+        public static Vector3 operator -(HalfEdgeVertex v1, HalfEdgeVertex v2)
         {
             return new Vector3(v1.Position - v2.Position);
         }
 
-        public static Vector3 operator *(Vertex v1, Vertex v2)
+        public static Vector3 operator *(HalfEdgeVertex v1, HalfEdgeVertex v2)
         {
             return new Vector3(v1.Position * v2.Position);
         }
 
-        public static bool operator ==(Vertex v1, Vertex v2)
+        public static bool operator ==(HalfEdgeVertex v1, HalfEdgeVertex v2)
         {
             if (object.ReferenceEquals(v1, v2))
             {
@@ -255,7 +242,7 @@ namespace KI.Analyzer
             return true;
         }
 
-        public static bool operator !=(Vertex v1, Vertex v2)
+        public static bool operator !=(HalfEdgeVertex v1, HalfEdgeVertex v2)
         {
             return !(v1 == v2);
         }

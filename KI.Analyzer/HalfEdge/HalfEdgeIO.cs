@@ -122,7 +122,7 @@ namespace KI.Analyzer
                 if (lineInfos[0] == "v")
                 {
                     var position = new Vector3(float.Parse(lineInfos[1]), float.Parse(lineInfos[2]), float.Parse(lineInfos[3]));
-                    var vertex = new Vertex(position, halfEdge.Vertexs.Count);
+                    var vertex = new HalfEdgeVertex(position, halfEdge.Vertexs.Count);
                     halfEdge.Vertexs.Add(vertex);
                 }
 

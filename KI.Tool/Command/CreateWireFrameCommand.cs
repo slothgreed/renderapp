@@ -50,28 +50,28 @@ namespace KI.Tool.Command
             {
                 for (int i = 0; i < renderObject.Geometry.Index.Count / 3; i++)
                 {
-                    position.Add(renderObject.Geometry.Position[renderObject.Geometry.Index[3 * i]]);
-                    position.Add(renderObject.Geometry.Position[renderObject.Geometry.Index[3 * i + 1]]);
+                    position.Add(renderObject.Geometry.Vertexs[renderObject.Geometry.Index[3 * i]].Position);
+                    position.Add(renderObject.Geometry.Vertexs[renderObject.Geometry.Index[3 * i + 1]].Position);
 
-                    position.Add(renderObject.Geometry.Position[renderObject.Geometry.Index[3 * i + 1]]);
-                    position.Add(renderObject.Geometry.Position[renderObject.Geometry.Index[3 * i + 2]]);
+                    position.Add(renderObject.Geometry.Vertexs[renderObject.Geometry.Index[3 * i + 1]].Position);
+                    position.Add(renderObject.Geometry.Vertexs[renderObject.Geometry.Index[3 * i + 2]].Position);
 
-                    position.Add(renderObject.Geometry.Position[renderObject.Geometry.Index[3 * i + 2]]);
-                    position.Add(renderObject.Geometry.Position[renderObject.Geometry.Index[3 * i]]);
+                    position.Add(renderObject.Geometry.Vertexs[renderObject.Geometry.Index[3 * i + 2]].Position);
+                    position.Add(renderObject.Geometry.Vertexs[renderObject.Geometry.Index[3 * i]].Position);
                 }
             }
             else
             {
-                for (int i = 0; i < renderObject.Geometry.Position.Count / 3; i++)
+                for (int i = 0; i < renderObject.Geometry.Vertexs.Count / 3; i++)
                 {
-                    position.Add(renderObject.Geometry.Position[3 * i]);
-                    position.Add(renderObject.Geometry.Position[3 * i + 1]);
+                    position.Add(renderObject.Geometry.Vertexs[3 * i].Position);
+                    position.Add(renderObject.Geometry.Vertexs[3 * i + 1].Position);
 
-                    position.Add(renderObject.Geometry.Position[3 * i + 1]);
-                    position.Add(renderObject.Geometry.Position[3 * i + 2]);
+                    position.Add(renderObject.Geometry.Vertexs[3 * i + 1].Position);
+                    position.Add(renderObject.Geometry.Vertexs[3 * i + 2].Position);
 
-                    position.Add(renderObject.Geometry.Position[3 * i + 2]);
-                    position.Add(renderObject.Geometry.Position[3 * i]);
+                    position.Add(renderObject.Geometry.Vertexs[3 * i + 2].Position);
+                    position.Add(renderObject.Geometry.Vertexs[3 * i].Position);
                 }
             }
 

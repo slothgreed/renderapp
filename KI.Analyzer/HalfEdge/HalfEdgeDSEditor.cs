@@ -40,8 +40,8 @@ namespace KI.Analyzer
                 return;
             }
 
-            Vertex delV = edge.Start;
-            Vertex remV = edge.End;
+            HalfEdgeVertex delV = edge.Start;
+            HalfEdgeVertex remV = edge.End;
 
             #region [create delete list]
             //削除するメッシュ
@@ -49,7 +49,7 @@ namespace KI.Analyzer
             //削除するエッジ
             var deleteEdge = new List<HalfEdge>();
             //削除する頂点
-            var deleteVertex = new List<Vertex>();
+            var deleteVertex = new List<HalfEdgeVertex>();
 
             deleteVertex.Add(delV);
 
@@ -113,7 +113,7 @@ namespace KI.Analyzer
             var delMesh1 = edge.Mesh;
             var delMesh2 = opposite.Mesh;
 
-            var vertex = new Vertex((edge.Start.Position + edge.End.Position) / 2, HalfEdge.Vertexs.Count);
+            var vertex = new HalfEdgeVertex((edge.Start.Position + edge.End.Position) / 2, HalfEdge.Vertexs.Count);
 
             var right = new HalfEdge(vertex, edge.End, HalfEdge.Edges.Count);
             var oppoRight = new HalfEdge(edge.End, vertex, HalfEdge.Edges.Count + 1);
@@ -294,7 +294,7 @@ namespace KI.Analyzer
         /// 頂点削除
         /// </summary>
         /// <param name="deleteVertex">削除する頂点</param>
-        private void DeleteVertex(List<Vertex> deleteVertex)
+        private void DeleteVertex(List<HalfEdgeVertex> deleteVertex)
         {
             //エッジ削除
             foreach (var vertex in deleteVertex)

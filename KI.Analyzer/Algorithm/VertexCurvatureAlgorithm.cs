@@ -40,7 +40,7 @@ namespace KI.Analyzer.Algorithm
         /// ボロノイ領域
         /// </summary>
         /// <param name="vertex">頂点</param>
-        private void SetVoronoiRagion(Vertex vertex)
+        private void SetVoronoiRagion(HalfEdgeVertex vertex)
         {
             float voronoi = 0;
             foreach (var edge in vertex.AroundEdge)
@@ -104,7 +104,7 @@ namespace KI.Analyzer.Algorithm
         /// ガウス曲率
         /// </summary>
         /// <param name="vertex">頂点</param>
-        private void SetGaussianParameter(Vertex vertex)
+        private void SetGaussianParameter(HalfEdgeVertex vertex)
         {
             float angle = 0;
             foreach (var edge in vertex.AroundEdge)
@@ -120,7 +120,7 @@ namespace KI.Analyzer.Algorithm
         /// 平均曲率
         /// </summary>
         /// <param name="vertex">頂点</param>
-        private void SetMeanCurvature(Vertex vertex)
+        private void SetMeanCurvature(HalfEdgeVertex vertex)
         {
             float value = 0;
             foreach (var edge in vertex.AroundEdge)
@@ -146,7 +146,7 @@ namespace KI.Analyzer.Algorithm
         /// 最大・最小主曲率
         /// </summary>
         /// <param name="vertex">頂点</param>
-        private void SetMaxMinCurvature(Vertex vertex)
+        private void SetMaxMinCurvature(HalfEdgeVertex vertex)
         {
             float mean = (float)vertex.GetParameter(VertexParam.MeanCurvature);
             float gauss = (float)vertex.GetParameter(VertexParam.GaussCurvature);
@@ -169,7 +169,7 @@ namespace KI.Analyzer.Algorithm
         /// 接平面に投影した時のベクトル
         /// </summary>
         /// <param name="vertex">頂点</param>
-        private void SetPrincipalCurvature(Vertex vertex)
+        private void SetPrincipalCurvature(HalfEdgeVertex vertex)
         {
             Vector3 edge = vertex.AroundEdge.First().End.Position - vertex.AroundEdge.First().Start.Position;
             Vector3 numer = edge - (Vector3.Dot(edge, vertex.Normal) * vertex.Normal);

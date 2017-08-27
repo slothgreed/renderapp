@@ -1,11 +1,6 @@
-﻿using System.Collections.Generic;
-using KI.Analyzer;
-using KI.Asset;
-using KI.Foundation.KIMath;
-using KI.Gfx.GLUtil;
+﻿using KI.Analyzer;
 using KI.Renderer;
 using KI.Tool.Utility;
-using OpenTK;
 
 namespace KI.Tool.Control
 {

@@ -171,7 +171,7 @@ namespace KI.Analyzer
         /// <summary>
         /// 頂点
         /// </summary>
-        public IEnumerable<Vertex> AroundVertex
+        public IEnumerable<HalfEdgeVertex> AroundVertex
         {
             get
             {

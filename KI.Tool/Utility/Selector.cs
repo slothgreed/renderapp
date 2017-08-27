@@ -30,7 +30,7 @@ namespace KI.Tool.Utility
         /// <param name="selectObject">選択形状</param>
         /// <param name="vertex">選択頂点番号</param>
         /// <returns>成功か</returns>
-        public static bool PickPoint(Vector2 mouse, ref RenderObject selectObject, ref Vertex vertex)
+        public static bool PickPoint(Vector2 mouse, ref RenderObject selectObject, ref HalfEdgeVertex vertex)
         {
             bool select = false;
             float minLength = float.MaxValue;
@@ -191,7 +191,7 @@ namespace KI.Tool.Utility
         /// <param name="minLength">この長さ以下の頂点を取得</param>
         /// <param name="vertex">選択Index</param>
         /// <returns>成功か</returns>
-        private static bool PickPointCore(Vector3 near, Vector3 far, RenderObject renderObject, ref float minLength, ref Vertex vertex)
+        private static bool PickPointCore(Vector3 near, Vector3 far, RenderObject renderObject, ref float minLength, ref HalfEdgeVertex vertex)
         {
             if (!CanSelect(renderObject))
             {

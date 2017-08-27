@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using KI.Analyzer;
 using KI.Asset;
 using KI.Foundation.Command;
@@ -63,8 +64,8 @@ namespace KI.Tool.Command
             Vector3 max;
             List<Vector3> voxelPosition = new List<Vector3>();
             List<Vector3> voxelNormal = new List<Vector3>();
-            KICalc.MinMax(renderObject.Geometry.Position, out min, out max);
-            voxel = new VoxelSpace(renderObject.Geometry.Position, renderObject.Geometry.Index, partition, min, max);
+            KICalc.MinMax(renderObject.Geometry.Vertexs.Select(p => p.Position), out min, out max);
+            voxel = new VoxelSpace(renderObject.Geometry.Vertexs.Select(p => p.Position).ToList(), renderObject.Geometry.Index, partition, min, max);
             GetVoxelObject(out voxelPosition, out voxelNormal);
 
             RenderObject voxelObject = RenderObjectFactory.Instance.CreateRenderObject("Voxel :" + renderObject.Name);

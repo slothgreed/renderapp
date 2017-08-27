@@ -30,12 +30,12 @@ namespace KI.Tool.Control
         /// <summary>
         /// 選択した形状の頂点1
         /// </summary>
-        private Vertex selectStart = null;
+        private HalfEdgeVertex selectStart = null;
 
         /// <summary>
         /// 選択した形状の頂点2
         /// </summary>
-        private Vertex selectEnd = null;
+        private HalfEdgeVertex selectEnd = null;
 
         /// <summary>
         /// マウス押下
@@ -47,7 +47,7 @@ namespace KI.Tool.Control
             RenderObject renderObject = null;
             if (mouse.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                Vertex vertex = null;
+                HalfEdgeVertex vertex = null;
                 if (HalfEdgeDSSelector.PickPoint(leftMouse.Click, ref renderObject, ref vertex))
                 {
                     // 初回
@@ -77,7 +77,7 @@ namespace KI.Tool.Control
                     }
 
                     RenderObject pointObject = RenderObjectFactory.Instance.CreateRenderObject("Picking");
-                    Geometry geometry = new Geometry("Picking", new List<Vector3>() { vertex.Position }, null, KICalc.RandomColor(), null, null, GeometryType.Point);
+                    Geometry geometry = new Geometry("Picking", new List<Vector3>() { vertex.Position }, null, Vector3.UnitY, null, null, GeometryType.Point);
                     pointObject.SetGeometryInfo(geometry);
                     pointObject.ModelMatrix = selectObject.ModelMatrix;
                     Global.RenderSystem.ActiveScene.AddObject(pointObject);
@@ -116,7 +116,7 @@ namespace KI.Tool.Control
             dijkstra.Execute();
 
             RenderObject lines = RenderObjectFactory.Instance.CreateRenderObject("DijkstraLine");
-            Geometry geometry = new Geometry("DijkstraLine", dijkstra.DijkstraLine(), null, Vector3.UnitZ, null, null, GeometryType.Line);
+            Geometry geometry = new Geometry("DijkstraLine", dijkstra.DijkstraLine(), null, Vector3.UnitY, null, null, GeometryType.Line);
             lines.SetGeometryInfo(geometry);
             lines.ModelMatrix = selectObject.ModelMatrix;
             Global.RenderSystem.ActiveScene.AddObject(lines);

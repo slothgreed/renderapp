@@ -19,7 +19,7 @@ namespace KI.Analyzer
         /// <param name="start">始点</param>
         /// <param name="end">終点</param>
         /// <param name="index">要素番号</param>
-        public HalfEdge(Vertex start, Vertex end, int index = -1)
+        public HalfEdge(HalfEdgeVertex start, HalfEdgeVertex end, int index = -1)
         {
             Start = start;
             End = end;
@@ -34,7 +34,7 @@ namespace KI.Analyzer
         /// <param name="start">始点</param>
         /// <param name="end">終点</param>
         /// <param name="index">要素番号</param>
-        public HalfEdge(Mesh mesh, Vertex start, Vertex end, int index = -1)
+        public HalfEdge(Mesh mesh, HalfEdgeVertex start, HalfEdgeVertex end, int index = -1)
         {
             Mesh = mesh;
             Start = start;
@@ -46,12 +46,12 @@ namespace KI.Analyzer
         /// <summary>
         /// 始点
         /// </summary>
-        public Vertex Start { get; set; }
+        public HalfEdgeVertex Start { get; set; }
 
         /// <summary>
         /// 終点
         /// </summary>
-        public Vertex End { get; set; }
+        public HalfEdgeVertex End { get; set; }
 
         /// <summary>
         /// メッシュ

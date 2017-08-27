@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using KI.Analyzer;
 using KI.Foundation.Core;
-using KI.Foundation.Utility;
+using KI.Foundation.KIMath;
 using KI.Gfx.GLUtil;
-using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
 using OpenTK;
 
@@ -36,22 +35,7 @@ namespace KI.Asset
         /// <summary>
         /// 頂点リスト
         /// </summary>
-        private List<Vector3> position = new List<Vector3>();
-
-        /// <summary>
-        /// 法線リスト
-        /// </summary>
-        private List<Vector3> normal = new List<Vector3>();
-
-        /// <summary>
-        /// 色リスト
-        /// </summary>
-        private List<Vector3> color = new List<Vector3>();
-
-        /// <summary>
-        /// テクスチャ座標リスト
-        /// </summary>
-        private List<Vector2> texcoord = new List<Vector2>();
+        private List<Vertex> vertexs = new List<Vertex>();
 
         /// <summary>
         /// 頂点インデックスリスト
@@ -71,7 +55,28 @@ namespace KI.Asset
         public Geometry(string name, List<Vector3> pos, List<Vector3> nor, List<Vector3> col, List<Vector2> tex, List<int> idx, GeometryType type)
             : base(name)
         {
-            Update(pos, nor, col, tex, idx, type);
+            Vector3 normal = Vector3.Zero;
+            Vector3 color = Vector3.Zero;
+            Vector2 texcoord = Vector2.Zero;
+            for (int i = 0; i < pos.Count; i++)
+            {
+                if (nor != null)
+                {
+                    normal = nor[i];
+                }
+                if (col != null)
+                {
+                    color = col[i];
+                }
+                if (tex != null)
+                {
+                    texcoord = tex[i];
+                }
+
+                vertexs.Add(new Vertex(pos[i], normal, color, texcoord, i));
+            }
+
+            Update(vertexs, idx, type);
         }
 
         /// <summary>
@@ -87,7 +92,25 @@ namespace KI.Asset
         public Geometry(string name, List<Vector3> pos, List<Vector3> nor, Vector3 col, List<Vector2> tex, List<int> idx, GeometryType type)
             : base(name)
         {
-            Update(pos, nor, col, tex, idx, type);
+            Vector3 normal = Vector3.Zero;
+            Vector3 color = Vector3.Zero;
+            Vector2 texcoord = Vector2.Zero;
+            for (int i = 0; i < pos.Count; i++)
+            {
+                if (nor != null)
+                {
+                    normal = nor[i];
+                }
+
+                if (tex != null)
+                {
+                    texcoord = tex[i];
+                }
+
+                vertexs.Add(new Vertex(pos[i], normal, col, texcoord, i));
+            }
+
+            Update(vertexs, idx, type);
         }
 
         /// <summary>
@@ -106,50 +129,6 @@ namespace KI.Asset
         public GeometryType GeometryType { get; set; }
 
         /// <summary>
-        /// 頂点リスト
-        /// </summary>
-        public List<Vector3> Position
-        {
-            get
-            {
-                return position;
-            }
-        }
-
-        /// <summary>
-        /// 法線リスト
-        /// </summary>
-        public List<Vector3> Normal
-        {
-            get
-            {
-                return normal;
-            }
-        }
-
-        /// <summary>
-        /// 色リスト
-        /// </summary>
-        public List<Vector3> Color
-        {
-            get
-            {
-                return color;
-            }
-        }
-
-        /// <summary>
-        /// テクスチャ座標リスト
-        /// </summary>
-        public List<Vector2> TexCoord
-        {
-            get
-            {
-                return texcoord;
-            }
-        }
-
-        /// <summary>
         /// 頂点インデックスリスト
         /// </summary>
         public List<int> Index
@@ -160,23 +139,14 @@ namespace KI.Asset
             }
         }
 
-        /// <summary>
-        /// 三角形の数
-        /// </summary>
-        public int TriangleNum
+        public List<Vertex> Vertexs
         {
             get
             {
-                if (Index.Count == 0)
-                {
-                    return Position.Count / 3;
-                }
-                else
-                {
-                    return Index.Count / 3;
-                }
+                return vertexs;
             }
         }
+
 
         /// <summary>
         /// テクスチャ
@@ -196,19 +166,14 @@ namespace KI.Asset
 
         public void UpdateHalfEdge()
         {
-            if(HalfEdgeDS == null)
+            if (HalfEdgeDS == null)
             {
                 return;
             }
 
-            position.Clear();
-            normal.Clear();
-            color.Clear();
             index.Clear();
 
-            position = HalfEdgeDS.Vertexs.Select(p => p.Position).ToList();
-            normal = HalfEdgeDS.Vertexs.Select(p => p.Normal).ToList();
-            color = HalfEdgeDS.Vertexs.Select(p => p.Color).ToList();
+            vertexs = HalfEdgeDS.Vertexs.OfType<Vertex>().ToList();
 
             foreach (var mesh in HalfEdgeDS.Meshs)
             {
@@ -227,27 +192,9 @@ namespace KI.Asset
         /// <param name="tex">テクスチャ座標</param>
         /// <param name="idx">頂点Index</param>
         /// <param name="type">形状タイプ</param>
-        public void Update(List<Vector3> pos, List<Vector3> nor, List<Vector3> col, List<Vector2> tex, List<int> idx, GeometryType type)
+        public void Update(List<Vertex> vert, List<int> idx, GeometryType type)
         {
-            if (pos != null)
-            {
-                position = pos;
-            }
-
-            if (nor != null)
-            {
-                normal = nor;
-            }
-
-            if (col != null)
-            {
-                color = col;
-            }
-
-            if (tex != null)
-            {
-                texcoord = tex;
-            }
+            vertexs = vert;
 
             if (idx != null)
             {
@@ -259,182 +206,138 @@ namespace KI.Asset
             OnUpdate();
         }
 
-        /// <summary>
-        /// 更新
-        /// </summary>
-        /// <param name="pos">頂点</param>
-        /// <param name="nor">法線</param>
-        /// <param name="col">色</param>
-        /// <param name="tex">テクスチャ座標</param>
-        /// <param name="idx">頂点Index</param>
-        /// <param name="type">形状タイプ</param>
-        public void Update(List<Vector3> pos, List<Vector3> nor, Vector3 col, List<Vector2> tex, List<int> idx, GeometryType type)
-        {
-            if (pos != null)
-            {
-                position = pos;
-            }
-
-            if (nor != null)
-            {
-                normal = nor;
-            }
-
-            if (col != null)
-            {
-                color.Clear();
-                for (int i = 0; i < Position.Count; i++)
-                {
-                    color.Add(col);
-                }
-            }
-
-            if (tex != null)
-            {
-                texcoord = tex;
-            }
-
-            if (idx != null)
-            {
-                index = idx;
-            }
-
-            GeometryType = type;
-
-            OnUpdate();
-        }
 
         #region [convert mesh]
-        /// <summary>
-        /// Triangle毎に変換
-        /// </summary>
-        public void ConvertPerTriangle()
-        {
-            if (Index.Count == 0)
-                return;
+        ///// <summary>
+        ///// Triangle毎に変換
+        ///// </summary>
+        //public void ConvertPerTriangle()
+        //{
+        //    if (Index.Count == 0)
+        //        return;
 
-            if (Position.Count == 0)
-                return;
+        //    if (Position.Count == 0)
+        //        return;
 
-            bool texArray = false;
-            bool colorArray = false;
-            bool normalArray = false;
-            if (TexCoord.Count == Position.Count)
-                texArray = true;
+        //    bool texArray = false;
+        //    bool colorArray = false;
+        //    bool normalArray = false;
+        //    if (TexCoord.Count == Position.Count)
+        //        texArray = true;
 
-            if (Normal.Count == Position.Count)
-                normalArray = true;
+        //    if (Normal.Count == Position.Count)
+        //        normalArray = true;
 
-            if (Color.Count == Position.Count)
-                colorArray = true;
+        //    if (Color.Count == Position.Count)
+        //        colorArray = true;
 
-            var newPosition = new List<Vector3>();
-            var newTexcoord = new List<Vector2>();
-            var newColor = new List<Vector3>();
-            var newNormal = new List<Vector3>();
+        //    var newPosition = new List<Vector3>();
+        //    var newTexcoord = new List<Vector2>();
+        //    var newColor = new List<Vector3>();
+        //    var newNormal = new List<Vector3>();
 
-            for (int i = 0; i < Index.Count; i += 3)
-            {
-                newPosition.Add(Position[Index[i]]);
-                newPosition.Add(Position[Index[i + 1]]);
-                newPosition.Add(Position[Index[i + 2]]);
-                if (texArray)
-                {
-                    newTexcoord.Add(TexCoord[Index[i]]);
-                    newTexcoord.Add(TexCoord[Index[i + 1]]);
-                    newTexcoord.Add(TexCoord[Index[i + 2]]);
-                }
+        //    for (int i = 0; i < Index.Count; i += 3)
+        //    {
+        //        newPosition.Add(Position[Index[i]]);
+        //        newPosition.Add(Position[Index[i + 1]]);
+        //        newPosition.Add(Position[Index[i + 2]]);
+        //        if (texArray)
+        //        {
+        //            newTexcoord.Add(TexCoord[Index[i]]);
+        //            newTexcoord.Add(TexCoord[Index[i + 1]]);
+        //            newTexcoord.Add(TexCoord[Index[i + 2]]);
+        //        }
 
-                if (colorArray)
-                {
-                    newColor.Add(Color[Index[i]]);
-                    newColor.Add(Color[Index[i + 1]]);
-                    newColor.Add(Color[Index[i + 2]]);
-                }
+        //        if (colorArray)
+        //        {
+        //            newColor.Add(Color[Index[i]]);
+        //            newColor.Add(Color[Index[i + 1]]);
+        //            newColor.Add(Color[Index[i + 2]]);
+        //        }
 
-                if (normalArray)
-                {
-                    newNormal.Add(Normal[Index[i]]);
-                    newNormal.Add(Normal[Index[i + 1]]);
-                    newNormal.Add(Normal[Index[i + 2]]);
-                }
-            }
+        //        if (normalArray)
+        //        {
+        //            newNormal.Add(Normal[Index[i]]);
+        //            newNormal.Add(Normal[Index[i + 1]]);
+        //            newNormal.Add(Normal[Index[i + 2]]);
+        //        }
+        //    }
 
-            position = newPosition;
-            normal = newNormal;
-            texcoord = newTexcoord;
-            color = newColor;
-            index.Clear();
-        }
+        //    position = newPosition;
+        //    normal = newNormal;
+        //    texcoord = newTexcoord;
+        //    color = newColor;
+        //    index.Clear();
+        //}
 
-        /// <summary>
-        /// 頂点配列に変換
-        /// </summary>
-        public void ConvertVertexArray()
-        {
-            if (Index.Count != 0)
-                return;
+        ///// <summary>
+        ///// 頂点配列に変換
+        ///// </summary>
+        //public void ConvertVertexArray()
+        //{
+        //    if (Index.Count != 0)
+        //        return;
 
-            if (Position.Count == 0)
-                return;
+        //    if (Position.Count == 0)
+        //        return;
 
-            bool texArray = false;
-            bool colorArray = false;
-            bool normalArray = false;
-            if (TexCoord.Count == Position.Count)
-                texArray = true;
+        //    bool texArray = false;
+        //    bool colorArray = false;
+        //    bool normalArray = false;
+        //    if (TexCoord.Count == Position.Count)
+        //        texArray = true;
 
-            if (Normal.Count == Position.Count)
-                normalArray = true;
+        //    if (Normal.Count == Position.Count)
+        //        normalArray = true;
 
-            if (Color.Count == Position.Count)
-                colorArray = true;
+        //    if (Color.Count == Position.Count)
+        //        colorArray = true;
 
-            var newPosition = new List<Vector3>();
-            var newTexcoord = new List<Vector2>();
-            var newColor = new List<Vector3>();
-            var newNormal = new List<Vector3>();
-            bool isExist = false;
-            for (int i = 0; i < Position.Count; i++)
-            {
-                isExist = false;
-                for (int j = 0; j < newPosition.Count; j++)
-                {
-                    if (newPosition[j] == Position[i])
-                    {
-                        isExist = true;
-                        index.Add(j);
-                        break;
-                    }
-                }
+        //    var newPosition = new List<Vector3>();
+        //    var newTexcoord = new List<Vector2>();
+        //    var newColor = new List<Vector3>();
+        //    var newNormal = new List<Vector3>();
+        //    bool isExist = false;
+        //    for (int i = 0; i < Position.Count; i++)
+        //    {
+        //        isExist = false;
+        //        for (int j = 0; j < newPosition.Count; j++)
+        //        {
+        //            if (newPosition[j] == Position[i])
+        //            {
+        //                isExist = true;
+        //                index.Add(j);
+        //                break;
+        //            }
+        //        }
 
-                if (!isExist)
-                {
-                    newPosition.Add(Position[i]);
-                    index.Add(newPosition.Count - 1);
+        //        if (!isExist)
+        //        {
+        //            newPosition.Add(Position[i]);
+        //            index.Add(newPosition.Count - 1);
 
-                    if (texArray)
-                    {
-                        newTexcoord.Add(TexCoord[i]);
-                    }
+        //            if (texArray)
+        //            {
+        //                newTexcoord.Add(TexCoord[i]);
+        //            }
 
-                    if (colorArray)
-                    {
-                        newColor.Add(Color[i]);
-                    }
+        //            if (colorArray)
+        //            {
+        //                newColor.Add(Color[i]);
+        //            }
 
-                    if (normalArray)
-                    {
-                        newNormal.Add(Normal[i]);
-                    }
-                }
-            }
+        //            if (normalArray)
+        //            {
+        //                newNormal.Add(Normal[i]);
+        //            }
+        //        }
+        //    }
 
-            position = newPosition;
-            texcoord = newTexcoord;
-            color = newColor;
-            normal = newNormal;
-        }
+        //    position = newPosition;
+        //    texcoord = newTexcoord;
+        //    color = newColor;
+        //    normal = newNormal;
+        //}
         #endregion
 
         #endregion
@@ -466,45 +369,45 @@ namespace KI.Asset
             }
         }
 
-        /// <summary>
-        /// 法線の算出
-        /// </summary>
-        public void CalcNormal()
-        {
-            Normal.Clear();
+        ///// <summary>
+        ///// 法線の算出
+        ///// </summary>
+        //public void CalcNormal()
+        //{
+        //    Normal.Clear();
 
-            switch (GeometryType)
-            {
-                case GeometryType.None:
-                case GeometryType.Point:
-                case GeometryType.Line:
-                case GeometryType.Mix:
-                    return;
-                case GeometryType.Triangle:
-                    for (int i = 0; i < Position.Count; i += 3)
-                    {
-                        Vector3 normal = Vector3.Cross(Position[i + 2] - Position[i + 1], Position[i] - Position[i + 1]).Normalized();
-                        Normal.Add(normal);
-                        Normal.Add(normal);
-                        Normal.Add(normal);
-                    }
+        //    switch (GeometryType)
+        //    {
+        //        case GeometryType.None:
+        //        case GeometryType.Point:
+        //        case GeometryType.Line:
+        //        case GeometryType.Mix:
+        //            return;
+        //        case GeometryType.Triangle:
+        //            for (int i = 0; i < Position.Count; i += 3)
+        //            {
+        //                Vector3 normal = Vector3.Cross(Position[i + 2] - Position[i + 1], Position[i] - Position[i + 1]).Normalized();
+        //                Normal.Add(normal);
+        //                Normal.Add(normal);
+        //                Normal.Add(normal);
+        //            }
 
-                    break;
-                case GeometryType.Quad:
-                    for (int i = 0; i < position.Count; i += 4)
-                    {
-                        Vector3 normal = Vector3.Cross(Position[i + 2] - Position[i + 1], Position[i] - Position[i + 1]).Normalized();
-                        Normal.Add(normal);
-                        Normal.Add(normal);
-                        Normal.Add(normal);
-                        Normal.Add(normal);
-                    }
+        //            break;
+        //        case GeometryType.Quad:
+        //            for (int i = 0; i < position.Count; i += 4)
+        //            {
+        //                Vector3 normal = Vector3.Cross(Position[i + 2] - Position[i + 1], Position[i] - Position[i + 1]).Normalized();
+        //                Normal.Add(normal);
+        //                Normal.Add(normal);
+        //                Normal.Add(normal);
+        //                Normal.Add(normal);
+        //            }
 
-                    break;
-                default:
-                    break;
-            }
-        }
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
 
         /// <summary>
         /// 形状情報更新イベント

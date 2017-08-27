@@ -47,7 +47,7 @@ namespace KI.Analyzer
         /// <summary>
         /// 頂点リスト
         /// </summary>
-        public List<Vertex> Vertexs { get; set; } = new List<Vertex>();
+        public List<HalfEdgeVertex> Vertexs { get; set; } = new List<HalfEdgeVertex>();
 
         /// <summary>
         /// エッジの取得
@@ -55,7 +55,7 @@ namespace KI.Analyzer
         /// <param name="start">始点</param>
         /// <param name="end">終点</param>
         /// <returns>エッジ</returns>
-        public HalfEdge GetEdge(Vertex start, Vertex end)
+        public HalfEdge GetEdge(HalfEdgeVertex start, HalfEdgeVertex end)
         {
             return start.AroundEdge.Where(p => p.Start == start && p.End == end).FirstOrDefault();
         }
@@ -66,9 +66,9 @@ namespace KI.Analyzer
         /// <param name="vertex">起点</param>
         /// <param name="distance">距離</param>
         /// <returns>範囲内の頂点</returns>
-        public List<Vertex> GetAroundVertex(Vertex vertex, float distance)
+        public List<HalfEdgeVertex> GetAroundVertex(HalfEdgeVertex vertex, float distance)
         {
-            List<Vertex> vertex_list = new List<Vertex>();
+            List<HalfEdgeVertex> vertex_list = new List<HalfEdgeVertex>();
             vertex.CalcFlag = true;
             vertex_list.Add(vertex);
             RecursiveAroundPosition(vertex_list, vertex, vertex, distance);
@@ -126,7 +126,7 @@ namespace KI.Analyzer
         {
             for (int i = 0; i < vertexList.Count; i++)
             {
-                Vertex vertex = new Vertex(vertexList[i], i);
+                HalfEdgeVertex vertex = new HalfEdgeVertex(vertexList[i], i);
                 Vertexs.Add(vertex);
             }
         }
@@ -137,15 +137,15 @@ namespace KI.Analyzer
         /// <param name="vertexlist">三角形の頂点リスト</param>
         private void CreateHalfEdgeData(List<Vector3> vertexlist)
         {
-            Vertex v1 = null, v2 = null, v3 = null;
+            HalfEdgeVertex v1 = null, v2 = null, v3 = null;
             //最終的にポリゴンに格納する頂点
             for (int i = 0; i < vertexlist.Count; i++)
             {
                 //ないVertexを調査
-                Vertex vertex = Vertexs.Find(p => p.Position == vertexlist[i]);
+                HalfEdgeVertex vertex = Vertexs.Find(p => p.Position == vertexlist[i]);
                 if (vertex == null)
                 {
-                    vertex = new Vertex(vertexlist[i], Vertexs.Count);
+                    vertex = new HalfEdgeVertex(vertexlist[i], Vertexs.Count);
                     Vertexs.Add(vertex);
                 }
 
@@ -174,7 +174,7 @@ namespace KI.Analyzer
         /// <param name="v1">頂点1</param>
         /// <param name="v2">頂点2</param>
         /// <param name="v3">頂点3</param>
-        private void CreateMesh(Vertex v1, Vertex v2, Vertex v3)
+        private void CreateMesh(HalfEdgeVertex v1, HalfEdgeVertex v2, HalfEdgeVertex v3)
         {
             Mesh mesh = new Mesh(Meshs.Count);
             HalfEdge edge1 = new HalfEdge(mesh, v1, v2, Edges.Count);
@@ -199,9 +199,9 @@ namespace KI.Analyzer
             int poly_Num = polyIndex.Count / 3;
             for (int num = 0; num < poly_Num; num++)
             {
-                Vertex v1 = Vertexs[polyIndex[3 * num]];
-                Vertex v2 = Vertexs[polyIndex[3 * num + 1]];
-                Vertex v3 = Vertexs[polyIndex[3 * num + 2]];
+                HalfEdgeVertex v1 = Vertexs[polyIndex[3 * num]];
+                HalfEdgeVertex v2 = Vertexs[polyIndex[3 * num + 1]];
+                HalfEdgeVertex v3 = Vertexs[polyIndex[3 * num + 2]];
                 CreateMesh(v1, v2, v3);
             }
         }
@@ -234,8 +234,8 @@ namespace KI.Analyzer
         /// <param name="edge">元となるエッジ</param>
         private void SetOppositeEdge2(HalfEdge edge)
         {
-            Vertex start = edge.Start;
-            Vertex end = edge.End;
+            HalfEdgeVertex start = edge.Start;
+            HalfEdgeVertex end = edge.End;
             //反対の頂点のエッジループ
             foreach (var opposite in end.AroundEdge)
             {
@@ -278,7 +278,7 @@ namespace KI.Analyzer
         /// </summary>
         /// <param name="vertex"></param>
         /// <param name="distance"></param>
-        private void RecursiveAroundPosition(List<Vertex> vertex_list, Vertex vertex, Vertex startVertex, float distance)
+        private void RecursiveAroundPosition(List<HalfEdgeVertex> vertex_list, HalfEdgeVertex vertex, HalfEdgeVertex startVertex, float distance)
         {
             float length;
             foreach (var aroundEdge in vertex.AroundEdge)

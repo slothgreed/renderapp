@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using KI.Asset;
 using KI.Foundation.Command;
 using KI.Foundation.Core;
@@ -42,7 +43,7 @@ namespace KI.Tool.Command
         /// <returns>成功値</returns>
         public CommandResult Execute(string commandArg)
         {
-            var half = AssetFactory.Instance.CreateHalfEdge(renderObject.Geometry.Position, renderObject.Geometry.Index);
+            var half = AssetFactory.Instance.CreateHalfEdge(renderObject.Geometry.Vertexs.Select(p => p.Position).ToList(), renderObject.Geometry.Index);
             RenderObject halfEdge = RenderObjectFactory.Instance.CreateRenderObject("HalfEdge :" + renderObject.Name);
             halfEdge.SetGeometryInfo(half.Geometrys[0]);
             halfEdge.ModelMatrix = renderObject.ModelMatrix;

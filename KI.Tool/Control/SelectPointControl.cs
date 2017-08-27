@@ -22,7 +22,7 @@ namespace KI.Tool.Control
         public override bool Down(System.Windows.Forms.MouseEventArgs mouse)
         {
             RenderObject renderObject = null;
-            Vertex vertex = null;
+            HalfEdgeVertex vertex = null;
 
             if (HalfEdgeDSSelector.PickPoint(leftMouse.Click, ref renderObject, ref vertex))
             {

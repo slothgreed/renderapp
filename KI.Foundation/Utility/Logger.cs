@@ -28,7 +28,7 @@ namespace KI.Foundation.Utility
             Debug,
             Warning,
             Error,
-            Descript
+            Allway
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace KI.Foundation.Utility
         /// <param name="methodName">関数名</param>
         public static void Log(LogLevel level, string message, [CallerMemberName]string methodName = "")
         {
-            if (level == LogLevel.Descript)
+            if (level == LogLevel.Allway)
             {
                 Console.WriteLine(level + ": " + message);
                 return;

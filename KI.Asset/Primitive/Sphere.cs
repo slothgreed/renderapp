@@ -162,7 +162,7 @@ namespace KI.Asset
 
             var info = new Geometry(this.Name, position, normal, null, texcoord, null, Gfx.GLUtil.GeometryType.Triangle);
 
-            info.ConvertVertexArray();
+            //info.ConvertVertexArray();
 
             Geometrys = new Geometry[] { info };
         }

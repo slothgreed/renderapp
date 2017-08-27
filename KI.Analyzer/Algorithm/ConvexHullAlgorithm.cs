@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using KI.Foundation.KIMath;
 using KI.Foundation.Utility;
 using OpenTK;
 
@@ -20,25 +21,22 @@ namespace KI.Analyzer.Algorithm
         /// 点群
         /// </summary>
         private List<Vector3> pointList;
-        
+
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="position">座標</param>
-        public ConvexHullAlgorithm(List<Vector3> position)
+        public ConvexHullAlgorithm(List<Vertex> position)
         {
             pointList = new List<Vector3>();
             meshList = new List<Mesh>();
 
-            foreach (var pos in position)
-            {
-                pointList.Add(pos);
-            }
+            pointList.AddRange(position.Select(p => p.Position));
 
             QuickHullAlgorithm();
 
-            Logger.Log(Logger.LogLevel.Descript, "MeshList :" + meshList.Count.ToString());
-            Logger.Log(Logger.LogLevel.Descript, "Point :" + pointList.Count.ToString());
+            Logger.Log(Logger.LogLevel.Allway, "MeshList :" + meshList.Count.ToString());
+            Logger.Log(Logger.LogLevel.Allway, "Point :" + pointList.Count.ToString());
         }
 
         /// <summary>
@@ -122,7 +120,7 @@ namespace KI.Analyzer.Algorithm
         {
             var visibleMesh = FindVisibleMesh(meshList, farPoint);
             var boundaryList = FindBoundaryEdge(visibleMesh);
-            CreateMesh(boundaryList, new Vertex(farPoint));
+            CreateMesh(boundaryList, new HalfEdgeVertex(farPoint));
             visibleMesh.All(p => { p.Dispose(); return true; });
         }
 
@@ -205,7 +203,7 @@ namespace KI.Analyzer.Algorithm
         /// </summary>
         /// <param name="boundaryList">境界リスト</param>
         /// <param name="vertex">頂点</param>
-        private void CreateMesh(List<HalfEdge> boundaryList, Vertex vertex)
+        private void CreateMesh(List<HalfEdge> boundaryList, HalfEdgeVertex vertex)
         {
             //反対エッジ作成用に
             var newMesh = new List<Mesh>();
@@ -304,9 +302,9 @@ namespace KI.Analyzer.Algorithm
                 }
             }
 
-            Vertex vertex1 = new Vertex(min);
-            Vertex vertex2 = new Vertex(max);
-            Vertex vertex3 = new Vertex(xyMinzMax);
+            HalfEdgeVertex vertex1 = new HalfEdgeVertex(min);
+            HalfEdgeVertex vertex2 = new HalfEdgeVertex(max);
+            HalfEdgeVertex vertex3 = new HalfEdgeVertex(xyMinzMax);
             HalfEdge edge1 = new HalfEdge(vertex1, vertex2);
             HalfEdge edge2 = new HalfEdge(vertex2, vertex3);
             HalfEdge edge3 = new HalfEdge(vertex3, vertex1);

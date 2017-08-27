@@ -15,7 +15,7 @@ namespace KI.Analyzer
         /// <param name="done">確定したか</param>
         /// <param name="cost">重み</param>
         /// <param name="vertex">頂点座標</param>
-        public Node(bool done, int cost, Vertex vertex)
+        public Node(bool done, int cost, HalfEdgeVertex vertex)
         {
             Done = done;
             Cost = cost;
@@ -40,7 +40,7 @@ namespace KI.Analyzer
         /// <summary>
         /// 頂点座標
         /// </summary>
-        public Vertex Vertex { get; private set; }
+        public HalfEdgeVertex Vertex { get; private set; }
     }
 
     /// <summary>
@@ -74,7 +74,7 @@ namespace KI.Analyzer
         /// <param name="half">ハーフエッジ</param>
         /// <param name="start">開始位置</param>
         /// <param name="end">終了位置</param>
-        public DijkstraAlgorithm(HalfEdgeDS half, Vertex start, Vertex end)
+        public DijkstraAlgorithm(HalfEdgeDS half, HalfEdgeVertex start, HalfEdgeVertex end)
         {
             halfEdge = half;
             startIndex = start.Index;

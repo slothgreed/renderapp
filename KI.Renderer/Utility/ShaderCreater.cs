@@ -51,46 +51,20 @@ namespace KI.Asset
                 return shaderPath;
             }
 
-            if (CheckBufferEnable(renderObject.PositionBuffer) &&
-                CheckBufferEnable(renderObject.NormalBuffer) &&
-                CheckBufferEnable(renderObject.ColorBuffer) &&
-                CheckBufferEnable(renderObject.TexCoordBuffer))
-            {
-                return Directory + @"GBuffer\GeneralPNCT.vert";
-            }
-
-            if (CheckBufferEnable(renderObject.PositionBuffer) &&
-                CheckBufferEnable(renderObject.NormalBuffer) &&
-                CheckBufferEnable(renderObject.TexCoordBuffer))
-            {
-                return Directory + @"GBuffer\GeneralPNT.vert";
-            }
-
-            if (CheckBufferEnable(renderObject.PositionBuffer) &&
-                CheckBufferEnable(renderObject.NormalBuffer) &&
-                CheckBufferEnable(renderObject.ColorBuffer))
-            {
-                return Directory + @"GBuffer\GeneralPCN.vert";
-            }
-
-            if (CheckBufferEnable(renderObject.PositionBuffer) &&
-                CheckBufferEnable(renderObject.ColorBuffer))
+            if (renderObject.Geometry.GeometryType == GeometryType.Line ||
+                renderObject.Geometry.GeometryType == GeometryType.Point)
             {
                 return Directory + @"GBuffer\GeneralPC.vert";
             }
 
-            if (CheckBufferEnable(renderObject.PositionBuffer) &&
-                CheckBufferEnable(renderObject.TexCoordBuffer))
+            if (renderObject.Geometry.TextureNum != 0)
             {
-                return Directory + @"GBuffer\GeneralPNT.vert";
+                return Directory + @"GBuffer\GeneralPNCT.vert";
             }
-
-            if (CheckBufferEnable(renderObject.PositionBuffer))
+            else
             {
-                return Directory + @"GBuffer\GeneralPCN.vert";
+                return Directory + @"GBuffer\GeneralPNC.vert";
             }
-
-            return null;
         }
 
         /// <summary>
@@ -100,38 +74,20 @@ namespace KI.Asset
         /// <returns>ファイルパス</returns>
         public string GetFragShader(RenderObject renderObject)
         {
-            if (CheckBufferEnable(renderObject.PositionBuffer) &&
-                CheckBufferEnable(renderObject.TexCoordBuffer) &&
-                CheckBufferEnable(renderObject.NormalBuffer))
-            {
-                return Directory + @"GBuffer\GeneralPNT.frag";
-            }
-
-            if (CheckBufferEnable(renderObject.PositionBuffer) &&
-                CheckBufferEnable(renderObject.ColorBuffer) &&
-                CheckBufferEnable(renderObject.NormalBuffer))
-            {
-                return Directory + @"GBuffer\GeneralPCN.frag";
-            }
-
-            if (CheckBufferEnable(renderObject.PositionBuffer) &&
-                CheckBufferEnable(renderObject.NormalBuffer))
-            {
-                return Directory + @"GBuffer\GeneralPN.frag";
-            }
-
-            if (CheckBufferEnable(renderObject.PositionBuffer) &&
-                CheckBufferEnable(renderObject.ColorBuffer))
+            if (renderObject.Geometry.GeometryType == GeometryType.Line ||
+                renderObject.Geometry.GeometryType == GeometryType.Point)
             {
                 return Directory + @"GBuffer\GeneralPC.frag";
             }
 
-            if (CheckBufferEnable(renderObject.PositionBuffer))
+            if (renderObject.Geometry.TextureNum != 0)
             {
-                return Directory + @"GBuffer\GeneralPN.frag";
+                return Directory + @"GBuffer\GeneralPNT.frag";
             }
-
-            return null;
+            else
+            {
+                return Directory + @"GBuffer\GeneralPNC.frag";
+            }
         }
 
         /// <summary>

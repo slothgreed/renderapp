@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using KI.Asset;
 using KI.Foundation.Core;
 using KI.Foundation.Utility;
@@ -85,7 +86,7 @@ namespace KI.Renderer
             Shader.BindBuffer();
             if (Geometry.Index.Count == 0)
             {
-                DeviceContext.Instance.DrawArrays(Geometry.GeometryType, 0, Geometry.Position.Count);
+                DeviceContext.Instance.DrawArrays(Geometry.GeometryType, 0, Geometry.Vertexs.Count);
             }
             else
             {
@@ -125,11 +126,6 @@ namespace KI.Renderer
         /// </summary>
         private void Initialize()
         {
-            if (Geometry.Normal.Count == 0)
-            {
-                Geometry.CalcNormal();
-            }
-
             GenBuffer();
             string vert = ShaderCreater.Instance.GetVertexShader(this);
             string frag = ShaderCreater.Instance.GetFragShader(this);
@@ -141,26 +137,14 @@ namespace KI.Renderer
         /// </summary>
         private void GenBuffer()
         {
-            if (Geometry.Position.Count != 0)
+            if (Geometry.Vertexs.Count != 0)
             {
                 PositionBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
                 PositionBuffer.GenBuffer();
-            }
-
-            if (Geometry.Normal.Count != 0)
-            {
                 NormalBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
                 NormalBuffer.GenBuffer();
-            }
-
-            if (Geometry.Color.Count != 0)
-            {
                 ColorBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
                 ColorBuffer.GenBuffer();
-            }
-
-            if (Geometry.TexCoord.Count != 0)
-            {
                 TexCoordBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
                 TexCoordBuffer.GenBuffer();
             }
@@ -181,22 +165,10 @@ namespace KI.Renderer
         {
             if (PositionBuffer != null)
             {
-                PositionBuffer.SetData(Geometry.Position, EArrayType.Vec3Array);
-            }
-
-            if (Geometry.Normal.Count != 0)
-            {
-                NormalBuffer.SetData(Geometry.Normal, EArrayType.Vec3Array);
-            }
-
-            if (Geometry.Color.Count != 0)
-            {
-                ColorBuffer.SetData(Geometry.Color, EArrayType.Vec3Array);
-            }
-
-            if (Geometry.TexCoord.Count != 0)
-            {
-                TexCoordBuffer.SetData(Geometry.TexCoord, EArrayType.Vec2Array);
+                PositionBuffer.SetData(Geometry.Vertexs.Select(p => p.Position).ToList(), EArrayType.Vec3Array);
+                NormalBuffer.SetData(Geometry.Vertexs.Select(p => p.Normal).ToList(), EArrayType.Vec3Array);
+                ColorBuffer.SetData(Geometry.Vertexs.Select(p => p.Color).ToList(), EArrayType.Vec3Array);
+                TexCoordBuffer.SetData(Geometry.Vertexs.Select(p => p.TexCoord).ToList(), EArrayType.Vec2Array);
             }
 
             if (Geometry.Index.Count != 0)
