@@ -1,6 +1,7 @@
 ﻿using KI.Analyzer;
 using KI.Renderer;
 using KI.Tool.Utility;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Tool.Control
 {
@@ -19,14 +20,14 @@ namespace KI.Tool.Control
             if (mouse.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 RenderObject renderObject = null;
-                Mesh mesh = null;
+                HalfEdgeMesh mesh = null;
 
                 if (HalfEdgeDSSelector.PickTriangle(leftMouse.Click, ref renderObject, ref mesh))
                 {
                     foreach (var vertex in mesh.AroundVertex)
                     {
                         vertex.IsSelect = true;
-                        renderObject.Geometry.UpdateHalfEdge();
+                        renderObject.Polygon.Update(PrimitiveType.Points);
                     }
                 }
             }

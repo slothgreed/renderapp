@@ -1,12 +1,12 @@
 ﻿using KI.Foundation.Utility;
-using OpenTK;
+using KI.Gfx.Geometry;
 
 namespace KI.Analyzer
 {
     /// <summary>
     /// エッジクラス
     /// </summary>
-    public class HalfEdge
+    public class HalfEdge : Line
     {
         /// <summary>
         /// 三角形を構成するエッジの角度thisと前のエッジの反対の角度
@@ -20,6 +20,7 @@ namespace KI.Analyzer
         /// <param name="end">終点</param>
         /// <param name="index">要素番号</param>
         public HalfEdge(HalfEdgeVertex start, HalfEdgeVertex end, int index = -1)
+            : base(start, end)
         {
             Start = start;
             End = end;
@@ -34,7 +35,8 @@ namespace KI.Analyzer
         /// <param name="start">始点</param>
         /// <param name="end">終点</param>
         /// <param name="index">要素番号</param>
-        public HalfEdge(Mesh mesh, HalfEdgeVertex start, HalfEdgeVertex end, int index = -1)
+        public HalfEdge(HalfEdgeMesh mesh, HalfEdgeVertex start, HalfEdgeVertex end, int index = -1)
+            : base(start, end)
         {
             Mesh = mesh;
             Start = start;
@@ -46,17 +48,17 @@ namespace KI.Analyzer
         /// <summary>
         /// 始点
         /// </summary>
-        public HalfEdgeVertex Start { get; set; }
+        public new HalfEdgeVertex Start { get; set; }
 
         /// <summary>
         /// 終点
         /// </summary>
-        public HalfEdgeVertex End { get; set; }
+        public new HalfEdgeVertex End { get; set; }
 
         /// <summary>
         /// メッシュ
         /// </summary>
-        public Mesh Mesh { get; set; }
+        public HalfEdgeMesh Mesh { get; set; }
 
         /// <summary>
         /// 次のエッジ
@@ -107,7 +109,7 @@ namespace KI.Analyzer
         /// <summary>
         /// エッジの長さ
         /// </summary>
-        public float Length
+        public new float Length
         {
             get
             {

@@ -3,20 +3,6 @@
 namespace KI.Gfx.GLUtil
 {
     /// <summary>
-    /// 形状の種類
-    /// </summary>
-    public enum GeometryType
-    {
-        None,
-        Point,
-        Line,
-        Triangle,
-        Quad,
-        Patch,
-        Mix
-    }
-
-    /// <summary>
     /// デバイスコンテキスト
     /// </summary>
     public class DeviceContext
@@ -72,9 +58,9 @@ namespace KI.Gfx.GLUtil
         /// <param name="type">形状タイプ</param>
         /// <param name="first">開始番号</param>
         /// <param name="count">数</param>
-        public void DrawArrays(GeometryType type, int first, int count)
+        public void DrawArrays(PrimitiveType type, int first, int count)
         {
-            GL.DrawArrays(ConvertToPrimitiveType(type), first, count);
+            GL.DrawArrays(type, first, count);
         }
 
         /// <summary>
@@ -84,9 +70,9 @@ namespace KI.Gfx.GLUtil
         /// <param name="count">数</param>
         /// <param name="elementType">要素の型</param>
         /// <param name="indices">ポインタの場所</param>
-        public void DrawElements(GeometryType type, int count, DrawElementsType elementType, int indices)
+        public void DrawElements(PrimitiveType type, int count, DrawElementsType elementType, int indices)
         {
-            GL.DrawElements(ConvertToPrimitiveType(type), count, elementType, indices);
+            GL.DrawElements(type, count, elementType, indices);
         }
 
         /// <summary>
@@ -116,35 +102,6 @@ namespace KI.Gfx.GLUtil
         public void Clear()
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-        }
-
-        /// <summary>
-        /// 描画種類をプリミティブ種類に変換します。
-        /// </summary>
-        /// <param name="type">描画種類</param>
-        /// <returns>プリミティブ種類</returns>
-        private PrimitiveType ConvertToPrimitiveType(GeometryType type)
-        {
-            switch (type)
-            {
-                case GeometryType.None:
-                case GeometryType.Point:
-                    return PrimitiveType.Points;
-                case GeometryType.Line:
-                    return PrimitiveType.Lines;
-                case GeometryType.Triangle:
-                    return PrimitiveType.Triangles;
-                case GeometryType.Quad:
-                    return PrimitiveType.Quads;
-                case GeometryType.Mix:
-                    break;
-                case GeometryType.Patch:
-                    return PrimitiveType.Patches;
-                default:
-                    break;
-            }
-
-            return PrimitiveType.Points;
         }
     }
 }

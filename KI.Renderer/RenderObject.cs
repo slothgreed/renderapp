@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using KI.Asset;
 using KI.Foundation.Core;
 using KI.Foundation.Utility;
+using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
@@ -11,10 +13,56 @@ using OpenTK.Graphics.OpenGL;
 namespace KI.Renderer
 {
     /// <summary>
+    /// レンダリング種類
+    /// </summary>
+    public enum RenderMode
+    {
+        Point,
+        Line,
+        Polygon,
+        PolygonLine,
+    }
+
+    /// <summary>
+    /// レンダリングパッケージ
+    /// </summary>
+    public class RenderPackage
+    {
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="type">形状種類</param>
+        public RenderPackage(PrimitiveType type)
+        {
+            Type = type;
+        }
+
+        /// <summary>
+        /// 頂点バッファ
+        /// </summary>
+        public VertexBuffer VertexBuffer { get; set; } = new VertexBuffer();
+
+        /// <summary>
+        /// シェーダ
+        /// </summary>
+        public Shader Shader { get; set; }
+
+        /// <summary>
+        /// レンダリングするときの種類
+        /// </summary>
+        public PrimitiveType Type { get; set; }
+    }
+
+    /// <summary>
     /// 任意形状(triangle,quad,line,patchのみ対応)
     /// </summary>
     public class RenderObject : SceneNode
     {
+        /// <summary>
+        /// 形状データ
+        /// </summary>
+        private Polygon polygon;
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -28,86 +76,113 @@ namespace KI.Renderer
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
-        /// <param name="info">形状</param>
-        public RenderObject(string name, Geometry info)
+        /// <param name="polygon">形状</param>
+        public RenderObject(string name, Polygon polygon)
             : base(name)
         {
-            SetGeometryInfo(info);
+            SetPolygon(polygon);
         }
 
         /// <summary>
-        /// 頂点バッファ
+        /// レンダリングパッケージ
         /// </summary>
-        public ArrayBuffer PositionBuffer { get; private set; }
+        public Dictionary<PrimitiveType, RenderPackage> Package { get; private set; } = new Dictionary<PrimitiveType, RenderPackage>();
 
         /// <summary>
-        /// 法線バッファ
+        /// メインのシェーダ
         /// </summary>
-        public ArrayBuffer NormalBuffer { get; private set; }
-        
-        /// <summary>
-        /// カラーバッファ
-        /// </summary>
-        public ArrayBuffer ColorBuffer { get; private set; }
+        public Shader Shader
+        {
+            get
+            {
+                return Package[Polygon.Type].Shader;
+            }
 
-        /// <summary>
-        /// テクスチャ座標バッファ
-        /// </summary>
-        public ArrayBuffer TexCoordBuffer { get; private set; }
-
-        /// <summary>
-        /// 頂点Indexバッファ
-        /// </summary>
-        public ArrayBuffer IndexBuffer { get; private set; }
+            set
+            {
+                Package[Polygon.Type].Shader = value;
+            }
+        }
 
         /// <summary>
         /// 形状
         /// </summary>
-        public Geometry Geometry { get; private set; }
+        public Polygon Polygon
+        {
+            get
+            {
+                return polygon;
+            }
+
+            private set
+            {
+                if (polygon != null)
+                {
+                    polygon.UpdatePolygon -= UpdatePolygon;
+                }
+
+                polygon = value;
+                polygon.UpdatePolygon += UpdatePolygon;
+            }
+        }
 
         /// <summary>
-        /// シェーダ
+        /// レンダリング種類
         /// </summary>
-        public Shader Shader { get; set; }
-        
+        public RenderMode Mode { get; set; }
+
         /// <summary>
         /// 描画
         /// </summary>
         /// <param name="scene">シーン</param>
         public override void RenderCore(IScene scene)
         {
-            if (Shader == null)
+            if (Mode == RenderMode.Point)
             {
-                Logger.Log(Logger.LogLevel.Error, "not set shader");
-                return;
+                RenderPackage(scene, PrimitiveType.Points);
             }
 
-            ShaderHelper.InitializeState(scene, Shader, this, Geometry.Textures);
-            Shader.BindBuffer();
-            if (Geometry.Index.Count == 0)
+            if (Mode == RenderMode.Line)
             {
-                DeviceContext.Instance.DrawArrays(Geometry.GeometryType, 0, Geometry.Vertexs.Count);
-            }
-            else
-            {
-                DeviceContext.Instance.DrawElements(Geometry.GeometryType, Geometry.Index.Count, DrawElementsType.UnsignedInt, 0);
+                RenderPackage(scene, PrimitiveType.Lines);
             }
 
-            Shader.UnBindBuffer();
-            Logger.GLLog(Logger.LogLevel.Error);
+            if (Mode == RenderMode.Polygon)
+            {
+                RenderPackage(scene, Polygon.Type);
+            }
+
+            if (Mode == RenderMode.PolygonLine)
+            {
+                RenderPackage(scene, PrimitiveType.Lines);
+                RenderPackage(scene, Polygon.Type);
+            }
         }
 
         /// <summary>
         /// 形状をセット
         /// </summary>
-        /// <param name="geometry">形状情報</param>
-        public void SetGeometryInfo(Geometry geometry)
+        /// <param name="polygon">形状情報</param>
+        public void SetPolygon(Polygon polygon)
         {
-            geometry.GeometryUpdate -= UpdateGeometry;
-            Geometry = geometry;
-            Geometry.GeometryUpdate += UpdateGeometry;
+            Polygon = polygon;
+            SetupRenderPackage(polygon.Type);
 
-            Initialize();
+            if (Polygon.Type == PrimitiveType.Points)
+            {
+                Mode = RenderMode.Point;
+            }
+            else
+            if (Polygon.Type == PrimitiveType.Lines)
+            {
+                Mode = RenderMode.Line;
+            }
+            else
+            if (Polygon.Type == PrimitiveType.Triangles ||
+                Polygon.Type == PrimitiveType.Quads)
+            {
+                Mode = RenderMode.Polygon;
+            }
         }
 
         /// <summary>
@@ -115,77 +190,90 @@ namespace KI.Renderer
         /// </summary>
         public override void Dispose()
         {
-            BufferFactory.Instance.RemoveByValue(PositionBuffer);
-            BufferFactory.Instance.RemoveByValue(ColorBuffer);
-            BufferFactory.Instance.RemoveByValue(TexCoordBuffer);
-            BufferFactory.Instance.RemoveByValue(NormalBuffer);
+            foreach (var pack in Package.Values)
+            {
+                pack.VertexBuffer.Dispose();
+            }
         }
 
         /// <summary>
-        /// 初期化
+        /// レンダリング
         /// </summary>
-        private void Initialize()
+        /// <param name="scene">シーン</param>
+        /// <param name="type">形状種類</param>
+        private void RenderPackage(IScene scene, PrimitiveType type)
         {
-            GenBuffer();
-            string vert = ShaderCreater.Instance.GetVertexShader(this);
-            string frag = ShaderCreater.Instance.GetFragShader(this);
-            this.Shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
+            if (Package.ContainsKey(type))
+            {
+                RenderPackageCore(scene, Package[type]);
+            }
+            else
+            {
+                Logger.Log(Logger.LogLevel.Warning, "can't Render" + type.ToString());
+            }
         }
 
         /// <summary>
-        /// バッファの作成
+        /// レンダーパッケージの設定
         /// </summary>
-        private void GenBuffer()
+        /// <param name="type">形状種類</param>
+        private void SetupRenderPackage(PrimitiveType type)
         {
-            if (Geometry.Vertexs.Count != 0)
+            if (!Package.ContainsKey(type))
             {
-                PositionBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
-                PositionBuffer.GenBuffer();
-                NormalBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
-                NormalBuffer.GenBuffer();
-                ColorBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
-                ColorBuffer.GenBuffer();
-                TexCoordBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
-                TexCoordBuffer.GenBuffer();
+                Package[type] = new RenderPackage(type);
+                Package[type].VertexBuffer.GenBuffer(Polygon, type);
+                string vert = ShaderCreater.Instance.GetVertexShader(this);
+                string frag = ShaderCreater.Instance.GetFragShader(this);
+                Package[type].Shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
             }
 
-            if (Geometry.Index.Count != 0)
-            {
-                IndexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
-                IndexBuffer.GenBuffer();
-            }
-
-            SetupBuffer();
+            Package[type].VertexBuffer.SetupBuffer(Polygon, type);
         }
 
         /// <summary>
-        /// バッファにデータの設定
+        /// ジオメトリ更新処理
         /// </summary>
-        private void SetupBuffer()
+        /// <param name="sender">ジオメトリ</param>
+        /// <param name="e">イベント</param>
+        private void UpdatePolygon(object sender, UpdatePolygonEventArgs e)
         {
-            if (PositionBuffer != null)
-            {
-                PositionBuffer.SetData(Geometry.Vertexs.Select(p => p.Position).ToList(), EArrayType.Vec3Array);
-                NormalBuffer.SetData(Geometry.Vertexs.Select(p => p.Normal).ToList(), EArrayType.Vec3Array);
-                ColorBuffer.SetData(Geometry.Vertexs.Select(p => p.Color).ToList(), EArrayType.Vec3Array);
-                TexCoordBuffer.SetData(Geometry.Vertexs.Select(p => p.TexCoord).ToList(), EArrayType.Vec2Array);
-            }
-
-            if (Geometry.Index.Count != 0)
-            {
-                if (IndexBuffer == null)
-                {
-                    IndexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
-                    IndexBuffer.GenBuffer();
-                }
-
-                IndexBuffer.SetData(Geometry.Index, EArrayType.IntArray);
-            }
+            SetupRenderPackage(e.Type);
+            Mode = RenderMode.PolygonLine;
         }
 
-        private void UpdateGeometry(object sender, EventArgs e)
+        /// <summary>
+        /// レンダリング
+        /// </summary>
+        /// <param name="scene">シーン</param>
+        /// <param name="package">レンダリング情報</param>
+        private void RenderPackageCore(IScene scene, RenderPackage package)
         {
-            SetupBuffer();
+            if (package.Shader == null)
+            {
+                Logger.Log(Logger.LogLevel.Error, "not set shader");
+                return;
+            }
+
+            if (package.VertexBuffer.Num == 0)
+            {
+                Logger.Log(Logger.LogLevel.Error, "vertexs list is 0");
+                return;
+            }
+
+            ShaderHelper.InitializeState(scene, this, package, Polygon.Textures);
+            package.Shader.BindBuffer();
+            if (package.VertexBuffer.IndexBuffer.ContainsKey(package.Type))
+            {
+                DeviceContext.Instance.DrawElements(package.Type, package.VertexBuffer.Num, DrawElementsType.UnsignedInt, 0);
+            }
+            else
+            {
+                DeviceContext.Instance.DrawArrays(package.Type, 0, package.VertexBuffer.Num);
+            }
+
+            package.Shader.UnBindBuffer();
+            Logger.GLLog(Logger.LogLevel.Error);
         }
     }
 }

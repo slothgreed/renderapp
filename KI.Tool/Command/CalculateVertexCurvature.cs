@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using KI.Analyzer;
 using KI.Analyzer.Algorithm;
-using KI.Asset;
 using KI.Foundation.Command;
 using KI.Foundation.Core;
 using KI.Foundation.Utility;
-using KI.Gfx.GLUtil;
 using KI.Renderer;
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Tool.Command
 {
@@ -46,7 +43,7 @@ namespace KI.Tool.Command
                 return CommandResult.Failed;
             }
 
-            if (renderObject.Geometry.HalfEdgeDS == null)
+            if (renderObject.Polygon is HalfEdgeDS)
             {
                 return CommandResult.Failed;
             }
@@ -61,8 +58,8 @@ namespace KI.Tool.Command
         /// <returns>結果</returns>
         public CommandResult Execute(string commandArg)
         {
-            var vertexInfo = new VertexCurvatureAlgorithm(renderObject.Geometry.HalfEdgeDS);
-            var halfDS = renderObject.Geometry.HalfEdgeDS;
+            var halfDS = renderObject.Polygon as HalfEdgeDS;
+            var vertexInfo = new VertexCurvatureAlgorithm(halfDS);
 
             List<Vector3> position = new List<Vector3>();// poly.Vertexs.Select(p => p.Position).ToList();
             List<Vector3> voronoi = new List<Vector3>();
@@ -75,17 +72,17 @@ namespace KI.Tool.Command
             List<Vector3> minVecColor = new List<Vector3>();
             List<Vector3> maxVecColor = new List<Vector3>();
 
-            var voronoiParam = new ScalarParameter(halfDS.Vertexs.Select(p => (float)p.GetParameter(VertexParam.Voronoi)).ToArray());
-            var meanParam = new ScalarParameter(halfDS.Vertexs.Select(p => (float)p.GetParameter(VertexParam.MeanCurvature)).ToArray());
-            var gaussParam = new ScalarParameter(halfDS.Vertexs.Select(p => (float)p.GetParameter(VertexParam.GaussCurvature)).ToArray());
-            var minParam = new ScalarParameter(halfDS.Vertexs.Select(p => (float)p.GetParameter(VertexParam.MinCurvature)).ToArray());
-            var maxParam = new ScalarParameter(halfDS.Vertexs.Select(p => (float)p.GetParameter(VertexParam.MaxCurvature)).ToArray());
-            var minVecParam = new VectorParameter<Vector3>(halfDS.Vertexs.Select(p => (Vector3)p.GetParameter(VertexParam.MinVector)).ToArray());
-            var maxVecParam = new VectorParameter<Vector3>(halfDS.Vertexs.Select(p => (Vector3)p.GetParameter(VertexParam.MaxVector)).ToArray());
+            var voronoiParam = new ScalarParameter(halfDS.HalfEdgeVertexs.Select(p => (float)p.GetParameter(VertexParam.Voronoi)).ToArray());
+            var meanParam = new ScalarParameter(halfDS.HalfEdgeVertexs.Select(p => (float)p.GetParameter(VertexParam.MeanCurvature)).ToArray());
+            var gaussParam = new ScalarParameter(halfDS.HalfEdgeVertexs.Select(p => (float)p.GetParameter(VertexParam.GaussCurvature)).ToArray());
+            var minParam = new ScalarParameter(halfDS.HalfEdgeVertexs.Select(p => (float)p.GetParameter(VertexParam.MinCurvature)).ToArray());
+            var maxParam = new ScalarParameter(halfDS.HalfEdgeVertexs.Select(p => (float)p.GetParameter(VertexParam.MaxCurvature)).ToArray());
+            var minVecParam = new VectorParameter<Vector3>(halfDS.Vertexs.OfType<HalfEdgeVertex>().Select(p => (Vector3)p.GetParameter(VertexParam.MinVector)).ToArray());
+            var maxVecParam = new VectorParameter<Vector3>(halfDS.Vertexs.OfType<HalfEdgeVertex>().Select(p => (Vector3)p.GetParameter(VertexParam.MaxVector)).ToArray());
 
-            for (int j = 0; j < halfDS.Meshs.Count; j++)
+            foreach (var mesh in halfDS.HalfEdgeMeshs)
             {
-                foreach (var vertex in halfDS.Meshs[j].AroundVertex)
+                foreach (var vertex in mesh.AroundVertex)
                 {
                     int i = vertex.Index;
                     position.Add(vertex.Position);
@@ -104,7 +101,6 @@ namespace KI.Tool.Command
                     minVecColor.Add(Vector3.UnitX);
                     minVecColor.Add(Vector3.UnitX);
 
-
                     maxVector.Add(vertex.Position);
                     maxVector.Add(vertex.Position + (Vector3)maxVecParam.GetValue(i) * 0.05f);
                     maxVector.Add(vertex.Position);
@@ -117,13 +113,13 @@ namespace KI.Tool.Command
                 }
             }
 
-            AddObject("voronoi", position, voronoi, GeometryType.Triangle);
-            AddObject("mean", position, mean, GeometryType.Triangle);
-            AddObject("gauss", position, gauss, GeometryType.Triangle);
-            AddObject("min", position, min, GeometryType.Triangle);
-            AddObject("max", position, max, GeometryType.Triangle);
-            AddObject("minVector", minVector, minVecColor, GeometryType.Line);
-            AddObject("maxVector", maxVector, maxVecColor, GeometryType.Line);
+            AddObject("voronoi", position, voronoi, PrimitiveType.Triangles);
+            AddObject("mean", position, mean, PrimitiveType.Triangles);
+            AddObject("gauss", position, gauss, PrimitiveType.Triangles);
+            AddObject("min", position, min, PrimitiveType.Triangles);
+            AddObject("max", position, max, PrimitiveType.Triangles);
+            AddObject("minVector", minVector, minVecColor, PrimitiveType.Lines);
+            AddObject("maxVector", maxVector, maxVecColor, PrimitiveType.Lines);
 
             return CommandResult.Success;
         }
@@ -139,13 +135,13 @@ namespace KI.Tool.Command
         /// <param name="name">名前</param>
         /// <param name="position">位置情報</param>
         /// <param name="color">色情報</param>
-        private void AddObject(string name, List<Vector3> position, List<Vector3> color, GeometryType type)
+        private void AddObject(string name, List<Vector3> position, List<Vector3> color, PrimitiveType type)
         {
-            Geometry geometry = new Geometry(name + " : " + renderObject.Name, position, null, color, null, null, type);
-            RenderObject render = RenderObjectFactory.Instance.CreateRenderObject(name);
-            render.SetGeometryInfo(geometry);
-            render.ModelMatrix = renderObject.ModelMatrix;
-            Global.RenderSystem.ActiveScene.AddObject(render);
+            //Geometry polygon = new Geometry(name + " : " + renderObject.Name, position, null, color, null, null, type);
+            //RenderObject render = RenderObjectFactory.Instance.CreateRenderObject(name);
+            //render.SetGeometryInfo(polygon);
+            //render.ModelMatrix = renderObject.ModelMatrix;
+            //Global.RenderSystem.ActiveScene.AddObject(render);
         }
     }
 }

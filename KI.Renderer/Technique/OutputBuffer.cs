@@ -26,7 +26,7 @@ namespace KI.Renderer
         {
             Plane = RenderObjectFactory.Instance.CreateRenderObject("OutputBuffer", AssetFactory.Instance.CreatePlane("OutputPlane"));
             var textures = Global.RenderSystem.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
-            Plane.Geometry.AddTexture(TextureKind.Normal, textures[(int)GBuffer.GBufferOutputType.Color]);
+            Plane.Polygon.AddTexture(TextureKind.Normal, textures[(int)GBuffer.GBufferOutputType.Color]);
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace KI.Renderer
         /// <param name="outputTexture">出力テクスチャ</param>
         public void SetOutputTarget(TextureKind textureKind, Texture outputTexture)
         {
-            Plane.Geometry.AddTexture(textureKind, outputTexture);
+            Plane.Polygon.AddTexture(textureKind, outputTexture);
         }
 
         /// <summary>

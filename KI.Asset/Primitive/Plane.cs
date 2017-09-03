@@ -1,14 +1,16 @@
 ﻿using System.Collections.Generic;
 using KI.Foundation.Core;
 using KI.Foundation.Utility;
+using KI.Gfx.Geometry;
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Asset
 {
     /// <summary>
     /// 平面
     /// </summary>
-    public class Plane : KIObject, IGeometry
+    public class Plane : KIObject, IPolygon
     {
         #region [メンバ変数]
         /// <summary>
@@ -52,7 +54,7 @@ namespace KI.Asset
             quad1 = q1;
             quad2 = q2;
             quad3 = q3;
-            CreateGeometry();
+            CreatePolygon();
         }
 
         /// <summary>
@@ -66,43 +68,31 @@ namespace KI.Asset
             quad1 = new Vector3(1, -1, 0);
             quad2 = new Vector3(1, 1, 0);
             quad3 = new Vector3(-1, 1, 0);
-            CreateGeometry();
+            CreatePolygon();
         }
 
         /// <summary>
         /// 形状情報
         /// </summary>
-        public Geometry[] Geometrys { get; private set; }
+        public Polygon[] Polygons { get; private set; }
 
         #region [形状の作成]
         /// <summary>
         /// 形状の作成
         /// </summary>
-        public void CreateGeometry()
+        public void CreatePolygon()
         {
-            var position = new List<Vector3>();
-            var normal = new List<Vector3>();
-            var texcoord = new List<Vector2>();
-            position.Add(quad0);
-            position.Add(quad1);
-            position.Add(quad2);
-            position.Add(quad3);
-
             surface = KICalc.GetPlaneFormula(quad0, quad1, quad2);
 
-            normal.Add(new Vector3(surface));
-            normal.Add(normal[0]);
-            normal.Add(normal[0]);
-            normal.Add(normal[0]);
+            Mesh mesh = new Mesh(
+                new Vertex(quad0, surface.Xyz, Vector2.Zero),
+                new Vertex(quad1, surface.Xyz, Vector2.UnitX),
+                new Vertex(quad2, surface.Xyz, Vector2.One),
+                new Vertex(quad3, surface.Xyz, Vector2.UnitY));
 
-            texcoord.Add(Vector2.Zero);
-            texcoord.Add(Vector2.UnitX);
-            texcoord.Add(Vector2.UnitX + Vector2.UnitY);
-            texcoord.Add(Vector2.UnitY);
+            var polygon = new Polygon(this.Name, new List<Mesh>() { mesh }, PrimitiveType.Quads);
 
-            var info = new Geometry(this.Name, position, normal, Vector3.UnitX, texcoord, null, Gfx.GLUtil.GeometryType.Quad);
-
-            Geometrys = new Geometry[] { info };
+            Polygons = new Polygon[] { polygon };
         }
         #endregion
     }

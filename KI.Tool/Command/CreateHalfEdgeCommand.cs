@@ -4,6 +4,7 @@ using KI.Asset;
 using KI.Foundation.Command;
 using KI.Foundation.Core;
 using KI.Renderer;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Tool.Command
 {
@@ -33,7 +34,7 @@ namespace KI.Tool.Command
         /// <returns>成功値</returns>
         public CommandResult CanExecute(string commandArg)
         {
-            return CanCreateGeometry(renderObject);
+            return CanCreatePolygon(renderObject);
         }
 
         /// <summary>
@@ -43,9 +44,9 @@ namespace KI.Tool.Command
         /// <returns>成功値</returns>
         public CommandResult Execute(string commandArg)
         {
-            var half = AssetFactory.Instance.CreateHalfEdge(renderObject.Geometry.Vertexs.Select(p => p.Position).ToList(), renderObject.Geometry.Index);
+            var half = AssetFactory.Instance.CreateHalfEdge("HalfEdge :" + renderObject.Name,renderObject.Polygon.Vertexs.Select(p => p.Position).ToList(), renderObject.Polygon.Index[PrimitiveType.Triangles]);
             RenderObject halfEdge = RenderObjectFactory.Instance.CreateRenderObject("HalfEdge :" + renderObject.Name);
-            halfEdge.SetGeometryInfo(half.Geometrys[0]);
+            halfEdge.SetPolygon(half.Polygons[0]);
             halfEdge.ModelMatrix = renderObject.ModelMatrix;
             Global.RenderSystem.ActiveScene.AddObject(halfEdge);
 

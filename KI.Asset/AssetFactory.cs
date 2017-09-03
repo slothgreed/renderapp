@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using KI.Analyzer;
 using KI.Foundation.Core;
+using KI.Gfx.Geometry;
 using OpenTK;
 
 namespace KI.Asset
@@ -8,7 +9,7 @@ namespace KI.Asset
     /// <summary>
     /// アセットファクトリ
     /// </summary>
-    public class AssetFactory : KIFactoryBase<Geometry>
+    public class AssetFactory : KIFactoryBase<Polygon>
     {
         /// <summary>
         /// シングルトン
@@ -52,7 +53,7 @@ namespace KI.Asset
         /// <param name="min">最小値</param>
         /// <param name="max">最大値</param>
         /// <returns>軸</returns>
-        public IGeometry CreateAxis(string name, Vector3 min, Vector3 max)
+        public IPolygon CreateAxis(string name, Vector3 min, Vector3 max)
         {
             return new Axis(name, min, max);
         }
@@ -66,7 +67,7 @@ namespace KI.Asset
         /// <param name="wpartition">横分割数</param>
         /// <param name="orient">内外</param>
         /// <returns>球</returns>
-        public IGeometry CreateSphere(string name, float radial, int hpartition, int wpartition, bool orient)
+        public IPolygon CreateSphere(string name, float radial, int hpartition, int wpartition, bool orient)
         {
             return new Sphere(name, radial, hpartition, wpartition, orient);
         }
@@ -76,7 +77,7 @@ namespace KI.Asset
         /// </summary>
         /// <param name="name">名前</param>
         /// <returns>平面</returns>
-        public IGeometry CreatePlane(string name)
+        public IPolygon CreatePlane(string name)
         {
             return new Plane(name);
         }
@@ -92,7 +93,7 @@ namespace KI.Asset
         /// </summary>
         /// <param name="filePath">ファイルパス</param>
         /// <returns>3dモデル</returns>
-        public IGeometry CreateLoad3DModel(string filePath)
+        public IPolygon CreateLoad3DModel(string filePath)
         {
             string extension = System.IO.Path.GetExtension(filePath);
             string fileName = System.IO.Path.GetFileName(filePath);
@@ -117,9 +118,9 @@ namespace KI.Asset
         /// <param name="position">頂点座標</param>
         /// <param name="index">頂点番号</param>
         /// <returns>ハーフエッジ</returns>
-        public IGeometry CreateHalfEdge(List<Vector3> position, List<int> index)
+        public IPolygon CreateHalfEdge(string name, List<Vector3> position, List<int> index)
         {
-            return new HalfEdgeConverter(new HalfEdgeDS(position, index));
+            return new HalfEdgeConverter(new HalfEdgeDS(name, position, index));
         }
     }
 }

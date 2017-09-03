@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using KI.Analyzer;
-using KI.Foundation.KIMath;
 using KI.Foundation.Tree;
 using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
@@ -39,11 +34,11 @@ namespace KI.Tool.Utility
             GetMouseClipPosition(mouse, out near, out far);
 
             RenderObject renderObject = null;
-            foreach (KINode geometryNode in Global.RenderSystem.ActiveScene.RootNode.AllChildren())
+            foreach (KINode polygonNode in Global.RenderSystem.ActiveScene.RootNode.AllChildren())
             {
-                if (geometryNode.KIObject is RenderObject)
+                if (polygonNode.KIObject is RenderObject)
                 {
-                    renderObject = geometryNode.KIObject as RenderObject;
+                    renderObject = polygonNode.KIObject as RenderObject;
                 }
                 else
                 {
@@ -75,12 +70,12 @@ namespace KI.Tool.Utility
             GetMouseClipPosition(mouse, out near, out far);
 
             RenderObject renderObject;
-            foreach (KINode geometryNode in Global.RenderSystem.ActiveScene.RootNode.AllChildren())
+            foreach (KINode polygonNode in Global.RenderSystem.ActiveScene.RootNode.AllChildren())
             {
                 renderObject = null;
-                if (geometryNode.KIObject is RenderObject)
+                if (polygonNode.KIObject is RenderObject)
                 {
-                    renderObject = geometryNode.KIObject as RenderObject;
+                    renderObject = polygonNode.KIObject as RenderObject;
                 }
                 else
                 {
@@ -108,7 +103,7 @@ namespace KI.Tool.Utility
         /// <param name="selectObject">選択形状</param>
         /// <param name="mesh">選択した三角形</param>
         /// <returns>成功か</returns>
-        public static bool PickTriangle(Vector2 mouse, ref RenderObject selectObject, ref Mesh mesh)
+        public static bool PickTriangle(Vector2 mouse, ref RenderObject selectObject, ref HalfEdgeMesh mesh)
         {
             float minLength = float.MaxValue;
             Vector3 near = Vector3.Zero;
@@ -116,12 +111,12 @@ namespace KI.Tool.Utility
             GetMouseClipPosition(mouse, out near, out far);
 
             RenderObject renderObject;
-            foreach (KINode geometryNode in Global.RenderSystem.ActiveScene.RootNode.AllChildren())
+            foreach (KINode polygonNode in Global.RenderSystem.ActiveScene.RootNode.AllChildren())
             {
                 renderObject = null;
-                if (geometryNode.KIObject is RenderObject)
+                if (polygonNode.KIObject is RenderObject)
                 {
-                    renderObject = geometryNode.KIObject as RenderObject;
+                    renderObject = polygonNode.KIObject as RenderObject;
                 }
                 else
                 {
@@ -149,12 +144,12 @@ namespace KI.Tool.Utility
         /// <returns></returns>
         private static bool CanSelect(RenderObject selectObject)
         {
-            if(selectObject == null)
+            if (selectObject == null)
             {
                 return false;
             }
 
-            if (selectObject.Geometry.HalfEdgeDS == null)
+            if (selectObject.Polygon is HalfEdgeDS)
             {
                 return false;
             }
@@ -200,9 +195,10 @@ namespace KI.Tool.Utility
 
             bool select = false;
             Vector3 crossPos = Vector3.Zero;
-            for (int i = 0; i < renderObject.Geometry.HalfEdgeDS.Vertexs.Count; i++)
+            var halfEdgeDS = renderObject.Polygon as HalfEdgeDS;
+            foreach (var halfVertex in halfEdgeDS.HalfEdgeVertexs)
             {
-                Vector3 point = renderObject.Geometry.HalfEdgeDS.Vertexs[i].Position;
+                Vector3 point = halfVertex.Position;
                 point = KICalc.Multiply(renderObject.ModelMatrix, point);
 
                 if (KICalc.PerpendicularPoint(point, near, far, out crossPos))
@@ -215,7 +211,7 @@ namespace KI.Tool.Utility
                         if (length < minLength)
                         {
                             minLength = length;
-                            vertex = renderObject.Geometry.HalfEdgeDS.Vertexs[i];
+                            vertex = halfVertex;
                             select = true;
                         }
                     }
@@ -244,12 +240,11 @@ namespace KI.Tool.Utility
             bool select = false;
             float distance = 0;
 
-            if (renderObject.Geometry.Index.Count != 0)
+            var halfEdgeDS = renderObject.Polygon as HalfEdgeDS;
+            if (renderObject.Polygon.Index.Count != 0)
             {
-                for (int i = 0; i < renderObject.Geometry.HalfEdgeDS.Edges.Count; i++)
+                foreach (var edge in halfEdgeDS.HalfEdges)
                 {
-                    HalfEdge edge = renderObject.Geometry.HalfEdgeDS.Edges[i];
-
                     Vector3 startPos = KICalc.Multiply(renderObject.ModelMatrix, edge.Start.Position);
                     Vector3 endPos = KICalc.Multiply(renderObject.ModelMatrix, edge.End.Position);
 
@@ -282,7 +277,7 @@ namespace KI.Tool.Utility
         /// <param name="minLength">この長さ以下の頂点を取得</param>
         /// <param name="mesh">選択Triangle</param>
         /// <returns>成功か</returns>
-        private static bool PickTriangleCore(Vector3 near, Vector3 far, RenderObject renderObject, ref float minLength, ref Mesh mesh)
+        private static bool PickTriangleCore(Vector3 near, Vector3 far, RenderObject renderObject, ref float minLength, ref HalfEdgeMesh mesh)
         {
             if (!CanSelect(renderObject))
             {
@@ -290,19 +285,21 @@ namespace KI.Tool.Utility
             }
 
             bool select = false;
+
+            var halfEdgeDS = renderObject.Polygon as HalfEdgeDS;
             //頂点配列の時
-            if (renderObject.Geometry.Index.Count != 0)
+            if (renderObject.Polygon.Index.Count != 0)
             {
-                for (int i = 0; i < renderObject.Geometry.HalfEdgeDS.Meshs.Count; i++)
+                foreach (var halfMesh in halfEdgeDS.HalfEdgeMeshs)
                 {
-                    var vertexs = renderObject.Geometry.HalfEdgeDS.Meshs[i].AroundVertex.ToArray();
+                    var vertexs = halfMesh.AroundVertex.ToArray();
                     Vector3 multiVertex1 = KICalc.Multiply(renderObject.ModelMatrix, vertexs[0].Position);
                     Vector3 multiVertex2 = KICalc.Multiply(renderObject.ModelMatrix, vertexs[1].Position);
                     Vector3 multiVertex3 = KICalc.Multiply(renderObject.ModelMatrix, vertexs[2].Position);
                     Vector3 result = Vector3.Zero;
                     if (KICalc.CrossPlanetoLinePos(multiVertex1, multiVertex2, multiVertex3, near, far, ref minLength, out result))
                     {
-                        mesh = renderObject.Geometry.HalfEdgeDS.Meshs[i];
+                        mesh = halfMesh;
                         select = true;
                     }
                 }
@@ -310,6 +307,5 @@ namespace KI.Tool.Utility
 
             return select;
         }
-
     }
 }

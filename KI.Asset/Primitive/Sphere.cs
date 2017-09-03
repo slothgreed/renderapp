@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using KI.Foundation.Core;
+using KI.Gfx.Geometry;
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Asset
 {
     /// <summary>
     /// 球
     /// </summary>
-    public class Sphere : KIObject, IGeometry
+    public class Sphere : KIObject, IPolygon
     {
         /// <summary>
         /// 半径
@@ -45,18 +47,18 @@ namespace KI.Asset
             this.hpartition = hpartition;
             this.wpartition = wpartition;
             this.orient = orient;
-            CreateGeometry();
+            CreatePolygon();
         }
 
         /// <summary>
         /// 形状情報
         /// </summary>
-        public Geometry[] Geometrys { get; private set; }
+        public Polygon[] Polygons { get; private set; }
 
         /// <summary>
         /// オブジェクトの設定
         /// </summary>
-        public void CreateGeometry()
+        public void CreatePolygon()
         {
             float theta = (float)Math.PI / hpartition;
             float phi = (float)Math.PI / wpartition;
@@ -160,11 +162,21 @@ namespace KI.Asset
                 }
             }
 
-            var info = new Geometry(this.Name, position, normal, null, texcoord, null, Gfx.GLUtil.GeometryType.Triangle);
+            var meshs = new List<Mesh>();
+            for (int i = 0; i < position.Count; i += 3)
+            {
+                meshs.Add(
+                    new Mesh(
+                        new Vertex(position[3 * i], normal[3 * i], texcoord[3 * i]),
+                        new Vertex(position[3 * i + 1], normal[3 * i + 1], texcoord[3 * i + 1]),
+                        new Vertex(position[3 * i + 2], normal[3 * i + 2], texcoord[3 * i + 2])));
+            }
+
+            var info = new Polygon(this.Name, meshs, PrimitiveType.Triangles);
 
             //info.ConvertVertexArray();
 
-            Geometrys = new Geometry[] { info };
+            Polygons = new Polygon[] { info };
         }
 
         /// <summary>

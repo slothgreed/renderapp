@@ -180,6 +180,7 @@ namespace KI.Renderer
         /// <summary>
         /// テクニックの追加後イベント発行
         /// </summary>
+        /// <param name="technique">レンダーテクニック</param>
         private void OnTechniqueAdded(RenderTechnique technique)
         {
             TechniqueAdded?.Invoke(this, new RenderQueueEventArgs(technique));
@@ -188,6 +189,7 @@ namespace KI.Renderer
         /// <summary>
         /// テクニックの削除後イベント発行
         /// </summary>
+        /// <param name="technique">レンダーテクニック</param>
         private void OnTechniqueRemoved(RenderTechnique technique)
         {
             TechniqueRemoved?.Invoke(this, new RenderQueueEventArgs(technique));

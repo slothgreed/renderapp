@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using KI.Foundation.Core;
+using KI.Gfx.Geometry;
 using OpenTK;
 
 namespace KI.Asset
@@ -7,7 +8,7 @@ namespace KI.Asset
     /// <summary>
     /// 軸
     /// </summary>
-    public class Axis : KIObject, IGeometry
+    public class Axis : KIObject, IPolygon
     {
         /// <summary>
         /// 最小値
@@ -30,37 +31,37 @@ namespace KI.Asset
         {
             this.min = min;
             this.max = max;
-            CreateGeometry();
+            CreatePolygon();
         }
 
         /// <summary>
         /// 形状情報
         /// </summary>
-        public Geometry[] Geometrys { get; private set; }
+        public Polygon[] Polygons { get; private set; }
 
         /// <summary>
         /// 軸作成
         /// </summary>
-        public void CreateGeometry()
+        public void CreatePolygon()
         {
             var position = new List<Vector3>();
             var color = new List<Vector3>();
-            position.Add(new Vector3(max.X, 0.0f, 0.0f));
-            position.Add(new Vector3(min.X, 0.0f, 0.0f));
-            position.Add(new Vector3(0.0f, max.Y, 0.0f));
-            position.Add(new Vector3(0.0f, min.Y, 0.0f));
-            position.Add(new Vector3(0.0f, 0.0f, max.Z));
-            position.Add(new Vector3(0.0f, 0.0f, min.Z));
+            var vertexs = new List<Vertex>();
+            var lines = new List<Line>();
 
-            color.Add(new Vector3(1, 0, 0));
-            color.Add(new Vector3(1, 0, 0));
-            color.Add(new Vector3(0, 1, 0));
-            color.Add(new Vector3(0, 1, 0));
-            color.Add(new Vector3(0, 0, 1));
-            color.Add(new Vector3(0, 0, 1));
+            vertexs.Add(new Vertex(new Vector3(max.X, 0.0f, 0.0f), new Vector3(1, 0, 0)));
+            vertexs.Add(new Vertex(new Vector3(min.X, 0.0f, 0.0f), new Vector3(1, 0, 0)));
+            vertexs.Add(new Vertex(new Vector3(0.0f, max.Y, 0.0f), new Vector3(0, 1, 0)));
+            vertexs.Add(new Vertex(new Vector3(0.0f, min.Y, 0.0f), new Vector3(0, 1, 0)));
+            vertexs.Add(new Vertex(new Vector3(0.0f, 0.0f, max.Z), new Vector3(0, 0, 1)));
+            vertexs.Add(new Vertex(new Vector3(0.0f, 0.0f, min.Z), new Vector3(0, 0, 1)));
 
-            Geometry info = new Geometry("Axis", position, null, color, null, null, Gfx.GLUtil.GeometryType.Line);
-            Geometrys = new Geometry[] { info };
+            lines.Add(new Line(vertexs[0], vertexs[1]));
+            lines.Add(new Line(vertexs[2], vertexs[3]));
+            lines.Add(new Line(vertexs[4], vertexs[5]));
+
+            Polygon info = new Polygon("Axis", lines);
+            Polygons = new Polygon[] { info };
         }
     }
 }

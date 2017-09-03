@@ -1,24 +1,16 @@
-﻿namespace KI.Asset
-{
-    /// <summary>
-    /// 形状のプリミティブ種類
-    /// </summary>
-    public enum PrimitiveType
-    {
-        Axis,
-        Plane,
-        Sphere
-    }
+﻿using KI.Gfx.Geometry;
 
+namespace KI.Asset
+{
     /// <summary>
     /// 形状クラスのインタフェース
     /// </summary>
-    public interface IGeometry
+    public interface IPolygon
     {
         /// <summary>
         /// 形状
         /// </summary>
-        Geometry[] Geometrys
+        Polygon[] Polygons
         {
             get;
         }
@@ -26,6 +18,6 @@
         /// <summary>
         /// 形状の作成
         /// </summary>
-        void CreateGeometry();
+        void CreatePolygon();
     }
 }

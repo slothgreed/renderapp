@@ -1,7 +1,9 @@
-﻿using KI.Gfx.GLUtil;
+﻿using KI.Gfx.Geometry;
+using KI.Gfx.GLUtil;
 using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
 using KI.Renderer;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Asset
 {
@@ -45,19 +47,19 @@ namespace KI.Asset
         /// <returns>ファイルパス</returns>
         public string GetVertexShader(RenderObject renderObject)
         {
-            string shaderPath = GetTextureFragShader(renderObject.Geometry);
+            string shaderPath = GetTextureFragShader(renderObject.Polygon);
             if (shaderPath != null)
             {
                 return shaderPath;
             }
 
-            if (renderObject.Geometry.GeometryType == GeometryType.Line ||
-                renderObject.Geometry.GeometryType == GeometryType.Point)
+            if (renderObject.Polygon.Type == PrimitiveType.Lines ||
+                renderObject.Polygon.Type == PrimitiveType.Points)
             {
                 return Directory + @"GBuffer\GeneralPC.vert";
             }
 
-            if (renderObject.Geometry.TextureNum != 0)
+            if (renderObject.Polygon.TextureNum != 0)
             {
                 return Directory + @"GBuffer\GeneralPNCT.vert";
             }
@@ -74,13 +76,13 @@ namespace KI.Asset
         /// <returns>ファイルパス</returns>
         public string GetFragShader(RenderObject renderObject)
         {
-            if (renderObject.Geometry.GeometryType == GeometryType.Line ||
-                renderObject.Geometry.GeometryType == GeometryType.Point)
+            if (renderObject.Polygon.Type == PrimitiveType.Lines ||
+                renderObject.Polygon.Type == PrimitiveType.Points)
             {
                 return Directory + @"GBuffer\GeneralPC.frag";
             }
 
-            if (renderObject.Geometry.TextureNum != 0)
+            if (renderObject.Polygon.TextureNum != 0)
             {
                 return Directory + @"GBuffer\GeneralPNT.frag";
             }
@@ -93,30 +95,30 @@ namespace KI.Asset
         /// <summary>
         /// テクスチャ付フラグメントシェーダの取得
         /// </summary>
-        /// <param name="geometry">形状</param>
+        /// <param name="polygon">形状</param>
         /// <returns>ファイルパス</returns>
-        public string GetTextureFragShader(Geometry geometry)
+        public string GetTextureFragShader(Polygon polygon)
         {
-            if (geometry.GetTexture(TextureKind.Albedo) != null &&
-                geometry.GetTexture(TextureKind.Normal) != null &&
-                geometry.GetTexture(TextureKind.Specular) != null)
+            if (polygon.GetTexture(TextureKind.Albedo) != null &&
+                polygon.GetTexture(TextureKind.Normal) != null &&
+                polygon.GetTexture(TextureKind.Specular) != null)
             {
                 return Directory + @"GBuffer\GeneralANS.frag";
             }
 
-            if (geometry.GetTexture(TextureKind.Albedo) != null &&
-                geometry.GetTexture(TextureKind.Normal) != null)
+            if (polygon.GetTexture(TextureKind.Albedo) != null &&
+                polygon.GetTexture(TextureKind.Normal) != null)
             {
                 return Directory + @"GBuffer\GeneralAN.frag";
             }
 
-            if (geometry.GetTexture(TextureKind.Albedo) != null &&
-                geometry.GetTexture(TextureKind.Specular) != null)
+            if (polygon.GetTexture(TextureKind.Albedo) != null &&
+                polygon.GetTexture(TextureKind.Specular) != null)
             {
                 return Directory + @"GBuffer\GeneralAS.frag";
             }
 
-            if (geometry.GetTexture(TextureKind.Albedo) != null)
+            if (polygon.GetTexture(TextureKind.Albedo) != null)
             {
                 return Directory + @"GBuffer\GeneralA.frag";
             }

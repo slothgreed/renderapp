@@ -4,9 +4,10 @@ using System.Linq;
 using KI.Asset;
 using KI.Foundation.Command;
 using KI.Foundation.Core;
-using KI.Gfx.GLUtil;
+using KI.Gfx.Geometry;
 using KI.Renderer;
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Tool.Command
 {
@@ -18,7 +19,7 @@ namespace KI.Tool.Command
         /// <summary>
         /// 形状
         /// </summary>
-        private Geometry geometry;
+        private Polygon polygon;
 
         /// <summary>
         /// コンストラクタ
@@ -26,7 +27,7 @@ namespace KI.Tool.Command
         /// <param name="asset">作成するオブジェクト</param>
         public CreatePolygonCommand(KIObject asset)
         {
-            geometry = asset as Geometry;
+            polygon = asset as Polygon;
         }
 
         /// <summary>
@@ -36,7 +37,7 @@ namespace KI.Tool.Command
         /// <returns>成功値</returns>
         public CommandResult CanExecute(string commandArg)
         {
-            return CanCreateGeometry(geometry);
+            return CanCreatePolygon(polygon);
         }
 
         /// <summary>
@@ -46,11 +47,16 @@ namespace KI.Tool.Command
         /// <returns>成功値</returns>
         public CommandResult Execute(string commandArg)
         {
-            List<Vector3> position = geometry.Vertexs.Select(p => p.Position).ToList();
-            List<Vector3> normal = geometry.Vertexs.Select(p => p.Normal).ToList();
-            List<int> index = new List<int>(geometry.Index);
-            RenderObject polygon = RenderObjectFactory.Instance.CreateRenderObject("Polygon :" + geometry.Name);
-            polygon.SetGeometryInfo(new Geometry("Polygon :" + geometry.Name, position, normal, new Vector3(0.7f, 0.7f, 0.7f), null, index, GeometryType.Triangle));
+            List<Vertex> vertex = new List<Vertex>();
+            List<int> index = new List<int>(polygon.Index[PrimitiveType.Triangles]);
+            RenderObject polygonObject = RenderObjectFactory.Instance.CreateRenderObject("Polygon :" + polygon.Name);
+            var color = new Vector3(0.7f);
+            for (int i = 0; i < polygon.Vertexs.Count; i++)
+            {
+                vertex.Add(new Vertex(polygon.Vertexs[i].Position, polygon.Vertexs[i].Normal, color));
+            }
+
+            polygonObject.SetPolygon(new Polygon("Polygon :" + polygon.Name, vertex, index, PrimitiveType.Triangles));
             Global.RenderSystem.ActiveScene.AddObject(polygon);
 
             return CommandResult.Success;

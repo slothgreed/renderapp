@@ -36,9 +36,9 @@ namespace KI.Renderer
         /// <param name="name">名前</param>
         /// <param name="primitive">ジオメトリ</param>
         /// <returns>描画オブジェクト</returns>
-        public RenderObject CreateRenderObject(string name, IGeometry primitive)
+        public RenderObject CreateRenderObject(string name, IPolygon primitive)
         {
-            var renderObject = new RenderObject(name, primitive.Geometrys.First());
+            var renderObject = new RenderObject(name, primitive.Polygons.First());
             AddItem(renderObject);
             return renderObject;
         }
@@ -49,10 +49,10 @@ namespace KI.Renderer
         /// <param name="name">名前</param>
         /// <param name="primitive">ジオメトリ</param>
         /// <returns>描画オブジェクト</returns>
-        public IEnumerable<RenderObject> CreateRenderObjects(string name, IGeometry primitive)
+        public IEnumerable<RenderObject> CreateRenderObjects(string name, IPolygon primitive)
         {
             var list = new List<RenderObject>();
-            foreach (var info in primitive.Geometrys)
+            foreach (var info in primitive.Polygons)
             {
                 var renderObject = new RenderObject(name, info);
                 list.Add(renderObject);

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using KI.Asset;
+using System.Linq;
+using KI.Analyzer;
 using KI.Foundation.Command;
 using KI.Foundation.Core;
-using KI.Gfx.GLUtil;
+using KI.Gfx.Geometry;
 using KI.Renderer;
 using OpenTK;
 
@@ -40,12 +41,12 @@ namespace KI.Tool.Command
                 return CommandResult.Failed;
             }
 
-            if (renderObject.Geometry.HalfEdgeDS == null)
+            if (renderObject.Polygon is HalfEdgeDS)
             {
                 return CommandResult.Failed;
             }
 
-            return CanCreateGeometry(renderObject);
+            return CanCreatePolygon(renderObject);
         }
 
         /// <summary>
@@ -57,7 +58,9 @@ namespace KI.Tool.Command
         {
             List<Vector3> position = new List<Vector3>();
             var color = new List<Vector3>();
-            foreach (var mesh in renderObject.Geometry.HalfEdgeDS.Meshs)
+            List<Line> lines = new List<Line>();
+            var halfEdgeDS = renderObject.Polygon as HalfEdgeDS;
+            foreach (var mesh in halfEdgeDS.HalfEdgeMeshs)
             {
                 foreach (var edge in mesh.AroundEdge)
                 {
@@ -69,11 +72,14 @@ namespace KI.Tool.Command
 
                     color.Add(Vector3.UnitZ);
                     color.Add(Vector3.UnitZ);
+
+                    lines.Add(new Line(new Vertex(start + mesh.Gravity, Vector3.UnitZ), new Vertex(end + mesh.Gravity, Vector3.UnitZ)));
                 }
             }
 
             RenderObject wireframe = RenderObjectFactory.Instance.CreateRenderObject("HalfEdgeWireFrame :" + renderObject.Name);
-            wireframe.SetGeometryInfo(new Geometry("HalfEdgeWireFrame :" + renderObject.Name, position, null, color, null, null, GeometryType.Line));
+
+            wireframe.SetPolygon(new Polygon("HalfEdgeWireFrame :" + renderObject.Name, lines));
             wireframe.ModelMatrix = renderObject.ModelMatrix;
             Global.RenderSystem.ActiveScene.AddObject(wireframe);
 

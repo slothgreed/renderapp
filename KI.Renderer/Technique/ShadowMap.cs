@@ -44,11 +44,11 @@ namespace KI.Renderer
             {
                 if (asset.KIObject is RenderObject)
                 {
-                    var geometry = asset.KIObject as RenderObject;
-                    var old = geometry.Shader;
-                    geometry.Shader = ShaderItem;
-                    geometry.Render(scene);
-                    geometry.Shader = old;
+                    var polygon = asset.KIObject as RenderObject;
+                    var old = polygon.Shader;
+                    polygon.Shader = ShaderItem;
+                    polygon.Render(scene);
+                    polygon.Shader = old;
                 }
             }
 

@@ -39,7 +39,7 @@ namespace KI.Tool.Control
 
                     selectObject = renderObject;
                     selectHalfEdge = halfEdge;
-                    renderObject.Geometry.UpdateHalfEdge();
+                    renderObject.Polygon.Update(OpenTK.Graphics.OpenGL.PrimitiveType.Lines);
                 }
             }
 
@@ -47,9 +47,10 @@ namespace KI.Tool.Control
             {
                 if (selectHalfEdge != null)
                 {
-                    selectObject.Geometry.HalfEdgeDS.Editor.EdgeFlips(selectHalfEdge);
+                    var halfEdgeDS = selectObject.Polygon as HalfEdgeDS;
+                    halfEdgeDS.Editor.EdgeFlips(selectHalfEdge);
                     selectHalfEdge = null;
-                    selectObject.Geometry.UpdateHalfEdge();
+                    selectObject.Polygon.Update(OpenTK.Graphics.OpenGL.PrimitiveType.Lines);
                 }
             }
 

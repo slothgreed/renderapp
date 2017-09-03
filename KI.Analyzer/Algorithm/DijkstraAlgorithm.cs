@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using KI.Gfx.Geometry;
 using OpenTK;
 
 namespace KI.Analyzer
@@ -108,15 +109,19 @@ namespace KI.Analyzer
         /// ダイクストラの算出結果
         /// </summary>
         /// <returns>ダイクストラの線算出</returns>
-        public List<Vector3> DijkstraLine()
+        public List<Line> DijkstraLine()
         {
-            List<Vector3> line = new List<Vector3>();
+            List<Line> line = new List<Line>();
             Node current = nodes[endIndex];
             while (current != nodes[startIndex])
             {
-                line.Add(current.Vertex.Position);
-                line.Add(current.MinRouteNode.Vertex.Position);
+                var newVertex0 = new Vertex(current.Vertex);
+                var newVertex1 = new Vertex(current.MinRouteNode.Vertex);
 
+                newVertex0.Color = Vector3.UnitY;
+                newVertex1.Color = Vector3.UnitY;
+
+                line.Add(new Line(newVertex0, newVertex1));
                 current = current.MinRouteNode;
             }
 
@@ -128,11 +133,14 @@ namespace KI.Analyzer
         /// </summary>
         private void Initialize()
         {
-            nodes = new Node[halfEdge.Vertexs.Count];
+            nodes = new Node[halfEdge.HalfEdgeVertexs.Count()];
 
-            for (int i = 0; i < nodes.Length; i++)
+            int counter = 0;
+            foreach (var vertex in halfEdge.HalfEdgeVertexs)
             {
-                nodes[i] = new Node(false, -1, halfEdge.Vertexs[i]);
+                nodes[counter] = new Node(false, -1, vertex);
+                counter++;
+
             }
 
             //initialize

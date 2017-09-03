@@ -45,7 +45,7 @@ namespace KI.Analyzer
 
             #region [create delete list]
             //削除するメッシュ
-            var deleteMesh = new List<Mesh>();
+            var deleteMesh = new List<HalfEdgeMesh>();
             //削除するエッジ
             var deleteEdge = new List<HalfEdge>();
             //削除する頂点
@@ -86,17 +86,17 @@ namespace KI.Analyzer
 
             for (int i = 0; i < HalfEdge.Meshs.Count; i++)
             {
-                HalfEdge.Meshs[i].Index = i;
+                ((HalfEdgeMesh)HalfEdge.Meshs[i]).Index = i;
             }
 
-            for (int i = 0; i < HalfEdge.Edges.Count; i++)
+            for (int i = 0; i < HalfEdge.Lines.Count; i++)
             {
-                HalfEdge.Edges[i].Index = i;
+                ((HalfEdge)HalfEdge.Lines[i]).Index = i;
             }
 
             for (int i = 0; i < HalfEdge.Vertexs.Count; i++)
             {
-                HalfEdge.Vertexs[i].Index = i;
+                ((HalfEdgeVertex)HalfEdge.Vertexs[i]).Index = i;
             }
 
             //HasError();
@@ -115,33 +115,33 @@ namespace KI.Analyzer
 
             var vertex = new HalfEdgeVertex((edge.Start.Position + edge.End.Position) / 2, HalfEdge.Vertexs.Count);
 
-            var right = new HalfEdge(vertex, edge.End, HalfEdge.Edges.Count);
-            var oppoRight = new HalfEdge(edge.End, vertex, HalfEdge.Edges.Count + 1);
+            var right = new HalfEdge(vertex, edge.End, HalfEdge.Lines.Count);
+            var oppoRight = new HalfEdge(edge.End, vertex, HalfEdge.Lines.Count + 1);
             Analyzer.HalfEdge.SetupOpposite(right, oppoRight);
 
-            var left = new HalfEdge(edge.Start, vertex, HalfEdge.Edges.Count + 2);
-            var oppoLeft = new HalfEdge(vertex, edge.Start, HalfEdge.Edges.Count + 3);
+            var left = new HalfEdge(edge.Start, vertex, HalfEdge.Lines.Count + 2);
+            var oppoLeft = new HalfEdge(vertex, edge.Start, HalfEdge.Lines.Count + 3);
             Analyzer.HalfEdge.SetupOpposite(left, oppoLeft);
 
-            var up = new HalfEdge(vertex, edge.Next.End, HalfEdge.Edges.Count + 4);
-            var oppoup = new HalfEdge(edge.Next.End, vertex, HalfEdge.Edges.Count + 5);
+            var up = new HalfEdge(vertex, edge.Next.End, HalfEdge.Lines.Count + 4);
+            var oppoup = new HalfEdge(edge.Next.End, vertex, HalfEdge.Lines.Count + 5);
             Analyzer.HalfEdge.SetupOpposite(up, oppoup);
 
             var down = new HalfEdge(vertex, opposite.Next.End, edge.Index);
             var oppodown = new HalfEdge(opposite.Next.End, vertex, opposite.Index);
             Analyzer.HalfEdge.SetupOpposite(down, oppodown);
 
-            var rightUp = new Mesh(right, edge.Next, oppoup, delMesh1.Index);
-            var leftUp = new Mesh(up, edge.Before, left, delMesh2.Index);
-            var rightDown = new Mesh(down, opposite.Before, oppoRight, HalfEdge.Meshs.Count);
-            var leftDown = new Mesh(oppoLeft, opposite.Next, oppodown, HalfEdge.Meshs.Count + 1);
+            var rightUp = new HalfEdgeMesh(right, edge.Next, oppoup, delMesh1.Index);
+            var leftUp = new HalfEdgeMesh(up, edge.Before, left, delMesh2.Index);
+            var rightDown = new HalfEdgeMesh(down, opposite.Before, oppoRight, HalfEdge.Meshs.Count);
+            var leftDown = new HalfEdgeMesh(oppoLeft, opposite.Next, oppodown, HalfEdge.Meshs.Count + 1);
 
             HalfEdge.Vertexs.Add(vertex);
 
-            HalfEdge.Edges.Add(right); HalfEdge.Edges.Add(oppoRight);
-            HalfEdge.Edges.Add(left); HalfEdge.Edges.Add(oppoLeft);
-            HalfEdge.Edges.Add(up); HalfEdge.Edges.Add(oppoup);
-            HalfEdge.Edges.Add(down); HalfEdge.Edges.Add(oppodown);
+            HalfEdge.Lines.Add(right); HalfEdge.Lines.Add(oppoRight);
+            HalfEdge.Lines.Add(left); HalfEdge.Lines.Add(oppoLeft);
+            HalfEdge.Lines.Add(up); HalfEdge.Lines.Add(oppoup);
+            HalfEdge.Lines.Add(down); HalfEdge.Lines.Add(oppodown);
 
             HalfEdge.Meshs.Add(rightUp);
             HalfEdge.Meshs.Add(leftUp);
@@ -149,7 +149,7 @@ namespace KI.Analyzer
             HalfEdge.Meshs.Add(leftDown);
 
             DeleteEdge(new List<HalfEdge>() { edge, opposite });
-            DeleteMesh(new List<Mesh>() { delMesh1, delMesh2 });
+            DeleteMesh(new List<HalfEdgeMesh>() { delMesh1, delMesh2 });
 
             //HasError();
         }
@@ -174,17 +174,17 @@ namespace KI.Analyzer
 
             var createEdge = new HalfEdge(startPos, endPos, edge.Index);
             var createEdgeOpposite = new HalfEdge(endPos, startPos, opposite.Index);
-            var createMesh = new Mesh(createEdge, opposite.Before, edge.Next, delMesh1.Index);
-            var createMeshOpposite = new Mesh(createEdgeOpposite, edge.Before, opposite.Next, delMesh2.Index);
+            var createMesh = new HalfEdgeMesh(createEdge, opposite.Before, edge.Next, delMesh1.Index);
+            var createMeshOpposite = new HalfEdgeMesh(createEdgeOpposite, edge.Before, opposite.Next, delMesh2.Index);
             Analyzer.HalfEdge.SetupOpposite(createEdge, createEdgeOpposite);
 
             HalfEdge.Meshs.Add(createMesh);
             HalfEdge.Meshs.Add(createMeshOpposite);
-            HalfEdge.Edges.Add(createEdge);
-            HalfEdge.Edges.Add(createEdgeOpposite);
+            HalfEdge.Lines.Add(createEdge);
+            HalfEdge.Lines.Add(createEdgeOpposite);
 
             DeleteEdge(new List<HalfEdge>() { edge, opposite });
-            DeleteMesh(new List<Mesh>() { delMesh1, delMesh2 });
+            DeleteMesh(new List<HalfEdgeMesh>() { delMesh1, delMesh2 });
 
             //HasError();
         }
@@ -268,7 +268,7 @@ namespace KI.Analyzer
         /// メッシュ削除
         /// </summary>
         /// <param name="deleteMesh">削除するメッシュ</param>
-        private void DeleteMesh(List<Mesh> deleteMesh)
+        private void DeleteMesh(List<HalfEdgeMesh> deleteMesh)
         {
             foreach (var mesh in deleteMesh)
             {
@@ -286,7 +286,7 @@ namespace KI.Analyzer
             foreach (var edge in deleteEdge)
             {
                 edge.Dispose();
-                HalfEdge.Edges.Remove(edge);
+                HalfEdge.Lines.Remove(edge);
             }
         }
 
@@ -310,7 +310,7 @@ namespace KI.Analyzer
         /// <returns>ある</returns>
         private bool HasError()
         {
-            foreach (var edge in HalfEdge.Edges)
+            foreach (var edge in HalfEdge.HalfEdges)
             {
                 if (edge.ErrorEdge)
                 {
@@ -319,7 +319,7 @@ namespace KI.Analyzer
                 }
             }
 
-            foreach (var mesh in HalfEdge.Meshs)
+            foreach (var mesh in HalfEdge.HalfEdgeMeshs)
             {
                 if (mesh.ErrorMesh)
                 {
@@ -328,7 +328,7 @@ namespace KI.Analyzer
                 }
             }
 
-            foreach (var vertex in HalfEdge.Vertexs)
+            foreach (var vertex in HalfEdge.HalfEdgeVertexs)
             {
                 if (vertex.ErrorVertex)
                 {

@@ -80,6 +80,7 @@
     <Compile Include="Utility\ShaderHelper.cs" />
     <Compile Include="Technique\ShadowMap.cs" />
     <Compile Include="Technique\SSLIC.cs" />
+    <Compile Include="VertexBuffer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Technique\RenderTechniqueT4.tt">

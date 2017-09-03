@@ -26,7 +26,7 @@ namespace KI.Analyzer.Algorithm
         /// <param name="half">ハーフエッジ</param>
         private void Calculate(HalfEdgeDS half)
         {
-            foreach (var vertex in half.Vertexs)
+            foreach (var vertex in half.HalfEdgeVertexs)
             {
                 SetVoronoiRagion(vertex);
                 SetGaussianParameter(vertex);

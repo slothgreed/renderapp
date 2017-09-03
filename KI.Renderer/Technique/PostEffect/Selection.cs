@@ -25,7 +25,7 @@ namespace KI.Renderer
             : base("SelectionBuffer", vertexShader, fragShader, RenderTechniqueType.Selection, RenderType.OffScreen)
         {
             var textures = Global.RenderSystem.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
-            Plane.Geometry.AddTexture(TextureKind.Normal, textures[(int)GBuffer.GBufferOutputType.Color]);
+            Plane.Polygon.AddTexture(TextureKind.Normal, textures[(int)GBuffer.GBufferOutputType.Color]);
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace KI.Renderer
                 if (Global.RenderSystem.ActiveScene.SelectNode is RenderObject)
                 {
                     var renderObject = Global.RenderSystem.ActiveScene.SelectNode as RenderObject;
-                    uID = renderObject.Geometry.ID;
+                    uID = renderObject.Polygon.ID;
                 }
                 else
                 {

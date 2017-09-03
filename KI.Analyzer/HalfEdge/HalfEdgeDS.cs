@@ -1,21 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using KI.Foundation.Utility;
+using KI.Gfx.Geometry;
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Analyzer
 {
     /// <summary>
     /// ポリへドロン
     /// </summary>
-    public class HalfEdgeDS
+    public class HalfEdgeDS : Polygon
     {
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public HalfEdgeDS()
+        public HalfEdgeDS(string name)
+            : base(name)
         {
             Editor = new HalfEdgeDSEditor(this);
+            Type = PrimitiveType.Triangles;
         }
 
         /// <summary>
@@ -23,8 +28,8 @@ namespace KI.Analyzer
         /// </summary>
         /// <param name="position">頂点座標リスト</param>
         /// <param name="polyIndex">「三角形を構成する頂点番号を格納したVector3」のリスト</param>
-        public HalfEdgeDS(List<Vector3> position, List<int> polyIndex = null)
-            :this()
+        public HalfEdgeDS(string name, List<Vector3> position, List<int> polyIndex = null)
+            : this(name)
         {
             Initialize(position, polyIndex);
         }
@@ -33,21 +38,6 @@ namespace KI.Analyzer
         /// ハーフエッジのエディタ
         /// </summary>
         public HalfEdgeDSEditor Editor { get; private set; }
-
-        /// <summary>
-        /// メッシュリスト
-        /// </summary>
-        public List<Mesh> Meshs { get; set; } = new List<Mesh>();
-
-        /// <summary>
-        /// エッジリスト
-        /// </summary>
-        public List<HalfEdge> Edges { get; set; } = new List<HalfEdge>();
-        
-        /// <summary>
-        /// 頂点リスト
-        /// </summary>
-        public List<HalfEdgeVertex> Vertexs { get; set; } = new List<HalfEdgeVertex>();
 
         /// <summary>
         /// エッジの取得
@@ -85,9 +75,38 @@ namespace KI.Analyzer
         /// </summary>
         public void ClearSelection()
         {
-            foreach (var vertex in Vertexs)
+            foreach (var vertex in HalfEdgeVertexs)
             {
                 vertex.IsSelect = false;
+            }
+        }
+
+        public override void Update(PrimitiveType type)
+        {
+            base.Update(PrimitiveType.Triangles);
+        }
+
+        public IEnumerable<HalfEdgeVertex> HalfEdgeVertexs
+        {
+            get
+            {
+                return Vertexs.OfType<HalfEdgeVertex>();
+            }
+        }
+
+        public IEnumerable<HalfEdgeMesh> HalfEdgeMeshs
+        {
+            get
+            {
+                return Meshs.OfType<HalfEdgeMesh>();
+            }
+        }
+
+        public IEnumerable<HalfEdge> HalfEdges
+        {
+            get
+            {
+                return Lines.OfType<HalfEdge>();
             }
         }
 
@@ -142,7 +161,7 @@ namespace KI.Analyzer
             for (int i = 0; i < vertexlist.Count; i++)
             {
                 //ないVertexを調査
-                HalfEdgeVertex vertex = Vertexs.Find(p => p.Position == vertexlist[i]);
+                var vertex = Vertexs.Find(p => p.Position == vertexlist[i]);
                 if (vertex == null)
                 {
                     vertex = new HalfEdgeVertex(vertexlist[i], Vertexs.Count);
@@ -151,15 +170,15 @@ namespace KI.Analyzer
 
                 if (v1 == null)
                 {
-                    v1 = vertex;
+                    v1 = vertex as HalfEdgeVertex;
                 }
                 else if (v2 == null)
                 {
-                    v2 = vertex;
+                    v2 = vertex as HalfEdgeVertex;
                 }
                 else
                 {
-                    v3 = vertex;
+                    v3 = vertex as HalfEdgeVertex;
                     CreateMesh(v1, v2, v3);
                     v1 = null;
                     v2 = null;
@@ -176,18 +195,25 @@ namespace KI.Analyzer
         /// <param name="v3">頂点3</param>
         private void CreateMesh(HalfEdgeVertex v1, HalfEdgeVertex v2, HalfEdgeVertex v3)
         {
-            Mesh mesh = new Mesh(Meshs.Count);
-            HalfEdge edge1 = new HalfEdge(mesh, v1, v2, Edges.Count);
-            HalfEdge edge2 = new HalfEdge(mesh, v2, v3, Edges.Count + 1);
-            HalfEdge edge3 = new HalfEdge(mesh, v3, v1, Edges.Count + 2);
+            HalfEdgeMesh mesh = new HalfEdgeMesh(Meshs.Count);
+            HalfEdge edge1 = new HalfEdge(mesh, v1, v2, Lines.Count);
+            HalfEdge edge2 = new HalfEdge(mesh, v2, v3, Lines.Count + 1);
+            HalfEdge edge3 = new HalfEdge(mesh, v3, v1, Lines.Count + 2);
 
             //メッシュにエッジを格納
             mesh.SetEdge(edge1, edge2, edge3);
             Meshs.Add(mesh);
 
-            Edges.Add(edge1);
-            Edges.Add(edge2);
-            Edges.Add(edge3);
+            Lines.Add(edge1);
+            Lines.Add(edge2);
+            Lines.Add(edge3);
+        }
+
+        public void Setup(List<HalfEdgeVertex> vertexs, List<HalfEdge> edges, List<HalfEdgeMesh> meshs)
+        {
+            Vertexs = vertexs.OfType<Vertex>().ToList();
+            Lines = edges.OfType<Line>().ToList();
+            Meshs = meshs.OfType<Mesh>().ToList();
         }
 
         /// <summary>
@@ -199,9 +225,9 @@ namespace KI.Analyzer
             int poly_Num = polyIndex.Count / 3;
             for (int num = 0; num < poly_Num; num++)
             {
-                HalfEdgeVertex v1 = Vertexs[polyIndex[3 * num]];
-                HalfEdgeVertex v2 = Vertexs[polyIndex[3 * num + 1]];
-                HalfEdgeVertex v3 = Vertexs[polyIndex[3 * num + 2]];
+                HalfEdgeVertex v1 = Vertexs[polyIndex[3 * num]] as HalfEdgeVertex;
+                HalfEdgeVertex v2 = Vertexs[polyIndex[3 * num + 1]] as HalfEdgeVertex;
+                HalfEdgeVertex v3 = Vertexs[polyIndex[3 * num + 2]] as HalfEdgeVertex;
                 CreateMesh(v1, v2, v3);
             }
         }
@@ -211,7 +237,7 @@ namespace KI.Analyzer
         /// </summary>
         private void SetOppositeEdge()
         {
-            foreach (var vertex in Vertexs)
+            foreach (var vertex in HalfEdgeVertexs)
             {
                 foreach (var edge in vertex.AroundEdge)
                 {
@@ -255,7 +281,7 @@ namespace KI.Analyzer
         {
             int ok_flag = 0;
             HalfEdge opposite;
-            foreach (var edge in Edges)
+            foreach (var edge in HalfEdges)
             {
                 opposite = edge.Opposite;
                 if (edge == opposite)

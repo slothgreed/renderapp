@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using KI.Analyzer;
 using KI.Foundation.Core;
-using KI.Foundation.KIMath;
-using KI.Gfx.GLUtil;
 using KI.Gfx.KITexture;
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
-namespace KI.Asset
+namespace KI.Gfx.Geometry
 {
     /// <summary>
     /// 頂点格納種類
@@ -21,16 +19,31 @@ namespace KI.Asset
     }
 
     /// <summary>
-    /// 形状
+    /// 更新イベント
     /// </summary>
-    public class Geometry : KIObject
+    public class UpdatePolygonEventArgs
     {
-        #region Propety
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="type">更新した形状種類</param>
+        public UpdatePolygonEventArgs(PrimitiveType type)
+        {
+            Type = type;
+        }
 
         /// <summary>
-        /// 形状情報更新イベント
+        /// 更新した形状種類
         /// </summary>
-        public EventHandler GeometryUpdate { get; set; }
+        public PrimitiveType Type { get; private set; }
+    }
+
+    /// <summary>
+    /// 形状
+    /// </summary>
+    public class Polygon : KIObject
+    {
+        #region Propety
 
         /// <summary>
         /// 頂点リスト
@@ -38,80 +51,85 @@ namespace KI.Asset
         private List<Vertex> vertexs = new List<Vertex>();
 
         /// <summary>
+        /// ワイヤフレーム
+        /// </summary>
+        private List<Line> lines = new List<Line>();
+
+        /// <summary>
+        /// メッシュリスト
+        /// </summary>
+        private List<Mesh> meshs = new List<Mesh>();
+
+        /// <summary>
         /// 頂点インデックスリスト
         /// </summary>
-        private List<int> index = new List<int>();
+        private Dictionary<PrimitiveType, List<int>> index = new Dictionary<PrimitiveType, List<int>>();
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
-        /// <param name="pos">頂点</param>
-        /// <param name="nor">法線</param>
-        /// <param name="col">色</param>
-        /// <param name="tex">テクスチャ座標</param>
-        /// <param name="idx">頂点Index</param>
-        /// <param name="type">形状タイプ</param>
-        public Geometry(string name, List<Vector3> pos, List<Vector3> nor, List<Vector3> col, List<Vector2> tex, List<int> idx, GeometryType type)
-            : base(name)
+        public Polygon(string name)
+           : base(name)
         {
-            Vector3 normal = Vector3.Zero;
-            Vector3 color = Vector3.Zero;
-            Vector2 texcoord = Vector2.Zero;
-            for (int i = 0; i < pos.Count; i++)
-            {
-                if (nor != null)
-                {
-                    normal = nor[i];
-                }
-                if (col != null)
-                {
-                    color = col[i];
-                }
-                if (tex != null)
-                {
-                    texcoord = tex[i];
-                }
-
-                vertexs.Add(new Vertex(pos[i], normal, color, texcoord, i));
-            }
-
-            Update(vertexs, idx, type);
         }
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
-        /// <param name="pos">頂点</param>
-        /// <param name="nor">法線</param>
-        /// <param name="col">色</param>
-        /// <param name="tex">テクスチャ座標</param>
-        /// <param name="idx">頂点Index</param>
-        /// <param name="type">形状タイプ</param>
-        public Geometry(string name, List<Vector3> pos, List<Vector3> nor, Vector3 col, List<Vector2> tex, List<int> idx, GeometryType type)
+        /// <param name="vertex">頂点</param>
+        public Polygon(string name, List<Vertex> vertex)
             : base(name)
         {
-            Vector3 normal = Vector3.Zero;
-            Vector3 color = Vector3.Zero;
-            Vector2 texcoord = Vector2.Zero;
-            for (int i = 0; i < pos.Count; i++)
-            {
-                if (nor != null)
-                {
-                    normal = nor[i];
-                }
-
-                if (tex != null)
-                {
-                    texcoord = tex[i];
-                }
-
-                vertexs.Add(new Vertex(pos[i], normal, col, texcoord, i));
-            }
-
-            Update(vertexs, idx, type);
+            vertexs = vertex;
+            Type = PrimitiveType.Points;
         }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <param name="line">線分リスト</param>
+        public Polygon(string name, List<Line> line)
+            : base(name)
+        {
+            lines = line;
+            Type = PrimitiveType.Lines;
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <param name="mesh">メッシュ</param>
+        /// <param name="type">種類</param>
+        public Polygon(string name, List<Mesh> mesh, PrimitiveType type)
+            : base(name)
+        {
+            meshs = mesh;
+            Type = type;
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <param name="vertex">頂点リスト</param>
+        /// <param name="indexList">頂点バッファリスト</param>
+        /// <param name="type">種類</param>
+        public Polygon(string name, List<Vertex> vertex, List<int> indexList, PrimitiveType type)
+            : base(name)
+        {
+            vertexs = vertex;
+            index[type] = indexList;
+            Type = type;
+        }
+
+        /// <summary>
+        /// 形状情報更新イベント
+        /// </summary>
+        public EventHandler<UpdatePolygonEventArgs> UpdatePolygon { get; set; }
 
         /// <summary>
         /// 形状ID
@@ -119,19 +137,14 @@ namespace KI.Asset
         public int ID { get; set; }
 
         /// <summary>
-        /// ハーフエッジ
-        /// </summary>
-        public HalfEdgeDS HalfEdgeDS { get; set; }
-
-        /// <summary>
         /// 形状種類
         /// </summary>
-        public GeometryType GeometryType { get; set; }
+        public PrimitiveType Type { get; set; }
 
         /// <summary>
         /// 頂点インデックスリスト
         /// </summary>
-        public List<int> Index
+        public Dictionary<PrimitiveType, List<int>> Index
         {
             get
             {
@@ -139,14 +152,53 @@ namespace KI.Asset
             }
         }
 
-        public List<Vertex> Vertexs
+        /// <summary>
+        /// 頂点リスト
+        /// </summary>
+        public virtual List<Vertex> Vertexs
         {
             get
             {
                 return vertexs;
             }
+
+            protected set
+            {
+                vertexs = value;
+            }
         }
 
+        /// <summary>
+        /// 線分
+        /// </summary>
+        public List<Line> Lines
+        {
+            get
+            {
+                return lines;
+            }
+
+            protected set
+            {
+                lines = value;
+            }
+        }
+
+        /// <summary>
+        /// 面
+        /// </summary>
+        public List<Mesh> Meshs
+        {
+            get
+            {
+                return meshs;
+            }
+
+            protected set
+            {
+                meshs = value;
+            }
+        }
 
         /// <summary>
         /// テクスチャ
@@ -164,48 +216,34 @@ namespace KI.Asset
             }
         }
 
-        public void UpdateHalfEdge()
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="type">形状タイプ</param>
+        public virtual void Update(PrimitiveType type)
         {
-            if (HalfEdgeDS == null)
-            {
-                return;
-            }
-
-            index.Clear();
-
-            vertexs = HalfEdgeDS.Vertexs.OfType<Vertex>().ToList();
-
-            foreach (var mesh in HalfEdgeDS.Meshs)
-            {
-                index.AddRange(mesh.AroundVertex.Select(p => p.Index));
-            }
-
-            OnUpdate();
+            OnUpdate(type);
         }
 
         /// <summary>
         /// 更新
         /// </summary>
-        /// <param name="pos">頂点</param>
-        /// <param name="nor">法線</param>
-        /// <param name="col">色</param>
-        /// <param name="tex">テクスチャ座標</param>
+        /// <param name="vert">頂点</param>
         /// <param name="idx">頂点Index</param>
         /// <param name="type">形状タイプ</param>
-        public void Update(List<Vertex> vert, List<int> idx, GeometryType type)
+        public void Update(List<Vertex> vert, List<int> idx, PrimitiveType type)
         {
             vertexs = vert;
 
             if (idx != null)
             {
-                index = idx;
+                index[type] = idx;
             }
 
-            GeometryType = type;
+            Type = type;
 
-            OnUpdate();
+            OnUpdate(type);
         }
-
 
         #region [convert mesh]
         ///// <summary>
@@ -369,6 +407,52 @@ namespace KI.Asset
             }
         }
 
+        /// <summary>
+        /// ワイヤフレームの作成
+        /// </summary>
+        /// <param name="color">ワイヤフレームの色</param>
+        public void CreateWireFrame(Vector3 color)
+        {
+            lines.Clear();
+
+            if (Index[PrimitiveType.Triangles].Count != 0)
+            {
+                for (int i = 0; i < Index[PrimitiveType.Triangles].Count / 3; i++)
+                {
+                    var vertex1 = new Vertex(vertexs[Index[PrimitiveType.Triangles][3 * i]]);
+                    var vertex2 = new Vertex(vertexs[Index[PrimitiveType.Triangles][3 * i + 1]]);
+                    var vertex3 = new Vertex(vertexs[Index[PrimitiveType.Triangles][3 * i + 2]]);
+
+                    vertex1.Color = color;
+                    vertex2.Color = color;
+                    vertex3.Color = color;
+
+                    lines.Add(new Line(vertex1, vertex2));
+                    lines.Add(new Line(vertex2, vertex3));
+                    lines.Add(new Line(vertex3, vertex1));
+                }
+            }
+            else
+            {
+                for (int i = 0; i < Vertexs.Count / 3; i++)
+                {
+                    var vertex1 = new Vertex(vertexs[3 * i]);
+                    var vertex2 = new Vertex(vertexs[3 * i + 1]);
+                    var vertex3 = new Vertex(vertexs[3 * i + 2]);
+
+                    vertex1.Color = color;
+                    vertex2.Color = color;
+                    vertex3.Color = color;
+
+                    lines.Add(new Line(vertex1, vertex2));
+                    lines.Add(new Line(vertex2, vertex3));
+                    lines.Add(new Line(vertex3, vertex1));
+                }
+            }
+
+            OnUpdate(PrimitiveType.Lines);
+        }
+
         ///// <summary>
         ///// 法線の算出
         ///// </summary>
@@ -376,14 +460,14 @@ namespace KI.Asset
         //{
         //    Normal.Clear();
 
-        //    switch (GeometryType)
+        //    switch (PrimitiveType)
         //    {
-        //        case GeometryType.None:
-        //        case GeometryType.Point:
-        //        case GeometryType.Line:
-        //        case GeometryType.Mix:
+        //        case PrimitiveType.None:
+        //        case PrimitiveType.Points:
+        //        case PrimitiveType.Lines:
+        //        case PrimitiveType.Mix:
         //            return;
-        //        case GeometryType.Triangle:
+        //        case PrimitiveType.Triangles:
         //            for (int i = 0; i < Position.Count; i += 3)
         //            {
         //                Vector3 normal = Vector3.Cross(Position[i + 2] - Position[i + 1], Position[i] - Position[i + 1]).Normalized();
@@ -393,7 +477,7 @@ namespace KI.Asset
         //            }
 
         //            break;
-        //        case GeometryType.Quad:
+        //        case PrimitiveType.Quads:
         //            for (int i = 0; i < position.Count; i += 4)
         //            {
         //                Vector3 normal = Vector3.Cross(Position[i + 2] - Position[i + 1], Position[i] - Position[i + 1]).Normalized();
@@ -412,9 +496,10 @@ namespace KI.Asset
         /// <summary>
         /// 形状情報更新イベント
         /// </summary>
-        private void OnUpdate()
+        /// <param name="type">形状種類</param>
+        private void OnUpdate(PrimitiveType type)
         {
-            GeometryUpdate?.Invoke(this, EventArgs.Empty);
+            UpdatePolygon?.Invoke(this, new UpdatePolygonEventArgs(type));
         }
     }
 }

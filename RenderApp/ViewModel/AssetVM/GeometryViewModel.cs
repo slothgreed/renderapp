@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using KI.Asset;
-using KI.UI.ViewModel;
+using KI.Gfx.Geometry;
 
 namespace RenderApp.ViewModel
 {
@@ -13,7 +12,7 @@ namespace RenderApp.ViewModel
         {
         }
 
-        public GeometryViewModel(Geometry model)
+        public GeometryViewModel(Polygon model)
         {
             Model = model;
             PropertyItem = new Dictionary<string, object>();
@@ -52,7 +51,7 @@ namespace RenderApp.ViewModel
             }
         }
 
-        public Geometry Model { get; private set; }
+        public Polygon Model { get; private set; }
 
         public override void UpdateProperty()
         {

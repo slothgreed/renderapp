@@ -52,10 +52,10 @@ namespace KI.Renderer
         public override void Initialize()
         {
             var textures = Global.RenderSystem.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
-            Plane.Geometry.AddTexture(TextureKind.Albedo, textures[(int)GBuffer.GBufferOutputType.Posit]);
-            Plane.Geometry.AddTexture(TextureKind.Normal, textures[(int)GBuffer.GBufferOutputType.Normal]);
-            Plane.Geometry.AddTexture(TextureKind.World, textures[(int)GBuffer.GBufferOutputType.Color]);
-            Plane.Geometry.AddTexture(TextureKind.Lighting, textures[(int)GBuffer.GBufferOutputType.Light]);
+            Plane.Polygon.AddTexture(TextureKind.Albedo, textures[(int)GBuffer.GBufferOutputType.Posit]);
+            Plane.Polygon.AddTexture(TextureKind.Normal, textures[(int)GBuffer.GBufferOutputType.Normal]);
+            Plane.Polygon.AddTexture(TextureKind.World, textures[(int)GBuffer.GBufferOutputType.Color]);
+            Plane.Polygon.AddTexture(TextureKind.Lighting, textures[(int)GBuffer.GBufferOutputType.Light]);
         }
     }
 }

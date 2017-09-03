@@ -1,14 +1,15 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using KI.Asset.Loader;
-using KI.Gfx.GLUtil;
+using KI.Gfx.Geometry;
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Asset
 {
     /// <summary>
     /// STLのローダ現在テキストファイルのみ
     /// </summary>
-    public class STLConverter : IGeometry
+    public class STLConverter : IPolygon
     {
         /// <summary>
         /// stlファイルのローダ
@@ -22,13 +23,13 @@ namespace KI.Asset
         public STLConverter(string filePath)
         {
             stlData = new STLLoader(filePath);
-            CreateGeometry();
+            CreatePolygon();
         }
 
         /// <summary>
         /// 形状情報
         /// </summary>
-        public Geometry[] Geometrys
+        public Polygon[] Polygons
         {
             get;
             private set;
@@ -37,10 +38,22 @@ namespace KI.Asset
         /// <summary>
         /// 形状の作成
         /// </summary>
-        public void CreateGeometry()
+        public void CreatePolygon()
         {
-            Geometry info = new Geometry(stlData.FileName, stlData.Position, stlData.Normal, Vector3.One, null, null, GeometryType.Triangle);
-            Geometrys = new Geometry[] { info };
+            var mesh = new List<Mesh>();
+
+            for (int i = 0; i < stlData.Position.Count; i += 3)
+            {
+                mesh.Add(
+                    new Mesh(
+                        new Vertex(stlData.Position[3 * i], stlData.Normal[3 * i], Vector3.One),
+                        new Vertex(stlData.Position[3 * i + 1], stlData.Normal[3 * i + 1], Vector3.One),
+                        new Vertex(stlData.Position[3 * i + 2], stlData.Normal[3 * i + 2], Vector3.One)
+                        ));
+            }
+
+            Polygon info = new Polygon(stlData.FileName, mesh, PrimitiveType.Triangles);
+            Polygons = new Polygon[] { info };
         }
     }
 }

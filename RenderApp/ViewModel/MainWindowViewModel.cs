@@ -222,8 +222,8 @@ namespace RenderApp.ViewModel
             {
                 foreach (var filename in dlg.FileNames)
                 {
-                    var geometrys = AssetFactory.Instance.CreateLoad3DModel(filename);
-                    var renderObject = RenderObjectFactory.Instance.CreateRenderObject(filename, geometrys);
+                    var polygons = AssetFactory.Instance.CreateLoad3DModel(filename);
+                    var renderObject = RenderObjectFactory.Instance.CreateRenderObject(filename, polygons);
                     renderObject.Scale = new OpenTK.Vector3(10);
                     Workspace.MainScene.AddObject(renderObject);
                 }

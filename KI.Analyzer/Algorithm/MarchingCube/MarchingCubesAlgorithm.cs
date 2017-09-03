@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using KI.Foundation.Utility;
+using KI.Gfx.Geometry;
 using OpenTK;
 
 namespace KI.Analyzer.Algorithm.MarchingCube
@@ -77,12 +78,7 @@ namespace KI.Analyzer.Algorithm.MarchingCube
         /// <summary>
         /// MarchingTrianlge情報
         /// </summary>
-        public List<Vector3> PositionList { get; private set; } = new List<Vector3>();
-
-        /// <summary>
-        /// Marching色情報
-        /// </summary>
-        public List<Vector3> ColorList { get; private set; } = new List<Vector3>();
+        public List<Mesh> Meshs { get; private set; } = new List<Mesh>();
 
         /// <summary>
         /// 頂点の作成位置の取得
@@ -166,12 +162,12 @@ namespace KI.Analyzer.Algorithm.MarchingCube
 
                   for (int l = 0; MarchingTable.TriIndexTable[marching.State, l] != -1; l += 3)
                   {
-                      ColorList.Add(new Vector3(0.7f));
-                      ColorList.Add(new Vector3(0.7f));
-                      ColorList.Add(new Vector3(0.7f));
-                      PositionList.Add(vertexList[MarchingTable.TriIndexTable[marching.State, l]]);
-                      PositionList.Add(vertexList[MarchingTable.TriIndexTable[marching.State, l + 2]]);
-                      PositionList.Add(vertexList[MarchingTable.TriIndexTable[marching.State, l + 1]]);
+                      Meshs.Add(
+                          new Mesh(
+                              new Vertex(vertexList[MarchingTable.TriIndexTable[marching.State, l]], Vector3.UnitY),
+                              new Vertex(vertexList[MarchingTable.TriIndexTable[marching.State, l + 2]], Vector3.UnitY),
+                              new Vertex(vertexList[MarchingTable.TriIndexTable[marching.State, l + 1]], Vector3.UnitY))
+                              );
                   }
               };
 

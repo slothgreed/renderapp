@@ -17,32 +17,36 @@ namespace KI.Renderer
         /// 初期状態の設定
         /// </summary>
         /// <param name="scene">シーン</param>
-        /// <param name="shader">シェーダ</param>
         /// <param name="renderObject">形状</param>
+        /// <param name="package">レンダリング情報</param>
         /// <param name="textures">テクスチャ</param>
-        public static void InitializeState(IScene scene, Shader shader, RenderObject renderObject, Dictionary<TextureKind, Texture> textures)
+        public static void InitializeState(IScene scene, RenderObject renderObject, RenderPackage package, Dictionary<TextureKind, Texture> textures)
         {
-            foreach (ShaderProgramInfo info in shader.GetShaderVariable())
+            foreach (ShaderProgramInfo info in package.Shader.GetShaderVariable())
             {
                 switch (info.Name)
                 {
                     case "position":
-                        info.Variable = renderObject.PositionBuffer;
+                        info.Variable = package.VertexBuffer.PositionBuffer;
                         break;
                     case "normal":
-                        info.Variable = renderObject.NormalBuffer;
+                        info.Variable = package.VertexBuffer.NormalBuffer;
                         break;
                     case "color":
-                        info.Variable = renderObject.ColorBuffer;
+                        info.Variable = package.VertexBuffer.ColorBuffer;
                         break;
                     case "texcoord":
-                        info.Variable = renderObject.TexCoordBuffer;
+                        info.Variable = package.VertexBuffer.TexCoordBuffer;
                         break;
                     case "index":
-                        info.Variable = renderObject.IndexBuffer;
+                        if (package.VertexBuffer.IndexBuffer.ContainsKey(package.Type))
+                        {
+                            info.Variable = package.VertexBuffer.IndexBuffer[package.Type];
+                        }
+
                         break;
                     case "uGeometryID":
-                        info.Variable = renderObject.Geometry.ID;
+                        info.Variable = renderObject.Polygon.ID;
                         break;
                     case "uWidth":
                         info.Variable = DeviceContext.Instance.Width;

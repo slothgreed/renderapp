@@ -1,15 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using KI.Asset.Loader.Loader;
-using KI.Gfx.GLUtil;
+using KI.Gfx.Geometry;
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
+
 
 namespace KI.Asset
 {
     /// <summary>
     /// plyファイルデータを独自形式に変換
     /// </summary>
-    public class PLYConverter : IGeometry
+    public class PLYConverter : IPolygon
     {
         /// <summary>
         /// plyファイルデータ
@@ -23,20 +25,20 @@ namespace KI.Asset
         public PLYConverter(string filePath)
         {
             plyData = new PLYLoader(filePath);
-            CreateGeometry();
+            CreatePolygon();
         }
 
         /// <summary>
         /// 形状情報
         /// </summary>
-        public Geometry[] Geometrys { get; private set; }
+        public Polygon[] Polygons { get; private set; }
 
         /// <summary>
         /// 形状の作成
         /// </summary>
-        public void CreateGeometry()
+        public void CreatePolygon()
         {
-            var position = new List<Vector3>();
+            var vertexs = new List<Vertex>();
 
             int vertexNum = plyData.Propertys[0].Count;
             for (int i = 0; i < vertexNum; i++)
@@ -49,13 +51,12 @@ namespace KI.Asset
                 var vectorY = plyData.Propertys[5][i];
                 var vectorZ = plyData.Propertys[6][i];
 
-                position.Add(new Vector3(x, y, z));
+                vertexs.Add(new Vertex(new Vector3(x, y, z), new Vector3(vectorX, vectorY, vectorZ)));
             }
 
             List<int> index = plyData.FaceIndex.ToList();
-
-            Geometry info = new Geometry(plyData.FileName, position, null, Vector3.UnitX, null, index, GeometryType.Triangle);
-            Geometrys = new Geometry[] { info };
+            Polygon info = new Polygon(plyData.FileName, vertexs, index, PrimitiveType.Triangles);
+            Polygons = new Polygon[] { info };
         }
     }
 }

@@ -2,13 +2,13 @@
 using System.Linq;
 using KI.Analyzer;
 using KI.Analyzer.Algorithm.MarchingCube;
-using KI.Asset;
 using KI.Foundation.Command;
 using KI.Foundation.Core;
 using KI.Foundation.Utility;
-using KI.Gfx.GLUtil;
+using KI.Gfx.Geometry;
 using KI.Renderer;
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Tool.Command
 {
@@ -50,7 +50,7 @@ namespace KI.Tool.Command
                 return CommandResult.Failed;
             }
 
-            if (renderObject.Geometry.GeometryType != Gfx.GLUtil.GeometryType.Triangle)
+            if (renderObject.Polygon.Type != PrimitiveType.Triangles)
             {
                 return CommandResult.Failed;
             }
@@ -67,15 +67,15 @@ namespace KI.Tool.Command
         {
             Vector3 min;
             Vector3 max;
-            KICalc.MinMax(renderObject.Geometry.Vertexs.Select(p => p.Position), out min, out max);
+            KICalc.MinMax(renderObject.Polygon.Vertexs.Select(p => p.Position), out min, out max);
             min -= Vector3.One * 10;
             max += Vector3.One * 10;
-            var voxel = new VoxelSpace(renderObject.Geometry.Vertexs.Select(p => p.Position).ToList(), renderObject.Geometry.Index, partition, min, max);
+            var voxel = new VoxelSpace(renderObject.Polygon.Vertexs.Select(p => p.Position).ToList(), renderObject.Polygon.Index[PrimitiveType.Triangles], partition, min, max);
             var marching = new MarchingCubesAlgorithm(voxel, 0.8f);
 
             RenderObject marghingObject = RenderObjectFactory.Instance.CreateRenderObject("MarchingCube :" + renderObject.Name);
-            var geometry = new Geometry(marghingObject.Name, marching.PositionList, null, marching.ColorList, null, null, Gfx.GLUtil.GeometryType.Triangle);
-            marghingObject.SetGeometryInfo(geometry);
+            var polygon = new Polygon(marghingObject.Name, marching.Meshs, PrimitiveType.Triangles);
+            marghingObject.SetPolygon(polygon);
             marghingObject.ModelMatrix = renderObject.ModelMatrix;
             Global.RenderSystem.ActiveScene.AddObject(marghingObject);
 

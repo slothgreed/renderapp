@@ -83,8 +83,8 @@ namespace KI.Renderer
             {
                 if (asset.KIObject is RenderObject)
                 {
-                    var geometry = asset.KIObject as RenderObject;
-                    geometry.Render(scene);
+                    var polygon = asset.KIObject as RenderObject;
+                    polygon.Render(scene);
                 }
             }
 

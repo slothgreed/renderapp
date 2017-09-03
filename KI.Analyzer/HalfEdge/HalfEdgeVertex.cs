@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using KI.Foundation.KIMath;
 using KI.Foundation.Utility;
+using KI.Gfx.Geometry;
 using OpenTK;
 
 namespace KI.Analyzer
@@ -57,7 +57,7 @@ namespace KI.Analyzer
         /// <param name="pos">座標</param>
         /// <param name="index">要素番号</param>
         public HalfEdgeVertex(Vector3 pos, int index = -1)
-            : base(pos, Vector3.Zero, Vector3.Zero, Vector2.Zero, index)
+            : base(pos, Vector3.Zero, Vector3.Zero, Vector2.Zero)
         {
             parameter = new Dictionary<VertexParam, object>();
             Position = pos;
@@ -74,6 +74,11 @@ namespace KI.Analyzer
         /// 削除フラグ。Updateが走ると必ず削除するべきもの
         /// </summary>
         public bool DeleteFlag { get; set; }
+
+        /// <summary>
+        /// 要素番号
+        /// </summary>
+        public int Index { get; set; }
 
         /// <summary>
         /// 選択中か
@@ -127,7 +132,7 @@ namespace KI.Analyzer
         /// <summary>
         /// 周辺メッシュ
         /// </summary>
-        public IEnumerable<Mesh> AroundMesh
+        public IEnumerable<HalfEdgeMesh> AroundMesh
         {
             get
             {

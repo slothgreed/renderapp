@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using KI.Foundation.KIMath;
 using KI.Foundation.Utility;
+using KI.Gfx.Geometry;
 using OpenTK;
 
 namespace KI.Analyzer.Algorithm
@@ -15,7 +14,7 @@ namespace KI.Analyzer.Algorithm
         /// <summary>
         /// メッシュリスト
         /// </summary>
-        private List<Mesh> meshList;
+        private List<HalfEdgeMesh> meshList;
 
         /// <summary>
         /// 点群
@@ -29,7 +28,7 @@ namespace KI.Analyzer.Algorithm
         public ConvexHullAlgorithm(List<Vertex> position)
         {
             pointList = new List<Vector3>();
-            meshList = new List<Mesh>();
+            meshList = new List<HalfEdgeMesh>();
 
             pointList.AddRange(position.Select(p => p.Position));
 
@@ -42,7 +41,7 @@ namespace KI.Analyzer.Algorithm
         /// <summary>
         /// メッシュ
         /// </summary>
-        public List<Mesh> Meshs
+        public List<HalfEdgeMesh> Meshs
         {
             get
             {
@@ -83,7 +82,7 @@ namespace KI.Analyzer.Algorithm
         {
             while (true)
             {
-                Mesh calcMesh = meshList.FirstOrDefault(p => (bool)p.CalcFlag == false);
+                HalfEdgeMesh calcMesh = meshList.FirstOrDefault(p => (bool)p.CalcFlag == false);
 
                 //すべて計算し終わったら終了
                 if (calcMesh == null)
@@ -146,7 +145,7 @@ namespace KI.Analyzer.Algorithm
         /// <param name="meshList">検索面</param>
         /// <param name="point">この点から見える面</param>
         /// <returns>可視面</returns>
-        private List<Mesh> FindVisibleMesh(List<Mesh> meshList, Vector3 point)
+        private List<HalfEdgeMesh> FindVisibleMesh(List<HalfEdgeMesh> meshList, Vector3 point)
         {
             return meshList.Where(mesh => Vector3.Dot(mesh.Normal, point - mesh.Gravity) > 0).ToList();
         }
@@ -156,7 +155,7 @@ namespace KI.Analyzer.Algorithm
         /// </summary>
         /// <param name="visibleMesh">可視面</param>
         /// <returns>境界エッジ</returns>
-        private List<HalfEdge> FindBoundaryEdge(List<Mesh> visibleMesh)
+        private List<HalfEdge> FindBoundaryEdge(List<HalfEdgeMesh> visibleMesh)
         {
             var boundaryList = new List<HalfEdge>();
             foreach (var mesh in visibleMesh)
@@ -206,14 +205,14 @@ namespace KI.Analyzer.Algorithm
         private void CreateMesh(List<HalfEdge> boundaryList, HalfEdgeVertex vertex)
         {
             //反対エッジ作成用に
-            var newMesh = new List<Mesh>();
+            var newMesh = new List<HalfEdgeMesh>();
 
             //境界エッジからポリゴンの作成
             foreach (var boundary in boundaryList)
             {
                 HalfEdge edge1 = new HalfEdge(vertex, boundary.Start);
                 HalfEdge edge2 = new HalfEdge(boundary.End, vertex);
-                Mesh mesh = new Mesh(edge1, boundary, edge2);
+                HalfEdgeMesh mesh = new HalfEdgeMesh(edge1, boundary, edge2);
                 mesh.CalcFlag = false;
                 newMesh.Add(mesh);
                 meshList.Add(mesh);
@@ -247,7 +246,7 @@ namespace KI.Analyzer.Algorithm
         /// <param name="mesh">面</param>
         /// <param name="posit">点</param>
         /// <returns>成功</returns>
-        private bool FindFarPoint(Mesh mesh, out Vector3 posit)
+        private bool FindFarPoint(HalfEdgeMesh mesh, out Vector3 posit)
         {
             float maxDist = float.MinValue;
             posit = Vector3.Zero;
@@ -317,8 +316,8 @@ namespace KI.Analyzer.Algorithm
             HalfEdge.SetupOpposite(edge2, oppo3);
             HalfEdge.SetupOpposite(edge3, oppo2);
 
-            var mesh1 = new Mesh(edge1, edge2, edge3);
-            var mesh2 = new Mesh(oppo1, oppo2, oppo3);
+            var mesh1 = new HalfEdgeMesh(edge1, edge2, edge3);
+            var mesh2 = new HalfEdgeMesh(oppo1, oppo2, oppo3);
             mesh1.CalcFlag = false;
             mesh2.CalcFlag = false;
             meshList.Add(mesh1);

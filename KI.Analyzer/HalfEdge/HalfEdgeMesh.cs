@@ -2,45 +2,37 @@
 using System.Collections.Generic;
 using System.Linq;
 using KI.Foundation.Utility;
+using KI.Gfx.Geometry;
 using OpenTK;
 
 namespace KI.Analyzer
 {
     /// <summary>
-    /// メッシュ
+    /// ハーフエッジ用のメッシュ
     /// </summary>
-    public class Mesh
+    public class HalfEdgeMesh : Mesh
     {
         /// <summary>
         /// エッジ
         /// </summary>
-        private List<HalfEdge> edges = new List<HalfEdge>();
-
-        /// <summary>
-        /// 法線
-        /// </summary>
-        private Vector3 normal = Vector3.Zero;
-
-        /// <summary>
-        /// 平面の公式
-        /// </summary>
-        private Vector4 plane = Vector4.Zero;
-
-        /// <summary>
-        /// 重心
-        /// </summary>
-        private Vector3 gravity = Vector3.Zero;
+        public IEnumerable<HalfEdge> Edges
+        {
+            get
+            {
+                return Lines.OfType<HalfEdge>();
+            }
+        }
 
         /// <summary>
         /// 面積
         /// </summary>
         private float area = float.MinValue;
-        
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="index">要素番号</param>
-        public Mesh(int index = -1)
+        public HalfEdgeMesh(int index = -1)
         {
             Index = index;
         }
@@ -52,7 +44,8 @@ namespace KI.Analyzer
         /// <param name="edge2">エッジ2</param>
         /// <param name="edge3">エッジ3</param>
         /// <param name="index">要素番号</param>
-        public Mesh(HalfEdge edge1, HalfEdge edge2, HalfEdge edge3, int index = -1)
+        public HalfEdgeMesh(HalfEdge edge1, HalfEdge edge2, HalfEdge edge3, int index = -1)
+            : base(edge1, edge2, edge3)
         {
             SetEdge(edge1, edge2, edge3);
             Index = index;
@@ -74,58 +67,19 @@ namespace KI.Analyzer
         public bool DeleteFlag { get; set; }
 
         /// <summary>
-        /// 法線
+        /// 面積
         /// </summary>
-        public Vector3 Normal
+        public float Area
         {
             get
             {
-                if (normal == Vector3.Zero)
+                if (area == float.MinValue)
                 {
-                    normal = KICalc.Normal(
-                        edges[1].Start.Position - edges[0].Start.Position,
-                        edges[2].Start.Position - edges[0].Start.Position);
+                    var edge = Edges.ToArray();
+                    area = KICalc.Area(edge[0].Start.Position, edge[1].Start.Position, edge[2].Start.Position);
                 }
 
-                return normal;
-            }
-        }
-
-        /// <summary>
-        /// 平面の公式
-        /// </summary>
-        public Vector4 Plane
-        {
-            get
-            {
-                if (plane == Vector4.Zero)
-                {
-                    var positions = AroundVertex.Select(p => p.Position).ToArray();
-                    plane = KICalc.GetPlaneFormula(positions[0], positions[1], positions[2]);
-                }
-
-                return plane;
-            }
-        }
-
-        /// <summary>
-        /// 重心
-        /// </summary>
-        public Vector3 Gravity
-        {
-            get
-            {
-                if (gravity == Vector3.Zero)
-                {
-                    foreach (var vertex in AroundVertex)
-                    {
-                        gravity += vertex.Position;
-                    }
-
-                    gravity /= AroundVertex.Count();
-                }
-
-                return gravity;
+                return area;
             }
         }
 
@@ -136,24 +90,7 @@ namespace KI.Analyzer
         {
             get
             {
-                return edges.Any(p => p.Radian >= MathHelper.PiOver2);
-            }
-        }
-
-        /// <summary>
-        /// 面積
-        /// </summary>
-        public float Area
-        {
-            get
-            {
-                if (area == float.MinValue)
-                {
-                    var edge = edges.ToArray();
-                    area = KICalc.Area(edge[0].Start.Position, edge[1].Start.Position, edge[2].Start.Position);
-                }
-
-                return area;
+                return Edges.Any(p => p.Radian >= MathHelper.PiOver2);
             }
         }
 
@@ -164,7 +101,7 @@ namespace KI.Analyzer
         {
             get
             {
-                return edges;
+                return Edges;
             }
         }
 
@@ -175,7 +112,7 @@ namespace KI.Analyzer
         {
             get
             {
-                foreach (var edge in edges)
+                foreach (var edge in Edges)
                 {
                     yield return edge.Start;
                 }
@@ -201,9 +138,9 @@ namespace KI.Analyzer
         /// <param name="edge3">エッジ3</param>
         public void SetEdge(HalfEdge edge1, HalfEdge edge2, HalfEdge edge3)
         {
-            edges.Add(edge1);
-            edges.Add(edge2);
-            edges.Add(edge3);
+            Lines.Add(edge1);
+            Lines.Add(edge2);
+            Lines.Add(edge3);
 
             HalfEdge.SetupNextBefore(edge1, edge2, edge3);
             edge1.Mesh = this;
@@ -218,12 +155,12 @@ namespace KI.Analyzer
         /// <returns>エッジ</returns>
         public HalfEdge GetEdge(int index)
         {
-            if (edges.Count < index)
+            if (Edges.Count() < index)
             {
                 return null;
             }
 
-            return edges[index];
+            return Edges.ElementAt(index);
         }
 
         /// <summary>
@@ -232,8 +169,6 @@ namespace KI.Analyzer
         public void Dispose()
         {
             DeleteFlag = true;
-            edges.Clear();
-            edges = null;
         }
     }
 }

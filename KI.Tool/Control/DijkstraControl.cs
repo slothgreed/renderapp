@@ -1,11 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using KI.Analyzer;
 using KI.Asset;
-using KI.Foundation.Core;
-using KI.Foundation.KIMath;
-using KI.Foundation.Utility;
-using KI.Gfx.GLUtil;
+using KI.Gfx.Geometry;
 using KI.Renderer;
 using KI.Tool.Utility;
 using OpenTK;
@@ -77,8 +73,8 @@ namespace KI.Tool.Control
                     }
 
                     RenderObject pointObject = RenderObjectFactory.Instance.CreateRenderObject("Picking");
-                    Geometry geometry = new Geometry("Picking", new List<Vector3>() { vertex.Position }, null, Vector3.UnitY, null, null, GeometryType.Point);
-                    pointObject.SetGeometryInfo(geometry);
+                    Polygon polygon = new Polygon("Picking", new List<Vertex>() { new Vertex(vertex.Position, Vector3.UnitY) });
+                    pointObject.SetPolygon(polygon);
                     pointObject.ModelMatrix = selectObject.ModelMatrix;
                     Global.RenderSystem.ActiveScene.AddObject(pointObject);
 
@@ -112,14 +108,15 @@ namespace KI.Tool.Control
         /// <returns>成功</returns>
         private bool Execute()
         {
-            dijkstra = new DijkstraAlgorithm(selectObject.Geometry.HalfEdgeDS, selectStart, selectEnd);
+            dijkstra = new DijkstraAlgorithm(selectObject.Polygon as HalfEdgeDS, selectStart, selectEnd);
             dijkstra.Execute();
 
-            RenderObject lines = RenderObjectFactory.Instance.CreateRenderObject("DijkstraLine");
-            Geometry geometry = new Geometry("DijkstraLine", dijkstra.DijkstraLine(), null, Vector3.UnitY, null, null, GeometryType.Line);
-            lines.SetGeometryInfo(geometry);
-            lines.ModelMatrix = selectObject.ModelMatrix;
-            Global.RenderSystem.ActiveScene.AddObject(lines);
+            RenderObject lineObject = RenderObjectFactory.Instance.CreateRenderObject("DijkstraLine");
+
+            Polygon polygon = new Polygon("DijkstraLine", dijkstra.DijkstraLine());
+            lineObject.SetPolygon(polygon);
+            lineObject.ModelMatrix = selectObject.ModelMatrix;
+            Global.RenderSystem.ActiveScene.AddObject(lineObject);
             return true;
         }
     }

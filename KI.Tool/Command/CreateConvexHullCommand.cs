@@ -4,9 +4,9 @@ using KI.Analyzer.Algorithm;
 using KI.Asset;
 using KI.Foundation.Command;
 using KI.Foundation.Core;
-using KI.Gfx.GLUtil;
+using KI.Gfx.Geometry;
 using KI.Renderer;
-using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Tool.Command
 {
@@ -36,7 +36,7 @@ namespace KI.Tool.Command
         /// <returns>成功値</returns>
         public CommandResult CanExecute(string commandArg)
         {
-            return CanCreateGeometry(renderObject);
+            return CanCreatePolygon(renderObject);
         }
 
         /// <summary>
@@ -46,47 +46,40 @@ namespace KI.Tool.Command
         /// <returns>成功値</returns>
         public CommandResult Execute(string commandArg)
         {
-            ConvexHullAlgorithm convexHull = new ConvexHullAlgorithm(renderObject.Geometry.Vertexs);
-            List<Vector3> position = new List<Vector3>();
+            ConvexHullAlgorithm convexHull = new ConvexHullAlgorithm(renderObject.Polygon.Vertexs);
+            List<Mesh> meshs = new List<Mesh>();
             foreach (var mesh in convexHull.Meshs)
             {
-                Vector3 pos0 = Vector3.Zero;
-                Vector3 pos1 = Vector3.Zero;
-                Vector3 pos2 = Vector3.Zero;
+                Vertex ver0 = null;
+                Vertex ver1 = null;
+                Vertex ver2 = null;
                 foreach (var vertex in mesh.AroundVertex)
                 {
-                    if (pos0 == Vector3.Zero)
+                    if (ver0 == null)
                     {
-                        pos0 = vertex.Position;
+                        ver0 = vertex;
                         continue;
                     }
 
-                    if (pos1 == Vector3.Zero)
+                    if (ver1 == null)
                     {
-                        pos1 = vertex.Position;
+                        ver1 = vertex;
                         continue;
                     }
 
-                    if (pos2 == Vector3.Zero)
+                    if (ver2 == null)
                     {
-                        pos2 = vertex.Position;
+                        ver2 = vertex;
                         continue;
                     }
                 }
 
-                position.Add(pos0);
-                position.Add(pos1);
-
-                position.Add(pos1);
-                position.Add(pos2);
-
-                position.Add(pos2);
-                position.Add(pos0);
+                meshs.Add(new Mesh(ver0, ver1, ver2));
             }
 
-            Geometry info = new Geometry("ConvexHull:" + renderObject.Name, position, null, Vector3.UnitZ, null, null, GeometryType.Line);
+            Polygon info = new Polygon("ConvexHull:" + renderObject.Name, meshs, PrimitiveType.Triangles);
             RenderObject convex = RenderObjectFactory.Instance.CreateRenderObject("ConvexHull :" + renderObject.Name);
-            convex.SetGeometryInfo(info);
+            convex.SetPolygon(info);
             convex.ModelMatrix = renderObject.ModelMatrix;
             Global.RenderSystem.ActiveScene.AddObject(convex);
 

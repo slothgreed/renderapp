@@ -1,14 +1,13 @@
-﻿using KI.Asset;
-using KI.Foundation.Command;
+﻿using KI.Foundation.Command;
 using KI.Foundation.Core;
-using KI.Gfx.GLUtil;
 using KI.Renderer;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Tool.Command
 {
     public class CreateModelCommandBase
     {
-        protected CommandResult CanCreateGeometry(KIObject asset)
+        protected CommandResult CanCreatePolygon(KIObject asset)
         {
             if (!(asset is RenderObject))
             {
@@ -16,7 +15,7 @@ namespace KI.Tool.Command
             }
 
             RenderObject renderObject = asset as RenderObject;
-            if (renderObject.Geometry.GeometryType != GeometryType.Triangle)
+            if (renderObject.Polygon.Type != PrimitiveType.Triangles)
             {
                 return CommandResult.Failed;
             }

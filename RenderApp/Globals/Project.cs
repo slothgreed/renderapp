@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using KI.Asset;
 using KI.Foundation.Core;
 using KI.Foundation.Tree;
 using KI.Gfx;
+using KI.Gfx.Geometry;
 using KI.Gfx.KITexture;
 
 namespace RenderApp.Globals
@@ -16,7 +16,7 @@ namespace RenderApp.Globals
         /// <summary>
         /// 形状ルート
         /// </summary>
-        private KINode geometryRoot;
+        private KINode polygonRoot;
 
         /// <summary>
         /// Textureオブジェクト
@@ -39,10 +39,10 @@ namespace RenderApp.Globals
         private Project()
         {
             RootNode = new KINode("ROOT");
-            geometryRoot = new KINode("Geometry");
+            polygonRoot = new KINode("Geometry");
             textureRoot = new KINode("Texture");
             shaderProgramRoot = new KINode("ShaderProgram");
-            RootNode.AddChild(geometryRoot);
+            RootNode.AddChild(polygonRoot);
             RootNode.AddChild(textureRoot);
             RootNode.AddChild(shaderProgramRoot);
         }
@@ -58,9 +58,9 @@ namespace RenderApp.Globals
         /// <param name="child">子供</param>
         internal void AddChild(KIObject child)
         {
-            if (child is Geometry)
+            if (child is Polygon)
             {
-                geometryRoot.AddChild(child);
+                polygonRoot.AddChild(child);
                 Workspace.MainScene.AddObject(child);
             }
 
@@ -85,7 +85,7 @@ namespace RenderApp.Globals
             switch (assetType)
             {
                 case RAAsset.Model:
-                    return geometryRoot.AllChildren().Select(p => p.KIObject);
+                    return polygonRoot.AllChildren().Select(p => p.KIObject);
                 case RAAsset.Texture:
                     return textureRoot.AllChildren().Select(p => p.KIObject);
                 case RAAsset.ShaderProgram:

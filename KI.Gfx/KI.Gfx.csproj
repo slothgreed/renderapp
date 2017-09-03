@@ -50,6 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Geometry\Line.cs" />
+    <Compile Include="Geometry\Mesh.cs" />
+    <Compile Include="Geometry\Polygon.cs" />
+    <Compile Include="Geometry\Triangle.cs" />
+    <Compile Include="Geometry\Vertex.cs" />
     <Compile Include="GLUtil\Buffer\ArrayBuffer.cs" />
     <Compile Include="GLUtil\Buffer\BufferFactory.cs" />
     <Compile Include="GLUtil\Buffer\BufferObject.cs" />

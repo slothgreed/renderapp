@@ -1,11 +1,7 @@
-﻿using System.Collections.Generic;
-using KI.Analyzer;
-using KI.Asset;
-using KI.Foundation.Utility;
-using KI.Gfx.GLUtil;
+﻿using KI.Analyzer;
 using KI.Renderer;
 using KI.Tool.Utility;
-using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Tool.Control
 {
@@ -27,8 +23,7 @@ namespace KI.Tool.Control
             if (HalfEdgeDSSelector.PickPoint(leftMouse.Click, ref renderObject, ref vertex))
             {
                 vertex.IsSelect = true;
-                renderObject.Geometry.UpdateHalfEdge();
-
+                renderObject.Polygon.Update(PrimitiveType.Points);
             }
 
             return true;

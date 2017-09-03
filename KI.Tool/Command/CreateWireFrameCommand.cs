@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-using KI.Asset;
-using KI.Foundation.Command;
+﻿using KI.Foundation.Command;
 using KI.Foundation.Core;
-using KI.Foundation.Utility;
-using KI.Gfx.GLUtil;
 using KI.Renderer;
 using OpenTK;
 
@@ -35,7 +31,7 @@ namespace KI.Tool.Command
         /// <returns>成功値</returns>
         public CommandResult CanExecute(string commandArg)
         {
-            return CanCreateGeometry(renderObject);
+            return CanCreatePolygon(renderObject);
         }
 
         /// <summary>
@@ -45,41 +41,7 @@ namespace KI.Tool.Command
         /// <returns>成功値</returns>
         public CommandResult Execute(string commandArg)
         {
-            List<Vector3> position = new List<Vector3>();
-            if (renderObject.Geometry.Index.Count != 0)
-            {
-                for (int i = 0; i < renderObject.Geometry.Index.Count / 3; i++)
-                {
-                    position.Add(renderObject.Geometry.Vertexs[renderObject.Geometry.Index[3 * i]].Position);
-                    position.Add(renderObject.Geometry.Vertexs[renderObject.Geometry.Index[3 * i + 1]].Position);
-
-                    position.Add(renderObject.Geometry.Vertexs[renderObject.Geometry.Index[3 * i + 1]].Position);
-                    position.Add(renderObject.Geometry.Vertexs[renderObject.Geometry.Index[3 * i + 2]].Position);
-
-                    position.Add(renderObject.Geometry.Vertexs[renderObject.Geometry.Index[3 * i + 2]].Position);
-                    position.Add(renderObject.Geometry.Vertexs[renderObject.Geometry.Index[3 * i]].Position);
-                }
-            }
-            else
-            {
-                for (int i = 0; i < renderObject.Geometry.Vertexs.Count / 3; i++)
-                {
-                    position.Add(renderObject.Geometry.Vertexs[3 * i].Position);
-                    position.Add(renderObject.Geometry.Vertexs[3 * i + 1].Position);
-
-                    position.Add(renderObject.Geometry.Vertexs[3 * i + 1].Position);
-                    position.Add(renderObject.Geometry.Vertexs[3 * i + 2].Position);
-
-                    position.Add(renderObject.Geometry.Vertexs[3 * i + 2].Position);
-                    position.Add(renderObject.Geometry.Vertexs[3 * i].Position);
-                }
-            }
-
-            RenderObject wireframe = RenderObjectFactory.Instance.CreateRenderObject("WireFrame :" + renderObject.Name);
-            wireframe.SetGeometryInfo(new Geometry("WireFrame :" + renderObject.Name, position, null, Vector3.UnitX, null, null, GeometryType.Line));
-            wireframe.ModelMatrix = renderObject.ModelMatrix;
-            Global.RenderSystem.ActiveScene.AddObject(wireframe);
-
+            renderObject.Polygon.CreateWireFrame(Vector3.Zero);
             return CommandResult.Success;
         }
 

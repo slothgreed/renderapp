@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using KI.Foundation.Core;
 using KI.Foundation.Utility;
+using KI.Gfx.Geometry;
 using OpenTK;
 
 namespace KI.Asset.Loader
@@ -40,11 +41,6 @@ namespace KI.Asset.Loader
                 Logger.Log(Logger.LogLevel.Error, filePath + "開けません。現在のフォルダ位置" + System.Environment.CurrentDirectory);
             }
         }
-
-        /// <summary>
-        /// 形状情報
-        /// </summary>
-        public Geometry[] GeometryInfos { get; private set; }
 
         /// <summary>
         /// 頂点
