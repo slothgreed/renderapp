@@ -30,11 +30,11 @@
                     <v:ViewportView/>
                 </DataTemplate>
             </vm:DockPaneTemplateSelector.ViewportTemplate>
-            <vm:DockPaneTemplateSelector.GeometryTemplate>
-                <DataTemplate DataType="{x:Type vm:GeometryViewModel}">
-                    <v:GeometryView/>
+            <vm:DockPaneTemplateSelector.RenderObjectTemplate>
+                <DataTemplate DataType="{x:Type vm:RenderObjectViewModel}">
+                    <v:RenderObjectView/>
                 </DataTemplate>
-            </vm:DockPaneTemplateSelector.GeometryTemplate>
+            </vm:DockPaneTemplateSelector.RenderObjectTemplate>
             <vm:DockPaneTemplateSelector.ShaderTemplate>
                 <DataTemplate DataType="{x:Type vm:ShaderViewModel}">
                     <v:ShaderView/>

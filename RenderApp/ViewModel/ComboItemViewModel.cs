@@ -9,14 +9,14 @@ namespace RenderApp.ViewModel
     {
         private Action<int> action;
         private object Owner;
-        private List<KIObject> items;
+        private List<object> items;
         private int selectIndex = 0;
 
-        public ComboItemViewModel(object owner, string name, IEnumerable<KIObject> value, int selectedIndex = 0)
+        public ComboItemViewModel(object owner, string name, IEnumerable<object> value, int selectedIndex = 0)
         {
             Owner = owner;
             Name = name;
-            items = new List<KIObject>();
+            items = new List<object>();
             if (value != null)
             {
                 foreach (var item in value)
@@ -35,7 +35,7 @@ namespace RenderApp.ViewModel
             set;
         }
 
-        public List<KIObject> Items
+        public List<object> Items
         {
             get
             {

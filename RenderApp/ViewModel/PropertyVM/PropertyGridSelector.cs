@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using KI.Foundation.Core;
+using KI.Renderer;
 using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel

@@ -45,10 +45,10 @@ namespace KI.Tool.Command
 
             if (renderObject.Polygon is HalfEdgeDS)
             {
-                return CommandResult.Failed;
+                return CommandResult.Success;
             }
 
-            return CommandResult.Success;
+            return CommandResult.Failed;
         }
 
         /// <summary>

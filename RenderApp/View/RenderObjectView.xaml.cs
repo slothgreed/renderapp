@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace RenderApp.View
 {
     /// <summary>
-    /// GeometryView.xaml の相互作用ロジック
+    /// RenderObjectView.xaml の相互作用ロジック
     /// </summary>
-    public partial class GeometryView : UserControl
+    public partial class RenderObjectView : UserControl
     {
-        public GeometryView()
+        public RenderObjectView()
         {
             InitializeComponent();
         }

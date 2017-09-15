@@ -172,7 +172,7 @@
     <Compile Include="ViewModel\DefaultViewModel.cs" />
     <Compile Include="ViewModel\Dialog\DialogViewModelBase.cs" />
     <Compile Include="ViewModel\Controller\VoxelViewModel.cs" />
-    <Compile Include="ViewModel\AssetVM\GeometryViewModel.cs" />
+    <Compile Include="ViewModel\AssetVM\RenderObjectViewModel.cs" />
     <Compile Include="ViewModel\PropertyVM\PropertyGridSelector.cs" />
     <Compile Include="ViewModel\RenderSystemViewModel.cs" />
     <Compile Include="ViewModel\AssetVM\ShaderViewModel.cs" />
@@ -211,8 +211,8 @@
     <Compile Include="View\Controller\VoxelView.xaml.cs">
       <DependentUpon>VoxelView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\GeometryView.xaml.cs">
-      <DependentUpon>GeometryView.xaml</DependentUpon>
+    <Compile Include="View\RenderObjectView.xaml.cs">
+      <DependentUpon>RenderObjectView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PropertyGridView.xaml.cs">
       <DependentUpon>PropertyGridView.xaml</DependentUpon>
@@ -293,7 +293,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\GeometryView.xaml">
+    <Page Include="View\RenderObjectView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

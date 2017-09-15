@@ -15,7 +15,7 @@ namespace RenderApp.ViewModel
 
         public DataTemplate ViewportTemplate { get; set; }
 
-        public DataTemplate GeometryTemplate { get; set; }
+        public DataTemplate RenderObjectTemplate { get; set; }
 
         public DataTemplate ShaderTemplate { get; set; }
 
@@ -54,9 +54,9 @@ namespace RenderApp.ViewModel
                 return ShaderTemplate;
             }
 
-            if (item is GeometryViewModel)
+            if (item is RenderObjectViewModel)
             {
-                return GeometryTemplate;
+                return RenderObjectTemplate;
             }
 
             if (item is RenderSystemViewModel)

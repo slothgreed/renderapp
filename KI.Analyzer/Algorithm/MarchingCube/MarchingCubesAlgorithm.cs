@@ -166,8 +166,7 @@ namespace KI.Analyzer.Algorithm.MarchingCube
                           new Mesh(
                               new Vertex(vertexList[MarchingTable.TriIndexTable[marching.State, l]], Vector3.UnitY),
                               new Vertex(vertexList[MarchingTable.TriIndexTable[marching.State, l + 2]], Vector3.UnitY),
-                              new Vertex(vertexList[MarchingTable.TriIndexTable[marching.State, l + 1]], Vector3.UnitY))
-                              );
+                              new Vertex(vertexList[MarchingTable.TriIndexTable[marching.State, l + 1]], Vector3.UnitY)));
                   }
               };
 

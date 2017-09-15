@@ -79,8 +79,7 @@ namespace KI.Tool.Command
         /// <summary>
         /// ボクセル形状の取得
         /// </summary>
-        /// <param name="position">位置情報</param>
-        /// <param name="normal">法線</param>
+        /// <returns>メッシュリスト</returns>
         public List<Mesh> GetVoxelObject()
         {
             var meshs = new List<Mesh>();
@@ -147,8 +146,7 @@ namespace KI.Tool.Command
                     new Vertex(q0, normal, Vector3.One),
                     new Vertex(q1, normal, Vector3.One),
                     new Vertex(q2, normal, Vector3.One),
-                    new Vertex(q3, normal, Vector3.One)
-                ));
+                    new Vertex(q3, normal, Vector3.One)));
         }
 
         /// <summary>

@@ -115,6 +115,7 @@ namespace KI.Asset
         /// <summary>
         /// ハーフエッジの作成
         /// </summary>
+        /// <param name="name">名前</param>
         /// <param name="position">頂点座標</param>
         /// <param name="index">頂点番号</param>
         /// <returns>ハーフエッジ</returns>

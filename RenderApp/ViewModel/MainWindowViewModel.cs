@@ -489,7 +489,7 @@ namespace RenderApp.ViewModel
             TabItemViewModel vm = null;
             if (node.KIObject is SceneNode)
             {
-                //vm = new GeometryViewModel((Geometry)node.KIObject);
+                vm = new RenderObjectViewModel(node.KIObject as RenderObject);
                 Workspace.MainScene.SelectNode = (SceneNode)node.KIObject;
             }
             else if (node.KIObject is ShaderProgram)
@@ -502,9 +502,9 @@ namespace RenderApp.ViewModel
 
         public void ReplaceTabWindow(TabItemViewModel window)
         {
-            if (window is GeometryViewModel)
+            if (window is RenderObjectViewModel)
             {
-                var oldItem = LeftDownDockPanel.FindVM<GeometryViewModel>();
+                var oldItem = LeftDownDockPanel.FindVM<RenderObjectViewModel>();
                 LeftDownDockPanel.ReplaceVM(oldItem, window);
             }
 

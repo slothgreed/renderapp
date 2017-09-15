@@ -110,7 +110,6 @@ namespace KI.Foundation.Utility
             return result;
         }
 
-
         /// <summary>
         /// 頂点リストから、最小値最大値を算出
         /// </summary>
@@ -748,10 +747,10 @@ namespace KI.Foundation.Utility
             float numer = d1343 * d4321 - d1321 * d4343;
 
             float mua = numer / denom;
-            float mub = (d1343 + d4321 * (mua)) / d4343;
+            float mub = (d1343 + d4321 * mua) / d4343;
 
-            result0 = (p1 + mua * p21);
-            result1 = (p3 + mub * p43);
+            result0 = p1 + mua * p21;
+            result1 = p3 + mub * p43;
 
             distance = (result0 - result1).Length;
             return true;

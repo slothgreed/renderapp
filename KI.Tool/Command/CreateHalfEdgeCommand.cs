@@ -44,7 +44,11 @@ namespace KI.Tool.Command
         /// <returns>成功値</returns>
         public CommandResult Execute(string commandArg)
         {
-            var half = AssetFactory.Instance.CreateHalfEdge("HalfEdge :" + renderObject.Name,renderObject.Polygon.Vertexs.Select(p => p.Position).ToList(), renderObject.Polygon.Index[PrimitiveType.Triangles]);
+            var half = AssetFactory.Instance.CreateHalfEdge(
+                "HalfEdge :" + renderObject.Name,
+                renderObject.Polygon.Vertexs.Select(p => p.Position).ToList(),
+                renderObject.Polygon.Index[PrimitiveType.Triangles]);
+
             RenderObject halfEdge = RenderObjectFactory.Instance.CreateRenderObject("HalfEdge :" + renderObject.Name);
             halfEdge.SetPolygon(half.Polygons[0]);
             halfEdge.ModelMatrix = renderObject.ModelMatrix;

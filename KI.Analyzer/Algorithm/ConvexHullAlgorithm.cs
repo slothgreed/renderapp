@@ -170,7 +170,7 @@ namespace KI.Analyzer.Algorithm
                 }
             }
 
-            //select sort.
+            //境界線が一周するように並べ替え
             HalfEdge tmpEdge = null;
             for (int i = 0; i < boundaryList.Count; i++)
             {
@@ -185,15 +185,6 @@ namespace KI.Analyzer.Algorithm
                 }
             }
 
-            //境界エッジがループでできていないとエラー
-            //check method
-            //for (int i = 0; i < boundaryList.Count - 1; i++)
-            //{
-            //   if(boundaryList[i].End != boundaryList[i + 1].Start)
-            //   {
-            //       Console.WriteLine("Error");
-            //   }
-            //}
             return boundaryList;
         }
 
@@ -282,7 +273,7 @@ namespace KI.Analyzer.Algorithm
 
             foreach (var pos in pointList)
             {
-                if (max.X < pos.X && max.Y < pos.X && max.Z < pos.X)
+                if (max.X < pos.X && max.Y < pos.Y && max.Z < pos.Z)
                 {
                     max = pos;
                     continue;
