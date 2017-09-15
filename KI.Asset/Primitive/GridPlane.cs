@@ -62,14 +62,13 @@ namespace KI.Asset.Primitive
                     line_start2 = new Vector3(i, 0, -world);
                     line_fin2 = new Vector3(i, 0, world);
 
-                    var start1 = new Vertex(line_start1, Vector3.One);
-                    var fin1 = new Vertex(line_fin1, Vector3.One);
-                    var start2 = new Vertex(line_start2, Vector3.One);
-                    var fin2 = new Vertex(line_fin2, Vector3.One);
-
+                    var start1 = new Vertex(vertexs.Count, line_start1, Vector3.One);
                     vertexs.Add(start1);
+                    var fin1 = new Vertex(vertexs.Count, line_fin1, Vector3.One);
                     vertexs.Add(fin1);
+                    var start2 = new Vertex(vertexs.Count, line_start2, Vector3.One);
                     vertexs.Add(start2);
+                    var fin2 = new Vertex(vertexs.Count, line_fin2, Vector3.One);
                     vertexs.Add(fin2);
 
                     lines.Add(new Line(fin1, fin1));

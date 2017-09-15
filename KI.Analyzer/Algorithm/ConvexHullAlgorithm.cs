@@ -22,6 +22,11 @@ namespace KI.Analyzer.Algorithm
         private List<Vector3> pointList;
 
         /// <summary>
+        /// 頂点の数
+        /// </summary>
+        private int vertexCount = 0;
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="position">座標</param>
@@ -119,7 +124,8 @@ namespace KI.Analyzer.Algorithm
         {
             var visibleMesh = FindVisibleMesh(meshList, farPoint);
             var boundaryList = FindBoundaryEdge(visibleMesh);
-            CreateMesh(boundaryList, new HalfEdgeVertex(farPoint));
+            CreateMesh(boundaryList, new HalfEdgeVertex(farPoint, vertexCount));
+            vertexCount++;
             visibleMesh.All(p => { p.Dispose(); return true; });
         }
 
@@ -292,9 +298,11 @@ namespace KI.Analyzer.Algorithm
                 }
             }
 
-            HalfEdgeVertex vertex1 = new HalfEdgeVertex(min);
-            HalfEdgeVertex vertex2 = new HalfEdgeVertex(max);
-            HalfEdgeVertex vertex3 = new HalfEdgeVertex(xyMinzMax);
+            HalfEdgeVertex vertex1 = new HalfEdgeVertex(min, 0);
+            HalfEdgeVertex vertex2 = new HalfEdgeVertex(max, 1);
+            HalfEdgeVertex vertex3 = new HalfEdgeVertex(xyMinzMax, 2);
+            vertexCount = 3;
+
             HalfEdge edge1 = new HalfEdge(vertex1, vertex2);
             HalfEdge edge2 = new HalfEdge(vertex2, vertex3);
             HalfEdge edge3 = new HalfEdge(vertex3, vertex1);

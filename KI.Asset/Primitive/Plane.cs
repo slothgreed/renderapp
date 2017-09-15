@@ -85,10 +85,10 @@ namespace KI.Asset
             surface = KICalc.GetPlaneFormula(quad0, quad1, quad2);
 
             Mesh mesh = new Mesh(
-                new Vertex(quad0, surface.Xyz, Vector2.Zero),
-                new Vertex(quad1, surface.Xyz, Vector2.UnitX),
-                new Vertex(quad2, surface.Xyz, Vector2.One),
-                new Vertex(quad3, surface.Xyz, Vector2.UnitY));
+                new Vertex(0, quad0, surface.Xyz, Vector2.Zero),
+                new Vertex(1, quad1, surface.Xyz, Vector2.UnitX),
+                new Vertex(2, quad2, surface.Xyz, Vector2.One),
+                new Vertex(3, quad3, surface.Xyz, Vector2.UnitY));
 
             var polygon = new Polygon(this.Name, new List<Mesh>() { mesh }, PrimitiveType.Quads);
 

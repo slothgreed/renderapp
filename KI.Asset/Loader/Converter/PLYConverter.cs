@@ -51,7 +51,7 @@ namespace KI.Asset
                 var vectorY = plyData.Propertys[5][i];
                 var vectorZ = plyData.Propertys[6][i];
 
-                vertexs.Add(new Vertex(new Vector3(x, y, z), new Vector3(vectorX, vectorY, vectorZ)));
+                vertexs.Add(new Vertex(i, new Vector3(x, y, z), new Vector3(vectorX, vectorY, vectorZ)));
             }
 
             List<int> index = plyData.FaceIndex.ToList();

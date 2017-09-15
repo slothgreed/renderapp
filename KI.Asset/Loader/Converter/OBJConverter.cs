@@ -97,9 +97,9 @@ namespace KI.Asset
                     }
 
                     mesh.Add(new Mesh(
-                        new Vertex(pos0, nor0, texCoord0),
-                        new Vertex(pos1, nor1, texCoord1),
-                        new Vertex(pos2, nor2, texCoord2)));
+                        new Vertex(3 * mesh.Count, pos0, nor0, texCoord0),
+                        new Vertex(3 * mesh.Count + 1, pos1, nor1, texCoord1),
+                        new Vertex(3 * mesh.Count + 2, pos2, nor2, texCoord2)));
                 }
 
                 if (mesh.Count != 0)

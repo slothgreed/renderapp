@@ -115,8 +115,8 @@ namespace KI.Analyzer
             Node current = nodes[endIndex];
             while (current != nodes[startIndex])
             {
-                var newVertex0 = new Vertex(current.Vertex);
-                var newVertex1 = new Vertex(current.MinRouteNode.Vertex);
+                var newVertex0 = new Vertex(2 * line.Count, current.Vertex);
+                var newVertex1 = new Vertex(2 * line.Count + 1, current.MinRouteNode.Vertex);
 
                 newVertex0.Color = Vector3.UnitY;
                 newVertex1.Color = Vector3.UnitY;

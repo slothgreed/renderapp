@@ -143,10 +143,10 @@ namespace KI.Tool.Command
 
             meshs.Add(
                 new Mesh(
-                    new Vertex(q0, normal, Vector3.One),
-                    new Vertex(q1, normal, Vector3.One),
-                    new Vertex(q2, normal, Vector3.One),
-                    new Vertex(q3, normal, Vector3.One)));
+                    new Vertex(4 * meshs.Count, q0, normal, Vector3.One),
+                    new Vertex(4 * meshs.Count + 1, q1, normal, Vector3.One),
+                    new Vertex(4 * meshs.Count + 2, normal, Vector3.One),
+                    new Vertex(4 * meshs.Count + 3, normal, Vector3.One)));
         }
 
         /// <summary>

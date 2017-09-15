@@ -49,12 +49,12 @@ namespace KI.Asset
             var vertexs = new List<Vertex>();
             var lines = new List<Line>();
 
-            vertexs.Add(new Vertex(new Vector3(max.X, 0.0f, 0.0f), new Vector3(1, 0, 0)));
-            vertexs.Add(new Vertex(new Vector3(min.X, 0.0f, 0.0f), new Vector3(1, 0, 0)));
-            vertexs.Add(new Vertex(new Vector3(0.0f, max.Y, 0.0f), new Vector3(0, 1, 0)));
-            vertexs.Add(new Vertex(new Vector3(0.0f, min.Y, 0.0f), new Vector3(0, 1, 0)));
-            vertexs.Add(new Vertex(new Vector3(0.0f, 0.0f, max.Z), new Vector3(0, 0, 1)));
-            vertexs.Add(new Vertex(new Vector3(0.0f, 0.0f, min.Z), new Vector3(0, 0, 1)));
+            vertexs.Add(new Vertex(0, new Vector3(max.X, 0.0f, 0.0f), new Vector3(1, 0, 0)));
+            vertexs.Add(new Vertex(1, new Vector3(min.X, 0.0f, 0.0f), new Vector3(1, 0, 0)));
+            vertexs.Add(new Vertex(2, new Vector3(0.0f, max.Y, 0.0f), new Vector3(0, 1, 0)));
+            vertexs.Add(new Vertex(3, new Vector3(0.0f, min.Y, 0.0f), new Vector3(0, 1, 0)));
+            vertexs.Add(new Vertex(4, new Vector3(0.0f, 0.0f, max.Z), new Vector3(0, 0, 1)));
+            vertexs.Add(new Vertex(5, new Vector3(0.0f, 0.0f, min.Z), new Vector3(0, 0, 1)));
 
             lines.Add(new Line(vertexs[0], vertexs[1]));
             lines.Add(new Line(vertexs[2], vertexs[3]));

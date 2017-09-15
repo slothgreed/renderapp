@@ -167,9 +167,9 @@ namespace KI.Asset
             {
                 meshs.Add(
                     new Mesh(
-                        new Vertex(position[3 * i], normal[3 * i], texcoord[3 * i]),
-                        new Vertex(position[3 * i + 1], normal[3 * i + 1], texcoord[3 * i + 1]),
-                        new Vertex(position[3 * i + 2], normal[3 * i + 2], texcoord[3 * i + 2])));
+                        new Vertex(i, position[3 * i], normal[3 * i], texcoord[3 * i]),
+                        new Vertex(i + 1, position[3 * i + 1], normal[3 * i + 1], texcoord[3 * i + 1]),
+                        new Vertex(i + 2, position[3 * i + 2], normal[3 * i + 2], texcoord[3 * i + 2])));
             }
 
             var info = new Polygon(this.Name, meshs, PrimitiveType.Triangles);

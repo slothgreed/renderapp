@@ -419,9 +419,9 @@ namespace KI.Gfx.Geometry
             {
                 for (int i = 0; i < Index[PrimitiveType.Triangles].Count / 3; i++)
                 {
-                    var vertex1 = new Vertex(vertexs[Index[PrimitiveType.Triangles][3 * i]]);
-                    var vertex2 = new Vertex(vertexs[Index[PrimitiveType.Triangles][3 * i + 1]]);
-                    var vertex3 = new Vertex(vertexs[Index[PrimitiveType.Triangles][3 * i + 2]]);
+                    var vertex1 = new Vertex(3 * i, vertexs[Index[PrimitiveType.Triangles][3 * i]]);
+                    var vertex2 = new Vertex(3 * i + 1, vertexs[Index[PrimitiveType.Triangles][3 * i + 1]]);
+                    var vertex3 = new Vertex(3 * i + 2, vertexs[Index[PrimitiveType.Triangles][3 * i + 2]]);
 
                     vertex1.Color = color;
                     vertex2.Color = color;
@@ -436,9 +436,9 @@ namespace KI.Gfx.Geometry
             {
                 for (int i = 0; i < Vertexs.Count / 3; i++)
                 {
-                    var vertex1 = new Vertex(vertexs[3 * i]);
-                    var vertex2 = new Vertex(vertexs[3 * i + 1]);
-                    var vertex3 = new Vertex(vertexs[3 * i + 2]);
+                    var vertex1 = new Vertex(3 * i, vertexs[3 * i]);
+                    var vertex2 = new Vertex(3 * i + 1, vertexs[3 * i + 1]);
+                    var vertex3 = new Vertex(3 * i + 2, vertexs[3 * i + 2]);
 
                     vertex1.Color = color;
                     vertex2.Color = color;

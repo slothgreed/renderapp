@@ -46,9 +46,9 @@ namespace KI.Asset
             {
                 mesh.Add(
                     new Mesh(
-                        new Vertex(stlData.Position[3 * i], stlData.Normal[3 * i], Vector3.One),
-                        new Vertex(stlData.Position[3 * i + 1], stlData.Normal[3 * i + 1], Vector3.One),
-                        new Vertex(stlData.Position[3 * i + 2], stlData.Normal[3 * i + 2], Vector3.One)
+                        new Vertex(3 * mesh.Count, stlData.Position[3 * i], stlData.Normal[3 * i], Vector3.One),
+                        new Vertex(3 * mesh.Count + 1, stlData.Position[3 * i + 1], stlData.Normal[3 * i + 1], Vector3.One),
+                        new Vertex(3 * mesh.Count + 2, stlData.Position[3 * i + 2], stlData.Normal[3 * i + 2], Vector3.One)
                         ));
             }
 

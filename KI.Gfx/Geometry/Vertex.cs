@@ -10,12 +10,14 @@ namespace KI.Gfx.Geometry
         /// <summary>
         /// 頂点
         /// </summary>
+        /// <param name="id">識別子</param>
         /// <param name="position">位置</param>
         /// <param name="normal">法線</param>
         /// <param name="color">色</param>
         /// <param name="texcoord">テクスチャ座標</param>
-        public Vertex(Vector3 position, Vector3 normal, Vector3 color, Vector2 texcoord)
+        public Vertex(int id, Vector3 position, Vector3 normal, Vector3 color, Vector2 texcoord)
         {
+            ID = id;
             Position = position;
             Normal = normal;
             Color = color;
@@ -28,8 +30,8 @@ namespace KI.Gfx.Geometry
         /// <param name="position">位置</param>
         /// <param name="normal">法線</param>
         /// <param name="color">色</param>
-        public Vertex(Vector3 position, Vector3 normal, Vector3 color)
-            : this(position, normal, color, Vector2.Zero)
+        public Vertex(int id, Vector3 position, Vector3 normal, Vector3 color)
+            : this(id, position, normal, color, Vector2.Zero)
         {
         }
 
@@ -39,8 +41,8 @@ namespace KI.Gfx.Geometry
         /// <param name="position">位置</param>
         /// <param name="color">色</param>
         /// <param name="texcoord">テクスチャ座標</param>
-        public Vertex(Vector3 position, Vector3 color, Vector2 texcoord)
-            : this(position, Vector3.Zero, color, texcoord)
+        public Vertex(int id, Vector3 position, Vector3 color, Vector2 texcoord)
+            : this(id, position, Vector3.Zero, color, texcoord)
         {
         }
 
@@ -49,8 +51,8 @@ namespace KI.Gfx.Geometry
         /// </summary>
         /// <param name="position">位置</param>
         /// <param name="color">色</param>
-        public Vertex(Vector3 position, Vector3 color)
-            : this(position, Vector3.Zero, color, Vector2.Zero)
+        public Vertex(int id, Vector3 position, Vector3 color)
+            : this(id, position, Vector3.Zero, color, Vector2.Zero)
         {
         }
 
@@ -59,8 +61,8 @@ namespace KI.Gfx.Geometry
         /// </summary>
         /// <param name="position">位置</param>
         /// <param name="texcoord">テクスチャ座標</param>
-        public Vertex(Vector3 position, Vector2 texcoord)
-            : this(position, Vector3.Zero, Vector3.One, texcoord)
+        public Vertex(int id, Vector3 position, Vector2 texcoord)
+            : this(id, position, Vector3.Zero, Vector3.One, texcoord)
         {
         }
 
@@ -68,11 +70,16 @@ namespace KI.Gfx.Geometry
         /// コピーコンストラクタ
         /// </summary>
         /// <param name="vertex">頂点</param>
-        public Vertex(Vertex vertex)
-            : this(vertex.Position, vertex.Normal, vertex.Color, vertex.TexCoord)
+        public Vertex(int id, Vertex vertex)
+            : this(id, vertex.Position, vertex.Normal, vertex.Color, vertex.TexCoord)
         {
         }
 
+        /// <summary>
+        /// 識別子
+        /// </summary>
+        public int ID { get; set; }
+        
         /// <summary>
         /// 位置
         /// </summary>

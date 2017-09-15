@@ -55,14 +55,13 @@ namespace KI.Analyzer
         /// 頂点
         /// </summary>
         /// <param name="pos">座標</param>
-        /// <param name="index">要素番号</param>
-        public HalfEdgeVertex(Vector3 pos, int index = -1)
-            : base(pos, Vector3.Zero, Vector3.Zero, Vector2.Zero)
+        /// <param name="id">識別子</param>
+        public HalfEdgeVertex(Vector3 pos, int id)
+            : base(id, pos, Vector3.Zero, Vector3.Zero, Vector2.Zero)
         {
             parameter = new Dictionary<VertexParam, object>();
             Position = pos;
             Color = new Vector3(0.8f);
-            Index = index;
         }
 
         /// <summary>

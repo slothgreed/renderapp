@@ -117,10 +117,10 @@ namespace KI.Asset
         private Polygon CreatePolygon(string name, Vector3 vertex0, Vector3 vertex1, Vector3 vertex2, Vector3 vertex3)
         {
             List<Vertex> front = new List<Vertex>();
-            var front0 = new Vertex(vertex0, Vector2.Zero);
-            var front1 = new Vertex(vertex1, Vector2.UnitY);
-            var front2 = new Vertex(vertex2, Vector2.UnitX + Vector2.UnitY);
-            var front3 = new Vertex(vertex3, Vector2.UnitX);
+            var front0 = new Vertex(0, vertex0, Vector2.Zero);
+            var front1 = new Vertex(1, vertex1, Vector2.UnitY);
+            var front2 = new Vertex(2, vertex2, Vector2.UnitX + Vector2.UnitY);
+            var front3 = new Vertex(3, vertex3, Vector2.UnitX);
             List<Mesh> mesh = new List<Mesh>();
             mesh.Add(new Mesh(front[0], front[1], front[2], front[3]));
 

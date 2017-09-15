@@ -53,7 +53,7 @@ namespace KI.Tool.Command
             var color = new Vector3(0.7f);
             for (int i = 0; i < polygon.Vertexs.Count; i++)
             {
-                vertex.Add(new Vertex(polygon.Vertexs[i].Position, polygon.Vertexs[i].Normal, color));
+                vertex.Add(new Vertex(i, polygon.Vertexs[i].Position, polygon.Vertexs[i].Normal, color));
             }
 
             polygonObject.SetPolygon(new Polygon("Polygon :" + polygon.Name, vertex, index, PrimitiveType.Triangles));

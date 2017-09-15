@@ -73,7 +73,7 @@ namespace KI.Tool.Control
                     }
 
                     RenderObject pointObject = RenderObjectFactory.Instance.CreateRenderObject("Picking");
-                    Polygon polygon = new Polygon("Picking", new List<Vertex>() { new Vertex(vertex.Position, Vector3.UnitY) });
+                    Polygon polygon = new Polygon("Picking", new List<Vertex>() { new Vertex(0, vertex.Position, Vector3.UnitY) });
                     pointObject.SetPolygon(polygon);
                     pointObject.ModelMatrix = selectObject.ModelMatrix;
                     Global.RenderSystem.ActiveScene.AddObject(pointObject);

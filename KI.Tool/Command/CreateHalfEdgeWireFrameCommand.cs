@@ -73,7 +73,10 @@ namespace KI.Tool.Command
                     color.Add(Vector3.UnitZ);
                     color.Add(Vector3.UnitZ);
 
-                    lines.Add(new Line(new Vertex(start + mesh.Gravity, Vector3.UnitZ), new Vertex(end + mesh.Gravity, Vector3.UnitZ)));
+                    lines.Add(
+                        new Line(
+                            new Vertex(2 * lines.Count, start + mesh.Gravity, Vector3.UnitZ), 
+                            new Vertex(2 * lines.Count + 1, end + mesh.Gravity, Vector3.UnitZ)));
                 }
             }
 
