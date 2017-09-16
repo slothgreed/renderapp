@@ -3,6 +3,7 @@ using System.Linq;
 using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace KI.Renderer
@@ -80,13 +81,21 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="polygon">ポリゴン</param>
         /// <param name="type">形状種類</param>
-        public void SetupBuffer(Polygon polygon, PrimitiveType type)
+        public void SetupBuffer(Polygon polygon, PrimitiveType type, List<Vector3> color)
         {
             if (polygon.Index.ContainsKey(type))
             {
                 PositionBuffer.SetData(polygon.Vertexs.Select(p => p.Position).ToList(), EArrayType.Vec3Array);
                 NormalBuffer.SetData(polygon.Vertexs.Select(p => p.Normal).ToList(), EArrayType.Vec3Array);
-                ColorBuffer.SetData(polygon.Vertexs.Select(p => p.Color).ToList(), EArrayType.Vec3Array);
+                if (color != null)
+                {
+                    ColorBuffer.SetData(color, EArrayType.Vec3Array);
+                }
+                else
+                {
+                    ColorBuffer.SetData(polygon.Vertexs.Select(p => p.Color).ToList(), EArrayType.Vec3Array);
+                }
+
                 TexCoordBuffer.SetData(polygon.Vertexs.Select(p => p.TexCoord).ToList(), EArrayType.Vec2Array);
                 IndexBuffer[type].SetData(polygon.Index[type], EArrayType.IntArray);
                 Num = polygon.Index[type].Count;
@@ -95,7 +104,14 @@ namespace KI.Renderer
             {
                 PositionBuffer.SetData(polygon.Vertexs.Select(p => p.Position).ToList(), EArrayType.Vec3Array);
                 NormalBuffer.SetData(polygon.Vertexs.Select(p => p.Normal).ToList(), EArrayType.Vec3Array);
-                ColorBuffer.SetData(polygon.Vertexs.Select(p => p.Color).ToList(), EArrayType.Vec3Array);
+                if (color != null)
+                {
+                    ColorBuffer.SetData(color, EArrayType.Vec3Array);
+                }
+                else
+                {
+                    ColorBuffer.SetData(polygon.Vertexs.Select(p => p.Color).ToList(), EArrayType.Vec3Array);
+                }
                 TexCoordBuffer.SetData(polygon.Vertexs.Select(p => p.TexCoord).ToList(), EArrayType.Vec2Array);
                 Num = polygon.Vertexs.Count;
             }
@@ -110,7 +126,15 @@ namespace KI.Renderer
 
                 PositionBuffer.SetData(vertexs.Select(p => p.Position).ToList(), EArrayType.Vec3Array);
                 NormalBuffer.SetData(vertexs.Select(p => p.Normal).ToList(), EArrayType.Vec3Array);
-                ColorBuffer.SetData(vertexs.Select(p => p.Color).ToList(), EArrayType.Vec3Array);
+                if (color != null)
+                {
+                    ColorBuffer.SetData(color, EArrayType.Vec3Array);
+                }
+                else
+                {
+                    ColorBuffer.SetData(polygon.Vertexs.Select(p => p.Color).ToList(), EArrayType.Vec3Array);
+                }
+
                 TexCoordBuffer.SetData(vertexs.Select(p => p.TexCoord).ToList(), EArrayType.Vec2Array);
                 Num = vertexs.Count;
             }
@@ -124,7 +148,15 @@ namespace KI.Renderer
 
                 PositionBuffer.SetData(vertexs.Select(p => p.Position).ToList(), EArrayType.Vec3Array);
                 NormalBuffer.SetData(vertexs.Select(p => p.Normal).ToList(), EArrayType.Vec3Array);
-                ColorBuffer.SetData(vertexs.Select(p => p.Color).ToList(), EArrayType.Vec3Array);
+                if (color != null)
+                {
+                    ColorBuffer.SetData(color, EArrayType.Vec3Array);
+                }
+                else
+                {
+                    ColorBuffer.SetData(polygon.Vertexs.Select(p => p.Color).ToList(), EArrayType.Vec3Array);
+                }
+
                 TexCoordBuffer.SetData(vertexs.Select(p => p.TexCoord).ToList(), EArrayType.Vec2Array);
                 Num = vertexs.Count;
             }

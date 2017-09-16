@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Linq;
+using System.Windows.Forms;
 using KI.Analyzer;
 using KI.Renderer;
 using KI.Tool.Utility;
@@ -30,10 +31,11 @@ namespace KI.Tool.Control
             if (mouse.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 RenderObject renderObject = null;
-                HalfEdge halfEdge = null;
+                HalfEdgeVertex halfEdgeVertex = null;
 
-                if (HalfEdgeDSSelector.PickLine(leftMouse.Click, ref renderObject, ref halfEdge))
+                if (HalfEdgeDSSelector.PickPoint(leftMouse.Click, ref renderObject, ref halfEdgeVertex))
                 {
+                    HalfEdge halfEdge = halfEdgeVertex.AroundEdge.First();
                     halfEdge.Start.IsSelect = true;
                     halfEdge.End.IsSelect = true;
 
@@ -47,6 +49,8 @@ namespace KI.Tool.Control
             {
                 if (selectHalfEdge != null)
                 {
+                    selectHalfEdge.Start.IsSelect = false;
+                    selectHalfEdge.End.IsSelect = false;
                     var halfEdgeDS = selectObject.Polygon as HalfEdgeDS;
                     halfEdgeDS.Editor.EdgeFlips(selectHalfEdge);
                     selectHalfEdge = null;

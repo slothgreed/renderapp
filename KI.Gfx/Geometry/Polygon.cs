@@ -18,6 +18,12 @@ namespace KI.Gfx.Geometry
         VertexArray //VertexArray状態で入っている
     }
 
+    public enum VertexColor
+    {
+        WireFrame
+    }
+
+
     /// <summary>
     /// 更新イベント
     /// </summary>
@@ -32,6 +38,18 @@ namespace KI.Gfx.Geometry
             Type = type;
         }
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="type">更新した形状種類</param>
+        /// <param name="type">更新した色情報</param>
+        public UpdatePolygonEventArgs(PrimitiveType type, List<Vector3> color)
+        {
+            Type = type;
+            Color = color;
+        }
+
+        public List<Vector3> Color { get; private set; }
         /// <summary>
         /// 更新した形状種類
         /// </summary>
@@ -65,6 +83,10 @@ namespace KI.Gfx.Geometry
         /// </summary>
         private Dictionary<PrimitiveType, List<int>> index = new Dictionary<PrimitiveType, List<int>>();
 
+        /// <summary>
+        /// 頂点カラーリスト
+        /// </summary>
+        private Dictionary<VertexColor, List<Vector3>> vertexColor = new Dictionary<VertexColor, List<Vector3>>();
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -222,7 +244,31 @@ namespace KI.Gfx.Geometry
         /// <param name="type">形状タイプ</param>
         public virtual void Update(PrimitiveType type)
         {
-            OnUpdate(type);
+            if (Index.ContainsKey(PrimitiveType.Lines))
+            {
+                Index[PrimitiveType.Lines].Clear();
+
+                if(Lines != null)
+                {
+                    foreach (var line in Lines)
+                    {
+                        Index[PrimitiveType.Lines].Add(line.Start.Index);
+                        Index[PrimitiveType.Lines].Add(line.End.Index);
+                    }
+                }
+            }
+
+            if (Index.ContainsKey(PrimitiveType.Triangles))
+            {
+                Index[PrimitiveType.Triangles].Clear();
+
+                foreach (var mesh in Meshs)
+                {
+                    Index[PrimitiveType.Triangles].AddRange(mesh.Vertexs.Select(p => p.Index));
+                }
+            }
+            OnUpdate(new UpdatePolygonEventArgs(PrimitiveType.Lines));
+            OnUpdate(new UpdatePolygonEventArgs(PrimitiveType.Triangles));
         }
 
         /// <summary>
@@ -242,7 +288,7 @@ namespace KI.Gfx.Geometry
 
             Type = type;
 
-            OnUpdate(type);
+            OnUpdate(new UpdatePolygonEventArgs(type));
         }
 
         #region [convert mesh]
@@ -413,44 +459,27 @@ namespace KI.Gfx.Geometry
         /// <param name="color">ワイヤフレームの色</param>
         public void CreateWireFrame(Vector3 color)
         {
-            lines.Clear();
 
-            if (Index[PrimitiveType.Triangles].Count != 0)
+            List<int> lineIndex = new List<int>();
+            List<Vector3> wireFrameColor = new List<Vector3>();
+            foreach (var mesh in Meshs)
             {
-                for (int i = 0; i < Index[PrimitiveType.Triangles].Count / 3; i++)
+                for (int j = 0; j < mesh.Vertexs.Count - 1; j++)
                 {
-                    var vertex1 = new Vertex(3 * i, vertexs[Index[PrimitiveType.Triangles][3 * i]]);
-                    var vertex2 = new Vertex(3 * i + 1, vertexs[Index[PrimitiveType.Triangles][3 * i + 1]]);
-                    var vertex3 = new Vertex(3 * i + 2, vertexs[Index[PrimitiveType.Triangles][3 * i + 2]]);
-
-                    vertex1.Color = color;
-                    vertex2.Color = color;
-                    vertex3.Color = color;
-
-                    lines.Add(new Line(vertex1, vertex2));
-                    lines.Add(new Line(vertex2, vertex3));
-                    lines.Add(new Line(vertex3, vertex1));
+                    lineIndex.Add(mesh.Vertexs[j].Index);
+                    lineIndex.Add(mesh.Vertexs[j + 1].Index);
                 }
-            }
-            else
-            {
-                for (int i = 0; i < Vertexs.Count / 3; i++)
-                {
-                    var vertex1 = new Vertex(3 * i, vertexs[3 * i]);
-                    var vertex2 = new Vertex(3 * i + 1, vertexs[3 * i + 1]);
-                    var vertex3 = new Vertex(3 * i + 2, vertexs[3 * i + 2]);
 
-                    vertex1.Color = color;
-                    vertex2.Color = color;
-                    vertex3.Color = color;
-
-                    lines.Add(new Line(vertex1, vertex2));
-                    lines.Add(new Line(vertex2, vertex3));
-                    lines.Add(new Line(vertex3, vertex1));
-                }
+                lineIndex.Add(mesh.Vertexs[mesh.Vertexs.Count - 1].Index);
+                lineIndex.Add(mesh.Vertexs[0].Index);
+                wireFrameColor.Add(color);
+                wireFrameColor.Add(color);
             }
 
-            OnUpdate(PrimitiveType.Lines);
+            Index[PrimitiveType.Lines] = lineIndex;
+            vertexColor[VertexColor.WireFrame] = wireFrameColor;
+
+            OnUpdate(new UpdatePolygonEventArgs(PrimitiveType.Lines, wireFrameColor));
         }
 
         ///// <summary>
@@ -497,9 +526,9 @@ namespace KI.Gfx.Geometry
         /// 形状情報更新イベント
         /// </summary>
         /// <param name="type">形状種類</param>
-        private void OnUpdate(PrimitiveType type)
+        private void OnUpdate(UpdatePolygonEventArgs e)
         {
-            UpdatePolygon?.Invoke(this, new UpdatePolygonEventArgs(type));
+            UpdatePolygon?.Invoke(this,e);
         }
     }
 }

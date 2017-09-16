@@ -151,10 +151,10 @@ namespace KI.Tool.Utility
 
             if (selectObject.Polygon is HalfEdgeDS)
             {
-                return false;
+                return true;
             }
 
-            return true;
+            return false;
         }
 
         /// <summary>

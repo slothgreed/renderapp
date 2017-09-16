@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KI.Foundation.Utility;
+using OpenTK;
 
 namespace KI.Analyzer
 {
@@ -192,12 +193,18 @@ namespace KI.Analyzer
 
         /// <summary>
         /// EdgeFlipsできるか
-        /// すでに同一エッジがある場合はできない。
+        /// すでに同一エッジがある場合はできない。(cgjems情報 ifdef false内)
+        /// (判定条件足りなさそうなので以下方法で)
+        /// 交換前のエッジの両端点と、交換後のエッジの中点のベクトルが
+        /// 両方内向きならできる。片方外向きならできない。
+        /// 両方外向きにはなりえないからできない（90度はありうるのでtrue）
+        /// 単点と中点のベクトル2つの内積が正ならできる
         /// </summary>
-        /// <param name="edge">エッジ</param>
+        /// <param name="edge">交換するエッジ</param>
         /// <returns>できる</returns>
         private bool CanEdgeFlips(HalfEdge edge)
         {
+#if false
             var createStart = edge.Next.End;
             var createEnd = edge.Opposite.Next.End;
 
@@ -218,6 +225,17 @@ namespace KI.Analyzer
             }
 
             return true;
+
+#endif
+            var createStar = edge.Next.End;
+            var createEnd = edge.Opposite.Next.End;
+            var middle = (createStar.Position + createEnd.Position) / 2;
+            if(Vector3.Dot(middle - edge.Start.Position, middle - edge.End.Position) < 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -263,7 +281,7 @@ namespace KI.Analyzer
             }
         }
 
-        #region [delete object]
+#region [delete object]
         /// <summary>
         /// メッシュ削除
         /// </summary>
@@ -339,6 +357,6 @@ namespace KI.Analyzer
 
             return false;
         }
-        #endregion
+#endregion
     }
 }

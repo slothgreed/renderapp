@@ -55,9 +55,9 @@ namespace KI.Analyzer
         /// 頂点
         /// </summary>
         /// <param name="pos">座標</param>
-        /// <param name="id">識別子</param>
-        public HalfEdgeVertex(Vector3 pos, int id)
-            : base(id, pos, Vector3.Zero, Vector3.Zero, Vector2.Zero)
+        /// <param name="index">要素番号</param>
+        public HalfEdgeVertex(Vector3 pos, int index)
+            : base(index, pos, Vector3.Zero, Vector3.Zero, Vector2.Zero)
         {
             parameter = new Dictionary<VertexParam, object>();
             Position = pos;
@@ -75,11 +75,6 @@ namespace KI.Analyzer
         public bool DeleteFlag { get; set; }
 
         /// <summary>
-        /// 要素番号
-        /// </summary>
-        public int Index { get; set; }
-
-        /// <summary>
         /// 選択中か
         /// </summary>
         public bool IsSelect
@@ -92,9 +87,20 @@ namespace KI.Analyzer
             set
             {
                 isSelect = value;
-                if (isSelect == true)
+            }
+        }
+
+        public override Vector3 Color
+        {
+            get
+            {
+                if (IsSelect)
                 {
-                    Color = SELECT_COLOR;
+                    return SELECT_COLOR;
+                }
+                else
+                {
+                    return base.Color;
                 }
             }
         }

@@ -8,6 +8,7 @@ using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace KI.Renderer
@@ -51,6 +52,11 @@ namespace KI.Renderer
         /// レンダリングするときの種類
         /// </summary>
         public PrimitiveType Type { get; set; }
+
+        /// <summary>
+        /// カラーリスト（頂点カラーよりこちら優先）
+        /// </summary>
+        public List<Vector3> Color { get; set; }
     }
 
     /// <summary>
@@ -228,7 +234,7 @@ namespace KI.Renderer
                 Package[type].Shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
             }
 
-            Package[type].VertexBuffer.SetupBuffer(Polygon, type);
+            Package[type].VertexBuffer.SetupBuffer(Polygon, type, Package[type].Color);
         }
 
         /// <summary>
@@ -239,6 +245,12 @@ namespace KI.Renderer
         private void UpdatePolygon(object sender, UpdatePolygonEventArgs e)
         {
             SetupRenderPackage(e.Type);
+            if(e.Color != null)
+            {
+                Package[e.Type].Color = e.Color;
+                Package[e.Type].VertexBuffer.SetupBuffer(Polygon, e.Type, e.Color);
+            }
+
             Mode = RenderMode.PolygonLine;
         }
 
