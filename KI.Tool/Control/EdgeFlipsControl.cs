@@ -7,6 +7,16 @@ using KI.Tool.Utility;
 namespace KI.Tool.Control
 {
     /// <summary>
+    /// エッジ編集モード
+    /// </summary>
+    public enum EdgeEditMode
+    {
+        EdgeCollapse,
+        EdgeFlips,
+        EdgeSplit
+    }
+
+    /// <summary>
     /// エッジフリップ確認用
     /// </summary>
     public class EdgeFlipsControl : IControl
@@ -20,6 +30,11 @@ namespace KI.Tool.Control
         /// 選択エッジ
         /// </summary>
         private HalfEdge selectHalfEdge = null;
+
+        /// <summary>
+        /// エッジ編集モード
+        /// </summary>
+        public EdgeEditMode Mode { get; private set; } = EdgeEditMode.EdgeCollapse;
 
         /// <summary>
         /// マウス押下処理
@@ -41,24 +56,52 @@ namespace KI.Tool.Control
 
                     selectObject = renderObject;
                     selectHalfEdge = halfEdge;
+
                     renderObject.Polygon.Update(OpenTK.Graphics.OpenGL.PrimitiveType.Lines);
+
                 }
             }
 
-            if (mouse.Button == MouseButtons.Right)
+            if (mouse.Button == MouseButtons.Middle)
             {
                 if (selectHalfEdge != null)
                 {
                     selectHalfEdge.Start.IsSelect = false;
                     selectHalfEdge.End.IsSelect = false;
                     var halfEdgeDS = selectObject.Polygon as HalfEdgeDS;
-                    halfEdgeDS.Editor.EdgeFlips(selectHalfEdge);
+
+                    switch (Mode)
+                    {
+                        case EdgeEditMode.EdgeCollapse:
+                            halfEdgeDS.Editor.EdgeCollapse(selectHalfEdge);
+                            break;
+                        case EdgeEditMode.EdgeFlips:
+                            halfEdgeDS.Editor.EdgeFlips(selectHalfEdge);
+                            break;
+                        case EdgeEditMode.EdgeSplit:
+                            halfEdgeDS.Editor.EdgeSplit(selectHalfEdge);
+                            break;
+                    }
+
                     selectHalfEdge = null;
                     selectObject.Polygon.Update(OpenTK.Graphics.OpenGL.PrimitiveType.Lines);
                 }
             }
 
             return base.Down(mouse);
+        }
+
+        public override bool UnBinding()
+        {
+            if (selectHalfEdge != null)
+            {
+                selectHalfEdge.Start.IsSelect = false;
+                selectHalfEdge.End.IsSelect = false;
+                selectHalfEdge = null;
+                selectObject.Polygon.Update(OpenTK.Graphics.OpenGL.PrimitiveType.Lines);
+            }
+
+            return base.UnBinding();
         }
     }
 }

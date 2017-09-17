@@ -1,4 +1,5 @@
-﻿using KI.Foundation.Utility;
+﻿using System;
+using KI.Foundation.Utility;
 using KI.Gfx.Geometry;
 
 namespace KI.Analyzer
@@ -22,8 +23,6 @@ namespace KI.Analyzer
         public HalfEdge(HalfEdgeVertex start, HalfEdgeVertex end, int index = -1)
             : base(start, end)
         {
-            Start = start;
-            End = end;
             Index = index;
             Start.AddEdge(this);
         }
@@ -39,8 +38,6 @@ namespace KI.Analyzer
             : base(start, end)
         {
             Mesh = mesh;
-            Start = start;
-            End = end;
             Index = index;
             Start.AddEdge(this);
         }
@@ -48,12 +45,34 @@ namespace KI.Analyzer
         /// <summary>
         /// 始点
         /// </summary>
-        public new HalfEdgeVertex Start { get; set; }
+        public new HalfEdgeVertex Start
+        {
+            get
+            {
+                return base.Start as HalfEdgeVertex;
+            }
+
+            set
+            {
+                base.Start = value;
+            }
+        }
 
         /// <summary>
         /// 終点
         /// </summary>
-        public new HalfEdgeVertex End { get; set; }
+        public new HalfEdgeVertex End
+        {
+            get
+            {
+                return base.End as HalfEdgeVertex;
+            }
+
+            set
+            {
+                base.End = value;
+            }
+        }
 
         /// <summary>
         /// メッシュ
@@ -125,6 +144,7 @@ namespace KI.Analyzer
             get
             {
                 return Start.DeleteFlag ||
+                !Start.ContainsEdge(this) ||
                 End.DeleteFlag ||
                 Mesh.DeleteFlag ||
                 Next.DeleteFlag ||
@@ -201,6 +221,16 @@ namespace KI.Analyzer
             Mesh = null;
             Before = null;
             Opposite = null;
+        }
+
+        internal bool HasVertex(HalfEdgeVertex vertex)
+        {
+            if(Start == vertex || End == vertex)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

@@ -72,11 +72,16 @@ namespace KI.Analyzer
                 if (around.Start == delV)
                 {
                     around.Start = remV;
-                    around.Opposite.End = remV;
+                    around.Start.AddEdge(around);
+                }
+
+                if(around.Before.End == delV)
+                {
+                    around.Before.End = remV;
                 }
             }
 
-            //remV.Position = (remV.Position + delV.Position) / 2;
+            remV.Position = (remV.Position + delV.Position) / 2;
             //エッジ情報の切り替え
             Analyzer.HalfEdge.SetupOpposite(edge.Next.Opposite, edge.Before.Opposite);
             Analyzer.HalfEdge.SetupOpposite(edge.Opposite.Next.Opposite, edge.Opposite.Before.Opposite);
@@ -85,22 +90,24 @@ namespace KI.Analyzer
             DeleteEdge(deleteEdge);
             DeleteVertex(deleteVertex);
 
-            for (int i = 0; i < HalfEdge.Meshs.Count; i++)
-            {
-                ((HalfEdgeMesh)HalfEdge.Meshs[i]).Index = i;
-            }
+            //HasError(delV);
+            //HasError();
 
-            for (int i = 0; i < HalfEdge.Lines.Count; i++)
-            {
-                ((HalfEdge)HalfEdge.Lines[i]).Index = i;
-            }
+            //for (int i = 0; i < HalfEdge.Meshs.Count; i++)
+            //{
+            //    ((HalfEdgeMesh)HalfEdge.Meshs[i]).Index = i;
+            //}
+
+            //for (int i = 0; i < HalfEdge.Lines.Count; i++)
+            //{
+            //    ((HalfEdge)HalfEdge.Lines[i]).Index = i;
+            //}
 
             for (int i = 0; i < HalfEdge.Vertexs.Count; i++)
             {
-                ((HalfEdgeVertex)HalfEdge.Vertexs[i]).Index = i;
+                HalfEdge.Vertexs[i].Index = i;
             }
 
-            //HasError();
         }
         #endregion
 
@@ -152,7 +159,7 @@ namespace KI.Analyzer
             DeleteEdge(new List<HalfEdge>() { edge, opposite });
             DeleteMesh(new List<HalfEdgeMesh>() { delMesh1, delMesh2 });
 
-            //HasError();
+            HasError();
         }
 
         /// <summary>
@@ -322,18 +329,40 @@ namespace KI.Analyzer
             }
         }
 
+
+        private bool HasError(HalfEdgeVertex vertex)
+        {
+            foreach (var edge in HalfEdge.HalfEdges)
+            {
+                if(edge.HasVertex(vertex))
+                {
+                    Console.WriteLine("error");
+                }
+            }
+
+            foreach (var mesh in HalfEdge.HalfEdgeMeshs)
+            {
+                if (mesh.HasVertex(vertex))
+                {
+                    Console.WriteLine("error");
+                }
+            }
+
+            return false;
+        }
         /// <summary>
         /// エラーがあるか
         /// </summary>
         /// <returns>ある</returns>
-        private bool HasError()
+        public bool HasError()
         {
+            int errorCounter = 0;
             foreach (var edge in HalfEdge.HalfEdges)
             {
                 if (edge.ErrorEdge)
                 {
                     Logger.Log(Logger.LogLevel.Error, "Edge : HasError");
-                    return true;
+                    errorCounter++;
                 }
             }
 
@@ -342,7 +371,7 @@ namespace KI.Analyzer
                 if (mesh.ErrorMesh)
                 {
                     Logger.Log(Logger.LogLevel.Error, "Mesh : HasError");
-                    return true;
+                    errorCounter++;
                 }
             }
 
@@ -351,11 +380,19 @@ namespace KI.Analyzer
                 if (vertex.ErrorVertex)
                 {
                     Logger.Log(Logger.LogLevel.Error, "Vertex : HasError");
-                    return true;
+                    errorCounter++;
                 }
             }
 
-            return false;
+            if (errorCounter == 0)
+            {
+                return false;
+            }
+            else
+            {
+                Logger.Log(Logger.LogLevel.Error, "ErrorCount " + errorCounter.ToString());
+                return true;
+            }
         }
 #endregion
     }

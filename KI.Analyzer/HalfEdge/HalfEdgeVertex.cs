@@ -131,7 +131,27 @@ namespace KI.Analyzer
                         yield return edge;
                     }
                 }
+
+                //if (halfEdge == null)
+                //{
+                //    var tmpEdge = halfEdge;
+                //    while (true)
+                //    {
+                //        tmpEdge = tmpEdge.Opposite.Next;
+                //        yield return tmpEdge;
+
+                //        if (tmpEdge == halfEdge)
+                //        {
+                //            yield break;
+                //        }
+                //    } 
+                //}
             }
+        }
+
+        public bool ContainsEdge(HalfEdge halfEdge)
+        {
+            return AroundEdge.Contains(halfEdge);
         }
 
         /// <summary>

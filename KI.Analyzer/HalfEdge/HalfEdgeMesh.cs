@@ -126,7 +126,9 @@ namespace KI.Analyzer
         {
             get
             {
-                return AroundEdge.Any(p => p.DeleteFlag) || DeleteFlag;
+                return AroundEdge.Any(p => p.DeleteFlag)
+                    || AroundVertex.Any(p => p.DeleteFlag)
+                    || DeleteFlag;
             }
         }
 
@@ -169,6 +171,11 @@ namespace KI.Analyzer
         public void Dispose()
         {
             DeleteFlag = true;
+        }
+
+        internal bool HasVertex(HalfEdgeVertex vertex)
+        {
+            return Vertexs.OfType<HalfEdgeVertex>().Where(p => p == vertex).Any();
         }
     }
 }
