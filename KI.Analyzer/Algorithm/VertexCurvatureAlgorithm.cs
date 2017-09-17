@@ -45,7 +45,7 @@ namespace KI.Analyzer.Algorithm
             float voronoi = 0;
             foreach (var edge in vertex.AroundEdge)
             {
-                //float length = edge.Length;
+                //float length = edge.Length;ta
                 //HalfEdge opposite = edge.Opposite;
                 //float alpha = edge.Next.Next.Radian;
                 //float beta = opposite.Next.Next.Radian;
@@ -96,7 +96,7 @@ namespace KI.Analyzer.Algorithm
             }
 
             // TODO: not 1
-            voronoi = 1;
+            //voronoi = 1;
             vertex.AddParameter(VertexParam.Voronoi, voronoi);
         }
 

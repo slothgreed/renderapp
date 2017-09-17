@@ -67,14 +67,4 @@
         ShaderProgram,
         Shader,
     }
-
-    public enum RAController
-    {
-        Default,
-        Dijkstra,
-        SelectPoint,
-        SelectTriangle,
-        SelectLine,
-        EdgeFlips
-    }
 }

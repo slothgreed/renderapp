@@ -192,6 +192,19 @@ namespace RenderApp.ViewModel
 					return _OpenDebugWindow;
 				}
 			}
+			private ICommand _DataVisualization;
+			public ICommand DataVisualization
+			{
+				get
+				{
+					if (_DataVisualization == null)
+					{
+						return _DataVisualization = CreateCommand(DataVisualizationCommand);						
+					}
+
+					return _DataVisualization;
+				}
+			}
 			private ICommand _Undo;
 			public ICommand Undo
 			{

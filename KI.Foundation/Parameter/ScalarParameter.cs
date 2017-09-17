@@ -3,18 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using KI.Foundation.Utility;
 
-namespace KI.Analyzer
+namespace KI.Foundation.Parameter
 {
     /// <summary>
     /// 値のパラメータ
     /// </summary>
-    public class ScalarParameter
+    public class ScalarParameter : IParameter
     {
-        /// <summary>
-        /// 曲率最大値最小値平均値分散確率密度関数
-        /// </summary>
-        private float[] values;
-
         /// <summary>
         /// 最大値
         /// </summary>
@@ -35,10 +30,27 @@ namespace KI.Analyzer
         /// </summary>
         private float valianceValue = float.MaxValue;
 
-        public ScalarParameter(float[] parameters)
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <param name="parameters">パラメータ</param>
+        public ScalarParameter(string name, IEnumerable<float> parameters)
         {
-            values = parameters.ToArray();
+            Name = name;
+            Values = parameters.ToArray();
         }
+
+        /// <summary>
+        /// 名前
+        /// </summary>
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// 値
+        /// </summary>
+        public float[] Values { get; private set; }
+
         /// <summary>
         /// 最大値
         /// </summary>
@@ -48,7 +60,7 @@ namespace KI.Analyzer
             {
                 if (maxValue == float.MaxValue)
                 {
-                    maxValue = values.Max();
+                    maxValue = Values.Max();
                 }
 
                 return maxValue;
@@ -64,7 +76,7 @@ namespace KI.Analyzer
             {
                 if (minValue == float.MaxValue)
                 {
-                    minValue = values.Min();
+                    minValue = Values.Min();
                 }
 
                 return minValue;
@@ -80,8 +92,8 @@ namespace KI.Analyzer
             {
                 if (meanValue == float.MaxValue)
                 {
-                    float sum = values.Sum();
-                    meanValue = sum / values.Length;
+                    float sum = Values.Sum();
+                    meanValue = sum / Values.Length;
                 }
 
                 return meanValue;
@@ -97,12 +109,12 @@ namespace KI.Analyzer
             {
                 if (valianceValue == float.MaxValue)
                 {
-                    foreach (var val in values)
+                    foreach (var val in Values)
                     {
                         valianceValue += (meanValue - val) * (meanValue - val);
                     }
 
-                    valianceValue /= values.Length;
+                    valianceValue /= Values.Length;
                 }
 
                 return valianceValue;
@@ -116,7 +128,7 @@ namespace KI.Analyzer
         /// <returns>値</returns>
         public float GetValue(int index)
         {
-            if (values.Length < index)
+            if (Values.Length < index)
             {
                 Logger.Log(Logger.LogLevel.Warning, "Not Found Value:" + index);
                 return 0;
@@ -128,7 +140,7 @@ namespace KI.Analyzer
                 return 0;
             }
 
-            return values[index];
+            return Values[index];
         }
 
         /// <summary>

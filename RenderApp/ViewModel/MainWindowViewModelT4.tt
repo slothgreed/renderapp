@@ -35,6 +35,7 @@ using System.Windows.Input;
 		"Octree",
 		"OpenExplorer",
 		"OpenDebugWindow",
+		"DataVisualization",
 		"Undo",
 		"Redo"
 	};

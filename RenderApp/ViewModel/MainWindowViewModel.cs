@@ -347,7 +347,7 @@ namespace RenderApp.ViewModel
         #endregion
 
         #region [swintch controller command]
-        public ControlManager.CONTROL_MODE ControlMode
+        public CONTROL_MODE ControlMode
         {
             get
             {
@@ -357,30 +357,9 @@ namespace RenderApp.ViewModel
 
         private void ControllerCommand(object controllerMenu)
         {
-            RAController menuParam = (RAController)controllerMenu;
+            CONTROL_MODE menuParam = (CONTROL_MODE)controllerMenu;
             OnPropertyChanging("ControlMode");
-            switch (menuParam)
-            {
-                case RAController.Default:
-                    ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.SelectTriangle;
-                    break;
-                case RAController.Dijkstra:
-                    ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.Dijkstra;
-                    break;
-                case RAController.SelectPoint:
-                    ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.SelectPoint;
-                    break;
-                case RAController.SelectTriangle:
-                    ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.SelectTriangle;
-                    break;
-                case RAController.SelectLine:
-                    ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.SelectLine;
-                    break;
-                case RAController.EdgeFlips:
-                    ControlManager.Instance.Mode = ControlManager.CONTROL_MODE.EdgeFlips;
-                    break;
-            }
-
+            ControlManager.Instance.Mode = menuParam;
             OnPropertyChanged("ControlMode");
         }
 
@@ -456,6 +435,16 @@ namespace RenderApp.ViewModel
         private void OpenDebugWindowCommand()
         {
             View.DebugWindow window = new View.DebugWindow();
+            window.Show();
+        }
+
+        private void DataVisualizationCommand()
+        {
+            View.DataVisualization window = new View.DataVisualization();
+            var renderObject =  Workspace.MainScene.SelectNode as RenderObject;
+            window.GraphName = "vertexParameter";
+            window.ParameterList = renderObject.Polygon.Parameter;
+            window.Update(renderObject.Polygon.Parameter);
             window.Show();
         }
 

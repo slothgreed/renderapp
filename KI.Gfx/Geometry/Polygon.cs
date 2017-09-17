@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using KI.Foundation.Core;
+using KI.Foundation.Parameter;
 using KI.Gfx.KITexture;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
@@ -49,7 +50,11 @@ namespace KI.Gfx.Geometry
             Color = color;
         }
 
+        /// <summary>
+        /// 色情報
+        /// </summary>
         public List<Vector3> Color { get; private set; }
+
         /// <summary>
         /// 更新した形状種類
         /// </summary>
@@ -87,6 +92,12 @@ namespace KI.Gfx.Geometry
         /// 頂点カラーリスト
         /// </summary>
         private Dictionary<VertexColor, List<Vector3>> vertexColor = new Dictionary<VertexColor, List<Vector3>>();
+
+        /// <summary>
+        /// パラメータ
+        /// </summary>
+        private Dictionary<string, IParameter> parameters = new Dictionary<string, IParameter>();
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -228,15 +239,25 @@ namespace KI.Gfx.Geometry
         public Dictionary<TextureKind, Texture> Textures { get; private set; } = new Dictionary<TextureKind, Texture>();
 
         /// <summary>
-        /// テクスチャ枚数
+        /// パラメータ
         /// </summary>
-        public int TextureNum
+        public Dictionary<string, IParameter> Parameter
         {
             get
             {
-                return Textures.Count;
+                return parameters;
             }
         }
+
+        /// <summary>
+        /// パラメータの追加
+        /// </summary>
+        /// <param name="parameter"></param>
+        public void AddParameter(IParameter parameter)
+        {
+            parameters.Add(parameter.Name, parameter);
+        }
+
 
         /// <summary>
         /// 更新

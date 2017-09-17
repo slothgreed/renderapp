@@ -9,7 +9,7 @@ using OpenTK.Graphics.OpenGL;
 namespace KI.Analyzer
 {
     /// <summary>
-    /// ポリへドロン
+    /// ハーフエッジデータ構造
     /// </summary>
     public class HalfEdgeDS : Polygon
     {

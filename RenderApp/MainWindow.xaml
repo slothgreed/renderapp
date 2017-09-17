@@ -9,6 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+    xmlns:control="clr-namespace:KI.Tool.Control;assembly=KI.Tool"
     mc:Ignorable="d"
     Title="RenderingApplication" MinHeight="600" MinWidth="1200"
     Height="600" Width="1200">
@@ -52,12 +53,12 @@
             </MenuItem>
 
             <MenuItem Header="Controller">
-                <MenuItem Header="Default" Command="{Binding Controller}" CommandParameter="{x:Static local:RAController.Default}"/>
-                <MenuItem Header="SelectTriangle" Command="{Binding Controller}" CommandParameter="{x:Static local:RAController.SelectTriangle}"/>
-                <MenuItem Header="SelectLine" Command="{Binding Controller}" CommandParameter="{x:Static local:RAController.SelectLine}"/>
-                <MenuItem Header="SelectPoint" Command="{Binding Controller}" CommandParameter="{x:Static local:RAController.SelectPoint}"/>
-                <MenuItem Header="EdgeFlips" Command="{Binding Controller}" CommandParameter="{x:Static local:RAController.EdgeFlips}"/>
-                <MenuItem Header="Dijkstra" Command="{Binding Controller}" CommandParameter="{x:Static local:RAController.Dijkstra}"/>
+                <MenuItem Header="Default" Command="{Binding Controller}" CommandParameter="{x:Static control:CONTROL_MODE.SelectTriangle}"/>
+                <MenuItem Header="SelectTriangle" Command="{Binding Controller}" CommandParameter="{x:Static control:CONTROL_MODE.SelectTriangle}"/>
+                <MenuItem Header="SelectLine" Command="{Binding Controller}" CommandParameter="{x:Static control:CONTROL_MODE.SelectLine}"/>
+                <MenuItem Header="SelectPoint" Command="{Binding Controller}" CommandParameter="{x:Static control:CONTROL_MODE.SelectPoint}"/>
+                <MenuItem Header="EdgeEditor" Command="{Binding Controller}" CommandParameter="{x:Static control:CONTROL_MODE.EdgeFlips}"/>
+                <MenuItem Header="Dijkstra" Command="{Binding Controller}" CommandParameter="{x:Static control:CONTROL_MODE.Dijkstra}"/>
             </MenuItem>
 
 
@@ -80,6 +81,7 @@
             <MenuItem Header="Help">
                 <MenuItem Header="Resource Directory" Command="{Binding OpenExplorer}" CommandParameter="{x:Static local:ProjectInfo.ResourceDirectory}" />
                 <MenuItem Header="DebugWindow" Command="{Binding OpenDebugWindow}"/>
+                <MenuItem Header="DataVisualization" Command="{Binding DataVisualization}"/>
             </MenuItem>
         </Menu>
 

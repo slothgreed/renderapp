@@ -59,7 +59,7 @@ namespace KI.Asset
                 return Directory + @"GBuffer\GeneralPC.vert";
             }
 
-            if (renderObject.Polygon.TextureNum != 0)
+            if (renderObject.Polygon.Textures.Count != 0)
             {
                 return Directory + @"GBuffer\GeneralPNCT.vert";
             }
@@ -82,7 +82,7 @@ namespace KI.Asset
                 return Directory + @"GBuffer\GeneralPC.frag";
             }
 
-            if (renderObject.Polygon.TextureNum != 0)
+            if (renderObject.Polygon.Textures.Count != 0)
             {
                 return Directory + @"GBuffer\GeneralPNT.frag";
             }

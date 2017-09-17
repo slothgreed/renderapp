@@ -5,6 +5,18 @@ using KI.Foundation.Utility;
 namespace KI.Tool.Control
 {
     /// <summary>
+    /// コントローラのモード
+    /// </summary>
+    public enum CONTROL_MODE
+    {
+        SelectTriangle,
+        SelectLine,
+        SelectPoint,
+        EdgeFlips,
+        Dijkstra
+    }
+
+    /// <summary>
     /// コントロールマネージャ
     /// </summary>
     public class ControlManager : IControl
@@ -30,18 +42,6 @@ namespace KI.Tool.Control
             Controllers.Add(CONTROL_MODE.SelectPoint, new SelectPointControl());
             Controllers.Add(CONTROL_MODE.EdgeFlips, new EdgeFlipsControl());
             cameraController = new CameraControl();
-        }
-
-        /// <summary>
-        /// コントローラのモード
-        /// </summary>
-        public enum CONTROL_MODE
-        {
-            SelectTriangle,
-            SelectLine,
-            SelectPoint,
-            EdgeFlips,
-            Dijkstra
         }
 
         /// <summary>

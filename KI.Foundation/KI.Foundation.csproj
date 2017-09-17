@@ -60,6 +60,9 @@
     <Compile Include="Core\KIFile.cs" />
     <Compile Include="Core\KITimer.cs" />
     <Compile Include="Core\KIMouse.cs" />
+    <Compile Include="Parameter\IParameter.cs" />
+    <Compile Include="Parameter\ScalarParameter.cs" />
+    <Compile Include="Parameter\VectorParameter.cs" />
     <Compile Include="Tree\KINode.cs" />
     <Compile Include="Tree\NotifyNodeChangedEventArgs.cs">
       <DependentUpon>NotifyNodeChangedEventArgs.tt</DependentUpon>
