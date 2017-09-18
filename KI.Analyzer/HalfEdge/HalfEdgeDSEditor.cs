@@ -14,6 +14,26 @@ namespace KI.Analyzer
     public class HalfEdgeDSEditor
     {
         /// <summary>
+        /// 削除するエッジ
+        /// </summary>
+        private List<HalfEdge> deleteEdges = new List<HalfEdge>();
+
+        /// <summary>
+        /// 削除する面
+        /// </summary>
+        private List<HalfEdgeMesh> deleteMeshs = new List<HalfEdgeMesh>();
+
+        /// <summary>
+        /// 削除する頂点
+        /// </summary>
+        private List<HalfEdgeVertex> deleteVertexs = new List<HalfEdgeVertex>();
+
+        /// <summary>
+        /// 編集中かどうか
+        /// </summary>
+        private bool nowEdit = false;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="half">ハーフエッジ</param>
@@ -27,7 +47,69 @@ namespace KI.Analyzer
         /// </summary>
         public HalfEdgeDS HalfEdge { get; private set; }
 
+        /// <summary>
+        /// 編集中かどうか
+        /// </summary>
+        public bool NowEdit
+        {
+            get
+            {
+                return nowEdit;
+            }
+
+            private set
+            {
+                nowEdit = value;
+            }
+        }
+
         #region [edit method]
+        
+        /// <summary>
+        /// 編集開始
+        /// </summary>
+        public void StartEdit()
+        {
+            nowEdit = true;
+        }
+
+        /// <summary>
+        /// 編集終了
+        /// </summary>
+        public void FinEdit()
+        {
+            nowEdit = false;
+            //DeleteMesh(deleteMeshs);
+            //DeleteEdge(deleteEdges);
+            //DeleteVertex(deleteVertexs);
+
+            var vertexs = HalfEdge.HalfEdgeVertexs.Where(p => !p.DeleteFlag);
+            var edges = HalfEdge.HalfEdges.Where(p => !p.DeleteFlag);
+            var meshs = HalfEdge.HalfEdgeMeshs.Where(p => !p.DeleteFlag);
+
+            HalfEdge.Setup(vertexs, edges, meshs);
+
+            int counter = 0;
+            foreach (var mesh in HalfEdge.HalfEdgeMeshs)
+            {
+                mesh.Index = counter;
+                counter++;
+            }
+
+            counter = 0;
+            foreach (var edge in HalfEdge.HalfEdges)
+            {
+                edge.Index = counter;
+                counter++;
+            }
+
+            counter = 0;
+            foreach (var vertex in HalfEdge.HalfEdgeVertexs)
+            {
+                vertex.Index = counter;
+                counter++;
+            }
+        }
         #region [vertex decimation]
 
         /// <summary>
@@ -36,6 +118,12 @@ namespace KI.Analyzer
         /// <param name="edge">削除するエッジ</param>
         public void EdgeCollapse(HalfEdge edge)
         {
+            if (!NowEdit)
+            {
+                Logger.Log(Logger.LogLevel.Warning, "Call StartEdit");
+                return;
+            }
+
             if (!CanEdgeCollapse(edge))
             {
                 return;
@@ -46,24 +134,24 @@ namespace KI.Analyzer
 
             #region [create delete list]
             //削除するメッシュ
-            var deleteMesh = new List<HalfEdgeMesh>();
+            var delMesh = new List<HalfEdgeMesh>();
             //削除するエッジ
-            var deleteEdge = new List<HalfEdge>();
+            var delEdge = new List<HalfEdge>();
             //削除する頂点
-            var deleteVertex = new List<HalfEdgeVertex>();
+            var delVertex = new List<HalfEdgeVertex>();
 
-            deleteVertex.Add(delV);
+            delVertex.Add(delV);
 
             //頂点とエッジの格納
-            deleteEdge.Add(edge);
-            deleteEdge.Add(edge.Next);
-            deleteEdge.Add(edge.Next.Next);
-            deleteMesh.Add(edge.Mesh);
+            delEdge.Add(edge);
+            delEdge.Add(edge.Next);
+            delEdge.Add(edge.Next.Next);
+            delMesh.Add(edge.Mesh);
             //頂点とエッジの格納
-            deleteEdge.Add(edge.Opposite);
-            deleteEdge.Add(edge.Opposite.Next);
-            deleteEdge.Add(edge.Opposite.Next.Next);
-            deleteMesh.Add(edge.Opposite.Mesh);
+            delEdge.Add(edge.Opposite);
+            delEdge.Add(edge.Opposite.Next);
+            delEdge.Add(edge.Opposite.Next.Next);
+            delMesh.Add(edge.Opposite.Mesh);
             #endregion
 
             //頂点が削除対象なら、残す方に移動
@@ -86,28 +174,26 @@ namespace KI.Analyzer
             Analyzer.HalfEdge.SetupOpposite(edge.Next.Opposite, edge.Before.Opposite);
             Analyzer.HalfEdge.SetupOpposite(edge.Opposite.Next.Opposite, edge.Opposite.Before.Opposite);
 
-            DeleteMesh(deleteMesh);
-            DeleteEdge(deleteEdge);
-            DeleteVertex(deleteVertex);
-
-            //HasError(delV);
-            //HasError();
-
-            //for (int i = 0; i < HalfEdge.Meshs.Count; i++)
-            //{
-            //    ((HalfEdgeMesh)HalfEdge.Meshs[i]).Index = i;
-            //}
-
-            //for (int i = 0; i < HalfEdge.Lines.Count; i++)
-            //{
-            //    ((HalfEdge)HalfEdge.Lines[i]).Index = i;
-            //}
-
-            for (int i = 0; i < HalfEdge.Vertexs.Count; i++)
+            foreach(var dedge in delEdge)
             {
-                HalfEdge.Vertexs[i].Index = i;
+                dedge.Dispose();
             }
 
+            foreach (var dmesh in delMesh)
+            {
+                dmesh.Dispose();
+            }
+
+            foreach (var dvertex in delVertex)
+            {
+                dvertex.Dispose();
+            }
+
+            deleteVertexs.AddRange(delVertex);
+            deleteEdges.AddRange(delEdge);
+            deleteMeshs.AddRange(delMesh);
+            //HasError(delV);
+            //HasError();
         }
         #endregion
 
@@ -117,6 +203,12 @@ namespace KI.Analyzer
         /// <param name="edge">エッジ</param>
         public void EdgeSplit(HalfEdge edge)
         {
+            if (!NowEdit)
+            {
+                Logger.Log(Logger.LogLevel.Warning, "Call StartEdit");
+                return;
+            }
+
             var opposite = edge.Opposite;
             var delMesh1 = edge.Mesh;
             var delMesh2 = opposite.Mesh;
@@ -156,10 +248,13 @@ namespace KI.Analyzer
             HalfEdge.Meshs.Add(rightDown);
             HalfEdge.Meshs.Add(leftDown);
 
-            DeleteEdge(new List<HalfEdge>() { edge, opposite });
-            DeleteMesh(new List<HalfEdgeMesh>() { delMesh1, delMesh2 });
+            edge.Dispose(); opposite.Dispose();
+            deleteEdges.Add(edge); deleteEdges.Add(opposite);
 
-            HasError();
+            delMesh1.Dispose(); delMesh2.Dispose();
+            deleteMeshs.Add(delMesh1); deleteMeshs.Add(delMesh2);
+
+            //HasError();
         }
 
         /// <summary>
@@ -168,6 +263,12 @@ namespace KI.Analyzer
         /// <param name="edge">入れ替えるエッジ</param>
         public void EdgeFlips(HalfEdge edge)
         {
+            if (!NowEdit)
+            {
+                Logger.Log(Logger.LogLevel.Warning, "Call StartEdit");
+                return;
+            }
+
             if (!CanEdgeFlips(edge))
             {
                 return;
@@ -191,9 +292,11 @@ namespace KI.Analyzer
             HalfEdge.Lines.Add(createEdge);
             HalfEdge.Lines.Add(createEdgeOpposite);
 
-            DeleteEdge(new List<HalfEdge>() { edge, opposite });
-            DeleteMesh(new List<HalfEdgeMesh>() { delMesh1, delMesh2 });
+            edge.Dispose(); opposite.Dispose();
+            deleteEdges.Add(edge); deleteEdges.Add(opposite);
 
+            delMesh1.Dispose(); delMesh2.Dispose();
+            deleteMeshs.Add(delMesh1); deleteMeshs.Add(delMesh2);
             //HasError();
         }
         #endregion
@@ -297,7 +400,6 @@ namespace KI.Analyzer
         {
             foreach (var mesh in deleteMesh)
             {
-                mesh.Dispose();
                 HalfEdge.Meshs.Remove(mesh);
             }
         }
@@ -310,7 +412,6 @@ namespace KI.Analyzer
         {
             foreach (var edge in deleteEdge)
             {
-                edge.Dispose();
                 HalfEdge.Lines.Remove(edge);
             }
         }
@@ -324,7 +425,6 @@ namespace KI.Analyzer
             //エッジ削除
             foreach (var vertex in deleteVertex)
             {
-                vertex.Dispose();
                 HalfEdge.Vertexs.Remove(vertex);
             }
         }

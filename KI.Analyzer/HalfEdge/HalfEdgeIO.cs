@@ -115,6 +115,7 @@ namespace KI.Analyzer
             {
                 line = fileData[lineNumber];
                 lineNumber++;
+
                 if (line.Contains("HalfEdge Data Strucure")) continue;
                 if (line.Contains("Vertex :")) continue;
                 if (line.Contains("Edge :")) continue;

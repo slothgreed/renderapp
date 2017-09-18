@@ -10,6 +10,12 @@ namespace KI.Gfx.Geometry
     /// </summary>
     public class Mesh
     {
+
+        /// <summary>
+        /// 面積
+        /// </summary>
+        private float area = 0;
+
         /// <summary>
         /// エッジ
         /// </summary>
@@ -109,6 +115,23 @@ namespace KI.Gfx.Geometry
             }
         }
 
+
+        /// <summary>
+        /// 面積
+        /// </summary>
+        public float Area
+        {
+            get
+            {
+                if (area == 0)
+                {
+                    area = KICalc.Area(lines[0].Start.Position, lines[1].Start.Position, lines[2].Start.Position);
+                }
+
+                return area;
+            }
+        }
+
         /// <summary>
         /// 法線
         /// </summary>
@@ -163,6 +186,17 @@ namespace KI.Gfx.Geometry
 
                 return gravity;
             }
+        }
+
+        /// <summary>
+        /// 編集したときに呼ぶ
+        /// </summary>
+        public virtual void Modified()
+        {
+            area = 0;
+            normal = Vector3.Zero;
+            plane = Vector4.Zero;
+            gravity = Vector3.Zero;
         }
     }
 }

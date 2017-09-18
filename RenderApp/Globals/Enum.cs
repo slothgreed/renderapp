@@ -57,7 +57,8 @@
         CalculateVertexParameter,
         STL,
         OBJ,
-        File
+        File,
+        AdaptiveMesh
     }
 
     public enum RAAsset

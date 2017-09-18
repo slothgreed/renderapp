@@ -13,6 +13,11 @@ namespace KI.Gfx.Geometry
     public class Line
     {
         /// <summary>
+        /// 長さ
+        /// </summary>
+        private float length = 0;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="start">始点</param>
@@ -40,8 +45,18 @@ namespace KI.Gfx.Geometry
         {
             get
             {
-                return (Start.Position - End.Position).Length;
+                if(length == 0)
+                {
+                    length = (Start.Position - End.Position).Length;
+                }
+
+                return length;
             }
+        }
+
+        public virtual void Modified()
+        {
+            length = 0;
         }
     }
 }

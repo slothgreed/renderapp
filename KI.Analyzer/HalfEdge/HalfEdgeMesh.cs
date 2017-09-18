@@ -23,10 +23,6 @@ namespace KI.Analyzer
             }
         }
 
-        /// <summary>
-        /// 面積
-        /// </summary>
-        private float area = float.MinValue;
 
         /// <summary>
         /// コンストラクタ
@@ -65,23 +61,6 @@ namespace KI.Analyzer
         /// 削除フラグ。Updateが走ると必ず削除するべきもの
         /// </summary>
         public bool DeleteFlag { get; set; }
-
-        /// <summary>
-        /// 面積
-        /// </summary>
-        public float Area
-        {
-            get
-            {
-                if (area == float.MinValue)
-                {
-                    var edge = Edges.ToArray();
-                    area = KICalc.Area(edge[0].Start.Position, edge[1].Start.Position, edge[2].Start.Position);
-                }
-
-                return area;
-            }
-        }
 
         /// <summary>
         /// 鈍角三角形ならtrue

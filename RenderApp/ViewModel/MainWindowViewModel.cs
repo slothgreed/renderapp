@@ -321,9 +321,15 @@ namespace RenderApp.ViewModel
                     CommandManager.Instance.Execute(command, null, true);
                     //select = Workspace.SceneManager.ActiveScene.SelectAsset;
                     break;
+                case RAGeometry.AdaptiveMesh:
+                    command = new AdaptiveMeshCommand(Workspace.MainScene.SelectNode);
+                    CommandManager.Instance.Execute(command, null, true);
+                        break;
                 default:
                     break;
             }
+
+            Viewport.Instance.GLControl_Paint(null, null);
         }
 
         //private static KIObject select;
@@ -440,11 +446,13 @@ namespace RenderApp.ViewModel
 
         private void DataVisualizationCommand()
         {
-            View.DataVisualization window = new View.DataVisualization();
+            View.DebugWindow window = new View.DebugWindow();
+            View.DataVisualization dataVisualize = new View.DataVisualization();
             var renderObject =  Workspace.MainScene.SelectNode as RenderObject;
-            window.GraphName = "vertexParameter";
-            window.ParameterList = renderObject.Polygon.Parameter;
-            window.Update(renderObject.Polygon.Parameter);
+            dataVisualize.GraphName = "vertexParameter";
+            dataVisualize.ParameterList = renderObject.Polygon.Parameter;
+            dataVisualize.Update(renderObject.Polygon.Parameter);
+            window.Content = dataVisualize;
             window.Show();
         }
 

@@ -45,29 +45,6 @@ namespace KI.Analyzer.Algorithm
             float voronoi = 0;
             foreach (var edge in vertex.AroundEdge)
             {
-                //float length = edge.Length;ta
-                //HalfEdge opposite = edge.Opposite;
-                //float alpha = edge.Next.Next.Radian;
-                //float beta = opposite.Next.Next.Radian;
-                //if (!edge.Mesh.IsObtuse)
-                //{
-                //    alpha = (float)(Math.Cos(alpha) / Math.Sin(alpha));
-                //    beta = (float)(Math.Cos(beta) / Math.Sin(beta));
-
-                //    voronoi += ((float)(alpha + beta) * length * length) / 8;
-                //}
-                //else
-                //{
-                //    if (edge.Radian > MathHelper.PiOver2)
-                //    {
-                //        voronoi += edge.Mesh.Area / 2;
-                //    }
-                //    else
-                //    {
-                //        voronoi += edge.Mesh.Area / 4;
-                //    }
-                //}
-
                 Vector3 midPoint1;
                 Vector3 midPoint2;
                 if (edge.Radian < MathHelper.PiOver2)

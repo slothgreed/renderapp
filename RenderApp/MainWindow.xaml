@@ -73,6 +73,7 @@
                 <MenuItem Header="ConvexHull" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.ConvexHull}"/>
                 <MenuItem Header="MarchingCube" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.MarchingCube}"/>
                 <MenuItem Header="CalculateVertexParameter" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.CalculateVertexParameter}"/>
+                <MenuItem Header="AdaptiveMesh" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.AdaptiveMesh}"/>
                 <Separator/>
                 <MenuItem Header="Voxelize" Command="{Binding Voxelize}"/>
                 <MenuItem Header="Octree" Command="{Binding Octree}"/>

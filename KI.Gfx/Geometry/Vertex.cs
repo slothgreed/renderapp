@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using System;
+using OpenTK;
 
 namespace KI.Gfx.Geometry
 {
@@ -88,7 +89,7 @@ namespace KI.Gfx.Geometry
         /// <summary>
         /// 位置
         /// </summary>
-        public Vector3 Position { get; set; }
+        public virtual Vector3 Position { get; set; }
 
         /// <summary>
         /// 法線
@@ -104,5 +105,12 @@ namespace KI.Gfx.Geometry
         /// テクスチャ座標
         /// </summary>
         public Vector2 TexCoord { get; set; }
+
+        /// <summary>
+        /// 編集したときに呼ぶ
+        /// </summary>
+        public virtual void Modified()
+        {
+        }
     }
 }

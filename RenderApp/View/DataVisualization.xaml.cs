@@ -20,7 +20,7 @@ namespace RenderApp.View
     /// <summary>
     /// DataVisualization.xaml の相互作用ロジック
     /// </summary>
-    public partial class DataVisualization : Window
+    public partial class DataVisualization : UserControl
     {
         public DataVisualization()
         {

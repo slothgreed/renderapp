@@ -182,12 +182,6 @@
     <Compile Include="ViewModel\DockTabVM\TabControlViewModel.cs" />
     <Compile Include="ViewModel\DockTabVM\TabItemViewModel.cs" />
     <Compile Include="ViewModel\ViewportViewModel.cs" />
-    <Compile Include="View\Controller\DijkstraView.xaml.cs">
-      <DependentUpon>DijkstraView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Controller\SelectView.xaml.cs">
-      <DependentUpon>SelectView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\DataVisualization.xaml.cs">
       <DependentUpon>DataVisualization.xaml</DependentUpon>
     </Compile>
@@ -265,14 +259,6 @@
     <Compile Include="View\ViewportView.xaml.cs">
       <DependentUpon>ViewportView.xaml</DependentUpon>
     </Compile>
-    <Page Include="View\Controller\DijkstraView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Controller\SelectView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\DataVisualization.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

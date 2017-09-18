@@ -78,6 +78,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithm\AdaptiveMeshAlgorithm.cs" />
     <Compile Include="Algorithm\ConvexHullAlgorithm.cs" />
     <Compile Include="Algorithm\DijkstraAlgorithm.cs" />
     <Compile Include="Algorithm\MarchingCube\MarchingCubesAlgorithm.cs" />

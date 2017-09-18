@@ -81,11 +81,10 @@ namespace KI.Analyzer
             }
         }
 
-        public override void Update(PrimitiveType type)
-        {
-            base.Update(PrimitiveType.Triangles);
-        }
 
+        /// <summary>
+        /// ハーフエッジ頂点の取得
+        /// </summary>
         public IEnumerable<HalfEdgeVertex> HalfEdgeVertexs
         {
             get
@@ -94,6 +93,9 @@ namespace KI.Analyzer
             }
         }
 
+        /// <summary>
+        /// ハーフエッジメッシュの取得
+        /// </summary>
         public IEnumerable<HalfEdgeMesh> HalfEdgeMeshs
         {
             get
@@ -102,6 +104,9 @@ namespace KI.Analyzer
             }
         }
 
+        /// <summary>
+        /// ハーフエッジの取得
+        /// </summary>
         public IEnumerable<HalfEdge> HalfEdges
         {
             get
@@ -209,7 +214,7 @@ namespace KI.Analyzer
             Lines.Add(edge3);
         }
 
-        public void Setup(List<HalfEdgeVertex> vertexs, List<HalfEdge> edges, List<HalfEdgeMesh> meshs)
+        public void Setup(IEnumerable<HalfEdgeVertex> vertexs, IEnumerable<HalfEdge> edges, IEnumerable<HalfEdgeMesh> meshs)
         {
             Vertexs = vertexs.OfType<Vertex>().ToList();
             Lines = edges.OfType<Line>().ToList();

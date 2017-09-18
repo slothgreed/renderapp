@@ -53,17 +53,6 @@
                 </DataTemplate>
             </vm:DockPaneTemplateSelector.VoxelTemplate>
 
-            <vm:DockPaneTemplateSelector.DijkstraTemplate>
-                <DataTemplate DataType="{x:Type vm:DijkstraViewModel}">
-                    <vc:DijkstraView/>
-                </DataTemplate>
-            </vm:DockPaneTemplateSelector.DijkstraTemplate>
-
-            <vm:DockPaneTemplateSelector.SelectObjectTemplate>
-                <DataTemplate DataType="{x:Type vm:SelectViewModel}">
-                    <vc:SelectView/>
-                </DataTemplate>
-            </vm:DockPaneTemplateSelector.SelectObjectTemplate>
         </vm:DockPaneTemplateSelector>
 
         <DataTemplate x:Key="TabItemHeaderTempalte">

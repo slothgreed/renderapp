@@ -12,7 +12,7 @@ namespace KI.Analyzer
         /// <summary>
         /// 三角形を構成するエッジの角度thisと前のエッジの反対の角度
         /// </summary>
-        private float radian = 0.0f;
+        private float radian = 0;
 
         /// <summary>
         /// コンストラクタ
@@ -55,6 +55,10 @@ namespace KI.Analyzer
             set
             {
                 base.Start = value;
+                if(value != null)
+                {
+                    Start.Modified();
+                }
             }
         }
 
@@ -71,6 +75,10 @@ namespace KI.Analyzer
             set
             {
                 base.End = value;
+                if (value != null)
+                {
+                    End.Modified();
+                }
             }
         }
 
@@ -126,17 +134,6 @@ namespace KI.Analyzer
         }
 
         /// <summary>
-        /// エッジの長さ
-        /// </summary>
-        public new float Length
-        {
-            get
-            {
-                return (Start - End).Length;
-            }
-        }
-
-        /// <summary>
         /// エラーエッジ
         /// </summary>
         public bool ErrorEdge
@@ -154,6 +151,20 @@ namespace KI.Analyzer
                 Next == Before ||
                 DeleteFlag;
             }
+        }
+
+        /// <summary>
+        /// 編集したときに呼ぶ
+        /// </summary>
+        public override void Modified()
+        {
+            radian = 0;
+            if(Mesh != null)
+            {
+                Mesh.Modified();
+            }
+
+            base.Modified();
         }
 
         #region [operator] 
