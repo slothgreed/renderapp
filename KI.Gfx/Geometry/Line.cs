@@ -45,7 +45,7 @@ namespace KI.Gfx.Geometry
         {
             get
             {
-                if(length == 0)
+                if (length == 0)
                 {
                     length = (Start.Position - End.Position).Length;
                 }

@@ -379,7 +379,7 @@ namespace KI.Analyzer
                 {
                     for (int k = 0; k < Partition; k++)
                     {
-                        if(condition(i, j, k))
+                        if (condition(i, j, k))
                         {
                             continue;
                         }

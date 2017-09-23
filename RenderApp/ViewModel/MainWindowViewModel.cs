@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows.Forms;
 using KI.Asset;
+using KI.Analyzer;
 using KI.Foundation.Command;
 using KI.Foundation.Tree;
 using KI.Gfx;
@@ -450,8 +451,8 @@ namespace RenderApp.ViewModel
             View.DataVisualization dataVisualize = new View.DataVisualization();
             var renderObject =  Workspace.MainScene.SelectNode as RenderObject;
             dataVisualize.GraphName = "vertexParameter";
-            dataVisualize.ParameterList = renderObject.Polygon.Parameter;
-            dataVisualize.Update(renderObject.Polygon.Parameter);
+            dataVisualize.ParameterList = ((HalfEdgeDS)renderObject.Polygon).Parameter;
+            dataVisualize.Update(((HalfEdgeDS)renderObject.Polygon).Parameter);
             window.Content = dataVisualize;
             window.Show();
         }

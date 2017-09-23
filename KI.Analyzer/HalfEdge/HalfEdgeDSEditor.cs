@@ -163,7 +163,7 @@ namespace KI.Analyzer
                     around.Start.AddEdge(around);
                 }
 
-                if(around.Before.End == delV)
+                if (around.Before.End == delV)
                 {
                     around.Before.End = remV;
                 }
@@ -340,7 +340,7 @@ namespace KI.Analyzer
             var createStar = edge.Next.End;
             var createEnd = edge.Opposite.Next.End;
             var middle = (createStar.Position + createEnd.Position) / 2;
-            if(Vector3.Dot(middle - edge.Start.Position, middle - edge.End.Position) < 0)
+            if (Vector3.Dot(middle - edge.Start.Position, middle - edge.End.Position) < 0)
             {
                 return true;
             }
@@ -434,7 +434,7 @@ namespace KI.Analyzer
         {
             foreach (var edge in HalfEdge.HalfEdges)
             {
-                if(edge.HasVertex(vertex))
+                if (edge.HasVertex(vertex))
                 {
                     Console.WriteLine("error");
                 }
@@ -450,6 +450,7 @@ namespace KI.Analyzer
 
             return false;
         }
+
         /// <summary>
         /// エラーがあるか
         /// </summary>

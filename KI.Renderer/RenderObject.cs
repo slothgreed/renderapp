@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using KI.Asset;
-using KI.Foundation.Core;
 using KI.Foundation.Utility;
 using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil;
-using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
@@ -29,11 +26,7 @@ namespace KI.Renderer
     /// </summary>
     public class RenderPackage
     {
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        /// <param name="type">形状種類</param>
-        public RenderPackage(PrimitiveType type)
+        public RenderPackage(Polygon polygon, PrimitiveType type)
         {
             Type = type;
         }
@@ -52,9 +45,9 @@ namespace KI.Renderer
         /// レンダリングするときの種類
         /// </summary>
         public PrimitiveType Type { get; set; }
-
+        
         /// <summary>
-        /// カラーリスト（頂点カラーよりこちら優先）
+        /// テクスチャ座標
         /// </summary>
         public List<Vector3> Color { get; set; }
     }
@@ -227,14 +220,18 @@ namespace KI.Renderer
         {
             if (!Package.ContainsKey(type))
             {
-                Package[type] = new RenderPackage(type);
-                Package[type].VertexBuffer.GenBuffer(Polygon, type);
+                Package[type] = new RenderPackage(Polygon, type);
+                Package[type].VertexBuffer.GenBuffer(polygon, type);
                 string vert = ShaderCreater.Instance.GetVertexShader(this);
                 string frag = ShaderCreater.Instance.GetFragShader(this);
                 Package[type].Shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
             }
 
-            Package[type].VertexBuffer.SetupBuffer(Polygon, type, Package[type].Color);
+            Package[type].VertexBuffer.SetupBuffer(Polygon, type);
+            if (Package[type].Color != null)
+            {
+                Package[type].VertexBuffer.ColorList = Package[type].Color;
+            }
         }
 
         /// <summary>
@@ -245,10 +242,10 @@ namespace KI.Renderer
         private void UpdatePolygon(object sender, UpdatePolygonEventArgs e)
         {
             SetupRenderPackage(e.Type);
-            if(e.Color != null)
+            if (e.Color != null)
             {
                 Package[e.Type].Color = e.Color;
-                Package[e.Type].VertexBuffer.SetupBuffer(Polygon, e.Type, e.Color);
+                Package[e.Type].VertexBuffer.ColorList = e.Color;
             }
 
             Mode = RenderMode.PolygonLine;

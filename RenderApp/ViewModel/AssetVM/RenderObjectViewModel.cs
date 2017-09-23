@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using KI.Analyzer;
 using KI.Foundation.Core;
+using KI.Foundation.Parameter;
 using KI.Gfx.Geometry;
 using KI.Renderer;
 using KI.UI.ViewModel;
@@ -42,6 +44,70 @@ namespace RenderApp.ViewModel
                 }
             }
         }
+
+        private VertexColor selectedItem;
+        public VertexColor SelectedItem
+        {
+            get
+            {
+                return selectedItem;
+            }
+
+            set
+            {
+                selectedItem = value;
+
+                var halfEdgeDS = Model.Polygon as HalfEdgeDS;
+                if (halfEdgeDS.Parameter.ContainsKey(SelectedItem.ToString()))
+                {
+                    var param = halfEdgeDS.Parameter[SelectedItem.ToString()] as ScalarParameter;
+                    maxValue = param.Max;
+                    minValue = param.Min;
+                    OnPropertyChanged(nameof(MaxValue));
+                    OnPropertyChanged(nameof(MinValue));
+                }
+
+                halfEdgeDS.UpdateVertexColor(SelectedItem, MinValue, MaxValue);
+            }
+        }
+
+
+        private float minValue;
+        public float MinValue
+        {
+            get
+            {
+                return minValue;
+            }
+
+            set
+            {
+                minValue = value;
+                if (Model.Polygon is HalfEdgeDS)
+                {
+                    ((HalfEdgeDS)Model.Polygon).UpdateVertexColor(SelectedItem, MinValue, MaxValue);
+                }
+            }
+        }
+
+        private float maxValue;
+        public float MaxValue
+        {
+            get
+            {
+                return maxValue;
+            }
+
+            set
+            {
+                maxValue = value;
+                if(Model.Polygon is HalfEdgeDS)
+                {
+                    ((HalfEdgeDS)Model.Polygon).UpdateVertexColor(SelectedItem, MinValue, MaxValue);
+                }
+            }
+        }
+
 
         public Dictionary<string, object> PropertyItem
         {

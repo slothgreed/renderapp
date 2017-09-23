@@ -21,7 +21,12 @@ namespace KI.Gfx.Geometry
 
     public enum VertexColor
     {
-        WireFrame
+        WireFrame,
+        Voronoi,
+        MeanCurvature,
+        GaussCurvature,
+        MinCurvature,
+        MaxCurvature,
     }
 
 
@@ -92,11 +97,6 @@ namespace KI.Gfx.Geometry
         /// 頂点カラーリスト
         /// </summary>
         private Dictionary<VertexColor, List<Vector3>> vertexColor = new Dictionary<VertexColor, List<Vector3>>();
-
-        /// <summary>
-        /// パラメータ
-        /// </summary>
-        private Dictionary<string, IParameter> parameters = new Dictionary<string, IParameter>();
 
         /// <summary>
         /// コンストラクタ
@@ -239,28 +239,7 @@ namespace KI.Gfx.Geometry
         public Dictionary<TextureKind, Texture> Textures { get; private set; } = new Dictionary<TextureKind, Texture>();
 
         /// <summary>
-        /// パラメータ
-        /// </summary>
-        public Dictionary<string, IParameter> Parameter
-        {
-            get
-            {
-                return parameters;
-            }
-        }
-
-        /// <summary>
-        /// パラメータの追加
-        /// </summary>
-        /// <param name="parameter"></param>
-        public void AddParameter(IParameter parameter)
-        {
-            parameters.Add(parameter.Name, parameter);
-        }
-
-
-        /// <summary>
-        /// 更新
+        /// 更新処理
         /// </summary>
         /// <param name="type">形状タイプ</param>
         public virtual void Update(PrimitiveType type)
@@ -269,7 +248,7 @@ namespace KI.Gfx.Geometry
             {
                 Index[PrimitiveType.Lines].Clear();
 
-                if(Lines != null)
+                if (Lines != null)
                 {
                     foreach (var line in Lines)
                     {
@@ -288,9 +267,11 @@ namespace KI.Gfx.Geometry
                     Index[PrimitiveType.Triangles].AddRange(mesh.Vertexs.Select(p => p.Index));
                 }
             }
+
             OnUpdate(new UpdatePolygonEventArgs(PrimitiveType.Lines));
             OnUpdate(new UpdatePolygonEventArgs(PrimitiveType.Triangles));
         }
+
 
         /// <summary>
         /// 更新
@@ -547,7 +528,7 @@ namespace KI.Gfx.Geometry
         /// 形状情報更新イベント
         /// </summary>
         /// <param name="type">形状種類</param>
-        private void OnUpdate(UpdatePolygonEventArgs e)
+        protected void OnUpdate(UpdatePolygonEventArgs e)
         {
             UpdatePolygon?.Invoke(this,e);
         }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using KI.Foundation.Utility;
 using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
@@ -22,7 +23,6 @@ namespace KI.Renderer
         /// 法線バッファ
         /// </summary>
         public ArrayBuffer NormalBuffer { get; private set; }
-
         /// <summary>
         /// カラーバッファ
         /// </summary>
@@ -32,6 +32,70 @@ namespace KI.Renderer
         /// テクスチャ座標バッファ
         /// </summary>
         public ArrayBuffer TexCoordBuffer { get; private set; }
+
+        /// <summary>
+        /// 頂点情報
+        /// </summary>
+        public List<Vector3> PositionList
+        {
+            set
+            {
+                if (value.Count == 0)
+                {
+                    Logger.Log(Logger.LogLevel.Error, "vertex num error");
+                }
+
+                PositionBuffer.SetData(value, EArrayType.Vec3Array);
+            }
+        }
+
+        /// <summary>
+        /// 法線情報
+        /// </summary>
+        public List<Vector3> NormalList
+        {
+            set
+            {
+                if (value.Count == 0)
+                {
+                    Logger.Log(Logger.LogLevel.Error, "vertex num error");
+                }
+
+                NormalBuffer.SetData(value, EArrayType.Vec3Array);
+            }
+        }
+
+        /// <summary>
+        /// カラー情報
+        /// </summary>
+        public List<Vector3> ColorList
+        {
+            set
+            {
+                if (value.Count == 0)
+                {
+                    Logger.Log(Logger.LogLevel.Error, "vertex num error");
+                }
+
+                ColorBuffer.SetData(value, EArrayType.Vec3Array);
+            }
+        }
+
+        /// <summary>
+        /// テクスチャ座標情報
+        /// </summary>
+        public List<Vector2> TexCoordList
+        {
+            set
+            {
+                if (value.Count == 0)
+                {
+                    Logger.Log(Logger.LogLevel.Error, "vertex num error");
+                }
+
+                TexCoordBuffer.SetData(value, EArrayType.Vec2Array);
+            }
+        }
 
         /// <summary>
         /// 描画する数
@@ -62,17 +126,13 @@ namespace KI.Renderer
         public void GenBuffer(Polygon polygon, PrimitiveType type)
         {
             PositionBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
-            PositionBuffer.GenBuffer();
             NormalBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
-            NormalBuffer.GenBuffer();
             ColorBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
-            ColorBuffer.GenBuffer();
             TexCoordBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
-            TexCoordBuffer.GenBuffer();
+
             if (polygon.Index.ContainsKey(type))
             {
                 IndexBuffer[type] = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
-                IndexBuffer[type].GenBuffer();
             }
         }
 
@@ -81,39 +141,26 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="polygon">ポリゴン</param>
         /// <param name="type">形状種類</param>
-        public void SetupBuffer(Polygon polygon, PrimitiveType type, List<Vector3> color)
+        /// <param name="color">頂点カラーの設定</param>
+        public void SetupBuffer(Polygon polygon, PrimitiveType type)
         {
             if (polygon.Index.ContainsKey(type))
             {
-                PositionBuffer.SetData(polygon.Vertexs.Select(p => p.Position).ToList(), EArrayType.Vec3Array);
-                NormalBuffer.SetData(polygon.Vertexs.Select(p => p.Normal).ToList(), EArrayType.Vec3Array);
-                if (color != null)
-                {
-                    ColorBuffer.SetData(color, EArrayType.Vec3Array);
-                }
-                else
-                {
-                    ColorBuffer.SetData(polygon.Vertexs.Select(p => p.Color).ToList(), EArrayType.Vec3Array);
-                }
-
-                TexCoordBuffer.SetData(polygon.Vertexs.Select(p => p.TexCoord).ToList(), EArrayType.Vec2Array);
                 IndexBuffer[type].SetData(polygon.Index[type], EArrayType.IntArray);
+
                 Num = polygon.Index[type].Count;
+                PositionList = polygon.Vertexs.Select(p => p.Position).ToList();
+                NormalList = polygon.Vertexs.Select(p => p.Normal).ToList();
+                ColorList = polygon.Vertexs.Select(p => p.Color).ToList();
+                TexCoordList = polygon.Vertexs.Select(p => p.TexCoord).ToList();
             }
             else if (type == PrimitiveType.Points)
             {
-                PositionBuffer.SetData(polygon.Vertexs.Select(p => p.Position).ToList(), EArrayType.Vec3Array);
-                NormalBuffer.SetData(polygon.Vertexs.Select(p => p.Normal).ToList(), EArrayType.Vec3Array);
-                if (color != null)
-                {
-                    ColorBuffer.SetData(color, EArrayType.Vec3Array);
-                }
-                else
-                {
-                    ColorBuffer.SetData(polygon.Vertexs.Select(p => p.Color).ToList(), EArrayType.Vec3Array);
-                }
-                TexCoordBuffer.SetData(polygon.Vertexs.Select(p => p.TexCoord).ToList(), EArrayType.Vec2Array);
                 Num = polygon.Vertexs.Count;
+                PositionList = polygon.Vertexs.Select(p => p.Position).ToList();
+                NormalList = polygon.Vertexs.Select(p => p.Normal).ToList();
+                ColorList = polygon.Vertexs.Select(p => p.Color).ToList();
+                TexCoordList = polygon.Vertexs.Select(p => p.TexCoord).ToList();
             }
             else if (type == PrimitiveType.Lines)
             {
@@ -124,19 +171,11 @@ namespace KI.Renderer
                     vertexs.Add(line.End);
                 }
 
-                PositionBuffer.SetData(vertexs.Select(p => p.Position).ToList(), EArrayType.Vec3Array);
-                NormalBuffer.SetData(vertexs.Select(p => p.Normal).ToList(), EArrayType.Vec3Array);
-                if (color != null)
-                {
-                    ColorBuffer.SetData(color, EArrayType.Vec3Array);
-                }
-                else
-                {
-                    ColorBuffer.SetData(polygon.Vertexs.Select(p => p.Color).ToList(), EArrayType.Vec3Array);
-                }
-
-                TexCoordBuffer.SetData(vertexs.Select(p => p.TexCoord).ToList(), EArrayType.Vec2Array);
                 Num = vertexs.Count;
+                PositionList = vertexs.Select(p => p.Position).ToList();
+                NormalList = vertexs.Select(p => p.Normal).ToList();
+                ColorList = vertexs.Select(p => p.Color).ToList();
+                TexCoordList = vertexs.Select(p => p.TexCoord).ToList();
             }
             else
             {
@@ -146,19 +185,11 @@ namespace KI.Renderer
                     vertexs.AddRange(mesh.Vertexs);
                 }
 
-                PositionBuffer.SetData(vertexs.Select(p => p.Position).ToList(), EArrayType.Vec3Array);
-                NormalBuffer.SetData(vertexs.Select(p => p.Normal).ToList(), EArrayType.Vec3Array);
-                if (color != null)
-                {
-                    ColorBuffer.SetData(color, EArrayType.Vec3Array);
-                }
-                else
-                {
-                    ColorBuffer.SetData(polygon.Vertexs.Select(p => p.Color).ToList(), EArrayType.Vec3Array);
-                }
-
-                TexCoordBuffer.SetData(vertexs.Select(p => p.TexCoord).ToList(), EArrayType.Vec2Array);
                 Num = vertexs.Count;
+                PositionList = vertexs.Select(p => p.Position).ToList();
+                NormalList = vertexs.Select(p => p.Normal).ToList();
+                ColorList = vertexs.Select(p => p.Color).ToList();
+                TexCoordList = vertexs.Select(p => p.TexCoord).ToList();
             }
         }
     }

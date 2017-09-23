@@ -118,7 +118,7 @@ namespace KI.Foundation.Utility
         /// <param name="max">最大値</param>
         public static void MinMax(IEnumerable<Vector3> position, out Vector3 min, out Vector3 max)
         {
-            if(!position.Any())
+            if (!position.Any())
             {
                 min = Vector3.Zero;
                 max = Vector3.Zero;
@@ -744,6 +744,7 @@ namespace KI.Foundation.Utility
             {
                 return false;
             }
+
             float numer = d1343 * d4321 - d1321 * d4343;
 
             float mua = numer / denom;

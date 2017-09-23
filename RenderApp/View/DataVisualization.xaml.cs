@@ -30,6 +30,7 @@ namespace RenderApp.View
         public string GraphName { get; set; }
 
         private Dictionary<string, IParameter> parameterList;
+
         public Dictionary<string, IParameter> ParameterList
         {
             get
@@ -46,6 +47,7 @@ namespace RenderApp.View
                 {
                     this.ParameterKind.Items.Add(paramName);
                 }
+
                 this.ParameterKind.Items.Add("All");
             }
         }
@@ -69,7 +71,7 @@ namespace RenderApp.View
 
             foreach (var paramList in parameters)
             {
-                if(paramList.Value is ScalarParameter)
+                if (paramList.Value is ScalarParameter)
                 {
                     Series series = new Series();
                     series.Name = paramList.Key;
@@ -102,7 +104,7 @@ namespace RenderApp.View
             {
                 Update(new Dictionary<string, IParameter>() { { item, ParameterList[item] } });
             }
-            else if(item == "All")
+            else if (item == "All")
             {
                 Update(ParameterList);
             }

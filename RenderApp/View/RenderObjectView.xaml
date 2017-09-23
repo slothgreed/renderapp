@@ -4,11 +4,24 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:RenderApp.ViewModel"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:v="clr-namespace:RenderApp.View"
+             xmlns:geometry="clr-namespace:KI.Gfx.Geometry;assembly=KI.Gfx"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ObjectDataProvider x:Key="VertexColorEnum" MethodName="GetValues" 
+                        ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="geometry:VertexColor"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
     <StackPanel>
         <v:PropertyGridView/>
+        <ComboBox SelectedItem="{Binding SelectedItem}" ItemsSource="{Binding Source={StaticResource VertexColorEnum}}"/>
+        <TextBox Text="{Binding MinValue}"/>
+        <TextBox Text="{Binding MaxValue}"/>
     </StackPanel>
     
 </UserControl>

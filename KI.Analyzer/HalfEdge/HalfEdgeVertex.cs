@@ -237,20 +237,20 @@ namespace KI.Analyzer
                         normal = sum.Normalized();
                     }
 
-                    Vector3 value = Vector3.Zero;
+                    //Vector3 value = Vector3.Zero;
 
-                    foreach (var edge in AroundEdge)
-                    {
-                        HalfEdge opposite = edge.Opposite;
-                        float alpha = edge.Next.Next.Radian;
-                        float beta = opposite.Next.Next.Radian;
-                        alpha = (float)(Math.Cos(alpha) / Math.Sin(alpha));
-                        beta = (float)(Math.Cos(beta) / Math.Sin(beta));
+                    //foreach (var edge in AroundEdge)
+                    //{
+                    //    HalfEdge opposite = edge.Opposite;
+                    //    float alpha = edge.Next.Next.Radian;
+                    //    float beta = opposite.Next.Next.Radian;
+                    //    alpha = (float)(Math.Cos(alpha) / Math.Sin(alpha));
+                    //    beta = (float)(Math.Cos(beta) / Math.Sin(beta));
 
-                        value += (alpha + beta) * (edge.Start - edge.End);
-                    }
+                    //    value += (alpha + beta) * (edge.Start - edge.End);
+                    //}
 
-                    normal = value.Normalized();
+                    //normal = value.Normalized();
                 }
 
                 return normal;
@@ -296,7 +296,7 @@ namespace KI.Analyzer
                     }
                 }
 
-                return voronoi;
+                return 1;// voronoi;
             }
         }
 

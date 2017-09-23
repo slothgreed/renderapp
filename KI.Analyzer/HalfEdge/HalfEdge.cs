@@ -55,7 +55,7 @@ namespace KI.Analyzer
             set
             {
                 base.Start = value;
-                if(value != null)
+                if (value != null)
                 {
                     Start.Modified();
                 }
@@ -159,7 +159,7 @@ namespace KI.Analyzer
         public override void Modified()
         {
             radian = 0;
-            if(Mesh != null)
+            if (Mesh != null)
             {
                 Mesh.Modified();
             }
@@ -236,7 +236,7 @@ namespace KI.Analyzer
 
         internal bool HasVertex(HalfEdgeVertex vertex)
         {
-            if(Start == vertex || End == vertex)
+            if (Start == vertex || End == vertex)
             {
                 return true;
             }

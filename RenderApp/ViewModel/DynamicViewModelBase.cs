@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Dynamic;
+
 namespace RenderApp.ViewModel
 {
     public class DynamicViewModelBase<T> : DynamicObject, INotifyPropertyChanged where T : class

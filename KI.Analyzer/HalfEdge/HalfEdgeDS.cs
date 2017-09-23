@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using KI.Foundation.Parameter;
 using KI.Foundation.Utility;
 using KI.Gfx.Geometry;
 using OpenTK;
@@ -13,6 +14,11 @@ namespace KI.Analyzer
     /// </summary>
     public class HalfEdgeDS : Polygon
     {
+        /// <summary>
+        /// パラメータ
+        /// </summary>
+        private Dictionary<string, IParameter> parameters = new Dictionary<string, IParameter>();
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -33,6 +39,27 @@ namespace KI.Analyzer
         {
             Initialize(position, polyIndex);
         }
+
+        /// <summary>
+        /// パラメータ
+        /// </summary>
+        public Dictionary<string, IParameter> Parameter
+        {
+            get
+            {
+                return parameters;
+            }
+        }
+
+        /// <summary>
+        /// パラメータの追加
+        /// </summary>
+        /// <param name="parameter"></param>
+        public void AddParameter(IParameter parameter)
+        {
+            parameters.Add(parameter.Name, parameter);
+        }
+
 
         /// <summary>
         /// ハーフエッジのエディタ
@@ -212,6 +239,42 @@ namespace KI.Analyzer
             Lines.Add(edge1);
             Lines.Add(edge2);
             Lines.Add(edge3);
+        }
+
+        /// <summary>
+        /// 頂点カラーの更新
+        /// </summary>
+        public void UpdateVertexColor(VertexColor colorType, float minValue, float maxValue)
+        {
+            IEnumerable<Vector3> color = null;
+            switch (colorType)
+            {
+                case VertexColor.WireFrame:
+                    color = HalfEdgeVertexs.Select(p => Vector3.Zero);
+                    break;
+                case VertexColor.Voronoi:
+                    color = HalfEdgeVertexs.Select(p => KICalc.GetPseudoColor(p.Voronoi, minValue, maxValue));
+                    break;
+                case VertexColor.MeanCurvature:
+                    color = HalfEdgeVertexs.Select(p => KICalc.GetPseudoColor(p.MeanCurvature, minValue, maxValue));
+                    break;
+                case VertexColor.GaussCurvature:
+                    color = HalfEdgeVertexs.Select(p => KICalc.GetPseudoColor(p.GaussCurvature, minValue, maxValue));
+                    break;
+                case VertexColor.MinCurvature:
+                    color = HalfEdgeVertexs.Select(p => KICalc.GetPseudoColor(p.MinCurvature, minValue, maxValue));
+                    break;
+                case VertexColor.MaxCurvature:
+                    color = HalfEdgeVertexs.Select(p => KICalc.GetPseudoColor(p.MaxCurvature, minValue, maxValue));
+                    break;
+                default:
+                    break;
+            }
+
+            if(color != null)
+            {
+                OnUpdate(new UpdatePolygonEventArgs(PrimitiveType.Triangles, color.ToList()));
+            }
         }
 
         public void Setup(IEnumerable<HalfEdgeVertex> vertexs, IEnumerable<HalfEdge> edges, IEnumerable<HalfEdgeMesh> meshs)

@@ -70,13 +70,13 @@ namespace KI.Tool.Command
             var minVecParam = new VectorParameter("MinVector", halfDS.HalfEdgeVertexs.Select(p => p.MinDirection));
             var maxVecParam = new VectorParameter("MaxVector", halfDS.HalfEdgeVertexs.Select(p => p.MaxDirection));
 
-            renderObject.Polygon.AddParameter(voronoiParam);
-            renderObject.Polygon.AddParameter(meanParam);
-            renderObject.Polygon.AddParameter(gaussParam);
-            renderObject.Polygon.AddParameter(minParam);
-            renderObject.Polygon.AddParameter(maxParam);
-            renderObject.Polygon.AddParameter(minVecParam);
-            renderObject.Polygon.AddParameter(maxVecParam);
+            halfDS.AddParameter(voronoiParam);
+            halfDS.AddParameter(meanParam);
+            halfDS.AddParameter(gaussParam);
+            halfDS.AddParameter(minParam);
+            halfDS.AddParameter(maxParam);
+            halfDS.AddParameter(minVecParam);
+            halfDS.AddParameter(maxVecParam);
 
             return CommandResult.Success;
         }

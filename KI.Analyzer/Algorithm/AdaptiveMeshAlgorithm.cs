@@ -31,7 +31,6 @@ namespace KI.Analyzer.Algorithm
             Calculate();
         }
 
-
         /// <summary>
         /// 計算処理
         /// </summary>
@@ -142,7 +141,7 @@ namespace KI.Analyzer.Algorithm
         {
             var sizingField = (6 * toleranceError / halfEdgeVertex.MaxCurvature) - 3 * toleranceError * toleranceError;
 
-            if(sizingField < 0)
+            if (sizingField < 0)
             {
                 return 0;
             }
