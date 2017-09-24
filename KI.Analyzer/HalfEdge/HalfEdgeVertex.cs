@@ -296,7 +296,7 @@ namespace KI.Analyzer
                     }
                 }
 
-                return 1;// voronoi;
+                return voronoi;
             }
         }
 
@@ -530,6 +530,12 @@ namespace KI.Analyzer
                baseU.Z * min1 + baseV.Z * min2).Normalized();
         }
         #endregion
+
+        /// <summary>
+        /// クラスタ番号
+        /// </summary>
+        public int Cluster { get; set; }
+
 
         #region [operator]
         public static Vector3 operator +(HalfEdgeVertex v1, HalfEdgeVertex v2)

@@ -14,10 +14,10 @@
         </Grid.RowDefinitions>
         <WrapPanel>
             <ComboBox x:Name="ParameterKind" SelectionChanged="ParameterList_SelectionChanged" Width="100"/>
-            <TextBlock x:Name="Max" Text="最大値" Margin="2,0"/>
-            <TextBox Text="0" Width="80" TextAlignment="Right" Margin="2,0" LostFocus="TextBox_MaxLostFocus"/>
             <TextBlock x:Name="Min" Text="最小値"/>
             <TextBox Text="0" Width="80" TextAlignment="Right" Margin="2,0" LostFocus="TextBox_MinLostFocus"/>
+            <TextBlock x:Name="Max" Text="最大値" Margin="2,0"/>
+            <TextBox Text="0" Width="80" TextAlignment="Right" Margin="2,0" LostFocus="TextBox_MaxLostFocus"/>
             <Button Content="Reset" Click="Button_Click" Margin="2,0"/>
         </WrapPanel>
 

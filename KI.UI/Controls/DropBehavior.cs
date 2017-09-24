@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Interactivity;
 
-namespace KI.UI.Control
+namespace KI.UI.Controls
 {
     public class DropAcceptDescription
     {

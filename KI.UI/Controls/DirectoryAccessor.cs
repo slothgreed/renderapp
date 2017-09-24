@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace KI.UI.Control
+namespace KI.UI.Controls
 {
     public class DirectoryAccessor : System.Windows.Controls.Control
     {

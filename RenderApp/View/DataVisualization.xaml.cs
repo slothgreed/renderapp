@@ -121,6 +121,7 @@ namespace RenderApp.View
                 if (chart.ChartAreas.Count != 0)
                 {
                     chart.ChartAreas[GraphName].AxisY.Maximum = value;
+                    chart.ChartAreas[GraphName].AxisY.Minimum = value;
                 }
             }
         }
@@ -135,6 +136,7 @@ namespace RenderApp.View
                 var chart = (Chart)windowsFormsHost.Child;
                 if (chart.ChartAreas.Count != 0)
                 {
+                    chart.ChartAreas[GraphName].AxisY.Maximum = value;
                     chart.ChartAreas[GraphName].AxisY.Minimum = value;
                 }
             }
