@@ -3,22 +3,18 @@ using System.Windows.Controls;
 
 namespace KI.UI.Controls
 {
-    public class DirectoryAccessor : System.Windows.Controls.Control
+    public class DirectoryAccessor : Control
     {
         public static readonly DependencyProperty FolderPathProperty =
-            DependencyProperty.Register("FolderPath", typeof(string), typeof(DirectoryAccessor), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register("FolderPath",
+                typeof(string),
+                typeof(DirectoryAccessor),
+                new PropertyMetadata(string.Empty));
 
         public string FolderPath
         {
-            get
-            {
-                return (string)GetValue(FolderPathProperty);
-            }
-
-            set
-            {
-                SetValue(FolderPathProperty, value);
-            }
+            get { return (string)GetValue(FolderPathProperty); }
+            set { SetValue(FolderPathProperty, value); }
         }
 
         static DirectoryAccessor()

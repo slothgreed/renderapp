@@ -115,7 +115,7 @@ namespace KI.Analyzer
         /// <summary>
         /// テンポラリ計算用フラグ
         /// </summary>
-        public object CalcFlag { get; set; }
+        public object TmpParameter { get; set; }
 
         /// <summary>
         /// degree エッジと、前のエッジの角度

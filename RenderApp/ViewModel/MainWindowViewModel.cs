@@ -326,6 +326,10 @@ namespace RenderApp.ViewModel
                     command = new AdaptiveMeshCommand(Workspace.MainScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                         break;
+                case RAGeometry.QEM:
+                    command = new QEMCommand(Workspace.MainScene.SelectNode);
+                    CommandManager.Instance.Execute(command, null, true);
+                    break;
                 default:
                     break;
             }

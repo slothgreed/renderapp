@@ -7,6 +7,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:v="clr-namespace:RenderApp.View"
              xmlns:geometry="clr-namespace:KI.Gfx.Geometry;assembly=KI.Gfx"
+             xmlns:control="clr-namespace:KI.UI.Controls;assembly=KI.UI"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -20,8 +21,8 @@
     <StackPanel>
         <v:PropertyGridView/>
         <ComboBox SelectedItem="{Binding SelectedItem}" ItemsSource="{Binding Source={StaticResource VertexColorEnum}}"/>
-        <TextBox Text="{Binding MinValue}"/>
-        <TextBox Text="{Binding MaxValue}"/>
+        <control:KITextBox Text="{Binding MinValue}"/>
+        <control:KITextBox Text="{Binding MaxValue}"/>
     </StackPanel>
     
 </UserControl>

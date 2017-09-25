@@ -116,17 +116,19 @@ namespace KI.Analyzer
         /// マージによる頂点削除削除後、頂点位置移動
         /// </summary>
         /// <param name="edge">削除するエッジ</param>
-        public void EdgeCollapse(HalfEdge edge)
+        /// <param name="newPosition">新しい頂点位置</param>
+        /// <returns>残した頂点</returns>
+        public HalfEdgeVertex EdgeCollapse(HalfEdge edge, Vector3 newPosition)
         {
             if (!NowEdit)
             {
                 Logger.Log(Logger.LogLevel.Warning, "Call StartEdit");
-                return;
+                return null;
             }
 
             if (!CanEdgeCollapse(edge))
             {
-                return;
+                return null;
             }
 
             HalfEdgeVertex delV = edge.Start;
@@ -169,12 +171,12 @@ namespace KI.Analyzer
                 }
             }
 
-            remV.Position = (remV.Position + delV.Position) / 2;
+            remV.Position = newPosition;
             //エッジ情報の切り替え
             Analyzer.HalfEdge.SetupOpposite(edge.Next.Opposite, edge.Before.Opposite);
             Analyzer.HalfEdge.SetupOpposite(edge.Opposite.Next.Opposite, edge.Opposite.Before.Opposite);
 
-            foreach(var dedge in delEdge)
+            foreach (var dedge in delEdge)
             {
                 dedge.Dispose();
             }
@@ -192,6 +194,8 @@ namespace KI.Analyzer
             deleteVertexs.AddRange(delVertex);
             deleteEdges.AddRange(delEdge);
             deleteMeshs.AddRange(delMesh);
+
+            return remV;
             //HasError(delV);
             //HasError();
         }

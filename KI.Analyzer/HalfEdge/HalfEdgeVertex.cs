@@ -103,7 +103,7 @@ namespace KI.Analyzer
         /// <summary>
         /// テンポラリ計算用フラグ
         /// </summary>
-        public object CalcFlag { get; set; }
+        public object TmpParameter { get; set; }
 
         /// <summary>
         /// 削除フラグ。Updateが走ると必ず削除するべきもの

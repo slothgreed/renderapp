@@ -58,7 +58,8 @@
         STL,
         OBJ,
         File,
-        AdaptiveMesh
+        AdaptiveMesh,
+        QEM
     }
 
     public enum RAAsset

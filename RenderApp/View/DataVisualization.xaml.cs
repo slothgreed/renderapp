@@ -113,8 +113,8 @@ namespace RenderApp.View
         private void TextBox_MaxLostFocus(object sender, RoutedEventArgs e)
         {
             var textBox = sender as TextBox;
-            int value = 0;
-            if (int.TryParse(textBox.Text, out value))
+            double value = 0;
+            if (double.TryParse(textBox.Text, out value))
             {
                 var windowsFormsHost = this.WindowsHost as WindowsFormsHost;
                 var chart = (Chart)windowsFormsHost.Child;
@@ -129,8 +129,8 @@ namespace RenderApp.View
         private void TextBox_MinLostFocus(object sender, RoutedEventArgs e)
         {
             var textBox = sender as TextBox;
-            int value = 0;
-            if (int.TryParse(textBox.Text, out value))
+            double value = 0;
+            if (double.TryParse(textBox.Text, out value))
             {
                 var windowsFormsHost = this.WindowsHost as WindowsFormsHost;
                 var chart = (Chart)windowsFormsHost.Child;

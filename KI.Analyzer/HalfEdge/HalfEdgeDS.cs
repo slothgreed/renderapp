@@ -86,12 +86,12 @@ namespace KI.Analyzer
         public List<HalfEdgeVertex> GetAroundVertex(HalfEdgeVertex vertex, float distance)
         {
             List<HalfEdgeVertex> vertex_list = new List<HalfEdgeVertex>();
-            vertex.CalcFlag = true;
+            vertex.TmpParameter = true;
             vertex_list.Add(vertex);
             RecursiveAroundPosition(vertex_list, vertex, vertex, distance);
             for (int i = 0; i < vertex_list.Count; i++)
             {
-                vertex_list[i].CalcFlag = false;
+                vertex_list[i].TmpParameter = false;
             }
 
             return vertex_list;
@@ -378,9 +378,9 @@ namespace KI.Analyzer
             foreach (var aroundEdge in vertex.AroundEdge)
             {
                 length = (startVertex - aroundEdge.End).Length;
-                if (length < distance && (bool)aroundEdge.End.CalcFlag == false)
+                if (length < distance && (bool)aroundEdge.End.TmpParameter == false)
                 {
-                    aroundEdge.End.CalcFlag = true;
+                    aroundEdge.End.TmpParameter = true;
                     vertex_list.Add(aroundEdge.End);
                     RecursiveAroundPosition(vertex_list, aroundEdge.End, startVertex, distance);
                 }

@@ -48,7 +48,7 @@ namespace KI.Analyzer.Algorithm
 
                 if (edge.Length < 4 * sizingField / 3)
                 {
-                    halfEdgeDS.Editor.EdgeCollapse(edge);
+                    halfEdgeDS.Editor.EdgeCollapse(edge, (edge.Start + edge.End) / 2);
                 }
             }
 

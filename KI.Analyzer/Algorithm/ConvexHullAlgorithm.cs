@@ -87,7 +87,7 @@ namespace KI.Analyzer.Algorithm
         {
             while (true)
             {
-                HalfEdgeMesh calcMesh = meshList.FirstOrDefault(p => (bool)p.CalcFlag == false);
+                HalfEdgeMesh calcMesh = meshList.FirstOrDefault(p => (bool)p.TmpParameter == false);
 
                 //すべて計算し終わったら終了
                 if (calcMesh == null)
@@ -111,7 +111,7 @@ namespace KI.Analyzer.Algorithm
                 else
                 {
                     //最も遠い頂点が見つからない場合は終了
-                    calcMesh.CalcFlag = true;
+                    calcMesh.TmpParameter = true;
                 }
             }
         }
@@ -210,7 +210,7 @@ namespace KI.Analyzer.Algorithm
                 HalfEdge edge1 = new HalfEdge(vertex, boundary.Start);
                 HalfEdge edge2 = new HalfEdge(boundary.End, vertex);
                 HalfEdgeMesh mesh = new HalfEdgeMesh(edge1, boundary, edge2);
-                mesh.CalcFlag = false;
+                mesh.TmpParameter = false;
                 newMesh.Add(mesh);
                 meshList.Add(mesh);
             }
@@ -317,8 +317,8 @@ namespace KI.Analyzer.Algorithm
 
             var mesh1 = new HalfEdgeMesh(edge1, edge2, edge3);
             var mesh2 = new HalfEdgeMesh(oppo1, oppo2, oppo3);
-            mesh1.CalcFlag = false;
-            mesh2.CalcFlag = false;
+            mesh1.TmpParameter = false;
+            mesh2.TmpParameter = false;
             meshList.Add(mesh1);
             meshList.Add(mesh2);
 
