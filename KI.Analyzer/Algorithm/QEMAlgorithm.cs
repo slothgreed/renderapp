@@ -16,8 +16,13 @@ namespace KI.Analyzer.Algorithm
         /// <summary>
         /// QEMパラメータ
         /// </summary>
-        public class Parameter : IComparable
+        public class Parameter : IComparable<Parameter>
         {
+            /// <summary>
+            /// 保持オブジェクト
+            /// </summary>
+            public object Owner;
+            
             /// <summary>
             /// Q行列
             /// </summary>
@@ -33,24 +38,27 @@ namespace KI.Analyzer.Algorithm
             /// </summary>
             /// <param name="obj">Parameterクラス</param>
             /// <returns></returns>
-            public int CompareTo(object obj)
+            public int CompareTo(Parameter other)
             {
-                var parameter = obj as Parameter;
-
-                if (this.Cost == parameter.Cost)
+                if (this.Cost == other.Cost)
                 {
                     return 0;
                 }
-                else if (this.Cost > parameter.Cost)
-                {
-                    return 1;
-                }
-                else // if (this.Cost > parameter.Cost)
+                else if (this.Cost < other.Cost)
                 {
                     return -1;
                 }
+                else // if (this.Cost > other.Cost)
+                {
+                    return 1;
+                }
             }
         }
+
+        /// <summary>
+        /// バイナリツリー
+        /// </summary>
+        private BinaryTree<Parameter> binaryTree;
 
         /// <summary>
         /// ハーフエッジ
@@ -100,7 +108,7 @@ namespace KI.Analyzer.Algorithm
 
                 var cost = CalculateCost(vertex.Position, matrix);
 
-                vertex.TmpParameter = new Parameter() { Quadric = matrix, Cost = cost };
+                vertex.TmpParameter = new Parameter() { Owner = vertex, Quadric = matrix, Cost = cost };
             }
         }
 
@@ -142,25 +150,18 @@ namespace KI.Analyzer.Algorithm
         /// </summary>
         private void Calculate()
         {
+            foreach (var edge in halfEdgeDS.HalfEdges)
+            {
+                var cost = CalculateEdgeCost(edge);
+                edge.TmpParameter = new Parameter() { Owner = edge, Cost = cost };
+            }
+
+            binaryTree = new BinaryTree<Parameter>(halfEdgeDS.HalfEdges.Select(p => p.TmpParameter).Cast<Parameter>().ToArray());
+
             halfEdgeDS.Editor.StartEdit();
             for (int i = 0; i < deleteVertexNum; i++)
             {
-                var minValue = float.MaxValue;
-                HalfEdge minCostEdge = null;
-                foreach (var edge in halfEdgeDS.HalfEdges)
-                {
-                    if(edge.DeleteFlag)
-                    {
-                        continue;
-                    }
-
-                    var cost = CalculateEdgeCost(edge);
-                    if (cost < minValue)
-                    {
-                        minValue = cost;
-                        minCostEdge = edge;
-                    }
-                }
+                var minCostEdge = binaryTree.Min.Owner as HalfEdge;
 
                 var quadric = ((Parameter)minCostEdge.Start.TmpParameter).Quadric + ((Parameter)minCostEdge.End.TmpParameter).Quadric;
 
@@ -168,18 +169,37 @@ namespace KI.Analyzer.Algorithm
 
                 var vertex = halfEdgeDS.Editor.EdgeCollapse(minCostEdge, (minCostEdge.Start + minCostEdge.End) / 2/* new Vector3(invert.Row0.W, invert.Row1.W, invert.Row2.W)*/);
 
+                // 消したものはバイナリツリーから削除
+                binaryTree.Remove((Parameter)minCostEdge.TmpParameter);
+
                 if (vertex != null)
                 {
-                    ((Parameter)vertex.TmpParameter).Quadric = quadric;
+                    UpdateQuadric(vertex,quadric);
                 }
                 else
                 {
-                    ((Parameter)minCostEdge.Start.TmpParameter).Quadric = Matrix4.Identity * 100;
-                    ((Parameter)minCostEdge.End.TmpParameter).Quadric = Matrix4.Identity * 100;
+                    UpdateQuadric(minCostEdge.Start, Matrix4.Identity * 100);
+                    UpdateQuadric(minCostEdge.End, Matrix4.Identity * 100);
                 }
             }
 
             halfEdgeDS.Editor.FinEdit();
+        }
+
+        /// <summary>
+        /// 頂点の行列を更新します。
+        /// </summary>
+        /// <param name="vertex">頂点</param>
+        /// <param name="quadric">誤差行列</param>
+        private void UpdateQuadric(HalfEdgeVertex vertex, Matrix4 quadric)
+        {
+            ((Parameter)vertex.TmpParameter).Quadric = quadric;
+            foreach (var edge in vertex.AroundEdge)
+            {
+                binaryTree.Remove(edge.TmpParameter as Parameter);
+                ((Parameter)edge.TmpParameter).Cost = CalculateEdgeCost(edge);
+                binaryTree.Insert(edge.TmpParameter as Parameter);
+            }
         }
     }
 }

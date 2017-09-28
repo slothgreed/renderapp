@@ -63,6 +63,7 @@
     <Compile Include="Parameter\IParameter.cs" />
     <Compile Include="Parameter\ScalarParameter.cs" />
     <Compile Include="Parameter\VectorParameter.cs" />
+    <Compile Include="Tree\BinaryTree.cs" />
     <Compile Include="Tree\KINode.cs" />
     <Compile Include="Tree\NotifyNodeChangedEventArgs.cs">
       <DependentUpon>NotifyNodeChangedEventArgs.tt</DependentUpon>

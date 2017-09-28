@@ -26,6 +26,17 @@ namespace KI.Foundation.Tree
         }
 
         /// <summary>
+        /// 最小値を返します。
+        /// </summary>
+        public T Min
+        {
+            get
+            {
+                return this.root.Min.Value;
+            }
+        }
+
+        /// <summary>
         /// データを挿入します。
         /// </summary>
         /// <param name="data">データ</param>
@@ -42,7 +53,8 @@ namespace KI.Foundation.Tree
             Node parent = null;
             while (node != null)
             {
-                if (node.Value.CompareTo(data) < 0)
+                parent = node;
+                if (data.CompareTo(node.Value) < 0)
                 {
                     node = node.Left;
                 }
@@ -56,7 +68,7 @@ namespace KI.Foundation.Tree
 
             // 親ノードの子に新しいノードを設定
             newNode.Parent = parent;
-            if (parent.Value.CompareTo(data) < 0)
+            if (data.CompareTo(parent.Value) < 0)
             {
                 parent.Left = newNode;
             }
@@ -73,7 +85,7 @@ namespace KI.Foundation.Tree
         public void Remove(T data)
         {
             var removeNode = Find(data);
-            Remove(data);
+            Remove(removeNode);
         }
 
         /// <summary>
@@ -86,15 +98,15 @@ namespace KI.Foundation.Tree
             Node node = this.root;
             while (node != null)
             {
-                if (node.Value.CompareTo(data) == 0)
+                if (data.CompareTo(node.Value) == 0)
                 {
                     return node;
                 }
-                else if (node.Value.CompareTo(data) < 0)
+                else if (data.CompareTo(node.Value) < 0)
                 {
                     node = node.Left;
                 }
-                else if (node.Value.CompareTo(data) > 0)
+                else if (data.CompareTo(node.Value) > 0)
                 {
                     node = node.Right;
                 }
@@ -199,7 +211,7 @@ namespace KI.Foundation.Tree
                 get
                 {
                     var node = this;
-                    while (node == null)
+                    while (node != null)
                     {
                         if (node.Left == null)
                         {
@@ -207,28 +219,6 @@ namespace KI.Foundation.Tree
                         }
 
                         node = node.Left;
-                    }
-
-                    return null;
-                }
-            }
-
-            /// <summary>
-            /// 最大ノードを取得します。
-            /// </summary>
-            public Node Max
-            {
-                get
-                {
-                    var node = this;
-                    while (node == null)
-                    {
-                        if (node.Right == null)
-                        {
-                            return node;
-                        }
-
-                        node = node.Right;
                     }
 
                     return null;
