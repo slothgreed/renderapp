@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KI.Foundation.Tree;
 using OpenTK;
 
 namespace KI.Analyzer.Algorithm
@@ -15,7 +16,7 @@ namespace KI.Analyzer.Algorithm
         /// <summary>
         /// QEMパラメータ
         /// </summary>
-        public class Parameter
+        public class Parameter : IComparable
         {
             /// <summary>
             /// Q行列
@@ -26,6 +27,29 @@ namespace KI.Analyzer.Algorithm
             /// 誤差
             /// </summary>
             public float Cost { get; set; }
+
+            /// <summary>
+            /// 比較関数
+            /// </summary>
+            /// <param name="obj">Parameterクラス</param>
+            /// <returns></returns>
+            public int CompareTo(object obj)
+            {
+                var parameter = obj as Parameter;
+
+                if (this.Cost == parameter.Cost)
+                {
+                    return 0;
+                }
+                else if (this.Cost > parameter.Cost)
+                {
+                    return 1;
+                }
+                else // if (this.Cost > parameter.Cost)
+                {
+                    return -1;
+                }
+            }
         }
 
         /// <summary>
