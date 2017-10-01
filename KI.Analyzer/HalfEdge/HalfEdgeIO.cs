@@ -136,7 +136,7 @@ namespace KI.Analyzer
                 {
                     int startIndex = int.Parse(lineInfos[1]);
                     int endIndex = int.Parse(lineInfos[2]);
-                    var edge = new HalfEdge(halfVertexs[startIndex], halfVertexs[endIndex], halfVertexs.Count);
+                    var edge = new HalfEdge(halfVertexs[startIndex], halfVertexs[endIndex], halfEdges.Count);
                     halfEdges.Add(edge);
                 }
 

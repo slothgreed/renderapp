@@ -196,8 +196,6 @@ namespace KI.Analyzer
             deleteMeshs.AddRange(delMesh);
 
             return remV;
-            //HasError(delV);
-            //HasError();
         }
         #endregion
 

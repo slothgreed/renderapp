@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace KI.Foundation.Tree
 {
@@ -17,7 +18,7 @@ namespace KI.Foundation.Tree
         /// バイナリツリー
         /// </summary>
         /// <param name="data">データ</param>
-        public BinaryTree(T[] data)
+        public BinaryTree(IEnumerable<T> data)
         {
             foreach (var d in data)
             {
@@ -93,7 +94,7 @@ namespace KI.Foundation.Tree
         /// </summary>
         /// <param name="data">データ</param>
         /// <returns>ノード</returns>
-        private Node Find(T data)
+        public Node Find(T data)
         {
             Node node = this.root;
             while (node != null)
@@ -118,61 +119,102 @@ namespace KI.Foundation.Tree
         /// <summary>
         /// データを削除します。
         /// </summary>
-        /// <param name="node">ノード</param>
-        private void Remove(Node node)
+        /// <param name="removeNode">ノード</param>
+        private void Remove(Node removeNode)
         {
+            var parentNode = removeNode.Parent;
             // 末端ノードなら、親ノードの持つ自身のノードを消す
-            if (node.Left == null && node.Right == null)
+            if (removeNode.IsLeaf)
             {
-                if (node == this.root)
+                if(parentNode == null)
                 {
                     this.root = null;
                     return;
                 }
 
-                if (node.Parent.Left == node)
+                if (parentNode.Left == removeNode)
                 {
-                    node.Parent.Left = null;
+                    parentNode.Left = null;
                 }
-                else if (node.Parent.Right == node)
+                else if (parentNode.Right == removeNode)
                 {
-                    node.Parent.Right = null;
+                    parentNode.Right = null;
                 }
 
+                removeNode.Dispose();
                 return;
             }
 
-            if (node.Left == null)
+            if (removeNode.Left == null)
             {
-                node.Value = node.Right.Value;
-                node.Right = null;
+                if (parentNode == null)
+                {
+                    this.root = removeNode.Right;
+                }
+                else
+                {
+                    if (parentNode.Left == removeNode)
+                    {
+                        parentNode.Left = removeNode.Right;
+                    }
+                    else if (parentNode.Right == removeNode)
+                    {
+                        parentNode.Right = removeNode.Right;
+                    }
+                }
+
+                removeNode.Right.Parent = parentNode;
+                removeNode.Dispose();
                 return;
             }
 
-            if (node.Right == null)
+            if (removeNode.Right == null)
             {
-                node.Value = node.Left.Value;
-                node.Left = null;
+                if (parentNode == null)
+                {
+                    this.root = removeNode.Left;
+                }
+                else
+                {
+                    if (parentNode.Left == removeNode)
+                    {
+                        parentNode.Left = removeNode.Left;
+                    }
+                    else if (parentNode.Right == removeNode)
+                    {
+                        parentNode.Right = removeNode.Left;
+                    }
+                }
+
+                removeNode.Left.Parent = parentNode;
+                removeNode.Dispose();
                 return;
             }
 
-            var targetNode = node.Right.Min;
-            if (targetNode.Parent.Left == targetNode)
+            var moveNode = removeNode.Right.Min;
+            var moveParent = moveNode.Parent;
+
+            removeNode.Value = moveNode.Value;
+
+            if (moveParent.Right == moveNode)
             {
-                targetNode.Parent.Left = null;
+                moveParent.Right = moveNode.Right;
             }
-            else if (targetNode.Parent.Right == targetNode)
+            else
             {
-                targetNode.Parent.Right = null;
+                moveParent.Left = moveNode.Right;
             }
 
-            node.Value = targetNode.Value;
+            if (moveNode.Right != null)
+            {
+                moveNode.Right.Parent = moveParent;
+            }
         }
 
         /// <summary>
         /// ノードクラス
         /// </summary>
-        private class Node
+        public class Node
         {
             /// <summary>
             /// コンストラクタ
@@ -199,6 +241,54 @@ namespace KI.Foundation.Tree
             public Node Parent { get; set; }
 
             /// <summary>
+            /// 末端ノードか
+            /// </summary>
+            public bool IsLeaf
+            {
+                get
+                {
+                    return Right == null && Left == null;
+                }
+            }
+
+            /// <summary>
+            /// エラーチェック
+            /// </summary>
+            public bool Error
+            {
+                get
+                {
+                    //if (Left != null)
+                    //{
+                    //    if (Value.CompareTo(Left.Value) < 0)
+                    //    {
+                    //        return true;
+                    //    }
+
+                    //    if (Left.Error)
+                    //    {
+                    //        return true;
+                    //    }
+                    //}
+
+                    //if (Right != null)
+                    //{
+                    //    if (Value.CompareTo(Right.Value) > 0)
+                    //    {
+                    //        return true;
+                    //    }
+
+                    //    if (Right.Error)
+                    //    {
+                    //        return true;
+                    //    }
+                    //}
+
+                    return false;
+                }
+            }
+
+            /// <summary>
             /// 値です。
             /// </summary>
             public T Value { get; set; }
@@ -223,6 +313,59 @@ namespace KI.Foundation.Tree
 
                     return null;
                 }
+            }
+
+            /// <summary>
+            /// ノード構成を文字列表記
+            /// </summary>
+            public void ToStringNode()
+            {
+                Console.WriteLine("Parent" + Parent?.Value.ToString());
+                ToStringAllChild(string.Empty);
+            }
+
+            /// <summary>
+            /// 解放処理
+            /// </summary>
+            public void Dispose()
+            {
+                Parent = null;
+                Left = null;
+                Right = null;
+                Value = default(T);
+            }
+
+            /// <summary>
+            /// 全ての子を列挙します。
+            /// </summary>
+            /// <param name="str">添え字</param>
+            private void ToStringAllChild(string str)
+            {
+                Console.WriteLine(str + Value.ToString());
+                str += "↓";
+                if (Left != null)
+                {
+                    str += "L";
+                    Left.ToStringAllChild(str);
+                }
+
+                if (Right != null)
+                {
+                    str += "R";
+                    Right.ToStringAllChild(str);
+                }
+
+                if (Left != null)
+                {
+                    str = str.Remove(str.LastIndexOf("L"), 1);
+                }
+
+                if (Right != null)
+                {
+                    str = str.Remove(str.LastIndexOf("R"), 1);
+                }
+
+                str = str.Remove(str.LastIndexOf("↓"), 1);
             }
         }
     }

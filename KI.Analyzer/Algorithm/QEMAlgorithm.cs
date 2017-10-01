@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#define BINARYTREE
+
+using System;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using KI.Foundation.Tree;
+using KI.Foundation.Utility;
 using OpenTK;
 
 namespace KI.Analyzer.Algorithm
@@ -19,6 +20,11 @@ namespace KI.Analyzer.Algorithm
         public class Parameter : IComparable<Parameter>
         {
             /// <summary>
+            /// 誤差のバッキングフィールド
+            /// </summary>
+            private float cost;
+
+            /// <summary>
             /// 保持オブジェクト
             /// </summary>
             public object Owner;
@@ -31,7 +37,22 @@ namespace KI.Analyzer.Algorithm
             /// <summary>
             /// 誤差
             /// </summary>
-            public float Cost { get; set; }
+            public float Cost
+            {
+                get
+                {
+                    return cost;
+                }
+                set
+                {
+                    if(Math.Abs(value) < KICalc.THRESHOLD05)
+                    {
+                        cost = 0;
+                    }
+
+                    cost = value;
+                }
+            }
 
             /// <summary>
             /// 比較関数
@@ -42,7 +63,14 @@ namespace KI.Analyzer.Algorithm
             {
                 if (this.Cost == other.Cost)
                 {
-                    return 0;
+                    if (Owner == other.Owner)
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        return 1;
+                    }
                 }
                 else if (this.Cost < other.Cost)
                 {
@@ -52,6 +80,11 @@ namespace KI.Analyzer.Algorithm
                 {
                     return 1;
                 }
+            }
+
+            public override string ToString()
+            {
+                return Cost + " : " + Owner.ToString();
             }
         }
 
@@ -70,6 +103,8 @@ namespace KI.Analyzer.Algorithm
         /// </summary>
         private int deleteVertexNum;
 
+        private StreamWriter writer;
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -80,7 +115,13 @@ namespace KI.Analyzer.Algorithm
             halfEdgeDS = halfEdge;
             this.deleteVertexNum = deleteVertexNum;
             Initialize();
+#if BINARYTREE
+            writer = new StreamWriter("BinaryDebug.txt");
+#else
+            writer = new StreamWriter("LinearDebug.txt");
+#endif
             Calculate();
+            writer.Close();
         }
 
         /// <summary>
@@ -104,6 +145,8 @@ namespace KI.Analyzer.Algorithm
                         a * b, b * b, b * c, b * d,
                         a * c, b * c, c * c, c * d,
                         a * d, b * d, c * d, d * d);
+
+                    matrix *= 0.01f;
                 }
 
                 var cost = CalculateCost(vertex.Position, matrix);
@@ -127,7 +170,7 @@ namespace KI.Analyzer.Algorithm
             result.Z = vec.X * matrix.Row0.Z + vec.Y * matrix.Row1.Z + vec.Z * matrix.Row2.Z + vec.W * matrix.Row3.Z;
             result.W = vec.X * matrix.Row0.W + vec.Y * matrix.Row1.W + vec.Z * matrix.Row2.W + vec.W * matrix.Row3.W;
 
-            return Vector4.Dot(result,vec);
+            return Vector4.Dot(result, vec);
         }
 
 
@@ -141,9 +184,10 @@ namespace KI.Analyzer.Algorithm
         {
             return 
                 CalculateCost(edge.Start.Position, ((Parameter)edge.Start.TmpParameter).Quadric) +
-                CalculateCost(edge.End.Position, ((Parameter)edge.Start.TmpParameter).Quadric);
+                CalculateCost(edge.End.Position, ((Parameter)edge.End.TmpParameter).Quadric);
         }
 
+#if BINARYTREE
 
         /// <summary>
         /// 計算
@@ -156,28 +200,55 @@ namespace KI.Analyzer.Algorithm
                 edge.TmpParameter = new Parameter() { Owner = edge, Cost = cost };
             }
 
-            binaryTree = new BinaryTree<Parameter>(halfEdgeDS.HalfEdges.Select(p => p.TmpParameter).Cast<Parameter>().ToArray());
+            binaryTree = new BinaryTree<Parameter>(halfEdgeDS.HalfEdges.Select(p => p.TmpParameter).Cast<Parameter>());
 
             halfEdgeDS.Editor.StartEdit();
             for (int i = 0; i < deleteVertexNum; i++)
             {
                 var minCostEdge = binaryTree.Min.Owner as HalfEdge;
+                while (minCostEdge.DeleteFlag)
+                {
+                    // 消したものはバイナリツリーから削除
+                    binaryTree.Remove((Parameter)minCostEdge.TmpParameter);
+                    minCostEdge = binaryTree.Min.Owner as HalfEdge;
+                    continue;
+                }
 
                 var quadric = ((Parameter)minCostEdge.Start.TmpParameter).Quadric + ((Parameter)minCostEdge.End.TmpParameter).Quadric;
 
-                var invert = quadric.Inverted();
-
-                var vertex = halfEdgeDS.Editor.EdgeCollapse(minCostEdge, (minCostEdge.Start + minCostEdge.End) / 2/* new Vector3(invert.Row0.W, invert.Row1.W, invert.Row2.W)*/);
-
-                // 消したものはバイナリツリーから削除
-                binaryTree.Remove((Parameter)minCostEdge.TmpParameter);
-
-                if (vertex != null)
+                //var invert = quadric.Inverted();
+                if (minCostEdge.Start.Index > minCostEdge.End.Index)
                 {
-                    UpdateQuadric(vertex,quadric);
+                    var str = string.Format("Delete Index {0},{1} : Cost {2},{3} : Edge index{4}",
+                    minCostEdge.Start.Index,
+                    minCostEdge.End.Index,
+                    ((Parameter)minCostEdge.Start.TmpParameter).Cost,
+                    ((Parameter)minCostEdge.End.TmpParameter).Cost,
+                    minCostEdge.Index);
+                    writer.WriteLine(str);
                 }
                 else
                 {
+                    var str = string.Format("Delete Index {0},{1} : Cost {2},{3} : Edge index{4}",
+                    minCostEdge.End.Index,
+                    minCostEdge.Start.Index,
+                    ((Parameter)minCostEdge.End.TmpParameter).Cost,
+                    ((Parameter)minCostEdge.Start.TmpParameter).Cost,
+                    minCostEdge.Index);
+                    writer.WriteLine(str);
+                }
+
+                var vertex = halfEdgeDS.Editor.EdgeCollapse(minCostEdge, (minCostEdge.Start + minCostEdge.End) / 2/* new Vector3(invert.Row0.W, invert.Row1.W, invert.Row2.W)*/);
+
+                if (vertex != null)
+                {
+                    // 消したものはバイナリツリーから削除
+                    binaryTree.Remove((Parameter)minCostEdge.TmpParameter);
+                    UpdateQuadric(vertex, quadric);
+                }
+                else
+                {
+                    // 消せなかったら消せたことに
                     UpdateQuadric(minCostEdge.Start, Matrix4.Identity * 100);
                     UpdateQuadric(minCostEdge.End, Matrix4.Identity * 100);
                 }
@@ -194,12 +265,91 @@ namespace KI.Analyzer.Algorithm
         private void UpdateQuadric(HalfEdgeVertex vertex, Matrix4 quadric)
         {
             ((Parameter)vertex.TmpParameter).Quadric = quadric;
+
             foreach (var edge in vertex.AroundEdge)
             {
+                if (edge.DeleteFlag)
+                {
+                    continue;
+                }
+
                 binaryTree.Remove(edge.TmpParameter as Parameter);
                 ((Parameter)edge.TmpParameter).Cost = CalculateEdgeCost(edge);
                 binaryTree.Insert(edge.TmpParameter as Parameter);
+
+                binaryTree.Remove(edge.Opposite.TmpParameter as Parameter);
+                ((Parameter)edge.Opposite.TmpParameter).Cost = CalculateEdgeCost(edge.Opposite);
+                binaryTree.Insert(edge.Opposite.TmpParameter as Parameter);
             }
         }
+#endif
+
+#if !BINARYTREE
+        /// <summary>
+        /// 計算
+        /// </summary>
+        private void Calculate()
+        {
+            halfEdgeDS.Editor.StartEdit();
+            for (int i = 0; i < deleteVertexNum; i++)
+            {
+                var minValue = float.MaxValue;
+                HalfEdge minCostEdge = null;
+                foreach (var edge in halfEdgeDS.HalfEdges)
+                {
+                    if (edge.DeleteFlag)
+                    {
+                        continue;
+                    }
+
+                    var cost = CalculateEdgeCost(edge);
+                    if (cost < minValue)
+                    {
+                        minValue = cost;
+                        minCostEdge = edge;
+                    }
+                }
+
+                var quadric = ((Parameter)minCostEdge.Start.TmpParameter).Quadric + ((Parameter)minCostEdge.End.TmpParameter).Quadric;
+
+                //var invert = quadric.Inverted();
+
+                if (minCostEdge.Start.Index > minCostEdge.End.Index)
+                {
+                    var str = string.Format("Delete Index {0},{1} : Cost {2},{3} : Edge index{4}",
+                    minCostEdge.Start.Index,
+                    minCostEdge.End.Index,
+                    ((Parameter)minCostEdge.Start.TmpParameter).Cost,
+                    ((Parameter)minCostEdge.End.TmpParameter).Cost,
+                    minCostEdge.Index);
+                    writer.WriteLine(str);
+                }
+                else
+                {
+                    var str = string.Format("Delete Index {0},{1} : Cost {2},{3} : Edge index{4}",
+                    minCostEdge.End.Index,
+                    minCostEdge.Start.Index,
+                    ((Parameter)minCostEdge.End.TmpParameter).Cost,
+                    ((Parameter)minCostEdge.Start.TmpParameter).Cost,
+                    minCostEdge.Index);
+                    writer.WriteLine(str);
+                }
+
+                var vertex = halfEdgeDS.Editor.EdgeCollapse(minCostEdge, (minCostEdge.Start + minCostEdge.End) / 2/* new Vector3(invert.Row0.W, invert.Row1.W, invert.Row2.W)*/);
+
+                if (vertex != null)
+                {
+                    ((Parameter)vertex.TmpParameter).Quadric = quadric;
+                }
+                else
+                {
+                    ((Parameter)minCostEdge.Start.TmpParameter).Quadric = Matrix4.Identity * 100;
+                    ((Parameter)minCostEdge.End.TmpParameter).Quadric = Matrix4.Identity * 100;
+                }
+            }
+
+            halfEdgeDS.Editor.FinEdit();
+        }
+#endif
     }
 }

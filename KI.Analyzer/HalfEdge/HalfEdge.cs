@@ -243,5 +243,10 @@ namespace KI.Analyzer
 
             return false;
         }
+
+        public override string ToString()
+        {
+            return Index.ToString();
+        }
     }
 }
