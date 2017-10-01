@@ -17,7 +17,7 @@ namespace KI.Analyzer.Algorithm
         /// <summary>
         /// QEMパラメータ
         /// </summary>
-        public class Parameter : IComparable<Parameter>
+        public class Parameter : IComparable<Parameter>, IVertexColorParameter
         {
             /// <summary>
             /// 誤差のバッキングフィールド
@@ -51,6 +51,14 @@ namespace KI.Analyzer.Algorithm
                     }
 
                     cost = value;
+                }
+            }
+
+            public float Value
+            {
+                get
+                {
+                    return cost;
                 }
             }
 

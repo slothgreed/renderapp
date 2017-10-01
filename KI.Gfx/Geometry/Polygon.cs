@@ -27,6 +27,7 @@ namespace KI.Gfx.Geometry
         GaussCurvature,
         MinCurvature,
         MaxCurvature,
+        TmpParameter,
     }
 
 

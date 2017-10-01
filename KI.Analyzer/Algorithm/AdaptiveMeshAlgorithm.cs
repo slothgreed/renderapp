@@ -28,7 +28,13 @@ namespace KI.Analyzer.Algorithm
         {
             halfEdgeDS = halfEdge;
             toleranceError = tolerance;
-            Calculate();
+
+            foreach (var vertex in halfEdge.HalfEdgeVertexs)
+            {
+                SizingField(vertex);
+            }
+
+            //Calculate();
         }
 
         /// <summary>
@@ -143,11 +149,26 @@ namespace KI.Analyzer.Algorithm
 
             if (sizingField < 0)
             {
+                halfEdgeVertex.TmpParameter = new SizingFieldParameter() { SizeValue = 0 };
                 return 0;
             }
 
+            halfEdgeVertex.TmpParameter = new SizingFieldParameter() { SizeValue = (float)Math.Sqrt(sizingField) };
             return (float)Math.Sqrt(sizingField);
         }
+
+        public class SizingFieldParameter : IVertexColorParameter
+        {
+            public float SizeValue { get; set; }
+            public float Value
+            {
+                get
+                {
+                    return SizeValue;
+                }
+            }
+        }
+
 
         /// <summary>
         /// サイズフィールド

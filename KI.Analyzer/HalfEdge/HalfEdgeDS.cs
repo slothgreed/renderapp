@@ -267,6 +267,12 @@ namespace KI.Analyzer
                 case VertexColor.MaxCurvature:
                     color = HalfEdgeVertexs.Select(p => KICalc.GetPseudoColor(p.MaxCurvature, minValue, maxValue));
                     break;
+                case VertexColor.TmpParameter:
+                    if(HalfEdgeVertexs.First().TmpParameter is IVertexColorParameter)
+                    {
+                        color = HalfEdgeVertexs.Select(p => KICalc.GetPseudoColor(((IVertexColorParameter)p.TmpParameter).Value, minValue, maxValue));
+                    }
+                    break;
                 default:
                     break;
             }
