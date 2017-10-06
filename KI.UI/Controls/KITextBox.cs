@@ -11,6 +11,13 @@ namespace KI.UI.Controls
 {
     public class KITextBox : TextBox
     {
+        public KITextBox()
+        {
+            this.MinWidth = 80;
+
+            this.TextAlignment = TextAlignment.Right;
+        }
+
         /// <summary>
         /// フォーカスが得られたとき
         /// </summary>
@@ -28,7 +35,6 @@ namespace KI.UI.Controls
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
             base.OnMouseDown(e);
-            SelectAll();
         }
     }
 }

@@ -160,7 +160,6 @@
     <Compile Include="ViewModel\Controller\IControllerViewModelBase.cs" />
     <Compile Include="ViewModel\Controller\SelectViewModel.cs" />
     <Compile Include="ViewModel\DynamicViewModelBase.cs" />
-    <Compile Include="ViewModel\PropertyVM\IPropertyGridViewModel.cs" />
     <Compile Include="ViewModel\NodeVM\RootNodeViewModelT4.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -174,7 +173,6 @@
     <Compile Include="ViewModel\Dialog\DialogViewModelBase.cs" />
     <Compile Include="ViewModel\Controller\VoxelViewModel.cs" />
     <Compile Include="ViewModel\AssetVM\RenderObjectViewModel.cs" />
-    <Compile Include="ViewModel\PropertyVM\PropertyGridSelector.cs" />
     <Compile Include="ViewModel\RenderSystemViewModel.cs" />
     <Compile Include="ViewModel\AssetVM\ShaderViewModel.cs" />
     <Compile Include="ViewModel\AssetVM\ImageViewModel.cs" />
@@ -211,9 +209,6 @@
     </Compile>
     <Compile Include="View\RenderObjectView.xaml.cs">
       <DependentUpon>RenderObjectView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\PropertyGridView.xaml.cs">
-      <DependentUpon>PropertyGridView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\RenderSystemView.xaml.cs">
       <DependentUpon>RenderSystemView.xaml</DependentUpon>
@@ -288,10 +283,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\RenderObjectView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\PropertyGridView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

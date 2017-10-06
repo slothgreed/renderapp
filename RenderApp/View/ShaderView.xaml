@@ -7,5 +7,4 @@
              xmlns:vm="clr-namespace:RenderApp.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <v:PropertyGridView DataContext="{Binding Property}"/>
 </UserControl>

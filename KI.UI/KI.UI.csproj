@@ -63,37 +63,16 @@
     <Compile Include="Controls\KITextBox.cs" />
     <Compile Include="Controls\ThumbnailFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Controls\Vector3EditBoxView.xaml.cs">
+      <DependentUpon>Vector3EditBoxView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\CheckBoxViewModel.cs" />
     <Compile Include="ViewModel\CommandBase.cs" />
-    <Compile Include="ViewModel\Math\Matrix3ViewModel.cs" />
-    <Compile Include="ViewModel\Math\Matrix4ViewModel.cs" />
-    <Compile Include="ViewModel\Math\NumericViewModel.cs" />
-    <Compile Include="ViewModel\Math\Vector2ViewModel.cs" />
-    <Compile Include="ViewModel\Math\Vector3ViewModel.cs" />
-    <Compile Include="ViewModel\Math\Vector4ViewModel.cs" />
     <Compile Include="ViewModel\PropertyViewModelBase.cs" />
     <Compile Include="ViewModel\ThumbnailFileViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Compile Include="View\Math\CheckBoxView.xaml.cs">
-      <DependentUpon>CheckBoxView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Math\Matrix3View.xaml.cs">
-      <DependentUpon>Matrix3View.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Math\Matrix4View.xaml.cs">
-      <DependentUpon>Matrix4View.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Math\NumericView.xaml.cs">
       <DependentUpon>NumericView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Math\Vector2View.xaml.cs">
-      <DependentUpon>Vector2View.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Math\Vector3View.xaml.cs">
-      <DependentUpon>Vector3View.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Math\Vector4View.xaml.cs">
-      <DependentUpon>Vector4View.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -113,34 +92,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Math\CheckBoxView.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Controls\Vector3EditBoxView.xaml">
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Math\Matrix3View.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Math\Matrix4View.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Math\NumericView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Math\Vector2View.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Math\Vector3View.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\Math\Vector4View.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModel\Math\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,13 +7,12 @@ using KI.Foundation.Parameter;
 using KI.Gfx.Geometry;
 using KI.Renderer;
 using KI.UI.ViewModel;
+using OpenTK;
 
 namespace RenderApp.ViewModel
 {
-    public class RenderObjectViewModel : TabItemViewModel, IPropertyGridViewModel
+    public class RenderObjectViewModel : TabItemViewModel
     {
-        private Dictionary<string, object> item;
-
         public RenderObjectViewModel()
         {
         }
@@ -21,13 +20,58 @@ namespace RenderApp.ViewModel
         public RenderObjectViewModel(RenderObject model)
         {
             Model = model;
-            PropertyItem = new Dictionary<string, object>();
-            PropertyItem.Add("Translate", new Vector3ViewModel(Model, "Translate", model.Translate));
-            PropertyItem.Add("Scale", new Vector3ViewModel(Model, "Scale", model.Scale));
-            PropertyItem.Add("Rotate", new Vector3ViewModel(Model, "Rotate", model.Rotate));
-            PropertyItem.Add("Shader", new ComboItemViewModel(Model, "Shader", Globals.Project.ActiveProject.GetObject(RAAsset.Shader), 0));
-            PropertyItem.Add("Visible", new CheckBoxViewModel(Model, "Visible", model.Visible));
-            PropertyItem.Add("Mode", new ComboItemViewModel(Model, "Mode", Enum.GetValues(typeof(RenderMode)).Cast<object>()));
+        }
+
+        public Vector3 Rotate
+        {
+            get
+            {
+                return Model.Rotate;
+            }
+
+            set
+            {
+                Model.Rotate = value;
+            }
+        }
+
+        public Vector3 Scale
+        {
+            get
+            {
+                return Model.Scale;
+            }
+
+            set
+            {
+                Model.Scale = value;
+            }
+        }
+
+        public Vector3 Translate
+        {
+            get
+            {
+                return Model.Translate;
+            }
+
+            set
+            {
+                Model.Translate = value;
+            }
+        }
+
+        public RenderMode SelectedRenderMode
+        {
+            get
+            {
+                return Model.RenderMode;
+            }
+
+            set
+            {
+                Model.RenderMode = value;
+            }
         }
 
         public override string Title
@@ -105,20 +149,6 @@ namespace RenderApp.ViewModel
                 {
                     ((HalfEdgeDS)Model.Polygon).UpdateVertexColor(SelectedItem, MinValue, MaxValue);
                 }
-            }
-        }
-
-
-        public Dictionary<string, object> PropertyItem
-        {
-            get
-            {
-                return item;
-            }
-
-            set
-            {
-                SetValue(ref item, value);
             }
         }
 

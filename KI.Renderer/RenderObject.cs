@@ -128,7 +128,7 @@ namespace KI.Renderer
         /// <summary>
         /// レンダリング種類
         /// </summary>
-        public RenderMode Mode { get; set; }
+        public RenderMode RenderMode { get; set; }
 
         /// <summary>
         /// 描画
@@ -136,22 +136,22 @@ namespace KI.Renderer
         /// <param name="scene">シーン</param>
         public override void RenderCore(IScene scene)
         {
-            if (Mode == RenderMode.Point)
+            if (RenderMode == RenderMode.Point)
             {
                 RenderPackage(scene, PrimitiveType.Points);
             }
 
-            if (Mode == RenderMode.Line)
+            if (RenderMode == RenderMode.Line)
             {
                 RenderPackage(scene, PrimitiveType.Lines);
             }
 
-            if (Mode == RenderMode.Polygon)
+            if (RenderMode == RenderMode.Polygon)
             {
                 RenderPackage(scene, Polygon.Type);
             }
 
-            if (Mode == RenderMode.PolygonLine)
+            if (RenderMode == RenderMode.PolygonLine)
             {
                 RenderPackage(scene, PrimitiveType.Lines);
                 RenderPackage(scene, Polygon.Type);
@@ -169,18 +169,18 @@ namespace KI.Renderer
 
             if (Polygon.Type == PrimitiveType.Points)
             {
-                Mode = RenderMode.Point;
+                RenderMode = RenderMode.Point;
             }
             else
             if (Polygon.Type == PrimitiveType.Lines)
             {
-                Mode = RenderMode.Line;
+                RenderMode = RenderMode.Line;
             }
             else
             if (Polygon.Type == PrimitiveType.Triangles ||
                 Polygon.Type == PrimitiveType.Quads)
             {
-                Mode = RenderMode.Polygon;
+                RenderMode = RenderMode.Polygon;
             }
         }
 
@@ -248,7 +248,7 @@ namespace KI.Renderer
                 Package[e.Type].VertexBuffer.ColorList = e.Color;
             }
 
-            Mode = RenderMode.PolygonLine;
+            RenderMode = RenderMode.PolygonLine;
         }
 
         /// <summary>

@@ -8,6 +8,7 @@
              xmlns:v="clr-namespace:RenderApp.View"
              xmlns:geometry="clr-namespace:KI.Gfx.Geometry;assembly=KI.Gfx"
              xmlns:control="clr-namespace:KI.UI.Controls;assembly=KI.UI"
+             xmlns:renderer="clr-namespace:KI.Renderer;assembly=KI.Renderer"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -17,12 +18,55 @@
                 <x:Type TypeName="geometry:VertexColor"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+
+        <ObjectDataProvider x:Key="RenderModeEnum" MethodName="GetValues"
+                            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="renderer:RenderMode"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Width" Value="80"/>
+        </Style>
     </UserControl.Resources>
     <StackPanel>
-        <v:PropertyGridView/>
-        <ComboBox SelectedItem="{Binding SelectedItem}" ItemsSource="{Binding Source={StaticResource VertexColorEnum}}"/>
-        <control:KITextBox Text="{Binding MinValue}"/>
-        <control:KITextBox Text="{Binding MaxValue}"/>
+        <WrapPanel Margin="2">
+            <TextBlock Text="Rotate"/>
+            <control:Vector3EditBox Vector3Value="{Binding Rotate}"/>
+        </WrapPanel>
+        <WrapPanel Margin="2">
+            <TextBlock Text="Scale"/>
+            <control:Vector3EditBox Vector3Value="{Binding Scale}"/>
+        </WrapPanel>
+        <WrapPanel Margin="2">
+            <TextBlock Text="Translate"/>
+            <control:Vector3EditBox Vector3Value="{Binding Translate}"/>
+        </WrapPanel>
+        
+        <DockPanel>
+            <TextBlock Text="Render Mode"/>
+            <ComboBox ItemsSource="{Binding Source={StaticResource RenderModeEnum}}"
+                      SelectedItem="{Binding SelectedRenderMode}"
+                      Margin="2"
+                      HorizontalAlignment="Stretch"/>
+        </DockPanel>
+        <DockPanel>
+            <TextBlock Text="Vertex Color"/>
+            <ComboBox SelectedItem="{Binding SelectedItem}"
+                      ItemsSource="{Binding Source={StaticResource VertexColorEnum}}"
+                      Margin="2"
+                      HorizontalAlignment="Stretch"/>
+        </DockPanel>
+
+        <DockPanel>
+            <TextBlock Text="Min Value"/>
+            <control:KITextBox Text="{Binding MinValue}" Margin="2" />
+        </DockPanel>
+        <DockPanel>
+            <TextBlock Text="Max Value"/>
+            <control:KITextBox Text="{Binding MaxValue}" Margin="2" />
+        </DockPanel>
     </StackPanel>
     
 </UserControl>

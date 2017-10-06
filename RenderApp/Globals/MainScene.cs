@@ -67,11 +67,11 @@ namespace RenderApp.Globals
             //    ActiveScene.AddObject(b);
             //}
 
-            var bunny = AssetFactory.Instance.CreateLoad3DModel(Global.KIDirectory + @"\renderapp\resource\model\bunny.half");
+            var bunny = AssetFactory.Instance.CreateLoad3DModel(Global.KIDirectory + @"\renderapp\resource\model\lowBunny.half");
             //var bunny = AssetFactory.Instance.CreateLoad3DModel(Global.KIDirectory + @"\renderapp\resource\model\lowBunny.half");
             //List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/Sphere.stl");
             var renderBunny = RenderObjectFactory.Instance.CreateRenderObject("bunny", bunny);
-            renderBunny.RotateX(-90);
+            //renderBunny.RotateX(-90);
             //renderBunny.Scale = new OpenTK.Vector3(100);
             AddObject(renderBunny);
         }
