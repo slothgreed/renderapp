@@ -99,7 +99,6 @@ namespace RenderApp.ViewModel
             LeftUpDockPanel.Add(new RootNodeViewModel(Project.ActiveProject.RootNode, "Project"));
             CenterDockPanel.Add(new ViewportViewModel());
             RightDownDockPanel = new TabControlViewModel();
-            RightDownDockPanel.Add(new ShaderProgramViewModel(null));
             RightDownDockPanel.Add(new VoxelViewModel());
             Viewport.Instance.OnLoaded += OnLoadedEvent;
             Viewport.Instance.OnMouseDown += OnMouseDownEvent;
@@ -494,10 +493,6 @@ namespace RenderApp.ViewModel
                 vm = new RenderObjectViewModel(node.KIObject as RenderObject);
                 Workspace.MainScene.SelectNode = (SceneNode)node.KIObject;
             }
-            else if (node.KIObject is ShaderProgram)
-            {
-                vm = new ShaderProgramViewModel((ShaderProgram)node.KIObject);
-            }
 
             ReplaceTabWindow(vm);
         }
@@ -508,12 +503,6 @@ namespace RenderApp.ViewModel
             {
                 var oldItem = LeftDownDockPanel.FindVM<RenderObjectViewModel>();
                 LeftDownDockPanel.ReplaceVM(oldItem, window);
-            }
-
-            if (window is ShaderProgramViewModel)
-            {
-                var oldItem = RightDownDockPanel.FindVM<ShaderProgramViewModel>();
-                RightDownDockPanel.ReplaceVM(oldItem, window);
             }
         }
 

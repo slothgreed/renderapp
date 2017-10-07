@@ -109,10 +109,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\dll\OpenTK.GLControl.dll</HintPath>
     </Reference>
-    <Reference Include="OpenTK.GLU, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\dll\OpenTK.GLU.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -156,10 +152,7 @@
       <DependentUpon>ControllerViewModelT4.tt</DependentUpon>
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="ViewModel\Controller\DijkstraViewModel.cs" />
     <Compile Include="ViewModel\Controller\IControllerViewModelBase.cs" />
-    <Compile Include="ViewModel\Controller\SelectViewModel.cs" />
-    <Compile Include="ViewModel\DynamicViewModelBase.cs" />
     <Compile Include="ViewModel\NodeVM\RootNodeViewModelT4.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -168,14 +161,10 @@
     </Compile>
     <Compile Include="ViewModel\DockTabVM\DockPaneSelector.cs" />
     <Compile Include="ViewModel\DockTabVM\DockWindowViewModel.cs" />
-    <Compile Include="ViewModel\ComboItemViewModel.cs" />
-    <Compile Include="ViewModel\DefaultViewModel.cs" />
     <Compile Include="ViewModel\Dialog\DialogViewModelBase.cs" />
     <Compile Include="ViewModel\Controller\VoxelViewModel.cs" />
     <Compile Include="ViewModel\AssetVM\RenderObjectViewModel.cs" />
     <Compile Include="ViewModel\RenderSystemViewModel.cs" />
-    <Compile Include="ViewModel\AssetVM\ShaderViewModel.cs" />
-    <Compile Include="ViewModel\AssetVM\ImageViewModel.cs" />
     <Compile Include="ViewModel\NodeVM\NodeItemViewModel.cs" />
     <Compile Include="ViewModel\DockTabVM\TabControlViewModel.cs" />
     <Compile Include="ViewModel\DockTabVM\TabItemViewModel.cs" />
@@ -213,10 +202,6 @@
     <Compile Include="View\RenderSystemView.xaml.cs">
       <DependentUpon>RenderSystemView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ShaderProgramView.xaml.cs">
-      <DependentUpon>ShaderProgramView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewModel\AssetVM\ShaderProgramViewModel.cs" />
     <Compile Include="Scene\Shader\HeightMap\HeightMap.cs" />
     <Compile Include="Scene\Shader\Line\CEffectLine.cs" />
     <Compile Include="Scene\Shader\MRT\Fur\Fur.cs" />
@@ -232,18 +217,11 @@
     <Compile Include="Scene\Shader\Luminous\Luminous.cs" />
     <Compile Include="Scene\Shader\OffScreen\Sobel\CSobel.cs" />
     <Compile Include="Scene\Shader\OffScreen\SSAO\SSAO.cs" />
-    <Compile Include="ViewModel\AssetVM\TextureViewModel.cs" />
-    <Compile Include="View\ShaderView.xaml.cs">
-      <DependentUpon>ShaderView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\TabControlView.xaml.cs">
       <DependentUpon>TabControlView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TabItemView.xaml.cs">
       <DependentUpon>TabItemView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\TextureView.xaml.cs">
-      <DependentUpon>TextureView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Scene\Shader\OffScreen\Defferd\CDeffed.cs" />
     <Compile Include="Scene\Shader\OffScreen\Shadow\CShadowMap.cs" />
@@ -290,23 +268,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ShaderProgramView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ShaderView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\TabControlView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TabItemView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\TextureView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

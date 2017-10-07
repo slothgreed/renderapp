@@ -36,9 +36,6 @@
     <Reference Include="OpenTK.GLControl">
       <HintPath>..\dll\OpenTK.GLControl.dll</HintPath>
     </Reference>
-    <Reference Include="OpenTK.GLU">
-      <HintPath>..\dll\OpenTK.GLU.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />

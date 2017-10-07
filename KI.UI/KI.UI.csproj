@@ -37,9 +37,6 @@
     <Reference Include="OpenTK.GLControl">
       <HintPath>..\dll\OpenTK.GLControl.dll</HintPath>
     </Reference>
-    <Reference Include="OpenTK.GLU">
-      <HintPath>..\dll\OpenTK.GLU.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -66,14 +63,9 @@
     <Compile Include="Controls\Vector3EditBoxView.xaml.cs">
       <DependentUpon>Vector3EditBoxView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\CheckBoxViewModel.cs" />
     <Compile Include="ViewModel\CommandBase.cs" />
-    <Compile Include="ViewModel\PropertyViewModelBase.cs" />
     <Compile Include="ViewModel\ThumbnailFileViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Compile Include="View\Math\NumericView.xaml.cs">
-      <DependentUpon>NumericView.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Resource.xaml">
@@ -96,13 +88,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Math\NumericView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewModel\Math\" />
+    <Folder Include="View\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

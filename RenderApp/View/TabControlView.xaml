@@ -16,16 +16,6 @@
                     <v:RootNodeView/>
                 </DataTemplate>
             </vm:DockPaneTemplateSelector.AssetTemplate>
-            <vm:DockPaneTemplateSelector.ShaderProgramTemplate>
-                <DataTemplate  DataType="{x:Type vm:ShaderProgramViewModel}">
-                    <v:ShaderProgramView/>
-                </DataTemplate>
-            </vm:DockPaneTemplateSelector.ShaderProgramTemplate>
-            <vm:DockPaneTemplateSelector.TexureTemplate>
-                <DataTemplate  DataType="{x:Type vm:TextureViewModel}">
-                    <v:TextureView/>
-                </DataTemplate>
-            </vm:DockPaneTemplateSelector.TexureTemplate>
             <vm:DockPaneTemplateSelector.ViewportTemplate>
                 <DataTemplate  DataType="{x:Type vm:ViewportViewModel}">
                     <v:ViewportView/>
@@ -36,11 +26,6 @@
                     <v:RenderObjectView/>
                 </DataTemplate>
             </vm:DockPaneTemplateSelector.RenderObjectTemplate>
-            <vm:DockPaneTemplateSelector.ShaderTemplate>
-                <DataTemplate DataType="{x:Type vm:ShaderViewModel}">
-                    <v:ShaderView/>
-                </DataTemplate>
-            </vm:DockPaneTemplateSelector.ShaderTemplate>
             <vm:DockPaneTemplateSelector.RenderTemplate>
                 <DataTemplate DataType="{x:Type vm:RenderSystemViewModel}">
                     <v:RenderSystemView/>

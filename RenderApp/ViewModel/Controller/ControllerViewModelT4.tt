@@ -8,8 +8,6 @@ using System.Windows.Input;
 <#
 	string[] _class =
 	{
-		"Select",
-		"Dijkstra",
 		"Voxel"
 	};
 	string[] _command = 
