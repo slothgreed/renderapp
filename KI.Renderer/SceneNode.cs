@@ -133,33 +133,30 @@ namespace KI.Renderer
         /// X軸で回転
         /// </summary>
         /// <param name="angle">Degree</param>
-        /// <param name="init">初期形状に対してか否か</param>
-        public virtual void RotateX(float angle, bool init = false)
+        public virtual void RotateX(float angle)
         {
             Matrix4 rotate = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(angle));
-            SetModelViewRotateXYZ(rotate, init);
+            SetModelViewRotateXYZ(rotate);
         }
 
         /// <summary>
         /// Y軸で回転
         /// </summary>
         /// <param name="angle">Degree</param>
-        /// <param name="init">初期形状に対してか否か</param>
-        public virtual void RotateY(float angle, bool init = false)
+        public virtual void RotateY(float angle)
         {
             Matrix4 rotate = Matrix4.CreateRotationY(MathHelper.DegreesToRadians(angle));
-            SetModelViewRotateXYZ(rotate, init);
+            SetModelViewRotateXYZ(rotate);
         }
 
         /// <summary>
         /// Z軸で回転
         /// </summary>
         /// <param name="angle">Degree</param>
-        /// <param name="init">初期形状に対してか否か</param>
-        public virtual void RotateZ(float angle, bool init = false)
+        public virtual void RotateZ(float angle)
         {
             Matrix4 rotate = Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(angle));
-            SetModelViewRotateXYZ(rotate, init);
+            SetModelViewRotateXYZ(rotate);
         }
 
         /// <summary>
@@ -168,13 +165,12 @@ namespace KI.Renderer
         /// <param name="angleX">X角度</param>
         /// <param name="angleY">Y角度</param>
         /// <param name="angleZ">Z角度</param>
-        /// <param name="init">初期角度に対してか</param>
-        public void RotateXYZ(float angleX, float angleY, float angleZ, bool init = false)
+        public void RotateXYZ(float angleX, float angleY, float angleZ)
         {
             Matrix4 rotateX = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(angleX));
             Matrix4 rotateY = Matrix4.CreateRotationY(MathHelper.DegreesToRadians(angleY));
             Matrix4 rotateZ = Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(angleZ));
-            SetModelViewRotateXYZ(rotateX * rotateY * rotateZ, init);
+            SetModelViewRotateXYZ(rotateX * rotateY * rotateZ);
         }
 
         /// <summary>
@@ -182,18 +178,17 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="vector1">vector1</param>
         /// <param name="vector2">vector2</param>
-        /// <param name="init">初期形状に対してか否か</param>
-        public void RotateQuaternion(Vector3 vector1, Vector3 vector2, bool init = false)
+        public void RotateQuaternion(Vector3 vector1, Vector3 vector2)
         {
             Vector3 exterior = Vector3.Cross(vector1, vector2);
             if (vector1.Z == -1.0f)
             {
-                RotateY(180, init);
+                RotateY(180);
                 return;
             }
             else if (vector1.Z == 1.0f)
             {
-                RotateY(0, init);
+                RotateY(0);
                 return;
             }
 
@@ -202,7 +197,7 @@ namespace KI.Renderer
                 exterior.Normalize();
                 float angle = KICalc.Radian(vector1, vector2, exterior);
                 Matrix4 mat = Matrix4.CreateFromAxisAngle(exterior, angle);
-                SetModelViewRotateXYZ(mat, init);
+                SetModelViewRotateXYZ(mat);
                 return;
             }
         }
@@ -251,16 +246,11 @@ namespace KI.Renderer
         /// 形状に回転を適用(初期の向きに対して)
         /// </summary>
         /// <param name="quart">クオータニオン</param>
-        /// <param name="init">初期に対してか</param>
-        private void SetModelViewRotateXYZ(Matrix4 quart, bool init)
+        private void SetModelViewRotateXYZ(Matrix4 quart)
         {
             //移動量を消して、回転後移動
             Vector3 translate = ModelMatrix.ExtractTranslation();
-            //初期形状に対しての場合は、回転量も削除
-            if (init)
-            {
-                ModelMatrix = ModelMatrix.ClearRotation();
-            }
+            ModelMatrix = ModelMatrix.ClearRotation();
 
             ModelMatrix = ModelMatrix.ClearTranslation();
 
