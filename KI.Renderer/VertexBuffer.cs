@@ -180,14 +180,18 @@ namespace KI.Renderer
             else
             {
                 var vertexs = new List<Vertex>();
+                var normals = new List<Vector3>();
                 foreach (var mesh in polygon.Meshs)
                 {
                     vertexs.AddRange(mesh.Vertexs);
+                    normals.Add(mesh.Normal);
+                    normals.Add(mesh.Normal);
+                    normals.Add(mesh.Normal);
                 }
 
                 Num = vertexs.Count;
                 PositionList = vertexs.Select(p => p.Position).ToList();
-                NormalList = vertexs.Select(p => p.Normal).ToList();
+                NormalList =normals;
                 ColorList = vertexs.Select(p => p.Color).ToList();
                 TexCoordList = vertexs.Select(p => p.TexCoord).ToList();
             }
