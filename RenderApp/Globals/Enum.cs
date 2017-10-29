@@ -59,7 +59,8 @@
         OBJ,
         File,
         AdaptiveMesh,
-        QEM
+        QEM,
+        Perceptron
     }
 
     public enum RAAsset

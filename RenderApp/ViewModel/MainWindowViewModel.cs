@@ -329,6 +329,10 @@ namespace RenderApp.ViewModel
                     command = new QEMCommand(Workspace.MainScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
+                case RAGeometry.Perceptron:
+                    command = new PerceptronCommand();
+                    CommandManager.Instance.Execute(command, null, true);
+                    break;
                 default:
                     break;
             }

@@ -75,6 +75,7 @@
                 <MenuItem Header="CalculateVertexParameter" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.CalculateVertexParameter}"/>
                 <MenuItem Header="AdaptiveMesh" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.AdaptiveMesh}"/>
                 <MenuItem Header="QEM" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.QEM}"/>
+                <MenuItem Header="Perceptron" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.Perceptron}"/>
                 <Separator/>
                 <MenuItem Header="Voxelize" Command="{Binding Voxelize}"/>
                 <MenuItem Header="Octree" Command="{Binding Octree}"/>
