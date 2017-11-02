@@ -35,25 +35,12 @@ namespace RenderApp.ViewModel
             {
                 if (activePane != value)
                 {
-                    SetValue<DockWindowViewModel>(ref activePane, value);
+                    SetValue(ref activePane, value);
                 }
             }
         }
 
         public DockWindowViewModel ActiveWindow { get; set; }
-
-        public bool PostProcessMode
-        {
-            get
-            {
-                if (Workspace.RenderSystem == null)
-                {
-                    return false;
-                }
-
-                return Workspace.RenderSystem.PostProcessMode;
-            }
-        }
 
         private WorkspaceViewModel workspaceViewModel;
         public WorkspaceViewModel WorkspaceViewModel
@@ -110,57 +97,8 @@ namespace RenderApp.ViewModel
             :base(null)
         {
             WorkspaceViewModel = new WorkspaceViewModel(this);
-            Viewport.Instance.OnLoaded += OnLoadedEvent;
-            Viewport.Instance.OnMouseDown += OnMouseDownEvent;
-            Viewport.Instance.OnMouseMove += OnMouseMoveEvent;
-            Viewport.Instance.OnMouseUp += OnMouseMoveUpEvent;
-            Viewport.Instance.OnMouseWheel += OnMouseWheelEvent;
-            Viewport.Instance.OnRender += OnRenderEvent;
-            Viewport.Instance.OnResize += OnResizeEvent;
             instance = this;
         }
-
-        #region [Viewport Method]
-        public void OnLoadedEvent(object sender, EventArgs e)
-        {
-            Workspace.RenderSystem.Initialize(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
-            Workspace.MainScene.Initialize();
-            WorkspaceViewModel.LeftUpDockPanel.Add(new RootNodeViewModel(WorkspaceViewModel.LeftUpDockPanel, Workspace.MainScene.RootNode, "Scene"));
-            WorkspaceViewModel.LeftDownDockPanel.Add(new RenderSystemViewModel(WorkspaceViewModel.LeftDownDockPanel, Workspace.RenderSystem));
-        }
-
-        private void OnResizeEvent(object sender, EventArgs e)
-        {
-            Workspace.MainScene.MainCamera.SetProjMatrix((float)DeviceContext.Instance.Width / DeviceContext.Instance.Height);
-            Workspace.RenderSystem.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
-        }
-
-        private void OnRenderEvent(object sender, PaintEventArgs e)
-        {
-            Workspace.RenderSystem.Render();
-        }
-
-        private void OnMouseWheelEvent(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            ControlManager.Instance.ProcessInput(e, ControlManager.MOUSE_STATE.WHEEL);
-        }
-
-        private void OnMouseMoveUpEvent(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            ControlManager.Instance.ProcessInput(e, ControlManager.MOUSE_STATE.UP);
-        }
-
-        private void OnMouseMoveEvent(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            ControlManager.Instance.ProcessInput(e, ControlManager.MOUSE_STATE.MOVE);
-        }
-
-        private void OnMouseDownEvent(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            ControlManager.Instance.ProcessInput(e, ControlManager.MOUSE_STATE.DOWN);
-        }
-
-        #endregion
 
         #endregion
 
@@ -351,7 +289,6 @@ namespace RenderApp.ViewModel
             Viewport.Instance.GLControl_Paint(null, null);
         }
 
-        //private static KIObject select;
         private void CreateCubeCommand()
         {
             //Cube cube = new Cube(RAFile.GetNameFromType(EAssetType.Geometry), Workspace.SceneManager.ActiveScene.WorldMin, Workspace.SceneManager.ActiveScene.WorldMax);
@@ -383,9 +320,9 @@ namespace RenderApp.ViewModel
         private void ControllerCommand(object controllerMenu)
         {
             CONTROL_MODE menuParam = (CONTROL_MODE)controllerMenu;
-            OnPropertyChanging("ControlMode");
+            OnPropertyChanging(nameof(ControlMode));
             ControlManager.Instance.Mode = menuParam;
-            OnPropertyChanged("ControlMode");
+            OnPropertyChanged(nameof(ControlMode));
         }
 
         #endregion
@@ -405,9 +342,9 @@ namespace RenderApp.ViewModel
         {
         }
 
-        public void LoadedCommand()
+        public void ContentRenderedCommand()
         {
-            viewport = Viewport.Instance;
+            WorkspaceViewModel.ViewportViewModel.Intialize();
         }
 
         public void ClosedCommand()
@@ -421,24 +358,6 @@ namespace RenderApp.ViewModel
             GC.Collect();
         }
 
-        #endregion
-
-        #region [Rendering Menu Command]
-        public void TogglePostProcessCommand()
-        {
-            Workspace.RenderSystem.TogglePostProcess();
-            OnPropertyChanged("PostProcessMode");
-        }
-        #endregion
-
-        #region [Analyze Menu Command]
-        private void VoxelizeCommand()
-        {
-        }
-
-        private void OctreeCommand()
-        {
-        }
         #endregion
 
         private void OpenExplorerCommand(object directoryPath)
@@ -494,15 +413,6 @@ namespace RenderApp.ViewModel
             }
         }
 
-        //private void DebugKeyCommand()
-        //{
-        //    if(select == null)
-        //    {
-        //        select = Workspace.SceneManager.ActiveScene.SelectAsset;
-        //    }
-        //    var command = new CreateHalfEdgeWireFrameCommand(select);
-        //    CommandManager.Instance.Execute(command, null, true);
-        //}
         #region [Update Method]
 
         public override void UpdateProperty()

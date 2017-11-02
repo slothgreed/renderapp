@@ -18,8 +18,7 @@
         </Grid.RowDefinitions>
         <v:TabControlView Grid.Column="0" Grid.Row="0" DataContext="{Binding LeftUpDockPanel}"/>
         <v:TabControlView Grid.Column="0" Grid.Row="1" DataContext="{Binding LeftDownDockPanel}"/>
-        <v:TabControlView Grid.Column="2" Grid.Row="0" DataContext="{Binding RightUpDockPanel}"/>
-        <v:TabControlView Grid.Column="2" Grid.Row="1" DataContext="{Binding RightDownDockPanel}"/>
+        <v:TabControlView Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" DataContext="{Binding RightDockPanel}"/>
         <v:TabControlView Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" DataContext="{Binding CenterDockPanel}"/>
     </Grid>
 </UserControl>

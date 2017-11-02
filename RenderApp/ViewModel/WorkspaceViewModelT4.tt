@@ -16,8 +16,7 @@ namespace RenderApp.ViewModel
 	{
 		"LeftUpDockPanel",
 		"LeftDownDockPanel",
-		"RightUpDockPanel",
-		"RightDownDockPanel",
+		"RightDockPanel",
 		"CenterDockPanel"
 	};
 #>

@@ -127,45 +127,6 @@ namespace RenderApp.ViewModel
 					return _SizeChanged;
 				}
 			}
-			private ICommand _TogglePostProcess;
-			public ICommand TogglePostProcess
-			{
-				get
-				{
-					if (_TogglePostProcess == null)
-					{
-						return _TogglePostProcess = CreateCommand(TogglePostProcessCommand);						
-					}
-
-					return _TogglePostProcess;
-				}
-			}
-			private ICommand _Voxelize;
-			public ICommand Voxelize
-			{
-				get
-				{
-					if (_Voxelize == null)
-					{
-						return _Voxelize = CreateCommand(VoxelizeCommand);						
-					}
-
-					return _Voxelize;
-				}
-			}
-			private ICommand _Octree;
-			public ICommand Octree
-			{
-				get
-				{
-					if (_Octree == null)
-					{
-						return _Octree = CreateCommand(OctreeCommand);						
-					}
-
-					return _Octree;
-				}
-			}
 			private ICommand _OpenExplorer;
 			public ICommand OpenExplorer
 			{
@@ -244,5 +205,5 @@ namespace RenderApp.ViewModel
 					return _OpenWindow;
 				}
 			}
-    }
+	}
 }

@@ -3,12 +3,20 @@ using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel
 {
-    public class RenderSystemViewModel : TabItemViewModel
+    public class RendererViewModel : TabItemViewModel
     {
+        private IRenderer model;
         public IRenderer Model
         {
-            get;
-            set;
+            get
+            {
+                return model;
+            }
+            set
+            {
+                SetValue(ref model, value);
+                TextureIndex = Model.ProcessingTexture.IndexOf(Model.OutputTexture);
+            }
         }
 
         private int textureIndex;
@@ -27,11 +35,23 @@ namespace RenderApp.ViewModel
             }
         }
 
-        public RenderSystemViewModel(ViewModelBase parent, IRenderer model)
+        public bool PostProcessMode
+        {
+            get
+            {
+                return Model.PostProcessMode;
+            }
+            set
+            {
+                Model.PostProcessMode =  value;
+                OnPropertyChanged(nameof(PostProcessMode));
+            }
+        }
+
+
+        public RendererViewModel(ViewModelBase parent)
             : base(parent)
         {
-            Model = model;
-            TextureIndex = Model.ProcessingTexture.IndexOf(Model.OutputTexture);
         }
 
         public override string Title

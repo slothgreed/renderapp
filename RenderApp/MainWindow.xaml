@@ -14,11 +14,11 @@
     Title="RenderingApplication" MinHeight="600" MinWidth="1200"
     Height="600" Width="1200">
     <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <ei:CallMethodAction MethodName="LoadedCommand" TargetObject="{Binding}"/>
-        </i:EventTrigger>
         <i:EventTrigger EventName="Closed">
             <ei:CallMethodAction MethodName="ClosedCommand" TargetObject="{Binding}"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="ContentRendered">
+            <ei:CallMethodAction MethodName="ContentRenderedCommand" TargetObject="{Binding}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Window.InputBindings>
@@ -61,9 +61,6 @@
                 <MenuItem Header="Dijkstra" Command="{Binding Controller}" CommandParameter="{x:Static control:CONTROL_MODE.Dijkstra}"/>
             </MenuItem>
 
-            <MenuItem Header="Rendering">
-                <MenuItem Header="PostProcess" Command="{Binding TogglePostProcess}" IsChecked="{Binding PostProcessMode,Mode=OneWay}"/>
-            </MenuItem>
             <MenuItem Header="Analyze">
                 <MenuItem Header="WireFrame" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.WireFrame}"/>
                 <MenuItem Header="Polygon" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.Polygon}"/>

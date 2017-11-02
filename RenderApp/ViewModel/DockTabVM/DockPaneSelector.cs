@@ -15,7 +15,6 @@ namespace RenderApp.ViewModel
 
         public DataTemplate RenderObjectTemplate { get; set; }
 
-
         public DataTemplate RenderTemplate { get; set; }
 
         public DataTemplate VoxelTemplate { get; set; }
@@ -38,7 +37,7 @@ namespace RenderApp.ViewModel
                 return RenderObjectTemplate;
             }
 
-            if (item is RenderSystemViewModel)
+            if (item is RendererViewModel)
             {
                 return RenderTemplate;
             }

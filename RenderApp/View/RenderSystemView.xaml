@@ -5,10 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Width" Value="80"/>
+        </Style>
+    </UserControl.Resources>
     <StackPanel>
-        <WrapPanel>
+        <WrapPanel Margin="2">
             <TextBlock Text="Output"  HorizontalAlignment="Stretch"/>
             <ComboBox ItemsSource="{Binding Model.ProcessingTexture}" SelectedIndex="{Binding TextureIndex}" HorizontalAlignment="Stretch"/>
+        </WrapPanel>
+        <WrapPanel Margin="2">
+            <CheckBox Content="PostProcess"  HorizontalAlignment="Stretch"/>
         </WrapPanel>
         <StackPanel/>
     </StackPanel>

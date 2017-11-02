@@ -50,7 +50,7 @@ namespace KI.Renderer
         /// <summary>
         /// ポストプロセスモード
         /// </summary>
-        public bool PostProcessMode { get; private set; }
+        public bool PostProcessMode { get; set; }
 
         /// <summary>
         /// レンダリング結果のテクスチャすべて
@@ -104,14 +104,6 @@ namespace KI.Renderer
             OutputBuffer.uSelectMap = OutputBuffer.OutputTexture[0];
             OutputBuffer.uTarget = OutputTexture;
             OutputBuffer.Render(ActiveScene);
-        }
-
-        /// <summary>
-        /// ポストプロセスを行うかのトグル
-        /// </summary>
-        public void TogglePostProcess()
-        {
-            PostProcessMode = !PostProcessMode;
         }
 
         /// <summary>

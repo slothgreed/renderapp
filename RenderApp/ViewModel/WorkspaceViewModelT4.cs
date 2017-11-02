@@ -38,31 +38,17 @@ namespace RenderApp.ViewModel
 			}
 		}
 
-		private TabControlViewModel _RightUpDockPanel;
-		public TabControlViewModel RightUpDockPanel
+		private TabControlViewModel _RightDockPanel;
+		public TabControlViewModel RightDockPanel
 		{
 			get
 			{
-				return _RightUpDockPanel;
+				return _RightDockPanel;
 			}
 
 			set
 			{
-				SetValue(ref _RightUpDockPanel, value);
-			}
-		}
-
-		private TabControlViewModel _RightDownDockPanel;
-		public TabControlViewModel RightDownDockPanel
-		{
-			get
-			{
-				return _RightDownDockPanel;
-			}
-
-			set
-			{
-				SetValue(ref _RightDownDockPanel, value);
+				SetValue(ref _RightDockPanel, value);
 			}
 		}
 

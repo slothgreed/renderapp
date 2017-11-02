@@ -12,20 +12,28 @@ namespace RenderApp.ViewModel
 {
     public partial class WorkspaceViewModel : ViewModelBase
     {
+        public RootNodeViewModel SceneNodeViewModel;
+        public RootNodeViewModel ProjectNodeViewModel;
+        public RendererViewModel RendererViewModel;
+        public ViewportViewModel ViewportViewModel;
+
         public WorkspaceViewModel(ViewModelBase parent)
             : base(parent)
         {
             LeftUpDockPanel = new TabControlViewModel(this);
             LeftDownDockPanel = new TabControlViewModel(this);
-            RightUpDockPanel = new TabControlViewModel(this);
-            RightDownDockPanel = new TabControlViewModel(this);
+            RightDockPanel = new TabControlViewModel(this);
             CenterDockPanel = new TabControlViewModel(this);
 
-            LeftUpDockPanel.Add(new RootNodeViewModel(LeftUpDockPanel, Project.ActiveProject.RootNode, "Project"));
-            CenterDockPanel.Add(new ViewportViewModel(CenterDockPanel));
-            RightDownDockPanel = new TabControlViewModel(RightDownDockPanel);
-            RightDownDockPanel.Add(new VoxelViewModel(RightDownDockPanel));
+            ProjectNodeViewModel = new RootNodeViewModel(LeftUpDockPanel, Project.ActiveProject.RootNode, "Project");
+            SceneNodeViewModel = new RootNodeViewModel(LeftUpDockPanel, Workspace.MainScene.RootNode, "Scene");
+            ViewportViewModel = new ViewportViewModel(CenterDockPanel);
+            RendererViewModel = new RendererViewModel(LeftDownDockPanel);
 
+            LeftUpDockPanel.Add(ProjectNodeViewModel);
+            CenterDockPanel.Add(ViewportViewModel);
+            LeftDownDockPanel.Add(RendererViewModel);
+            LeftUpDockPanel.Add(SceneNodeViewModel);
         }
 
         public void UpdateSelectNode(KINode node)
@@ -38,7 +46,7 @@ namespace RenderApp.ViewModel
             TabItemViewModel vm = null;
             if (node.KIObject is SceneNode)
             {
-                vm = new RenderObjectViewModel(LeftDownDockPanel, node.KIObject as RenderObject);
+                vm = new RenderObjectViewModel(RightDockPanel, node.KIObject as RenderObject);
                 Workspace.MainScene.SelectNode = (SceneNode)node.KIObject;
             }
 
@@ -49,8 +57,8 @@ namespace RenderApp.ViewModel
         {
             if (window is RenderObjectViewModel)
             {
-                var oldItem = LeftDownDockPanel.FindVM<RenderObjectViewModel>();
-                LeftDownDockPanel.ReplaceVM(oldItem, window);
+                var oldItem = RightDockPanel.FindVM<RenderObjectViewModel>();
+                RightDockPanel.ReplaceVM(oldItem, window);
             }
         }
 

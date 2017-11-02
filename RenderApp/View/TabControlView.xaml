@@ -27,7 +27,7 @@
                 </DataTemplate>
             </vm:DockPaneTemplateSelector.RenderObjectTemplate>
             <vm:DockPaneTemplateSelector.RenderTemplate>
-                <DataTemplate DataType="{x:Type vm:RenderSystemViewModel}">
+                <DataTemplate DataType="{x:Type vm:RendererViewModel}">
                     <v:RenderSystemView/>
                 </DataTemplate>
             </vm:DockPaneTemplateSelector.RenderTemplate>

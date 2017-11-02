@@ -47,36 +47,8 @@ namespace KI.UI.ViewModel
             OnPropertyChanged(memberName);
         }
 
-        protected void SetValue<T>(Func<T, bool> updateFunc, T value, [CallerMemberName]string memberName = "")
-        {
-            OnPropertyChanging(memberName);
-            if (updateFunc != null)
-            {
-                updateFunc(value);
-            }
-
-            OnPropertyChanged(memberName);
-        }
-
-        protected void SetValue<T>(Action<T> action, T value, [CallerMemberName]string memberName = "")
-        {
-            OnPropertyChanging(memberName);
-            if (action != null)
-            {
-                action(value);
-            }
-
-            OnPropertyChanged(memberName);
-        }
-
-        protected void OnPropertyChange([CallerMemberName]string memberName = "")
-        {
-            OnPropertyChanging(memberName);
-            OnPropertyChanged(memberName);
-        }
-
         /// <summary>
-        /// WPF変更後に使用
+        /// UI変更後に使用
         /// </summary>
         /// <param name="propertyName"></param>
         protected virtual void OnPropertyChanged(string propertyName)
