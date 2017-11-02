@@ -14,8 +14,9 @@ namespace RenderApp.ViewModel
             }
             set
             {
-                SetValue(ref model, value);
+                model =  value;
                 TextureIndex = Model.ProcessingTexture.IndexOf(Model.OutputTexture);
+                OnPropertyChanged(nameof(Model));
             }
         }
 
@@ -30,8 +31,9 @@ namespace RenderApp.ViewModel
 
             private set
             {
-                SetValue<int>(ref textureIndex, value);
+                textureIndex = value;
                 Model.OutputTexture = Model.ProcessingTexture[value];
+                OnPropertyChanged(nameof(TextureIndex));
             }
         }
 

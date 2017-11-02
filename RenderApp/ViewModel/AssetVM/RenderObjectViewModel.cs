@@ -34,6 +34,7 @@ namespace RenderApp.ViewModel
             set
             {
                 Model.Rotate = value;
+                OnPropertyChanged(nameof(Rotate));
             }
         }
 
@@ -47,6 +48,7 @@ namespace RenderApp.ViewModel
             set
             {
                 Model.Scale = value;
+                OnPropertyChanged(nameof(Scale));
             }
         }
 
@@ -60,6 +62,7 @@ namespace RenderApp.ViewModel
             set
             {
                 Model.Translate = value;
+                OnPropertyChanged(nameof(Translate));
             }
         }
 

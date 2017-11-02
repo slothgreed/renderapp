@@ -4,8 +4,6 @@ using System.Windows.Forms;
 using KI.Asset;
 using KI.Analyzer;
 using KI.Foundation.Command;
-using KI.Foundation.Tree;
-using KI.Gfx;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
@@ -20,27 +18,18 @@ namespace RenderApp.ViewModel
 {
     public partial class MainWindowViewModel : ViewModelBase
     {
-        #region [property method]
+        #region [Member]
 
-        private DockWindowViewModel activePane = null;
+        private static MainWindowViewModel instance;
 
-        public DockWindowViewModel ActivePane
+        public static MainWindowViewModel Instance
         {
             get
             {
-                return activePane;
-            }
-
-            set
-            {
-                if (activePane != value)
-                {
-                    SetValue(ref activePane, value);
-                }
+                return instance;
             }
         }
 
-        public DockWindowViewModel ActiveWindow { get; set; }
 
         private WorkspaceViewModel workspaceViewModel;
         public WorkspaceViewModel WorkspaceViewModel
@@ -58,22 +47,6 @@ namespace RenderApp.ViewModel
                 }
             }
         }
-
-        #endregion
-
-        #region [Member]
-
-        private static MainWindowViewModel instance;
-
-        public static MainWindowViewModel Instance
-        {
-            get
-            {
-                return instance;
-            }
-        }
-
-        private Viewport viewport;
 
         private string taskBarText;
 
@@ -315,14 +288,19 @@ namespace RenderApp.ViewModel
             {
                 return ControlManager.Instance.Mode;
             }
+
+            set
+            {
+                OnPropertyChanging(nameof(ControlMode));
+                ControlManager.Instance.Mode = value;
+                OnPropertyChanged(nameof(ControlMode));
+            }
         }
 
         private void ControllerCommand(object controllerMenu)
         {
             CONTROL_MODE menuParam = (CONTROL_MODE)controllerMenu;
-            OnPropertyChanging(nameof(ControlMode));
-            ControlManager.Instance.Mode = menuParam;
-            OnPropertyChanged(nameof(ControlMode));
+            ControlMode = menuParam;
         }
 
         #endregion
@@ -330,6 +308,7 @@ namespace RenderApp.ViewModel
         #region [MainWindow Event Command]
         private void WindowCloseCommand()
         {
+            Viewport.Instance.Dispose();
             Workspace.RenderSystem.Dispose();
             ShaderFactory.Instance.Dispose();
             RenderTargetFactory.Instance.Dispose();
@@ -349,11 +328,6 @@ namespace RenderApp.ViewModel
 
         public void ClosedCommand()
         {
-            if (viewport != null)
-            {
-                viewport.Dispose();
-            }
-
             WindowCloseCommand();
             GC.Collect();
         }
@@ -412,13 +386,5 @@ namespace RenderApp.ViewModel
                 WorkspaceViewModel.OpenWindow(windowType);
             }
         }
-
-        #region [Update Method]
-
-        public override void UpdateProperty()
-        {
-            Viewport.Instance.GLControl_Paint(null, null);
-        }
-        #endregion
     }
 }

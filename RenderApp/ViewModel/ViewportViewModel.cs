@@ -60,6 +60,11 @@ namespace RenderApp.ViewModel
             Workspace.MainScene.Initialize();
         }
 
+        internal void Invalidate()
+        {
+            Viewport.Instance.GLControl_Paint(null, null);
+        }
+
         private void OnResizeEvent(object sender, EventArgs e)
         {
             Workspace.MainScene.MainCamera.SetProjMatrix((float)DeviceContext.Instance.Width / DeviceContext.Instance.Height);

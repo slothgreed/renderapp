@@ -30,10 +30,28 @@ namespace RenderApp.ViewModel
             ViewportViewModel = new ViewportViewModel(CenterDockPanel);
             RendererViewModel = new RendererViewModel(LeftDownDockPanel);
 
+            RendererViewModel.PropertyChanged += RendererViewModel_PropertyChanged;
+            SceneNodeViewModel.PropertyChanged += SceneNodeViewModel_PropertyChanged;
+
             LeftUpDockPanel.Add(ProjectNodeViewModel);
             CenterDockPanel.Add(ViewportViewModel);
             LeftDownDockPanel.Add(RendererViewModel);
             LeftUpDockPanel.Add(SceneNodeViewModel);
+        }
+
+        private void SceneNodeViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            ViewportViewModel.Invalidate();
+        }
+
+        private void RendererViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            ViewportViewModel.Invalidate();
+        }
+
+        private void RenderObjectViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            ViewportViewModel.Invalidate();
         }
 
         public void UpdateSelectNode(KINode node)
@@ -47,6 +65,7 @@ namespace RenderApp.ViewModel
             if (node.KIObject is SceneNode)
             {
                 vm = new RenderObjectViewModel(RightDockPanel, node.KIObject as RenderObject);
+                vm.PropertyChanged += RenderObjectViewModel_PropertyChanged;
                 Workspace.MainScene.SelectNode = (SceneNode)node.KIObject;
             }
 
