@@ -8,16 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-<# 
-	string[] _property =
-	{
-		"LeftUpDockPanel",
-		"LeftDownDockPanel",
-		"RightUpDockPanel",
-		"RightDownDockPanel",
-		"CenterDockPanel"
-	};
-#>
 <#
 	string[] _command =
 	{
@@ -37,7 +27,8 @@ using System.Windows.Input;
 		"OpenDebugWindow",
 		"DataVisualization",
 		"Undo",
-		"Redo"
+		"Redo",
+		"OpenWindow"
 	};
 
 #>
@@ -64,31 +55,6 @@ namespace RenderApp.ViewModel
 			}
 <#
 		}
-
 #>
-
-<#
-		for(int i =0 ; i < _property.Length; i++)
-		{
-#>
-			private TabControlViewModel _<#=_property[i]#>;
-			public TabControlViewModel <#=_property[i]#>
-			{
-				get
-				{
-					return _<#=_property[i]#>;
-				}
-
-				set
-				{
-					SetValue(ref _<#=_property[i]#>, value);
-				}
-			}
-<#
-		}
-
-#>
-
 	}
-
 }

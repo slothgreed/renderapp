@@ -54,6 +54,24 @@ namespace RenderApp.ViewModel
                 return Workspace.RenderSystem.PostProcessMode;
             }
         }
+
+        private WorkspaceViewModel workspaceViewModel;
+        public WorkspaceViewModel WorkspaceViewModel
+        {
+            get
+            {
+                return workspaceViewModel;
+            }
+
+            set
+            {
+                if (workspaceViewModel == null)
+                {
+                    SetValue(ref workspaceViewModel, value);
+                }
+            }
+        }
+
         #endregion
 
         #region [Member]
@@ -91,16 +109,7 @@ namespace RenderApp.ViewModel
         public MainWindowViewModel()
             :base(null)
         {
-            LeftUpDockPanel = new TabControlViewModel(this);
-            LeftDownDockPanel = new TabControlViewModel(this);
-            RightUpDockPanel = new TabControlViewModel(this);
-            RightDownDockPanel = new TabControlViewModel(this);
-            CenterDockPanel = new TabControlViewModel(this);
-
-            LeftUpDockPanel.Add(new RootNodeViewModel(LeftUpDockPanel, Project.ActiveProject.RootNode, "Project"));
-            CenterDockPanel.Add(new ViewportViewModel(CenterDockPanel));
-            RightDownDockPanel = new TabControlViewModel(RightDownDockPanel);
-            RightDownDockPanel.Add(new VoxelViewModel(RightDownDockPanel));
+            WorkspaceViewModel = new WorkspaceViewModel(this);
             Viewport.Instance.OnLoaded += OnLoadedEvent;
             Viewport.Instance.OnMouseDown += OnMouseDownEvent;
             Viewport.Instance.OnMouseMove += OnMouseMoveEvent;
@@ -110,13 +119,14 @@ namespace RenderApp.ViewModel
             Viewport.Instance.OnResize += OnResizeEvent;
             instance = this;
         }
+
         #region [Viewport Method]
         public void OnLoadedEvent(object sender, EventArgs e)
         {
             Workspace.RenderSystem.Initialize(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
             Workspace.MainScene.Initialize();
-            LeftUpDockPanel.Add(new RootNodeViewModel(LeftUpDockPanel, Workspace.MainScene.RootNode, "Scene"));
-            LeftDownDockPanel.Add(new RenderSystemViewModel(LeftDownDockPanel, Workspace.RenderSystem));
+            WorkspaceViewModel.LeftUpDockPanel.Add(new RootNodeViewModel(WorkspaceViewModel.LeftUpDockPanel, Workspace.MainScene.RootNode, "Scene"));
+            WorkspaceViewModel.LeftDownDockPanel.Add(new RenderSystemViewModel(WorkspaceViewModel.LeftDownDockPanel, Workspace.RenderSystem));
         }
 
         private void OnResizeEvent(object sender, EventArgs e)
@@ -475,6 +485,15 @@ namespace RenderApp.ViewModel
             CommandManager.Instance.Redo();
         }
 
+        private void OpenWindowCommand(object parameter)
+        {
+            if(parameter is AppWindow)
+            {
+                var windowType = (AppWindow)parameter;
+                WorkspaceViewModel.OpenWindow(windowType);
+            }
+        }
+
         //private void DebugKeyCommand()
         //{
         //    if(select == null)
@@ -485,31 +504,6 @@ namespace RenderApp.ViewModel
         //    CommandManager.Instance.Execute(command, null, true);
         //}
         #region [Update Method]
-        public void UpdateSelectNode(KINode node)
-        {
-            if (node.KIObject == null)
-            {
-                return;
-            }
-
-            TabItemViewModel vm = null;
-            if (node.KIObject is SceneNode)
-            {
-                vm = new RenderObjectViewModel(LeftDownDockPanel, node.KIObject as RenderObject);
-                Workspace.MainScene.SelectNode = (SceneNode)node.KIObject;
-            }
-
-            ReplaceTabWindow(vm);
-        }
-
-        public void ReplaceTabWindow(TabItemViewModel window)
-        {
-            if (window is RenderObjectViewModel)
-            {
-                var oldItem = LeftDownDockPanel.FindVM<RenderObjectViewModel>();
-                LeftDownDockPanel.ReplaceVM(oldItem, window);
-            }
-        }
 
         public override void UpdateProperty()
         {

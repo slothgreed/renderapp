@@ -81,7 +81,7 @@ namespace RenderApp.ViewModel
             if (nodeList.SelectedItems.Count > 0)
             {
                 ActiveNode = nodeList.SelectedItems[0] as NodeItemViewModel;
-                MainWindowViewModel.Instance.UpdateSelectNode(ActiveNode.Model);
+                MainWindowViewModel.Instance.WorkspaceViewModel.UpdateSelectNode(ActiveNode.Model);
             }
         }
 

@@ -231,73 +231,18 @@ namespace RenderApp.ViewModel
 					return _Redo;
 				}
 			}
-
-			private TabControlViewModel _LeftUpDockPanel;
-			public TabControlViewModel LeftUpDockPanel
+			private ICommand _OpenWindow;
+			public ICommand OpenWindow
 			{
 				get
 				{
-					return _LeftUpDockPanel;
-				}
+					if (_OpenWindow == null)
+					{
+						return _OpenWindow = CreateCommand(OpenWindowCommand);						
+					}
 
-				set
-				{
-					SetValue(ref _LeftUpDockPanel, value);
+					return _OpenWindow;
 				}
 			}
-			private TabControlViewModel _LeftDownDockPanel;
-			public TabControlViewModel LeftDownDockPanel
-			{
-				get
-				{
-					return _LeftDownDockPanel;
-				}
-
-				set
-				{
-					SetValue(ref _LeftDownDockPanel, value);
-				}
-			}
-			private TabControlViewModel _RightUpDockPanel;
-			public TabControlViewModel RightUpDockPanel
-			{
-				get
-				{
-					return _RightUpDockPanel;
-				}
-
-				set
-				{
-					SetValue(ref _RightUpDockPanel, value);
-				}
-			}
-			private TabControlViewModel _RightDownDockPanel;
-			public TabControlViewModel RightDownDockPanel
-			{
-				get
-				{
-					return _RightDownDockPanel;
-				}
-
-				set
-				{
-					SetValue(ref _RightDownDockPanel, value);
-				}
-			}
-			private TabControlViewModel _CenterDockPanel;
-			public TabControlViewModel CenterDockPanel
-			{
-				get
-				{
-					return _CenterDockPanel;
-				}
-
-				set
-				{
-					SetValue(ref _CenterDockPanel, value);
-				}
-			}
-
-	}
-
+    }
 }

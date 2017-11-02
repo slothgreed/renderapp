@@ -169,6 +169,12 @@
     <Compile Include="ViewModel\DockTabVM\TabControlViewModel.cs" />
     <Compile Include="ViewModel\DockTabVM\TabItemViewModel.cs" />
     <Compile Include="ViewModel\ViewportViewModel.cs" />
+    <Compile Include="ViewModel\WorkspaceViewModel.cs" />
+    <Compile Include="ViewModel\WorkspaceViewModelT4.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WorkspaceViewModelT4.tt</DependentUpon>
+    </Compile>
     <Compile Include="View\DataVisualization.xaml.cs">
       <DependentUpon>DataVisualization.xaml</DependentUpon>
     </Compile>
@@ -232,6 +238,9 @@
     <Compile Include="View\ViewportView.xaml.cs">
       <DependentUpon>ViewportView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\WorkspaceView.xaml.cs">
+      <DependentUpon>WorkspaceView.xaml</DependentUpon>
+    </Compile>
     <Page Include="View\DataVisualization.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -277,6 +286,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ViewportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WorkspaceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -377,6 +390,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ControllerViewModelT4.cs</LastGenOutput>
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Content>
+    <Content Include="ViewModel\WorkspaceViewModelT4.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>WorkspaceViewModelT4.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

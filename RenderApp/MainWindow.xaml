@@ -61,7 +61,6 @@
                 <MenuItem Header="Dijkstra" Command="{Binding Controller}" CommandParameter="{x:Static control:CONTROL_MODE.Dijkstra}"/>
             </MenuItem>
 
-
             <MenuItem Header="Rendering">
                 <MenuItem Header="PostProcess" Command="{Binding TogglePostProcess}" IsChecked="{Binding PostProcessMode,Mode=OneWay}"/>
             </MenuItem>
@@ -70,6 +69,7 @@
                 <MenuItem Header="Polygon" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.Polygon}"/>
                 <MenuItem Header="HalfEdge" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.HalfEdge}"/>
                 <MenuItem Header="HalfEdgeWireFrame" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.HalfEdgeWireFrame}"/>
+                <Separator/>
                 <MenuItem Header="ConvexHull" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.ConvexHull}"/>
                 <MenuItem Header="MarchingCube" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.MarchingCube}"/>
                 <MenuItem Header="CalculateVertexParameter" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.CalculateVertexParameter}"/>
@@ -80,6 +80,13 @@
                 <MenuItem Header="Voxelize" Command="{Binding Voxelize}"/>
                 <MenuItem Header="Octree" Command="{Binding Octree}"/>
             </MenuItem>
+
+            <MenuItem Header="View">
+                <MenuItem Header="Project" Command="{Binding OpenWindow}" CommandParameter="{x:Static local:AppWindow.Project}"/>
+                <MenuItem Header="Scene" Command="{Binding OpenWindow}" CommandParameter="{x:Static local:AppWindow.Scene}"/>
+                <MenuItem Header="RenderSystem" Command="{Binding OpenWindow}" CommandParameter="{x:Static local:AppWindow.RenderSystem}"/>
+                <MenuItem Header="Viewport" Command="{Binding OpenWindow}" CommandParameter="{x:Static local:AppWindow.Viewport}"/>
+            </MenuItem>
             
             <MenuItem Header="Help">
                 <MenuItem Header="Resource Directory" Command="{Binding OpenExplorer}" CommandParameter="{x:Static local:ProjectInfo.ResourceDirectory}" />
@@ -87,24 +94,7 @@
                 <MenuItem Header="DataVisualization" Command="{Binding DataVisualization}"/>
             </MenuItem>
         </Menu>
-
-        <Grid x:Name="mainGrid" Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="300"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <v:TabControlView Grid.Column="0" Grid.Row="0" DataContext="{Binding LeftUpDockPanel}"/>
-            <v:TabControlView Grid.Column="0" Grid.Row="1" DataContext="{Binding LeftDownDockPanel}"/>
-            <v:TabControlView Grid.Column="2" Grid.Row="0" DataContext="{Binding RightUpDockPanel}"/>
-            <v:TabControlView Grid.Column="2" Grid.Row="1" DataContext="{Binding RightDownDockPanel}"/>
-            <v:TabControlView Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" DataContext="{Binding CenterDockPanel}"/>
-        </Grid>
-
+        <v:WorkspaceView DataContext="{Binding WorkspaceViewModel}" Grid.Row="1"/>
         <TextBlock Grid.Row="2" Text="{Binding TaskBarText}"/>
     </Grid>
     

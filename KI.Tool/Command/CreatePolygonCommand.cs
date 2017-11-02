@@ -19,7 +19,7 @@ namespace KI.Tool.Command
         /// <summary>
         /// 形状
         /// </summary>
-        private Polygon polygon;
+        private RenderObject renderObject;
 
         /// <summary>
         /// コンストラクタ
@@ -27,7 +27,7 @@ namespace KI.Tool.Command
         /// <param name="asset">作成するオブジェクト</param>
         public CreatePolygonCommand(KIObject asset)
         {
-            polygon = asset as Polygon;
+            renderObject = asset as RenderObject;
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace KI.Tool.Command
         /// <returns>成功値</returns>
         public CommandResult CanExecute(string commandArg)
         {
-            return CanCreatePolygon(polygon);
+            return CanCreatePolygon(renderObject);
         }
 
         /// <summary>
@@ -47,6 +47,7 @@ namespace KI.Tool.Command
         /// <returns>成功値</returns>
         public CommandResult Execute(string commandArg)
         {
+            var polygon =  renderObject.Polygon;
             List<Vertex> vertex = new List<Vertex>();
             List<int> index = new List<int>(polygon.Index[PrimitiveType.Triangles]);
             RenderObject polygonObject = RenderObjectFactory.Instance.CreateRenderObject("Polygon :" + polygon.Name);

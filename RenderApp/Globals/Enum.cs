@@ -70,4 +70,12 @@
         ShaderProgram,
         Shader,
     }
+
+    public enum AppWindow
+    {
+        Project,
+        Scene,
+        RenderSystem,
+        Viewport
+    }
 }

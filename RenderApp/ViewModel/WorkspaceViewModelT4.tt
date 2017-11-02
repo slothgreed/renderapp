@@ -1,0 +1,46 @@
+﻿<#@ template language="C#" debug="true" hostspecific="true" #>
+<#@ output extension="cs"#>
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
+namespace RenderApp.ViewModel
+{
+	public partial class WorkspaceViewModel
+	{
+<# 
+	string[] _property =
+	{
+		"LeftUpDockPanel",
+		"LeftDownDockPanel",
+		"RightUpDockPanel",
+		"RightDownDockPanel",
+		"CenterDockPanel"
+	};
+#>
+<#
+	for(int i =0 ; i < _property.Length; i++)
+	{
+#>
+
+		private TabControlViewModel _<#=_property[i]#>;
+		public TabControlViewModel <#=_property[i]#>
+		{
+			get
+			{
+				return _<#=_property[i]#>;
+			}
+
+			set
+			{
+				SetValue(ref _<#=_property[i]#>, value);
+			}
+		}
+<#
+	}
+#>
+	}
+}
