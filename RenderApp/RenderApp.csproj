@@ -164,7 +164,7 @@
     <Compile Include="ViewModel\Dialog\DialogViewModelBase.cs" />
     <Compile Include="ViewModel\Controller\VoxelViewModel.cs" />
     <Compile Include="ViewModel\AssetVM\RenderObjectViewModel.cs" />
-    <Compile Include="ViewModel\RenderSystemViewModel.cs" />
+    <Compile Include="ViewModel\RendererViewModel.cs" />
     <Compile Include="ViewModel\NodeVM\NodeItemViewModel.cs" />
     <Compile Include="ViewModel\DockTabVM\TabControlViewModel.cs" />
     <Compile Include="ViewModel\DockTabVM\TabItemViewModel.cs" />

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Windows.Forms;
 using KI.Asset;
 using KI.Analyzer;
 using KI.Foundation.Command;
@@ -13,6 +12,7 @@ using KI.Renderer;
 using KI.Tool.Command;
 using KI.Tool.Control;
 using RenderApp.Globals;
+using System.Windows;
 
 namespace RenderApp.ViewModel
 {
@@ -87,7 +87,7 @@ namespace RenderApp.ViewModel
         private void OpenProjectCommand()
         {
             ProjectInfo.IsOpen = true;
-            OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
+            var dlg = new System.Windows.Forms.OpenFileDialog();
             dlg.InitialDirectory = ProjectInfo.ResourceDirectory;
             dlg.Filter = "projファイル(*.@proj)|*.proj;";
             dlg.FilterIndex = 1;
@@ -115,9 +115,9 @@ namespace RenderApp.ViewModel
         #endregion
 
         #region [Asset Menu Command]
-        private void LoadAssetCommand(object loadAssetMenuParam)
+        private void LoadAssetCommand(object parameter)
         {
-            RAAsset menuParam = (RAAsset)loadAssetMenuParam;
+            RAAsset menuParam = (RAAsset)parameter;
 
             switch (menuParam)
             {
@@ -135,7 +135,7 @@ namespace RenderApp.ViewModel
 
         private void Load3DModelCommand()
         {
-            System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
+            var dlg = new System.Windows.Forms.OpenFileDialog();
             dlg.InitialDirectory = ProjectInfo.ResourceDirectory;
             dlg.Filter = "objファイル(*.obj)|*.obj;|stlファイル(*.stl)|*.stl;|halfファイル(*.half)|*.half;|plyファイル(*.ply)|*.ply;|すべてのファイル(*.*)|*.*";
             dlg.Multiselect = true;
@@ -254,6 +254,14 @@ namespace RenderApp.ViewModel
                 case RAGeometry.Perceptron:
                     command = new PerceptronCommand();
                     CommandManager.Instance.Execute(command, null, true);
+                    break;
+                case RAGeometry.Voxelize:
+                    var window = new View.DebugWindow();
+                    var voxelView = new View.Controller.VoxelView();
+                    voxelView.DataContext = new VoxelViewModel(this);
+                    window.Owner = Application.Current.MainWindow;
+                    window.Content = voxelView;
+                    window.Show();
                     break;
                 default:
                     break;

@@ -60,7 +60,6 @@ namespace KI.Analyzer
             parameters.Add(parameter.Name, parameter);
         }
 
-
         /// <summary>
         /// ハーフエッジのエディタ
         /// </summary>
@@ -371,6 +370,7 @@ namespace KI.Analyzer
             return true;
         }
         #endregion
+
         #region [getter method]
 
         /// <summary>

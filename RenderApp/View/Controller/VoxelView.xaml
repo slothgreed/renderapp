@@ -4,9 +4,15 @@
         xmlns:vm="clr-namespace:RenderApp.ViewModel"
         xmlns:dvm="clr-namespace:RenderApp.ViewModel.Dialog"
         xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <WrapPanel>
-        <TextBlock Text="分割数" FontSize="16" Margin="2" TextAlignment="Center"/>
-        <TextBox Text="{Binding PartitionNum}" Width="80"/>
+    <StackPanel>
+        <WrapPanel>
+            <TextBlock Text="Target" Width="80" Margin="2"/>
+            <TextBox IsReadOnly="True" Text="{Binding TargetObject}"/>
+        </WrapPanel>
+        <WrapPanel>
+            <TextBlock Text="分割数" Margin="2" Width="80"/>
+            <TextBox Text="{Binding PartitionNum}" Width="80"/>
+        </WrapPanel>
         <Button Content="Execute" Width="80" Command="{Binding Execute}" Margin="2"/>
-    </WrapPanel>
+    </StackPanel>
 </UserControl>

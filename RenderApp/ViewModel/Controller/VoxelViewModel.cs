@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using KI.Foundation.Command;
 using KI.Renderer;
 using KI.Tool.Command;
@@ -18,6 +19,18 @@ namespace RenderApp.ViewModel
         public VoxelViewModel(ViewModelBase parent)
             : base(parent)
         {
+        }
+
+        public string TargetObject
+        {
+            get
+            {
+                return Workspace.MainScene.SelectNode.Name;
+            }
+            set
+            {
+
+            }
         }
 
         public int PartitionNum

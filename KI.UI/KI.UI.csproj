@@ -63,7 +63,7 @@
     <Compile Include="Controls\Vector3EditBoxView.xaml.cs">
       <DependentUpon>Vector3EditBoxView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\CommandBase.cs" />
+    <Compile Include="ViewModel\DelegateCommand.cs" />
     <Compile Include="ViewModel\ThumbnailFileViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
   </ItemGroup>

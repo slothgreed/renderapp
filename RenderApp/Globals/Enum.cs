@@ -60,7 +60,8 @@
         File,
         AdaptiveMesh,
         QEM,
-        Perceptron
+        Perceptron,
+        Voxelize
     }
 
     public enum RAAsset
