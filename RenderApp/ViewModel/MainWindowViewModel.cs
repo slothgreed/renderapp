@@ -89,17 +89,18 @@ namespace RenderApp.ViewModel
         #region [constructor]
 
         public MainWindowViewModel()
+            :base(null)
         {
-            LeftUpDockPanel = new TabControlViewModel();
-            LeftDownDockPanel = new TabControlViewModel();
-            RightUpDockPanel = new TabControlViewModel();
-            RightDownDockPanel = new TabControlViewModel();
-            CenterDockPanel = new TabControlViewModel();
+            LeftUpDockPanel = new TabControlViewModel(this);
+            LeftDownDockPanel = new TabControlViewModel(this);
+            RightUpDockPanel = new TabControlViewModel(this);
+            RightDownDockPanel = new TabControlViewModel(this);
+            CenterDockPanel = new TabControlViewModel(this);
 
-            LeftUpDockPanel.Add(new RootNodeViewModel(Project.ActiveProject.RootNode, "Project"));
-            CenterDockPanel.Add(new ViewportViewModel());
-            RightDownDockPanel = new TabControlViewModel();
-            RightDownDockPanel.Add(new VoxelViewModel());
+            LeftUpDockPanel.Add(new RootNodeViewModel(LeftUpDockPanel, Project.ActiveProject.RootNode, "Project"));
+            CenterDockPanel.Add(new ViewportViewModel(CenterDockPanel));
+            RightDownDockPanel = new TabControlViewModel(RightDownDockPanel);
+            RightDownDockPanel.Add(new VoxelViewModel(RightDownDockPanel));
             Viewport.Instance.OnLoaded += OnLoadedEvent;
             Viewport.Instance.OnMouseDown += OnMouseDownEvent;
             Viewport.Instance.OnMouseMove += OnMouseMoveEvent;
@@ -114,8 +115,8 @@ namespace RenderApp.ViewModel
         {
             Workspace.RenderSystem.Initialize(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
             Workspace.MainScene.Initialize();
-            LeftUpDockPanel.Add(new RootNodeViewModel(Workspace.MainScene.RootNode, "Scene"));
-            LeftDownDockPanel.Add(new RenderSystemViewModel(Workspace.RenderSystem));
+            LeftUpDockPanel.Add(new RootNodeViewModel(LeftUpDockPanel, Workspace.MainScene.RootNode, "Scene"));
+            LeftDownDockPanel.Add(new RenderSystemViewModel(LeftDownDockPanel, Workspace.RenderSystem));
         }
 
         private void OnResizeEvent(object sender, EventArgs e)
@@ -494,7 +495,7 @@ namespace RenderApp.ViewModel
             TabItemViewModel vm = null;
             if (node.KIObject is SceneNode)
             {
-                vm = new RenderObjectViewModel(node.KIObject as RenderObject);
+                vm = new RenderObjectViewModel(LeftDownDockPanel, node.KIObject as RenderObject);
                 Workspace.MainScene.SelectNode = (SceneNode)node.KIObject;
             }
 

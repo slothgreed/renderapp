@@ -8,6 +8,22 @@ namespace KI.UI.ViewModel
     public abstract class ViewModelBase : INotifyPropertyChanged, INotifyPropertyChanging
     {
         #region [PropertyChange view vm]
+
+        public ViewModelBase Parent
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="parent">親ビューモデル</param>
+        public ViewModelBase(ViewModelBase parent)
+        {
+            Parent = parent;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public event PropertyChangingEventHandler PropertyChanging;

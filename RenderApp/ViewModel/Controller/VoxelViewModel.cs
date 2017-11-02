@@ -2,6 +2,7 @@
 using KI.Foundation.Command;
 using KI.Renderer;
 using KI.Tool.Command;
+using KI.UI.ViewModel;
 using RenderApp.Globals;
 
 
@@ -14,7 +15,8 @@ namespace RenderApp.ViewModel
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public VoxelViewModel()
+        public VoxelViewModel(ViewModelBase parent)
+            : base(parent)
         {
         }
 

@@ -62,8 +62,6 @@ namespace RenderApp.ViewModel
             }
         }
 
-        public NodeItemViewModel Parent { get; set; }
-
         public bool HoverHighlighting
         {
             get
@@ -138,19 +136,15 @@ namespace RenderApp.ViewModel
             }
         }
 
-        public NodeItemViewModel()
+        public NodeItemViewModel(ViewModelBase parent)
+            :base(parent)
         {
             children = new ObservableCollection<NodeItemViewModel>();
         }
 
-        public NodeItemViewModel(KINode node, NodeItemViewModel parent)
-            : this()
+        public NodeItemViewModel(ViewModelBase parent, KINode node)
+            : this(parent)
         {
-            if (parent != null)
-            {
-                Parent = parent;
-            }
-
             node.NodeInserted += InsertNodeEvent;
             node.NodeRemoved += RemoveNodeEvent;
             DisplayName = node.Name;
@@ -176,11 +170,11 @@ namespace RenderApp.ViewModel
                 KINode node = sender as KINode;
                 if (Children.Count > e.NewIndex)
                 {
-                    Children.Insert(e.NewIndex, new NodeItemViewModel(node, this));
+                    Children.Insert(e.NewIndex, new NodeItemViewModel(this, node));
                 }
                 else
                 {
-                    Children.Add(new NodeItemViewModel(node, this));
+                    Children.Add(new NodeItemViewModel(this, node));
                 }
             }
         }

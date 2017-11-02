@@ -4,6 +4,11 @@ namespace RenderApp.ViewModel
 {
     public abstract class DockWindowViewModel : ViewModelBase
     {
+        public DockWindowViewModel(ViewModelBase parent)
+            : base(parent)
+        {
+
+        }
         //protected string _title;
         //public virtual string Title
         //{

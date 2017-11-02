@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel
 {
@@ -49,7 +50,8 @@ namespace RenderApp.ViewModel
             }
         }
 
-        public TabControlViewModel()
+        public TabControlViewModel(ViewModelBase parent)
+            : base(parent)
         {
         }
 

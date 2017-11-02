@@ -1,4 +1,5 @@
 ﻿using KI.Renderer;
+using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel
 {
@@ -26,7 +27,8 @@ namespace RenderApp.ViewModel
             }
         }
 
-        public RenderSystemViewModel(IRenderer model)
+        public RenderSystemViewModel(ViewModelBase parent, IRenderer model)
+            : base(parent)
         {
             Model = model;
             TextureIndex = Model.ProcessingTexture.IndexOf(Model.OutputTexture);

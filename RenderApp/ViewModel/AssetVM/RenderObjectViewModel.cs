@@ -13,11 +13,13 @@ namespace RenderApp.ViewModel
 {
     public class RenderObjectViewModel : TabItemViewModel
     {
-        public RenderObjectViewModel()
+        public RenderObjectViewModel(ViewModelBase parent)
+            : base(parent)
         {
         }
 
-        public RenderObjectViewModel(RenderObject model)
+        public RenderObjectViewModel(ViewModelBase parent, RenderObject model)
+            : base(parent)
         {
             Model = model;
         }

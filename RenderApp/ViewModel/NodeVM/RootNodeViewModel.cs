@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.IO;
 using KI.Foundation.Core;
 using KI.Foundation.Tree;
+using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel
 {
@@ -13,16 +14,18 @@ namespace RenderApp.ViewModel
     {
         private NodeItemViewModel activeNode;
 
-        public RootNodeViewModel(KINode rootNode, string title)
+        public RootNodeViewModel(ViewModelBase parent, KINode rootNode, string title)
+            : base(parent)
         {
             Title = title;
-            Initialize(new List<KINode>() { rootNode });
+            Initialize(parent, new List<KINode>() { rootNode });
         }
 
-        public RootNodeViewModel(List<KINode> rootNodes, string title)
+        public RootNodeViewModel(ViewModelBase parent, List<KINode> rootNodes, string title)
+            :base(parent)
         {
             Title = title;
-            Initialize(rootNodes);
+            Initialize(parent, rootNodes);
         }
 
         public ObservableCollection<NodeItemViewModel> RootNode
@@ -44,14 +47,14 @@ namespace RenderApp.ViewModel
             }
         }
 
-        public void Initialize(List<KINode> rootNodes)
+        public void Initialize(ViewModelBase parent, List<KINode> rootNodes)
         {
             if (rootNodes != null)
             {
                 RootNode = new ObservableCollection<NodeItemViewModel>();
                 foreach (var root in rootNodes)
                 {
-                    var rootVM = new NodeItemViewModel(root, null);
+                    var rootVM = new NodeItemViewModel(parent, root);
                     RootNode.Add(rootVM);
                     InitAddNode(root, rootVM);
                 }
@@ -66,7 +69,7 @@ namespace RenderApp.ViewModel
         {
             foreach (var node in parent.Children)
             {
-                var nodeVM = new NodeItemViewModel(node, parentVM);
+                var nodeVM = new NodeItemViewModel(parentVM, node);
                 parentVM.Children.Add(nodeVM);
                 InitAddNode(node, nodeVM);
             }
@@ -84,7 +87,7 @@ namespace RenderApp.ViewModel
 
         public void DeleteCommand()
         {
-            var parent = ActiveNode.Parent;
+            var parent = ActiveNode.Parent as NodeItemViewModel;
             ActiveNode.Model.Dispose();
             parent.Model.RemoveChild(ActiveNode.Model);
             parent.Children.Remove(ActiveNode);

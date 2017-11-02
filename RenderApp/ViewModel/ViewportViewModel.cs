@@ -1,5 +1,6 @@
 ﻿using System.Windows.Forms.Integration;
 using KI.Gfx.GLUtil;
+using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel
 {
@@ -15,7 +16,8 @@ namespace RenderApp.ViewModel
             }
         }
 
-        public ViewportViewModel()
+        public ViewportViewModel(ViewModelBase parent)
+            : base(parent)
         {
         }
 

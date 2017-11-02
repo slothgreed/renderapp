@@ -14,7 +14,6 @@ namespace RenderApp.ViewModel
 
         protected string title;
 
-        public TabControlViewModel Parent { get; set; }
 
         public virtual string Title
         {
@@ -42,11 +41,17 @@ namespace RenderApp.ViewModel
             }
         }
 
+        public TabItemViewModel(ViewModelBase parent)
+            : base(parent)
+        {
+
+        }
+
         private void CloseTabItemCommand()
         {
             if (Parent != null)
             {
-                Parent.Remove(this);
+                ((TabControlViewModel)Parent).Remove(this);
             }
         }
 
