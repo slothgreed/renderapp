@@ -7,6 +7,9 @@ namespace RenderApp.View
     /// </summary>
     public partial class RootNodeView : UserControl
     {
+        /// <summary>
+        /// Constractor.
+        /// </summary>
         public RootNodeView()
         {
             InitializeComponent();

@@ -22,7 +22,7 @@ namespace RenderApp.ViewModel
         }
 
         public RootNodeViewModel(ViewModelBase parent, List<KINode> rootNodes, string title)
-            :base(parent)
+            : base(parent)
         {
             Title = title;
             Initialize(parent, rootNodes);

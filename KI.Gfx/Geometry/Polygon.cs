@@ -21,6 +21,7 @@ namespace KI.Gfx.Geometry
 
     public enum VertexColor
     {
+        Default,
         WireFrame,
         Voronoi,
         MeanCurvature,
@@ -531,7 +532,7 @@ namespace KI.Gfx.Geometry
         /// <param name="type">形状種類</param>
         protected void OnUpdate(UpdatePolygonEventArgs e)
         {
-            UpdatePolygon?.Invoke(this,e);
+            UpdatePolygon?.Invoke(this, e);
         }
     }
 }

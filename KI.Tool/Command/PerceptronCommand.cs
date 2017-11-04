@@ -35,7 +35,7 @@ namespace KI.Tool.Command
         {
             var values = new float[100][];
             var result = new float[100];
-            for(int i = 0; i < values.Length; i++)
+            for (int i = 0; i < values.Length; i++)
             {
                 values[i] = new float[3];
             }

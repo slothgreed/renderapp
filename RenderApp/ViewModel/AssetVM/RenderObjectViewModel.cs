@@ -150,7 +150,7 @@ namespace RenderApp.ViewModel
             set
             {
                 maxValue = value;
-                if(Model.Polygon is HalfEdgeDS)
+                if (Model.Polygon is HalfEdgeDS)
                 {
                     ((HalfEdgeDS)Model.Polygon).UpdateVertexColor(SelectedItem, MinValue, MaxValue);
                 }

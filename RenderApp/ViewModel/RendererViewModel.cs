@@ -12,9 +12,10 @@ namespace RenderApp.ViewModel
             {
                 return model;
             }
+
             set
             {
-                model =  value;
+                model = value;
                 TextureIndex = Model.ProcessingTexture.IndexOf(Model.OutputTexture);
                 OnPropertyChanged(nameof(Model));
             }
@@ -45,7 +46,7 @@ namespace RenderApp.ViewModel
             }
             set
             {
-                Model.PostProcessMode =  value;
+                Model.PostProcessMode = value;
                 OnPropertyChanged(nameof(PostProcessMode));
             }
         }

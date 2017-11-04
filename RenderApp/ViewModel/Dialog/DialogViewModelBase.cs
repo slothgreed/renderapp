@@ -7,13 +7,9 @@ namespace RenderApp.ViewModel.Dialog
         public DialogViewModelBase(ViewModelBase parent)
             : base(parent)
         {
-
         }
+
         public virtual void Close(bool boolean)
-        {
-        }
-
-        public override void UpdateProperty()
         {
         }
     }

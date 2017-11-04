@@ -708,7 +708,7 @@ namespace KI.Foundation.Utility
         /// <param name="end1">終点1</param>
         /// <param name="distance">距離</param>
         /// <returns>成功</returns>
-        public static bool DistanceLineToLine(Vector3 start0, Vector3 end0, Vector3 start1, Vector3 end1,out float distance)
+        public static bool DistanceLineToLine(Vector3 start0, Vector3 end0, Vector3 start1, Vector3 end1, out float distance)
         {
             distance = float.MaxValue;
 

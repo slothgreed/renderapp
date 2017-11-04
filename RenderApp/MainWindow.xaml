@@ -45,11 +45,6 @@
                 <MenuItem Header="Model" Command="{Binding LoadAsset}" CommandParameter="{x:Static local:RAAsset.Model}"/>
                 <MenuItem Header="Texture" Command="{Binding LoadAsset}" CommandParameter="{x:Static local:RAAsset.Texture}"/>
                 <MenuItem Header="Shader" Command="{Binding LoadAsset}" CommandParameter="{x:Static local:RAAsset.Shader}"/>
-                <MenuItem Header="Object">
-                    <MenuItem Header="Cube" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.Cube}"/>
-                    <MenuItem Header="Sphere" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.Sphere}"/>
-                    <MenuItem Header="Plane" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.Plane}"/>
-                </MenuItem>
             </MenuItem>
 
             <MenuItem Header="Controller">

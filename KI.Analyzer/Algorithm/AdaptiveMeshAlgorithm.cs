@@ -116,7 +116,7 @@ namespace KI.Analyzer.Algorithm
                 {
                     float meshSizingField = SizingField(mesh);
                     numerator += mesh.Area * meshSizingField * mesh.Gravity;
-                    denominator +=  mesh.Area * meshSizingField;
+                    denominator += mesh.Area * meshSizingField;
                 }
 
                 var result = numerator /= denominator;

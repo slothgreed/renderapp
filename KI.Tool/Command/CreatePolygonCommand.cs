@@ -47,7 +47,7 @@ namespace KI.Tool.Command
         /// <returns>成功値</returns>
         public CommandResult Execute(string commandArg)
         {
-            var polygon =  renderObject.Polygon;
+            var polygon = renderObject.Polygon;
             List<Vertex> vertex = new List<Vertex>();
             List<int> index = new List<int>(polygon.Index[PrimitiveType.Triangles]);
             RenderObject polygonObject = RenderObjectFactory.Instance.CreateRenderObject("Polygon :" + polygon.Name);

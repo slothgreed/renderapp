@@ -101,32 +101,6 @@ namespace RenderApp.ViewModel
 					return _Controller;
 				}
 			}
-			private ICommand _WindowClose;
-			public ICommand WindowClose
-			{
-				get
-				{
-					if (_WindowClose == null)
-					{
-						return _WindowClose = CreateCommand(WindowCloseCommand);						
-					}
-
-					return _WindowClose;
-				}
-			}
-			private ICommand _SizeChanged;
-			public ICommand SizeChanged
-			{
-				get
-				{
-					if (_SizeChanged == null)
-					{
-						return _SizeChanged = CreateCommand(SizeChangedCommand);						
-					}
-
-					return _SizeChanged;
-				}
-			}
 			private ICommand _OpenExplorer;
 			public ICommand OpenExplorer
 			{

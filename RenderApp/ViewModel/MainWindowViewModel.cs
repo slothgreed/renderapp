@@ -67,7 +67,7 @@ namespace RenderApp.ViewModel
         #region [constructor]
 
         public MainWindowViewModel()
-            :base(null)
+            : base(null)
         {
             WorkspaceViewModel = new WorkspaceViewModel(this);
             instance = this;
@@ -205,15 +205,6 @@ namespace RenderApp.ViewModel
             ICommand command = null;
             switch (menuParam)
             {
-                case RAGeometry.Cube:
-                    CreateCubeCommand();
-                    break;
-                case RAGeometry.Sphere:
-                    CreateSphereCommand();
-                    break;
-                case RAGeometry.Plane:
-                    CreatePlaneCommand();
-                    break;
                 case RAGeometry.WireFrame:
                     command = new CreateWireFrameCommand(Workspace.MainScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
@@ -267,26 +258,9 @@ namespace RenderApp.ViewModel
                     break;
             }
 
-            Viewport.Instance.GLControl_Paint(null, null);
+            WorkspaceViewModel.ViewportViewModel.Invalidate();
         }
 
-        private void CreateCubeCommand()
-        {
-            //Cube cube = new Cube(RAFile.GetNameFromType(EAssetType.Geometry), Workspace.SceneManager.ActiveScene.WorldMin, Workspace.SceneManager.ActiveScene.WorldMax);
-            //AssetFactory.Instance.CreateGeometry(cube);
-        }
-
-        private void CreateSphereCommand()
-        {
-            //Sphere sphere = new Sphere(RAFile.GetNameFromType(EAssetType.Geometry), 5, 5, 5, true, OpenTK.Vector3.UnitY);
-            //AssetFactory.Instance.CreateGeometry(sphere);
-        }
-
-        private void CreatePlaneCommand()
-        {
-            //Plane plane = new Plane(KIFile.GetNameFromType(EAssetType.Geometry));
-            //AssetFactory.Instance.CreateGeometry(plane.CreateRenderObject().First());
-        }
         #endregion
 
         #region [swintch controller command]
@@ -307,27 +281,12 @@ namespace RenderApp.ViewModel
 
         private void ControllerCommand(object controllerMenu)
         {
-            CONTROL_MODE menuParam = (CONTROL_MODE)controllerMenu;
-            ControlMode = menuParam;
+            ControlMode = (CONTROL_MODE)controllerMenu;
         }
 
         #endregion
 
         #region [MainWindow Event Command]
-        private void WindowCloseCommand()
-        {
-            Viewport.Instance.Dispose();
-            Workspace.RenderSystem.Dispose();
-            ShaderFactory.Instance.Dispose();
-            RenderTargetFactory.Instance.Dispose();
-            TextureFactory.Instance.Dispose();
-            BufferFactory.Instance.Dispose();
-            AssetFactory.Instance.Dispose();
-        }
-
-        private void SizeChangedCommand()
-        {
-        }
 
         public void ContentRenderedCommand()
         {
@@ -336,7 +295,13 @@ namespace RenderApp.ViewModel
 
         public void ClosedCommand()
         {
-            WindowCloseCommand();
+            Viewport.Instance.Dispose();
+            Workspace.RenderSystem.Dispose();
+            ShaderFactory.Instance.Dispose();
+            RenderTargetFactory.Instance.Dispose();
+            TextureFactory.Instance.Dispose();
+            BufferFactory.Instance.Dispose();
+            AssetFactory.Instance.Dispose();
             GC.Collect();
         }
 
@@ -368,7 +333,7 @@ namespace RenderApp.ViewModel
         {
             View.DebugWindow window = new View.DebugWindow();
             View.DataVisualization dataVisualize = new View.DataVisualization();
-            var renderObject =  Workspace.MainScene.SelectNode as RenderObject;
+            var renderObject = Workspace.MainScene.SelectNode as RenderObject;
             dataVisualize.GraphName = "vertexParameter";
             dataVisualize.ParameterList = ((HalfEdgeDS)renderObject.Polygon).Parameter;
             dataVisualize.Update(((HalfEdgeDS)renderObject.Polygon).Parameter);
@@ -388,7 +353,7 @@ namespace RenderApp.ViewModel
 
         private void OpenWindowCommand(object parameter)
         {
-            if(parameter is AppWindow)
+            if (parameter is AppWindow)
             {
                 var windowType = (AppWindow)parameter;
                 WorkspaceViewModel.OpenWindow(windowType);

@@ -126,7 +126,7 @@ namespace KI.Foundation.Tree
             // 末端ノードなら、親ノードの持つ自身のノードを消す
             if (removeNode.IsLeaf)
             {
-                if(parentNode == null)
+                if (parentNode == null)
                 {
                     this.root = null;
                     return;

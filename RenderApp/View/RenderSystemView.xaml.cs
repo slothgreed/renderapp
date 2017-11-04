@@ -20,6 +20,9 @@ namespace RenderApp.View
     /// </summary>
     public partial class RenderSystemView : UserControl
     {
+        /// <summary>
+        /// Constractor.
+        /// </summary>
         public RenderSystemView()
         {
             InitializeComponent();

@@ -48,8 +48,7 @@ namespace KI.Asset
                     new Mesh(
                         new Vertex(i, stlData.Position[3 * i], stlData.Normal[3 * i], Vector3.One),
                         new Vertex(i + 1, stlData.Position[3 * i + 1], stlData.Normal[3 * i + 1], Vector3.One),
-                        new Vertex(i + 2, stlData.Position[3 * i + 2], stlData.Normal[3 * i + 2], Vector3.One)
-                        ));
+                        new Vertex(i + 2, stlData.Position[3 * i + 2], stlData.Normal[3 * i + 2], Vector3.One)));
             }
 
             Polygon info = new Polygon(stlData.FileName, mesh, PrimitiveType.Triangles);

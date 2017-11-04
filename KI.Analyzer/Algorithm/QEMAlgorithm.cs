@@ -28,12 +28,12 @@ namespace KI.Analyzer.Algorithm
             /// 保持オブジェクト
             /// </summary>
             public object Owner;
-            
+
             /// <summary>
             /// Q行列
             /// </summary>
             public Matrix4 Quadric { get; set; }
-            
+
             /// <summary>
             /// 誤差
             /// </summary>
@@ -45,7 +45,7 @@ namespace KI.Analyzer.Algorithm
                 }
                 set
                 {
-                    if(Math.Abs(value) < KICalc.THRESHOLD05)
+                    if (Math.Abs(value) < KICalc.THRESHOLD05)
                     {
                         cost = 0;
                     }
@@ -168,7 +168,7 @@ namespace KI.Analyzer.Algorithm
         /// </summary>
         /// <param name="vector">ベクトル</param>
         /// <param name="matrix">マトリクス</param>
-        /// <returns>ベクトル</returns>
+        /// <returns>コスト</returns>
         private float CalculateCost(Vector3 vector, Matrix4 matrix)
         {
             Vector4 result = Vector4.Zero;
@@ -185,12 +185,11 @@ namespace KI.Analyzer.Algorithm
         /// <summary>
         /// コストの算出
         /// </summary>
-        /// <param name="vector">ベクトル</param>
-        /// <param name="matrix">マトリクス</param>
-        /// <returns>ベクトル</returns>
+        /// <param name="edge">ハーフエッジ</param>
+        /// <returns>コスト</returns>
         private float CalculateEdgeCost(HalfEdge edge)
         {
-            return 
+            return
                 CalculateCost(edge.Start.Position, ((Parameter)edge.Start.TmpParameter).Quadric) +
                 CalculateCost(edge.End.Position, ((Parameter)edge.End.TmpParameter).Quadric);
         }

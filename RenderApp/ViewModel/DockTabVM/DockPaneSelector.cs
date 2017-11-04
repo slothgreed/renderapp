@@ -19,7 +19,6 @@ namespace RenderApp.ViewModel
 
         public DataTemplate VoxelTemplate { get; set; }
 
-
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             if (item is RootNodeViewModel)

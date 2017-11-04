@@ -137,7 +137,7 @@ namespace RenderApp.ViewModel
         }
 
         public NodeItemViewModel(ViewModelBase parent)
-            :base(parent)
+            : base(parent)
         {
             children = new ObservableCollection<NodeItemViewModel>();
         }

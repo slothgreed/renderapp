@@ -20,6 +20,9 @@ namespace RenderApp.View
     /// </summary>
     public partial class TabItemView : UserControl
     {
+        /// <summary>
+        /// Constractor.
+        /// </summary>
         public TabItemView()
         {
             InitializeComponent();

@@ -45,9 +45,6 @@
 
     public enum RAGeometry
     {
-        Cube,
-        Sphere,
-        Plane,
         WireFrame,
         Polygon,
         HalfEdge,

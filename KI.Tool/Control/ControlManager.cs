@@ -41,7 +41,6 @@ namespace KI.Tool.Control
             Controllers.Add(CONTROL_MODE.Dijkstra, new DijkstraControl());
             Controllers.Add(CONTROL_MODE.SelectPoint, new SelectPointControl());
             Controllers.Add(CONTROL_MODE.EdgeFlips, new EdgeFlipsControl());
-            cameraController = new CameraControl();
         }
 
         /// <summary>

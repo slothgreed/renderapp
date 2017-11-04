@@ -83,7 +83,6 @@ namespace RenderApp.ViewModel
 
         public void OpenWindow(AppWindow windowType)
         {
-
         }
     }
 }

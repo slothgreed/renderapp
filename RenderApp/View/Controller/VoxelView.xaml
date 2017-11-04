@@ -3,16 +3,21 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:RenderApp.ViewModel"
         xmlns:dvm="clr-namespace:RenderApp.ViewModel.Dialog"
+        xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <StackPanel>
-        <WrapPanel>
+        <DockPanel>
             <TextBlock Text="Target" Width="80" Margin="2"/>
             <TextBox IsReadOnly="True" Text="{Binding TargetObject}"/>
-        </WrapPanel>
-        <WrapPanel>
+        </DockPanel>
+        <DockPanel>
+            <TextBlock Text="Color" Width="80" Margin="2"/>
+            <toolkit:ColorPicker SelectedColor="{Binding SelectColor}"/>
+        </DockPanel>
+        <DockPanel>
             <TextBlock Text="分割数" Margin="2" Width="80"/>
             <TextBox Text="{Binding PartitionNum}" Width="80"/>
-        </WrapPanel>
+        </DockPanel>
         <Button Content="Execute" Width="80" Command="{Binding Execute}" Margin="2"/>
     </StackPanel>
 </UserControl>

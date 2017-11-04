@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using KI.Foundation.Command;
 using KI.Renderer;
 using KI.Tool.Command;
@@ -16,6 +15,7 @@ namespace RenderApp.ViewModel
         /// <summary>
         /// コンストラクタ
         /// </summary>
+        /// <param name="parent">親ビューモデル</param>
         public VoxelViewModel(ViewModelBase parent)
             : base(parent)
         {
@@ -46,6 +46,12 @@ namespace RenderApp.ViewModel
             }
         }
 
+        public System.Windows.Media.Color SelectColor
+        {
+            get;
+            set;
+        }
+
         public override string Title
         {
             get
@@ -56,7 +62,7 @@ namespace RenderApp.ViewModel
 
         private void ExecuteCommand()
         {
-            ICommand command = new CreateVoxelCommand(Workspace.MainScene.SelectNode as RenderObject, PartitionNum);
+            ICommand command = new CreateVoxelCommand(Workspace.MainScene.SelectNode as RenderObject, new OpenTK.Vector3(SelectColor.R, SelectColor.G, SelectColor.B), PartitionNum);
             CommandManager.Instance.Execute(command, null, true);
         }
 

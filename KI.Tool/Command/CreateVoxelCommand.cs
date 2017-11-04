@@ -32,13 +32,20 @@ namespace KI.Tool.Command
         private int partition = 0;
 
         /// <summary>
+        /// ボクセルカラー
+        /// </summary>
+        private Vector3 voxelColor;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="asset">作成するオブジェクト</param>
+        /// <param name="color">ボクセル色</param>
         /// <param name="part">分割数</param>
-        public CreateVoxelCommand(RenderObject asset, int part)
+        public CreateVoxelCommand(RenderObject asset, Vector3 color, int part)
         {
             renderObject = asset as RenderObject;
+            voxelColor = color;
             partition = part;
         }
 
@@ -143,10 +150,10 @@ namespace KI.Tool.Command
 
             meshs.Add(
                 new Mesh(
-                    new Vertex(4 * meshs.Count, q0, normal, Vector3.One),
-                    new Vertex(4 * meshs.Count + 1, q1, normal, Vector3.One),
-                    new Vertex(4 * meshs.Count + 2, normal, Vector3.One),
-                    new Vertex(4 * meshs.Count + 3, normal, Vector3.One)));
+                    new Vertex(4 * meshs.Count, q0, normal,voxelColor),
+                    new Vertex(4 * meshs.Count + 1, q1, normal, voxelColor),
+                    new Vertex(4 * meshs.Count + 2, normal, voxelColor),
+                    new Vertex(4 * meshs.Count + 3, normal, voxelColor)));
         }
 
         /// <summary>

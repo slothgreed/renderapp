@@ -9,6 +9,9 @@ namespace KI.UI.ViewModel
     {
         #region [PropertyChange view vm]
 
+        /// <summary>
+        /// 親ビューモデル
+        /// </summary>
         public ViewModelBase Parent
         {
             get;
@@ -24,8 +27,14 @@ namespace KI.UI.ViewModel
             Parent = parent;
         }
 
+        /// <summary>
+        /// プロパティ変更後イベント
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// プロパティ変更イベント
+        /// </summary>
         public event PropertyChangingEventHandler PropertyChanging;
 
         /// <summary>
@@ -50,7 +59,7 @@ namespace KI.UI.ViewModel
         /// <summary>
         /// UI変更後に使用
         /// </summary>
-        /// <param name="propertyName"></param>
+        /// <param name="propertyName">プロパティ名</param>
         protected virtual void OnPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)
