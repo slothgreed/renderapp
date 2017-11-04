@@ -4,6 +4,7 @@
         xmlns:v="clr-namespace:RenderApp.View"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:avalon="http://schemas.xceed.com/wpf/xaml/avalondock"
         xmlns:local="clr-namespace:RenderApp.View"
         mc:Ignorable="d">
     <Grid>

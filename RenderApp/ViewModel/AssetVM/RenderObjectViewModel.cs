@@ -1,18 +1,38 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Windows.Input;
 using KI.Analyzer;
-using KI.Foundation.Core;
 using KI.Foundation.Parameter;
 using KI.Gfx.Geometry;
 using KI.Renderer;
+using KI.Tool.Command;
 using KI.UI.ViewModel;
 using OpenTK;
+using RenderApp.Globals;
 
 namespace RenderApp.ViewModel
 {
     public class RenderObjectViewModel : TabItemViewModel
     {
+        private ICommand _CalculateVertexCurvature;
+        public ICommand CalculateVertexCurvature
+        {
+            get
+            {
+                if (_CalculateVertexCurvature == null)
+                {
+                    return _CalculateVertexCurvature = CreateCommand(CalculateVertexCurvatureCommand);
+                }
+
+                return _CalculateVertexCurvature;
+            }
+        }
+
+        private void CalculateVertexCurvatureCommand()
+        {
+            var command = new CalculateVertexCurvature(Workspace.MainScene.SelectNode);
+            KI.Foundation.Command.CommandManager.Instance.Execute(command, null, true);
+        }
+
         public RenderObjectViewModel(ViewModelBase parent)
             : base(parent)
         {
@@ -155,6 +175,42 @@ namespace RenderApp.ViewModel
                     ((HalfEdgeDS)Model.Polygon).UpdateVertexColor(SelectedItem, MinValue, MaxValue);
                 }
             }
+        }
+
+        private float lowValue;
+        public float LowValue
+        {
+            get
+            {
+                return lowValue;
+            }
+            set
+            {
+                SetValue(ref lowValue, value);
+                ParamSlider_ValueChanged();
+            }
+        }
+
+        private float heightValue;
+        public float HeightValue
+        {
+            get
+            {
+                return heightValue;
+            }
+            set
+            {
+                SetValue(ref heightValue, value);
+                ParamSlider_ValueChanged();
+            }
+        }
+
+        /// <summary>
+        /// パラメータスライダの値変更イベント
+        /// </summary>
+        private void ParamSlider_ValueChanged()
+        {
+            ((HalfEdgeDS)Model.Polygon).UpdateVertexColor(SelectedItem, LowValue, HeightValue);
         }
 
         public RenderObject Model { get; private set; }

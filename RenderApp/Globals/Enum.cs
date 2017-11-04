@@ -51,7 +51,6 @@
         HalfEdgeWireFrame,
         ConvexHull,
         MarchingCube,
-        CalculateVertexParameter,
         STL,
         OBJ,
         File,

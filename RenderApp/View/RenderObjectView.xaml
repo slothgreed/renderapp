@@ -9,6 +9,7 @@
              xmlns:geometry="clr-namespace:KI.Gfx.Geometry;assembly=KI.Gfx"
              xmlns:control="clr-namespace:KI.UI.Controls;assembly=KI.UI"
              xmlns:renderer="clr-namespace:KI.Renderer;assembly=KI.Renderer"
+             xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -27,46 +28,74 @@
         </ObjectDataProvider>
 
         <Style TargetType="{x:Type TextBlock}">
-            <Setter Property="Width" Value="80"/>
+            <Setter Property="Width" Value="75"/>
         </Style>
     </UserControl.Resources>
     <StackPanel>
-        <WrapPanel Margin="2">
-            <TextBlock Text="Rotate"/>
-            <control:Vector3EditBox Vector3Value="{Binding Rotate}"/>
-        </WrapPanel>
-        <WrapPanel Margin="2">
-            <TextBlock Text="Scale"/>
-            <control:Vector3EditBox Vector3Value="{Binding Scale}"/>
-        </WrapPanel>
-        <WrapPanel Margin="2">
-            <TextBlock Text="Translate"/>
-            <control:Vector3EditBox Vector3Value="{Binding Translate}"/>
-        </WrapPanel>
-        
-        <DockPanel>
-            <TextBlock Text="Render Mode"/>
-            <ComboBox ItemsSource="{Binding Source={StaticResource RenderModeEnum}}"
+        <Expander Header="SRT" IsExpanded="True" Margin="2">
+            <StackPanel>
+                <WrapPanel Margin="2">
+                    <TextBlock Text="Rotate"/>
+                    <control:Vector3EditBox Vector3Value="{Binding Rotate}"/>
+                </WrapPanel>
+                <WrapPanel Margin="2">
+                    <TextBlock Text="Scale"/>
+                    <control:Vector3EditBox Vector3Value="{Binding Scale}"/>
+                </WrapPanel>
+                <WrapPanel Margin="2">
+                    <TextBlock Text="Translate"/>
+                    <control:Vector3EditBox Vector3Value="{Binding Translate}"/>
+                </WrapPanel>
+            </StackPanel>
+        </Expander>
+
+        <Expander Header="Render" Margin="2" IsExpanded="True">
+            <StackPanel>
+                <TextBlock Text="Render Mode"/>
+                <ComboBox ItemsSource="{Binding Source={StaticResource RenderModeEnum}}"
                       SelectedItem="{Binding SelectedRenderMode}"
                       Margin="2"
                       HorizontalAlignment="Stretch"/>
-        </DockPanel>
-        <DockPanel>
-            <TextBlock Text="Vertex Color"/>
-            <ComboBox SelectedItem="{Binding SelectedItem}"
+            </StackPanel>
+        </Expander>
+
+        <Expander Header="頂点カラー" Margin="2" IsExpanded="True">
+            <StackPanel>
+                <Button Content="Calculate" Command="{Binding CalculateVertexCurvature}"/>
+                <DockPanel>
+                    <TextBlock Text="Vertex Color"/>
+                    <ComboBox SelectedItem="{Binding SelectedItem}"
                       ItemsSource="{Binding Source={StaticResource VertexColorEnum}}"
                       Margin="2"
                       HorizontalAlignment="Stretch"/>
-        </DockPanel>
-
-        <DockPanel>
-            <TextBlock Text="Min Value"/>
-            <control:KITextBox Text="{Binding MinValue}" Margin="2" />
-        </DockPanel>
-        <DockPanel>
-            <TextBlock Text="Max Value"/>
-            <control:KITextBox Text="{Binding MaxValue}" Margin="2" />
-        </DockPanel>
+                </DockPanel>
+                <toolkit:RangeSlider LowerRangeBackground="Blue"
+                                 HigherRangeBackground="Red"
+                                 Minimum="{Binding MinValue}"
+                                 Maximum="{Binding MaxValue}"
+                                 LowerValue="{Binding LowValue}"
+                                 HigherValue="{Binding HeightValue}"/>
+                <DockPanel>
+                    <TextBlock Text="Low Value"/>
+                    <control:KITextBox Text="{Binding LowValue}" Margin="2"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Height Value"/>
+                    <control:KITextBox Text="{Binding HeightValue}" Margin="2"/>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Min Value"/>
+                    <control:KITextBox Text="{Binding MinValue}" Margin="2" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Max Value"/>
+                    <control:KITextBox Text="{Binding MaxValue}" Margin="2" />
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Step"/>
+                    <control:KITextBox Text="{Binding StepValue}" Margin="2"/>
+                </DockPanel>
+            </StackPanel>
+        </Expander>
     </StackPanel>
-    
 </UserControl>

@@ -19,6 +19,12 @@ namespace RenderApp.ViewModel
         public VoxelViewModel(ViewModelBase parent)
             : base(parent)
         {
+            var color = new System.Windows.Media.Color();
+            color.R = 0;
+            color.G = 0;
+            color.B = 0;
+            color.A = 255;
+            SelectColor = color;
         }
 
         public string TargetObject
@@ -62,13 +68,9 @@ namespace RenderApp.ViewModel
 
         private void ExecuteCommand()
         {
-            ICommand command = new CreateVoxelCommand(Workspace.MainScene.SelectNode as RenderObject, new OpenTK.Vector3(SelectColor.R, SelectColor.G, SelectColor.B), PartitionNum);
+            var color = new OpenTK.Vector3(SelectColor.R / 255.0f, SelectColor.G / 255.0f, SelectColor.B / 255.0f);
+            ICommand command = new CreateVoxelCommand(Workspace.MainScene.SelectNode as RenderObject, color, PartitionNum);
             CommandManager.Instance.Execute(command, null, true);
-        }
-
-        public override void UpdateProperty()
-        {
-            throw new NotImplementedException();
         }
     }
 }
