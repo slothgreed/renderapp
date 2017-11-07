@@ -248,6 +248,9 @@ namespace KI.Analyzer
             IEnumerable<Vector3> color = null;
             switch (colorType)
             {
+                case VertexColor.Default:
+                    color = HalfEdgeVertexs.Select(p => p.Color);
+                    break;
                 case VertexColor.WireFrame:
                     color = HalfEdgeVertexs.Select(p => Vector3.Zero);
                     break;

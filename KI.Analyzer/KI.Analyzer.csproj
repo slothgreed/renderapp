@@ -75,6 +75,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithm\KMeansAlgorithm.cs" />
     <Compile Include="Algorithm\PerceptronAlgorithm.cs" />
     <Compile Include="Algorithm\AdaptiveMeshAlgorithm.cs" />
     <Compile Include="Algorithm\ConvexHullAlgorithm.cs" />

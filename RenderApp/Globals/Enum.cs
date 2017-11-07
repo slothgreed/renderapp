@@ -57,7 +57,8 @@
         AdaptiveMesh,
         QEM,
         Perceptron,
-        Voxelize
+        Voxelize,
+        Kmeans
     }
 
     public enum RAAsset

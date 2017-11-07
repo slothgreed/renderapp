@@ -242,6 +242,10 @@ namespace RenderApp.ViewModel
                     command = new PerceptronCommand();
                     CommandManager.Instance.Execute(command, null, true);
                     break;
+                case RAGeometry.Kmeans:
+                    command = new KMeansCommand(Workspace.MainScene.SelectNode, 40, 10);
+                    CommandManager.Instance.Execute(command, null, true);
+                    break;
                 case RAGeometry.Voxelize:
                     var window = new View.DebugWindow();
                     var voxelView = new View.Controller.VoxelView();

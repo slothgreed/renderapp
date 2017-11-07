@@ -11,6 +11,11 @@ namespace KI.Foundation.Utility
     public class KICalc
     {
         /// <summary>
+        /// ランダム
+        /// </summary>
+        private static Random rand = new Random();
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         static KICalc()
@@ -843,7 +848,6 @@ namespace KI.Foundation.Utility
         public static Vector3 RandomColor()
         {
             Vector3 color = new Vector3();
-            Random rand = new Random();
             color.X = rand.Next(255) / 255.0f;
             color.Y = rand.Next(255) / 255.0f;
             color.Z = rand.Next(255) / 255.0f;

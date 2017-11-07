@@ -101,7 +101,7 @@ namespace KI.Analyzer
         }
 
         /// <summary>
-        /// テンポラリ計算用フラグ
+        /// テンポラリ計算用変数
         /// </summary>
         public object TmpParameter { get; set; }
 

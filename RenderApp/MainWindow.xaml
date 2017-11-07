@@ -67,6 +67,7 @@
                 <MenuItem Header="AdaptiveMesh" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.AdaptiveMesh}"/>
                 <MenuItem Header="QEM" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.QEM}"/>
                 <MenuItem Header="Perceptron" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.Perceptron}"/>
+                <MenuItem Header="Kmeans" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.Kmeans}"/>
                 <Separator/>
                 <MenuItem Header="Voxelize" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.Voxelize}"/>
             </MenuItem>

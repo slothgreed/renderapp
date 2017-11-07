@@ -124,7 +124,7 @@ namespace RenderApp.ViewModel
 
             set
             {
-                selectedItem = value;
+                SetValue(ref selectedItem, value);
 
                 var halfEdgeDS = Model.Polygon as HalfEdgeDS;
                 if (halfEdgeDS.Parameter.ContainsKey(SelectedItem.ToString()))
@@ -136,7 +136,7 @@ namespace RenderApp.ViewModel
                     OnPropertyChanged(nameof(MinValue));
                 }
 
-                halfEdgeDS.UpdateVertexColor(SelectedItem, MinValue, MaxValue);
+                ParamSlider_ValueChanged();
             }
         }
 
@@ -151,11 +151,8 @@ namespace RenderApp.ViewModel
 
             set
             {
-                minValue = value;
-                if (Model.Polygon is HalfEdgeDS)
-                {
-                    ((HalfEdgeDS)Model.Polygon).UpdateVertexColor(SelectedItem, MinValue, MaxValue);
-                }
+                SetValue(ref minValue, value);
+                ParamSlider_ValueChanged();
             }
         }
 
@@ -169,11 +166,8 @@ namespace RenderApp.ViewModel
 
             set
             {
-                maxValue = value;
-                if (Model.Polygon is HalfEdgeDS)
-                {
-                    ((HalfEdgeDS)Model.Polygon).UpdateVertexColor(SelectedItem, MinValue, MaxValue);
-                }
+                SetValue(ref maxValue, value);
+                ParamSlider_ValueChanged();
             }
         }
 
@@ -210,7 +204,10 @@ namespace RenderApp.ViewModel
         /// </summary>
         private void ParamSlider_ValueChanged()
         {
-            ((HalfEdgeDS)Model.Polygon).UpdateVertexColor(SelectedItem, LowValue, HeightValue);
+            if (Model.Polygon is HalfEdgeDS)
+            {
+                ((HalfEdgeDS)Model.Polygon).UpdateVertexColor(SelectedItem, LowValue, HeightValue);
+            }
         }
 
         public RenderObject Model { get; private set; }
