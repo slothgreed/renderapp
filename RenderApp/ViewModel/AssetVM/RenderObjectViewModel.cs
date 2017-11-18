@@ -96,6 +96,7 @@ namespace RenderApp.ViewModel
             set
             {
                 Model.RenderMode = value;
+                OnPropertyChanged(nameof(SelectedRenderMode));
             }
         }
 

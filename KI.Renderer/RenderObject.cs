@@ -5,7 +5,6 @@ using KI.Foundation.Utility;
 using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil;
 using KI.Gfx.KIShader;
-using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace KI.Renderer
@@ -15,41 +14,11 @@ namespace KI.Renderer
     /// </summary>
     public enum RenderMode
     {
+        None,
         Point,
         Line,
         Polygon,
         PolygonLine,
-    }
-
-    /// <summary>
-    /// レンダリングパッケージ
-    /// </summary>
-    public class RenderPackage
-    {
-        public RenderPackage(Polygon polygon, PrimitiveType type)
-        {
-            Type = type;
-        }
-
-        /// <summary>
-        /// 頂点バッファ
-        /// </summary>
-        public VertexBuffer VertexBuffer { get; set; } = new VertexBuffer();
-
-        /// <summary>
-        /// シェーダ
-        /// </summary>
-        public Shader Shader { get; set; }
-
-        /// <summary>
-        /// レンダリングするときの種類
-        /// </summary>
-        public PrimitiveType Type { get; set; }
-        
-        /// <summary>
-        /// テクスチャ座標
-        /// </summary>
-        public List<Vector3> Color { get; set; }
     }
 
     /// <summary>
@@ -85,7 +54,7 @@ namespace KI.Renderer
         /// <summary>
         /// レンダリングパッケージ
         /// </summary>
-        public Dictionary<PrimitiveType, RenderPackage> Package { get; private set; } = new Dictionary<PrimitiveType, RenderPackage>();
+        public Dictionary<PrimitiveType, RenderPackage> Packages { get; private set; } = new Dictionary<PrimitiveType, RenderPackage>();
 
         /// <summary>
         /// メインのシェーダ
@@ -94,12 +63,12 @@ namespace KI.Renderer
         {
             get
             {
-                return Package[Polygon.Type].Shader;
+                return Packages[Polygon.Type].Shader;
             }
 
             set
             {
-                Package[Polygon.Type].Shader = value;
+                Packages[Polygon.Type].Shader = value;
             }
         }
 
@@ -117,11 +86,11 @@ namespace KI.Renderer
             {
                 if (polygon != null)
                 {
-                    polygon.UpdatePolygon -= UpdatePolygon;
+                    polygon.PolygonUpdated -= OnPolygonUpdated;
                 }
 
                 polygon = value;
-                polygon.UpdatePolygon += UpdatePolygon;
+                polygon.PolygonUpdated += OnPolygonUpdated;
             }
         }
 
@@ -167,21 +136,33 @@ namespace KI.Renderer
             Polygon = polygon;
             SetupRenderPackage(polygon.Type);
 
-            if (Polygon.Type == PrimitiveType.Points)
+            RenderMode = PrimitiveTypeToRenderMode(Polygon.Type);
+        }
+
+        /// <summary>
+        /// PrimitiveTypeからRenderModeを取得。
+        /// </summary>
+        /// <param name="primitiveType">PrimitiveType</param>
+        /// <returns>RenderMode</returns>
+        public RenderMode PrimitiveTypeToRenderMode(PrimitiveType primitiveType)
+        {
+            if (primitiveType == PrimitiveType.Points)
             {
-                RenderMode = RenderMode.Point;
+                return RenderMode.Point;
             }
             else
-            if (Polygon.Type == PrimitiveType.Lines)
+            if (primitiveType == PrimitiveType.Lines)
             {
-                RenderMode = RenderMode.Line;
+                return RenderMode.Line;
             }
             else
-            if (Polygon.Type == PrimitiveType.Triangles ||
-                Polygon.Type == PrimitiveType.Quads)
+            if (primitiveType == PrimitiveType.Triangles ||
+                primitiveType == PrimitiveType.Quads)
             {
-                RenderMode = RenderMode.Polygon;
+                return RenderMode.Polygon;
             }
+
+            return RenderMode.None;
         }
 
         /// <summary>
@@ -189,7 +170,7 @@ namespace KI.Renderer
         /// </summary>
         public override void Dispose()
         {
-            foreach (var pack in Package.Values)
+            foreach (var pack in Packages.Values)
             {
                 pack.VertexBuffer.Dispose();
             }
@@ -202,9 +183,9 @@ namespace KI.Renderer
         /// <param name="type">形状種類</param>
         private void RenderPackage(IScene scene, PrimitiveType type)
         {
-            if (Package.ContainsKey(type))
+            if (Packages.ContainsKey(type))
             {
-                RenderPackageCore(scene, Package[type]);
+                Packages[type].RenderPackageCore(scene, this);
             }
             else
             {
@@ -216,21 +197,21 @@ namespace KI.Renderer
         /// レンダーパッケージの設定
         /// </summary>
         /// <param name="type">形状種類</param>
-        private void SetupRenderPackage(PrimitiveType type)
+        public void SetupRenderPackage(PrimitiveType type)
         {
-            if (!Package.ContainsKey(type))
+            if (!Packages.ContainsKey(type))
             {
-                Package[type] = new RenderPackage(Polygon, type);
-                Package[type].VertexBuffer.GenBuffer(polygon, type);
+                Packages[type] = new RenderPackage(Polygon, type);
+                Packages[type].VertexBuffer.GenBuffer(polygon, type);
                 string vert = ShaderCreater.Instance.GetVertexShader(this);
                 string frag = ShaderCreater.Instance.GetFragShader(this);
-                Package[type].Shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
+                Packages[type].Shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
             }
 
-            Package[type].VertexBuffer.SetupBuffer(Polygon, type);
-            if (Package[type].Color != null)
+            Packages[type].VertexBuffer.SetupBuffer(Polygon, type);
+            if (Packages[type].Color != null)
             {
-                Package[type].VertexBuffer.ColorList = Package[type].Color;
+                Packages[type].VertexBuffer.ColorList = Packages[type].Color;
             }
         }
 
@@ -239,50 +220,16 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="sender">ジオメトリ</param>
         /// <param name="e">イベント</param>
-        private void UpdatePolygon(object sender, UpdatePolygonEventArgs e)
+        private void OnPolygonUpdated(object sender, UpdatePolygonEventArgs e)
         {
             SetupRenderPackage(e.Type);
             if (e.Color != null)
             {
-                Package[e.Type].Color = e.Color;
-                Package[e.Type].VertexBuffer.ColorList = e.Color;
+                Packages[e.Type].Color = e.Color;
+                Packages[e.Type].VertexBuffer.ColorList = e.Color;
             }
 
             RenderMode = RenderMode.PolygonLine;
-        }
-
-        /// <summary>
-        /// レンダリング
-        /// </summary>
-        /// <param name="scene">シーン</param>
-        /// <param name="package">レンダリング情報</param>
-        private void RenderPackageCore(IScene scene, RenderPackage package)
-        {
-            if (package.Shader == null)
-            {
-                Logger.Log(Logger.LogLevel.Error, "not set shader");
-                return;
-            }
-
-            if (package.VertexBuffer.Num == 0)
-            {
-                Logger.Log(Logger.LogLevel.Error, "vertexs list is 0");
-                return;
-            }
-
-            ShaderHelper.InitializeState(scene, this, package, Polygon.Textures);
-            package.Shader.BindBuffer();
-            if (package.VertexBuffer.IndexBuffer.ContainsKey(package.Type))
-            {
-                DeviceContext.Instance.DrawElements(package.Type, package.VertexBuffer.Num, DrawElementsType.UnsignedInt, 0);
-            }
-            else
-            {
-                DeviceContext.Instance.DrawArrays(package.Type, 0, package.VertexBuffer.Num);
-            }
-
-            package.Shader.UnBindBuffer();
-            Logger.GLLog(Logger.LogLevel.Error);
         }
     }
 }

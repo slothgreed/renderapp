@@ -164,7 +164,7 @@ namespace KI.Gfx.Geometry
         /// <summary>
         /// 形状情報更新イベント
         /// </summary>
-        public EventHandler<UpdatePolygonEventArgs> UpdatePolygon { get; set; }
+        public EventHandler<UpdatePolygonEventArgs> PolygonUpdated { get; set; }
 
         /// <summary>
         /// 形状ID
@@ -457,34 +457,33 @@ namespace KI.Gfx.Geometry
             }
         }
 
-        /// <summary>
-        /// ワイヤフレームの作成
-        /// </summary>
-        /// <param name="color">ワイヤフレームの色</param>
-        public void CreateWireFrame(Vector3 color)
-        {
+        ///// <summary>
+        ///// ワイヤフレームの作成
+        ///// </summary>
+        ///// <param name="color">ワイヤフレームの色</param>
+        //public void CreateWireFrame(Vector3 color)
+        //{
+        //    List<int> lineIndex = new List<int>();
+        //    List<Vector3> wireFrameColor = new List<Vector3>();
+        //    foreach (var mesh in Meshs)
+        //    {
+        //        for (int j = 0; j < mesh.Vertexs.Count - 1; j++)
+        //        {
+        //            lineIndex.Add(mesh.Vertexs[j].Index);
+        //            lineIndex.Add(mesh.Vertexs[j + 1].Index);
+        //        }
 
-            List<int> lineIndex = new List<int>();
-            List<Vector3> wireFrameColor = new List<Vector3>();
-            foreach (var mesh in Meshs)
-            {
-                for (int j = 0; j < mesh.Vertexs.Count - 1; j++)
-                {
-                    lineIndex.Add(mesh.Vertexs[j].Index);
-                    lineIndex.Add(mesh.Vertexs[j + 1].Index);
-                }
+        //        lineIndex.Add(mesh.Vertexs[mesh.Vertexs.Count - 1].Index);
+        //        lineIndex.Add(mesh.Vertexs[0].Index);
+        //        wireFrameColor.Add(color);
+        //        wireFrameColor.Add(color);
+        //    }
 
-                lineIndex.Add(mesh.Vertexs[mesh.Vertexs.Count - 1].Index);
-                lineIndex.Add(mesh.Vertexs[0].Index);
-                wireFrameColor.Add(color);
-                wireFrameColor.Add(color);
-            }
+        //    Index[PrimitiveType.Lines] = lineIndex;
+        //    vertexColor[VertexColor.WireFrame] = wireFrameColor;
 
-            Index[PrimitiveType.Lines] = lineIndex;
-            vertexColor[VertexColor.WireFrame] = wireFrameColor;
-
-            OnUpdate(new UpdatePolygonEventArgs(PrimitiveType.Lines, wireFrameColor));
-        }
+        //    OnUpdate(new UpdatePolygonEventArgs(PrimitiveType.Lines, wireFrameColor));
+        //}
 
         ///// <summary>
         ///// 法線の算出
@@ -532,7 +531,7 @@ namespace KI.Gfx.Geometry
         /// <param name="type">形状種類</param>
         protected void OnUpdate(UpdatePolygonEventArgs e)
         {
-            UpdatePolygon?.Invoke(this, e);
+            PolygonUpdated?.Invoke(this, e);
         }
     }
 }

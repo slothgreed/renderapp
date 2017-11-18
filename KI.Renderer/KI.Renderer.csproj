@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IScene.cs" />
+    <Compile Include="RenderPackage.cs" />
     <Compile Include="SceneNode.cs" />
     <Compile Include="Technique\DeferredBuffer.cs" />
     <Compile Include="Technique\GBuffer.cs" />

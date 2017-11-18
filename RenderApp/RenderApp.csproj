@@ -169,7 +169,6 @@
     <Compile Include="ViewModel\Converter\EnumConverter.cs" />
     <Compile Include="Globals\Project.cs" />
     <Compile Include="Globals\Enum.cs" />
-    <Compile Include="Utility\ActiveItems.cs" />
     <Compile Include="ViewModel\Controller\ControllerViewModelT4.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
