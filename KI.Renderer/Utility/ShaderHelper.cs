@@ -18,30 +18,31 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="scene">シーン</param>
         /// <param name="renderObject">形状</param>
-        /// <param name="package">レンダリング情報</param>
+        /// <param name="vertexBuffer">頂点バッファ</param>
+        /// <param name="shader">レンダリング情報</param>
         /// <param name="textures">テクスチャ</param>
-        public static void InitializeState(IScene scene, RenderObject renderObject, RenderPackage package, Dictionary<TextureKind, Texture> textures)
+        public static void InitializeState(IScene scene, RenderObject renderObject, VertexBuffer vertexBuffer, Shader shader, Dictionary<TextureKind, Texture> textures)
         {
-            foreach (ShaderProgramInfo info in package.Shader.GetShaderVariable())
+            foreach (ShaderProgramInfo info in shader.GetShaderVariable())
             {
                 switch (info.Name)
                 {
                     case "position":
-                        info.Variable = package.VertexBuffer.PositionBuffer;
+                        info.Variable = vertexBuffer.PositionBuffer;
                         break;
                     case "normal":
-                        info.Variable = package.VertexBuffer.NormalBuffer;
+                        info.Variable = vertexBuffer.NormalBuffer;
                         break;
                     case "color":
-                        info.Variable = package.VertexBuffer.ColorBuffer;
+                        info.Variable = vertexBuffer.ColorBuffer;
                         break;
                     case "texcoord":
-                        info.Variable = package.VertexBuffer.TexCoordBuffer;
+                        info.Variable = vertexBuffer.TexCoordBuffer;
                         break;
                     case "index":
-                        if (package.VertexBuffer.IndexBuffer.ContainsKey(package.Type))
+                        if (vertexBuffer.EnableIndexBuffer)
                         {
-                            info.Variable = package.VertexBuffer.IndexBuffer[package.Type];
+                            info.Variable = vertexBuffer.IndexBuffer;
                         }
 
                         break;

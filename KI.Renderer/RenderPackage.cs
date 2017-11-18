@@ -17,7 +17,6 @@ namespace KI.Renderer
     /// </summary>
     public class RenderPackage
     {
-
         public RenderPackage(Polygon polygon, PrimitiveType type)
         {
             VertexBuffer = new VertexBuffer();
@@ -63,9 +62,9 @@ namespace KI.Renderer
                 return;
             }
 
-            ShaderHelper.InitializeState(scene, renderObject, this, renderObject.Polygon.Textures);
+            ShaderHelper.InitializeState(scene, renderObject, VertexBuffer, Shader, renderObject.Polygon.Textures);
             Shader.BindBuffer();
-            if (VertexBuffer.IndexBuffer.ContainsKey(Type))
+            if (VertexBuffer.EnableIndexBuffer)
             {
                 DeviceContext.Instance.DrawElements(Type, VertexBuffer.Num, DrawElementsType.UnsignedInt, 0);
             }

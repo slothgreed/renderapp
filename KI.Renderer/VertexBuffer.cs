@@ -34,6 +34,16 @@ namespace KI.Renderer
         public ArrayBuffer TexCoordBuffer { get; private set; }
 
         /// <summary>
+        /// インデックスバッファ
+        /// </summary>
+        public ArrayBuffer IndexBuffer { get; private set; }
+        
+        /// <summary>
+        /// インデックスバッファが有効か
+        /// </summary>
+        public bool EnableIndexBuffer { get; private set; }
+
+        /// <summary>
         /// 頂点情報
         /// </summary>
         public List<Vector3> PositionList
@@ -43,6 +53,11 @@ namespace KI.Renderer
                 if (value.Count == 0)
                 {
                     Logger.Log(Logger.LogLevel.Error, "vertex num error");
+                }
+
+                if(PositionBuffer == null)
+                {
+                    PositionBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
                 }
 
                 PositionBuffer.SetData(value, EArrayType.Vec3Array);
@@ -61,6 +76,11 @@ namespace KI.Renderer
                     Logger.Log(Logger.LogLevel.Error, "vertex num error");
                 }
 
+                if (NormalBuffer == null)
+                {
+                    NormalBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
+                }
+
                 NormalBuffer.SetData(value, EArrayType.Vec3Array);
             }
         }
@@ -75,6 +95,10 @@ namespace KI.Renderer
                 if (value.Count == 0)
                 {
                     Logger.Log(Logger.LogLevel.Error, "vertex num error");
+                }
+                if (ColorBuffer == null)
+                {
+                    ColorBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
                 }
 
                 ColorBuffer.SetData(value, EArrayType.Vec3Array);
@@ -92,6 +116,10 @@ namespace KI.Renderer
                 {
                     Logger.Log(Logger.LogLevel.Error, "vertex num error");
                 }
+                if (TexCoordBuffer == null)
+                {
+                    TexCoordBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
+                }
 
                 TexCoordBuffer.SetData(value, EArrayType.Vec2Array);
             }
@@ -105,96 +133,80 @@ namespace KI.Renderer
         /// <summary>
         /// 頂点Indexバッファ
         /// </summary>
-        public Dictionary<PrimitiveType, ArrayBuffer> IndexBuffer { get; private set; } = new Dictionary<PrimitiveType, ArrayBuffer>();
+        public List<int> IndexBufferList
+        {
+            set
+            {
+                if( value.Count == 0)
+                {
+                    Logger.Log(Logger.LogLevel.Error, "index buffer count 0");
+                }
 
+                if (IndexBuffer == null)
+                {
+                    IndexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
+                }
+
+                IndexBuffer.SetData(value, EArrayType.IntArray);
+            }
+        }
         /// <summary>
         /// 解放処理
         /// </summary>
         public void Dispose()
         {
             BufferFactory.Instance.RemoveByValue(PositionBuffer);
+            BufferFactory.Instance.RemoveByValue(NormalBuffer);
             BufferFactory.Instance.RemoveByValue(ColorBuffer);
             BufferFactory.Instance.RemoveByValue(TexCoordBuffer);
-            BufferFactory.Instance.RemoveByValue(NormalBuffer);
+            PositionBuffer = null;
+            NormalBuffer = null;
+            ColorBuffer = null;
+            TexCoordBuffer = null;
         }
 
         /// <summary>
         /// バッファの作成
         /// </summary>
-        /// <param name="polygon">ポリゴン</param>
-        /// <param name="type">形状種類</param>
-        public void GenBuffer(Polygon polygon, PrimitiveType type)
+        public void GenBuffer()
         {
             PositionBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
             NormalBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
             ColorBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
             TexCoordBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
-
-            if (polygon.Index.ContainsKey(type))
-            {
-                IndexBuffer[type] = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
-            }
         }
 
         /// <summary>
-        /// バッファにデータの設定
+        /// Index バッファの設定
         /// </summary>
-        /// <param name="polygon">ポリゴン</param>
-        /// <param name="type">形状種類</param>
-        /// <param name="color">頂点カラーの設定</param>
-        public void SetupBuffer(Polygon polygon, PrimitiveType type)
+        /// <param name="index">頂点インデックス</param>
+        /// <param name="num">数</param>
+        public void SetIndexBuffer(List<int> index)
         {
-            if (polygon.Index.ContainsKey(type))
-            {
-                IndexBuffer[type].SetData(polygon.Index[type], EArrayType.IntArray);
+            IndexBufferList = index;
+            Num = index.Count;
+            EnableIndexBuffer = true;
+        }
 
-                Num = polygon.Index[type].Count;
-                PositionList = polygon.Vertexs.Select(p => p.Position).ToList();
-                NormalList = polygon.Vertexs.Select(p => p.Normal).ToList();
-                ColorList = polygon.Vertexs.Select(p => p.Color).ToList();
-                TexCoordList = polygon.Vertexs.Select(p => p.TexCoord).ToList();
-            }
-            else if (type == PrimitiveType.Points)
+        /// <summary>
+        /// バッファの設定
+        /// </summary>
+        /// <param name="position">頂点</param>
+        /// <param name="normal">法線</param>
+        /// <param name="color">色</param>
+        /// <param name="texCoord">テクスチャ</param>
+        /// <param name="index">頂点インデックス</param>
+        /// <param name="num">数</param>
+        public void SetBuffer(List<Vector3> position, List<Vector3> normal, List<Vector3> color, List<Vector2> texCoord)
+        {
+            if (!EnableIndexBuffer)
             {
-                Num = polygon.Vertexs.Count;
-                PositionList = polygon.Vertexs.Select(p => p.Position).ToList();
-                NormalList = polygon.Vertexs.Select(p => p.Normal).ToList();
-                ColorList = polygon.Vertexs.Select(p => p.Color).ToList();
-                TexCoordList = polygon.Vertexs.Select(p => p.TexCoord).ToList();
+                Num = position.Count;
             }
-            else if (type == PrimitiveType.Lines)
-            {
-                var vertexs = new List<Vertex>();
-                foreach (var line in polygon.Lines)
-                {
-                    vertexs.Add(line.Start);
-                    vertexs.Add(line.End);
-                }
-
-                Num = vertexs.Count;
-                PositionList = vertexs.Select(p => p.Position).ToList();
-                NormalList = vertexs.Select(p => p.Normal).ToList();
-                ColorList = vertexs.Select(p => p.Color).ToList();
-                TexCoordList = vertexs.Select(p => p.TexCoord).ToList();
-            }
-            else
-            {
-                var vertexs = new List<Vertex>();
-                var normals = new List<Vector3>();
-                foreach (var mesh in polygon.Meshs)
-                {
-                    vertexs.AddRange(mesh.Vertexs);
-                    normals.Add(mesh.Normal);
-                    normals.Add(mesh.Normal);
-                    normals.Add(mesh.Normal);
-                }
-
-                Num = vertexs.Count;
-                PositionList = vertexs.Select(p => p.Position).ToList();
-                NormalList =normals;
-                ColorList = vertexs.Select(p => p.Color).ToList();
-                TexCoordList = vertexs.Select(p => p.TexCoord).ToList();
-            }
+            PositionList = position;
+            NormalList = normal;
+            ColorList = color;
+            TexCoordList = texCoord;
         }
     }
 }

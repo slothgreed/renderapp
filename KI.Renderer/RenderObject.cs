@@ -5,6 +5,7 @@ using KI.Foundation.Utility;
 using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil;
 using KI.Gfx.KIShader;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace KI.Renderer
@@ -202,16 +203,100 @@ namespace KI.Renderer
             if (!Packages.ContainsKey(type))
             {
                 Packages[type] = new RenderPackage(Polygon, type);
-                Packages[type].VertexBuffer.GenBuffer(polygon, type);
                 string vert = ShaderCreater.Instance.GetVertexShader(this);
                 string frag = ShaderCreater.Instance.GetFragShader(this);
                 Packages[type].Shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
             }
 
-            Packages[type].VertexBuffer.SetupBuffer(Polygon, type);
-            if (Packages[type].Color != null)
+            SetupBuffer(type);
+        }
+
+        /// <summary>
+        /// バッファにデータの設定
+        /// </summary>
+        /// <param name="polygon">ポリゴン</param>
+        /// <param name="type">形状種類</param>
+        /// <param name="color">頂点カラーの設定</param>
+        public void SetupBuffer(PrimitiveType type)
+        {
+            List<int> indexBuffer = null;
+            List<Vector3> position = null;
+            List<Vector3> normal = null;
+            List<Vector3> color = null;
+            List<Vector2> texCoord = null;
+            if (polygon.Index.ContainsKey(type))
             {
-                Packages[type].VertexBuffer.ColorList = Packages[type].Color;
+                indexBuffer = polygon.Index[type];
+                position = polygon.Vertexs.Select(p => p.Position).ToList();
+                normal = polygon.Vertexs.Select(p => p.Normal).ToList();
+                color = polygon.Vertexs.Select(p => p.Color).ToList();
+                texCoord = polygon.Vertexs.Select(p => p.TexCoord).ToList();
+            }
+            else if (type == PrimitiveType.Points)
+            {
+                position = polygon.Vertexs.Select(p => p.Position).ToList();
+                normal = polygon.Vertexs.Select(p => p.Normal).ToList();
+                color = polygon.Vertexs.Select(p => p.Color).ToList();
+                texCoord = polygon.Vertexs.Select(p => p.TexCoord).ToList();
+                Packages[type].VertexBuffer.SetBuffer(position, normal, color, texCoord);
+            }
+            else if (type == PrimitiveType.Lines)
+            {
+                var vertexs = new List<Vertex>();
+                foreach (var line in polygon.Lines)
+                {
+                    vertexs.Add(line.Start);
+                    vertexs.Add(line.End);
+                }
+
+                position = vertexs.Select(p => p.Position).ToList();
+                normal = vertexs.Select(p => p.Normal).ToList();
+                color = vertexs.Select(p => p.Color).ToList();
+                texCoord = vertexs.Select(p => p.TexCoord).ToList();
+            }
+            else
+            {
+                var vertexs = new List<Vertex>();
+                var normals = new List<Vector3>();
+
+                if (type == PrimitiveType.Triangles)
+                {
+                    foreach (var mesh in polygon.Meshs)
+                    {
+                        vertexs.AddRange(mesh.Vertexs);
+                        normals.Add(mesh.Normal);
+                        normals.Add(mesh.Normal);
+                        normals.Add(mesh.Normal);
+                    }
+                }
+                else
+                {
+                    foreach (var mesh in polygon.Meshs)
+                    {
+                        vertexs.AddRange(mesh.Vertexs);
+                        normals.Add(mesh.Normal);
+                        normals.Add(mesh.Normal);
+                        normals.Add(mesh.Normal);
+                        normals.Add(mesh.Normal);
+                    }
+                }
+
+                position = vertexs.Select(p => p.Position).ToList();
+                normal = normals;
+                color = vertexs.Select(p => p.Color).ToList();
+                texCoord = vertexs.Select(p => p.TexCoord).ToList();
+            }
+
+            // デフォルトカラーよりすでに設定されているカラーを優先
+            if(Packages[type].Color != null)
+            {
+                color = Packages[type].Color;
+            }
+            Packages[type].VertexBuffer.SetBuffer(position, normal, color, texCoord);
+
+            if(indexBuffer != null)
+            {
+                Packages[type].VertexBuffer.SetIndexBuffer(indexBuffer);
             }
         }
 
