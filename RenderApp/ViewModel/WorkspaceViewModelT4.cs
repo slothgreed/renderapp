@@ -5,64 +5,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using  KI.UI.ViewModel;
 namespace RenderApp.ViewModel
 {
 	public partial class WorkspaceViewModel
 	{
 
-		private TabControlViewModel _LeftUpDockPanel;
-		public TabControlViewModel LeftUpDockPanel
+		private ObservableCollection<ViewModelBase> _AnchorablesSources;
+		public ObservableCollection<ViewModelBase> AnchorablesSources
 		{
 			get
 			{
-				return _LeftUpDockPanel;
+				return _AnchorablesSources;
 			}
 
 			set
 			{
-				SetValue(ref _LeftUpDockPanel, value);
+				SetValue(ref _AnchorablesSources, value);
 			}
 		}
 
-		private TabControlViewModel _LeftDownDockPanel;
-		public TabControlViewModel LeftDownDockPanel
+		private ObservableCollection<ViewModelBase> _DocumentsSources;
+		public ObservableCollection<ViewModelBase> DocumentsSources
 		{
 			get
 			{
-				return _LeftDownDockPanel;
+				return _DocumentsSources;
 			}
 
 			set
 			{
-				SetValue(ref _LeftDownDockPanel, value);
-			}
-		}
-
-		private TabControlViewModel _RightDockPanel;
-		public TabControlViewModel RightDockPanel
-		{
-			get
-			{
-				return _RightDockPanel;
-			}
-
-			set
-			{
-				SetValue(ref _RightDockPanel, value);
-			}
-		}
-
-		private TabControlViewModel _CenterDockPanel;
-		public TabControlViewModel CenterDockPanel
-		{
-			get
-			{
-				return _CenterDockPanel;
-			}
-
-			set
-			{
-				SetValue(ref _CenterDockPanel, value);
+				SetValue(ref _DocumentsSources, value);
 			}
 		}
 	}

@@ -8,7 +8,7 @@ using RenderApp.Globals;
 
 namespace RenderApp.ViewModel
 {
-    public partial class VoxelViewModel : TabItemViewModel, IControllerViewModelBase
+    public partial class VoxelViewModel : DockWindowViewModel, IControllerViewModelBase
     {
         private int partitionNum = 64;
 
@@ -17,7 +17,7 @@ namespace RenderApp.ViewModel
         /// </summary>
         /// <param name="parent">親ビューモデル</param>
         public VoxelViewModel(ViewModelBase parent)
-            : base(parent)
+            : base(parent, "VoxelView", Place.Floating)
         {
             var color = new System.Windows.Media.Color();
             color.R = 0;
@@ -56,14 +56,6 @@ namespace RenderApp.ViewModel
         {
             get;
             set;
-        }
-
-        public override string Title
-        {
-            get
-            {
-                return "Voxel";
-            }
         }
 
         private void ExecuteCommand()

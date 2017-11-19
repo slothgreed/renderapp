@@ -23,7 +23,7 @@ namespace KI.Tool.Control
             if (HalfEdgeDSSelector.PickPoint(leftMouse.Click, ref renderObject, ref vertex))
             {
                 vertex.IsSelect = true;
-                renderObject.Polygon.Update(PrimitiveType.Points);
+                renderObject.Polygon.UpdateVertexArray(PrimitiveType.Points);
             }
 
             return true;

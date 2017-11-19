@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Input;
 using KI.Foundation.Tree;
 using KI.Renderer;
 using KI.UI.ViewModel;
@@ -20,23 +19,20 @@ namespace RenderApp.ViewModel
         public WorkspaceViewModel(ViewModelBase parent)
             : base(parent)
         {
-            LeftUpDockPanel = new TabControlViewModel(this);
-            LeftDownDockPanel = new TabControlViewModel(this);
-            RightDockPanel = new TabControlViewModel(this);
-            CenterDockPanel = new TabControlViewModel(this);
-
-            ProjectNodeViewModel = new RootNodeViewModel(LeftUpDockPanel, Project.ActiveProject.RootNode, "Project");
-            SceneNodeViewModel = new RootNodeViewModel(LeftUpDockPanel, Workspace.MainScene.RootNode, "Scene");
-            ViewportViewModel = new ViewportViewModel(CenterDockPanel);
-            RendererViewModel = new RendererViewModel(LeftDownDockPanel);
+            ProjectNodeViewModel = new RootNodeViewModel(this, Project.ActiveProject.RootNode, "Project");
+            SceneNodeViewModel = new RootNodeViewModel(this, Workspace.MainScene.RootNode, "Scene");
+            ViewportViewModel = new ViewportViewModel(this);
+            RendererViewModel = new RendererViewModel(this);
 
             RendererViewModel.PropertyChanged += RendererViewModel_PropertyChanged;
             SceneNodeViewModel.PropertyChanged += SceneNodeViewModel_PropertyChanged;
 
-            LeftUpDockPanel.Add(ProjectNodeViewModel);
-            CenterDockPanel.Add(ViewportViewModel);
-            LeftDownDockPanel.Add(RendererViewModel);
-            LeftUpDockPanel.Add(SceneNodeViewModel);
+            AnchorablesSources = new ObservableCollection<ViewModelBase>();
+            DocumentsSources = new ObservableCollection<ViewModelBase>();
+            AnchorablesSources.Add(ProjectNodeViewModel);
+            AnchorablesSources.Add(SceneNodeViewModel);
+            AnchorablesSources.Add(RendererViewModel);
+            DocumentsSources.Add(ViewportViewModel);
         }
 
         private void SceneNodeViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -61,10 +57,10 @@ namespace RenderApp.ViewModel
                 return;
             }
 
-            TabItemViewModel vm = null;
+            DockWindowViewModel vm = null;
             if (node.KIObject is SceneNode)
             {
-                vm = new RenderObjectViewModel(RightDockPanel, node.KIObject as RenderObject);
+                vm = new RenderObjectViewModel(this, node.KIObject as RenderObject);
                 vm.PropertyChanged += RenderObjectViewModel_PropertyChanged;
                 Workspace.MainScene.SelectNode = (SceneNode)node.KIObject;
             }
@@ -72,12 +68,13 @@ namespace RenderApp.ViewModel
             ReplaceTabWindow(vm);
         }
 
-        public void ReplaceTabWindow(TabItemViewModel window)
+        public void ReplaceTabWindow(DockWindowViewModel window)
         {
             if (window is RenderObjectViewModel)
             {
-                var oldItem = RightDockPanel.FindVM<RenderObjectViewModel>();
-                RightDockPanel.ReplaceVM(oldItem, window);
+                var oldItem = AnchorablesSources.FirstOrDefault(p => p is RenderObjectViewModel);
+                AnchorablesSources.Add(window);
+                AnchorablesSources.Remove(oldItem);
             }
         }
 

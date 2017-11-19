@@ -16,14 +16,14 @@ using System.Windows.Shapes;
 namespace RenderApp.View
 {
     /// <summary>
-    /// TabControlView.xaml の相互作用ロジック
+    /// RenderSystemView.xaml の相互作用ロジック
     /// </summary>
-    public partial class TabControlView : UserControl
+    public partial class RendererView : UserControl
     {
         /// <summary>
         /// Constractor.
         /// </summary>
-        public TabControlView()
+        public RendererView()
         {
             InitializeComponent();
         }

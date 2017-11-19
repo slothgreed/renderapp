@@ -61,7 +61,6 @@
 
         <Expander Header="頂点カラー" Margin="2" IsExpanded="True">
             <StackPanel>
-                <Button Content="Calculate" Command="{Binding CalculateVertexCurvature}"/>
                 <DockPanel>
                     <TextBlock Text="Vertex Color"/>
                     <ComboBox SelectedItem="{Binding SelectedItem}"

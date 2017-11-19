@@ -28,6 +28,28 @@ namespace KI.UI.ViewModel
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public ViewModelBase FindParent<T>() where T : ViewModelBase
+        {
+            if(Parent == null)
+            {
+                return null;
+            }
+
+            if (this.Parent is T)
+            {
+                return this.Parent;
+            }
+            else
+            {
+                return FindParent<T>();
+            }
+        }
+
+        /// <summary>
         /// プロパティ変更後イベント
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;

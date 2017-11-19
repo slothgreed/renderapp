@@ -66,8 +66,7 @@ namespace KI.Tool.Command
             }
 
             renderObject.Polygon.Index[PrimitiveType.Lines] = lineIndex;
-            renderObject.SetupRenderPackage(PrimitiveType.Lines);
-            renderObject.RenderMode = RenderMode.Line;
+            renderObject.SetupRenderPackage(PrimitiveType.Lines, wireFrameColors);
 
             return CommandResult.Success;
         }

@@ -3,7 +3,7 @@ using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel
 {
-    public class RendererViewModel : TabItemViewModel
+    public class RendererViewModel : DockWindowViewModel
     {
         private IRenderer model;
         public IRenderer Model
@@ -53,16 +53,8 @@ namespace RenderApp.ViewModel
 
 
         public RendererViewModel(ViewModelBase parent)
-            : base(parent)
+            : base(parent, "Renderer", Place.LeftDown)
         {
-        }
-
-        public override string Title
-        {
-            get
-            {
-                return "RenderSystem";
-            }
         }
 
         public override void UpdateProperty()

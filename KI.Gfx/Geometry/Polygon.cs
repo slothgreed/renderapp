@@ -241,12 +241,13 @@ namespace KI.Gfx.Geometry
         public Dictionary<TextureKind, Texture> Textures { get; private set; } = new Dictionary<TextureKind, Texture>();
 
         /// <summary>
-        /// 更新処理
+        /// 頂点バッファの更新
         /// </summary>
         /// <param name="type">形状タイプ</param>
-        public virtual void Update(PrimitiveType type)
+        public virtual void UpdateVertexArray(PrimitiveType type)
         {
-            if (Index.ContainsKey(PrimitiveType.Lines))
+            if (type == PrimitiveType.Lines &&
+                Index.ContainsKey(PrimitiveType.Lines))
             {
                 Index[PrimitiveType.Lines].Clear();
 
@@ -260,7 +261,8 @@ namespace KI.Gfx.Geometry
                 }
             }
 
-            if (Index.ContainsKey(PrimitiveType.Triangles))
+            if (type == PrimitiveType.Triangles &&
+                Index.ContainsKey(PrimitiveType.Triangles))
             {
                 Index[PrimitiveType.Triangles].Clear();
 
@@ -276,12 +278,12 @@ namespace KI.Gfx.Geometry
 
 
         /// <summary>
-        /// 更新
+        /// 頂点インデックスの更新
         /// </summary>
         /// <param name="vert">頂点</param>
         /// <param name="idx">頂点Index</param>
         /// <param name="type">形状タイプ</param>
-        public void Update(List<Vertex> vert, List<int> idx, PrimitiveType type)
+        public void UpdateIndexBuffer(List<Vertex> vert, List<int> idx, PrimitiveType type)
         {
             vertexs = vert;
 

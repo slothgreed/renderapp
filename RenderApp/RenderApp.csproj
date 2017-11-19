@@ -189,8 +189,6 @@
     <Compile Include="ViewModel\AssetVM\RenderObjectViewModel.cs" />
     <Compile Include="ViewModel\RendererViewModel.cs" />
     <Compile Include="ViewModel\NodeVM\NodeItemViewModel.cs" />
-    <Compile Include="ViewModel\DockTabVM\TabControlViewModel.cs" />
-    <Compile Include="ViewModel\DockTabVM\TabItemViewModel.cs" />
     <Compile Include="ViewModel\ViewportViewModel.cs" />
     <Compile Include="ViewModel\WorkspaceViewModel.cs" />
     <Compile Include="ViewModel\WorkspaceViewModelT4.cs">
@@ -228,8 +226,8 @@
     <Compile Include="View\RenderObjectView.xaml.cs">
       <DependentUpon>RenderObjectView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\RenderSystemView.xaml.cs">
-      <DependentUpon>RenderSystemView.xaml</DependentUpon>
+    <Compile Include="View\RendererView.xaml.cs">
+      <DependentUpon>RendererView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Scene\Shader\HeightMap\HeightMap.cs" />
     <Compile Include="Scene\Shader\Line\CEffectLine.cs" />
@@ -246,12 +244,6 @@
     <Compile Include="Scene\Shader\Luminous\Luminous.cs" />
     <Compile Include="Scene\Shader\OffScreen\Sobel\CSobel.cs" />
     <Compile Include="Scene\Shader\OffScreen\SSAO\SSAO.cs" />
-    <Compile Include="View\TabControlView.xaml.cs">
-      <DependentUpon>TabControlView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\TabItemView.xaml.cs">
-      <DependentUpon>TabItemView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Scene\Shader\OffScreen\Defferd\CDeffed.cs" />
     <Compile Include="Scene\Shader\OffScreen\Shadow\CShadowMap.cs" />
     <Compile Include="Utility\TrueTypeFont.cs">
@@ -296,15 +288,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\RenderSystemView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\TabControlView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\TabItemView.xaml">
+    <Page Include="View\RendererView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

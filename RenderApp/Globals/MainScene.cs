@@ -1,5 +1,7 @@
 ﻿using KI.Asset;
+using KI.Foundation.Command;
 using KI.Renderer;
+using KI.Tool.Command;
 
 namespace RenderApp.Globals
 {
@@ -74,6 +76,9 @@ namespace RenderApp.Globals
             //renderBunny.RotateX(-90);
             //renderBunny.Scale = new OpenTK.Vector3(100);
             AddObject(renderBunny);
+
+            CommandManager.Instance.Execute(new CreateWireFrameCommand(renderBunny), null, false);
+            CommandManager.Instance.Execute(new CalculateVertexCurvature(renderBunny), null, false);
         }
     }
 }

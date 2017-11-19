@@ -11,7 +11,7 @@ namespace RenderApp.ViewModel
     /// <summary>
     /// Viewportのヴューモデル
     /// </summary>
-    public class ViewportViewModel : TabItemViewModel
+    public class ViewportViewModel : DockWindowViewModel
     {
         /// <summary>
         /// glContext
@@ -19,22 +19,11 @@ namespace RenderApp.ViewModel
         private WindowsFormsHost glContext;
 
         /// <summary>
-        /// ウィンドウタイトル
-        /// </summary>
-        public override string Title
-        {
-            get
-            {
-                return "RenderApp";
-            }
-        }
-
-        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="parent">親ビューモデル</param>
         public ViewportViewModel(ViewModelBase parent)
-            : base(parent)
+            : base(parent, "Render App", Place.Floating)
         {
         }
 

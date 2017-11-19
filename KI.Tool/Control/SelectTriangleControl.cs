@@ -27,7 +27,7 @@ namespace KI.Tool.Control
                     foreach (var vertex in mesh.AroundVertex)
                     {
                         vertex.IsSelect = true;
-                        renderObject.Polygon.Update(PrimitiveType.Points);
+                        renderObject.Polygon.UpdateVertexArray(PrimitiveType.Points);
                     }
                 }
             }

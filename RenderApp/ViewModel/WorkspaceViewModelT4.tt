@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using  KI.UI.ViewModel;
 namespace RenderApp.ViewModel
 {
 	public partial class WorkspaceViewModel
@@ -14,10 +15,8 @@ namespace RenderApp.ViewModel
 <# 
 	string[] _property =
 	{
-		"LeftUpDockPanel",
-		"LeftDownDockPanel",
-		"RightDockPanel",
-		"CenterDockPanel"
+		"AnchorablesSources",
+		"DocumentsSources",
 	};
 #>
 <#
@@ -25,8 +24,8 @@ namespace RenderApp.ViewModel
 	{
 #>
 
-		private TabControlViewModel _<#=_property[i]#>;
-		public TabControlViewModel <#=_property[i]#>
+		private ObservableCollection<ViewModelBase> _<#=_property[i]#>;
+		public ObservableCollection<ViewModelBase> <#=_property[i]#>
 		{
 			get
 			{

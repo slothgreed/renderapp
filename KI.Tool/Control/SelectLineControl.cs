@@ -26,7 +26,7 @@ namespace KI.Tool.Control
                     halfEdge.Start.IsSelect = true;
                     halfEdge.End.IsSelect = true;
 
-                    renderObject.Polygon.Update(OpenTK.Graphics.OpenGL.PrimitiveType.Lines);
+                    renderObject.Polygon.UpdateVertexArray(OpenTK.Graphics.OpenGL.PrimitiveType.Lines);
                 }
             }
 

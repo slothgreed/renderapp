@@ -10,21 +10,19 @@ using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel
 {
-    public partial class RootNodeViewModel : TabItemViewModel
+    public partial class RootNodeViewModel : DockWindowViewModel
     {
         private NodeItemViewModel activeNode;
 
         public RootNodeViewModel(ViewModelBase parent, KINode rootNode, string title)
-            : base(parent)
+            : base(parent, title, Place.LeftUp)
         {
-            Title = title;
             Initialize(parent, new List<KINode>() { rootNode });
         }
 
         public RootNodeViewModel(ViewModelBase parent, List<KINode> rootNodes, string title)
-            : base(parent)
+            : base(parent,title, Place.LeftUp)
         {
-            Title = title;
             Initialize(parent, rootNodes);
         }
 

@@ -135,7 +135,7 @@ namespace KI.Renderer
         public void SetPolygon(Polygon polygon)
         {
             Polygon = polygon;
-            SetupRenderPackage(polygon.Type);
+            SetupRenderPackage(polygon.Type, null);
 
             RenderMode = PrimitiveTypeToRenderMode(Polygon.Type);
         }
@@ -198,7 +198,8 @@ namespace KI.Renderer
         /// レンダーパッケージの設定
         /// </summary>
         /// <param name="type">形状種類</param>
-        public void SetupRenderPackage(PrimitiveType type)
+        /// <param name="color">色</param>
+        public void SetupRenderPackage(PrimitiveType type, List<Vector3> color)
         {
             if (!Packages.ContainsKey(type))
             {
@@ -206,6 +207,11 @@ namespace KI.Renderer
                 string vert = ShaderCreater.Instance.GetVertexShader(this);
                 string frag = ShaderCreater.Instance.GetFragShader(this);
                 Packages[type].Shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
+            }
+
+            if(color != null)
+            {
+                Packages[type].Color = color;
             }
 
             SetupBuffer(type);
@@ -307,14 +313,7 @@ namespace KI.Renderer
         /// <param name="e">イベント</param>
         private void OnPolygonUpdated(object sender, UpdatePolygonEventArgs e)
         {
-            SetupRenderPackage(e.Type);
-            if (e.Color != null)
-            {
-                Packages[e.Type].Color = e.Color;
-                Packages[e.Type].VertexBuffer.ColorList = e.Color;
-            }
-
-            RenderMode = RenderMode.PolygonLine;
+            SetupRenderPackage(e.Type,e.Color);
         }
     }
 }

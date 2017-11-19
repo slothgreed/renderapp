@@ -11,35 +11,15 @@ using RenderApp.Globals;
 
 namespace RenderApp.ViewModel
 {
-    public class RenderObjectViewModel : TabItemViewModel
+    public class RenderObjectViewModel : DockWindowViewModel
     {
-        private ICommand _CalculateVertexCurvature;
-        public ICommand CalculateVertexCurvature
-        {
-            get
-            {
-                if (_CalculateVertexCurvature == null)
-                {
-                    return _CalculateVertexCurvature = CreateCommand(CalculateVertexCurvatureCommand);
-                }
-
-                return _CalculateVertexCurvature;
-            }
-        }
-
-        private void CalculateVertexCurvatureCommand()
-        {
-            var command = new CalculateVertexCurvature(Workspace.MainScene.SelectNode);
-            KI.Foundation.Command.CommandManager.Instance.Execute(command, null, true);
-        }
-
         public RenderObjectViewModel(ViewModelBase parent)
-            : base(parent)
+            : base(parent,"No Geometry", Place.RightUp)
         {
         }
 
         public RenderObjectViewModel(ViewModelBase parent, RenderObject model)
-            : base(parent)
+            : base(parent, "No Geometry", Place.RightUp)
         {
             Model = model;
         }
@@ -97,21 +77,6 @@ namespace RenderApp.ViewModel
             {
                 Model.RenderMode = value;
                 OnPropertyChanged(nameof(SelectedRenderMode));
-            }
-        }
-
-        public override string Title
-        {
-            get
-            {
-                if (Model == null)
-                {
-                    return "UnkownGeometry";
-                }
-                else
-                {
-                    return Model.ToString();
-                }
             }
         }
 
@@ -211,7 +176,20 @@ namespace RenderApp.ViewModel
             }
         }
 
-        public RenderObject Model { get; private set; }
+        private RenderObject _model;
+        public RenderObject Model
+        {
+            get
+            {
+                return _model;
+            }
+
+            private set
+            {
+                _model = value;
+                Title = Model.ToString();
+            }
+        }
 
         public override void UpdateProperty()
         {

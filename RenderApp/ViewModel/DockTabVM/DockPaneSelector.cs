@@ -1,52 +1,117 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
+using Xceed.Wpf.AvalonDock.Layout;
 
 namespace RenderApp.ViewModel
 {
+
+    class DockPaneLayoutUpdateStrategy : ILayoutUpdateStrategy
+    {
+        public void AfterInsertAnchorable(LayoutRoot layout, LayoutAnchorable anchorableShown)
+        {
+
+        }
+
+        public void AfterInsertDocument(LayoutRoot layout, LayoutDocument anchorableShown)
+        {
+
+        }
+
+        public bool BeforeInsertAnchorable(LayoutRoot layout, LayoutAnchorable anchorableToShow, ILayoutContainer destinationContainer)
+        {
+            var dockVM = anchorableToShow.Content as DockWindowViewModel;
+            var panes = layout.Descendents().OfType<LayoutAnchorablePane>();
+            LayoutAnchorablePane anchorablePane = null;
+            switch (dockVM.InitPlace)
+            {
+                case DockWindowViewModel.Place.LeftUp:
+                    anchorablePane = panes.First(p => p.Name == "LeftUpPane");
+                    break;
+                case DockWindowViewModel.Place.LeftDown:
+                    anchorablePane = panes.First(p => p.Name == "LeftDownPane");
+                    break;
+                case DockWindowViewModel.Place.RightUp:
+                    anchorablePane = panes.First(p => p.Name == "RightUpPane");
+                    break;
+                case DockWindowViewModel.Place.RightDown:
+                    anchorablePane = panes.First(p => p.Name == "RightDownPane");
+                    break;
+                case DockWindowViewModel.Place.Floating:
+                    if (layout.FloatingWindows.Count == 0)
+                    {
+                        layout.FloatingWindows.Add(new LayoutAnchorableFloatingWindow());
+                    }
+                    layout.LeftSide.Children.First().Children.Add(anchorableToShow);
+                    break;
+                default:
+                    break;
+            }
+
+            if (anchorablePane == null)
+            {
+                return false;
+            }
+            else
+            {
+                anchorablePane.Children.Add(anchorableToShow);
+            }
+
+            return true;
+        }
+
+        public bool BeforeInsertDocument(LayoutRoot layout, LayoutDocument anchorableToShow, ILayoutContainer destinationContainer)
+        {
+            var panes = layout.Descendents().OfType<LayoutDocumentPane>().FirstOrDefault();
+
+            if (panes != null)
+            {
+                panes.Children.Add(anchorableToShow);
+            }
+            else
+            {
+                return false;
+            }
+
+            return true;
+        }
+    }
+
     class DockPaneTemplateSelector : DataTemplateSelector
     {
-        public DataTemplate AssetTemplate { get; set; }
-
+        public DataTemplate RootNodeTemplate { get; set; }
         public DataTemplate ShaderProgramTemplate { get; set; }
-
-        public DataTemplate ModelTemplate { get; set; }
-
         public DataTemplate ViewportTemplate { get; set; }
-
         public DataTemplate RenderObjectTemplate { get; set; }
-
-        public DataTemplate RenderTemplate { get; set; }
-
+        public DataTemplate RendererTemplate { get; set; }
         public DataTemplate VoxelTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             if (item is RootNodeViewModel)
             {
-                return AssetTemplate;
+                return RootNodeTemplate;
             }
-
-            if (item is ViewportViewModel)
+            else if (item is ViewportViewModel)
             {
                 return ViewportTemplate;
             }
-
-            if (item is RenderObjectViewModel)
+            else if (item is RenderObjectViewModel)
             {
                 return RenderObjectTemplate;
             }
-
-            if (item is RendererViewModel)
+            else if (item is RendererViewModel)
             {
-                return RenderTemplate;
+                return RendererTemplate;
             }
-
-            if (item is VoxelViewModel)
+            else if (item is VoxelViewModel)
             {
                 return VoxelTemplate;
             }
-
-            return base.SelectTemplate(item, container);
+            else
+            {
+                return base.SelectTemplate(item, container);
+            }
         }
     }
 }

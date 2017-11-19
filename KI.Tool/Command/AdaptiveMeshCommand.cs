@@ -61,7 +61,7 @@ namespace KI.Tool.Command
 
             var adaptiveMesh = new AdaptiveMeshAlgorithm(halfDS, 1);
 
-            halfDS.Update(OpenTK.Graphics.OpenGL.PrimitiveType.Triangles);
+            halfDS.UpdateVertexArray(OpenTK.Graphics.OpenGL.PrimitiveType.Triangles);
 
             return CommandResult.Success;
         }

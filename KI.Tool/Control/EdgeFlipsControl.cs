@@ -57,7 +57,7 @@ namespace KI.Tool.Control
                     selectObject = renderObject;
                     selectHalfEdge = halfEdge;
 
-                    renderObject.Polygon.Update(OpenTK.Graphics.OpenGL.PrimitiveType.Lines);
+                    renderObject.Polygon.UpdateVertexArray(OpenTK.Graphics.OpenGL.PrimitiveType.Lines);
 
                 }
             }
@@ -84,7 +84,7 @@ namespace KI.Tool.Control
                     }
 
                     selectHalfEdge = null;
-                    selectObject.Polygon.Update(OpenTK.Graphics.OpenGL.PrimitiveType.Lines);
+                    selectObject.Polygon.UpdateVertexArray(OpenTK.Graphics.OpenGL.PrimitiveType.Lines);
                 }
             }
 
@@ -98,7 +98,7 @@ namespace KI.Tool.Control
                 selectHalfEdge.Start.IsSelect = false;
                 selectHalfEdge.End.IsSelect = false;
                 selectHalfEdge = null;
-                selectObject.Polygon.Update(OpenTK.Graphics.OpenGL.PrimitiveType.Lines);
+                selectObject.Polygon.UpdateVertexArray(OpenTK.Graphics.OpenGL.PrimitiveType.Lines);
             }
 
             return base.UnBinding();

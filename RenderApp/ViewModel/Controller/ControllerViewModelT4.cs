@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
 namespace RenderApp.ViewModel
 {
-	public partial class VoxelViewModel : TabItemViewModel
+	public partial class VoxelViewModel : DockWindowViewModel
 	{
 		private ICommand _Execute;
 		public ICommand Execute
