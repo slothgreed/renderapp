@@ -294,13 +294,16 @@ namespace KI.Renderer
             }
 
             // デフォルトカラーよりすでに設定されているカラーを優先
-            if(Packages[type].Color != null)
+            if (Packages[type].Color != null &&
+               Packages[type].Color.Count != 0)
             {
                 color = Packages[type].Color;
             }
+
             Packages[type].VertexBuffer.SetBuffer(position, normal, color, texCoord);
 
-            if(indexBuffer != null)
+            if (indexBuffer != null &&
+                indexBuffer.Count != 0)
             {
                 Packages[type].VertexBuffer.SetIndexBuffer(indexBuffer);
             }

@@ -57,9 +57,11 @@
     <Compile Include="Light\SpotLight.cs" />
     <Compile Include="Loader\Converter\HalfEdgeConverter.cs" />
     <Compile Include="Loader\Converter\OBJConverter.cs" />
+    <Compile Include="Loader\Converter\PLY2Converter.cs" />
     <Compile Include="Loader\Converter\PLYConverter.cs" />
     <Compile Include="Loader\Converter\STLConverter.cs" />
     <Compile Include="Loader\Geometry\OBJLoader.cs" />
+    <Compile Include="Loader\Geometry\PLY2Loader.cs" />
     <Compile Include="Loader\Geometry\PLYLoader.cs" />
     <Compile Include="Loader\Geometry\STLLoader.cs" />
     <Compile Include="Loader\Image\HDRImage.cs" />

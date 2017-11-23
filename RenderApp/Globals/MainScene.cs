@@ -1,4 +1,5 @@
-﻿using KI.Asset;
+﻿using System.Linq;
+using KI.Asset;
 using KI.Foundation.Command;
 using KI.Renderer;
 using KI.Tool.Command;
@@ -69,16 +70,24 @@ namespace RenderApp.Globals
             //    ActiveScene.AddObject(b);
             //}
 
-            //var bunny = AssetFactory.Instance.CreateLoad3DModel(Global.KIDirectory + @"\renderapp\resource\model\armadillo.half");
-            var bunny = AssetFactory.Instance.CreateLoad3DModel(Global.KIDirectory + @"\renderapp\resource\model\bunny.half");
-            //List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/Sphere.stl");
-            var renderBunny = RenderObjectFactory.Instance.CreateRenderObject("bunny", bunny);
-            //renderBunny.RotateX(-90);
-            //renderBunny.Scale = new OpenTK.Vector3(100);
-            AddObject(renderBunny);
+            ////var bunny = AssetFactory.Instance.CreateLoad3DModel(Global.KIDirectory + @"\renderapp\resource\model\armadillo.half");
+            //var bunny = AssetFactory.Instance.CreateLoad3DModel(Global.KIDirectory + @"\renderapp\resource\model\bunny.half");
+            ////List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/Sphere.stl");
+            //var renderBunny = RenderObjectFactory.Instance.CreateRenderObject("bunny", bunny);
+            ////renderBunny.RotateX(-90);
+            ////renderBunny.Scale = new OpenTK.Vector3(100);
+            //AddObject(renderBunny);
 
-            CommandManager.Instance.Execute(new CreateWireFrameCommand(renderBunny), null, false);
-            CommandManager.Instance.Execute(new CalculateVertexCurvature(renderBunny), null, false);
+            var moai = new PLY2Converter(@"E:\download\Crest\moai.ply2", @"E:\download\Crest\convertMoai.ply2");
+            var moaiModel = RenderObjectFactory.Instance.CreateRenderObjects("moai", moai);
+            foreach(var m in moaiModel)
+            {
+                m.Scale = new OpenTK.Vector3(100);
+                AddObject(m);
+            }
+
+            CommandManager.Instance.Execute(new CreateWireFrameCommand(moaiModel.First()), null, false);
+            //CommandManager.Instance.Execute(new CalculateVertexCurvature(renderBunny), null, false);
         }
     }
 }
