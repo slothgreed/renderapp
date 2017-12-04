@@ -78,11 +78,11 @@ namespace RenderApp.Globals
             ////renderBunny.Scale = new OpenTK.Vector3(100);
             //AddObject(renderBunny);
 
-            var moai = new PLY2Converter(@"E:\download\Crest\moai.ply2", @"E:\download\Crest\convertMoai.ply2");
+            var moai = new PLY2Converter(@"E:\MyProgram\CrestCode\moai.ply2", @"E:\MyProgram\CrestCode\convertMoai.ply2");
             var moaiModel = RenderObjectFactory.Instance.CreateRenderObjects("moai", moai);
             foreach(var m in moaiModel)
             {
-                m.Scale = new OpenTK.Vector3(100);
+                m.Scale = new OpenTK.Vector3(50);
                 AddObject(m);
             }
 

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using KI.Asset.Loader.Loader;
 using KI.Gfx.Geometry;
@@ -70,12 +72,91 @@ namespace KI.Asset
 
                 lines.Add(new Line(vertex1, t1vec));
                 lines.Add(new Line(vertex2, t2vec));
-
             }
 
             Polygon info = new Polygon(plyData.FileName, vertexs,plyData.FaceIndex,PrimitiveType.Triangles);
             Polygon info2 = new Polygon(plyData.FileName, lines);
-            Polygons = new Polygon[] { info ,info2};
+
+            string filePath3 = @"E:\MyProgram\CrestCode\ravines.txt";
+            string filePath4 = @"E:\MyProgram\CrestCode\ridges.txt";
+            string[] fileStream = File.ReadAllLines(filePath3, System.Text.Encoding.GetEncoding("Shift_JIS"));
+            Polygon info3 = ReadData(fileStream);
+            string[] fileStream2 = File.ReadAllLines(filePath4, System.Text.Encoding.GetEncoding("Shift_JIS"));
+            Polygon info4 = ReadData(fileStream2);
+
+            Polygons = new Polygon[] { info, info2, info3, info4 };
+        }
+
+        private Polygon ReadData(string[] fileStream)
+        {
+            try
+            {
+                int vertexNum = 0;
+                int faceNum = 0;
+                int connectNum = 0;
+                List<Vector4> vertexs = new List<Vector4>();
+                float x = 0, y = 0, z = 0, w = 0;
+                for (int i = 0; i < fileStream.Length; i++)
+                {
+                    var lineData = fileStream[i]
+                        .Split(' ')
+                        .Where(p => !string.IsNullOrEmpty(p))
+                        .ToArray();
+                    if (i == 0)
+                    {
+                        vertexNum = int.Parse(lineData[0]);
+                        continue;
+                    }
+                    if (i == 1)
+                    {
+                        faceNum = int.Parse(lineData[0]);
+                        continue;
+                    }
+                    if (i == 2)
+                    {
+                        connectNum = int.Parse(lineData[0]);
+                        continue;
+                    }
+                    if (vertexs.Count != vertexNum)
+                    {
+                        x = float.Parse(lineData[0]);
+                        y = float.Parse(lineData[1]);
+                        z = float.Parse(lineData[2]);
+                        w = float.Parse(lineData[3]);
+                        vertexs.Add(new Vector4(x, y, z, w));
+                        continue;
+                    }
+                }
+                List<List<Vertex>> links = new List<List<Vertex>>();
+                for (int i = 0; i < connectNum; i++)
+                {
+                    links.Add(new List<Vertex>());
+                }
+
+                for (int i = 0; i < vertexs.Count; i++)
+                {
+                    links[(int)vertexs[i].W].Add(new Vertex(0, new Vector3(vertexs[i].X, vertexs[i].Y, vertexs[i].Z), Vector3.Zero));
+                }
+
+                var lines = new List<Line>();
+                foreach (var link in links)
+                {
+                    for (int i = 0; i < link.Count - 1; i++)
+                    {
+                        var line = new Line(link[i], link[i + 1]);
+                        lines.Add(line);
+                    }
+                }
+
+                return new Polygon(plyData.FileName, lines);
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
+            return null;
         }
     }
 }
