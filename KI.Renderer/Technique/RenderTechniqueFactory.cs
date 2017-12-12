@@ -28,12 +28,21 @@ namespace KI.Renderer
     /// </summary>
     public class RenderTechniqueFactory : KIFactoryBase<RenderTechnique>
     {
+        /// <summary>
+        /// シェーダファイルクラス
+        /// </summary>
         private class ShaderFile
         {
             public string Vertex;
             public string Frag;
+            //public string Geom;
+            //public string Tes;
+            //public string Tcs;
         }
 
+        /// <summary>
+        /// デフォルトシェーダ
+        /// </summary>
         private Dictionary<RenderTechniqueType, ShaderFile> DefaultShader;
 
         /// <summary>
