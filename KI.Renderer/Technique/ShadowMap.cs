@@ -8,19 +8,11 @@ namespace KI.Renderer
     public class ShadowMap : RenderTechnique
     {
         /// <summary>
-        /// 頂点シェーダ
-        /// </summary>
-        private static string vertexShader = Global.ShaderDirectory + @"\shadow.vert";
-
-        /// <summary>
-        /// フラグシェーダ
-        /// </summary>
-        private static string fragShader = Global.ShaderDirectory + @"\shadow.frag";
-
-        /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ShadowMap()
+        /// <param name="vertexShader">頂点シェーダファイル</param>
+        /// <param name="fragShader">フラグメントシェーダファイル</param>
+        public ShadowMap(string vertexShader, string fragShader)
             : base("ShadowMap", vertexShader, fragShader, RenderTechniqueType.Shadow, RenderType.Original)
         {
         }

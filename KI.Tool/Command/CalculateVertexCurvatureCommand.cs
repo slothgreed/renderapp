@@ -7,6 +7,7 @@ using KI.Foundation.Command;
 using KI.Foundation.Core;
 using KI.Foundation.Parameter;
 using KI.Foundation.Utility;
+using KI.Gfx.Geometry;
 using KI.Renderer;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
@@ -16,7 +17,7 @@ namespace KI.Tool.Command
     /// <summary>
     /// 曲率の算出コマンド
     /// </summary>
-    public class CalculateVertexCurvature : ICommand
+    public class CalculateVertexCurvatureCommand : ICommand
     {
         /// <summary>
         /// レンダリング形状
@@ -27,7 +28,7 @@ namespace KI.Tool.Command
         /// コンストラクタ
         /// </summary>
         /// <param name="asset">算出オブジェクト</param>
-        public CalculateVertexCurvature(KIObject asset)
+        public CalculateVertexCurvatureCommand(KIObject asset)
         {
             renderObject = asset as RenderObject;
         }
@@ -77,6 +78,25 @@ namespace KI.Tool.Command
             halfDS.AddParameter(maxParam);
             halfDS.AddParameter(minVecParam);
             halfDS.AddParameter(maxVecParam);
+
+            var dirLine = new List<Line>();
+            foreach (var position in halfDS.HalfEdgeVertexs)
+            {
+                Vertex minStart = new Vertex(0, position.Position/* - position.MinDirection*/, Vector3.UnitX);
+                Vertex minEnd = new Vertex(0, position.Position + position.MinDirection, Vector3.UnitX);
+
+                Vertex maxStart = new Vertex(0, position.Position /*- position.MaxDirection*/, Vector3.UnitY);
+                Vertex maxEnd = new Vertex(0, position.Position + position.MaxDirection, Vector3.UnitY);
+
+                dirLine.Add(new Line(minStart, minEnd));
+                dirLine.Add(new Line(maxStart, maxEnd));
+            }
+
+            RenderObject dirLineObject = RenderObjectFactory.Instance.CreateRenderObject("Principal Direction");
+            var lines = new Polygon(halfDS.Name + "Direction", dirLine);
+            dirLineObject.SetPolygon(lines);
+            dirLineObject.ModelMatrix = renderObject.ModelMatrix;
+            Global.RenderSystem.ActiveScene.AddObject(dirLineObject);
 
             return CommandResult.Success;
         }

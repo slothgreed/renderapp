@@ -20,7 +20,7 @@ namespace RenderApp.Globals
             //RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Deferred));
             //RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Selection));
             //RenderQueue.AddTechnique((OutputBuffer)RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output));
-            OutputBuffer = new OutputBuffer();
+            OutputBuffer = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output) as OutputBuffer;
             OutputTexture = RenderQueue.OutputTexture(RenderTechniqueType.GBuffer).ToArray()[(int)GBuffer.GBufferOutputType.Color];
 
             //var textures = RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);

@@ -11,19 +11,9 @@ namespace KI.Renderer
     public partial class SSLIC : RenderTechnique
     {
         /// <summary>
-        /// 頂点シェーダ
-        /// </summary>
-        private static string vertexShader = Global.ShaderDirectory + @"\PostEffect\sslic.vert";
-
-        /// <summary>
-        /// フラグシェーダ
-        /// </summary>
-        private static string fragShader = Global.ShaderDirectory + @"\PostEffect\sslic.frag";
-
-        /// <summary>
         /// コンストラクタ
         /// </summary>
-        public SSLIC()
+        public SSLIC(string vertexShader, string fragShader)
             : base("SSLIC", vertexShader, fragShader, RenderTechniqueType.SSLIC, RenderType.Original)
         {
         }

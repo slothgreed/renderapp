@@ -9,19 +9,9 @@ namespace KI.Renderer
     public class ImageBasedLighting : RenderTechnique
     {
         /// <summary>
-        /// 頂点シェーダ
-        /// </summary>
-        private static string vertexShader = Global.ShaderDirectory + @"\Lighthing\ibl.vert";
-
-        /// <summary>
-        /// フラグシェーダ
-        /// </summary>
-        private static string fragShader = Global.ShaderDirectory + @"\Lighthing\ibl.frag";
-
-        /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ImageBasedLighting()
+        public ImageBasedLighting(string vertexShader, string fragShader)
             : base("IBL", vertexShader, fragShader, RenderTechniqueType.IBL, RenderType.Original)
         {
         }

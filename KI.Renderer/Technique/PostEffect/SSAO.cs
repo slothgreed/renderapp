@@ -8,19 +8,9 @@ namespace KI.Renderer
     public partial class SSAO : RenderTechnique
     {
         /// <summary>
-        /// 頂点シェーダ
-        /// </summary>
-        private static string vertexShader = Global.ShaderDirectory + @"\ssao.vert";
-
-        /// <summary>
-        /// フラグシェーダ
-        /// </summary>
-        private static string fragShader = Global.ShaderDirectory + @"\ssao.frag";
-
-        /// <summary>
         /// コンストラクタ
         /// </summary>
-        public SSAO()
+        public SSAO(string vertexShader, string fragShader)
             : base("SSAO", vertexShader, fragShader, RenderTechniqueType.SSAO, RenderType.OffScreen)
         {
         }

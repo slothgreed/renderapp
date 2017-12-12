@@ -9,19 +9,9 @@ namespace KI.Renderer
     public partial class OutputBuffer : RenderTechnique
     {
         /// <summary>
-        /// 頂点シェーダ
-        /// </summary>
-        private static string vertexShader = Global.ShaderDirectory + @"\PostEffect\Output.vert";
-
-        /// <summary>
-        /// フラグシェーダ
-        /// </summary>
-        private static string fragShader = Global.ShaderDirectory + @"\PostEffect\Output.frag";
-
-        /// <summary>
         /// コンストラクタ
         /// </summary>
-        public OutputBuffer()
+        public OutputBuffer(string vertexShader, string fragShader)
             : base("OutputBuffer", vertexShader, fragShader, RenderTechniqueType.Output, RenderType.Original)
         {
             Plane = RenderObjectFactory.Instance.CreateRenderObject("OutputBuffer", AssetFactory.Instance.CreatePlane("OutputPlane"));

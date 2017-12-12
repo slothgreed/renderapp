@@ -9,19 +9,9 @@ namespace KI.Renderer
     public partial class Selection : RenderTechnique
     {
         /// <summary>
-        /// 頂点シェーダ
-        /// </summary>
-        private static string vertexShader = Global.ShaderDirectory + @"\PostEffect\Selection.vert";
-
-        /// <summary>
-        /// フラグシェーダ
-        /// </summary>
-        private static string fragShader = Global.ShaderDirectory + @"\PostEffect\Selection.frag";
-
-        /// <summary>
         /// コンストラクタ
         /// </summary>
-        public Selection()
+        public Selection(string vertexShader, string fragShader)
             : base("SelectionBuffer", vertexShader, fragShader, RenderTechniqueType.Selection, RenderType.OffScreen)
         {
             var textures = Global.RenderSystem.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);

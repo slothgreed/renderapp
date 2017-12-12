@@ -9,19 +9,9 @@ namespace KI.Renderer
     public class DeferredBuffer : RenderTechnique
     {
         /// <summary>
-        /// 頂点シェーダ
-        /// </summary>
-        private static string vertexShader = Global.ShaderDirectory + @"\Lighthing\Defferd.vert";
-
-        /// <summary>
-        /// フラグシェーダ
-        /// </summary>
-        private static string fragShader = Global.ShaderDirectory + @"\Lighthing\Defferd.frag";
-
-        /// <summary>
         /// コンストラクタ
         /// </summary>
-        public DeferredBuffer()
+        public DeferredBuffer(string vertexShader, string fragShader)
             : base("Deferred", vertexShader, fragShader, RenderTechniqueType.Deferred, RenderType.Original)
         {
         }
