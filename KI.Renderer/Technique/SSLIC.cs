@@ -53,7 +53,7 @@ namespace KI.Renderer
                 GL.Enable(EnableCap.Blend);
                 GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
                 RenderTarget.ClearBuffer();
-                RenderTarget.BindRenderTarget(OutputTexture.ToArray());
+                RenderTarget.BindRenderTarget(OutputTexture);
                 Plane.Shader = ShaderItem;
                 Plane.Render(scene);
                 RenderTarget.UnBindRenderTarget();

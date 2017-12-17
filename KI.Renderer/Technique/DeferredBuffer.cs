@@ -23,7 +23,7 @@ namespace KI.Renderer
         public override void Render(IScene scene)
         {
             RenderTarget.ClearBuffer();
-            RenderTarget.BindRenderTarget(OutputTexture.ToArray());
+            RenderTarget.BindRenderTarget(OutputTexture);
             foreach (var light in scene.RootNode.AllChildren())
             {
                 if (light.KIObject is Light)

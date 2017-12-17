@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using KI.Asset;
 using KI.Foundation.Core;
@@ -45,8 +46,8 @@ namespace KI.Renderer
             : base(name)
         {
             renderType = type;
-            Init(vertexShader, fragShader);
             Technique = tech;
+            Init(vertexShader, fragShader);
         }
 
         /// <summary>
@@ -76,7 +77,7 @@ namespace KI.Renderer
         /// <summary>
         /// 出力テクスチャ
         /// </summary>
-        public List<Texture> OutputTexture { get; set; }
+        public Texture[] OutputTexture { get; protected set; }
 
         /// <summary>
         /// ポストプロセス用平面
@@ -110,18 +111,16 @@ namespace KI.Renderer
             if (renderType == RenderType.Original)
             {
                 Logger.Log(Logger.LogLevel.Error, "RenderTechnique : Not Defined Original Render");
+                throw new NotImplementedException();
             }
 
             if (renderType == RenderType.OffScreen)
             {
-                if (Plane != null)
-                {
-                    RenderTarget.ClearBuffer();
-                    RenderTarget.BindRenderTarget(OutputTexture.ToArray());
-                    Plane.Shader = ShaderItem;
-                    Plane.Render(scene);
-                    RenderTarget.UnBindRenderTarget();
-                }
+                RenderTarget.ClearBuffer();
+                RenderTarget.BindRenderTarget(OutputTexture);
+                Plane.Shader = ShaderItem;
+                Plane.Render(scene);
+                RenderTarget.UnBindRenderTarget();
             }
         }
 
@@ -133,24 +132,14 @@ namespace KI.Renderer
         public abstract void Initialize();
 
         /// <summary>
-        /// シェーダの生成
-        /// </summary>
-        /// <param name="vertexShader">頂点シェーダ</param>
-        /// <param name="fragShader">フラグメントシェーダ</param>
-        public virtual void CreateShader(string vertexShader, string fragShader)
-        {
-            ShaderItem = ShaderFactory.Instance.CreateShaderVF(vertexShader, fragShader);
-        }
-
-        /// <summary>
         /// レンダーターゲットの作成
         /// </summary>
         /// <param name="width">横</param>
         /// <param name="height">縦</param>
         public virtual void CreateRenderTarget(int width, int height)
         {
-            OutputTexture.Add(TextureFactory.Instance.CreateTexture("Texture:" + Name, width, height));
-            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget("RenderTarget:" + Name, width, height, OutputTexture.Count);
+            OutputTexture = new Texture[] { TextureFactory.Instance.CreateTexture("Texture:" + Name, width, height) };
+            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget("RenderTarget:" + Name, width, height, OutputTexture.Length);
             //RenderTarget = RenderTargetFactory.Instance.Default;
             RenderTarget.SizeChanged(width, height);
         }
@@ -181,12 +170,12 @@ namespace KI.Renderer
         /// <param name="fragShader">フラグシェーダ</param>
         private void Init(string vertexShader = null, string fragShader = null)
         {
+            // gbuffer用 以外はシェーダ作成
             if (vertexShader != null && fragShader != null)
             {
-                CreateShader(vertexShader, fragShader);
+                ShaderItem = ShaderFactory.Instance.CreateShaderVF(vertexShader, fragShader);
             }
 
-            OutputTexture = new List<Texture>();
             Plane = RenderObjectFactory.Instance.CreateRenderObject(Name, AssetFactory.Instance.CreatePlane(Name));
             CreateRenderTarget(KI.Gfx.GLUtil.DeviceContext.Instance.Width, KI.Gfx.GLUtil.DeviceContext.Instance.Height);
             Initialize();

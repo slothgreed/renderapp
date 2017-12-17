@@ -143,7 +143,7 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="type">テクニックのタイプ</param>
         /// <returns>出力テクスチャ</returns>
-        public List<Texture> OutputTexture(RenderTechniqueType type)
+        public Texture[] OutputTexture(RenderTechniqueType type)
         {
             foreach (var technique in techniques)
             {

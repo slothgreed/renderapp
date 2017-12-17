@@ -45,7 +45,7 @@ namespace KI.Gfx.Render
         /// <summary>
         /// 描画場所
         /// </summary>
-        public List<DrawBuffersEnum> OutputBuffers { get; set; } = new List<DrawBuffersEnum>();
+        public List<DrawBuffersEnum> OutputBuffers { get; private set; } = new List<DrawBuffersEnum>();
 
         /// <summary>
         /// フレームバッファ

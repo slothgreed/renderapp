@@ -45,23 +45,15 @@ namespace KI.Renderer
         /// <param name="height">縦</param>
         public override void CreateRenderTarget(int width, int height)
         {
-            Texture[] texture = new Texture[4];
-            texture[0] = TextureFactory.Instance.CreateTexture("GPosit", width, height);
-            texture[1] = TextureFactory.Instance.CreateTexture("GNormal", width, height);
-            texture[2] = TextureFactory.Instance.CreateTexture("GColor", width, height);
-            texture[3] = TextureFactory.Instance.CreateTexture("GLight", width, height);
+            OutputTexture = new Texture[4]
+            {
+                TextureFactory.Instance.CreateTexture("GPosit", width, height),
+                TextureFactory.Instance.CreateTexture("GNormal", width, height),
+                TextureFactory.Instance.CreateTexture("GColor", width, height),
+                TextureFactory.Instance.CreateTexture("GLight", width, height)
+            };
 
-            //RenderApp.Globals.Project.ActiveProject.AddChild(texture[0]);
-            //RenderApp.Globals.Project.ActiveProject.AddChild(texture[1]);
-            //RenderApp.Globals.Project.ActiveProject.AddChild(texture[2]);
-            //RenderApp.Globals.Project.ActiveProject.AddChild(texture[3]);
-
-            OutputTexture.Add(texture[0]);
-            OutputTexture.Add(texture[1]);
-            OutputTexture.Add(texture[2]);
-            OutputTexture.Add(texture[3]);
-
-            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget(Name, width, height, OutputTexture.Count);
+            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget(Name, width, height, OutputTexture.Length);
         }
 
         /// <summary>
@@ -78,7 +70,7 @@ namespace KI.Renderer
         public override void Render(IScene scene)
         {
             ClearBuffer();
-            RenderTarget.BindRenderTarget(OutputTexture.ToArray());
+            RenderTarget.BindRenderTarget(OutputTexture);
             foreach (var asset in scene.RootNode.AllChildren())
             {
                 if (asset.KIObject is RenderObject)
