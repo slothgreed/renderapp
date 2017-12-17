@@ -2,12 +2,12 @@
 using KI.Gfx.KITexture;
 using OpenTK;
 
-namespace KI.Asset
+namespace KI.Renderer
 {
     /// <summary>
     /// 光源
     /// </summary>
-    public abstract class Light : KIObject
+    public abstract class Light : SceneNode
     {
         /// <summary>
         /// コンストラクタ
@@ -34,22 +34,32 @@ namespace KI.Asset
         /// <summary>
         /// 位置
         /// </summary>
-        public Vector3 Position { get; protected set; }
+        public Vector3 Position { get; set; }
 
         /// <summary>
         /// 方向
         /// </summary>
-        public Vector3 Direction { get; protected set; }
+        public Vector3 Direction { get; set; }
 
         /// <summary>
         /// 強度
         /// </summary>
-        public float Shiness { get; protected set; }
+        public float Shiness { get; set; }
 
         /// <summary>
-        /// 色
+        /// 環境光
         /// </summary>
-        public Vector3 Color { get; protected set; }
+        public Vector3 AmbientColor { get; set; }
+
+        /// <summary>
+        /// 拡散光
+        /// </summary>
+        public Vector3 DiffuseColor { get; set; }
+
+        /// <summary>
+        /// 反射光
+        /// </summary>
+        public Vector3 SpecularColor { get; set; }
 
         /// <summary>
         /// マトリクス

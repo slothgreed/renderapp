@@ -37,16 +37,6 @@ namespace KI.Asset
         }
 
         /// <summary>
-        /// ライトの作成
-        /// </summary>
-        /// <param name="name">名前</param>
-        /// <returns>ライト</returns>
-        public Light CreateLight(string name)
-        {
-            return new PointLight(name, new Vector3(-11, 300, -18), Vector3.Zero);
-        }
-
-        /// <summary>
         /// 軸の作成
         /// </summary>
         /// <param name="name">名前</param>

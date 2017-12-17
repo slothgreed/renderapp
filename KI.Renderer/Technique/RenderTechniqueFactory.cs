@@ -62,6 +62,7 @@ namespace KI.Renderer
             DefaultShader.Add(RenderTechniqueType.Dof,       new ShaderFile() { Vertex = postEffect + @"\dof.vert",         Frag = postEffect + @"\dof.frag" });
             DefaultShader.Add(RenderTechniqueType.Sobel,     new ShaderFile() { Vertex = postEffect + @"\sobel.vert",       Frag = postEffect + @"\sobel.frag" });
             DefaultShader.Add(RenderTechniqueType.SSAO,      new ShaderFile() { Vertex = postEffect + @"\ssao.vert",        Frag = postEffect + @"\ssao.frag" });
+            DefaultShader.Add(RenderTechniqueType.Bloom,     new ShaderFile() { Vertex = postEffect + @"\bloom.vert",       Frag = postEffect + @"\bloom.frag" });
             DefaultShader.Add(RenderTechniqueType.SSLIC,     new ShaderFile() { Vertex = postEffect + @"\sslic.vert",       Frag = postEffect + @"\sslic.frag" });
             DefaultShader.Add(RenderTechniqueType.Selection, new ShaderFile() { Vertex = postEffect + @"\selection.vert",   Frag = postEffect + @"\selection.frag" });
             DefaultShader.Add(RenderTechniqueType.Output,    new ShaderFile() { Vertex = postEffect + @"\output.vert",      Frag = postEffect + @"\output.frag" });

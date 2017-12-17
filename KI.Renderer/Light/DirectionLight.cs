@@ -1,21 +1,26 @@
 ﻿using OpenTK;
 
-namespace KI.Asset
+namespace KI.Renderer
 {
     /// <summary>
-    /// 点光源
+    /// 平行光源
     /// </summary>
-    public class PointLight : Light
+    public class DirectionLight : Light
     {
         /// <summary>
-        /// 点光源
+        /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="lightPos">位置</param>
         /// <param name="lightDir">方向</param>
-        public PointLight(string name, Vector3 lightPos, Vector3 lightDir)
+        public DirectionLight(string name, Vector3 lightPos, Vector3 lightDir)
             : base(name, lightPos, lightDir)
         {
+        }
+
+        public override void RenderCore(IScene scene)
+        {
+            // TODO:
         }
     }
 }

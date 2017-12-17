@@ -29,7 +29,7 @@ namespace KI.Renderer
         {
             RootNode = new KINode("ROOT");
             MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
-            SunLight = AssetFactory.Instance.CreateLight("SunLight");
+            SunLight = RenderObjectFactory.Instance.CreateDirectionLight("SunLight", WorldMax, Vector3.Zero);
             AddObject(MainCamera);
             AddObject(SunLight);
         }

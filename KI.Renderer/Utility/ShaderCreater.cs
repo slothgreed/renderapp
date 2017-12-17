@@ -47,12 +47,6 @@ namespace KI.Asset
         /// <returns>ファイルパス</returns>
         public string GetVertexShader(RenderObject renderObject)
         {
-            string shaderPath = GetTextureFragShader(renderObject.Polygon);
-            if (shaderPath != null)
-            {
-                return shaderPath;
-            }
-
             if (renderObject.Polygon.Type == PrimitiveType.Lines ||
                 renderObject.Polygon.Type == PrimitiveType.Points)
             {
@@ -76,6 +70,12 @@ namespace KI.Asset
         /// <returns>ファイルパス</returns>
         public string GetFragShader(RenderObject renderObject)
         {
+            string shaderPath = GetTextureFragShader(renderObject.Polygon);
+            if (shaderPath != null)
+            {
+                return shaderPath;
+            }
+
             if (renderObject.Polygon.Type == PrimitiveType.Lines ||
                 renderObject.Polygon.Type == PrimitiveType.Points)
             {

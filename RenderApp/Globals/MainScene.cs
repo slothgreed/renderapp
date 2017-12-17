@@ -2,6 +2,7 @@
 using KI.Foundation.Command;
 using KI.Renderer;
 using KI.Tool.Command;
+using OpenTK;
 
 namespace RenderApp.Globals
 {
@@ -23,16 +24,17 @@ namespace RenderApp.Globals
         /// </summary>
         public override void Initialize()
         {
-            //List<RenderObject> axis = AssetFactory.Instance.CreateAxis("axis", Vector3.Zero, ActiveScene.WorldMax);
-            //foreach(var a in axis)
+            var axis = AssetFactory.Instance.CreateAxis("axis", Vector3.Zero, WorldMax);
+            var axisObject = RenderObjectFactory.Instance.CreateRenderObject(axis.ToString(), axis);
+            AddObject(axisObject);
+
+            //var sponzas = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/crytek-sponza/sponza.obj");
+            //var sponzaObject = RenderObjectFactory.Instance.CreateRenderObjects("sponza",sponzas);
+            //foreach (var sponza in sponzaObject)
             //{
-            //    ActiveScene.AddObject(a);
+            //    AddObject(sponza);
             //}
-            //List<RenderObject> sponzas = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/crytek-sponza/sponza.obj");
-            //foreach (var sponza in sponzas)
-            //{
-            //    ActiveScene.AddObject(sponza);
-            //}
+
             //List<RenderObject> ducks = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/duck/duck.obj");
             //foreach (var duck in ducks)
             //{

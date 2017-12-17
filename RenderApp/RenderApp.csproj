@@ -176,6 +176,7 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="ViewModel\Controller\IControllerViewModelBase.cs" />
+    <Compile Include="ViewModel\LightViewModel.cs" />
     <Compile Include="ViewModel\NodeVM\RootNodeViewModelT4.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -201,6 +202,9 @@
     </Compile>
     <Compile Include="View\DebugWindow.xaml.cs">
       <DependentUpon>DebugWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\LightView.xaml.cs">
+      <DependentUpon>LightView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\RootNodeView.xaml.cs">
       <DependentUpon>RootNodeView.xaml</DependentUpon>
@@ -261,6 +265,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DebugWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\LightView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

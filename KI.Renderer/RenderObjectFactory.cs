@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using KI.Asset;
 using KI.Foundation.Core;
+using OpenTK;
 
 namespace KI.Renderer
 {
@@ -61,5 +62,29 @@ namespace KI.Renderer
 
             return list;
         }
+
+        /// <summary>
+        /// ライトの作成
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// 
+        /// <returns>ライト</returns>
+        public Light CreatePointLight(string name, Vector3 lightPos)
+        {
+            return new PointLight(name, lightPos);
+        }
+
+        /// <summary>
+        /// ライトの作成
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <param name="lightPos">位置</param>
+        /// <param name="direction">向き</param>
+        /// <returns>ライト</returns>
+        public Light CreateDirectionLight(string name, Vector3 lightPos, Vector3 direction)
+        {
+            return new DirectionLight(name, lightPos, direction);
+        }
+
     }
 }

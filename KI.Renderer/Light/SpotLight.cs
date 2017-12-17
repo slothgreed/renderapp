@@ -1,6 +1,6 @@
 ﻿using OpenTK;
 
-namespace KI.Asset
+namespace KI.Renderer
 {
     /// <summary>
     /// スポットライト
@@ -20,5 +20,10 @@ namespace KI.Asset
         public float SpotRange { get; private set; }
 
         public float Fallof { get; private set; }
+
+        public override void RenderCore(IScene scene)
+        {
+            // TODO:
+        }
     }
 }

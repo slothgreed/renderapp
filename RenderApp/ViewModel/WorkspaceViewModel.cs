@@ -58,11 +58,16 @@ namespace RenderApp.ViewModel
             }
 
             DockWindowViewModel vm = null;
-            if (node.KIObject is SceneNode)
+            if (node.KIObject is RenderObject)
             {
                 vm = new RenderObjectViewModel(this, node.KIObject as RenderObject);
                 vm.PropertyChanged += RenderObjectViewModel_PropertyChanged;
                 Workspace.MainScene.SelectNode = (SceneNode)node.KIObject;
+            }
+            else
+            {
+                vm = new LightViewModel(this, node.KIObject as Light);
+
             }
 
             ReplaceTabWindow(vm);
@@ -70,9 +75,9 @@ namespace RenderApp.ViewModel
 
         public void ReplaceTabWindow(DockWindowViewModel window)
         {
-            if (window is RenderObjectViewModel)
+            if (window is RenderObjectViewModel || window is LightViewModel)
             {
-                var oldItem = AnchorablesSources.FirstOrDefault(p => p is RenderObjectViewModel);
+                var oldItem = AnchorablesSources.FirstOrDefault(p => p is RenderObjectViewModel || p is LightViewModel);
                 AnchorablesSources.Add(window);
                 AnchorablesSources.Remove(oldItem);
             }

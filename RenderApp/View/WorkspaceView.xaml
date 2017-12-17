@@ -30,6 +30,11 @@
                             <v:RootNodeView />
                         </DataTemplate>
                     </local:DockPaneTemplateSelector.RootNodeTemplate>
+                    <local:DockPaneTemplateSelector.LightTemplate>
+                        <DataTemplate>
+                            <v:LightView />
+                        </DataTemplate>
+                    </local:DockPaneTemplateSelector.LightTemplate>
                     <local:DockPaneTemplateSelector.RenderObjectTemplate>
                         <DataTemplate>
                             <v:RenderObjectView />
