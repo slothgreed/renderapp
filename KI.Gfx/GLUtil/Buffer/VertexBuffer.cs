@@ -1,13 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using KI.Foundation.Utility;
-using KI.Gfx.Geometry;
-using KI.Gfx.GLUtil;
-using KI.Gfx.GLUtil.Buffer;
+﻿using KI.Foundation.Utility;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace KI.Renderer
+namespace KI.Gfx.GLUtil.Buffer
 {
     /// <summary>
     /// 頂点バッファ
@@ -46,11 +41,11 @@ namespace KI.Renderer
         /// <summary>
         /// 頂点情報
         /// </summary>
-        public List<Vector3> PositionList
+        private Vector3[] PositionList
         {
             set
             {
-                if (value.Count == 0)
+                if (value.Length == 0)
                 {
                     Logger.Log(Logger.LogLevel.Error, "vertex num error");
                 }
@@ -67,11 +62,11 @@ namespace KI.Renderer
         /// <summary>
         /// 法線情報
         /// </summary>
-        public List<Vector3> NormalList
+        private Vector3[] NormalList
         {
             set
             {
-                if (value.Count == 0)
+                if (value.Length == 0)
                 {
                     Logger.Log(Logger.LogLevel.Error, "vertex num error");
                 }
@@ -88,11 +83,11 @@ namespace KI.Renderer
         /// <summary>
         /// カラー情報
         /// </summary>
-        public List<Vector3> ColorList
+        private Vector3[] ColorList
         {
             set
             {
-                if (value.Count == 0)
+                if (value.Length == 0)
                 {
                     Logger.Log(Logger.LogLevel.Error, "vertex num error");
                 }
@@ -108,11 +103,11 @@ namespace KI.Renderer
         /// <summary>
         /// テクスチャ座標情報
         /// </summary>
-        public List<Vector2> TexCoordList
+        private Vector2[] TexCoordList
         {
             set
             {
-                if (value.Count == 0)
+                if (value.Length == 0)
                 {
                     Logger.Log(Logger.LogLevel.Error, "vertex num error");
                 }
@@ -126,18 +121,13 @@ namespace KI.Renderer
         }
 
         /// <summary>
-        /// 描画する数
-        /// </summary>
-        public int Num { get; private set; }
-
-        /// <summary>
         /// 頂点Indexバッファ
         /// </summary>
-        public List<int> IndexBufferList
+        private int[] IndexBufferList
         {
             set
             {
-                if( value.Count == 0)
+                if (value.Length == 0)
                 {
                     Logger.Log(Logger.LogLevel.Error, "index buffer count 0");
                 }
@@ -150,6 +140,12 @@ namespace KI.Renderer
                 IndexBuffer.SetData(value, EArrayType.IntArray);
             }
         }
+
+        /// <summary>
+        /// 描画する数
+        /// </summary>
+        public int Num { get; private set; }
+
         /// <summary>
         /// 解放処理
         /// </summary>
@@ -181,10 +177,10 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="index">頂点インデックス</param>
         /// <param name="num">数</param>
-        public void SetIndexBuffer(List<int> index)
+        public void SetIndexBuffer(int[] index)
         {
             IndexBufferList = index;
-            Num = index.Count;
+            Num = index.Length;
             EnableIndexBuffer = true;
         }
 
@@ -197,12 +193,13 @@ namespace KI.Renderer
         /// <param name="texCoord">テクスチャ</param>
         /// <param name="index">頂点インデックス</param>
         /// <param name="num">数</param>
-        public void SetBuffer(List<Vector3> position, List<Vector3> normal, List<Vector3> color, List<Vector2> texCoord)
+        public void SetBuffer(Vector3[] position, Vector3[] normal, Vector3[] color, Vector2[] texCoord)
         {
             if (!EnableIndexBuffer)
             {
-                Num = position.Count;
+                Num = position.Length;
             }
+
             PositionList = position;
             NormalList = normal;
             ColorList = color;

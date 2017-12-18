@@ -72,6 +72,7 @@
     <Compile Include="Render\RenderTargetFactory.cs" />
     <Compile Include="Shader\ShaderProgram.cs" />
     <Compile Include="Shader\ShaderProgramInfo.cs" />
+    <Compile Include="GLUtil\Buffer\VertexBuffer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KI.Foundation\KI.Foundation.csproj">

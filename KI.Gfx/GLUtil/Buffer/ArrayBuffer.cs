@@ -53,30 +53,31 @@ namespace KI.Gfx.GLUtil
                 case EArrayType.None:
                     break;
                 case EArrayType.IntArray:
-                    List<int> intTmp = (List<int>)data;
-                    GL.BufferData(Target, (IntPtr)(intTmp.Count * sizeof(int)), intTmp.ToArray(), UsageHint);
+                    var intTmp = (int[])data;
+                    GL.BufferData(Target, (IntPtr)(intTmp.Length * sizeof(int)), intTmp, UsageHint);
                     break;
                 case EArrayType.FloatArray:
-                    List<float> fArray = (List<float>)data;
-                    GL.BufferData(Target, (IntPtr)(fArray.Count * sizeof(float)), fArray.ToArray(), UsageHint);
+                    var fArray = (float[])data;
+                    GL.BufferData(Target, (IntPtr)(fArray.Length * sizeof(float)), fArray, UsageHint);
                     break;
                 case EArrayType.DoubleArra:
-                    List<double> dArray = (List<double>)data;
-                    GL.BufferData(Target, (IntPtr)(dArray.Count * sizeof(double)), dArray.ToArray(), UsageHint);
+                    var dArray = (double[])data;
+                    GL.BufferData(Target, (IntPtr)(dArray.Length * sizeof(double)), dArray, UsageHint);
                     break;
                 case EArrayType.Vec2Array:
-                    List<Vector2> v2Array = (List<Vector2>)data;
-                    GL.BufferData(Target, (IntPtr)(v2Array.Count * Vector2.SizeInBytes), v2Array.ToArray(), UsageHint);
+                    var v2Array = (Vector2[])data;
+                    GL.BufferData(Target, (IntPtr)(v2Array.Length * Vector2.SizeInBytes), v2Array, UsageHint);
                     break;
                 case EArrayType.Vec3Array:
-                    List<Vector3> v3Array = (List<Vector3>)data;
-                    GL.BufferData(Target, (IntPtr)(v3Array.Count * Vector3.SizeInBytes), v3Array.ToArray(), UsageHint);
+                    var v3Array = (Vector3[])data;
+                    GL.BufferData(Target, (IntPtr)(v3Array.Length * Vector3.SizeInBytes), v3Array, UsageHint);
                     break;
                 case EArrayType.Vec4Array:
-                    List<Vector4> v4Array = (List<Vector4>)data;
-                    GL.BufferData(Target, (IntPtr)(v4Array.Count * Vector4.SizeInBytes), v4Array.ToArray(), UsageHint);
+                    var v4Array = (Vector4[])data;
+                    GL.BufferData(Target, (IntPtr)(v4Array.Length * Vector4.SizeInBytes), v4Array, UsageHint);
                     break;
                 default:
+                    new Exception();
                     break;
             }
 

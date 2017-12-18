@@ -225,25 +225,25 @@ namespace KI.Renderer
         /// <param name="color">頂点カラーの設定</param>
         public void SetupBuffer(PrimitiveType type)
         {
-            List<int> indexBuffer = null;
-            List<Vector3> position = null;
-            List<Vector3> normal = null;
-            List<Vector3> color = null;
-            List<Vector2> texCoord = null;
+            int[] indexBuffer = null;
+            Vector3[] position = null;
+            Vector3[] normal = null;
+            Vector3[] color = null;
+            Vector2[] texCoord = null;
             if (polygon.Index.ContainsKey(type))
             {
-                indexBuffer = polygon.Index[type];
-                position = polygon.Vertexs.Select(p => p.Position).ToList();
-                normal = polygon.Vertexs.Select(p => p.Normal).ToList();
-                color = polygon.Vertexs.Select(p => p.Color).ToList();
-                texCoord = polygon.Vertexs.Select(p => p.TexCoord).ToList();
+                indexBuffer = polygon.Index[type].ToArray();
+                position = polygon.Vertexs.Select(p => p.Position).ToArray();
+                normal = polygon.Vertexs.Select(p => p.Normal).ToArray();
+                color = polygon.Vertexs.Select(p => p.Color).ToArray();
+                texCoord = polygon.Vertexs.Select(p => p.TexCoord).ToArray();
             }
             else if (type == PrimitiveType.Points)
             {
-                position = polygon.Vertexs.Select(p => p.Position).ToList();
-                normal = polygon.Vertexs.Select(p => p.Normal).ToList();
-                color = polygon.Vertexs.Select(p => p.Color).ToList();
-                texCoord = polygon.Vertexs.Select(p => p.TexCoord).ToList();
+                position = polygon.Vertexs.Select(p => p.Position).ToArray();
+                normal = polygon.Vertexs.Select(p => p.Normal).ToArray();
+                color = polygon.Vertexs.Select(p => p.Color).ToArray();
+                texCoord = polygon.Vertexs.Select(p => p.TexCoord).ToArray();
                 Packages[type].VertexBuffer.SetBuffer(position, normal, color, texCoord);
             }
             else if (type == PrimitiveType.Lines)
@@ -255,10 +255,10 @@ namespace KI.Renderer
                     vertexs.Add(line.End);
                 }
 
-                position = vertexs.Select(p => p.Position).ToList();
-                normal = vertexs.Select(p => p.Normal).ToList();
-                color = vertexs.Select(p => p.Color).ToList();
-                texCoord = vertexs.Select(p => p.TexCoord).ToList();
+                position = vertexs.Select(p => p.Position).ToArray();
+                normal = vertexs.Select(p => p.Normal).ToArray();
+                color = vertexs.Select(p => p.Color).ToArray();
+                texCoord = vertexs.Select(p => p.TexCoord).ToArray();
             }
             else
             {
@@ -287,16 +287,16 @@ namespace KI.Renderer
                     }
                 }
 
-                position = vertexs.Select(p => p.Position).ToList();
-                normal = normals;
-                color = vertexs.Select(p => p.Color).ToList();
-                texCoord = vertexs.Select(p => p.TexCoord).ToList();
+                position = vertexs.Select(p => p.Position).ToArray();
+                normal = normals.ToArray();
+                color = vertexs.Select(p => p.Color).ToArray();
+                texCoord = vertexs.Select(p => p.TexCoord).ToArray();
             }
 
             // デフォルトカラーよりすでに設定されているカラーを優先
             if(Packages[type].Color != null)
             {
-                color = Packages[type].Color;
+                color = Packages[type].Color.ToArray();
             }
             Packages[type].VertexBuffer.SetBuffer(position, normal, color, texCoord);
 

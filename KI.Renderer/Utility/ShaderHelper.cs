@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using KI.Asset;
 using KI.Gfx;
 using KI.Gfx.GLUtil;
+using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
 using OpenTK;

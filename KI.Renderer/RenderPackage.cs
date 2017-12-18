@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using KI.Foundation.Utility;
 using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil;
+using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
