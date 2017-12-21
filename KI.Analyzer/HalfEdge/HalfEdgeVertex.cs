@@ -464,7 +464,6 @@ namespace KI.Analyzer
             Vector3 baseU = new Vector3(numer.X / denom.X, numer.Y / denom.Y, numer.Z / denom.Z);
             baseU.Normalize();
 
-            float inner = Vector3.Dot(baseU, normal);
             //基底V方向ベクトル
             Vector3 baseV = Vector3.Cross(baseU, normal);
             baseV.Normalize();
@@ -476,29 +475,30 @@ namespace KI.Analyzer
                 denom = new Vector3(numer.Length);
                 tangent = new Vector3(numer.X / denom.X, numer.Y / denom.Y, numer.Z / denom.Z);
                 tangentUV = new Vector2(Vector3.Dot(baseU, tangent), Vector3.Dot(baseV, tangent));
-                edge_Kapper = 2 * Vector3.Dot(-edge, normal) / edge.Length * edge.Length;
+                var edgeSE = around.Start.Position - around.End.Position;
+                edge_Kapper = 2 * Vector3.Dot(edgeSE, normal) / (edgeSE.Length * edgeSE.Length);
 
                 ellipse.M11 += tangentUV.X * tangentUV.X * tangentUV.X * tangentUV.X;
-                ellipse.M12 += tangentUV.X * tangentUV.X * tangentUV.X * tangentUV.Y;
+                ellipse.M12 += 2 * tangentUV.X * tangentUV.X * tangentUV.X * tangentUV.Y;
                 ellipse.M13 += tangentUV.X * tangentUV.X * tangentUV.Y * tangentUV.Y;
 
-                ellipse.M21 += tangentUV.X * tangentUV.X * tangentUV.X * tangentUV.Y;
-                ellipse.M22 += tangentUV.X * tangentUV.X * tangentUV.Y * tangentUV.Y;
-                ellipse.M23 += tangentUV.X * tangentUV.Y * tangentUV.Y * tangentUV.Y;
+                ellipse.M21 += 2 * tangentUV.X * tangentUV.X * tangentUV.X * tangentUV.Y;
+                ellipse.M22 += 4 * tangentUV.X * tangentUV.X * tangentUV.Y * tangentUV.Y;
+                ellipse.M23 += 2 * tangentUV.X * tangentUV.Y * tangentUV.Y * tangentUV.Y;
 
                 ellipse.M31 += tangentUV.X * tangentUV.X * tangentUV.Y * tangentUV.Y;
-                ellipse.M32 += tangentUV.X * tangentUV.Y * tangentUV.Y * tangentUV.Y;
+                ellipse.M32 += 2 * tangentUV.X * tangentUV.Y * tangentUV.Y * tangentUV.Y;
                 ellipse.M33 += tangentUV.Y * tangentUV.Y * tangentUV.Y * tangentUV.Y;
 
                 kapper.X += edge_Kapper * tangentUV.X * tangentUV.X;
-                kapper.Y += edge_Kapper * tangentUV.X * tangentUV.Y;
+                kapper.Y += 2 * edge_Kapper * tangentUV.X * tangentUV.Y;
                 kapper.Z += edge_Kapper * tangentUV.Y * tangentUV.Y;
             }
 
             ellipse.Invert();
             Vector3 result = KICalc.Multiply(ellipse, kapper);
             float a = result.X;
-            float b = result.Y / 2;
+            float b = result.Y;
             float c = result.Z;
 
             CvMat eigenVector;
