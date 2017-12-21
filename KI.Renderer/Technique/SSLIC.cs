@@ -49,7 +49,7 @@ namespace KI.Renderer
             if (Plane != null)
             {
                 var textures = Global.RenderSystem.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
-                var vector = textures[(int)GBuffer.GBufferOutputType.Color];
+                var vector = textures[(int)GBuffer.OutputTextureType.Color];
                 GL.Enable(EnableCap.Blend);
                 GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
                 RenderTarget.ClearBuffer();

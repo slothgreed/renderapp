@@ -20,24 +20,24 @@ namespace RenderApp.Globals
             RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Deferred));
             //RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Selection));
             OutputBuffer = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output) as OutputBuffer;
-            OutputTexture = RenderQueue.OutputTexture(RenderTechniqueType.GBuffer).ToArray()[(int)GBuffer.GBufferOutputType.Color];
+            OutputTexture = RenderQueue.OutputTexture(RenderTechniqueType.GBuffer).ToArray()[(int)GBuffer.OutputTextureType.Color];
 
             var textures = RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
             Bloom bloom = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Bloom) as Bloom;
-            bloom.uTarget = textures[3];
+            bloom.uTarget = textures[(int)GBuffer.OutputTextureType.Color];
             PostEffect.AddTechnique(bloom);
 
             Sobel sobel = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Sobel) as Sobel;
-            sobel.uTarget = textures[3];
+            sobel.uTarget = textures[(int)GBuffer.OutputTextureType.Color];
             PostEffect.AddTechnique(sobel);
 
             SSAO ssao = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.SSAO) as SSAO;
-            ssao.uPosition = textures[0];
-            ssao.uTarget = textures[0];
+            ssao.uPosition = textures[(int)GBuffer.OutputTextureType.Color];
+            ssao.uTarget = textures[(int)GBuffer.OutputTextureType.Color];
             PostEffect.AddTechnique(ssao);
 
             SSLIC sslic = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.SSLIC) as SSLIC;
-            sslic.uVector = textures[2];
+            sslic.uVector = textures[(int)GBuffer.OutputTextureType.Color];
             PostEffect.AddTechnique(sslic);
         }
     }

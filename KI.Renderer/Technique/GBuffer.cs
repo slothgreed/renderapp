@@ -20,7 +20,7 @@ namespace KI.Renderer
         /// <summary>
         /// GBufferの入力値
         /// </summary>
-        public enum GBufferOutputType
+        public enum OutputTextureType
         {
             Posit = 0,
             Normal,
@@ -33,7 +33,7 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="target">GBufferのタイプ</param>
         /// <returns>テクスチャ</returns>
-        public Texture GetOutputTexture(GBufferOutputType target)
+        public Texture GetOutputTexture(OutputTextureType target)
         {
             return OutputTexture[(int)target];
         }

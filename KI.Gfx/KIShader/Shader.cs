@@ -522,7 +522,7 @@ namespace KI.Gfx.KIShader
             GL.GetProgramInfoLog(program, out info);
             if (!string.IsNullOrWhiteSpace(info))
             {
-                Logger.Log(Logger.LogLevel.Error, info);
+                Logger.GLLog(Logger.LogLevel.Error, info);
             }
 
             GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
@@ -573,7 +573,7 @@ namespace KI.Gfx.KIShader
             GL.GetProgramInfoLog(program, out info);
             if (!string.IsNullOrWhiteSpace(info))
             {
-                Logger.Log(Logger.LogLevel.Error, info);
+                Logger.GLLog(Logger.LogLevel.Error, info);
             }
 
             GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
@@ -635,7 +635,7 @@ namespace KI.Gfx.KIShader
             GL.GetProgramInfoLog(program, out info);
             if (!string.IsNullOrWhiteSpace(info))
             {
-                Logger.Log(Logger.LogLevel.Error, info);
+                Logger.GLLog(Logger.LogLevel.Error, info);
             }
 
             GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
@@ -681,7 +681,7 @@ namespace KI.Gfx.KIShader
             GL.GetProgramInfoLog(program, out info);
             if (!string.IsNullOrWhiteSpace(info))
             {
-                Logger.Log(Logger.LogLevel.Error, info);
+                Logger.GLLog(Logger.LogLevel.Error, info);
             }
 
             GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
