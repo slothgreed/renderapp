@@ -54,6 +54,7 @@
                 <MenuItem Header="SelectPoint" Command="{Binding Controller}" CommandParameter="{x:Static control:CONTROL_MODE.SelectPoint}"/>
                 <MenuItem Header="EdgeEditor" Command="{Binding Controller}" CommandParameter="{x:Static control:CONTROL_MODE.EdgeFlips}"/>
                 <MenuItem Header="Dijkstra" Command="{Binding Controller}" CommandParameter="{x:Static control:CONTROL_MODE.Dijkstra}"/>
+                <MenuItem Header="Geodesic" Command="{Binding Controller}" CommandParameter="{x:Static control:CONTROL_MODE.Geodesic}"/>
             </MenuItem>
 
             <MenuItem Header="Analyze">

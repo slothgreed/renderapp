@@ -59,6 +59,7 @@
     <Compile Include="Command\CreatePolygonCommand.cs" />
     <Compile Include="Command\CreateVoxelCommand.cs" />
     <Compile Include="Command\CreateWireFrameCommand.cs" />
+    <Compile Include="Control\GeodesicDistanceControl.cs" />
     <Compile Include="Command\KMeansCommand.cs" />
     <Compile Include="Command\PerceptronCommand.cs" />
     <Compile Include="Command\QEMCommand.cs" />

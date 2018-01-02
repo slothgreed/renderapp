@@ -13,7 +13,8 @@ namespace KI.Tool.Control
         SelectLine,
         SelectPoint,
         EdgeFlips,
-        Dijkstra
+        Dijkstra,
+        Geodesic
     }
 
     /// <summary>
@@ -39,6 +40,7 @@ namespace KI.Tool.Control
             Controllers.Add(CONTROL_MODE.SelectTriangle, new SelectTriangleControl());
             Controllers.Add(CONTROL_MODE.SelectLine, new SelectLineControl());
             Controllers.Add(CONTROL_MODE.Dijkstra, new DijkstraControl());
+            Controllers.Add(CONTROL_MODE.Geodesic, new GeodesicDistanceControl());
             Controllers.Add(CONTROL_MODE.SelectPoint, new SelectPointControl());
             Controllers.Add(CONTROL_MODE.EdgeFlips, new EdgeFlipsControl());
         }

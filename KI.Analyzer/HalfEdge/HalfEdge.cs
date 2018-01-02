@@ -1,6 +1,7 @@
 ﻿using System;
 using KI.Foundation.Utility;
 using KI.Gfx.Geometry;
+using OpenTK;
 
 namespace KI.Analyzer
 {
@@ -81,6 +82,18 @@ namespace KI.Analyzer
                 }
             }
         }
+
+        /// <summary>
+        /// ベクトルの取得
+        /// </summary>
+        public Vector3 Vector
+        {
+            get
+            {
+                return this.End - this.Start;
+            }
+        }
+
 
         /// <summary>
         /// メッシュ

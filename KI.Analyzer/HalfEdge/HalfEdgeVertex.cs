@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using KI.Foundation.Utility;
 using KI.Gfx.Geometry;
+using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.LinearAlgebra.Double;
 using OpenCvSharp;
 using OpenTK;
 
@@ -505,8 +507,8 @@ namespace KI.Analyzer
             CvMat eigenValue;
             CvMat matEplise = Cv.CreateMat(2, 2, MatrixType.F32C1);
             matEplise.Set2D(0, 0, a);
-            matEplise.Set2D(0, 1, b);
-            matEplise.Set2D(1, 0, b);
+            matEplise.Set2D(0, 1, b / 2);
+            matEplise.Set2D(1, 0, b / 2);
             matEplise.Set2D(1, 1, c);
             eigenVector = Cv.CreateMat(2, 2, MatrixType.F32C1);
             eigenValue = Cv.CreateMat(1, 2, MatrixType.F32C1);
@@ -518,6 +520,16 @@ namespace KI.Analyzer
             float max2 = (float)eigenVector.Get2D(0, 1).Val0;
             float min1 = (float)eigenVector.Get2D(1, 0).Val0;
             float min2 = (float)eigenVector.Get2D(1, 1).Val0;
+
+            var elipseMat = DenseMatrix.OfArray(new double[,] { { a, b / 2 }, { b / 2, c } });
+            var eigen = elipseMat.Evd();
+            var eigenVector2 = eigen.EigenVectors;
+            var eigenValue2 = eigen.EigenValues;
+
+            min1 = (float)eigenVector2[0, 0];
+            min2 = (float)eigenVector2[0, 1];
+            max1 = (float)eigenVector2[1, 0];
+            max2 = (float)eigenVector2[1, 1];
 
             maxDirection = new Vector3(
                 baseU.X * max1 + baseV.X * max2,

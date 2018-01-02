@@ -80,16 +80,17 @@ namespace KI.Tool.Command
             halfDS.AddParameter(maxVecParam);
 
             var dirLine = new List<Line>();
+            var dirMaxLine = new List<Line>();
             foreach (var position in halfDS.HalfEdgeVertexs)
             {
-                Vertex minStart = new Vertex(0, position.Position/* - position.MinDirection*/, Vector3.UnitX);
-                Vertex minEnd = new Vertex(0, position.Position + position.MinDirection, Vector3.UnitX);
+                Vertex minStart = new Vertex(0, position.Position - position.MinDirection * 0.5f, Vector3.UnitX);
+                Vertex minEnd = new Vertex(0, position.Position + position.MinDirection * 0.5f, Vector3.UnitX);
 
-                Vertex maxStart = new Vertex(0, position.Position /*- position.MaxDirection*/, Vector3.UnitY);
-                Vertex maxEnd = new Vertex(0, position.Position + position.MaxDirection, Vector3.UnitY);
+                Vertex maxStart = new Vertex(0, position.Position - position.MaxDirection * 0.5f, Vector3.UnitY);
+                Vertex maxEnd = new Vertex(0, position.Position + position.MaxDirection * 0.5f, Vector3.UnitY);
 
                 dirLine.Add(new Line(minStart, minEnd));
-                dirLine.Add(new Line(maxStart, maxEnd));
+                dirMaxLine.Add(new Line(maxStart, maxEnd));
             }
 
             RenderObject dirLineObject = RenderObjectFactory.Instance.CreateRenderObject("Principal Direction");
@@ -97,6 +98,12 @@ namespace KI.Tool.Command
             dirLineObject.SetPolygon(lines);
             dirLineObject.ModelMatrix = renderObject.ModelMatrix;
             Global.RenderSystem.ActiveScene.AddObject(dirLineObject);
+
+            RenderObject dirLineObject2 = RenderObjectFactory.Instance.CreateRenderObject("Principal Direction");
+            var lines2 = new Polygon(halfDS.Name + "Direction", dirMaxLine);
+            dirLineObject2.SetPolygon(lines2);
+            dirLineObject2.ModelMatrix = renderObject.ModelMatrix;
+            Global.RenderSystem.ActiveScene.AddObject(dirLineObject2);
 
             return CommandResult.Success;
         }
