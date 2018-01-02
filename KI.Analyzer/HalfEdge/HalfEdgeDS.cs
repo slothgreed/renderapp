@@ -97,18 +97,6 @@ namespace KI.Analyzer
         }
 
         /// <summary>
-        /// 選択頂点を削除
-        /// </summary>
-        public void ClearSelection()
-        {
-            foreach (var vertex in HalfEdgeVertexs)
-            {
-                vertex.IsSelect = false;
-            }
-        }
-
-
-        /// <summary>
         /// ハーフエッジ頂点の取得
         /// </summary>
         public IEnumerable<HalfEdgeVertex> HalfEdgeVertexs

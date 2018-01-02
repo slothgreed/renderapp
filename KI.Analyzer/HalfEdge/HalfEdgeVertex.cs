@@ -30,16 +30,6 @@ namespace KI.Analyzer
     public class HalfEdgeVertex : Vertex
     {
         /// <summary>
-        /// 選択色
-        /// </summary>
-        public readonly Vector3 SELECT_COLOR = Vector3.UnitY;
-
-        /// <summary>
-        /// 選択中か
-        /// </summary>
-        private bool isSelect = false;
-        
-        /// <summary>
         /// 法線
         /// </summary>
         private Vector3 normal = Vector3.Zero;
@@ -123,37 +113,6 @@ namespace KI.Analyzer
             {
                 base.Position = value;
                 Modified();
-            }
-        }
-
-        /// <summary>
-        /// 選択中か
-        /// </summary>
-        public bool IsSelect
-        {
-            get
-            {
-                return isSelect;
-            }
-
-            set
-            {
-                isSelect = value;
-            }
-        }
-
-        public override Vector3 Color
-        {
-            get
-            {
-                if (IsSelect)
-                {
-                    return SELECT_COLOR;
-                }
-                else
-                {
-                    return base.Color;
-                }
             }
         }
 

@@ -1,8 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using KI.Analyzer;
+using KI.Gfx.Geometry;
 using KI.Renderer;
 using KI.Tool.Utility;
+using OpenTK;
 
 namespace KI.Tool.Control
 {
@@ -37,6 +40,11 @@ namespace KI.Tool.Control
         public EdgeEditMode Mode { get; private set; } = EdgeEditMode.EdgeCollapse;
 
         /// <summary>
+        /// 頂点の選択
+        /// </summary>
+        private List<HalfEdge> selectVertex;
+
+        /// <summary>
         /// マウス押下処理
         /// </summary>
         /// <param name="mouse">マウスイベント</param>
@@ -51,8 +59,8 @@ namespace KI.Tool.Control
                 if (HalfEdgeDSSelector.PickPoint(leftMouse.Click, ref renderObject, ref halfEdgeVertex))
                 {
                     HalfEdge halfEdge = halfEdgeVertex.AroundEdge.First();
-                    halfEdge.Start.IsSelect = true;
-                    halfEdge.End.IsSelect = true;
+                    halfEdge.Start.Color = Vector3.UnitY;
+                    halfEdge.End.Color = Vector3.UnitY;
 
                     selectObject = renderObject;
                     selectHalfEdge = halfEdge;
@@ -66,8 +74,6 @@ namespace KI.Tool.Control
             {
                 if (selectHalfEdge != null)
                 {
-                    selectHalfEdge.Start.IsSelect = false;
-                    selectHalfEdge.End.IsSelect = false;
                     var halfEdgeDS = selectObject.Polygon as HalfEdgeDS;
 
                     switch (Mode)
@@ -91,12 +97,16 @@ namespace KI.Tool.Control
             return base.Down(mouse);
         }
 
+        /// <summary>
+        /// コントローラの終了
+        /// </summary>
+        /// <returns>成功</returns>
         public override bool UnBinding()
         {
             if (selectHalfEdge != null)
             {
-                selectHalfEdge.Start.IsSelect = false;
-                selectHalfEdge.End.IsSelect = false;
+                selectHalfEdge.Start.Color = Vector3.Zero;
+                selectHalfEdge.End.Color = Vector3.Zero;
                 selectHalfEdge = null;
                 selectObject.Polygon.UpdateVertexArray(OpenTK.Graphics.OpenGL.PrimitiveType.Lines);
             }

@@ -1,6 +1,9 @@
-﻿using KI.Analyzer;
+﻿using System.Collections.Generic;
+using KI.Analyzer;
+using KI.Gfx.Geometry;
 using KI.Renderer;
 using KI.Tool.Utility;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace KI.Tool.Control
@@ -11,6 +14,16 @@ namespace KI.Tool.Control
     public class SelectTriangleControl : IControl
     {
         /// <summary>
+        /// 頂点の選択
+        /// </summary>
+        private List<Vertex> selectVertex = new List<Vertex>();
+
+        /// <summary>
+        /// 描画オブジェクト
+        /// </summary>
+        private RenderObject renderObject;
+        
+        /// <summary>
         /// マウス押下処理
         /// </summary>
         /// <param name="mouse">マウスイベント</param>
@@ -19,20 +32,51 @@ namespace KI.Tool.Control
         {
             if (mouse.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                RenderObject renderObject = null;
                 HalfEdgeMesh mesh = null;
 
                 if (HalfEdgeDSSelector.PickTriangle(leftMouse.Click, ref renderObject, ref mesh))
                 {
                     foreach (var vertex in mesh.AroundVertex)
                     {
-                        vertex.IsSelect = true;
+                        vertex.Color = Vector3.UnitY;
+                        selectVertex.Add(vertex);
                         renderObject.Polygon.UpdateVertexArray(PrimitiveType.Points);
                     }
                 }
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// コントローラの開始
+        /// </summary>
+        /// <returns>成功</returns>
+        public override bool Binding()
+        {
+            selectVertex = new List<Vertex>();
+
+            return base.Binding();
+        }
+
+        /// <summary>
+        /// コントローラの終了
+        /// </summary>
+        /// <returns>成功</returns>
+        public override bool UnBinding()
+        {
+            foreach (var vertex in selectVertex)
+            {
+                vertex.Color = new Vector3(0.8f);
+            }
+
+            if (renderObject != null)
+            {
+                renderObject.Polygon.UpdateVertexArray(PrimitiveType.Points);
+            }
+
+            selectVertex = null;
+            return base.UnBinding();
         }
     }
 }
