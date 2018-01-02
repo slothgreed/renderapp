@@ -12,14 +12,12 @@ namespace RenderApp.ViewModel
     public partial class WorkspaceViewModel : ViewModelBase
     {
         public RootNodeViewModel SceneNodeViewModel;
-        public RootNodeViewModel ProjectNodeViewModel;
         public RendererViewModel RendererViewModel;
         public ViewportViewModel ViewportViewModel;
 
         public WorkspaceViewModel(ViewModelBase parent)
             : base(parent)
         {
-            ProjectNodeViewModel = new RootNodeViewModel(this, Project.ActiveProject.RootNode, "Project");
             SceneNodeViewModel = new RootNodeViewModel(this, Workspace.MainScene.RootNode, "Scene");
             ViewportViewModel = new ViewportViewModel(this);
             RendererViewModel = new RendererViewModel(this);
@@ -29,7 +27,6 @@ namespace RenderApp.ViewModel
 
             AnchorablesSources = new ObservableCollection<ViewModelBase>();
             DocumentsSources = new ObservableCollection<ViewModelBase>();
-            AnchorablesSources.Add(ProjectNodeViewModel);
             AnchorablesSources.Add(SceneNodeViewModel);
             AnchorablesSources.Add(RendererViewModel);
             DocumentsSources.Add(ViewportViewModel);

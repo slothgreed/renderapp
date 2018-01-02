@@ -147,6 +147,31 @@ namespace KI.Analyzer
         }
 
         /// <summary>
+        /// コタンジェントの算出このエッジと前のエッジのCot
+        /// </summary>
+        public float Cot
+        {
+            get
+            {
+                var prev = -Before.Vector;
+
+                return (float)(Math.Cos(Radian) / Math.Sin(Radian));
+                return Vector3.Dot(Vector, prev) / Vector3.Cross(Vector, prev).Length;
+            }
+        }
+
+        /// <summary>
+        /// 境界かどうか
+        /// </summary>
+        public bool IsBound
+        {
+            get
+            {
+                return Opposite != null;
+            }
+        }
+
+        /// <summary>
         /// エラーエッジ
         /// </summary>
         public bool ErrorEdge
@@ -247,7 +272,7 @@ namespace KI.Analyzer
             Opposite = null;
         }
 
-        internal bool HasVertex(HalfEdgeVertex vertex)
+        public bool HasVertex(HalfEdgeVertex vertex)
         {
             if (Start == vertex || End == vertex)
             {

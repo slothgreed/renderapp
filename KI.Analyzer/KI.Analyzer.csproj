@@ -98,7 +98,6 @@
     <Compile Include="HalfEdge\HalfEdge.cs" />
     <Compile Include="HalfEdge\HalfEdgeDS.cs" />
     <Compile Include="HalfEdge\HalfEdgeDSEditor.cs" />
-    <Compile Include="HalfEdge\HalfEdgeDSUtility.cs" />
     <Compile Include="HalfEdge\HalfEdgeIO.cs" />
     <Compile Include="HalfEdge\HalfEdgeMesh.cs" />
     <Compile Include="HalfEdge\HalfEdgeVertex.cs" />
