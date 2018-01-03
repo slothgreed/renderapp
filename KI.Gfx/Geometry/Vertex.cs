@@ -32,6 +32,18 @@ namespace KI.Gfx.Geometry
         /// <param name="position">位置</param>
         /// <param name="normal">法線</param>
         /// <param name="color">色</param>
+        public Vertex(int index, Vector3 position)
+            : this(index, position, Vector3.Zero, Vector3.One, Vector2.Zero)
+        {
+        }
+
+        /// <summary>
+        /// 頂点
+        /// </summary>
+        /// <param name="index">要素番号</param>
+        /// <param name="position">位置</param>
+        /// <param name="normal">法線</param>
+        /// <param name="color">色</param>
         public Vertex(int index, Vector3 position, Vector3 normal, Vector3 color)
             : this(index, position, normal, color, Vector2.Zero)
         {

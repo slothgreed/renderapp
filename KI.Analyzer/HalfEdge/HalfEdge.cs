@@ -155,8 +155,7 @@ namespace KI.Analyzer
             {
                 var prev = -Before.Vector;
 
-                return (float)(Math.Cos(Radian) / Math.Sin(Radian));
-                return Vector3.Dot(Vector, prev) / Vector3.Cross(Vector, prev).Length;
+                return  Vector3.Dot(Vector, prev) / Vector3.Cross(Vector, prev).Length;
             }
         }
 

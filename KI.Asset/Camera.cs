@@ -33,7 +33,7 @@ namespace KI.Asset
         /// <summary>
         /// ズームの最大値
         /// </summary>
-        private float zoomMax = 600;
+        private float zoomMax = 10;
 
         /// <summary>
         /// 注視点の平行移動量
@@ -53,7 +53,7 @@ namespace KI.Asset
         /// <summary>
         /// 平行移動量の倍率設定
         /// </summary>
-        private float panRatio = 10.0f;
+        private float panRatio = 0.1f;
 
         /// <summary>
         /// 球面座標の角度
@@ -202,7 +202,7 @@ namespace KI.Asset
         /// </summary>
         public void InitCamera()
         {
-            pan = new Vector3(0.0f, 22.5f, 0.0f);
+            pan = new Vector3(0.0f, 0, 0.0f);
             LookAt = Vector3.Zero;
             Up = Vector3.UnitY;
             zoomLength = zoomMax;
@@ -226,6 +226,7 @@ namespace KI.Asset
         {
             ProjMatrix = Matrix4.CreatePerspectiveFieldOfView((float)System.Math.PI / 4.0f, aspect, Near, Far);
         }
+
         #region [カメラの平行移動]
 
         /// <summary>

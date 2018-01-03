@@ -99,6 +99,7 @@ namespace KI.Tool.Control
         public override bool UnBinding()
         {
             Global.RenderSystem.ActiveScene.DeleteObject("Picking");
+            Global.RenderSystem.ActiveScene.DeleteObject("DijkstraLine");
             return true;
         }
 

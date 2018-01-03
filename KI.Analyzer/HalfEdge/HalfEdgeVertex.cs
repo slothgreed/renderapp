@@ -275,10 +275,8 @@ namespace KI.Analyzer
                         float length = edge.Length;
                         length = length * length;
                         HalfEdge opposite = edge.Opposite;
-                        float alpha = edge.Next.Next.Radian;
-                        float beta = opposite.Next.Next.Radian;
-                        alpha = (float)(Math.Cos(alpha) / Math.Sin(alpha));
-                        beta = (float)(Math.Cos(beta) / Math.Sin(beta));
+                        float alpha = edge.Next.Next.Cot;
+                        float beta = opposite.Next.Next.Cot;
 
                         float angle = (alpha + beta) * length / 8;
                         float kapper = 2 * Vector3.Dot(edge.Start - edge.End, edge.Start.Normal) / length;

@@ -55,8 +55,11 @@ namespace KI.Analyzer.Algorithm
                 sumLength += edge.Length;
             }
 
+            sumLength /= half.HalfEdges.Count();
+
             time = sumLength * sumLength;
-            
+
+            ResetSelect();
             Initialize();
         }
 
@@ -65,35 +68,62 @@ namespace KI.Analyzer.Algorithm
         /// </summary>
         private void Initialize()
         {
-            var LaplaceMatrix = new DenseMatrix(halfEdgeDS.Vertexs.Count, halfEdgeDS.Vertexs.Count);
+            var laplaceMatrix = new DenseMatrix(halfEdgeDS.Vertexs.Count, halfEdgeDS.Vertexs.Count);
             foreach (var vertex in halfEdgeDS.HalfEdgeVertexs)
             {
-                float sum = 0;
+                float sum = 1e-8f;
                 foreach (var edge in vertex.AroundEdge)
                 {
-                    var alphaCot = HalfEdgeDSUtility.Cot(edge.Next);
-                    var betaCot = HalfEdgeDSUtility.Cot(edge.Opposite.Next);
+                    var alphaCot = edge.Next.Next.Cot;
+                    var betaCot = edge.Opposite.Next.Next.Cot;
 
                     float laplace = (alphaCot + betaCot) / 2;
-
-                    LaplaceMatrix[vertex.Index, edge.End.Index] = -laplace;
+                    laplaceMatrix[vertex.Index, edge.End.Index] = -laplace;
                     sum += laplace;
                 }
 
-                LaplaceMatrix[vertex.Index, vertex.Index] = sum;
+                laplaceMatrix[vertex.Index, vertex.Index] = sum;
             }
 
-            laplaceCholesky = LaplaceMatrix.Cholesky();
+            laplaceCholesky = laplaceMatrix.Cholesky();
 
             var areaMatrix = new DenseMatrix(halfEdgeDS.Vertexs.Count, halfEdgeDS.Vertexs.Count);
 
             foreach (var vertex in halfEdgeDS.HalfEdgeVertexs)
             {
-                areaMatrix[vertex.Index, vertex.Index] = vertex.Voronoi;
+                var sum = 0.0f;
+                foreach(var mesh in vertex.AroundMesh)
+                {
+                    sum += mesh.Area;
+                }
+
+                areaMatrix[vertex.Index, vertex.Index] = sum / 3;
             }
 
-            var HeatMatrix = areaMatrix.Add(LaplaceMatrix.Multiply(time) as DenseMatrix) as DenseMatrix;
+            var HeatMatrix = areaMatrix.Add(laplaceMatrix.Multiply(time) as DenseMatrix) as DenseMatrix;
             heatFlowCholesky = HeatMatrix.Cholesky();
+
+
+            //var file = new System.IO.StreamWriter(@"C:\Users\stmnd\Desktop\laplaceMatrix.txt");
+            //for (int i = 0; i < laplaceMatrix.ColumnCount; i++)
+            //{
+            //    for (int j = 0; j < laplaceMatrix.RowCount; j++)
+            //    {
+            //        if (laplaceMatrix[i, j] != 0)
+            //        {
+            //            file.WriteLine("geometry.js:502 " + laplaceMatrix[i, j].ToString("F2"));
+            //        }
+            //    }
+            //}
+            //file.Close();
+
+
+            //var areaFile = new System.IO.StreamWriter(@"C:\Users\stmnd\Desktop\area.txt");
+            //for(int i = 0; i < areaMatrix.ColumnCount; i++)
+            //{
+            //    areaFile.WriteLine(areaMatrix[i,i].ToString("F2"));
+            //}
+            //areaFile.Close();
         }
 
         /// <summary>
@@ -101,13 +131,12 @@ namespace KI.Analyzer.Algorithm
         /// </summary>
         public float[] Compute()
         {
-            var u = laplaceCholesky.Solve(selectVertex);
+            var u = heatFlowCholesky.Solve(selectVertex);
 
             var x = ComputeVectorField(u as DenseVector);
             var div = ComputeDivergence(x);
 
-            var distanceField = heatFlowCholesky.Solve(div.Negate());
-
+            var distanceField = laplaceCholesky.Solve(div.Negate());
             NormalizeDistance(distanceField as DenseMatrix);
 
             var distance = new float[halfEdgeDS.Vertexs.Count];
@@ -164,14 +193,16 @@ namespace KI.Analyzer.Algorithm
                 foreach (var edge in mesh.AroundEdge)
                 {
                     var ui = (float)u[edge.Start.Index];
-                    var vector = edge.End - edge.Start;
-
-                    grad += (ui * Vector3.Cross(mesh.Normal, vector));
+                    grad += (ui * Vector3.Cross(mesh.Normal, edge.Vector));
                 }
 
                 grad /= 2 * mesh.Area;
-                grad.Normalize();
-                vectorField[mesh.Index] = grad;
+                if (grad.Length != 0)
+                {
+                    grad.Normalize();
+                }
+
+                vectorField[mesh.Index] = -grad;
             }
 
             return vectorField;
@@ -192,10 +223,10 @@ namespace KI.Analyzer.Algorithm
                 foreach (var edge in vertex.AroundEdge)
                 {
                     var vector = vectorField[edge.Mesh.Index];
-                    var theta1 = HalfEdgeDSUtility.Cot(edge.Next);
-                    var theta2 = HalfEdgeDSUtility.Cot(edge.Before);
-                    var e1 = -edge.Before.Vector;
-                    var e2 = edge.Vector;
+                    var theta1 = edge.Next.Next.Cot;
+                    var theta2 = edge.Next.Cot;
+                    var e1 = edge.Vector;
+                    var e2 = edge.Before.Opposite.Vector;
                     sum += (theta1 * Vector3.Dot(e1, vector) + theta2 * Vector3.Dot(e2, vector));
                 }
 
