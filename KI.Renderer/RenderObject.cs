@@ -55,7 +55,7 @@ namespace KI.Renderer
         /// <summary>
         /// レンダリングパッケージ
         /// </summary>
-        public Dictionary<PrimitiveType, RenderPackage> Packages { get; private set; } = new Dictionary<PrimitiveType, RenderPackage>();
+        public Dictionary<PrimitiveType, Material> Packages { get; private set; } = new Dictionary<PrimitiveType, Material>();
 
         /// <summary>
         /// メインのシェーダ
@@ -203,7 +203,7 @@ namespace KI.Renderer
         {
             if (!Packages.ContainsKey(type))
             {
-                Packages[type] = new RenderPackage(Polygon, type);
+                Packages[type] = new Material(Polygon, type);
                 string vert = ShaderCreater.Instance.GetVertexShader(this);
                 string frag = ShaderCreater.Instance.GetFragShader(this);
                 Packages[type].Shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
