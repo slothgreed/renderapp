@@ -36,7 +36,7 @@ namespace KI.Renderer
                 if (Global.RenderSystem.ActiveScene.SelectNode is RenderObject)
                 {
                     var renderObject = Global.RenderSystem.ActiveScene.SelectNode as RenderObject;
-                    uID = renderObject.Polygon.ID;
+                    uID = renderObject.ID;
                 }
                 else
                 {

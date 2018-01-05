@@ -47,7 +47,7 @@ namespace KI.Renderer
 
                         break;
                     case "uGeometryID":
-                        info.Variable = renderObject.Polygon.ID;
+                        info.Variable = renderObject.ID;
                         break;
                     case "uWidth":
                         info.Variable = DeviceContext.Instance.Width;

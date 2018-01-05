@@ -167,11 +167,6 @@ namespace KI.Gfx.Geometry
         public EventHandler<UpdatePolygonEventArgs> PolygonUpdated { get; set; }
 
         /// <summary>
-        /// 形状ID
-        /// </summary>
-        public int ID { get; set; }
-
-        /// <summary>
         /// 形状種類
         /// </summary>
         public PrimitiveType Type { get; set; }
@@ -259,6 +254,8 @@ namespace KI.Gfx.Geometry
                         Index[PrimitiveType.Lines].Add(line.End.Index);
                     }
                 }
+
+                OnUpdate(new UpdatePolygonEventArgs(PrimitiveType.Lines));
             }
 
             if (type == PrimitiveType.Triangles &&
@@ -270,10 +267,9 @@ namespace KI.Gfx.Geometry
                 {
                     Index[PrimitiveType.Triangles].AddRange(mesh.Vertexs.Select(p => p.Index));
                 }
-            }
 
-            OnUpdate(new UpdatePolygonEventArgs(PrimitiveType.Lines));
-            OnUpdate(new UpdatePolygonEventArgs(PrimitiveType.Triangles));
+                OnUpdate(new UpdatePolygonEventArgs(PrimitiveType.Triangles));
+            }
         }
 
 
@@ -458,74 +454,6 @@ namespace KI.Gfx.Geometry
                 return null;
             }
         }
-
-        ///// <summary>
-        ///// ワイヤフレームの作成
-        ///// </summary>
-        ///// <param name="color">ワイヤフレームの色</param>
-        //public void CreateWireFrame(Vector3 color)
-        //{
-        //    List<int> lineIndex = new List<int>();
-        //    List<Vector3> wireFrameColor = new List<Vector3>();
-        //    foreach (var mesh in Meshs)
-        //    {
-        //        for (int j = 0; j < mesh.Vertexs.Count - 1; j++)
-        //        {
-        //            lineIndex.Add(mesh.Vertexs[j].Index);
-        //            lineIndex.Add(mesh.Vertexs[j + 1].Index);
-        //        }
-
-        //        lineIndex.Add(mesh.Vertexs[mesh.Vertexs.Count - 1].Index);
-        //        lineIndex.Add(mesh.Vertexs[0].Index);
-        //        wireFrameColor.Add(color);
-        //        wireFrameColor.Add(color);
-        //    }
-
-        //    Index[PrimitiveType.Lines] = lineIndex;
-        //    vertexColor[VertexColor.WireFrame] = wireFrameColor;
-
-        //    OnUpdate(new UpdatePolygonEventArgs(PrimitiveType.Lines, wireFrameColor));
-        //}
-
-        ///// <summary>
-        ///// 法線の算出
-        ///// </summary>
-        //public void CalcNormal()
-        //{
-        //    Normal.Clear();
-
-        //    switch (PrimitiveType)
-        //    {
-        //        case PrimitiveType.None:
-        //        case PrimitiveType.Points:
-        //        case PrimitiveType.Lines:
-        //        case PrimitiveType.Mix:
-        //            return;
-        //        case PrimitiveType.Triangles:
-        //            for (int i = 0; i < Position.Count; i += 3)
-        //            {
-        //                Vector3 normal = Vector3.Cross(Position[i + 2] - Position[i + 1], Position[i] - Position[i + 1]).Normalized();
-        //                Normal.Add(normal);
-        //                Normal.Add(normal);
-        //                Normal.Add(normal);
-        //            }
-
-        //            break;
-        //        case PrimitiveType.Quads:
-        //            for (int i = 0; i < position.Count; i += 4)
-        //            {
-        //                Vector3 normal = Vector3.Cross(Position[i + 2] - Position[i + 1], Position[i] - Position[i + 1]).Normalized();
-        //                Normal.Add(normal);
-        //                Normal.Add(normal);
-        //                Normal.Add(normal);
-        //                Normal.Add(normal);
-        //            }
-
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
 
         /// <summary>
         /// 形状情報更新イベント

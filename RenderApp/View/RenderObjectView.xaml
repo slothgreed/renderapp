@@ -24,15 +24,6 @@
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
 
-        <ObjectDataProvider
-            x:Key="RenderModeEnum"
-            MethodName="GetValues"
-            ObjectType="{x:Type sys:Enum}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="renderer:RenderMode" />
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="Width" Value="75" />
         </Style>
@@ -55,20 +46,6 @@
                     <TextBlock Text="Translate" />
                     <control:Vector3EditBox Vector3Value="{Binding Translate}" />
                 </WrapPanel>
-            </StackPanel>
-        </Expander>
-
-        <Expander
-            Margin="2"
-            Header="Render"
-            IsExpanded="True">
-            <StackPanel>
-                <TextBlock Text="Render Mode" />
-                <ComboBox
-                    Margin="2"
-                    HorizontalAlignment="Stretch"
-                    ItemsSource="{Binding Source={StaticResource RenderModeEnum}}"
-                    SelectedItem="{Binding SelectedRenderMode}" />
             </StackPanel>
         </Expander>
 

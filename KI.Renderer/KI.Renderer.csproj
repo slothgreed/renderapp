@@ -53,7 +53,9 @@
     <Compile Include="Light\Light.cs" />
     <Compile Include="Light\PointLight.cs" />
     <Compile Include="Light\SpotLight.cs" />
-    <Compile Include="RenderPackage.cs" />
+    <Compile Include="Material\VertexColorMaterial.cs" />
+    <Compile Include="Material\GeometryMaterial.cs" />
+    <Compile Include="Material\Material.cs" />
     <Compile Include="SceneNode.cs" />
     <Compile Include="Technique\DeferredBuffer.cs" />
     <Compile Include="Technique\GBuffer.cs" />

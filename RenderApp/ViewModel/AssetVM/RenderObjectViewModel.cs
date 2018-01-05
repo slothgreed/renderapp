@@ -66,20 +66,6 @@ namespace RenderApp.ViewModel
             }
         }
 
-        public RenderMode SelectedRenderMode
-        {
-            get
-            {
-                return Model.RenderMode;
-            }
-
-            set
-            {
-                Model.RenderMode = value;
-                OnPropertyChanged(nameof(SelectedRenderMode));
-            }
-        }
-
         private VertexColor selectedItem;
         public VertexColor SelectedItem
         {

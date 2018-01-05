@@ -18,6 +18,7 @@ namespace KI.Gfx.GLUtil.Buffer
         /// 法線バッファ
         /// </summary>
         public ArrayBuffer NormalBuffer { get; private set; }
+        
         /// <summary>
         /// カラーバッファ
         /// </summary>
@@ -182,6 +183,15 @@ namespace KI.Gfx.GLUtil.Buffer
             IndexBufferList = index;
             Num = index.Length;
             EnableIndexBuffer = true;
+        }
+
+        /// <summary>
+        /// 頂点カラーの変更
+        /// </summary>
+        /// <param name="colorBuffer">カラーバッファ</param>
+        public void ChangeVertexColor(ArrayBuffer colorBuffer)
+        {
+            ColorBuffer = colorBuffer;
         }
 
         /// <summary>
