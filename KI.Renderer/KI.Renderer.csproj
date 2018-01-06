@@ -56,6 +56,7 @@
     <Compile Include="Material\VertexColorMaterial.cs" />
     <Compile Include="Material\GeometryMaterial.cs" />
     <Compile Include="Material\Material.cs" />
+    <Compile Include="Material\WireFrameMaterial.cs" />
     <Compile Include="SceneNode.cs" />
     <Compile Include="Technique\DeferredBuffer.cs" />
     <Compile Include="Technique\GBuffer.cs" />

@@ -9,6 +9,7 @@ using KI.Foundation.Parameter;
 using KI.Foundation.Utility;
 using KI.Gfx.Geometry;
 using KI.Renderer;
+using KI.Renderer.Material;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
@@ -79,7 +80,7 @@ namespace KI.Tool.Command
             halfDS.AddParameter(minVecParam);
             halfDS.AddParameter(maxVecParam);
 
-            var dirLine = new List<Line>();
+            var dirMinLine = new List<Line>();
             var dirMaxLine = new List<Line>();
             foreach (var position in halfDS.HalfEdgeVertexs)
             {
@@ -89,21 +90,62 @@ namespace KI.Tool.Command
                 Vertex maxStart = new Vertex(0, position.Position - position.MaxDirection * 0.5f, Vector3.UnitY);
                 Vertex maxEnd = new Vertex(0, position.Position + position.MaxDirection * 0.5f, Vector3.UnitY);
 
-                dirLine.Add(new Line(minStart, minEnd));
+                dirMinLine.Add(new Line(minStart, minEnd));
                 dirMaxLine.Add(new Line(maxStart, maxEnd));
             }
 
-            RenderObject dirLineObject = RenderObjectFactory.Instance.CreateRenderObject("Principal Direction");
-            var lines = new Polygon(halfDS.Name + "Direction", dirLine);
-            dirLineObject.SetPolygon(lines);
-            dirLineObject.ModelMatrix = renderObject.ModelMatrix;
-            Global.RenderSystem.ActiveScene.AddObject(dirLineObject);
+            var parentNode = Global.RenderSystem.ActiveScene.FindNode(renderObject);
 
-            RenderObject dirLineObject2 = RenderObjectFactory.Instance.CreateRenderObject("Principal Direction");
-            var lines2 = new Polygon(halfDS.Name + "Direction", dirMaxLine);
-            dirLineObject2.SetPolygon(lines2);
-            dirLineObject2.ModelMatrix = renderObject.ModelMatrix;
-            Global.RenderSystem.ActiveScene.AddObject(dirLineObject2);
+            VertexColorMaterial voronoiMaterial = new VertexColorMaterial(renderObject.Name + " : Voronoi", 
+                renderObject.PolygonMaterial.VertexBuffer,
+                renderObject.Polygon.Type,
+                renderObject.Shader,
+                halfDS.HalfEdgeVertexs.Select(p => KICalc.GetPseudoColor(p.Voronoi, voronoiParam.Min, voronoiParam.Max)).ToArray());
+
+            VertexColorMaterial meanMaterial = new VertexColorMaterial(renderObject.Name + " : MeanCurvature",
+                renderObject.PolygonMaterial.VertexBuffer,
+                renderObject.Polygon.Type, 
+                renderObject.Shader,
+                halfDS.HalfEdgeVertexs.Select(p => KICalc.GetPseudoColor(p.MeanCurvature, meanParam.Min, meanParam.Max)).ToArray());
+
+            VertexColorMaterial gaussMaterial = new VertexColorMaterial(renderObject.Name + " : GaussCurvature",
+                renderObject.PolygonMaterial.VertexBuffer,
+                renderObject.Polygon.Type, 
+                renderObject.Shader,
+                halfDS.HalfEdgeVertexs.Select(p => KICalc.GetPseudoColor(p.GaussCurvature, gaussParam.Min, gaussParam.Max)).ToArray());
+
+            VertexColorMaterial minMaterial = new VertexColorMaterial(renderObject.Name + " : MinCurvature",
+                renderObject.PolygonMaterial.VertexBuffer,
+                renderObject.Polygon.Type,
+                renderObject.Shader,
+                halfDS.HalfEdgeVertexs.Select(p => KICalc.GetPseudoColor(p.MinCurvature, minParam.Min, minParam.Max)).ToArray());
+
+            VertexColorMaterial maxMaterial = new VertexColorMaterial(renderObject.Name + " : MaxCurvature",
+                renderObject.PolygonMaterial.VertexBuffer,
+                renderObject.Polygon.Type,
+                renderObject.Shader,
+                halfDS.HalfEdgeVertexs.Select(p => KICalc.GetPseudoColor(p.MaxCurvature, maxParam.Min, maxParam.Max)).ToArray());
+
+            renderObject.Materials.Add(voronoiMaterial);
+            renderObject.Materials.Add(meanMaterial);
+            renderObject.Materials.Add(gaussMaterial);
+            renderObject.Materials.Add(minMaterial);
+            renderObject.Materials.Add(maxMaterial);
+
+            Global.RenderSystem.ActiveScene.AddObject(voronoiMaterial, parentNode);
+            Global.RenderSystem.ActiveScene.AddObject(meanMaterial, parentNode);
+            Global.RenderSystem.ActiveScene.AddObject(gaussMaterial, parentNode);
+            Global.RenderSystem.ActiveScene.AddObject(minMaterial, parentNode);
+            Global.RenderSystem.ActiveScene.AddObject(maxMaterial, parentNode);
+
+            var minLines = new Polygon(halfDS.Name + "Direction", dirMinLine);
+            var maxLines = new Polygon(halfDS.Name + "Direction", dirMaxLine);
+            GeometryMaterial dirMinMaterial = new GeometryMaterial(renderObject.Name + " : MinDirection", minLines, renderObject.Shader);
+            GeometryMaterial dirMaxMaterial = new GeometryMaterial(renderObject.Name + " : MinDirection", maxLines, renderObject.Shader);
+            renderObject.Materials.Add(dirMinMaterial);
+            renderObject.Materials.Add(dirMaxMaterial);
+            Global.RenderSystem.ActiveScene.AddObject(dirMinMaterial, parentNode);
+            Global.RenderSystem.ActiveScene.AddObject(dirMaxMaterial, parentNode);
 
             return CommandResult.Success;
         }

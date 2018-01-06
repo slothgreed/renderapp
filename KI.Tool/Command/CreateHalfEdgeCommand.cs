@@ -47,7 +47,7 @@ namespace KI.Tool.Command
             var half = AssetFactory.Instance.CreateHalfEdge(
                 "HalfEdge :" + renderObject.Name,
                 renderObject.Polygon.Vertexs.Select(p => p.Position).ToList(),
-                renderObject.Polygon.Index[PrimitiveType.Triangles]);
+                renderObject.Polygon.Index);
 
             RenderObject halfEdge = RenderObjectFactory.Instance.CreateRenderObject("HalfEdge :" + renderObject.Name);
             halfEdge.SetPolygon(half.Polygons[0]);

@@ -2,6 +2,7 @@
 using KI.Foundation.Command;
 using KI.Foundation.Core;
 using KI.Renderer;
+using KI.Renderer.Material;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
@@ -65,8 +66,15 @@ namespace KI.Tool.Command
                 wireFrameColors.Add(wireFrameColor);
             }
 
-            renderObject.Polygon.Index[PrimitiveType.Lines] = lineIndex;
-            renderObject.UpdateMaterial(renderObject.Materials[0], wireFrameColors);
+            var parentNode = Global.RenderSystem.ActiveScene.FindNode(renderObject);
+            WireFrameMaterial material = new WireFrameMaterial(renderObject.Name + ": WireFrame",
+                renderObject.PolygonMaterial.VertexBuffer,
+                renderObject.Shader,
+                wireFrameColors.ToArray(),
+                lineIndex.ToArray());
+
+            renderObject.Materials.Add(material);
+            Global.RenderSystem.ActiveScene.AddObject(material, parentNode);
 
             return CommandResult.Success;
         }

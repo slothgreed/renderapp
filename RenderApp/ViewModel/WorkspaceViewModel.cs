@@ -63,8 +63,7 @@ namespace RenderApp.ViewModel
             }
             else
             {
-                vm = new LightViewModel(this, node.KIObject as Light);
-
+                vm = new MaterialViewModel(this, node.KIObject as MaterialBase);
             }
 
             ReplaceTabWindow(vm);
@@ -74,7 +73,7 @@ namespace RenderApp.ViewModel
         {
             if (window is RenderObjectViewModel || window is LightViewModel)
             {
-                var oldItem = AnchorablesSources.FirstOrDefault(p => p is RenderObjectViewModel || p is LightViewModel);
+                var oldItem = AnchorablesSources.FirstOrDefault(p => p is RenderObjectViewModel || p is MaterialViewModel);
                 AnchorablesSources.Add(window);
                 AnchorablesSources.Remove(oldItem);
             }

@@ -70,7 +70,7 @@ namespace KI.Tool.Command
             KICalc.MinMax(renderObject.Polygon.Vertexs.Select(p => p.Position), out min, out max);
             min -= Vector3.One * 10;
             max += Vector3.One * 10;
-            var voxel = new VoxelSpace(renderObject.Polygon.Vertexs.Select(p => p.Position).ToList(), renderObject.Polygon.Index[PrimitiveType.Triangles], partition, min, max);
+            var voxel = new VoxelSpace(renderObject.Polygon.Vertexs.Select(p => p.Position).ToList(), renderObject.Polygon.Index, partition, min, max);
             var marching = new MarchingCubesAlgorithm(voxel, 0.8f);
 
             RenderObject marghingObject = RenderObjectFactory.Instance.CreateRenderObject("MarchingCube :" + renderObject.Name);

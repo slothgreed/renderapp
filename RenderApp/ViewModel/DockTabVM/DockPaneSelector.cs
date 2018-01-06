@@ -84,6 +84,7 @@ namespace RenderApp.ViewModel
         public DataTemplate ViewportTemplate { get; set; }
         public DataTemplate RenderObjectTemplate { get; set; }
         public DataTemplate LightTemplate { get; set; }
+        public DataTemplate MaterialTemplate { get; set; }
         public DataTemplate RendererTemplate { get; set; }
         public DataTemplate VoxelTemplate { get; set; }
 
@@ -108,6 +109,10 @@ namespace RenderApp.ViewModel
             else if (item is LightViewModel)
             {
                 return LightTemplate;
+            }
+            else if(item is MaterialViewModel)
+            {
+                return MaterialTemplate;
             }
             else if (item is VoxelViewModel)
             {

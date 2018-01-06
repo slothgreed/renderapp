@@ -71,7 +71,7 @@ namespace KI.Tool.Command
             List<Vector3> voxelPosition = new List<Vector3>();
             List<Vector3> voxelNormal = new List<Vector3>();
             KICalc.MinMax(renderObject.Polygon.Vertexs.Select(p => p.Position), out min, out max);
-            voxel = new VoxelSpace(renderObject.Polygon.Vertexs.Select(p => p.Position).ToList(), renderObject.Polygon.Index[PrimitiveType.Triangles], partition, min, max);
+            voxel = new VoxelSpace(renderObject.Polygon.Vertexs.Select(p => p.Position).ToList(), renderObject.Polygon.Index, partition, min, max);
             var mesh = GetVoxelObject();
 
             RenderObject voxelObject = RenderObjectFactory.Instance.CreateRenderObject("Voxel :" + renderObject.Name);

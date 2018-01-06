@@ -93,7 +93,7 @@ namespace KI.Gfx.Geometry
         /// <summary>
         /// 頂点インデックスリスト
         /// </summary>
-        private Dictionary<PrimitiveType, List<int>> index = new Dictionary<PrimitiveType, List<int>>();
+        private List<int> index = new List<int>();
 
         /// <summary>
         /// 頂点カラーリスト
@@ -157,7 +157,7 @@ namespace KI.Gfx.Geometry
             : base(name)
         {
             vertexs = vertex;
-            index[type] = indexList;
+            index = indexList;
             Type = type;
         }
 
@@ -174,11 +174,16 @@ namespace KI.Gfx.Geometry
         /// <summary>
         /// 頂点インデックスリスト
         /// </summary>
-        public Dictionary<PrimitiveType, List<int>> Index
+        public List<int> Index
         {
             get
             {
                 return index;
+            }
+            
+            set
+            {
+                index = value;
             }
         }
 
@@ -242,16 +247,16 @@ namespace KI.Gfx.Geometry
         public virtual void UpdateVertexArray(PrimitiveType type)
         {
             if (type == PrimitiveType.Lines &&
-                Index.ContainsKey(PrimitiveType.Lines))
+                Index.Count != 0)
             {
-                Index[PrimitiveType.Lines].Clear();
+                Index.Clear();
 
                 if (Lines != null)
                 {
                     foreach (var line in Lines)
                     {
-                        Index[PrimitiveType.Lines].Add(line.Start.Index);
-                        Index[PrimitiveType.Lines].Add(line.End.Index);
+                        Index.Add(line.Start.Index);
+                        Index.Add(line.End.Index);
                     }
                 }
 
@@ -259,13 +264,13 @@ namespace KI.Gfx.Geometry
             }
 
             if (type == PrimitiveType.Triangles &&
-                Index.ContainsKey(PrimitiveType.Triangles))
+                Index.Count != 0)
             {
-                Index[PrimitiveType.Triangles].Clear();
+                Index.Clear();
 
                 foreach (var mesh in Meshs)
                 {
-                    Index[PrimitiveType.Triangles].AddRange(mesh.Vertexs.Select(p => p.Index));
+                    Index.AddRange(mesh.Vertexs.Select(p => p.Index));
                 }
 
                 OnUpdate(new UpdatePolygonEventArgs(PrimitiveType.Triangles));
@@ -285,7 +290,7 @@ namespace KI.Gfx.Geometry
 
             if (idx != null)
             {
-                index[type] = idx;
+                index = idx;
             }
 
             Type = type;

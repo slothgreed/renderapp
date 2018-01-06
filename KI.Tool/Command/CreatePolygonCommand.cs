@@ -49,7 +49,7 @@ namespace KI.Tool.Command
         {
             var polygon = renderObject.Polygon;
             List<Vertex> vertex = new List<Vertex>();
-            List<int> index = new List<int>(polygon.Index[PrimitiveType.Triangles]);
+            List<int> index = new List<int>(polygon.Index);
             RenderObject polygonObject = RenderObjectFactory.Instance.CreateRenderObject("Polygon :" + polygon.Name);
             var color = new Vector3(0.7f);
             for (int i = 0; i < polygon.Vertexs.Count; i++)

@@ -195,6 +195,15 @@ namespace KI.Gfx.GLUtil.Buffer
         }
 
         /// <summary>
+        /// 頂点カラーの変更
+        /// </summary>
+        /// <param name="indexBuffer">カラーバッファ</param>
+        public void ChangeIndexBuffer(ArrayBuffer indexBuffer)
+        {
+            IndexBuffer = indexBuffer;
+        }
+
+        /// <summary>
         /// バッファの設定
         /// </summary>
         /// <param name="position">頂点</param>

@@ -75,6 +75,11 @@ namespace KI.Renderer
             }
         }
 
+        public KINode FindNode(KIObject obj)
+        {
+            return RootNode.FindRecursiveChild(obj.Name);
+        }
+
         /// <summary>
         /// シーンのオブジェクトの取得
         /// </summary>

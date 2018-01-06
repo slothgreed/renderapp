@@ -160,20 +160,13 @@ namespace KI.Foundation.Tree
         {
             foreach (var child in Children)
             {
-                if (child.Children.Count > 0)
+                if (child.KIObject.Name == name)
                 {
-                    child.FindRecursiveChild(name);
-                }
-                else
-                {
-                    if (child.KIObject.Name == name)
-                    {
-                        return child;
-                    }
+                    return child;
                 }
             }
 
-            return null;
+            return FindRecursiveChild(name);
         }
 
         #endregion

@@ -13,6 +13,11 @@ namespace KI.Renderer
     public abstract class MaterialBase : KIObject
     {
         /// <summary>
+        /// 頂点バッファ
+        /// </summary>
+        public VertexBuffer VertexBuffer { get; set; } = new VertexBuffer();
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
@@ -30,10 +35,12 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="shader">シェーダ</param>
-        public MaterialBase(string name, Shader shader)
+        public MaterialBase(string name, VertexBuffer vertexBuffer, PrimitiveType type, Shader shader)
             : base(name)
         {
+            VertexBuffer = vertexBuffer;
             Shader = shader;
+            Type = type;
         }
 
         /// <summary>
@@ -49,16 +56,14 @@ namespace KI.Renderer
         /// <summary>
         /// 紐づけ
         /// </summary>
-        /// <param name="vertexBuffer">レンダリングする頂点バッファ</param>
         /// <returns>成功か</returns>
-        public abstract bool Binding(VertexBuffer vertexBuffer);
+        public abstract bool Binding();
 
         /// <summary>
         /// 紐づけ解除
         /// </summary>
-        /// <param name="vertexBuffer">レンダリングする頂点バッファ</param>
         /// <returns>成功か</returns>
-        public abstract bool UnBinding(VertexBuffer vertexBuffer);
+        public abstract bool UnBinding();
 
         /// <summary>
         /// 可視不可視

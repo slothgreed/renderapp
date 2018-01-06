@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
-using KI.Foundation.Core;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
@@ -10,9 +13,9 @@ using OpenTK.Graphics.OpenGL;
 namespace KI.Renderer.Material
 {
     /// <summary>
-    /// 頂点カラーのマテリアル
+    /// ワイヤフレームのマテリアル
     /// </summary>
-    public class VertexColorMaterial : MaterialBase
+    public class WireFrameMaterial : MaterialBase
     {
         /// <summary>
         /// 一時保存用のテンポラリカラーバッファ
@@ -25,16 +28,27 @@ namespace KI.Renderer.Material
         private ArrayBuffer vertexColorBuffer { get; set; }
 
         /// <summary>
+        /// 一時保存用のテンポラリカラーバッファ
+        /// </summary>
+        private ArrayBuffer localIndexBuffer { get; set; }
+
+        /// <summary>
+        /// インデックスバッファ
+        /// </summary>
+        private ArrayBuffer indexBuffer { get; set; }
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="type">種類</param>
         /// <param name="shader">シェーダ</param>
         /// <param name="Color">色情報</param>
-        public VertexColorMaterial(string name, VertexBuffer vertexBuffer, PrimitiveType type, Shader shader, Vector3[] color)
-            : base(name, vertexBuffer, type, shader)
+        public WireFrameMaterial(string name, VertexBuffer vertexBuffer, Shader shader, Vector3[] color, int[] index)
+            : base(name, vertexBuffer, PrimitiveType.Lines, shader)
         {
             ColorList = color;
+            IndexBufferList = index;
         }
 
         /// <summary>
@@ -58,11 +72,35 @@ namespace KI.Renderer.Material
         }
 
         /// <summary>
+        /// 頂点インデックス情報
+        /// </summary>
+        private int[] IndexBufferList
+        {
+            set
+            {
+                if (value.Length == 0)
+                {
+                    Logger.Log(Logger.LogLevel.Error, "vertex num error");
+                }
+                if (indexBuffer == null)
+                {
+                    indexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
+                }
+
+                indexBuffer.SetData(value, EArrayType.IntArray);
+            }
+        }
+
+        /// <summary>
         /// 紐づけ
         /// </summary>
         /// <returns>成功か</returns>
         public override bool Binding()
         {
+            //インデックスバッファと頂点カラーを一時的に変更
+            localIndexBuffer = VertexBuffer.IndexBuffer;
+            VertexBuffer.ChangeIndexBuffer(indexBuffer);
+
             //頂点カラーを一時的に変更
             localColorBuffer = VertexBuffer.ColorBuffer;
             VertexBuffer.ChangeVertexColor(vertexColorBuffer);
@@ -75,6 +113,9 @@ namespace KI.Renderer.Material
         /// <returns>成功か</returns>
         public override bool UnBinding()
         {
+            VertexBuffer.ChangeIndexBuffer(localIndexBuffer);
+            localIndexBuffer = null;
+
             VertexBuffer.ChangeVertexColor(localColorBuffer);
             localColorBuffer = null;
             return true;

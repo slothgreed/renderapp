@@ -35,6 +35,11 @@
                             <v:LightView />
                         </DataTemplate>
                     </local:DockPaneTemplateSelector.LightTemplate>
+                    <local:DockPaneTemplateSelector.MaterialTemplate>
+                        <DataTemplate>
+                            <v:MaterialView />
+                        </DataTemplate>
+                    </local:DockPaneTemplateSelector.MaterialTemplate>
                     <local:DockPaneTemplateSelector.RenderObjectTemplate>
                         <DataTemplate>
                             <v:RenderObjectView />

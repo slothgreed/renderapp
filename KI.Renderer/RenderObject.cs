@@ -57,7 +57,7 @@ namespace KI.Renderer
         /// <summary>
         /// PolygonMaterial
         /// </summary>
-        private GeometryMaterial PolygonMaterial { get; set; }
+        public GeometryMaterial PolygonMaterial { get; private set; }
 
         /// <summary>
         /// 形状ID
@@ -121,24 +121,28 @@ namespace KI.Renderer
                     return;
                 }
 
-                if (PolygonMaterial.VertexBuffer.Num == 0)
+                if (material.VertexBuffer.Num == 0)
                 {
                     Logger.Log(Logger.LogLevel.Error, "vertexs list is 0");
                     return;
                 }
 
-                ShaderHelper.InitializeState(scene, this, PolygonMaterial.VertexBuffer, material.Shader, Polygon.Textures);
+                material.Binding();
+
+                ShaderHelper.InitializeState(scene, this, material.VertexBuffer, material.Shader, Polygon.Textures);
                 material.Shader.BindBuffer();
-                if (PolygonMaterial.VertexBuffer.EnableIndexBuffer)
+                if (material.VertexBuffer.EnableIndexBuffer)
                 {
-                    DeviceContext.Instance.DrawElements(material.Type, PolygonMaterial.VertexBuffer.Num, DrawElementsType.UnsignedInt, 0);
+                    DeviceContext.Instance.DrawElements(material.Type, material.VertexBuffer.Num, DrawElementsType.UnsignedInt, 0);
                 }
                 else
                 {
-                    DeviceContext.Instance.DrawArrays(material.Type, 0, PolygonMaterial.VertexBuffer.Num);
+                    DeviceContext.Instance.DrawArrays(material.Type, 0, material.VertexBuffer.Num);
                 }
 
                 material.Shader.UnBindBuffer();
+
+                material.UnBinding();
                 Logger.GLLog(Logger.LogLevel.Error);
             }
         }
@@ -156,7 +160,7 @@ namespace KI.Renderer
                 string vert = ShaderCreater.Instance.GetVertexShader(this);
                 string frag = ShaderCreater.Instance.GetFragShader(this);
                 var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
-                material = new GeometryMaterial("Material:" + Name, polygon.Type, shader);
+                material = new GeometryMaterial("Material:" + Name, polygon, shader);
             }
 
             if (PolygonMaterial == null)
@@ -211,9 +215,9 @@ namespace KI.Renderer
             Vector3[] normal = null;
             Vector3[] color = null;
             Vector2[] texCoord = null;
-            if (polygon.Index.ContainsKey(material.Type))
+            if (polygon.Index.Count != 0)
             {
-                indexBuffer = polygon.Index[material.Type].ToArray();
+                indexBuffer = polygon.Index.ToArray();
                 position = polygon.Vertexs.Select(p => p.Position).ToArray();
                 normal = polygon.Vertexs.Select(p => p.Normal).ToArray();
                 color = polygon.Vertexs.Select(p => p.Color).ToArray();
@@ -279,11 +283,11 @@ namespace KI.Renderer
             //    color = material.Color.ToArray();
             //}
 
-            PolygonMaterial.VertexBuffer.SetBuffer(position, normal, color, texCoord);
+            material.VertexBuffer.SetBuffer(position, normal, color, texCoord);
 
             if(indexBuffer != null)
             {
-                PolygonMaterial.VertexBuffer.SetIndexBuffer(indexBuffer);
+                material.VertexBuffer.SetIndexBuffer(indexBuffer);
             }
         }
 
