@@ -33,9 +33,5 @@
             <TextBlock Text="Max Value" />
             <control:KITextBox Margin="2" Text="{Binding MaxValue}" />
         </DockPanel>
-        <DockPanel>
-            <TextBlock Text="Step" />
-            <control:KITextBox Margin="2" Text="{Binding StepValue}" />
-        </DockPanel>
     </StackPanel>
 </UserControl>
