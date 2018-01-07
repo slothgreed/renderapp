@@ -6,11 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:geometry="clr-namespace:KI.Gfx.Geometry;assembly=KI.Gfx"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:renderer="clr-namespace:KI.Renderer;assembly=KI.Renderer"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
-    xmlns:v="clr-namespace:RenderApp.View"
-    xmlns:vm="clr-namespace:RenderApp.ViewModel"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
@@ -46,49 +43,6 @@
                     <TextBlock Text="Translate" />
                     <control:Vector3EditBox Vector3Value="{Binding Translate}" />
                 </WrapPanel>
-            </StackPanel>
-        </Expander>
-
-        <Expander
-            Margin="2"
-            Header="頂点カラー"
-            IsExpanded="True">
-            <StackPanel>
-                <DockPanel>
-                    <TextBlock Text="Vertex Color" />
-                    <ComboBox
-                        Margin="2"
-                        HorizontalAlignment="Stretch"
-                        ItemsSource="{Binding Source={StaticResource VertexColorEnum}}"
-                        SelectedItem="{Binding SelectedItem}" />
-                </DockPanel>
-                <toolkit:RangeSlider
-                    HigherRangeBackground="Red"
-                    HigherValue="{Binding HeightValue}"
-                    LowerRangeBackground="Blue"
-                    LowerValue="{Binding LowValue}"
-                    Maximum="{Binding MaxValue}"
-                    Minimum="{Binding MinValue}" />
-                <DockPanel>
-                    <TextBlock Text="Low Value" />
-                    <control:KITextBox Margin="2" Text="{Binding LowValue}" />
-                </DockPanel>
-                <DockPanel>
-                    <TextBlock Text="Height Value" />
-                    <control:KITextBox Margin="2" Text="{Binding HeightValue}" />
-                </DockPanel>
-                <DockPanel>
-                    <TextBlock Text="Min Value" />
-                    <control:KITextBox Margin="2" Text="{Binding MinValue}" />
-                </DockPanel>
-                <DockPanel>
-                    <TextBlock Text="Max Value" />
-                    <control:KITextBox Margin="2" Text="{Binding MaxValue}" />
-                </DockPanel>
-                <DockPanel>
-                    <TextBlock Text="Step" />
-                    <control:KITextBox Margin="2" Text="{Binding StepValue}" />
-                </DockPanel>
             </StackPanel>
         </Expander>
     </StackPanel>

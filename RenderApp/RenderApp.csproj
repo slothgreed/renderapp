@@ -167,6 +167,7 @@
     <Compile Include="Globals\RenderSystem.cs" />
     <Compile Include="Globals\Workspace.cs" />
     <Compile Include="ViewModel\AssetVM\MaterialViewModel.cs" />
+    <Compile Include="ViewModel\AssetVM\VertexColorMaterialViewModel.cs" />
     <Compile Include="ViewModel\Converter\EnumConverter.cs" />
     <Compile Include="Globals\Project.cs" />
     <Compile Include="Globals\Enum.cs" />
@@ -258,6 +259,9 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Utility\Util.cs" />
+    <Compile Include="View\VertexColorMaterialView.xaml.cs">
+      <DependentUpon>VertexColorMaterialView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ViewportView.xaml.cs">
       <DependentUpon>ViewportView.xaml</DependentUpon>
     </Compile>
@@ -305,6 +309,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\RendererView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\VertexColorMaterialView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

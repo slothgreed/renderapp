@@ -69,6 +69,22 @@ namespace KI.Renderer
         /// </summary>
         public List<MaterialBase> Materials { get; private set; } = new List<MaterialBase>();
 
+
+        /// <summary>
+        /// 可視不可視
+        /// </summary>
+        public new bool Visible
+        {
+            get
+            {
+                return PolygonMaterial.Visible;
+            }
+            set
+            {
+                PolygonMaterial.Visible = value;
+            }
+        }
+
         /// <summary>
         /// メインのシェーダ
         /// </summary>
@@ -128,7 +144,6 @@ namespace KI.Renderer
                 }
 
                 material.Binding();
-
                 ShaderHelper.InitializeState(scene, this, material.VertexBuffer, material.Shader, Polygon.Textures);
                 material.Shader.BindBuffer();
                 if (material.VertexBuffer.EnableIndexBuffer)
@@ -141,7 +156,6 @@ namespace KI.Renderer
                 }
 
                 material.Shader.UnBindBuffer();
-
                 material.UnBinding();
                 Logger.GLLog(Logger.LogLevel.Error);
             }
@@ -198,97 +212,6 @@ namespace KI.Renderer
             //{
             //    material.Color = color;
             //}
-
-            SetupBuffer(material);
-        }
-
-        /// <summary>
-        /// バッファにデータの設定
-        /// </summary>
-        /// <param name="polygon">ポリゴン</param>
-        /// <param name="type">形状種類</param>
-        /// <param name="color">頂点カラーの設定</param>
-        public void SetupBuffer(MaterialBase material)
-        {
-            int[] indexBuffer = null;
-            Vector3[] position = null;
-            Vector3[] normal = null;
-            Vector3[] color = null;
-            Vector2[] texCoord = null;
-            if (polygon.Index.Count != 0)
-            {
-                indexBuffer = polygon.Index.ToArray();
-                position = polygon.Vertexs.Select(p => p.Position).ToArray();
-                normal = polygon.Vertexs.Select(p => p.Normal).ToArray();
-                color = polygon.Vertexs.Select(p => p.Color).ToArray();
-                texCoord = polygon.Vertexs.Select(p => p.TexCoord).ToArray();
-            }
-            else if (material.Type == PrimitiveType.Points)
-            {
-                position = polygon.Vertexs.Select(p => p.Position).ToArray();
-                normal = polygon.Vertexs.Select(p => p.Normal).ToArray();
-                color = polygon.Vertexs.Select(p => p.Color).ToArray();
-                texCoord = polygon.Vertexs.Select(p => p.TexCoord).ToArray();
-            }
-            else if (material.Type == PrimitiveType.Lines)
-            {
-                var vertexs = new List<Vertex>();
-                foreach (var line in polygon.Lines)
-                {
-                    vertexs.Add(line.Start);
-                    vertexs.Add(line.End);
-                }
-
-                position = vertexs.Select(p => p.Position).ToArray();
-                normal = vertexs.Select(p => p.Normal).ToArray();
-                color = vertexs.Select(p => p.Color).ToArray();
-                texCoord = vertexs.Select(p => p.TexCoord).ToArray();
-            }
-            else
-            {
-                var vertexs = new List<Vertex>();
-                var normals = new List<Vector3>();
-
-                if (material.Type == PrimitiveType.Triangles)
-                {
-                    foreach (var mesh in polygon.Meshs)
-                    {
-                        vertexs.AddRange(mesh.Vertexs);
-                        normals.Add(mesh.Normal);
-                        normals.Add(mesh.Normal);
-                        normals.Add(mesh.Normal);
-                    }
-                }
-                else
-                {
-                    foreach (var mesh in polygon.Meshs)
-                    {
-                        vertexs.AddRange(mesh.Vertexs);
-                        normals.Add(mesh.Normal);
-                        normals.Add(mesh.Normal);
-                        normals.Add(mesh.Normal);
-                        normals.Add(mesh.Normal);
-                    }
-                }
-
-                position = vertexs.Select(p => p.Position).ToArray();
-                normal = normals.ToArray();
-                color = vertexs.Select(p => p.Color).ToArray();
-                texCoord = vertexs.Select(p => p.TexCoord).ToArray();
-            }
-
-            // デフォルトカラーよりすでに設定されているカラーを優先
-            //if(material.Color != null)
-            //{
-            //    color = material.Color.ToArray();
-            //}
-
-            material.VertexBuffer.SetBuffer(position, normal, color, texCoord);
-
-            if(indexBuffer != null)
-            {
-                material.VertexBuffer.SetIndexBuffer(indexBuffer);
-            }
         }
 
         /// <summary>

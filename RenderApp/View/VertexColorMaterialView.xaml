@@ -1,0 +1,41 @@
+﻿<UserControl
+    x:Class="RenderApp.View.VertexColorMaterialView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:control="clr-namespace:KI.UI.Controls;assembly=KI.UI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    mc:Ignorable="d">
+    <StackPanel>
+        <toolkit:RangeSlider
+            HigherRangeBackground="Red"
+            HigherValue="{Binding HeightValue}"
+            LowerRangeBackground="Blue"
+            LowerValue="{Binding LowValue}"
+            Maximum="{Binding MaxValue}"
+            Minimum="{Binding MinValue}" />
+        <DockPanel>
+            <TextBlock Text="Low Value" />
+            <control:KITextBox Margin="2" Text="{Binding LowValue}" />
+        </DockPanel>
+        <DockPanel>
+            <TextBlock Text="Height Value" />
+            <control:KITextBox Margin="2" Text="{Binding HeightValue}" />
+        </DockPanel>
+        <DockPanel>
+            <TextBlock Text="Min Value" />
+            <control:KITextBox Margin="2" Text="{Binding MinValue}" />
+        </DockPanel>
+        <DockPanel>
+            <TextBlock Text="Max Value" />
+            <control:KITextBox Margin="2" Text="{Binding MaxValue}" />
+        </DockPanel>
+        <DockPanel>
+            <TextBlock Text="Step" />
+            <control:KITextBox Margin="2" Text="{Binding StepValue}" />
+        </DockPanel>
+    </StackPanel>
+</UserControl>

@@ -228,51 +228,6 @@ namespace KI.Analyzer
             Lines.Add(edge3);
         }
 
-        /// <summary>
-        /// 頂点カラーの更新
-        /// </summary>
-        public void UpdateVertexColor(VertexColor colorType, float minValue, float maxValue)
-        {
-            IEnumerable<Vector3> color = null;
-            switch (colorType)
-            {
-                case VertexColor.Default:
-                    color = HalfEdgeVertexs.Select(p => p.Color);
-                    break;
-                case VertexColor.WireFrame:
-                    color = HalfEdgeVertexs.Select(p => Vector3.Zero);
-                    break;
-                case VertexColor.Voronoi:
-                    color = HalfEdgeVertexs.Select(p => KICalc.GetPseudoColor(p.Voronoi, minValue, maxValue));
-                    break;
-                case VertexColor.MeanCurvature:
-                    color = HalfEdgeVertexs.Select(p => KICalc.GetPseudoColor(p.MeanCurvature, minValue, maxValue));
-                    break;
-                case VertexColor.GaussCurvature:
-                    color = HalfEdgeVertexs.Select(p => KICalc.GetPseudoColor(p.GaussCurvature, minValue, maxValue));
-                    break;
-                case VertexColor.MinCurvature:
-                    color = HalfEdgeVertexs.Select(p => KICalc.GetPseudoColor(p.MinCurvature, minValue, maxValue));
-                    break;
-                case VertexColor.MaxCurvature:
-                    color = HalfEdgeVertexs.Select(p => KICalc.GetPseudoColor(p.MaxCurvature, minValue, maxValue));
-                    break;
-                case VertexColor.TmpParameter:
-                    if (HalfEdgeVertexs.First().TmpParameter is IVertexColorParameter)
-                    {
-                        color = HalfEdgeVertexs.Select(p => KICalc.GetPseudoColor(((IVertexColorParameter)p.TmpParameter).Value, minValue, maxValue));
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-            if (color != null)
-            {
-                OnUpdate(new UpdatePolygonEventArgs(PrimitiveType.Triangles, color.ToList()));
-            }
-        }
-
         public void Setup(IEnumerable<HalfEdgeVertex> vertexs, IEnumerable<HalfEdge> edges, IEnumerable<HalfEdgeMesh> meshs)
         {
             Vertexs = vertexs.OfType<Vertex>().ToList();

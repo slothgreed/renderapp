@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Input;
 using KI.Foundation.Tree;
 using KI.Renderer;
+using KI.Renderer.Material;
 using KI.UI.ViewModel;
 using RenderApp.Globals;
 
@@ -47,6 +46,11 @@ namespace RenderApp.ViewModel
             ViewportViewModel.Invalidate();
         }
 
+        private void MaterialViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            ViewportViewModel.Invalidate();
+        }
+
         public void UpdateSelectNode(KINode node)
         {
             if (node.KIObject == null)
@@ -63,7 +67,8 @@ namespace RenderApp.ViewModel
             }
             else
             {
-                vm = new MaterialViewModel(this, node.KIObject as MaterialBase);
+                vm = new VertexColorMaterialViewModel(this, node.KIObject as VertexColorMaterial);
+                vm.PropertyChanged += MaterialViewModel_PropertyChanged;
             }
 
             ReplaceTabWindow(vm);
@@ -71,7 +76,7 @@ namespace RenderApp.ViewModel
 
         public void ReplaceTabWindow(DockWindowViewModel window)
         {
-            if (window is RenderObjectViewModel || window is LightViewModel)
+            if (window is RenderObjectViewModel || window is MaterialViewModel)
             {
                 var oldItem = AnchorablesSources.FirstOrDefault(p => p is RenderObjectViewModel || p is MaterialViewModel);
                 AnchorablesSources.Add(window);

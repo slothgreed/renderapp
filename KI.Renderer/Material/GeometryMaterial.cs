@@ -109,12 +109,6 @@ namespace KI.Renderer.Material
                 texCoord = vertexs.Select(p => p.TexCoord).ToArray();
             }
 
-            // デフォルトカラーよりすでに設定されているカラーを優先
-            //if(material.Color != null)
-            //{
-            //    color = material.Color.ToArray();
-            //}
-
             VertexBuffer.SetBuffer(position, normal, color, texCoord);
 
             if (indexBuffer != null)

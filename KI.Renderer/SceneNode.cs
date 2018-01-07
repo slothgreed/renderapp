@@ -121,11 +121,6 @@ namespace KI.Renderer
         /// <param name="scene">シーン</param>
         public void Render(IScene scene)
         {
-            if (!Visible)
-            {
-                return;
-            }
-
             RenderCore(scene);
         }
 

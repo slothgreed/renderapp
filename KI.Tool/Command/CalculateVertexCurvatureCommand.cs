@@ -100,31 +100,31 @@ namespace KI.Tool.Command
                 renderObject.PolygonMaterial.VertexBuffer,
                 renderObject.Polygon.Type,
                 renderObject.Shader,
-                halfDS.HalfEdgeVertexs.Select(p => KICalc.GetPseudoColor(p.Voronoi, voronoiParam.Min, voronoiParam.Max)).ToArray());
+                voronoiParam.Values);
 
             VertexColorMaterial meanMaterial = new VertexColorMaterial(renderObject.Name + " : MeanCurvature",
                 renderObject.PolygonMaterial.VertexBuffer,
                 renderObject.Polygon.Type, 
                 renderObject.Shader,
-                halfDS.HalfEdgeVertexs.Select(p => KICalc.GetPseudoColor(p.MeanCurvature, meanParam.Min, meanParam.Max)).ToArray());
+                meanParam.Values);
 
             VertexColorMaterial gaussMaterial = new VertexColorMaterial(renderObject.Name + " : GaussCurvature",
                 renderObject.PolygonMaterial.VertexBuffer,
                 renderObject.Polygon.Type, 
                 renderObject.Shader,
-                halfDS.HalfEdgeVertexs.Select(p => KICalc.GetPseudoColor(p.GaussCurvature, gaussParam.Min, gaussParam.Max)).ToArray());
+                gaussParam.Values);
 
             VertexColorMaterial minMaterial = new VertexColorMaterial(renderObject.Name + " : MinCurvature",
                 renderObject.PolygonMaterial.VertexBuffer,
                 renderObject.Polygon.Type,
                 renderObject.Shader,
-                halfDS.HalfEdgeVertexs.Select(p => KICalc.GetPseudoColor(p.MinCurvature, minParam.Min, minParam.Max)).ToArray());
+                minParam.Values);
 
             VertexColorMaterial maxMaterial = new VertexColorMaterial(renderObject.Name + " : MaxCurvature",
                 renderObject.PolygonMaterial.VertexBuffer,
                 renderObject.Polygon.Type,
                 renderObject.Shader,
-                halfDS.HalfEdgeVertexs.Select(p => KICalc.GetPseudoColor(p.MaxCurvature, maxParam.Min, maxParam.Max)).ToArray());
+                maxParam.Values);
 
             renderObject.Materials.Add(voronoiMaterial);
             renderObject.Materials.Add(meanMaterial);

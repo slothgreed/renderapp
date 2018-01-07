@@ -47,10 +47,10 @@ namespace KI.Asset
         /// </summary>
         public void CreatePolygon()
         {
-            halfEdge.Index[PrimitiveType.Triangles] = new List<int>();
+            halfEdge.Index = new List<int>();
             foreach (var mesh in halfEdge.HalfEdgeMeshs)
             {
-                halfEdge.Index[PrimitiveType.Triangles].AddRange(mesh.AroundVertex.Select(p => p.Index));
+                halfEdge.Index.AddRange(mesh.AroundVertex.Select(p => p.Index));
             }
 
             Polygons = new Polygon[] { halfEdge };

@@ -37,6 +37,9 @@ namespace KI.Renderer.Material
         /// </summary>
         private ArrayBuffer indexBuffer { get; set; }
 
+        private int localNum;
+        private int num = 0;
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -49,6 +52,7 @@ namespace KI.Renderer.Material
         {
             ColorList = color;
             IndexBufferList = index;
+            num = index.Length;
         }
 
         /// <summary>
@@ -98,8 +102,9 @@ namespace KI.Renderer.Material
         public override bool Binding()
         {
             //インデックスバッファと頂点カラーを一時的に変更
+            localNum = VertexBuffer.Num;
             localIndexBuffer = VertexBuffer.IndexBuffer;
-            VertexBuffer.ChangeIndexBuffer(indexBuffer);
+            VertexBuffer.ChangeIndexBuffer(indexBuffer, num);
 
             //頂点カラーを一時的に変更
             localColorBuffer = VertexBuffer.ColorBuffer;
@@ -113,8 +118,9 @@ namespace KI.Renderer.Material
         /// <returns>成功か</returns>
         public override bool UnBinding()
         {
-            VertexBuffer.ChangeIndexBuffer(localIndexBuffer);
+            VertexBuffer.ChangeIndexBuffer(localIndexBuffer, localNum);
             localIndexBuffer = null;
+            localNum = 0;
 
             VertexBuffer.ChangeVertexColor(localColorBuffer);
             localColorBuffer = null;

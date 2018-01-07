@@ -67,7 +67,8 @@ namespace KI.Tool.Command
             }
 
             var parentNode = Global.RenderSystem.ActiveScene.FindNode(renderObject);
-            WireFrameMaterial material = new WireFrameMaterial(renderObject.Name + ": WireFrame",
+            WireFrameMaterial material = new WireFrameMaterial(
+                renderObject.Name + ": WireFrame",
                 renderObject.PolygonMaterial.VertexBuffer,
                 renderObject.Shader,
                 wireFrameColors.ToArray(),

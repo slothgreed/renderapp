@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using KI.Foundation.Core;
 using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
@@ -14,6 +16,11 @@ namespace KI.Renderer.Material
     /// </summary>
     public class VertexColorMaterial : MaterialBase
     {
+        /// <summary>
+        /// 頂点パラメータ
+        /// </summary>
+        private float[] VertexParameter;
+
         /// <summary>
         /// 一時保存用のテンポラリカラーバッファ
         /// </summary>
@@ -31,11 +38,18 @@ namespace KI.Renderer.Material
         /// <param name="type">種類</param>
         /// <param name="shader">シェーダ</param>
         /// <param name="Color">色情報</param>
-        public VertexColorMaterial(string name, VertexBuffer vertexBuffer, PrimitiveType type, Shader shader, Vector3[] color)
+        public VertexColorMaterial(string name, VertexBuffer vertexBuffer, PrimitiveType type, Shader shader, float[] parameter)
             : base(name, vertexBuffer, type, shader)
         {
-            ColorList = color;
+            Max = parameter.Max();
+            Min = parameter.Min();
+            VertexParameter = parameter;
+            UpdateVertexColor(Min, Max);
         }
+
+        public float Min { get; set; }
+
+        public float Max { get; private set; }
 
         /// <summary>
         /// カラー情報
@@ -78,6 +92,17 @@ namespace KI.Renderer.Material
             VertexBuffer.ChangeVertexColor(localColorBuffer);
             localColorBuffer = null;
             return true;
+        }
+
+        /// <summary>
+        /// 頂点カラーの更新
+        /// </summary>
+        /// <param name="parameter">パラメータ</param>
+        /// <param name="lowValue">最小値</param>
+        /// <param name="heightValue">最大値</param>
+        public void UpdateVertexColor(float lowValue, float heightValue)
+        {
+            ColorList = VertexParameter.Select(p => KICalc.GetPseudoColor(p, lowValue, heightValue)).ToArray();
         }
     }
 }
