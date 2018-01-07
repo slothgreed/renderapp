@@ -34,7 +34,7 @@ namespace KI.Tool.Utility
             GetMouseClipPosition(mouse, out near, out far);
 
             RenderObject renderObject = null;
-            foreach (KINode polygonNode in Global.RenderSystem.ActiveScene.RootNode.AllChildren())
+            foreach (KINode polygonNode in Global.Renderer.ActiveScene.RootNode.AllChildren())
             {
                 if (polygonNode.KIObject is RenderObject)
                 {
@@ -70,7 +70,7 @@ namespace KI.Tool.Utility
             GetMouseClipPosition(mouse, out near, out far);
 
             RenderObject renderObject;
-            foreach (KINode polygonNode in Global.RenderSystem.ActiveScene.RootNode.AllChildren())
+            foreach (KINode polygonNode in Global.Renderer.ActiveScene.RootNode.AllChildren())
             {
                 renderObject = null;
                 if (polygonNode.KIObject is RenderObject)
@@ -111,7 +111,7 @@ namespace KI.Tool.Utility
             GetMouseClipPosition(mouse, out near, out far);
 
             RenderObject renderObject;
-            foreach (KINode polygonNode in Global.RenderSystem.ActiveScene.RootNode.AllChildren())
+            foreach (KINode polygonNode in Global.Renderer.ActiveScene.RootNode.AllChildren())
             {
                 renderObject = null;
                 if (polygonNode.KIObject is RenderObject)
@@ -172,8 +172,8 @@ namespace KI.Tool.Utility
             viewport[3] = DeviceContext.Instance.Height;
 
             KICalc.GetClickPos(
-                Global.RenderSystem.ActiveScene.MainCamera.Matrix,
-                Global.RenderSystem.ActiveScene.MainCamera.ProjMatrix,
+                Global.Renderer.ActiveScene.MainCamera.Matrix,
+                Global.Renderer.ActiveScene.MainCamera.ProjMatrix,
                 viewport, mouse, out near, out far);
         }
 

@@ -66,7 +66,7 @@ namespace KI.Tool.Command
                 wireFrameColors.Add(wireFrameColor);
             }
 
-            var parentNode = Global.RenderSystem.ActiveScene.FindNode(renderObject);
+            var parentNode = Global.Renderer.ActiveScene.FindNode(renderObject);
             WireFrameMaterial material = new WireFrameMaterial(
                 renderObject.Name + ": WireFrame",
                 renderObject.PolygonMaterial.VertexBuffer.ShallowCopy(),
@@ -75,7 +75,7 @@ namespace KI.Tool.Command
                 lineIndex.ToArray());
 
             renderObject.Materials.Add(material);
-            Global.RenderSystem.ActiveScene.AddObject(material, parentNode);
+            Global.Renderer.ActiveScene.AddObject(material, parentNode);
 
             return CommandResult.Success;
         }

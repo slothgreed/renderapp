@@ -54,7 +54,7 @@ namespace KI.Tool.Control
                     }
                     else if (selectObject != renderObject)
                     {
-                        Global.RenderSystem.ActiveScene.DeleteObject("Picking");
+                        Global.Renderer.ActiveScene.DeleteObject("Picking");
                         // 前回と選択した形状が違う
                         selectObject = renderObject;
                         selectStart = vertex;
@@ -76,7 +76,7 @@ namespace KI.Tool.Control
                     Polygon polygon = new Polygon("Picking", new List<Vertex>() { new Vertex(0, vertex.Position, Vector3.UnitY) });
                     pointObject.SetPolygon(polygon);
                     pointObject.ModelMatrix = selectObject.ModelMatrix;
-                    Global.RenderSystem.ActiveScene.AddObject(pointObject);
+                    Global.Renderer.ActiveScene.AddObject(pointObject);
 
                     if (selectStart != null && selectEnd != null)
                     {
@@ -84,7 +84,7 @@ namespace KI.Tool.Control
                         selectObject = null;
                         selectStart = null;
                         selectEnd = null;
-                        Global.RenderSystem.ActiveScene.DeleteObject("Picking");
+                        Global.Renderer.ActiveScene.DeleteObject("Picking");
                     }
                 }
             }
@@ -98,8 +98,8 @@ namespace KI.Tool.Control
         /// <returns>成功</returns>
         public override bool UnBinding()
         {
-            Global.RenderSystem.ActiveScene.DeleteObject("Picking");
-            Global.RenderSystem.ActiveScene.DeleteObject("DijkstraLine");
+            Global.Renderer.ActiveScene.DeleteObject("Picking");
+            Global.Renderer.ActiveScene.DeleteObject("DijkstraLine");
             return true;
         }
 
@@ -117,7 +117,7 @@ namespace KI.Tool.Control
             Polygon polygon = new Polygon("DijkstraLine", dijkstra.DijkstraLine());
             lineObject.SetPolygon(polygon);
             lineObject.ModelMatrix = selectObject.ModelMatrix;
-            Global.RenderSystem.ActiveScene.AddObject(lineObject);
+            Global.Renderer.ActiveScene.AddObject(lineObject);
             return true;
         }
     }

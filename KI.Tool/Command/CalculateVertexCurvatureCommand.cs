@@ -94,7 +94,7 @@ namespace KI.Tool.Command
                 dirMaxLine.Add(new Line(maxStart, maxEnd));
             }
 
-            var parentNode = Global.RenderSystem.ActiveScene.FindNode(renderObject);
+            var parentNode = Global.Renderer.ActiveScene.FindNode(renderObject);
 
             VertexParameterMaterial voronoiMaterial = new VertexParameterMaterial(renderObject.Name + " : Voronoi",
                 renderObject.PolygonMaterial.VertexBuffer.ShallowCopy(),
@@ -132,11 +132,11 @@ namespace KI.Tool.Command
             renderObject.Materials.Add(minMaterial);
             renderObject.Materials.Add(maxMaterial);
 
-            Global.RenderSystem.ActiveScene.AddObject(voronoiMaterial, parentNode);
-            Global.RenderSystem.ActiveScene.AddObject(meanMaterial, parentNode);
-            Global.RenderSystem.ActiveScene.AddObject(gaussMaterial, parentNode);
-            Global.RenderSystem.ActiveScene.AddObject(minMaterial, parentNode);
-            Global.RenderSystem.ActiveScene.AddObject(maxMaterial, parentNode);
+            Global.Renderer.ActiveScene.AddObject(voronoiMaterial, parentNode);
+            Global.Renderer.ActiveScene.AddObject(meanMaterial, parentNode);
+            Global.Renderer.ActiveScene.AddObject(gaussMaterial, parentNode);
+            Global.Renderer.ActiveScene.AddObject(minMaterial, parentNode);
+            Global.Renderer.ActiveScene.AddObject(maxMaterial, parentNode);
 
             var minLines = new Polygon(halfDS.Name + "Direction", dirMinLine);
             var maxLines = new Polygon(halfDS.Name + "Direction", dirMaxLine);
@@ -144,8 +144,8 @@ namespace KI.Tool.Command
             GeometryMaterial dirMaxMaterial = new GeometryMaterial(renderObject.Name + " : MaxDirection", maxLines, renderObject.Shader);
             renderObject.Materials.Add(dirMinMaterial);
             renderObject.Materials.Add(dirMaxMaterial);
-            Global.RenderSystem.ActiveScene.AddObject(dirMinMaterial, parentNode);
-            Global.RenderSystem.ActiveScene.AddObject(dirMaxMaterial, parentNode);
+            Global.Renderer.ActiveScene.AddObject(dirMinMaterial, parentNode);
+            Global.Renderer.ActiveScene.AddObject(dirMaxMaterial, parentNode);
 
             return CommandResult.Success;
         }

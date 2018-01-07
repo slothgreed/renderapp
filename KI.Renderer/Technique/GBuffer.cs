@@ -67,7 +67,7 @@ namespace KI.Renderer
         /// 描画
         /// </summary>
         /// <param name="scene">シーン</param>
-        public override void Render(IScene scene)
+        public override void Render(Scene scene)
         {
             ClearBuffer();
             RenderTarget.BindRenderTarget(OutputTexture);

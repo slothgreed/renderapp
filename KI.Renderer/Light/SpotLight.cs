@@ -21,7 +21,7 @@ namespace KI.Renderer
 
         public float Fallof { get; private set; }
 
-        public override void RenderCore(IScene scene)
+        public override void RenderCore(Scene scene)
         {
             // TODO:
         }

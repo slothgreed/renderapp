@@ -69,9 +69,9 @@ namespace RenderApp.ViewModel
         /// <param name="e"></param>
         public void OnLoadedEvent(object sender, EventArgs e)
         {
-            Workspace.RenderSystem.Initialize(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
-            MainWindowViewModel.Instance.WorkspaceViewModel.RendererViewModel.Model = Workspace.RenderSystem;
-            Workspace.MainScene.Initialize();
+            Workspace.Instance.InitializeRenderer(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
+            MainWindowViewModel.Instance.WorkspaceViewModel.RendererViewModel.Model = Workspace.Instance.Renderer;
+            Workspace.Instance.InitializeScene();
         }
 
         /// <summary>
@@ -89,8 +89,8 @@ namespace RenderApp.ViewModel
         /// <param name="e">イベント</param>
         private void OnResizeEvent(object sender, EventArgs e)
         {
-            Workspace.MainScene.MainCamera.SetProjMatrix((float)DeviceContext.Instance.Width / DeviceContext.Instance.Height);
-            Workspace.RenderSystem.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
+            Workspace.Instance.MainScene.MainCamera.SetProjMatrix((float)DeviceContext.Instance.Width / DeviceContext.Instance.Height);
+            Workspace.Instance.Renderer.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace RenderApp.ViewModel
         /// <param name="e">イベント</param>
         private void OnRenderEvent(object sender, PaintEventArgs e)
         {
-            Workspace.RenderSystem.Render();
+            Workspace.Instance.Renderer.Render();
         }
 
         /// <summary>

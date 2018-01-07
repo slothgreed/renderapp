@@ -18,7 +18,7 @@ namespace KI.Renderer
         {
         }
 
-        public override void RenderCore(IScene scene)
+        public override void RenderCore(Scene scene)
         {
             // TODO:
         }

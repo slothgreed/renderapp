@@ -78,7 +78,7 @@ namespace KI.Tool.Command
             Polygon info = new Polygon("Voxel :" + renderObject.Name, mesh, PrimitiveType.Quads);
             voxelObject.SetPolygon(info);
             voxelObject.Transformation(renderObject.ModelMatrix);
-            Global.RenderSystem.ActiveScene.AddObject(voxelObject);
+            Global.Renderer.ActiveScene.AddObject(voxelObject);
 
             return CommandResult.Success;
         }

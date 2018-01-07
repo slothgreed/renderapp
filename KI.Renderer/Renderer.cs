@@ -6,12 +6,12 @@ namespace KI.Renderer
     /// <summary>
     /// レンダリングシステム
     /// </summary>
-    public abstract class IRenderer
+    public class Renderer
     {
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public IRenderer()
+        public Renderer()
         {
             ProcessingTexture = new List<Texture>();
             PostProcessMode = false;
@@ -25,7 +25,7 @@ namespace KI.Renderer
         /// <summary>
         /// 描画するシーン
         /// </summary>
-        public IScene ActiveScene { get; set; }
+        public Scene ActiveScene { get; set; }
 
         /// <summary>
         /// レンダーキュー
@@ -58,13 +58,6 @@ namespace KI.Renderer
         public List<Texture> ProcessingTexture { get; private set; }
 
         /// <summary>
-        /// 初期化
-        /// </summary>
-        /// <param name="width">横</param>
-        /// <param name="height">縦</param>
-        public abstract void Initialize(int width, int height);
-
-        /// <summary>
         /// サイズ変更
         /// </summary>
         /// <param name="width">横</param>
@@ -94,6 +87,11 @@ namespace KI.Renderer
         /// </summary>
         public void Render()
         {
+            if (ActiveScene == null)
+            {
+                return;
+            }
+
             RenderQueue.Render(ActiveScene);
 
             if (PostProcessMode)

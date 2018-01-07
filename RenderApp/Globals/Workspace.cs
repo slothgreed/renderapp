@@ -1,29 +1,148 @@
-﻿using KI.Renderer;
+﻿using System.Linq;
+using KI.Asset;
+using KI.Foundation.Command;
+using KI.Renderer;
+using KI.Tool.Command;
+using OpenTK;
 
 namespace RenderApp.Globals
 {
     /// <summary>
     /// ワークスペース
     /// </summary>
-    public static class Workspace
+    public class Workspace
     {
         /// <summary>
-        /// コンストラクタ
+        /// シングルトンインスタンス
         /// </summary>
-        static Workspace()
+        private static Workspace instance;
+
+        /// <summary>
+        /// シングルトンインスタンス
+        /// </summary>
+        public static Workspace Instance
         {
-            RenderSystem.ActiveScene = MainScene;
-            Global.RenderSystem = RenderSystem;
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new Workspace();
+                    instance.Initialize();
+                }
+
+                return instance;
+            }
         }
 
         /// <summary>
-        /// シーンマネージャ
+        /// シーン
         /// </summary>
-        public static IScene MainScene { get; } = new MainScene();
+        public Scene MainScene { get; set; }
 
         /// <summary>
-        /// レンダーシステム
+        /// レンダラー
         /// </summary>
-        public static IRenderer RenderSystem { get; } = new RenderSystem();
+        public Renderer Renderer { get; set; }
+
+        public void Initialize()
+        {
+            MainScene = new Scene("MainScene");
+            Renderer = new Renderer();
+            Global.Renderer = Renderer;
+            Global.Renderer.ActiveScene = MainScene;
+        }
+
+        /// <summary>
+        /// 初期化
+        /// </summary>
+        public void InitializeScene()
+        {
+            MainScene.Initialize();
+            var axis = AssetFactory.Instance.CreateAxis("axis", Vector3.Zero, MainScene.WorldMax);
+            var axisObject = RenderObjectFactory.Instance.CreateRenderObject(axis.ToString(), axis);
+            MainScene.AddObject(axisObject);
+
+            //var sponzas = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/crytek-sponza/sponza.obj");
+            //var sponzaObject = RenderObjectFactory.Instance.CreateRenderObjects("sponza",sponzas);
+            //foreach (var sponza in sponzaObject)
+            //{
+            //    AddObject(sponza);
+            //}
+
+            //List<RenderObject> ducks = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/duck/duck.obj");
+            //foreach (var duck in ducks)
+            //{
+            //    duck.RotateX(-90);
+            //    duck.RotateY(0);
+            //    ActiveScene.AddObject(duck);
+            //}
+
+            //List<RenderObject> worlds = AssetFactory.Instance.CreateWorld("World", ActiveScene.WorldMin, ActiveScene.WorldMax);
+            //string[] paths = new string[]{
+            //        ProjectInfo.TextureDirectory + @"\cubemap\posx.jpg",
+            //        ProjectInfo.TextureDirectory + @"\cubemap\posy.jpg",
+            //        ProjectInfo.TextureDirectory + @"\cubemap\posz.jpg",
+            //        ProjectInfo.TextureDirectory + @"\cubemap\negx.jpg",
+            //        ProjectInfo.TextureDirectory + @"\cubemap\negy.jpg",
+            //        ProjectInfo.TextureDirectory + @"\cubemap\negz.jpg"
+            //};
+
+            //for (int i = 0; i < 6; i++)
+            //{
+            //    var texture = TextureFactory.Instance.CreateTexture(paths[i]);
+            //    worlds[i].AddTexture(TextureKind.Albedo, texture);
+            //    ActiveScene.AddObject(worlds[i]);
+            //}
+            //EnvironmentProbe cubeMap = AssetFactory.Instance.CreateEnvironmentMap("world");
+            //cubeMap.GenCubemap(paths);
+            //ActiveScene.AddObject(cubeMap);
+
+            var bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/bunny.half");
+            //var bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/maxplanck.half");
+            //var bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/fandisk.half");
+            var renderBunny = RenderObjectFactory.Instance.CreateRenderObject("bunny", bunny);
+            //renderBunny.RotateX(-90);
+            MainScene.AddObject(renderBunny);
+
+            //var bunny = AssetFactory.Instance.CreateLoad3DModel(Global.KIDirectory + @"\renderapp\resource\model\armadillo.half");
+            ////var bunny = AssetFactory.Instance.CreateLoad3DModel(Global.KIDirectory + @"\renderapp\resource\model\bunny.half");
+            ////List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/Sphere.stl");
+            //var renderBunny = RenderObjectFactory.Instance.CreateRenderObject("bunny", bunny);
+            ////renderBunny.RotateX(-90);
+            ////renderBunny.Scale = new OpenTK.Vector3(100);
+            //AddObject(renderBunny);
+
+            CommandManager.Instance.Execute(new CreateWireFrameCommand(renderBunny), null, false);
+            CommandManager.Instance.Execute(new CalculateVertexCurvatureCommand(renderBunny), null, false);
+        }
+
+        public void InitializeRenderer(int width, int height)
+        {
+            //RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Shadow));
+            Renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer));
+            //RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.IBL));
+            Renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Deferred));
+            //RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Selection));
+            Renderer.OutputBuffer = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output) as OutputBuffer;
+            Renderer.OutputTexture = Renderer.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer).ToArray()[(int)GBuffer.OutputTextureType.Color];
+
+            var textures = Renderer.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
+            Bloom bloom = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Bloom) as Bloom;
+            bloom.uTarget = textures[(int)GBuffer.OutputTextureType.Color];
+            Renderer.PostEffect.AddTechnique(bloom);
+
+            Sobel sobel = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Sobel) as Sobel;
+            sobel.uTarget = textures[(int)GBuffer.OutputTextureType.Color];
+            Renderer.PostEffect.AddTechnique(sobel);
+
+            SSAO ssao = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.SSAO) as SSAO;
+            ssao.uPosition = textures[(int)GBuffer.OutputTextureType.Color];
+            ssao.uTarget = textures[(int)GBuffer.OutputTextureType.Color];
+            Renderer.PostEffect.AddTechnique(ssao);
+
+            SSLIC sslic = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.SSLIC) as SSLIC;
+            sslic.uVector = textures[(int)GBuffer.OutputTextureType.Color];
+            Renderer.PostEffect.AddTechnique(sslic);
+        }
     }
 }

@@ -30,7 +30,7 @@ namespace RenderApp.ViewModel
             }
         }
 
-
+        public Workspace workspace;
         private WorkspaceViewModel workspaceViewModel;
         public WorkspaceViewModel WorkspaceViewModel
         {
@@ -69,7 +69,8 @@ namespace RenderApp.ViewModel
         public MainWindowViewModel()
             : base(null)
         {
-            WorkspaceViewModel = new WorkspaceViewModel(this);
+            workspace = Workspace.Instance;
+            WorkspaceViewModel = new WorkspaceViewModel(this, workspace);
             instance = this;
         }
 
@@ -147,7 +148,7 @@ namespace RenderApp.ViewModel
                     var polygons = AssetFactory.Instance.CreateLoad3DModel(filename);
                     var renderObject = RenderObjectFactory.Instance.CreateRenderObject(filename, polygons);
                     renderObject.Scale = new OpenTK.Vector3(10);
-                    Workspace.MainScene.AddObject(renderObject);
+                    workspace.MainScene.AddObject(renderObject);
                 }
             }
         }
@@ -206,27 +207,27 @@ namespace RenderApp.ViewModel
             switch (menuParam)
             {
                 case RAGeometry.WireFrame:
-                    command = new CreateWireFrameCommand(Workspace.MainScene.SelectNode);
+                    command = new CreateWireFrameCommand(workspace.MainScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.ConvexHull:
-                    command = new CreateConvexHullCommand(Workspace.MainScene.SelectNode);
+                    command = new CreateConvexHullCommand(workspace.MainScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.MarchingCube:
-                    command = new CreateMarchingCubeCommand(Workspace.MainScene.SelectNode, 64);
+                    command = new CreateMarchingCubeCommand(workspace.MainScene.SelectNode, 64);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.HalfEdgeWireFrame:
-                    command = new CreateHalfEdgeWireFrameCommand(Workspace.MainScene.SelectNode);
+                    command = new CreateHalfEdgeWireFrameCommand(workspace.MainScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.AdaptiveMesh:
-                    command = new AdaptiveMeshCommand(Workspace.MainScene.SelectNode);
+                    command = new AdaptiveMeshCommand(workspace.MainScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                         break;
                 case RAGeometry.QEM:
-                    command = new QEMCommand(Workspace.MainScene.SelectNode);
+                    command = new QEMCommand(workspace.MainScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.Perceptron:
@@ -234,7 +235,7 @@ namespace RenderApp.ViewModel
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.Kmeans:
-                    command = new KMeansCommand(Workspace.MainScene.SelectNode, 40, 10);
+                    command = new KMeansCommand(workspace.MainScene.SelectNode, 40, 10);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.Voxelize:
@@ -287,7 +288,7 @@ namespace RenderApp.ViewModel
         public void ClosedCommand()
         {
             Viewport.Instance.Dispose();
-            Workspace.RenderSystem.Dispose();
+            workspace.Renderer.Dispose();
             ShaderFactory.Instance.Dispose();
             RenderTargetFactory.Instance.Dispose();
             TextureFactory.Instance.Dispose();
@@ -324,7 +325,7 @@ namespace RenderApp.ViewModel
         {
             View.DebugWindow window = new View.DebugWindow();
             View.DataVisualization dataVisualize = new View.DataVisualization();
-            var renderObject = Workspace.MainScene.SelectNode as RenderObject;
+            var renderObject = workspace.MainScene.SelectNode as RenderObject;
             dataVisualize.GraphName = "vertexParameter";
             dataVisualize.ParameterList = ((HalfEdgeDS)renderObject.Polygon).Parameter;
             dataVisualize.Update(((HalfEdgeDS)renderObject.Polygon).Parameter);

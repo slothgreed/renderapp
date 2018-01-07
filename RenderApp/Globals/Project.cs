@@ -61,7 +61,7 @@ namespace RenderApp.Globals
             if (child is Polygon)
             {
                 polygonRoot.AddChild(child);
-                Workspace.MainScene.AddObject(child);
+                Workspace.Instance.MainScene.AddObject(child);
             }
 
             if (child is Texture)

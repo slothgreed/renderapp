@@ -21,7 +21,7 @@ namespace KI.Renderer
         /// <param name="vertexBuffer">頂点バッファ</param>
         /// <param name="shader">レンダリング情報</param>
         /// <param name="textures">テクスチャ</param>
-        public static void InitializeState(IScene scene, RenderObject renderObject, VertexBuffer vertexBuffer, Shader shader, Dictionary<TextureKind, Texture> textures)
+        public static void InitializeState(Scene scene, RenderObject renderObject, VertexBuffer vertexBuffer, Shader shader, Dictionary<TextureKind, Texture> textures)
         {
             foreach (ShaderProgramInfo info in shader.GetShaderVariable())
             {

@@ -15,7 +15,7 @@ namespace KI.Renderer
             : base("OutputBuffer", vertexShader, fragShader, RenderTechniqueType.Output, RenderType.Original)
         {
             Plane = RenderObjectFactory.Instance.CreateRenderObject("OutputBuffer", AssetFactory.Instance.CreatePlane("OutputPlane"));
-            var textures = Global.RenderSystem.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
+            var textures = Global.Renderer.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
             Plane.Polygon.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Color]);
         }
 
@@ -41,7 +41,7 @@ namespace KI.Renderer
         /// 描画
         /// </summary>
         /// <param name="scene">シーン</param>
-        public override void Render(IScene scene)
+        public override void Render(Scene scene)
         {
             //最終出力フレームバッファのバインドの必要なし
             Plane.Shader = ShaderItem;

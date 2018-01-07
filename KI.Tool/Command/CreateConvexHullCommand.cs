@@ -81,7 +81,7 @@ namespace KI.Tool.Command
             RenderObject convex = RenderObjectFactory.Instance.CreateRenderObject("ConvexHull :" + renderObject.Name);
             convex.SetPolygon(polygon);
             convex.ModelMatrix = renderObject.ModelMatrix;
-            Global.RenderSystem.ActiveScene.AddObject(convex);
+            Global.Renderer.ActiveScene.AddObject(convex);
 
             return CommandResult.Success;
         }

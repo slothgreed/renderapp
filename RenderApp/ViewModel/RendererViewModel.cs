@@ -5,8 +5,8 @@ namespace RenderApp.ViewModel
 {
     public class RendererViewModel : DockWindowViewModel
     {
-        private IRenderer model;
-        public IRenderer Model
+        private Renderer model;
+        public Renderer Model
         {
             get
             {

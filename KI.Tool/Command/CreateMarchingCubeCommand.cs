@@ -77,7 +77,7 @@ namespace KI.Tool.Command
             var polygon = new Polygon(marghingObject.Name, marching.Meshs, PrimitiveType.Triangles);
             marghingObject.SetPolygon(polygon);
             marghingObject.ModelMatrix = renderObject.ModelMatrix;
-            Global.RenderSystem.ActiveScene.AddObject(marghingObject);
+            Global.Renderer.ActiveScene.AddObject(marghingObject);
 
             return CommandResult.Success;
         }

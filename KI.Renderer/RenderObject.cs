@@ -127,7 +127,7 @@ namespace KI.Renderer
         /// 描画
         /// </summary>
         /// <param name="scene">シーン</param>
-        public override void RenderCore(IScene scene)
+        public override void RenderCore(Scene scene)
         {
             foreach (var material in Materials.Where(p => p.Visible))
             {
@@ -185,7 +185,6 @@ namespace KI.Renderer
                 Materials.Add(material);
             }
 
-            UpdateMaterial(material, null);
         }
 
         /// <summary>
@@ -200,29 +199,13 @@ namespace KI.Renderer
         }
 
         /// <summary>
-        /// マテリアルの更新
-        /// </summary>
-        /// <param name="type">形状種類</param>
-        /// <param name="color">色</param>
-        public void UpdateMaterial(MaterialBase material, List<Vector3> color)
-        {
-            //if (color != null)
-            //{
-            //    material.Color = color;
-            //}
-        }
-
-        /// <summary>
         /// ジオメトリ更新処理
         /// </summary>
         /// <param name="sender">ジオメトリ</param>
         /// <param name="e">イベント</param>
         private void OnPolygonUpdated(object sender, UpdatePolygonEventArgs e)
         {
-            foreach (var material in Materials.Where(p => p.Type == e.Type))
-            {
-                UpdateMaterial(material, e.Color);
-            }
+            PolygonMaterial.SetupBuffer();
         }
     }
 }

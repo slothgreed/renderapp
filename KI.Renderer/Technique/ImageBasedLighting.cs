@@ -20,7 +20,7 @@ namespace KI.Renderer
         /// 描画
         /// </summary>
         /// <param name="scene">シーン</param>
-        public override void Render(IScene scene)
+        public override void Render(Scene scene)
         {
             RenderTarget.ClearBuffer();
             RenderTarget.BindRenderTarget(OutputTexture);
@@ -43,7 +43,7 @@ namespace KI.Renderer
         /// </summary>
         public override void Initialize()
         {
-            var textures = Global.RenderSystem.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
+            var textures = Global.Renderer.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
             Plane.Polygon.AddTexture(TextureKind.Albedo, textures[(int)GBuffer.OutputTextureType.Posit]);
             Plane.Polygon.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Normal]);
             Plane.Polygon.AddTexture(TextureKind.World, textures[(int)GBuffer.OutputTextureType.Color]);

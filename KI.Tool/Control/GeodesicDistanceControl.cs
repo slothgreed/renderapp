@@ -56,7 +56,7 @@ namespace KI.Tool.Control
                         Polygon polygon = new Polygon("Picking", new List<Vertex>() { new Vertex(0, selectVertex.Position, Vector3.UnitY) });
                         pointObject.SetPolygon(polygon);
                         pointObject.ModelMatrix = renderObject.ModelMatrix;
-                        Global.RenderSystem.ActiveScene.AddObject(pointObject);
+                        Global.Renderer.ActiveScene.AddObject(pointObject);
 
 
                         geodesic.SelectPoint(selectVertex.Index);
@@ -102,7 +102,7 @@ namespace KI.Tool.Control
                             }
                         }
 
-                        var parentNode = Global.RenderSystem.ActiveScene.FindNode(renderObject);
+                        var parentNode = Global.Renderer.ActiveScene.FindNode(renderObject);
                         
 
                         var colorMaterial = new VertexParameterMaterial("distanceColor", 
@@ -114,7 +114,7 @@ namespace KI.Tool.Control
                         Polygon lineGeometry = new Polygon("geodesicDistance", lines);
                         var lineMaterial = new GeometryMaterial("geodesicDistance", lineGeometry, renderObject.Shader);
                         renderObject.Materials.Add(lineMaterial);
-                        Global.RenderSystem.ActiveScene.AddObject(lineMaterial, parentNode);
+                        Global.Renderer.ActiveScene.AddObject(lineMaterial, parentNode);
                     }
                 }
             }

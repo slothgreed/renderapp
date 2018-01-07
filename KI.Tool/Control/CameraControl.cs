@@ -67,11 +67,11 @@ namespace KI.Tool.Control
                     break;
                 case MouseButtons.Middle:
                     middleMouse.Move(mouse.X, mouse.Y);
-                    Global.RenderSystem.ActiveScene.MainCamera.Translate(middleMouse.Delta.X, middleMouse.Delta.Y, 0);
+                    Global.Renderer.ActiveScene.MainCamera.Translate(middleMouse.Delta.X, middleMouse.Delta.Y, 0);
                     break;
                 case MouseButtons.Right:
                     rightMouse.Move(mouse.X, mouse.Y);
-                    Global.RenderSystem.ActiveScene.MainCamera.Rotate(rightMouse.Delta.X, rightMouse.Delta.Y, 0);
+                    Global.Renderer.ActiveScene.MainCamera.Rotate(rightMouse.Delta.X, rightMouse.Delta.Y, 0);
                     break;
             }
 
@@ -111,7 +111,7 @@ namespace KI.Tool.Control
             switch (mouse.Button)
             {
                 case MouseButtons.None:
-                    Global.RenderSystem.ActiveScene.MainCamera.Zoom((int)mouse.Delta);
+                    Global.Renderer.ActiveScene.MainCamera.Zoom((int)mouse.Delta);
                     break;
             }
 

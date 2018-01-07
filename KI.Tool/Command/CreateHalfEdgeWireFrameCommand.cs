@@ -84,7 +84,7 @@ namespace KI.Tool.Command
 
             wireframe.SetPolygon(new Polygon("HalfEdgeWireFrame :" + renderObject.Name, lines));
             wireframe.ModelMatrix = renderObject.ModelMatrix;
-            Global.RenderSystem.ActiveScene.AddObject(wireframe);
+            Global.Renderer.ActiveScene.AddObject(wireframe);
 
             return CommandResult.Success;
         }

@@ -31,7 +31,7 @@ namespace RenderApp.ViewModel
         {
             get
             {
-                return Workspace.MainScene.SelectNode.Name;
+                return Workspace.Instance.MainScene.SelectNode.Name;
             }
             set
             {
@@ -61,7 +61,7 @@ namespace RenderApp.ViewModel
         private void ExecuteCommand()
         {
             var color = new OpenTK.Vector3(SelectColor.R / 255.0f, SelectColor.G / 255.0f, SelectColor.B / 255.0f);
-            ICommand command = new CreateVoxelCommand(Workspace.MainScene.SelectNode as RenderObject, color, PartitionNum);
+            ICommand command = new CreateVoxelCommand(Workspace.Instance.MainScene.SelectNode as RenderObject, color, PartitionNum);
             CommandManager.Instance.Execute(command, null, true);
         }
     }

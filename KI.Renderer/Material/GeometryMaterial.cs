@@ -109,6 +109,11 @@ namespace KI.Renderer.Material
                 texCoord = vertexs.Select(p => p.TexCoord).ToArray();
             }
 
+            if (VertexBuffer != null)
+            {
+                VertexBuffer.Dispose();
+            }
+
             VertexBuffer = new VertexBuffer();
             VertexBuffer.SetBuffer(position, normal, color, texCoord, indexBuffer);
         }

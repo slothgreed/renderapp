@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using KI.Foundation.Tree;
 using KI.Renderer;
@@ -10,14 +11,15 @@ namespace RenderApp.ViewModel
 {
     public partial class WorkspaceViewModel : ViewModelBase
     {
+        public Workspace workspace;
         public RootNodeViewModel SceneNodeViewModel;
         public RendererViewModel RendererViewModel;
         public ViewportViewModel ViewportViewModel;
 
-        public WorkspaceViewModel(ViewModelBase parent)
+        public WorkspaceViewModel(ViewModelBase parent, Workspace workspace)
             : base(parent)
         {
-            SceneNodeViewModel = new RootNodeViewModel(this, Workspace.MainScene.RootNode, "Scene");
+            SceneNodeViewModel = new RootNodeViewModel(this, workspace.MainScene.RootNode, "Scene");
             ViewportViewModel = new ViewportViewModel(this);
             RendererViewModel = new RendererViewModel(this);
 
@@ -63,7 +65,7 @@ namespace RenderApp.ViewModel
             {
                 vm = new RenderObjectViewModel(this, node.KIObject as RenderObject);
                 vm.PropertyChanged += RenderObjectViewModel_PropertyChanged;
-                Workspace.MainScene.SelectNode = (SceneNode)node.KIObject;
+                workspace.MainScene.SelectNode = (SceneNode)node.KIObject;
             }
             else
             {

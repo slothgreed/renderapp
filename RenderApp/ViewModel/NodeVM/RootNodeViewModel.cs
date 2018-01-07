@@ -29,7 +29,7 @@ namespace RenderApp.ViewModel
         public ObservableCollection<NodeItemViewModel> RootNode
         {
             get;
-            private set;
+            set;
         }
 
         public NodeItemViewModel ActiveNode

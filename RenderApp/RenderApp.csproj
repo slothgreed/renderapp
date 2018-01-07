@@ -163,8 +163,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppSystem.cs" />
-    <Compile Include="Globals\MainScene.cs" />
-    <Compile Include="Globals\RenderSystem.cs" />
     <Compile Include="Globals\Workspace.cs" />
     <Compile Include="ViewModel\AssetVM\MaterialViewModel.cs" />
     <Compile Include="ViewModel\AssetVM\VertexParameterMaterialViewModel.cs" />

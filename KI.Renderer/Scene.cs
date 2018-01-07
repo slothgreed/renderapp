@@ -9,7 +9,7 @@ namespace KI.Renderer
     /// <summary>
     /// シーンクラス
     /// </summary>
-    public abstract class IScene
+    public class Scene
     {
         /// <summary>
         /// 空間の最大値
@@ -25,9 +25,13 @@ namespace KI.Renderer
         /// コンストラクタ
         /// </summary>
         /// <param name="name">シーン名</param>
-        public IScene(string name)
+        public Scene(string name)
         {
             RootNode = new KINode("ROOT");
+        }
+
+        public void Initialize()
+        {
             MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
             SunLight = RenderObjectFactory.Instance.CreateDirectionLight("SunLight", WorldMax, Vector3.Zero);
             AddObject(MainCamera);
@@ -55,11 +59,6 @@ namespace KI.Renderer
         public Light SunLight { get; set; }
 
         #region [public scene method]
-
-        /// <summary>
-        /// 初期化
-        /// </summary>
-        public abstract void Initialize();
 
         /// <summary>
         /// オブジェクトの追加

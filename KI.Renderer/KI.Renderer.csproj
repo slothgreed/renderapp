@@ -48,7 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IScene.cs" />
+    <Compile Include="Scene.cs" />
     <Compile Include="Light\DirectionLight.cs" />
     <Compile Include="Light\Light.cs" />
     <Compile Include="Light\PointLight.cs" />
@@ -79,7 +79,7 @@
     <Compile Include="RenderObject.cs" />
     <Compile Include="RenderObjectFactory.cs" />
     <Compile Include="RenderQueue.cs" />
-    <Compile Include="IRenderer.cs" />
+    <Compile Include="Renderer.cs" />
     <Compile Include="Technique\RenderTechniqueFactory.cs" />
     <Compile Include="Utility\ShaderCreater.cs" />
     <Compile Include="Utility\ShaderHelper.cs" />

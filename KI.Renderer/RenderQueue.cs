@@ -130,7 +130,7 @@ namespace KI.Renderer
         /// レンダリング
         /// </summary>
         /// <param name="scene">シーン</param>
-        public void Render(IScene scene)
+        public void Render(Scene scene)
         {
             foreach (var loop in techniques)
             {
