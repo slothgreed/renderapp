@@ -21,10 +21,10 @@ namespace KI.Foundation.Parameter
         /// コンストラクタ
         /// </summary>
         /// <param name="val">値</param>
-        public VectorParameter(string name, IEnumerable<Vector3> val)
+        public VectorParameter(string name, Vector3[] val)
         {
             Name = name;
-            values = val.ToArray();
+            values = val;
         }
 
         /// <summary>

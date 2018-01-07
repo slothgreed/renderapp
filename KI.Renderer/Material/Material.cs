@@ -15,7 +15,7 @@ namespace KI.Renderer
         /// <summary>
         /// 頂点バッファ
         /// </summary>
-        public VertexBuffer VertexBuffer { get; set; } = new VertexBuffer();
+        public VertexBuffer VertexBuffer { get; set; }
 
         /// <summary>
         /// コンストラクタ
@@ -52,18 +52,6 @@ namespace KI.Renderer
         /// レンダリングするときの種類
         /// </summary>
         public PrimitiveType Type { get; set; }
-
-        /// <summary>
-        /// 紐づけ
-        /// </summary>
-        /// <returns>成功か</returns>
-        public abstract bool Binding();
-
-        /// <summary>
-        /// 紐づけ解除
-        /// </summary>
-        /// <returns>成功か</returns>
-        public abstract bool UnBinding();
 
         /// <summary>
         /// 可視不可視

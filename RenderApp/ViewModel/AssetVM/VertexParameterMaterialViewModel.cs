@@ -11,9 +11,9 @@ namespace RenderApp.ViewModel
 {
     class VertexColorMaterialViewModel : MaterialViewModel
     {
-        private VertexColorMaterial Model;
+        private VertexParameterMaterial Model;
 
-        public VertexColorMaterialViewModel(ViewModelBase parent, VertexColorMaterial model)
+        public VertexColorMaterialViewModel(ViewModelBase parent, VertexParameterMaterial model)
                 : base(parent, model)
         {
             Model = model;

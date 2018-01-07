@@ -53,7 +53,7 @@
     <Compile Include="Light\Light.cs" />
     <Compile Include="Light\PointLight.cs" />
     <Compile Include="Light\SpotLight.cs" />
-    <Compile Include="Material\VertexColorMaterial.cs" />
+    <Compile Include="Material\VertexParameterMaterial.cs" />
     <Compile Include="Material\GeometryMaterial.cs" />
     <Compile Include="Material\Material.cs" />
     <Compile Include="Material\WireFrameMaterial.cs" />

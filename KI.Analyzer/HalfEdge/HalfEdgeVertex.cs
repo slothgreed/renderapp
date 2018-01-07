@@ -478,15 +478,15 @@ namespace KI.Analyzer
             float min1 = (float)eigenVector.Get2D(1, 0).Val0;
             float min2 = (float)eigenVector.Get2D(1, 1).Val0;
 
-            var elipseMat = DenseMatrix.OfArray(new double[,] { { a, b / 2 }, { b / 2, c } });
-            var eigen = elipseMat.Evd();
-            var eigenVector2 = eigen.EigenVectors;
-            var eigenValue2 = eigen.EigenValues;
+            //var elipseMat = DenseMatrix.OfArray(new double[,] { { a, b / 2 }, { b / 2, c } });
+            //var eigen = elipseMat.Evd();
+            //var eigenVector2 = eigen.EigenVectors;
+            //var eigenValue2 = eigen.EigenValues;
 
-            min1 = (float)eigenVector2[0, 0];
-            min2 = (float)eigenVector2[0, 1];
-            max1 = (float)eigenVector2[1, 0];
-            max2 = (float)eigenVector2[1, 1];
+            //var max1 = (float)eigenVector2[0, 0];
+            //var max2 = (float)eigenVector2[0, 1];
+            //var min1 = (float)eigenVector2[1, 0];
+            //var min2 = (float)eigenVector2[1, 1];
 
             maxDirection = new Vector3(
                 baseU.X * max1 + baseV.X * max2,

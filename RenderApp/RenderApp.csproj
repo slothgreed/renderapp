@@ -167,7 +167,7 @@
     <Compile Include="Globals\RenderSystem.cs" />
     <Compile Include="Globals\Workspace.cs" />
     <Compile Include="ViewModel\AssetVM\MaterialViewModel.cs" />
-    <Compile Include="ViewModel\AssetVM\VertexColorMaterialViewModel.cs" />
+    <Compile Include="ViewModel\AssetVM\VertexParameterMaterialViewModel.cs" />
     <Compile Include="ViewModel\Converter\EnumConverter.cs" />
     <Compile Include="Globals\Project.cs" />
     <Compile Include="Globals\Enum.cs" />

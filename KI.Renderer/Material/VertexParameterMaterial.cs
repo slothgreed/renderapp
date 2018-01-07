@@ -1,0 +1,81 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using KI.Foundation.Core;
+using KI.Foundation.Utility;
+using KI.Gfx.GLUtil;
+using KI.Gfx.GLUtil.Buffer;
+using KI.Gfx.KIShader;
+using OpenTK;
+using OpenTK.Graphics.OpenGL;
+
+namespace KI.Renderer.Material
+{
+    /// <summary>
+    /// 頂点カラーのマテリアル
+    /// </summary>
+    public class VertexParameterMaterial : MaterialBase
+    {
+        /// <summary>
+        /// 頂点パラメータ
+        /// </summary>
+        private float[] VertexParameter;
+
+        /// <summary>
+        /// カラーバッファ
+        /// </summary>
+        private ArrayBuffer vertexColorBuffer { get; set; }
+
+        /// <summary>
+        /// 最小値
+        /// </summary>
+        public float Min { get; set; }
+
+        /// <summary>
+        /// 最大値
+        /// </summary>
+        public float Max { get; private set; }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <param name="type">種類</param>
+        /// <param name="shader">シェーダ</param>
+        /// <param name="Color">色情報</param>
+        public VertexParameterMaterial(string name, VertexBuffer vertexBuffer, PrimitiveType type, Shader shader, float[] parameter)
+            : base(name, vertexBuffer, type, shader)
+        {
+            Max = parameter.Max();
+            Min = parameter.Min();
+            VertexParameter = parameter;
+            vertexColorBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
+            UpdateVertexColor(Min, Max);
+            vertexBuffer.ColorBuffer = vertexColorBuffer;
+
+            VertexBuffer.EnableIndexBuffer = true;
+        }
+
+        /// <summary>
+        /// 頂点カラーの更新
+        /// </summary>
+        /// <param name="parameter">パラメータ</param>
+        /// <param name="lowValue">最小値</param>
+        /// <param name="heightValue">最大値</param>
+        public void UpdateVertexColor(float lowValue, float heightValue)
+        {
+            var colors = VertexParameter.Select(p => KICalc.GetPseudoColor(p, lowValue, heightValue)).ToArray();
+            vertexColorBuffer.SetData(colors, EArrayType.Vec3Array);
+        }
+
+        /// <summary>
+        /// 解放処理
+        /// </summary>
+        public override void Dispose()
+        {
+            vertexColorBuffer.Dispose();
+            base.Dispose();
+        }
+
+    }
+}

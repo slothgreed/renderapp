@@ -26,11 +26,14 @@ namespace KI.Asset.Loader.Converter
             }
 
             max -= min;
+            float maxValue = Math.Max(max.X, max.Y);
+            maxValue = Math.Max(maxValue, max.Z);
+
             var half = new Vector3(0.5f);
             foreach (var vertex in vertexs)
             {
                 vertex.Position = (vertex.Position - min);
-                vertex.Position = Vector3.Divide(vertex.Position, max);
+                vertex.Position = Vector3.Divide(vertex.Position, maxValue);
                 vertex.Position -= half;
             }
 

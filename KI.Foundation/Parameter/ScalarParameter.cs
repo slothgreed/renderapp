@@ -35,10 +35,10 @@ namespace KI.Foundation.Parameter
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="parameters">パラメータ</param>
-        public ScalarParameter(string name, IEnumerable<float> parameters)
+        public ScalarParameter(string name, float[] parameters)
         {
             Name = name;
-            Values = parameters.ToArray();
+            Values = parameters;
         }
 
         /// <summary>

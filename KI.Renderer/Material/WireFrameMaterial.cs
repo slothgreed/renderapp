@@ -18,27 +18,14 @@ namespace KI.Renderer.Material
     public class WireFrameMaterial : MaterialBase
     {
         /// <summary>
-        /// 一時保存用のテンポラリカラーバッファ
-        /// </summary>
-        private ArrayBuffer localColorBuffer { get; set; }
-
-        /// <summary>
         /// カラーバッファ
         /// </summary>
         private ArrayBuffer vertexColorBuffer { get; set; }
 
         /// <summary>
-        /// 一時保存用のテンポラリカラーバッファ
-        /// </summary>
-        private ArrayBuffer localIndexBuffer { get; set; }
-
-        /// <summary>
-        /// インデックスバッファ
+        /// 頂点番号バッファ
         /// </summary>
         private ArrayBuffer indexBuffer { get; set; }
-
-        private int localNum;
-        private int num = 0;
 
         /// <summary>
         /// コンストラクタ
@@ -50,81 +37,25 @@ namespace KI.Renderer.Material
         public WireFrameMaterial(string name, VertexBuffer vertexBuffer, Shader shader, Vector3[] color, int[] index)
             : base(name, vertexBuffer, PrimitiveType.Lines, shader)
         {
-            ColorList = color;
-            IndexBufferList = index;
-            num = index.Length;
+            vertexColorBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
+            vertexColorBuffer.SetData(color, EArrayType.Vec3Array);
+            vertexBuffer.ColorBuffer = vertexColorBuffer;
+
+            indexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
+            indexBuffer.SetData(index, EArrayType.IntArray);
+            vertexBuffer.IndexBuffer = indexBuffer;
+            vertexBuffer.Num = index.Length;
+            vertexBuffer.EnableIndexBuffer = true;
         }
 
         /// <summary>
-        /// カラー情報
+        /// 解放処理
         /// </summary>
-        private Vector3[] ColorList
+        public override void Dispose()
         {
-            set
-            {
-                if (value.Length == 0)
-                {
-                    Logger.Log(Logger.LogLevel.Error, "vertex num error");
-                }
-                if (vertexColorBuffer == null)
-                {
-                    vertexColorBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
-                }
-
-                vertexColorBuffer.SetData(value, EArrayType.Vec3Array);
-            }
-        }
-
-        /// <summary>
-        /// 頂点インデックス情報
-        /// </summary>
-        private int[] IndexBufferList
-        {
-            set
-            {
-                if (value.Length == 0)
-                {
-                    Logger.Log(Logger.LogLevel.Error, "vertex num error");
-                }
-                if (indexBuffer == null)
-                {
-                    indexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
-                }
-
-                indexBuffer.SetData(value, EArrayType.IntArray);
-            }
-        }
-
-        /// <summary>
-        /// 紐づけ
-        /// </summary>
-        /// <returns>成功か</returns>
-        public override bool Binding()
-        {
-            //インデックスバッファと頂点カラーを一時的に変更
-            localNum = VertexBuffer.Num;
-            localIndexBuffer = VertexBuffer.IndexBuffer;
-            VertexBuffer.ChangeIndexBuffer(indexBuffer, num);
-
-            //頂点カラーを一時的に変更
-            localColorBuffer = VertexBuffer.ColorBuffer;
-            VertexBuffer.ChangeVertexColor(vertexColorBuffer);
-            return true;
-        }
-
-        /// <summary>
-        /// 紐づけ解除
-        /// </summary>
-        /// <returns>成功か</returns>
-        public override bool UnBinding()
-        {
-            VertexBuffer.ChangeIndexBuffer(localIndexBuffer, localNum);
-            localIndexBuffer = null;
-            localNum = 0;
-
-            VertexBuffer.ChangeVertexColor(localColorBuffer);
-            localColorBuffer = null;
-            return true;
+            vertexColorBuffer.Dispose();
+            indexBuffer.Dispose();
+            base.Dispose();
         }
     }
 }

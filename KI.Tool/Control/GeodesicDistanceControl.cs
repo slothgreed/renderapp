@@ -105,8 +105,8 @@ namespace KI.Tool.Control
                         var parentNode = Global.RenderSystem.ActiveScene.FindNode(renderObject);
                         
 
-                        var colorMaterial = new VertexColorMaterial("distanceColor", 
-                            renderObject.PolygonMaterial.VertexBuffer, 
+                        var colorMaterial = new VertexParameterMaterial("distanceColor", 
+                            renderObject.PolygonMaterial.VertexBuffer.ShallowCopy(), 
                             renderObject.PolygonMaterial.Type, 
                             renderObject.Shader, 
                             geodesicDistance);

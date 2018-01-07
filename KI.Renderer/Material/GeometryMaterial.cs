@@ -109,22 +109,8 @@ namespace KI.Renderer.Material
                 texCoord = vertexs.Select(p => p.TexCoord).ToArray();
             }
 
-            VertexBuffer.SetBuffer(position, normal, color, texCoord);
-
-            if (indexBuffer != null)
-            {
-                VertexBuffer.SetIndexBuffer(indexBuffer);
-            }
-        }
-
-        public override bool Binding()
-        {
-            return true;
-        }
-
-        public override bool UnBinding()
-        {
-            return true;
+            VertexBuffer = new VertexBuffer();
+            VertexBuffer.SetBuffer(position, normal, color, texCoord, indexBuffer);
         }
     }
 }

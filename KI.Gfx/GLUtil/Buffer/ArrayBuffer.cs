@@ -14,28 +14,26 @@ namespace KI.Gfx.GLUtil
     public class ArrayBuffer : BufferObject
     {
         /// <summary>
+        /// UsageHint
+        /// </summary>
+        public BufferUsageHint usageHint;
+
+        /// <summary>
+        /// バッファターゲット
+        /// </summary>
+        private BufferTarget target;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="target">バッファターゲット</param>
         internal ArrayBuffer(BufferTarget target)
         {
-            Target = target;
-            UsageHint = BufferUsageHint.StaticDraw;
+            this.target = target;
+            usageHint = BufferUsageHint.StaticDraw;
             Enable = true;
         }
 
-        public BufferUsageHint UsageHint { get; set; }
-
-        public BufferTarget Target { get; set; }
-
-        /// <summary>
-        /// データ
-        /// </summary>
-        public object Data { get; private set; }
-
-        /// <summary>
-        /// 配列の型
-        /// </summary>
         public EArrayType ArrayType { get; private set; }
 
         /// <summary>
@@ -43,10 +41,9 @@ namespace KI.Gfx.GLUtil
         /// </summary>
         /// <param name="data">データ</param>
         /// <param name="arrayType">配列の型</param>
-        public void SetData(object data, EArrayType arrayType)
+        public void SetData(object data, EArrayType type)
         {
-            Data = data;
-            ArrayType = arrayType;
+            ArrayType = type;
             BindBuffer();
             switch (ArrayType)
             {
@@ -54,27 +51,27 @@ namespace KI.Gfx.GLUtil
                     break;
                 case EArrayType.IntArray:
                     var intTmp = (int[])data;
-                    GL.BufferData(Target, (IntPtr)(intTmp.Length * sizeof(int)), intTmp, UsageHint);
+                    GL.BufferData(target, (IntPtr)(intTmp.Length * sizeof(int)), intTmp, usageHint);
                     break;
                 case EArrayType.FloatArray:
                     var fArray = (float[])data;
-                    GL.BufferData(Target, (IntPtr)(fArray.Length * sizeof(float)), fArray, UsageHint);
+                    GL.BufferData(target, (IntPtr)(fArray.Length * sizeof(float)), fArray, usageHint);
                     break;
                 case EArrayType.DoubleArra:
                     var dArray = (double[])data;
-                    GL.BufferData(Target, (IntPtr)(dArray.Length * sizeof(double)), dArray, UsageHint);
+                    GL.BufferData(target, (IntPtr)(dArray.Length * sizeof(double)), dArray, usageHint);
                     break;
                 case EArrayType.Vec2Array:
                     var v2Array = (Vector2[])data;
-                    GL.BufferData(Target, (IntPtr)(v2Array.Length * Vector2.SizeInBytes), v2Array, UsageHint);
+                    GL.BufferData(target, (IntPtr)(v2Array.Length * Vector2.SizeInBytes), v2Array, usageHint);
                     break;
                 case EArrayType.Vec3Array:
                     var v3Array = (Vector3[])data;
-                    GL.BufferData(Target, (IntPtr)(v3Array.Length * Vector3.SizeInBytes), v3Array, UsageHint);
+                    GL.BufferData(target, (IntPtr)(v3Array.Length * Vector3.SizeInBytes), v3Array, usageHint);
                     break;
                 case EArrayType.Vec4Array:
                     var v4Array = (Vector4[])data;
-                    GL.BufferData(Target, (IntPtr)(v4Array.Length * Vector4.SizeInBytes), v4Array, UsageHint);
+                    GL.BufferData(target, (IntPtr)(v4Array.Length * Vector4.SizeInBytes), v4Array, usageHint);
                     break;
                 default:
                     new Exception();
@@ -97,7 +94,7 @@ namespace KI.Gfx.GLUtil
         /// </summary>
         protected override void BindBufferCore()
         {
-            GL.BindBuffer(Target, DeviceID);
+            GL.BindBuffer(target, DeviceID);
         }
 
         /// <summary>
@@ -105,7 +102,7 @@ namespace KI.Gfx.GLUtil
         /// </summary>
         protected override void UnBindBufferCore()
         {
-            GL.BindBuffer(Target, 0);
+            GL.BindBuffer(target, 0);
         }
 
         /// <summary>
@@ -114,6 +111,17 @@ namespace KI.Gfx.GLUtil
         protected override void DisposeCore()
         {
             GL.DeleteBuffer(DeviceID);
+        }
+
+        /// <summary>
+        /// 解放不要な情報のみのコピーを返す。
+        /// </summary>
+        public ArrayBuffer ShallowCopy()
+        {
+            var buffer = new ArrayBuffer(target);
+            buffer.ArrayType = ArrayType;
+            buffer.DeviceID = DeviceID;
+            return buffer;
         }
     }
 }

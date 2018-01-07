@@ -63,8 +63,9 @@ namespace RenderApp.Globals
             //cubeMap.GenCubemap(paths);
             //ActiveScene.AddObject(cubeMap);
 
-            var bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/geometryBunny.half");
+            var bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/bunny.half");
             //var bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/maxplanck.half");
+            //var bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/fandisk.half");
             var renderBunny = RenderObjectFactory.Instance.CreateRenderObject("bunny", bunny);
             //renderBunny.RotateX(-90);
             AddObject(renderBunny);

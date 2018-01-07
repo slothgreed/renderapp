@@ -67,7 +67,7 @@ namespace RenderApp.ViewModel
             }
             else
             {
-                vm = new VertexColorMaterialViewModel(this, node.KIObject as VertexColorMaterial);
+                vm = new VertexColorMaterialViewModel(this, node.KIObject as VertexParameterMaterial);
                 vm.PropertyChanged += MaterialViewModel_PropertyChanged;
             }
 
