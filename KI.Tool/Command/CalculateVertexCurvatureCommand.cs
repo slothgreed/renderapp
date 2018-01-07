@@ -84,11 +84,11 @@ namespace KI.Tool.Command
             var dirMaxLine = new List<Line>();
             foreach (var position in halfDS.HalfEdgeVertexs)
             {
-                Vertex minStart = new Vertex(0, position.Position - position.MinDirection * 0.5f, Vector3.UnitX);
-                Vertex minEnd = new Vertex(0, position.Position + position.MinDirection * 0.5f, Vector3.UnitX);
+                Vertex minStart = new Vertex(0, position.Position - position.MinDirection * 0.05f, Vector3.UnitX);
+                Vertex minEnd = new Vertex(0, position.Position + position.MinDirection * 0.05f, Vector3.UnitX);
 
-                Vertex maxStart = new Vertex(0, position.Position - position.MaxDirection * 0.5f, Vector3.UnitY);
-                Vertex maxEnd = new Vertex(0, position.Position + position.MaxDirection * 0.5f, Vector3.UnitY);
+                Vertex maxStart = new Vertex(0, position.Position - position.MaxDirection * 0.05f, Vector3.UnitY);
+                Vertex maxEnd = new Vertex(0, position.Position + position.MaxDirection * 0.05f, Vector3.UnitY);
 
                 dirMinLine.Add(new Line(minStart, minEnd));
                 dirMaxLine.Add(new Line(maxStart, maxEnd));
@@ -96,7 +96,7 @@ namespace KI.Tool.Command
 
             var parentNode = Global.RenderSystem.ActiveScene.FindNode(renderObject);
 
-            VertexColorMaterial voronoiMaterial = new VertexColorMaterial(renderObject.Name + " : Voronoi", 
+            VertexColorMaterial voronoiMaterial = new VertexColorMaterial(renderObject.Name + " : Voronoi",
                 renderObject.PolygonMaterial.VertexBuffer,
                 renderObject.Polygon.Type,
                 renderObject.Shader,
@@ -104,13 +104,13 @@ namespace KI.Tool.Command
 
             VertexColorMaterial meanMaterial = new VertexColorMaterial(renderObject.Name + " : MeanCurvature",
                 renderObject.PolygonMaterial.VertexBuffer,
-                renderObject.Polygon.Type, 
+                renderObject.Polygon.Type,
                 renderObject.Shader,
                 meanParam.Values);
 
             VertexColorMaterial gaussMaterial = new VertexColorMaterial(renderObject.Name + " : GaussCurvature",
                 renderObject.PolygonMaterial.VertexBuffer,
-                renderObject.Polygon.Type, 
+                renderObject.Polygon.Type,
                 renderObject.Shader,
                 gaussParam.Values);
 

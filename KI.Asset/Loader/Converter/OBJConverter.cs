@@ -5,7 +5,7 @@ using KI.Gfx.KITexture;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace KI.Asset
+namespace KI.Asset.Loader.Converter
 {
     /// <summary>
     /// objファイルデータを独自形式に変換

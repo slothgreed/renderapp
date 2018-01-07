@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using KI.Analyzer;
+using KI.Asset.Loader.Converter;
 using KI.Foundation.Core;
 using KI.Gfx.Geometry;
 using OpenTK;

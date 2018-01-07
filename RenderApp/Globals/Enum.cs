@@ -46,7 +46,6 @@
     public enum RAGeometry
     {
         WireFrame,
-        Polygon,
         HalfEdge,
         HalfEdgeWireFrame,
         ConvexHull,

@@ -52,11 +52,9 @@
     <Compile Include="Command\AdaptiveMeshCommand.cs" />
     <Compile Include="Command\CalculateVertexCurvatureCommand.cs" />
     <Compile Include="Command\CreateConvexHullCommand.cs" />
-    <Compile Include="Command\CreateHalfEdgeCommand.cs" />
     <Compile Include="Command\CreateHalfEdgeWireFrameCommand.cs" />
     <Compile Include="Command\CreateMarchingCubeCommand.cs" />
     <Compile Include="Command\CreateModelCommandBase.cs" />
-    <Compile Include="Command\CreatePolygonCommand.cs" />
     <Compile Include="Command\CreateVoxelCommand.cs" />
     <Compile Include="Command\CreateWireFrameCommand.cs" />
     <Compile Include="Control\GeodesicDistanceControl.cs" />

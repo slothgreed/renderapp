@@ -4,7 +4,7 @@ using KI.Analyzer;
 using KI.Gfx.Geometry;
 using OpenTK.Graphics.OpenGL;
 
-namespace KI.Asset
+namespace KI.Asset.Loader.Converter
 {
     /// <summary>
     /// ハーフエッジを独自形式に変換
@@ -53,6 +53,7 @@ namespace KI.Asset
                 halfEdge.Index.AddRange(mesh.AroundVertex.Select(p => p.Index));
             }
 
+            ConverterUtility.NormalizeObject(halfEdge.Vertexs);
             Polygons = new Polygon[] { halfEdge };
         }
     }

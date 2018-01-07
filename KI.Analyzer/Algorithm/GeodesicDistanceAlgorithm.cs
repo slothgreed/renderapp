@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KI.Gfx.Geometry;
 using MathNet.Numerics;
 using MathNet.Numerics.LinearAlgebra.Double;
 using MathNet.Numerics.LinearAlgebra.Factorization;
@@ -39,6 +40,11 @@ namespace KI.Analyzer.Algorithm
         /// 拡散係数
         /// </summary>
         private float time;
+
+        /// <summary>
+        /// 距離場
+        /// </summary>
+        public float[] DistanceField { get; private set; }
 
         /// <summary>
         /// コンストラクタ
@@ -129,24 +135,23 @@ namespace KI.Analyzer.Algorithm
         /// <summary>
         /// 距離場を計算
         /// </summary>
-        public float[] Compute()
+        public bool Compute()
         {
             var u = heatFlowCholesky.Solve(selectVertex);
 
             var x = ComputeVectorField(u as DenseVector);
             var div = ComputeDivergence(x);
 
-            var distanceField = laplaceCholesky.Solve(div.Negate());
-            NormalizeDistance(distanceField as DenseMatrix);
+            var distance = laplaceCholesky.Solve(div.Negate());
+            NormalizeDistance(distance as DenseMatrix);
 
-            var distance = new float[halfEdgeDS.Vertexs.Count];
-
-            for (int i = 0; i < distance.Length; i++)
+            DistanceField = new float[halfEdgeDS.Vertexs.Count];
+            for (int i = 0; i < DistanceField.Length; i++)
             {
-                distance[i] = (float)distanceField[i, 0];
+                DistanceField[i] = (float)distance[i, 0];
             }
 
-            return distance;
+            return true;
         }
         
         /// <summary>

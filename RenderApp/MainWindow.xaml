@@ -59,8 +59,6 @@
 
             <MenuItem Header="Analyze">
                 <MenuItem Header="WireFrame" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.WireFrame}"/>
-                <MenuItem Header="Polygon" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.Polygon}"/>
-                <MenuItem Header="HalfEdge" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.HalfEdge}"/>
                 <MenuItem Header="HalfEdgeWireFrame" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.HalfEdgeWireFrame}"/>
                 <Separator/>
                 <MenuItem Header="ConvexHull" Command="{Binding CreateObject}" CommandParameter="{x:Static local:RAGeometry.ConvexHull}"/>

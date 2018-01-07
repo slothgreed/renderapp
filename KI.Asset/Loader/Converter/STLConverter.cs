@@ -4,7 +4,7 @@ using KI.Gfx.Geometry;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace KI.Asset
+namespace KI.Asset.Loader.Converter
 {
     /// <summary>
     /// STLのローダ現在テキストファイルのみ

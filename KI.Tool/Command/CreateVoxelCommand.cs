@@ -150,10 +150,10 @@ namespace KI.Tool.Command
 
             meshs.Add(
                 new Mesh(
-                    new Vertex(4 * meshs.Count, q0, normal,voxelColor),
+                    new Vertex(4 * meshs.Count,     q0, normal, voxelColor),
                     new Vertex(4 * meshs.Count + 1, q1, normal, voxelColor),
-                    new Vertex(4 * meshs.Count + 2, normal, voxelColor),
-                    new Vertex(4 * meshs.Count + 3, normal, voxelColor)));
+                    new Vertex(4 * meshs.Count + 2, q2, normal, voxelColor),
+                    new Vertex(4 * meshs.Count + 3, q3, normal, voxelColor)));
         }
 
         /// <summary>

@@ -6,7 +6,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 
-namespace KI.Asset
+namespace KI.Asset.Loader.Converter
 {
     /// <summary>
     /// plyファイルデータを独自形式に変換

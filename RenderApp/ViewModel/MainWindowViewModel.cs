@@ -209,14 +209,6 @@ namespace RenderApp.ViewModel
                     command = new CreateWireFrameCommand(Workspace.MainScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
-                case RAGeometry.Polygon:
-                    command = new CreatePolygonCommand(Workspace.MainScene.SelectNode);
-                    CommandManager.Instance.Execute(command, null, true);
-                    break;
-                case RAGeometry.HalfEdge:
-                    command = new CreateHalfEdgeCommand(Workspace.MainScene.SelectNode);
-                    CommandManager.Instance.Execute(command, null, true);
-                    break;
                 case RAGeometry.ConvexHull:
                     command = new CreateConvexHullCommand(Workspace.MainScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
@@ -228,7 +220,6 @@ namespace RenderApp.ViewModel
                 case RAGeometry.HalfEdgeWireFrame:
                     command = new CreateHalfEdgeWireFrameCommand(Workspace.MainScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
-                    //select = Workspace.SceneManager.ActiveScene.SelectAsset;
                     break;
                 case RAGeometry.AdaptiveMesh:
                     command = new AdaptiveMeshCommand(Workspace.MainScene.SelectNode);
