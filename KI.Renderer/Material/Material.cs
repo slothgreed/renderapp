@@ -57,5 +57,13 @@ namespace KI.Renderer
         /// 可視不可視
         /// </summary>
         public bool Visible { get; set; } = true;
+
+        public virtual void Binding()
+        {
+        }
+
+        public virtual void UnBinding()
+        {
+        }
     }
 }

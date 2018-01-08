@@ -166,6 +166,7 @@
     <Compile Include="Globals\Workspace.cs" />
     <Compile Include="ViewModel\AssetVM\MaterialViewModel.cs" />
     <Compile Include="ViewModel\AssetVM\VertexParameterMaterialViewModel.cs" />
+    <Compile Include="ViewModel\AssetVM\WireFrameMaterialViewModel.cs" />
     <Compile Include="ViewModel\Converter\EnumConverter.cs" />
     <Compile Include="Globals\Project.cs" />
     <Compile Include="Globals\Enum.cs" />
@@ -263,6 +264,9 @@
     <Compile Include="View\ViewportView.xaml.cs">
       <DependentUpon>ViewportView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\WireFrameMaterialView.xaml.cs">
+      <DependentUpon>WireFrameMaterialView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\WorkspaceView.xaml.cs">
       <DependentUpon>WorkspaceView.xaml</DependentUpon>
     </Compile>
@@ -315,6 +319,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ViewportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WireFrameMaterialView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

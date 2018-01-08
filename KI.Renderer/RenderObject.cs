@@ -143,6 +143,7 @@ namespace KI.Renderer
                     return;
                 }
 
+                material.Binding();
                 ShaderHelper.InitializeState(scene, this, material.VertexBuffer, material.Shader, Polygon.Textures);
                 material.Shader.BindBuffer();
                 if (material.VertexBuffer.EnableIndexBuffer)
@@ -155,6 +156,8 @@ namespace KI.Renderer
                 }
 
                 material.Shader.UnBindBuffer();
+                material.UnBinding();
+
                 Logger.GLLog(Logger.LogLevel.Error);
             }
         }

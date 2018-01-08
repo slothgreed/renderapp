@@ -40,6 +40,11 @@
                             <v:VertexColorMaterialView />
                         </DataTemplate>
                     </local:DockPaneTemplateSelector.VertexColorMaterialTemplate>
+                    <local:DockPaneTemplateSelector.WireFrameMaterialTemplate>
+                        <DataTemplate>
+                            <v:WireFrameMaterialView />
+                        </DataTemplate>
+                    </local:DockPaneTemplateSelector.WireFrameMaterialTemplate>
                     <local:DockPaneTemplateSelector.RenderObjectTemplate>
                         <DataTemplate>
                             <v:RenderObjectView />

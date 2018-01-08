@@ -85,6 +85,7 @@ namespace RenderApp.ViewModel
         public DataTemplate RenderObjectTemplate { get; set; }
         public DataTemplate LightTemplate { get; set; }
         public DataTemplate VertexColorMaterialTemplate { get; set; }
+        public DataTemplate WireFrameMaterialTemplate { get; set; }
         public DataTemplate RendererTemplate { get; set; }
         public DataTemplate VoxelTemplate { get; set; }
 
@@ -110,9 +111,13 @@ namespace RenderApp.ViewModel
             {
                 return LightTemplate;
             }
-            else if(item is VertexColorMaterialViewModel)
+            else if (item is VertexColorMaterialViewModel)
             {
                 return VertexColorMaterialTemplate;
+            }
+            else if (item is WireFrameMaterialViewModel)
+            {
+                return WireFrameMaterialTemplate;
             }
             else if (item is VoxelViewModel)
             {

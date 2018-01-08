@@ -68,9 +68,21 @@ namespace RenderApp.ViewModel
                 vm.PropertyChanged += RenderObjectViewModel_PropertyChanged;
                 workspace.MainScene.SelectNode = (SceneNode)node.KIObject;
             }
-            else
+            else if (node.KIObject is MaterialBase)
             {
-                vm = new VertexColorMaterialViewModel(this, node.KIObject as VertexParameterMaterial);
+                if (node.KIObject is VertexColorMaterial)
+                {
+                    vm = new VertexColorMaterialViewModel(this, node.KIObject as VertexParameterMaterial);
+                }
+                else if (node.KIObject is WireFrameMaterial)
+                {
+                    vm = new WireFrameMaterialViewModel(this, node.KIObject as WireFrameMaterial);
+                }
+                else
+                {
+                    return;
+                }
+
                 vm.PropertyChanged += MaterialViewModel_PropertyChanged;
             }
 

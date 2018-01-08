@@ -28,6 +28,11 @@ namespace KI.Renderer.Material
         private ArrayBuffer indexBuffer { get; set; }
 
         /// <summary>
+        /// 色
+        /// </summary>
+        private Vector3[] colors;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
@@ -37,15 +42,40 @@ namespace KI.Renderer.Material
         public WireFrameMaterial(string name, VertexBuffer vertexBuffer, Shader shader, Vector3[] color, int[] index)
             : base(name, vertexBuffer, PrimitiveType.Lines, shader)
         {
+            colors = color;
             vertexColorBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
-            vertexColorBuffer.SetData(color, EArrayType.Vec3Array);
             vertexBuffer.ColorBuffer = vertexColorBuffer;
+            vertexColorBuffer.SetData(color, EArrayType.Vec3Array);
 
             indexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
             indexBuffer.SetData(index, EArrayType.IntArray);
             vertexBuffer.IndexBuffer = indexBuffer;
             vertexBuffer.Num = index.Length;
             vertexBuffer.EnableIndexBuffer = true;
+        }
+
+        /// <summary>
+        /// 色の更新
+        /// </summary>
+        /// <param name="color">色</param>
+        public void UpdateColor(Vector3 color)
+        {
+            for (int i = 0; i < colors.Length; i++)
+            {
+                colors[i] = color;
+            }
+
+            vertexColorBuffer.SetData(colors, EArrayType.Vec3Array);
+        }
+
+        public override void Binding()
+        {
+            base.Binding();
+        }
+
+        public override void UnBinding()
+        {
+            base.UnBinding();
         }
 
         /// <summary>
