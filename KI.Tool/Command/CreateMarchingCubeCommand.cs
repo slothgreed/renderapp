@@ -28,14 +28,21 @@ namespace KI.Tool.Command
         private int partition;
 
         /// <summary>
+        /// シーン
+        /// </summary>
+        private Scene scene;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
+        /// <param name="scene">シーン</param>
         /// <param name="asset">作成するオブジェクト</param>
         /// <param name="part">分割数</param>
-        public CreateMarchingCubeCommand(KIObject asset, int part)
+        public CreateMarchingCubeCommand(Scene scene, KIObject asset, int part)
         {
             renderObject = asset as RenderObject;
             partition = part;
+            this.scene = scene;
         }
 
         /// <summary>
@@ -77,7 +84,7 @@ namespace KI.Tool.Command
             var polygon = new Polygon(marghingObject.Name, marching.Meshs, PrimitiveType.Triangles);
             marghingObject.SetPolygon(polygon);
             marghingObject.ModelMatrix = renderObject.ModelMatrix;
-            Global.Renderer.ActiveScene.AddObject(marghingObject);
+            scene.AddObject(marghingObject);
 
             return CommandResult.Success;
         }

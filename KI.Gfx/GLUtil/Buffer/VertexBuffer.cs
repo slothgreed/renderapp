@@ -89,6 +89,7 @@ namespace KI.Gfx.GLUtil.Buffer
 
         /// <summary>
         /// 複製(BufferのID情報のみ・データ自体は複製しない)
+        /// ここで生成したものは解放不要
         /// </summary>
         /// <returns>vertexbuffer</returns>
         public VertexBuffer ShallowCopy()
@@ -99,6 +100,7 @@ namespace KI.Gfx.GLUtil.Buffer
             vertexBuffer.NormalBuffer = NormalBuffer.ShallowCopy();
             vertexBuffer.TexCoordBuffer = TexCoordBuffer.ShallowCopy();
             vertexBuffer.IndexBuffer = IndexBuffer.ShallowCopy();
+            vertexBuffer.EnableIndexBuffer = EnableIndexBuffer;
             vertexBuffer.Num = Num;
 
             return vertexBuffer;

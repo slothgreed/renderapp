@@ -24,13 +24,20 @@ namespace KI.Tool.Command
         private Vector3 wireFrameColor;
 
         /// <summary>
+        /// シーン
+        /// </summary>
+        private Scene scene;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
+        /// <param name="scene">シーン</param>
         /// <param name="asset">作成するオブジェクト</param>
-        public CreateWireFrameCommand(KIObject asset)
+        public CreateWireFrameCommand(Scene scene, KIObject asset)
         {
             renderObject = asset as RenderObject;
             wireFrameColor = Vector3.Zero;
+            this.scene = scene;
         }
 
         /// <summary>
@@ -75,7 +82,7 @@ namespace KI.Tool.Command
                 lineIndex.ToArray());
 
             renderObject.Materials.Add(material);
-            Global.Renderer.ActiveScene.AddObject(material, parentNode);
+            scene.AddObject(material, parentNode);
 
             return CommandResult.Success;
         }

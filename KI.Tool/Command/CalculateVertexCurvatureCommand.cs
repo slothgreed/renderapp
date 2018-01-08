@@ -26,11 +26,18 @@ namespace KI.Tool.Command
         private RenderObject renderObject;
 
         /// <summary>
+        /// シーン
+        /// </summary>
+        private Scene scene;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
+        /// <param name="scene">シーン</param>
         /// <param name="asset">算出オブジェクト</param>
-        public CalculateVertexCurvatureCommand(KIObject asset)
+        public CalculateVertexCurvatureCommand(Scene scene, KIObject asset)
         {
+            this.scene = scene;
             renderObject = asset as RenderObject;
         }
 
@@ -132,11 +139,11 @@ namespace KI.Tool.Command
             renderObject.Materials.Add(minMaterial);
             renderObject.Materials.Add(maxMaterial);
 
-            Global.Renderer.ActiveScene.AddObject(voronoiMaterial, parentNode);
-            Global.Renderer.ActiveScene.AddObject(meanMaterial, parentNode);
-            Global.Renderer.ActiveScene.AddObject(gaussMaterial, parentNode);
-            Global.Renderer.ActiveScene.AddObject(minMaterial, parentNode);
-            Global.Renderer.ActiveScene.AddObject(maxMaterial, parentNode);
+            scene.AddObject(voronoiMaterial, parentNode);
+            scene.AddObject(meanMaterial, parentNode);
+            scene.AddObject(gaussMaterial, parentNode);
+            scene.AddObject(minMaterial, parentNode);
+            scene.AddObject(maxMaterial, parentNode);
 
             var minLines = new Polygon(halfDS.Name + "Direction", dirMinLine);
             var maxLines = new Polygon(halfDS.Name + "Direction", dirMaxLine);
@@ -144,8 +151,8 @@ namespace KI.Tool.Command
             GeometryMaterial dirMaxMaterial = new GeometryMaterial(renderObject.Name + " : MaxDirection", maxLines, renderObject.Shader);
             renderObject.Materials.Add(dirMinMaterial);
             renderObject.Materials.Add(dirMaxMaterial);
-            Global.Renderer.ActiveScene.AddObject(dirMinMaterial, parentNode);
-            Global.Renderer.ActiveScene.AddObject(dirMaxMaterial, parentNode);
+            scene.AddObject(dirMinMaterial, parentNode);
+            scene.AddObject(dirMaxMaterial, parentNode);
 
             return CommandResult.Success;
         }

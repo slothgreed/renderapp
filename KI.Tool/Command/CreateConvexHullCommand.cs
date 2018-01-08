@@ -21,11 +21,18 @@ namespace KI.Tool.Command
         private RenderObject renderObject;
 
         /// <summary>
+        /// シーン
+        /// </summary>
+        private Scene scene;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
+        /// <param name="scene">シーン</param>
         /// <param name="asset">作成するオブジェクト</param>
-        public CreateConvexHullCommand(KIObject asset)
+        public CreateConvexHullCommand(Scene scene, KIObject asset)
         {
+            this.scene = scene;
             renderObject = asset as RenderObject;
         }
 
@@ -81,7 +88,7 @@ namespace KI.Tool.Command
             RenderObject convex = RenderObjectFactory.Instance.CreateRenderObject("ConvexHull :" + renderObject.Name);
             convex.SetPolygon(polygon);
             convex.ModelMatrix = renderObject.ModelMatrix;
-            Global.Renderer.ActiveScene.AddObject(convex);
+            scene.AddObject(convex);
 
             return CommandResult.Success;
         }

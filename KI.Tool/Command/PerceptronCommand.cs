@@ -17,6 +17,20 @@ namespace KI.Tool.Command
     public class PerceptronCommand : ICommand
     {
         /// <summary>
+        /// シーン
+        /// </summary>
+        private Scene scene;
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="scene">シーン</param>
+        public PerceptronCommand(Scene scene)
+        {
+            this.scene = scene;
+        }
+
+        /// <summary>
         /// 実行できるか
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
@@ -80,7 +94,7 @@ namespace KI.Tool.Command
             var polygon = new Polygon("perceptron", vertexs);
             RenderObject render = RenderObjectFactory.Instance.CreateRenderObject("perceptron");
             render.SetPolygon(polygon);
-            Global.Renderer.ActiveScene.AddObject(render);
+            scene.AddObject(render);
 
             return CommandResult.Success;
         }

@@ -207,19 +207,19 @@ namespace RenderApp.ViewModel
             switch (menuParam)
             {
                 case RAGeometry.WireFrame:
-                    command = new CreateWireFrameCommand(workspace.MainScene.SelectNode);
+                    command = new CreateWireFrameCommand(workspace.MainScene, workspace.MainScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.ConvexHull:
-                    command = new CreateConvexHullCommand(workspace.MainScene.SelectNode);
+                    command = new CreateConvexHullCommand(workspace.MainScene, workspace.MainScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.MarchingCube:
-                    command = new CreateMarchingCubeCommand(workspace.MainScene.SelectNode, 64);
+                    command = new CreateMarchingCubeCommand(workspace.MainScene, workspace.MainScene.SelectNode, 64);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.HalfEdgeWireFrame:
-                    command = new CreateHalfEdgeWireFrameCommand(workspace.MainScene.SelectNode);
+                    command = new CreateHalfEdgeWireFrameCommand(workspace.MainScene, workspace.MainScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.AdaptiveMesh:
@@ -231,11 +231,11 @@ namespace RenderApp.ViewModel
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.Perceptron:
-                    command = new PerceptronCommand();
+                    command = new PerceptronCommand(workspace.MainScene);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.Kmeans:
-                    command = new KMeansCommand(workspace.MainScene.SelectNode, 40, 10);
+                    command = new KMeansCommand(workspace.MainScene, workspace.MainScene.SelectNode, 40, 10);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.Voxelize:

@@ -37,16 +37,23 @@ namespace KI.Tool.Command
         private Vector3 voxelColor;
 
         /// <summary>
+        /// シーン
+        /// </summary>
+        private Scene scene;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
+        /// <param name="scene">シーン</param>
         /// <param name="asset">作成するオブジェクト</param>
         /// <param name="color">ボクセル色</param>
         /// <param name="part">分割数</param>
-        public CreateVoxelCommand(RenderObject asset, Vector3 color, int part)
+        public CreateVoxelCommand(Scene scene, RenderObject asset, Vector3 color, int part)
         {
             renderObject = asset as RenderObject;
             voxelColor = color;
             partition = part;
+            this.scene = scene;
         }
 
         /// <summary>
@@ -78,7 +85,7 @@ namespace KI.Tool.Command
             Polygon info = new Polygon("Voxel :" + renderObject.Name, mesh, PrimitiveType.Quads);
             voxelObject.SetPolygon(info);
             voxelObject.Transformation(renderObject.ModelMatrix);
-            Global.Renderer.ActiveScene.AddObject(voxelObject);
+            scene.AddObject(voxelObject);
 
             return CommandResult.Success;
         }

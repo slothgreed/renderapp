@@ -31,6 +31,7 @@ namespace RenderApp.ViewModel
             AnchorablesSources.Add(SceneNodeViewModel);
             AnchorablesSources.Add(RendererViewModel);
             DocumentsSources.Add(ViewportViewModel);
+            this.workspace = workspace;
         }
 
         private void SceneNodeViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

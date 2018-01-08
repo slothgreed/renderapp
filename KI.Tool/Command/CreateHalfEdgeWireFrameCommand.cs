@@ -21,11 +21,18 @@ namespace KI.Tool.Command
         private RenderObject renderObject;
 
         /// <summary>
+        /// シーン
+        /// </summary>
+        private Scene scene;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
+        /// <param name="scene">シーン</param>
         /// <param name="asset">作成するオブジェクト</param>
-        public CreateHalfEdgeWireFrameCommand(KIObject asset)
+        public CreateHalfEdgeWireFrameCommand(Scene scene, KIObject asset)
         {
+            this.scene = scene;
             renderObject = asset as RenderObject;
         }
 
@@ -84,7 +91,7 @@ namespace KI.Tool.Command
 
             wireframe.SetPolygon(new Polygon("HalfEdgeWireFrame :" + renderObject.Name, lines));
             wireframe.ModelMatrix = renderObject.ModelMatrix;
-            Global.Renderer.ActiveScene.AddObject(wireframe);
+            scene.AddObject(wireframe);
 
             return CommandResult.Success;
         }

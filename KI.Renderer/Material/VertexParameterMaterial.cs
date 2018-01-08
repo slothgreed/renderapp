@@ -12,7 +12,7 @@ using OpenTK.Graphics.OpenGL;
 namespace KI.Renderer.Material
 {
     /// <summary>
-    /// 頂点カラーのマテリアル
+    /// 頂点パラメータのマテリアル
     /// </summary>
     public class VertexParameterMaterial : MaterialBase
     {
@@ -76,6 +76,5 @@ namespace KI.Renderer.Material
             vertexColorBuffer.Dispose();
             base.Dispose();
         }
-
     }
 }
