@@ -380,7 +380,7 @@ namespace KI.Gfx.KIShader
         /// シェーダ変数の取得
         /// </summary>
         /// <returns>シェーダ変数</returns>
-        public IEnumerable<object> GetShaderVariable()
+        public IEnumerable<ShaderProgramInfo> GetShaderVariable()
         {
             foreach (var loop in shaderVariable)
             {
@@ -719,6 +719,10 @@ namespace KI.Gfx.KIShader
             else if (uniform.VariableType == VariableType.Vec3)
             {
                 GL.Uniform3(uniform.ShaderID, (Vector3)uniform.Variable);
+            }
+            else if (uniform.VariableType == VariableType.Vec4)
+            {
+                GL.Uniform4(uniform.ShaderID, (Vector4)uniform.Variable);
             }
             else if (uniform.VariableType == VariableType.Mat3)
             {

@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using KI.Analyzer;
 using KI.Analyzer.Algorithm;
+using KI.Asset;
 using KI.Foundation.Command;
 using KI.Foundation.Core;
 using KI.Foundation.Parameter;
 using KI.Foundation.Utility;
 using KI.Gfx.Geometry;
+using KI.Gfx.KIShader;
 using KI.Renderer;
 using KI.Renderer.Material;
 using OpenTK;
@@ -87,18 +89,20 @@ namespace KI.Tool.Command
             halfDS.AddParameter(minVecParam);
             halfDS.AddParameter(maxVecParam);
 
-            var dirMinLine = new List<Line>();
-            var dirMaxLine = new List<Line>();
+            var dirMinLine = new List<Vector3>();
+            var dirMaxLine = new List<Vector3>();
             foreach (var position in halfDS.HalfEdgeVertexs)
             {
-                Vertex minStart = new Vertex(0, position.Position - position.MinDirection * 0.01f, Vector3.UnitX);
-                Vertex minEnd = new Vertex(0, position.Position + position.MinDirection * 0.01f, Vector3.UnitX);
+                var minStart = new Vector3(position.Position - position.MinDirection * 0.01f);
+                var minEnd = new Vector3(position.Position + position.MinDirection * 0.01f);
 
-                Vertex maxStart = new Vertex(0, position.Position - position.MaxDirection * 0.01f, Vector3.UnitY);
-                Vertex maxEnd = new Vertex(0, position.Position + position.MaxDirection * 0.01f, Vector3.UnitY);
+                var maxStart = new Vector3(position.Position - position.MaxDirection * 0.01f);
+                var maxEnd = new Vector3(position.Position + position.MaxDirection * 0.01f);
 
-                dirMinLine.Add(new Line(minStart, minEnd));
-                dirMaxLine.Add(new Line(maxStart, maxEnd));
+                dirMinLine.Add(minStart);
+                dirMinLine.Add(minEnd);
+                dirMaxLine.Add(maxStart);
+                dirMaxLine.Add(maxEnd);
             }
 
             var parentNode = Global.Renderer.ActiveScene.FindNode(renderObject);
@@ -145,10 +149,9 @@ namespace KI.Tool.Command
             scene.AddObject(minMaterial, parentNode);
             scene.AddObject(maxMaterial, parentNode);
 
-            var minLines = new Polygon(halfDS.Name + "Direction", dirMinLine);
-            var maxLines = new Polygon(halfDS.Name + "Direction", dirMaxLine);
-            GeometryMaterial dirMinMaterial = new GeometryMaterial(renderObject.Name + " : MinDirection", minLines, renderObject.Shader);
-            GeometryMaterial dirMaxMaterial = new GeometryMaterial(renderObject.Name + " : MaxDirection", maxLines, renderObject.Shader);
+            var wireFrameShader = ShaderFactory.Instance.CreateShaderVF(ShaderCreater.Instance.Directory + @"GBuffer\WireFrame");
+            var dirMinMaterial = new DirectionMaterial(renderObject.Name + " : MinDirection", dirMinLine.ToArray(), new Vector4(1, 0, 0, 1), wireFrameShader);
+            var dirMaxMaterial = new DirectionMaterial(renderObject.Name + " : MaxDirection", dirMaxLine.ToArray(), new Vector4(0, 1, 0, 1), wireFrameShader);
             renderObject.Materials.Add(dirMinMaterial);
             renderObject.Materials.Add(dirMaxMaterial);
             scene.AddObject(dirMinMaterial, parentNode);

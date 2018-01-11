@@ -42,6 +42,13 @@ namespace KI.Renderer.Material
         /// <param name="color">頂点カラーの設定</param>
         public void SetupBuffer()
         {
+            if (VertexBuffer != null)
+            {
+                VertexBuffer.Dispose();
+            }
+
+            VertexBuffer = new VertexBuffer();
+
             int[] indexBuffer = null;
             Vector3[] position = null;
             Vector3[] normal = null;
@@ -109,12 +116,6 @@ namespace KI.Renderer.Material
                 texCoord = vertexs.Select(p => p.TexCoord).ToArray();
             }
 
-            if (VertexBuffer != null)
-            {
-                VertexBuffer.Dispose();
-            }
-
-            VertexBuffer = new VertexBuffer();
             VertexBuffer.SetBuffer(position, normal, color, texCoord, indexBuffer);
         }
     }

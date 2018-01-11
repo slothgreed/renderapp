@@ -49,6 +49,7 @@ namespace KI.Gfx.GLUtil.Buffer
         /// </summary>
         private void GenBuffer()
         {
+            Dispose();
             PositionBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
             NormalBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
             ColorBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
