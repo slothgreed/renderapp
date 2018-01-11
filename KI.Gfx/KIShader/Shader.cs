@@ -470,6 +470,7 @@ namespace KI.Gfx.KIShader
         {
             shaderVariable.Clear();
             GL.UseProgram(Program);
+            Logger.GLLog(Logger.LogLevel.Error);
 
             foreach (ShaderProgram loop in ActiveShader)
             {
@@ -956,12 +957,7 @@ namespace KI.Gfx.KIShader
 
                 string line = lines[i];
 
-                if (line.Contains("gl_FragData"))
-                {
-                    OutputBufferNum++;
-                }
-
-                if (line.Contains("gl_FragColor"))
+                if (line.Contains("OutputColor") && line.Contains("out") == false)
                 {
                     OutputBufferNum++;
                 }

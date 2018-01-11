@@ -60,8 +60,9 @@ namespace KI.Foundation.Utility
         /// GLログ
         /// </summary>
         /// <param name="level">エラーレベル</param>
+        /// <param name="message">メッセージ</param>
         /// <param name="methodName">関数名</param>
-        public static void GLLog(LogLevel level, [CallerMemberName]string methodName = "")
+        public static void GLLog(LogLevel level,string message = null, [CallerMemberName]string methodName = "")
         {
             if (glLogLevel == LogLevel.None)
             {
@@ -71,6 +72,11 @@ namespace KI.Foundation.Utility
             if (level >= glLogLevel)
             {
                 ErrorCode error = GL.GetError();
+                if (message != null)
+                {
+                    Console.WriteLine(level + "GL:" + methodName + ":" + message);
+                }
+
                 if (error != ErrorCode.NoError)
                 {
                     Console.WriteLine(level + "GL: " + methodName + ":" + error);

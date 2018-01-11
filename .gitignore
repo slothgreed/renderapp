@@ -1,4 +1,5 @@
-Resource/
+Resource/Model
+Resource/Texture
 bin/
 obj/
 packages/

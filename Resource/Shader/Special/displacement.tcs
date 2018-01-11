@@ -1,0 +1,31 @@
+#version 400
+layout(vertices = 4) out;
+
+in vec3 v_position[];
+in vec3 v_normal[];
+in vec2 v_texcoord[];
+
+out vec3 tc_position[];
+out vec2 tc_texcoord[];
+
+uniform float Outer;
+uniform float Inner;
+#define ID gl_InvocationID
+
+void main()
+{
+	
+    tc_position[ID] = v_position[ID];
+	tc_normal[ID] = v_normal[ID];
+	tc_texcoord[ID] = v_texcoord[ID];
+	
+	gl_TessLevelOuter[0] = float(Outer);
+	gl_TessLevelOuter[1] = float(Outer);
+	gl_TessLevelOuter[2] = float(Outer);
+	gl_TessLevelOuter[3] = float(Outer);
+	
+	gl_TessLevelInner[0] = float(Inner);
+	gl_TessLevelInner[1] = float(Inner);
+		
+
+}
