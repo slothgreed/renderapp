@@ -93,11 +93,11 @@ namespace KI.Tool.Command
             var dirMaxLine = new List<Vector3>();
             foreach (var position in halfDS.HalfEdgeVertexs)
             {
-                var minStart = new Vector3(position.Position - position.MinDirection * 0.01f);
-                var minEnd = new Vector3(position.Position + position.MinDirection * 0.01f);
+                var minStart = new Vector3(position.Position);
+                var minEnd = new Vector3(position.Position + position.MinDirection);
 
-                var maxStart = new Vector3(position.Position - position.MaxDirection * 0.01f);
-                var maxEnd = new Vector3(position.Position + position.MaxDirection * 0.01f);
+                var maxStart = new Vector3(position.Position);
+                var maxEnd = new Vector3(position.Position + position.MaxDirection);
 
                 dirMinLine.Add(minStart);
                 dirMinLine.Add(minEnd);
@@ -150,8 +150,10 @@ namespace KI.Tool.Command
             scene.AddObject(maxMaterial, parentNode);
 
             var wireFrameShader = ShaderFactory.Instance.CreateShaderVF(ShaderCreater.Instance.Directory + @"GBuffer\WireFrame");
-            var dirMinMaterial = new DirectionMaterial(renderObject.Name + " : MinDirection", dirMinLine.ToArray(), new Vector4(1, 0, 0, 1), wireFrameShader);
-            var dirMaxMaterial = new DirectionMaterial(renderObject.Name + " : MaxDirection", dirMaxLine.ToArray(), new Vector4(0, 1, 0, 1), wireFrameShader);
+
+            var normals = renderObject.Polygon.Vertexs.Select(p => p.Normal).ToArray();
+            var dirMinMaterial = new DirectionMaterial(renderObject.Name + " : MinDirection", wireFrameShader, dirMinLine.ToArray(), new Vector4(1, 0, 0, 1), normals);
+            var dirMaxMaterial = new DirectionMaterial(renderObject.Name + " : MaxDirection", wireFrameShader, dirMaxLine.ToArray(), new Vector4(0, 1, 0, 1), normals);
             renderObject.Materials.Add(dirMinMaterial);
             renderObject.Materials.Add(dirMaxMaterial);
             scene.AddObject(dirMinMaterial, parentNode);

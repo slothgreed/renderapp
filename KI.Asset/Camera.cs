@@ -79,7 +79,7 @@ namespace KI.Asset
         /// <summary>
         /// projectionのnear
         /// </summary>
-        public float Near { get; set; } = 1;
+        public float Near { get; set; } = 0.0001f;
 
         /// <summary>
         /// 投影行列
