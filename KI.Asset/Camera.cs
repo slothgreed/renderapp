@@ -129,7 +129,7 @@ namespace KI.Asset
         {
             get
             {
-                return Matrix * ProjMatrix;
+                return ProjMatrix * Matrix;
             }
         }
 

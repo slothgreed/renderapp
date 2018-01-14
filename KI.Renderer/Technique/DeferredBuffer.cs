@@ -4,7 +4,7 @@ using KI.Gfx.KITexture;
 namespace KI.Renderer
 {
     /// <summary>
-    /// Deffered Rendering
+    /// Deferred Rendering
     /// </summary>
     public class DeferredBuffer : RenderTechnique
     {
@@ -42,9 +42,9 @@ namespace KI.Renderer
         public override void Initialize()
         {
             var textures = Global.Renderer.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
-            Plane.Polygon.AddTexture(TextureKind.Albedo, textures[(int)GBuffer.OutputTextureType.Posit]);
+            Plane.Polygon.AddTexture(TextureKind.World, textures[(int)GBuffer.OutputTextureType.Posit]);
             Plane.Polygon.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Normal]);
-            Plane.Polygon.AddTexture(TextureKind.World, textures[(int)GBuffer.OutputTextureType.Color]);
+            Plane.Polygon.AddTexture(TextureKind.Albedo, textures[(int)GBuffer.OutputTextureType.Color]);
             Plane.Polygon.AddTexture(TextureKind.Lighting, textures[(int)GBuffer.OutputTextureType.Light]);
         }
     }

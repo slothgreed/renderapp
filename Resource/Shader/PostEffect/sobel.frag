@@ -39,7 +39,9 @@ void main(void)
 	{
 		OutputColor = vec4(0,0,0,1);
 	}
-
-	OutputColor = vec4(1);
+	else
+	{
+		OutputColor = vec4(1);
+	}
 }
 
