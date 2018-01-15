@@ -120,29 +120,32 @@ namespace RenderApp.Globals
         {
             //RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Shadow));
             Renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer));
+            
+            var gBufferTexture = Renderer.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
+
             //RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.IBL));
             Renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Deferred));
             //RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Selection));
-            Renderer.OutputBuffer = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output) as OutputBuffer;
-            Renderer.OutputTexture = Renderer.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer).ToArray()[(int)GBuffer.OutputTextureType.Color];
 
-            var textures = Renderer.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
+            Renderer.OutputBuffer = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output) as OutputBuffer;
+            Renderer.OutputTexture = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
+
             Bloom bloom = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Bloom) as Bloom;
-            bloom.uTarget = textures[(int)GBuffer.OutputTextureType.Color];
+            bloom.uTarget = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
             Renderer.PostEffect.AddTechnique(bloom);
 
             Sobel sobel = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Sobel) as Sobel;
-            sobel.uTarget = textures[(int)GBuffer.OutputTextureType.Color];
+            sobel.uTarget = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
             Renderer.PostEffect.AddTechnique(sobel);
 
-            SSAO ssao = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.SSAO) as SSAO;
-            ssao.uPosition = textures[(int)GBuffer.OutputTextureType.Color];
-            ssao.uTarget = textures[(int)GBuffer.OutputTextureType.Color];
-            Renderer.PostEffect.AddTechnique(ssao);
+            //SSAO ssao = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.SSAO) as SSAO;
+            //ssao.uPosition = gBufferTexture[(int)GBuffer.OutputTextureType.Posit];
+            //ssao.uTarget = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
+            //Renderer.PostEffect.AddTechnique(ssao);
 
-            SSLIC sslic = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.SSLIC) as SSLIC;
-            sslic.uVector = textures[(int)GBuffer.OutputTextureType.Color];
-            Renderer.PostEffect.AddTechnique(sslic);
+            //SSLIC sslic = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.SSLIC) as SSLIC;
+            //sslic.uVector = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
+            //Renderer.PostEffect.AddTechnique(sslic);
         }
     }
 }

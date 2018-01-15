@@ -23,7 +23,7 @@ namespace RenderApp.ViewModel
         /// </summary>
         /// <param name="parent">親ビューモデル</param>
         public ViewportViewModel(ViewModelBase parent)
-            : base(parent, "Render App", Place.Floating)
+            : base(parent, null, "Render App", Place.Floating)
         {
         }
 

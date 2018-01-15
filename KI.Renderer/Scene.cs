@@ -14,12 +14,12 @@ namespace KI.Renderer
         /// <summary>
         /// 空間の最大値
         /// </summary>
-        public readonly Vector3 WorldMax = new Vector3(100, 125, 100);
+        public readonly Vector3 WorldMax = new Vector3(1, 1, 1);
 
         /// <summary>
         /// 空間の最小値
         /// </summary>
-        public readonly Vector3 WorldMin = new Vector3(-100, -75, -100);
+        public readonly Vector3 WorldMin = new Vector3(-1, -1, -1);
 
         /// <summary>
         /// コンストラクタ

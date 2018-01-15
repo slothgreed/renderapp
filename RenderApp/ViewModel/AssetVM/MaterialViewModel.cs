@@ -13,7 +13,7 @@ namespace RenderApp.ViewModel
         private MaterialBase Model;
 
         public MaterialViewModel(ViewModelBase parent, MaterialBase model)
-            : base(parent, model?.Name, Place.RightUp)
+            : base(parent, model, model?.Name, Place.RightUp)
         {
             Model = model;
         }

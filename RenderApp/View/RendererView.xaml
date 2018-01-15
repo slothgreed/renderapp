@@ -1,23 +1,45 @@
-﻿<UserControl x:Class="RenderApp.View.RendererView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+﻿<UserControl
+    x:Class="RenderApp.View.RendererView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:renderer="clr-namespace:KI.Renderer;assembly=KI.Renderer"
+    xmlns:v="clr-namespace:RenderApp.View"
+    xmlns:vm="clr-namespace:RenderApp.ViewModel"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    mc:Ignorable="d">
     <UserControl.Resources>
         <Style TargetType="{x:Type TextBlock}">
-            <Setter Property="Width" Value="80"/>
+            <Setter Property="Width" Value="80" />
         </Style>
     </UserControl.Resources>
     <StackPanel>
         <WrapPanel Margin="2">
-            <TextBlock Text="Output"  HorizontalAlignment="Stretch"/>
-            <ComboBox ItemsSource="{Binding Model.ProcessingTexture}" SelectedIndex="{Binding TextureIndex}" HorizontalAlignment="Stretch"/>
+            <TextBlock HorizontalAlignment="Stretch" Text="Output" />
+            <ComboBox
+                HorizontalAlignment="Stretch"
+                ItemsSource="{Binding Model.ProcessingTexture}"
+                SelectedIndex="{Binding TextureIndex}" />
         </WrapPanel>
         <WrapPanel Margin="2">
-            <CheckBox Content="PostProcess"  HorizontalAlignment="Stretch"/>
+            <CheckBox
+                HorizontalAlignment="Stretch"
+                Content="PostProcess"
+                IsChecked="{Binding EnablePostEffect}" />
         </WrapPanel>
-        <StackPanel/>
+        <Expander Header="Post Process">
+            <ItemsControl ItemsSource="{Binding PostProcessItem}">
+                <ItemsControl.Resources>
+                    <DataTemplate DataType="{x:Type vm:BloomViewModel}">
+                        <v:BloomView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vm:SobelViewModel}">
+                        <v:SobelView />
+                    </DataTemplate>
+                </ItemsControl.Resources>
+            </ItemsControl>
+        </Expander>
     </StackPanel>
 </UserControl>

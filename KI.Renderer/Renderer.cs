@@ -50,7 +50,7 @@ namespace KI.Renderer
         /// <summary>
         /// ポストプロセスモード
         /// </summary>
-        public bool PostProcessMode { get; set; }
+        public bool PostProcessMode { get; set; } = true;
 
         /// <summary>
         /// レンダリング結果のテクスチャすべて

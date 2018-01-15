@@ -15,7 +15,7 @@ namespace RenderApp.ViewModel
     public class LightViewModel : DockWindowViewModel
     {
         public LightViewModel(ViewModelBase parent, Light light)
-            : base(parent, "LightProperty", Place.RightUp)
+            : base(parent, light, "LightProperty", Place.RightUp)
         {
             Model = light;
         }

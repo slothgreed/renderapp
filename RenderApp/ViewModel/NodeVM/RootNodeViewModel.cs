@@ -15,13 +15,13 @@ namespace RenderApp.ViewModel
         private NodeItemViewModel activeNode;
 
         public RootNodeViewModel(ViewModelBase parent, KINode rootNode, string title)
-            : base(parent, title, Place.LeftUp)
+            : base(parent, null, title, Place.LeftUp)
         {
             Initialize(parent, new List<KINode>() { rootNode });
         }
 
         public RootNodeViewModel(ViewModelBase parent, List<KINode> rootNodes, string title)
-            : base(parent,title, Place.LeftUp)
+            : base(parent, null, title, Place.LeftUp)
         {
             Initialize(parent, rootNodes);
         }

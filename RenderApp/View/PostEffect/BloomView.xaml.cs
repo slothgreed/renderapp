@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace RenderApp.View
 {
     /// <summary>
-    /// MaterialView.xaml の相互作用ロジック
+    /// BloomView.xaml の相互作用ロジック
     /// </summary>
-    public partial class MaterialView : UserControl
+    public partial class BloomView : UserControl
     {
-        public MaterialView()
+        public BloomView()
         {
             InitializeComponent();
         }

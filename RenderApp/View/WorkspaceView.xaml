@@ -7,6 +7,7 @@
     xmlns:local="clr-namespace:RenderApp.ViewModel"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:v="clr-namespace:RenderApp.View"
+    xmlns:vm="clr-namespace:RenderApp.ViewModel"
     mc:Ignorable="d">
     <Grid>
         <!--<Grid.ColumnDefinitions>
@@ -24,43 +25,43 @@
         <v:TabControlView Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" DataContext="{Binding CenterDockPanel}"/>-->
         <avalon:DockingManager AnchorablesSource="{Binding AnchorablesSources}" DocumentsSource="{Binding DocumentsSources}">
             <avalon:DockingManager.LayoutItemTemplateSelector>
-                <local:DockPaneTemplateSelector>
-                    <local:DockPaneTemplateSelector.RootNodeTemplate>
+                <vm:DockPaneTemplateSelector>
+                    <vm:DockPaneTemplateSelector.RootNodeTemplate>
                         <DataTemplate>
                             <v:RootNodeView />
                         </DataTemplate>
-                    </local:DockPaneTemplateSelector.RootNodeTemplate>
-                    <local:DockPaneTemplateSelector.LightTemplate>
+                    </vm:DockPaneTemplateSelector.RootNodeTemplate>
+                    <vm:DockPaneTemplateSelector.LightTemplate>
                         <DataTemplate>
                             <v:LightView />
                         </DataTemplate>
-                    </local:DockPaneTemplateSelector.LightTemplate>
-                    <local:DockPaneTemplateSelector.VertexColorMaterialTemplate>
+                    </vm:DockPaneTemplateSelector.LightTemplate>
+                    <vm:DockPaneTemplateSelector.VertexColorMaterialTemplate>
                         <DataTemplate>
                             <v:VertexColorMaterialView />
                         </DataTemplate>
-                    </local:DockPaneTemplateSelector.VertexColorMaterialTemplate>
-                    <local:DockPaneTemplateSelector.WireFrameMaterialTemplate>
+                    </vm:DockPaneTemplateSelector.VertexColorMaterialTemplate>
+                    <vm:DockPaneTemplateSelector.WireFrameMaterialTemplate>
                         <DataTemplate>
                             <v:WireFrameMaterialView />
                         </DataTemplate>
-                    </local:DockPaneTemplateSelector.WireFrameMaterialTemplate>
-                    <local:DockPaneTemplateSelector.RenderObjectTemplate>
+                    </vm:DockPaneTemplateSelector.WireFrameMaterialTemplate>
+                    <vm:DockPaneTemplateSelector.RenderObjectTemplate>
                         <DataTemplate>
                             <v:RenderObjectView />
                         </DataTemplate>
-                    </local:DockPaneTemplateSelector.RenderObjectTemplate>
-                    <local:DockPaneTemplateSelector.ViewportTemplate>
+                    </vm:DockPaneTemplateSelector.RenderObjectTemplate>
+                    <vm:DockPaneTemplateSelector.ViewportTemplate>
                         <DataTemplate>
                             <v:ViewportView />
                         </DataTemplate>
-                    </local:DockPaneTemplateSelector.ViewportTemplate>
-                    <local:DockPaneTemplateSelector.RendererTemplate>
+                    </vm:DockPaneTemplateSelector.ViewportTemplate>
+                    <vm:DockPaneTemplateSelector.RendererTemplate>
                         <DataTemplate>
                             <v:RendererView />
                         </DataTemplate>
-                    </local:DockPaneTemplateSelector.RendererTemplate>
-                </local:DockPaneTemplateSelector>
+                    </vm:DockPaneTemplateSelector.RendererTemplate>
+                </vm:DockPaneTemplateSelector>
             </avalon:DockingManager.LayoutItemTemplateSelector>
             <avalon:DockingManager.LayoutItemContainerStyle>
                 <Style TargetType="{x:Type avalon:LayoutItem}">
@@ -69,7 +70,7 @@
             </avalon:DockingManager.LayoutItemContainerStyle>
 
             <avalon:DockingManager.LayoutUpdateStrategy>
-                <local:DockPaneLayoutUpdateStrategy />
+                <vm:DockPaneLayoutUpdateStrategy />
             </avalon:DockingManager.LayoutUpdateStrategy>
 
             <avalon:LayoutRoot>

@@ -17,7 +17,7 @@ namespace RenderApp.ViewModel
         public ViewportViewModel ViewportViewModel;
 
         public WorkspaceViewModel(ViewModelBase parent, Workspace workspace)
-            : base(parent)
+            : base(parent, workspace)
         {
             SceneNodeViewModel = new RootNodeViewModel(this, workspace.MainScene.RootNode, "Scene");
             ViewportViewModel = new ViewportViewModel(this);

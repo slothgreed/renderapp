@@ -19,9 +19,30 @@ namespace KI.UI.ViewModel
         }
 
         /// <summary>
+        /// モデル
+        /// </summary>
+        public object DataModel
+        {
+            get;
+            protected set;
+        }
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="parent">親ビューモデル</param>
+        /// <param name="model">モデル</param>
+        public ViewModelBase(ViewModelBase parent, object model)
+        {
+            Parent = parent;
+            DataModel = model;
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="parent">親ビューモデル</param>
+        /// <param name="model">モデル</param>
         public ViewModelBase(ViewModelBase parent)
         {
             Parent = parent;

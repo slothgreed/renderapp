@@ -1,4 +1,5 @@
-﻿using KI.Renderer;
+﻿using System.Collections.ObjectModel;
+using KI.Renderer;
 using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel
@@ -17,6 +18,23 @@ namespace RenderApp.ViewModel
             {
                 model = value;
                 TextureIndex = Model.ProcessingTexture.IndexOf(Model.OutputTexture);
+
+                var postItem = new ObservableCollection<ViewModelBase>();
+                foreach (var postprocess in model.PostEffect.Items)
+                {
+                    if (postprocess is Bloom)
+                    {
+                        postItem.Add(new BloomViewModel(this, postprocess as Bloom));
+                    }
+                    else if(postprocess is Sobel)
+                    {
+                        postItem.Add(new SobelViewModel(this, postprocess as Sobel));
+                    }
+                }
+
+                PostProcessItem = postItem;
+                OnPropertyChanged(nameof(PostProcessItem));
+
                 OnPropertyChanged(nameof(Model));
             }
         }
@@ -38,22 +56,33 @@ namespace RenderApp.ViewModel
             }
         }
 
-        public bool PostProcessMode
+        public bool EnablePostEffect
         {
             get
             {
+                if (Model == null)
+                {
+                    return false;
+                }
+
                 return Model.PostProcessMode;
             }
             set
             {
                 Model.PostProcessMode = value;
-                OnPropertyChanged(nameof(PostProcessMode));
+                OnPropertyChanged(nameof(EnablePostEffect));
             }
+        }
+
+        public ObservableCollection<ViewModelBase> PostProcessItem
+        {
+            get;
+            set;
         }
 
 
         public RendererViewModel(ViewModelBase parent)
-            : base(parent, "Renderer", Place.LeftDown)
+            : base(parent, null, "Renderer", Place.LeftDown)
         {
         }
 

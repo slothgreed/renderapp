@@ -13,8 +13,8 @@ namespace RenderApp.ViewModel
             Floating
         }
 
-        public DockWindowViewModel(ViewModelBase parent, string title, Place place)
-            : base(parent)
+        public DockWindowViewModel(ViewModelBase parent, object model, string title, Place place)
+            : base(parent, model)
         {
             Title = title;
             InitPlace = place;

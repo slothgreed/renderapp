@@ -39,7 +39,7 @@ namespace KI.UI.ViewModel
         /// </summary>
         /// <param name="path"></param>
         public ThumbnailFileViewModel(ViewModelBase parent, string filePath, string imagePath)
-            : base(parent)
+            : base(parent, null)
         {
             FilePath = filePath;
             ImagePath = imagePath;

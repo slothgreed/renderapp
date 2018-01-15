@@ -14,12 +14,12 @@ namespace RenderApp.ViewModel
     public class RenderObjectViewModel : DockWindowViewModel
     {
         public RenderObjectViewModel(ViewModelBase parent)
-            : base(parent,"No Geometry", Place.RightUp)
+            : base(parent, null, "No Geometry", Place.RightUp)
         {
         }
 
         public RenderObjectViewModel(ViewModelBase parent, RenderObject model)
-            : base(parent, "No Geometry", Place.RightUp)
+            : base(parent, model, "No Geometry", Place.RightUp)
         {
             Model = model;
         }

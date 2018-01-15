@@ -17,7 +17,7 @@ namespace RenderApp.ViewModel
         /// </summary>
         /// <param name="parent">親ビューモデル</param>
         public VoxelViewModel(ViewModelBase parent)
-            : base(parent, "VoxelView", Place.Floating)
+            : base(parent, null, "VoxelView", Place.Floating)
         {
             var color = new System.Windows.Media.Color();
             color.R = 0;
