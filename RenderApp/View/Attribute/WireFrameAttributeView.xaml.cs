@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace RenderApp.View
 {
     /// <summary>
-    /// VertexColorMaterial.xaml の相互作用ロジック
+    /// WireFrameAttributeView.xaml の相互作用ロジック
     /// </summary>
-    public partial class VertexColorMaterialView : UserControl
+    public partial class WireFrameAttributeView : UserControl
     {
-        public VertexColorMaterialView()
+        public WireFrameAttributeView()
         {
             InitializeComponent();
         }

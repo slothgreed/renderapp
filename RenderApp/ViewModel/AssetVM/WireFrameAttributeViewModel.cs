@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using KI.Renderer.Material;
+using KI.Renderer.Attribute;
 using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel
 {
-    class WireFrameMaterialViewModel : MaterialViewModel
+    class WireFrameAttributeViewModel : AttributeViewModel
     {
         /// <summary>
         /// モデル
         /// </summary>
-        private WireFrameMaterial Model;
+        private WireFrameAttribute Model;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="parent">親ビューモデル</param>
         /// <param name="model">モデル</param>
-        public WireFrameMaterialViewModel(ViewModelBase parent, WireFrameMaterial model)
+        public WireFrameAttributeViewModel(ViewModelBase parent, WireFrameAttribute model)
                 : base(parent, model)
         {
             Model = model;

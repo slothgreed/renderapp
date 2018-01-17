@@ -8,14 +8,22 @@ using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel
 {
-    public class MaterialViewModel : DockWindowViewModel
+    public class AttributeViewModel : DockWindowViewModel
     {
-        private MaterialBase Model;
+        private AttributeBase Model;
 
-        public MaterialViewModel(ViewModelBase parent, MaterialBase model)
+        public AttributeViewModel(ViewModelBase parent, AttributeBase model)
             : base(parent, model, model?.Name, Place.RightUp)
         {
             Model = model;
+        }
+
+        public string Name
+        {
+            get
+            {
+                return Model.Name;
+            }
         }
     }
 }

@@ -48,17 +48,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Material\DirectionMaterial.cs" />
-    <Compile Include="Material\VertexColorMaterial.cs" />
+    <Compile Include="Attribute\DirectionAttribute.cs" />
+    <Compile Include="Attribute\VertexColorAttribute.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Light\DirectionLight.cs" />
     <Compile Include="Light\Light.cs" />
     <Compile Include="Light\PointLight.cs" />
     <Compile Include="Light\SpotLight.cs" />
-    <Compile Include="Material\VertexParameterMaterial.cs" />
-    <Compile Include="Material\GeometryMaterial.cs" />
-    <Compile Include="Material\Material.cs" />
-    <Compile Include="Material\WireFrameMaterial.cs" />
+    <Compile Include="Attribute\VertexParameterAttribute.cs" />
+    <Compile Include="Attribute\GeometryAttribute.cs" />
+    <Compile Include="Attribute\AttributeBase.cs" />
+    <Compile Include="Attribute\WireFrameAttribute.cs" />
     <Compile Include="SceneNode.cs" />
     <Compile Include="Technique\DeferredBuffer.cs" />
     <Compile Include="Technique\GBuffer.cs" />

@@ -9,12 +9,12 @@ using KI.Gfx.KIShader;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace KI.Renderer.Material
+namespace KI.Renderer.Attribute
 {
     /// <summary>
-    /// 頂点パラメータのマテリアル
+    /// 頂点パラメータのアトリビュート
     /// </summary>
-    public class VertexParameterMaterial : MaterialBase
+    public class VertexParameterAttribute : AttributeBase
     {
         /// <summary>
         /// 頂点パラメータ
@@ -43,7 +43,7 @@ namespace KI.Renderer.Material
         /// <param name="type">種類</param>
         /// <param name="shader">シェーダ</param>
         /// <param name="Color">色情報</param>
-        public VertexParameterMaterial(string name, VertexBuffer vertexBuffer, PrimitiveType type, Shader shader, float[] parameter)
+        public VertexParameterAttribute(string name, VertexBuffer vertexBuffer, PrimitiveType type, Shader shader, float[] parameter)
             : base(name, vertexBuffer, type, shader)
         {
             Max = parameter.Max();

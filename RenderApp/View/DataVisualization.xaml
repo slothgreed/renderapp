@@ -1,28 +1,47 @@
-﻿<UserControl x:Class="RenderApp.View.DataVisualization"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:RenderApp.View"
-        xmlns:wfc="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization"
-        mc:Ignorable="d"
-        >
+﻿<UserControl
+    x:Class="RenderApp.View.DataVisualization"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:RenderApp.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:wfc="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization"
+    mc:Ignorable="d">
     <Grid DataContext="{Binding DataVisualizationViewModel}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <WrapPanel>
-            <ComboBox x:Name="ParameterKind" SelectionChanged="ParameterList_SelectionChanged" Width="100"/>
-            <TextBlock x:Name="Min" Text="最小値"/>
-            <TextBox Text="0" Width="80" TextAlignment="Right" Margin="2,0" LostFocus="TextBox_MinLostFocus"/>
-            <TextBlock x:Name="Max" Text="最大値" Margin="2,0"/>
-            <TextBox Text="0" Width="80" TextAlignment="Right" Margin="2,0" LostFocus="TextBox_MaxLostFocus"/>
-            <Button Content="Reset" Click="Button_Click" Margin="2,0"/>
+            <ComboBox
+                x:Name="ParameterKind"
+                Width="100"
+                SelectionChanged="ParameterList_SelectionChanged" />
+            <TextBlock x:Name="Min" Text="最小値" />
+            <TextBox
+                Width="80"
+                Margin="2,0"
+                LostFocus="TextBox_MinLostFocus"
+                Text="0"
+                TextAlignment="Right" />
+            <TextBlock
+                x:Name="Max"
+                Margin="2,0"
+                Text="最大値" />
+            <TextBox
+                Width="80"
+                Margin="2,0"
+                LostFocus="TextBox_MaxLostFocus"
+                Text="0"
+                TextAlignment="Right" />
+            <Button
+                Margin="2,0"
+                Click="Button_Click"
+                Content="Reset" />
         </WrapPanel>
 
         <WindowsFormsHost x:Name="WindowsHost" Grid.Row="1">
-            <wfc:Chart/>
+            <wfc:Chart />
         </WindowsFormsHost>
     </Grid>
 </UserControl>

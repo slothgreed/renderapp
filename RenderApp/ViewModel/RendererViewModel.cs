@@ -33,8 +33,8 @@ namespace RenderApp.ViewModel
                 }
 
                 PostProcessItem = postItem;
-                OnPropertyChanged(nameof(PostProcessItem));
 
+                OnPropertyChanged(nameof(PostProcessItem));
                 OnPropertyChanged(nameof(Model));
             }
         }

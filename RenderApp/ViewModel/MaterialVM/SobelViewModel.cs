@@ -25,5 +25,19 @@ namespace RenderApp.ViewModel
         {
             Model = model;
         }
+
+        public float Threshold
+        {
+            get
+            {
+                return Model.uThreshold;
+            }
+
+            set
+            {
+                Model.uThreshold = value;
+                OnPropertyChanged(nameof(Threshold));
+            }
+        }
     }
 }

@@ -36,16 +36,6 @@
                             <v:LightView />
                         </DataTemplate>
                     </vm:DockPaneTemplateSelector.LightTemplate>
-                    <vm:DockPaneTemplateSelector.VertexColorMaterialTemplate>
-                        <DataTemplate>
-                            <v:VertexColorMaterialView />
-                        </DataTemplate>
-                    </vm:DockPaneTemplateSelector.VertexColorMaterialTemplate>
-                    <vm:DockPaneTemplateSelector.WireFrameMaterialTemplate>
-                        <DataTemplate>
-                            <v:WireFrameMaterialView />
-                        </DataTemplate>
-                    </vm:DockPaneTemplateSelector.WireFrameMaterialTemplate>
                     <vm:DockPaneTemplateSelector.RenderObjectTemplate>
                         <DataTemplate>
                             <v:RenderObjectView />

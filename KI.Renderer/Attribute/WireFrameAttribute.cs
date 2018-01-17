@@ -10,12 +10,12 @@ using KI.Gfx.KIShader;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace KI.Renderer.Material
+namespace KI.Renderer.Attribute
 {
     /// <summary>
-    /// ワイヤフレームのマテリアル
+    /// ワイヤフレームのアトリビュート
     /// </summary>
-    public class WireFrameMaterial : MaterialBase
+    public class WireFrameAttribute : AttributeBase
     {
         /// <summary>
         /// カラーバッファ
@@ -39,7 +39,7 @@ namespace KI.Renderer.Material
         /// <param name="type">種類</param>
         /// <param name="shader">シェーダ</param>
         /// <param name="Color">色情報</param>
-        public WireFrameMaterial(string name, VertexBuffer vertexBuffer, Shader shader, Vector3[] color, int[] index)
+        public WireFrameAttribute(string name, VertexBuffer vertexBuffer, Shader shader, Vector3[] color, int[] index)
             : base(name, vertexBuffer, PrimitiveType.Lines, shader)
         {
             colors = color;

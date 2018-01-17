@@ -9,12 +9,12 @@ using KI.Gfx.KIShader;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace KI.Renderer.Material
+namespace KI.Renderer.Attribute
 {
     /// <summary>
-    /// 形状のマテリアル
+    /// 形状のアトリビュート
     /// </summary>
-    public class GeometryMaterial : MaterialBase
+    public class GeometryAttribute : AttributeBase
     {
         /// <summary>
         /// ポリゴン情報
@@ -27,7 +27,7 @@ namespace KI.Renderer.Material
         /// <param name="name">名前</param>
         /// <param name="polygon">ポリゴン</param>
         /// <param name="shader">シェーダ</param>
-        public GeometryMaterial(string name, Polygon polygon, Shader shader)
+        public GeometryAttribute(string name, Polygon polygon, Shader shader)
             : base(name, polygon.Type, shader)
         {
             this.polygon = polygon;

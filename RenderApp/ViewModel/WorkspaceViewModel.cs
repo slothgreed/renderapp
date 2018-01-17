@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using KI.Foundation.Tree;
 using KI.Renderer;
-using KI.Renderer.Material;
+using KI.Renderer.Attribute;
 using KI.UI.ViewModel;
 using RenderApp.Globals;
 
@@ -49,7 +49,7 @@ namespace RenderApp.ViewModel
             ViewportViewModel.Invalidate();
         }
 
-        private void MaterialViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void AttributeViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             ViewportViewModel.Invalidate();
         }
@@ -68,32 +68,15 @@ namespace RenderApp.ViewModel
                 vm.PropertyChanged += RenderObjectViewModel_PropertyChanged;
                 workspace.MainScene.SelectNode = (SceneNode)node.KIObject;
             }
-            else if (node.KIObject is MaterialBase)
-            {
-                if (node.KIObject is VertexColorMaterial)
-                {
-                    vm = new VertexColorMaterialViewModel(this, node.KIObject as VertexParameterMaterial);
-                }
-                else if (node.KIObject is WireFrameMaterial)
-                {
-                    vm = new WireFrameMaterialViewModel(this, node.KIObject as WireFrameMaterial);
-                }
-                else
-                {
-                    return;
-                }
-
-                vm.PropertyChanged += MaterialViewModel_PropertyChanged;
-            }
 
             ReplaceTabWindow(vm);
         }
 
         public void ReplaceTabWindow(DockWindowViewModel window)
         {
-            if (window is RenderObjectViewModel || window is MaterialViewModel)
+            if (window is RenderObjectViewModel || window is AttributeViewModel)
             {
-                var oldItem = AnchorablesSources.FirstOrDefault(p => p is RenderObjectViewModel || p is MaterialViewModel);
+                var oldItem = AnchorablesSources.FirstOrDefault(p => p is RenderObjectViewModel || p is AttributeViewModel);
                 AnchorablesSources.Add(window);
                 AnchorablesSources.Remove(oldItem);
             }

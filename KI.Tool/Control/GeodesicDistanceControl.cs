@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using KI.Analyzer;
 using KI.Analyzer.Algorithm;
 using KI.Foundation.Utility;
 using KI.Gfx.Geometry;
 using KI.Renderer;
-using KI.Renderer.Material;
+using KI.Renderer.Attribute;
 using KI.Tool.Utility;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 
 namespace KI.Tool.Control
 {
@@ -105,16 +102,16 @@ namespace KI.Tool.Control
                         var parentNode = Global.Renderer.ActiveScene.FindNode(renderObject);
                         
 
-                        var colorMaterial = new VertexParameterMaterial("distanceColor", 
-                            renderObject.PolygonMaterial.VertexBuffer.ShallowCopy(), 
-                            renderObject.PolygonMaterial.Type, 
+                        var colorAttribute = new VertexParameterAttribute("distanceColor", 
+                            renderObject.PolygonAttribute.VertexBuffer.ShallowCopy(), 
+                            renderObject.PolygonAttribute.Type, 
                             renderObject.Shader, 
                             geodesicDistance);
 
                         Polygon lineGeometry = new Polygon("geodesicDistance", lines);
-                        var lineMaterial = new GeometryMaterial("geodesicDistance", lineGeometry, renderObject.Shader);
-                        renderObject.Materials.Add(lineMaterial);
-                        Global.Renderer.ActiveScene.AddObject(lineMaterial, parentNode);
+                        var lineAttribute = new GeometryAttribute("geodesicDistance", lineGeometry, renderObject.Shader);
+                        renderObject.Attributes.Add(lineAttribute);
+                        Global.Renderer.ActiveScene.AddObject(lineAttribute, parentNode);
                     }
                 }
             }

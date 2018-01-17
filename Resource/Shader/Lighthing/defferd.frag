@@ -32,16 +32,16 @@ vec4 getFogColor(vec4 color,vec4 worldPos)
 	float f = (fogEnd - length) / (fogEnd - fogStart);
 	return mix(fogColor,color,f);
 }
-vec4 getADS(vec4 normal,vec4 world)
+vec4 getADS(vec4 color, vec4 normal, vec4 world)
 {
 	//点からライト方向
-	vec3 lightDir = normalize(uLightPosition - world.xyz);	
-	vec3 eye = normalize(uCameraPosition -  world.xyz);//点から視線方向
-	float diffuse = max(dot(lightDir,normal.xyz),0.0);
-	vec3 spec_half = normalize(lightDir + eye);//ハーフベクトル
-	float specular = pow(dot(normal.xyz,spec_half),1.0);
-	float color = diffuse * 0.7 + specular * 0.3;
-	return vec4(color,color,color,1);
+	vec3 lightDir 	= normalize(uLightPosition - world.xyz);	
+	vec3 cameraDir 	= normalize(uCameraPosition -  world.xyz);	//点から視線方向
+	float diffuse 	= max(dot(lightDir,normal.xyz),0.0);
+	vec3 spec_half 	= normalize(lightDir + cameraDir);			//ハーフベクトル
+	float specular 	= pow(dot(normal.xyz,spec_half),1.0);
+	float value 	= diffuse * 0.7;// + specular * 0.3;
+	return value * color;
 	
 }
 
@@ -66,22 +66,19 @@ float getShadow(vec4 world)
 
 void main(void)
 {	
-	vec4 pixelColor = vec4(1.0,0,0,1.0);
-	vec2 coord = v_texcoord;
-	
-	vec4 normal = texture2D(uNormalMap,coord.xy) * 2 - 1;
+	vec4 normal = texture2D(uNormalMap,v_texcoord.xy) * 2 - 1;
 	normal = vec4(normal.xyz,1);
 	
-	vec4 position  = texture2D(uWorldMap,coord.xy) * 2 - 1;
+	vec4 position  = texture2D(uWorldMap,v_texcoord.xy) * 2 - 1;
 	vec4 world = getWorldPos(position);
 
 	//float shadow = getShadow(world);
-	vec4 albedo  = texture2D(uAlbedoMap,coord.xy);
-	pixelColor = albedo * getADS(normal,world);
+	vec4 albedo  = texture2D(uAlbedoMap,v_texcoord.xy);
+	vec4 pixelColor = getADS(albedo, normal, world);
 
 	//pixelColor = getFogColor(albedo,world);
 	pixelColor.a = 1;
-	OutputColor = pixelColor;
+	OutputColor = world;
 	
 }
 

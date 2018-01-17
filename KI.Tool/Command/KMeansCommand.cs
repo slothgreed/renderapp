@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using KI.Analyzer;
 using KI.Analyzer.Algorithm;
 using KI.Foundation.Command;
 using KI.Foundation.Core;
 using KI.Foundation.Utility;
 using KI.Renderer;
-using KI.Renderer.Material;
+using KI.Renderer.Attribute;
 using OpenTK;
 
 namespace KI.Tool.Command
@@ -76,13 +72,13 @@ namespace KI.Tool.Command
             }
 
             var parentNode = scene.FindNode(renderObject);
-            var material = new VertexColorMaterial(
+            var material = new VertexColorAttribute(
                 "KMeansClustering", 
-                renderObject.PolygonMaterial.VertexBuffer.ShallowCopy(),
+                renderObject.PolygonAttribute.VertexBuffer.ShallowCopy(),
                 renderObject.Polygon.Type, 
                 renderObject.Shader, colors);
 
-            renderObject.Materials.Add(material);
+            renderObject.Attributes.Add(material);
             scene.AddObject(material, parentNode);
 
             return CommandResult.Success;

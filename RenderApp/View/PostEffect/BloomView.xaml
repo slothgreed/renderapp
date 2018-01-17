@@ -8,7 +8,24 @@
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
-    <Grid>
+    <StackPanel>
         <TextBlock Text="Bloom" />
-    </Grid>
+        <DockPanel>
+            <TextBlock Text="Scale" />
+            <Slider
+                Maximum="{Binding Max}"
+                Minimum="{Binding Min}"
+                Value="{Binding Scale}" />
+        </DockPanel>
+        <DockPanel>
+            <TextBlock Text="Sigma" />
+            <Slider
+                Maximum="{Binding Max}"
+                Minimum="{Binding Min}"
+                Value="{Binding Sigma}" />
+        </DockPanel>
+        <DockPanel>
+            <Button Command="{Binding UpdateWeightCommand}" Content="Update" />
+        </DockPanel>
+    </StackPanel>
 </UserControl>

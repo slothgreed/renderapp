@@ -164,9 +164,9 @@
     </ApplicationDefinition>
     <Compile Include="AppSystem.cs" />
     <Compile Include="Globals\Workspace.cs" />
-    <Compile Include="ViewModel\AssetVM\MaterialViewModel.cs" />
-    <Compile Include="ViewModel\AssetVM\VertexParameterMaterialViewModel.cs" />
-    <Compile Include="ViewModel\AssetVM\WireFrameMaterialViewModel.cs" />
+    <Compile Include="ViewModel\AssetVM\AttributeViewModel.cs" />
+    <Compile Include="ViewModel\AssetVM\VertexParameterAttributeViewModel.cs" />
+    <Compile Include="ViewModel\AssetVM\WireFrameAttributeViewModel.cs" />
     <Compile Include="ViewModel\Converter\EnumConverter.cs" />
     <Compile Include="Globals\Project.cs" />
     <Compile Include="Globals\Enum.cs" />
@@ -246,16 +246,13 @@
     <Compile Include="Scene\Shader\Line\CEffectLine.cs" />
     <Compile Include="Scene\Shader\MRT\Fur\Fur.cs" />
     <Compile Include="Scene\Shader\NURBS\NURBS.cs" />
-    <Compile Include="Scene\Shader\OffScreen\Bloom\CBloom.cs" />
     <Compile Include="Scene\Shader\MRT\OutLine\OutLine.cs" />
     <Compile Include="Scene\Shader\OffScreen\Result\CResult.cs" />
     <Compile Include="Scene\Shader\MRT\General\ConstantShader.cs" />
     <Compile Include="Scene\Shader\Diffuse\CDiffuse.cs" />
     <Compile Include="Scene\Shader\DisplaceMent\DisplaceMentMap.cs" />
     <Compile Include="Scene\Shader\ColorRender\CColorShader.cs" />
-    <Compile Include="Scene\Shader\OffScreen\DOF\DOF.cs" />
     <Compile Include="Scene\Shader\Luminous\Luminous.cs" />
-    <Compile Include="Scene\Shader\OffScreen\Sobel\CSobel.cs" />
     <Compile Include="Scene\Shader\OffScreen\SSAO\SSAO.cs" />
     <Compile Include="Scene\Shader\OffScreen\Defferd\CDeffed.cs" />
     <Compile Include="Scene\Shader\OffScreen\Shadow\CShadowMap.cs" />
@@ -263,14 +260,14 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Utility\Util.cs" />
-    <Compile Include="View\VertexColorMaterialView.xaml.cs">
-      <DependentUpon>VertexColorMaterialView.xaml</DependentUpon>
+    <Compile Include="View\Attribute\VertexParameterAttributeView.xaml.cs">
+      <DependentUpon>VertexParameterAttributeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ViewportView.xaml.cs">
       <DependentUpon>ViewportView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\WireFrameMaterialView.xaml.cs">
-      <DependentUpon>WireFrameMaterialView.xaml</DependentUpon>
+    <Compile Include="View\Attribute\WireFrameAttributeView.xaml.cs">
+      <DependentUpon>WireFrameAttributeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\WorkspaceView.xaml.cs">
       <DependentUpon>WorkspaceView.xaml</DependentUpon>
@@ -323,7 +320,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\VertexColorMaterialView.xaml">
+    <Page Include="View\Attribute\VertexParameterAttributeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -331,7 +328,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\WireFrameMaterialView.xaml">
+    <Page Include="View\Attribute\WireFrameAttributeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -388,8 +385,6 @@
     <None Include="Scene\Shader\NURBS\nurbs.tcs" />
     <None Include="Scene\Shader\NURBS\nurbs.tes" />
     <None Include="Scene\Shader\NURBS\nurbs.vert" />
-    <None Include="Scene\Shader\OffScreen\Bloom\bloom.frag" />
-    <None Include="Scene\Shader\OffScreen\Bloom\bloom.vert" />
     <None Include="Scene\Shader\OffScreen\Result\result.frag" />
     <None Include="Scene\Shader\OffScreen\Result\result.vert" />
     <None Include="Scene\Shader\MRT\General\General.frag" />
@@ -414,8 +409,6 @@
     <None Include="Scene\Shader\OffScreen\Defferd\defferd.vert" />
     <None Include="Scene\Shader\OffScreen\Shadow\shadow.frag" />
     <None Include="Scene\Shader\OffScreen\Shadow\shadow.vert" />
-    <None Include="Scene\Shader\OffScreen\Sobel\sobel.frag" />
-    <None Include="Scene\Shader\OffScreen\Sobel\sobel.vert" />
     <None Include="Scene\Shader\OffScreen\SSAO\ssao.frag" />
     <None Include="Scene\Shader\OffScreen\SSAO\ssao.vert" />
   </ItemGroup>

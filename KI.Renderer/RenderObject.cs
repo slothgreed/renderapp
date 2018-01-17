@@ -6,7 +6,7 @@ using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
-using KI.Renderer.Material;
+using KI.Renderer.Attribute;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
@@ -55,9 +55,9 @@ namespace KI.Renderer
         }
 
         /// <summary>
-        /// PolygonMaterial
+        /// PolygonAttribute
         /// </summary>
-        public GeometryMaterial PolygonMaterial { get; private set; }
+        public GeometryAttribute PolygonAttribute { get; private set; }
 
         /// <summary>
         /// 形状ID
@@ -65,9 +65,9 @@ namespace KI.Renderer
         public int ID { get; set; }
 
         /// <summary>
-        /// マテリアル
+        /// アトリビュート
         /// </summary>
-        public List<MaterialBase> Materials { get; private set; } = new List<MaterialBase>();
+        public List<AttributeBase> Attributes { get; private set; } = new List<AttributeBase>();
 
 
         /// <summary>
@@ -77,11 +77,11 @@ namespace KI.Renderer
         {
             get
             {
-                return PolygonMaterial.Visible;
+                return PolygonAttribute.Visible;
             }
             set
             {
-                PolygonMaterial.Visible = value;
+                PolygonAttribute.Visible = value;
             }
         }
 
@@ -92,12 +92,12 @@ namespace KI.Renderer
         {
             get
             {
-                return PolygonMaterial.Shader;
+                return PolygonAttribute.Shader;
             }
 
             set
             {
-                PolygonMaterial.Shader = value;
+                PolygonAttribute.Shader = value;
             }
         }
 
@@ -129,7 +129,7 @@ namespace KI.Renderer
         /// <param name="scene">シーン</param>
         public override void RenderCore(Scene scene)
         {
-            foreach (var material in Materials.Where(p => p.Visible))
+            foreach (var material in Attributes.Where(p => p.Visible))
             {
                 if (material.Shader == null)
                 {
@@ -166,7 +166,7 @@ namespace KI.Renderer
         /// 形状をセット
         /// </summary>
         /// <param name="polygon">形状情報</param>
-        public void SetPolygon(Polygon polygon, MaterialBase material = null)
+        public void SetPolygon(Polygon polygon, AttributeBase material = null)
         {
             Polygon = polygon;
 
@@ -175,17 +175,17 @@ namespace KI.Renderer
                 string vert = ShaderCreater.Instance.GetVertexShader(this);
                 string frag = ShaderCreater.Instance.GetFragShader(this);
                 var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
-                material = new GeometryMaterial("Material:" + Name, polygon, shader);
+                material = new GeometryAttribute("Attribute:" + Name, polygon, shader);
             }
 
-            if (PolygonMaterial == null)
+            if (PolygonAttribute == null)
             {
-                PolygonMaterial = material as GeometryMaterial;
+                PolygonAttribute = material as GeometryAttribute;
             }
 
-            if (!Materials.Contains(material))
+            if (!Attributes.Contains(material))
             {
-                Materials.Add(material);
+                Attributes.Add(material);
             }
 
         }
@@ -195,7 +195,7 @@ namespace KI.Renderer
         /// </summary>
         public override void Dispose()
         {
-            foreach (var material in Materials)
+            foreach (var material in Attributes)
             {
                 material.Dispose();
             }
@@ -208,7 +208,7 @@ namespace KI.Renderer
         /// <param name="e">イベント</param>
         private void OnPolygonUpdated(object sender, UpdatePolygonEventArgs e)
         {
-            PolygonMaterial.SetupBuffer();
+            PolygonAttribute.SetupBuffer();
         }
     }
 }

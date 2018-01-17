@@ -4,24 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KI.Renderer;
-using KI.Renderer.Material;
+using KI.Renderer.Attribute;
 using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel
 {
-    class VertexColorMaterialViewModel : MaterialViewModel
+    class VertexParameterAttributeViewModel : AttributeViewModel
     {
         /// <summary>
         /// モデル
         /// </summary>
-        private VertexParameterMaterial Model;
+        private VertexParameterAttribute Model;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="parent">親ビューモデル</param>
         /// <param name="model">モデル</param>
-        public VertexColorMaterialViewModel(ViewModelBase parent, VertexParameterMaterial model)
+        public VertexParameterAttributeViewModel(ViewModelBase parent, VertexParameterAttribute model)
                 : base(parent, model)
         {
             Model = model;

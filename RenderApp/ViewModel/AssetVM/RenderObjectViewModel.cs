@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using KI.Analyzer;
 using KI.Foundation.Parameter;
 using KI.Gfx.Geometry;
 using KI.Renderer;
+using KI.Renderer.Attribute;
 using KI.Tool.Command;
 using KI.UI.ViewModel;
 using OpenTK;
@@ -22,6 +25,19 @@ namespace RenderApp.ViewModel
             : base(parent, model, "No Geometry", Place.RightUp)
         {
             Model = model;
+
+            Attributes = new ObservableCollection<ViewModelBase>();
+            foreach (var attribute in model.Attributes.Where(p => (p is GeometryAttribute) == false))
+            {
+                if (attribute is VertexParameterAttribute)
+                {
+                    Attributes.Add(new VertexParameterAttributeViewModel(this, attribute as VertexParameterAttribute));
+                }
+                else if(attribute is WireFrameAttribute)
+                {
+                    Attributes.Add(new WireFrameAttributeViewModel(this, attribute as WireFrameAttribute));
+                }
+            }
         }
 
         public Vector3 Rotate
@@ -79,6 +95,12 @@ namespace RenderApp.ViewModel
                 _model = value;
                 Title = Model.ToString();
             }
+        }
+
+        public ObservableCollection<ViewModelBase> Attributes
+        {
+            get;
+            set;
         }
 
         public override void UpdateProperty()

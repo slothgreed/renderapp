@@ -2,7 +2,7 @@
 using KI.Foundation.Command;
 using KI.Foundation.Core;
 using KI.Renderer;
-using KI.Renderer.Material;
+using KI.Renderer.Attribute;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
@@ -74,14 +74,14 @@ namespace KI.Tool.Command
             }
 
             var parentNode = Global.Renderer.ActiveScene.FindNode(renderObject);
-            WireFrameMaterial material = new WireFrameMaterial(
+            WireFrameAttribute material = new WireFrameAttribute(
                 renderObject.Name + ": WireFrame",
-                renderObject.PolygonMaterial.VertexBuffer.ShallowCopy(),
+                renderObject.PolygonAttribute.VertexBuffer.ShallowCopy(),
                 renderObject.Shader,
                 wireFrameColors.ToArray(),
                 lineIndex.ToArray());
 
-            renderObject.Materials.Add(material);
+            renderObject.Attributes.Add(material);
             scene.AddObject(material, parentNode);
 
             return CommandResult.Success;

@@ -9,12 +9,12 @@ using KI.Gfx.KIShader;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace KI.Renderer.Material
+namespace KI.Renderer.Attribute
 {
     /// <summary>
-    /// ベクトル表示用のマテリアル
+    /// ベクトル表示用のアトリビュート
     /// </summary>
-    public class DirectionMaterial : MaterialBase
+    public class DirectionAttribute : AttributeBase
     {
         /// <summary>
         /// 配列バッファ
@@ -47,7 +47,7 @@ namespace KI.Renderer.Material
         /// <param name="name">名前</param>
         /// <param name="polygon">線分</param>
         /// <param name="shader">シェーダ</param>
-        public DirectionMaterial(string name, Shader shader, Vector3[] lines, Vector4 color, Vector3[] normal = null, bool displayVector = true)
+        public DirectionAttribute(string name, Shader shader, Vector3[] lines, Vector4 color, Vector3[] normal = null, bool displayVector = true)
             : base(name, PrimitiveType.Lines, shader)
         {
             wireFrameColor = color;

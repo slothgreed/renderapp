@@ -9,12 +9,12 @@ using KI.Gfx.KIShader;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace KI.Renderer.Material
+namespace KI.Renderer.Attribute
 {
     /// <summary>
-    /// 頂点カラーのマテリアル
+    /// 頂点カラーのアトリビュート
     /// </summary>
-    public class VertexColorMaterial : MaterialBase
+    public class VertexColorAttribute : AttributeBase
     {
         /// <summary>
         /// 頂点パラメータ
@@ -33,7 +33,7 @@ namespace KI.Renderer.Material
         /// <param name="type">種類</param>
         /// <param name="shader">シェーダ</param>
         /// <param name="Color">色情報</param>
-        public VertexColorMaterial(string name, VertexBuffer vertexBuffer, PrimitiveType type, Shader shader, Vector3[] colors)
+        public VertexColorAttribute(string name, VertexBuffer vertexBuffer, PrimitiveType type, Shader shader, Vector3[] colors)
             : base(name, vertexBuffer, type, shader)
         {
             vertexColors = colors;

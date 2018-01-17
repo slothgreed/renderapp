@@ -8,6 +8,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns:v="clr-namespace:RenderApp.View"
+    xmlns:vm="clr-namespace:RenderApp.ViewModel"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
@@ -44,6 +46,22 @@
                     <control:Vector3EditBox Vector3Value="{Binding Translate}" />
                 </WrapPanel>
             </StackPanel>
+        </Expander>
+
+        <Expander
+            Margin="2"
+            Header="Attribute"
+            IsExpanded="True">
+            <ItemsControl ItemsSource="{Binding Attributes}">
+                <ItemsControl.Resources>
+                    <DataTemplate DataType="{x:Type vm:VertexParameterAttributeViewModel}">
+                        <v:VertexParameterAttributeView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vm:WireFrameAttributeViewModel}">
+                        <v:WireFrameAttributeView />
+                    </DataTemplate>
+                </ItemsControl.Resources>
+            </ItemsControl>
         </Expander>
     </StackPanel>
 </UserControl>

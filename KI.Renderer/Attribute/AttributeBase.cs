@@ -8,9 +8,9 @@ using OpenTK.Graphics.OpenGL;
 namespace KI.Renderer
 {
     /// <summary>
-    /// マテリアル
+    /// アトリビュート
     /// </summary>
-    public abstract class MaterialBase : KIObject
+    public abstract class AttributeBase : KIObject
     {
         /// <summary>
         /// 頂点バッファ
@@ -23,7 +23,7 @@ namespace KI.Renderer
         /// <param name="name">名前</param>
         /// <param name="type">レンダリングタイプ</param>
         /// <param name="shader">シェーダ</param>
-        public MaterialBase(string name, PrimitiveType type, Shader shader)
+        public AttributeBase(string name, PrimitiveType type, Shader shader)
             : base(name)
         {
             Shader = shader;
@@ -35,7 +35,7 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="shader">シェーダ</param>
-        public MaterialBase(string name, VertexBuffer vertexBuffer, PrimitiveType type, Shader shader)
+        public AttributeBase(string name, VertexBuffer vertexBuffer, PrimitiveType type, Shader shader)
             : base(name)
         {
             VertexBuffer = vertexBuffer;

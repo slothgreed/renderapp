@@ -11,7 +11,7 @@ using KI.Foundation.Utility;
 using KI.Gfx.Geometry;
 using KI.Gfx.KIShader;
 using KI.Renderer;
-using KI.Renderer.Material;
+using KI.Renderer.Attribute;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
@@ -107,57 +107,57 @@ namespace KI.Tool.Command
 
             var parentNode = Global.Renderer.ActiveScene.FindNode(renderObject);
 
-            VertexParameterMaterial voronoiMaterial = new VertexParameterMaterial(renderObject.Name + " : Voronoi",
-                renderObject.PolygonMaterial.VertexBuffer.ShallowCopy(),
+            VertexParameterAttribute voronoiAttribute = new VertexParameterAttribute(renderObject.Name + " : Voronoi",
+                renderObject.PolygonAttribute.VertexBuffer.ShallowCopy(),
                 renderObject.Polygon.Type,
                 renderObject.Shader,
                 voronoiParam.Values);
 
-            VertexParameterMaterial meanMaterial = new VertexParameterMaterial(renderObject.Name + " : MeanCurvature",
-                renderObject.PolygonMaterial.VertexBuffer.ShallowCopy(),
+            VertexParameterAttribute meanAttribute = new VertexParameterAttribute(renderObject.Name + " : MeanCurvature",
+                renderObject.PolygonAttribute.VertexBuffer.ShallowCopy(),
                 renderObject.Polygon.Type,
                 renderObject.Shader,
                 meanParam.Values);
 
-            VertexParameterMaterial gaussMaterial = new VertexParameterMaterial(renderObject.Name + " : GaussCurvature",
-                renderObject.PolygonMaterial.VertexBuffer.ShallowCopy(),
+            VertexParameterAttribute gaussAttribute = new VertexParameterAttribute(renderObject.Name + " : GaussCurvature",
+                renderObject.PolygonAttribute.VertexBuffer.ShallowCopy(),
                 renderObject.Polygon.Type,
                 renderObject.Shader,
                 gaussParam.Values);
 
-            VertexParameterMaterial minMaterial = new VertexParameterMaterial(renderObject.Name + " : MinCurvature",
-                renderObject.PolygonMaterial.VertexBuffer.ShallowCopy(),
+            VertexParameterAttribute minAttribute = new VertexParameterAttribute(renderObject.Name + " : MinCurvature",
+                renderObject.PolygonAttribute.VertexBuffer.ShallowCopy(),
                 renderObject.Polygon.Type,
                 renderObject.Shader,
                 minParam.Values);
 
-            VertexParameterMaterial maxMaterial = new VertexParameterMaterial(renderObject.Name + " : MaxCurvature",
-                renderObject.PolygonMaterial.VertexBuffer.ShallowCopy(),
+            VertexParameterAttribute maxAttribute = new VertexParameterAttribute(renderObject.Name + " : MaxCurvature",
+                renderObject.PolygonAttribute.VertexBuffer.ShallowCopy(),
                 renderObject.Polygon.Type,
                 renderObject.Shader,
                 maxParam.Values);
 
-            renderObject.Materials.Add(voronoiMaterial);
-            renderObject.Materials.Add(meanMaterial);
-            renderObject.Materials.Add(gaussMaterial);
-            renderObject.Materials.Add(minMaterial);
-            renderObject.Materials.Add(maxMaterial);
+            renderObject.Attributes.Add(voronoiAttribute);
+            renderObject.Attributes.Add(meanAttribute);
+            renderObject.Attributes.Add(gaussAttribute);
+            renderObject.Attributes.Add(minAttribute);
+            renderObject.Attributes.Add(maxAttribute);
 
-            scene.AddObject(voronoiMaterial, parentNode);
-            scene.AddObject(meanMaterial, parentNode);
-            scene.AddObject(gaussMaterial, parentNode);
-            scene.AddObject(minMaterial, parentNode);
-            scene.AddObject(maxMaterial, parentNode);
+            scene.AddObject(voronoiAttribute, parentNode);
+            scene.AddObject(meanAttribute, parentNode);
+            scene.AddObject(gaussAttribute, parentNode);
+            scene.AddObject(minAttribute, parentNode);
+            scene.AddObject(maxAttribute, parentNode);
 
             var wireFrameShader = ShaderFactory.Instance.CreateShaderVF(ShaderCreater.Instance.Directory + @"GBuffer\WireFrame");
 
             var normals = renderObject.Polygon.Vertexs.Select(p => p.Normal).ToArray();
-            var dirMinMaterial = new DirectionMaterial(renderObject.Name + " : MinDirection", wireFrameShader, dirMinLine.ToArray(), new Vector4(1, 0, 0, 1), normals);
-            var dirMaxMaterial = new DirectionMaterial(renderObject.Name + " : MaxDirection", wireFrameShader, dirMaxLine.ToArray(), new Vector4(0, 1, 0, 1), normals);
-            renderObject.Materials.Add(dirMinMaterial);
-            renderObject.Materials.Add(dirMaxMaterial);
-            scene.AddObject(dirMinMaterial, parentNode);
-            scene.AddObject(dirMaxMaterial, parentNode);
+            var dirMinAttribute = new DirectionAttribute(renderObject.Name + " : MinDirection", wireFrameShader, dirMinLine.ToArray(), new Vector4(1, 0, 0, 1), normals);
+            var dirMaxAttribute = new DirectionAttribute(renderObject.Name + " : MaxDirection", wireFrameShader, dirMaxLine.ToArray(), new Vector4(0, 1, 0, 1), normals);
+            renderObject.Attributes.Add(dirMinAttribute);
+            renderObject.Attributes.Add(dirMaxAttribute);
+            scene.AddObject(dirMinAttribute, parentNode);
+            scene.AddObject(dirMaxAttribute, parentNode);
 
             return CommandResult.Success;
         }

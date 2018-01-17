@@ -24,6 +24,46 @@ namespace RenderApp.ViewModel
                 : base(parent, model)
         {
             Model = model;
+
+            CreateCommand(UpdateWeightCommand);
         }
+
+        public void UpdateWeightCommand()
+        {
+            Model.UpdateWeight();
+        }
+
+        public int Scale
+        {
+            get
+            {
+                return Model.uScale;
+            }
+
+            set
+            {
+                Model.uScale = value;
+                OnPropertyChanged(nameof(Scale));
+            }
+        }
+
+        public float Sigma
+        {
+            get
+            {
+                return Model.Sigma;
+            }
+
+            set
+            {
+                Model.Sigma = value;
+                OnPropertyChanged(nameof(Sigma));
+            }
+        }
+
+        public float Max { get { return Model.Max; } }
+
+        public float Min { get { return Model.Min; } }
+
     }
 }

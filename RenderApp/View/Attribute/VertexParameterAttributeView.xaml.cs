@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace RenderApp.View
 {
     /// <summary>
-    /// WireFrameMaterialView.xaml の相互作用ロジック
+    /// VertexParameterAttributeView.xaml の相互作用ロジック
     /// </summary>
-    public partial class WireFrameMaterialView : UserControl
+    public partial class VertexParameterAttributeView : UserControl
     {
-        public WireFrameMaterialView()
+        public VertexParameterAttributeView()
         {
             InitializeComponent();
         }
