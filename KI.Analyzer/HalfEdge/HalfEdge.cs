@@ -153,9 +153,11 @@ namespace KI.Analyzer
         {
             get
             {
-                var prev = -Before.Vector;
+                var edge = this.Next.Next;
 
-                return  Vector3.Dot(Vector, prev) / Vector3.Cross(Vector, prev).Length;
+                var prev = -edge.Before.Vector;
+
+                return  Vector3.Dot(edge.Vector, prev) / Vector3.Cross(edge.Vector, prev).Length;
             }
         }
 

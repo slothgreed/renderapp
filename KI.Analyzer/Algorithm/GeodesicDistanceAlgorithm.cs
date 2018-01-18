@@ -80,8 +80,8 @@ namespace KI.Analyzer.Algorithm
                 float sum = 1e-8f;
                 foreach (var edge in vertex.AroundEdge)
                 {
-                    var alphaCot = edge.Next.Next.Cot;
-                    var betaCot = edge.Opposite.Next.Next.Cot;
+                    var alphaCot = edge.Cot;
+                    var betaCot = edge.Opposite.Cot;
 
                     float laplace = (alphaCot + betaCot) / 2;
                     laplaceMatrix[vertex.Index, edge.End.Index] = -laplace;
@@ -228,8 +228,8 @@ namespace KI.Analyzer.Algorithm
                 foreach (var edge in vertex.AroundEdge)
                 {
                     var vector = vectorField[edge.Mesh.Index];
-                    var theta1 = edge.Next.Next.Cot;
-                    var theta2 = edge.Next.Cot;
+                    var theta1 = edge.Cot;
+                    var theta2 = edge.Before.Cot;
                     var e1 = edge.Vector;
                     var e2 = edge.Before.Opposite.Vector;
                     sum += (theta1 * Vector3.Dot(e1, vector) + theta2 * Vector3.Dot(e2, vector));

@@ -74,23 +74,28 @@ namespace KI.Tool.Command
             //var vertexInfo = new VertexCurvatureAlgorithm(halfDS);
 
             var voronoiParam = new ScalarParameter("Voronoi", halfDS.HalfEdgeVertexs.Select(p => p.Voronoi).ToArray());
+            var laplaceParam = new ScalarParameter("Laplace", halfDS.HalfEdgeVertexs.Select(p => p.Laplace).ToArray());
             var meanParam = new ScalarParameter("MeanCurvature", halfDS.HalfEdgeVertexs.Select(p => p.MeanCurvature).ToArray());
             var gaussParam = new ScalarParameter("GaussCurvature", halfDS.HalfEdgeVertexs.Select(p => p.GaussCurvature).ToArray());
             var minParam = new ScalarParameter("MinCurvature", halfDS.HalfEdgeVertexs.Select(p => p.MinCurvature).ToArray());
             var maxParam = new ScalarParameter("MaxCurvature", halfDS.HalfEdgeVertexs.Select(p => p.MaxCurvature).ToArray());
+            var laplaceVecParam = new VectorParameter("LaplaceVector", halfDS.HalfEdgeVertexs.Select(p => p.LaplaceVector).ToArray());
             var minVecParam = new VectorParameter("MinVector", halfDS.HalfEdgeVertexs.Select(p => p.MinDirection).ToArray());
             var maxVecParam = new VectorParameter("MaxVector", halfDS.HalfEdgeVertexs.Select(p => p.MaxDirection).ToArray());
 
             halfDS.AddParameter(voronoiParam);
+            halfDS.AddParameter(laplaceParam);
             halfDS.AddParameter(meanParam);
             halfDS.AddParameter(gaussParam);
             halfDS.AddParameter(minParam);
             halfDS.AddParameter(maxParam);
+            halfDS.AddParameter(laplaceVecParam);
             halfDS.AddParameter(minVecParam);
             halfDS.AddParameter(maxVecParam);
 
             var dirMinLine = new List<Vector3>();
             var dirMaxLine = new List<Vector3>();
+            var laplaceLine = new List<Vector3>();
             foreach (var position in halfDS.HalfEdgeVertexs)
             {
                 var minStart = new Vector3(position.Position);
@@ -103,6 +108,12 @@ namespace KI.Tool.Command
                 dirMinLine.Add(minEnd);
                 dirMaxLine.Add(maxStart);
                 dirMaxLine.Add(maxEnd);
+
+                var laplaceStart = new Vector3(position.Position);
+                var laplaceEnd = new Vector3(position.Position + position.LaplaceVector);
+
+                laplaceLine.Add(laplaceStart);
+                laplaceLine.Add(laplaceEnd);
             }
 
             var parentNode = Global.Renderer.ActiveScene.FindNode(renderObject);
@@ -112,6 +123,12 @@ namespace KI.Tool.Command
                 renderObject.Polygon.Type,
                 renderObject.Shader,
                 voronoiParam.Values);
+
+            VertexParameterAttribute laplaceAttribute = new VertexParameterAttribute(renderObject.Name + " : Laplace",
+                renderObject.PolygonAttribute.VertexBuffer.ShallowCopy(),
+                renderObject.Polygon.Type,
+                renderObject.Shader,
+                laplaceParam.Values);
 
             VertexParameterAttribute meanAttribute = new VertexParameterAttribute(renderObject.Name + " : MeanCurvature",
                 renderObject.PolygonAttribute.VertexBuffer.ShallowCopy(),
@@ -138,12 +155,14 @@ namespace KI.Tool.Command
                 maxParam.Values);
 
             renderObject.Attributes.Add(voronoiAttribute);
+            renderObject.Attributes.Add(laplaceAttribute);
             renderObject.Attributes.Add(meanAttribute);
             renderObject.Attributes.Add(gaussAttribute);
             renderObject.Attributes.Add(minAttribute);
             renderObject.Attributes.Add(maxAttribute);
 
             scene.AddObject(voronoiAttribute, parentNode);
+            scene.AddObject(laplaceAttribute, parentNode);
             scene.AddObject(meanAttribute, parentNode);
             scene.AddObject(gaussAttribute, parentNode);
             scene.AddObject(minAttribute, parentNode);
@@ -158,6 +177,10 @@ namespace KI.Tool.Command
             renderObject.Attributes.Add(dirMaxAttribute);
             scene.AddObject(dirMinAttribute, parentNode);
             scene.AddObject(dirMaxAttribute, parentNode);
+
+            var laplaceVecAttribute = new DirectionAttribute(renderObject.Name + " : MinDirection", wireFrameShader, laplaceLine.ToArray(), new Vector4(1, 0, 0, 1), normals);
+            renderObject.Attributes.Add(laplaceVecAttribute);
+            scene.AddObject(laplaceVecAttribute, parentNode);
 
             return CommandResult.Success;
         }

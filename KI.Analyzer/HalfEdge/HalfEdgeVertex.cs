@@ -43,6 +43,16 @@ namespace KI.Analyzer
         /// ボロノイ領域
         /// </summary>
         private float voronoi = 0;
+        
+        /// <summary>
+        /// ラプラシアン
+        /// </summary>
+        private float laplacian = 0;
+
+        /// <summary>
+        /// ラプラスベクトル
+        /// </summary>
+        private Vector3 laplaceVector = Vector3.Zero;
 
         /// <summary>
         /// 平均曲率
@@ -219,6 +229,52 @@ namespace KI.Analyzer
         }
 
         /// <summary>
+        /// ラプラシアン
+        /// </summary>
+        public float Laplace
+        {
+            get
+            {
+                if (laplacian == 0)
+                {
+                    var sum = 0.0f;
+                    foreach (var edge in AroundEdge)
+                    {
+                        var alphaCot = edge.Cot;
+                        var betaCot = edge.Opposite.Cot;
+
+                        sum += (alphaCot + betaCot) / 2;
+                    }
+
+                    laplacian = sum;
+                }
+
+                return laplacian;
+            }
+        }
+
+        public Vector3 LaplaceVector
+        {
+            get
+            {
+                if (laplaceVector == Vector3.Zero)
+                {
+                    var sum = Vector3.Zero;
+                    foreach (var edge in AroundEdge)
+                    {
+                        var alphaCot = edge.Cot;
+                        var betaCot = edge.Opposite.Cot;
+
+                        sum += ((alphaCot + betaCot) / 2) * -edge.Vector;
+                    }
+
+                    laplaceVector = sum;
+                }
+
+                return laplaceVector;
+            }
+        }
+        /// <summary>
         /// ボロノイ領域
         /// </summary>
         public float Voronoi
@@ -275,8 +331,8 @@ namespace KI.Analyzer
                         float length = edge.Length;
                         length = length * length;
                         HalfEdge opposite = edge.Opposite;
-                        float alpha = edge.Next.Next.Cot;
-                        float beta = opposite.Next.Next.Cot;
+                        float alpha = edge.Cot;
+                        float beta = opposite.Cot;
 
                         float angle = (alpha + beta) * length / 8;
                         float kapper = 2 * Vector3.Dot(edge.Start - edge.End, edge.Start.Normal) / length;
