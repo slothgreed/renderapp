@@ -13,7 +13,7 @@
         <DockPanel>
             <TextBlock Text="ThreShold" />
             <Slider
-                Maximum="1"
+                Maximum="0.01"
                 Minimum="0"
                 Value="{Binding Threshold}" />
         </DockPanel>

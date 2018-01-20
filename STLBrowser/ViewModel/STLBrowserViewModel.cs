@@ -48,9 +48,5 @@ namespace STLBrowser.ViewModel
         private void OnSelectedSTLFile()
         {
         }
-        public override void UpdateProperty()
-        {
-            //SceneManager.Instance.AddObject(@"C:\Users\ido\Documents\KIProject\renderapp\STLBrowser\TestFolder\StanfordBunny.stl");
-        }
     }
 }

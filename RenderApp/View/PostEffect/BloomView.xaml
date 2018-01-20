@@ -24,8 +24,5 @@
                 Minimum="{Binding Min}"
                 Value="{Binding Sigma}" />
         </DockPanel>
-        <DockPanel>
-            <Button Command="{Binding UpdateWeightCommand}" Content="Update" />
-        </DockPanel>
     </StackPanel>
 </UserControl>

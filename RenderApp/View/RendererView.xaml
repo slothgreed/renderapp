@@ -30,7 +30,7 @@
                 IsChecked="{Binding EnablePostEffect}" />
         </WrapPanel>
         <Expander Header="Post Process">
-            <ItemsControl ItemsSource="{Binding PostProcessItem}">
+            <ItemsControl ItemsSource="{Binding PostProcesses}">
                 <ItemsControl.Resources>
                     <DataTemplate DataType="{x:Type vm:BloomViewModel}">
                         <v:BloomView />

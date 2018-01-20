@@ -44,10 +44,5 @@ namespace KI.UI.ViewModel
             FilePath = filePath;
             ImagePath = imagePath;
         }
-
-        public override void UpdateProperty()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -102,10 +102,5 @@ namespace RenderApp.ViewModel
             get;
             set;
         }
-
-        public override void UpdateProperty()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -80,10 +80,5 @@ namespace STLBrowser.ViewModel
         {
             Root = new DirectoryViewModel(path);
         }
-
-        public override void UpdateProperty()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

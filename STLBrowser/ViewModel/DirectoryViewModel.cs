@@ -48,11 +48,5 @@ namespace STLBrowser.ViewModel
                 }
             }
         }
-
-
-        public override void UpdateProperty()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

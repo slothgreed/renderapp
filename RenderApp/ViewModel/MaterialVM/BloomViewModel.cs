@@ -24,13 +24,6 @@ namespace RenderApp.ViewModel
                 : base(parent, model)
         {
             Model = model;
-
-            CreateCommand(UpdateWeightCommand);
-        }
-
-        public void UpdateWeightCommand()
-        {
-            Model.UpdateWeight();
         }
 
         public int Scale
@@ -57,6 +50,7 @@ namespace RenderApp.ViewModel
             set
             {
                 Model.Sigma = value;
+                Model.UpdateWeight();
                 OnPropertyChanged(nameof(Sigma));
             }
         }

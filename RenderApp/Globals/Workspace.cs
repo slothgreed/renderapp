@@ -113,7 +113,7 @@ namespace RenderApp.Globals
             //AddObject(renderBunny);
 
             CommandManager.Instance.Execute(new CreateWireFrameCommand(MainScene, renderBunny), null, false);
-            CommandManager.Instance.Execute(new CalculateVertexCurvatureCommand(MainScene, renderBunny), null, false);
+            //CommandManager.Instance.Execute(new CalculateVertexCurvatureCommand(MainScene, renderBunny), null, false);
         }
 
         public void InitializeRenderer(int width, int height)

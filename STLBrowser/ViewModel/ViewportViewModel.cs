@@ -52,11 +52,6 @@ namespace STLBrowser.ViewModel
             Viewport.Instance.OnMouseDown += OnMouseDownEvent;
         }
 
-        public override void UpdateProperty()
-        {
-
-        }
-
         public void OnLoadedEvent(object sender, EventArgs e)
         {
             SceneManager.Instance.Create("MainScene");

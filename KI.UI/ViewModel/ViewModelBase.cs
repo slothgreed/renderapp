@@ -110,10 +110,6 @@ namespace KI.UI.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
-        public virtual void UpdateProperty()
-        {
-        }
         #endregion
 
         protected ICommand CreateCommand(Action command, Func<bool> canExecute)

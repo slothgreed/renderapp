@@ -144,9 +144,5 @@ namespace RenderApp.ViewModel
         }
 
         #endregion
-
-        public override void UpdateProperty()
-        {
-        }
     }
 }

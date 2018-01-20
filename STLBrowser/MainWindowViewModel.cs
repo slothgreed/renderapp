@@ -50,10 +50,5 @@ namespace STLBrowser.ViewModel
             STLBrowserViewModel = new STLBrowserViewModel(@"C:\Users\ido\Documents\KIProject\RenderApp");
             ViewportViewModel = new ViewportViewModel();
         }
-
-        public override void UpdateProperty()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
