@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using KI.Foundation.Tree;
+using KI.Gfx.GLUtil;
 using KI.Renderer;
 using KI.Renderer.Attribute;
 using KI.UI.ViewModel;
@@ -25,6 +26,7 @@ namespace RenderApp.ViewModel
 
             RendererViewModel.PropertyChanged += RendererViewModel_PropertyChanged;
             SceneNodeViewModel.PropertyChanged += SceneNodeViewModel_PropertyChanged;
+            ViewportViewModel.PropertyChanged += ViewportViewModel_PropertyChanged;
 
             AnchorablesSources = new ObservableCollection<ViewModelBase>();
             DocumentsSources = new ObservableCollection<ViewModelBase>();
@@ -32,6 +34,25 @@ namespace RenderApp.ViewModel
             AnchorablesSources.Add(RendererViewModel);
             DocumentsSources.Add(ViewportViewModel);
             this.workspace = workspace;
+        }
+
+        private void ViewportViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Loaded")
+            {
+                workspace.InitializeRenderer(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
+                RendererViewModel.Model = workspace.Renderer;
+                workspace.InitializeScene();
+            }
+            else if (e.PropertyName == "Resize")
+            {
+                workspace.MainScene.MainCamera.SetProjMatrix((float)DeviceContext.Instance.Width / DeviceContext.Instance.Height);
+                workspace.Renderer.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
+            }
+            else if (e.PropertyName == "Renderer")
+            {
+                workspace.Renderer.Render();
+            }
         }
 
         private void SceneNodeViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -45,11 +66,6 @@ namespace RenderApp.ViewModel
         }
 
         private void RenderObjectViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            ViewportViewModel.Invalidate();
-        }
-
-        private void AttributeViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             ViewportViewModel.Invalidate();
         }

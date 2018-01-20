@@ -4,7 +4,6 @@ using System.Windows.Forms.Integration;
 using KI.Gfx.GLUtil;
 using KI.Tool.Control;
 using KI.UI.ViewModel;
-using RenderApp.Globals;
 
 namespace RenderApp.ViewModel
 {
@@ -60,6 +59,14 @@ namespace RenderApp.ViewModel
             };
         }
 
+        /// <summary>
+        /// 描画処理
+        /// </summary>
+        public void Invalidate()
+        {
+            Viewport.Instance.GLControl_Paint(null, null);
+        }
+
         #region [Viewport Method]
 
         /// <summary>
@@ -69,17 +76,8 @@ namespace RenderApp.ViewModel
         /// <param name="e"></param>
         public void OnLoadedEvent(object sender, EventArgs e)
         {
-            Workspace.Instance.InitializeRenderer(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
-            MainWindowViewModel.Instance.WorkspaceViewModel.RendererViewModel.Model = Workspace.Instance.Renderer;
-            Workspace.Instance.InitializeScene();
-        }
 
-        /// <summary>
-        /// 描画処理
-        /// </summary>
-        public void Invalidate()
-        {
-            Viewport.Instance.GLControl_Paint(null, null);
+            OnPropertyChanged("Loaded");
         }
 
         /// <summary>
@@ -89,8 +87,7 @@ namespace RenderApp.ViewModel
         /// <param name="e">イベント</param>
         private void OnResizeEvent(object sender, EventArgs e)
         {
-            Workspace.Instance.MainScene.MainCamera.SetProjMatrix((float)DeviceContext.Instance.Width / DeviceContext.Instance.Height);
-            Workspace.Instance.Renderer.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
+            OnPropertyChanged("Resize");
         }
 
         /// <summary>
@@ -100,7 +97,7 @@ namespace RenderApp.ViewModel
         /// <param name="e">イベント</param>
         private void OnRenderEvent(object sender, PaintEventArgs e)
         {
-            Workspace.Instance.Renderer.Render();
+            OnPropertyChanged("Renderer");
         }
 
         /// <summary>
