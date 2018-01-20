@@ -39,6 +39,7 @@ namespace RenderApp.ViewModel
                 selectColor = value;
                 var color = new OpenTK.Vector3(selectColor.R / 255.0f, selectColor.G / 255.0f, selectColor.B / 255.0f);
                 Model.UpdateColor(color);
+                OnPropertyChanged(nameof(SelectColor));
             }
         }
     }

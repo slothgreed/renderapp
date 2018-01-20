@@ -22,21 +22,29 @@ namespace RenderApp.ViewModel
                 var postItem = new ObservableCollection<ViewModelBase>();
                 foreach (var postprocess in model.PostEffect.Items)
                 {
+                    ViewModelBase viewModel = null;
                     if (postprocess is Bloom)
                     {
-                        postItem.Add(new BloomViewModel(this, postprocess as Bloom));
+                        viewModel = new BloomViewModel(this, postprocess as Bloom);
                     }
-                    else if(postprocess is Sobel)
+                    else if (postprocess is Sobel)
                     {
-                        postItem.Add(new SobelViewModel(this, postprocess as Sobel));
+                        viewModel = new SobelViewModel(this, postprocess as Sobel);
                     }
+
+                    viewModel.PropertyChanged += CollectionPropertyChanged;
+                    postItem.Add(viewModel);
                 }
 
-                PostProcessItem = postItem;
+                PostProcesses = postItem;
 
-                OnPropertyChanged(nameof(PostProcessItem));
                 OnPropertyChanged(nameof(Model));
             }
+        }
+
+        private void CollectionPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(PostProcesses));
         }
 
         private int textureIndex;
@@ -69,24 +77,31 @@ namespace RenderApp.ViewModel
             }
             set
             {
-                Model.PostProcessMode = value;
-                OnPropertyChanged(nameof(EnablePostEffect));
+                if (Model.PostProcessMode != value)
+                {
+                    Model.PostProcessMode = value;
+                    OnPropertyChanged(nameof(EnablePostEffect));
+                }
             }
         }
 
-        public ObservableCollection<ViewModelBase> PostProcessItem
+        private ObservableCollection<ViewModelBase> postProcesses = new ObservableCollection<ViewModelBase>();
+        public ObservableCollection<ViewModelBase> PostProcesses
         {
-            get;
-            set;
+            get
+            {
+                return postProcesses;
+            }
+            set
+            {
+                postProcesses = value;
+                OnPropertyChanged(nameof(PostProcesses));
+            }
         }
 
 
         public RendererViewModel(ViewModelBase parent)
             : base(parent, null, "Renderer", Place.LeftDown)
-        {
-        }
-
-        public override void UpdateProperty()
         {
         }
     }

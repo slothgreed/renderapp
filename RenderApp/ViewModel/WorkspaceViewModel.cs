@@ -74,9 +74,9 @@ namespace RenderApp.ViewModel
 
         public void ReplaceTabWindow(DockWindowViewModel window)
         {
-            if (window is RenderObjectViewModel || window is AttributeViewModel)
+            if (window is RenderObjectViewModel)
             {
-                var oldItem = AnchorablesSources.FirstOrDefault(p => p is RenderObjectViewModel || p is AttributeViewModel);
+                var oldItem = AnchorablesSources.FirstOrDefault(p => p is RenderObjectViewModel);
                 AnchorablesSources.Add(window);
                 AnchorablesSources.Remove(oldItem);
             }

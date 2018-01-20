@@ -29,15 +29,24 @@ namespace RenderApp.ViewModel
             Attributes = new ObservableCollection<ViewModelBase>();
             foreach (var attribute in model.Attributes.Where(p => (p is GeometryAttribute) == false))
             {
+                ViewModelBase viewModel = null;
                 if (attribute is VertexParameterAttribute)
                 {
-                    Attributes.Add(new VertexParameterAttributeViewModel(this, attribute as VertexParameterAttribute));
+                    viewModel = new VertexParameterAttributeViewModel(this, attribute as VertexParameterAttribute);
                 }
                 else if(attribute is WireFrameAttribute)
                 {
-                    Attributes.Add(new WireFrameAttributeViewModel(this, attribute as WireFrameAttribute));
+                    viewModel = new WireFrameAttributeViewModel(this, attribute as WireFrameAttribute);
                 }
+
+                viewModel.PropertyChanged += Collection_PropertyChanged;
+                Attributes.Add(viewModel);
             }
+        }
+
+        private void Collection_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(Attributes));
         }
 
         public Vector3 Rotate
