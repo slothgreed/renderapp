@@ -42,6 +42,7 @@ namespace RenderApp.ViewModel
             private set
             {
                 activeNode = value;
+                OnPropertyChanged(nameof(ActiveNode));
             }
         }
 
@@ -79,7 +80,6 @@ namespace RenderApp.ViewModel
             if (nodeList.SelectedItems.Count > 0)
             {
                 ActiveNode = nodeList.SelectedItems[0] as NodeItemViewModel;
-                MainWindowViewModel.Instance.WorkspaceViewModel.UpdateSelectNode(ActiveNode.Model);
             }
         }
 

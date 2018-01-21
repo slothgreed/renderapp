@@ -40,7 +40,7 @@ vec4 getADS(vec4 color, vec4 normal, vec4 world)
 	float diffuse 	= max(dot(lightDir,normal.xyz),0.0);
 	vec3 spec_half 	= normalize(lightDir + cameraDir);			//ハーフベクトル
 	float specular 	= pow(dot(normal.xyz,spec_half),1.0);
-	float value 	= diffuse * 0.7;// + specular * 0.3;
+	float value 	= diffuse * 0.7 + specular * 0.3;
 	return value * color;
 	
 }
@@ -78,7 +78,7 @@ void main(void)
 
 	//pixelColor = getFogColor(albedo,world);
 	pixelColor.a = 1;
-	OutputColor = world;
+	OutputColor = pixelColor;
 	
 }
 

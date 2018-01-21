@@ -129,7 +129,7 @@ namespace KI.Asset
         {
             get
             {
-                return ProjMatrix * Matrix;
+                return (Matrix * ProjMatrix).Inverted();
             }
         }
 

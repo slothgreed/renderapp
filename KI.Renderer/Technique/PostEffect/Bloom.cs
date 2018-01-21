@@ -20,12 +20,12 @@ namespace KI.Renderer
         /// <summary>
         /// Scale最大値
         /// </summary>
-        public int Max { get; set; } = 100;
+        public int Max { get; set; } = 1;
 
         /// <summary>
         /// 重みの値
         /// </summary>
-        public float Sigma { get; set; } = 100;
+        public float Sigma { get; set; } = 1;
 
         /// <summary>
         /// コンストラクタ

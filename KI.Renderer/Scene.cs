@@ -33,7 +33,7 @@ namespace KI.Renderer
         public void Initialize()
         {
             MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
-            SunLight = RenderObjectFactory.Instance.CreateDirectionLight("SunLight", WorldMax, Vector3.Zero);
+            SunLight = RenderObjectFactory.Instance.CreateDirectionLight("SunLight", Vector3.UnitY * 10, Vector3.Zero);
             AddObject(MainCamera);
             AddObject(SunLight);
         }

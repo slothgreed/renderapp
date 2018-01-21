@@ -26,7 +26,7 @@ namespace RenderApp.ViewModel
             Model = model;
         }
 
-        public int Scale
+        public float Scale
         {
             get
             {

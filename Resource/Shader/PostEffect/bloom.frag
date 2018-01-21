@@ -2,7 +2,7 @@
 in vec4 v_position;		
 in vec2 v_texcoord;
 uniform int uHorizon;
-uniform int uScale;
+uniform float uScale;
 uniform sampler2D uTarget;
 out vec4 OutputColor;
 uniform float uWeight[5];

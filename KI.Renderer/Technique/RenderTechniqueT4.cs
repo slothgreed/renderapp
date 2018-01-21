@@ -20,8 +20,8 @@ namespace KI.Renderer
 	}
 	public partial class Bloom : RenderTechnique
 	{
-		private int _uScale;
-		public int uScale
+		private float _uScale;
+		public float uScale
 		{
 			get
 			{
@@ -30,7 +30,7 @@ namespace KI.Renderer
 
 			set
 			{
-				SetValue<int>(ref _uScale, value); 
+				SetValue<float>(ref _uScale, value); 
 			}
 		}
 		private float[] _uWeight;
