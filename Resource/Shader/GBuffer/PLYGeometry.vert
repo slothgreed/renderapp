@@ -9,8 +9,9 @@ uniform mat4 uModelMatrix;
 out vec4 v_position;			//í∏ì_
 out vec3 v_color;				//êF
 out vec3 v_normal;				//ñ@ê¸
+out vec2 v_texcoord;
+
 out vec4 m_position;
-out vec2 v_texcoord;	
 
 void main(void)
 {
@@ -18,7 +19,7 @@ void main(void)
 	v_position = gl_Position;
 	m_position = vec4(position,1.0);
 	v_normal = uNormalMatrix * normal;
-	v_color = uNormalMatrix * color;
+	v_color = color;
 	//v_color = color;
 	v_texcoord = texcoord;
 }

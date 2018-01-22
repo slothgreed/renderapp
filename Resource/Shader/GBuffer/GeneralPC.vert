@@ -3,7 +3,7 @@ layout (location = 0) in vec3 position;
 layout (location = 1) in vec3 normal;
 layout (location = 2) in vec3 color;
 uniform mat4 uMVP;
-uniform mat3 uNormalMatrix;			//法線行列
+uniform mat3 uNormalMatrix;		//法線行列
 uniform mat4 uModelMatrix;
 out vec4 v_position;			//頂点
 out vec3 v_color;				//色

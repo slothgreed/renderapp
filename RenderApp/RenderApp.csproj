@@ -164,22 +164,21 @@
     </ApplicationDefinition>
     <Compile Include="AppSystem.cs" />
     <Compile Include="Globals\Workspace.cs" />
-    <Compile Include="ViewModel\AssetVM\AttributeViewModel.cs" />
-    <Compile Include="ViewModel\AssetVM\VertexParameterAttributeViewModel.cs" />
-    <Compile Include="ViewModel\AssetVM\WireFrameAttributeViewModel.cs" />
-    <Compile Include="ViewModel\Converter\EnumConverter.cs" />
+    <Compile Include="ViewModel\AttributeVM\AttributeViewModel.cs" />
+    <Compile Include="ViewModel\AttributeVM\VertexParameterAttributeViewModel.cs" />
+    <Compile Include="ViewModel\AttributeVM\WireFrameAttributeViewModel.cs" />
     <Compile Include="Globals\Project.cs" />
     <Compile Include="Globals\Enum.cs" />
-    <Compile Include="ViewModel\Controller\ControllerViewModelT4.cs">
+    <Compile Include="ViewModel\ControllerVM\ControllerViewModelT4.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ControllerViewModelT4.tt</DependentUpon>
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="ViewModel\Controller\IControllerViewModelBase.cs" />
+    <Compile Include="ViewModel\ControllerVM\IControllerViewModelBase.cs" />
     <Compile Include="ViewModel\LightViewModel.cs" />
-    <Compile Include="ViewModel\MaterialVM\BloomViewModel.cs" />
-    <Compile Include="ViewModel\MaterialVM\SobelViewModel.cs" />
+    <Compile Include="ViewModel\PostEffectVM\BloomViewModel.cs" />
+    <Compile Include="ViewModel\PostEffectVM\SobelViewModel.cs" />
     <Compile Include="ViewModel\NodeVM\RootNodeViewModelT4.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -188,8 +187,7 @@
     </Compile>
     <Compile Include="ViewModel\DockTabVM\DockPaneSelector.cs" />
     <Compile Include="ViewModel\DockTabVM\DockWindowViewModel.cs" />
-    <Compile Include="ViewModel\Dialog\DialogViewModelBase.cs" />
-    <Compile Include="ViewModel\Controller\VoxelViewModel.cs" />
+    <Compile Include="ViewModel\ControllerVM\VoxelViewModel.cs" />
     <Compile Include="ViewModel\AssetVM\RenderObjectViewModel.cs" />
     <Compile Include="ViewModel\RendererViewModel.cs" />
     <Compile Include="ViewModel\NodeVM\NodeItemViewModel.cs" />
@@ -209,13 +207,13 @@
     <Compile Include="View\LightView.xaml.cs">
       <DependentUpon>LightView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\PostEffect\BloomView.xaml.cs">
+    <Compile Include="View\PostEffectView\BloomView.xaml.cs">
       <DependentUpon>BloomView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\PostEffect\SobelView.xaml.cs">
+    <Compile Include="View\PostEffectView\SobelView.xaml.cs">
       <DependentUpon>SobelView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\RootNodeView.xaml.cs">
+    <Compile Include="View\NodeView\RootNodeView.xaml.cs">
       <DependentUpon>RootNodeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\NodeVM\RootNodeViewModel.cs" />
@@ -233,7 +231,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Scene\Shader\Bezier\Bezier.cs" />
-    <Compile Include="View\Controller\VoxelView.xaml.cs">
+    <Compile Include="View\ControllerView\VoxelView.xaml.cs">
       <DependentUpon>VoxelView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\RenderObjectView.xaml.cs">
@@ -260,13 +258,13 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Utility\Util.cs" />
-    <Compile Include="View\Attribute\VertexParameterAttributeView.xaml.cs">
+    <Compile Include="View\AttributeView\VertexParameterAttributeView.xaml.cs">
       <DependentUpon>VertexParameterAttributeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ViewportView.xaml.cs">
       <DependentUpon>ViewportView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Attribute\WireFrameAttributeView.xaml.cs">
+    <Compile Include="View\AttributeView\WireFrameAttributeView.xaml.cs">
       <DependentUpon>WireFrameAttributeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\WorkspaceView.xaml.cs">
@@ -284,15 +282,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\PostEffect\BloomView.xaml">
+    <Page Include="View\PostEffectView\BloomView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\PostEffect\SobelView.xaml">
+    <Page Include="View\PostEffectView\SobelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\RootNodeView.xaml">
+    <Page Include="View\NodeView\RootNodeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -308,7 +306,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\Controller\VoxelView.xaml">
+    <Page Include="View\ControllerView\VoxelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -320,7 +318,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Attribute\VertexParameterAttributeView.xaml">
+    <Page Include="View\AttributeView\VertexParameterAttributeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -328,7 +326,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Attribute\WireFrameAttributeView.xaml">
+    <Page Include="View\AttributeView\WireFrameAttributeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -425,7 +423,7 @@
     <Folder Include="Scene\Shader\ShaderType\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ViewModel\Controller\ControllerViewModelT4.tt">
+    <Content Include="ViewModel\ControllerVM\ControllerViewModelT4.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ControllerViewModelT4.cs</LastGenOutput>
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>

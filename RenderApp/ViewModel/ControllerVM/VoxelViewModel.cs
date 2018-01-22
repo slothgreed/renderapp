@@ -8,7 +8,7 @@ using RenderApp.Globals;
 
 namespace RenderApp.ViewModel
 {
-    public partial class VoxelViewModel : DockWindowViewModel, IControllerViewModelBase
+    public partial class VoxelViewModel : DockWindowViewModel
     {
         private int partitionNum = 64;
 

@@ -21,7 +21,7 @@ namespace RenderApp.ViewModel
 	for(int classIndex = 0; classIndex < _class.Length; classIndex++)
 	{
 #>
-	public partial class <#=_class[classIndex]#>ViewModel : TabItemViewModel
+	public partial class <#=_class[classIndex]#>ViewModel : DockWindowViewModel
 	{
 <#
 	for(int i =0 ; i < _command.Length; i++)
