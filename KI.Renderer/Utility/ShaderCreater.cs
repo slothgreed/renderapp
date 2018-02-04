@@ -16,7 +16,8 @@ namespace KI.Asset
         Displacement,
         EffectLine,
         NURBS,
-        Fur
+        Fur,
+        Outline
     }
 
     /// <summary>
@@ -136,15 +137,17 @@ namespace KI.Asset
             switch (type)
             {
                 case ShaderType.Bezier:
-                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"GBuffer\bezier");
+                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"Special\bezier");
                 case ShaderType.Displacement:
-                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"GBuffer\disp");
+                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"Special\disp");
                 case ShaderType.EffectLine:
-                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"GBuffer\effectline");
+                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"Special\effectline");
                 case ShaderType.NURBS:
-                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"GBuffer\nurbs");
+                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"Special\nurbs");
                 case ShaderType.Fur:
-                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"GBuffer\fur");
+                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"Special\fur");
+                case ShaderType.Outline:
+                    return ShaderFactory.Instance.CreateGeometryShader(Directory + @"Special\outline");
             }
 
             return null;

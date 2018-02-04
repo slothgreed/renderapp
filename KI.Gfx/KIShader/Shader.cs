@@ -261,7 +261,7 @@ namespace KI.Gfx.KIShader
         /// AttributeのBinding
         /// </summary>
         /// <param name="attribute">アトリビュート変数情報</param>
-        public void BindAttributeState(ShaderProgramInfo attribute)
+        private void BindAttributeState(ShaderProgramInfo attribute)
         {
             if (attribute.ShaderID == -1)
             {
@@ -333,6 +333,21 @@ namespace KI.Gfx.KIShader
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             Logger.GLLog(Logger.LogLevel.Error);
+        }
+
+        /// <summary>
+        /// 値の取得
+        /// </summary>
+        /// <param name="name">変数名</param>
+        /// <returns>変数</returns>
+        public object GetValue(string name)
+        {
+            if(shaderVariable.ContainsKey(name))
+            {
+                return shaderVariable[name].Variable;
+            }
+
+            return null;
         }
 
         /// <summary>

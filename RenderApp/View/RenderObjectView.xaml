@@ -24,7 +24,7 @@
         </ObjectDataProvider>
 
         <Style TargetType="{x:Type TextBlock}">
-            <Setter Property="Width" Value="75" />
+            <Setter Property="Width" Value="120" />
         </Style>
     </UserControl.Resources>
     <StackPanel>
@@ -47,6 +47,17 @@
                 </WrapPanel>
             </StackPanel>
         </Expander>
+        <Expander IsExpanded="True">
+            <StackPanel>
+                <WrapPanel>
+                    <TextBlock Text="GeometryAttribute" />
+                    <ComboBox
+                        HorizontalAlignment="Stretch"
+                        ItemsSource="{Binding GeometryAttributes}"
+                        SelectedItem="{Binding SelectedGeometryAttribute}" />
+                </WrapPanel>
+            </StackPanel>
+        </Expander>
 
         <Expander
             Margin="2"
@@ -59,6 +70,9 @@
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type vm:WireFrameAttributeViewModel}">
                         <v:WireFrameAttributeView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vm:OutlineAttributeViewModel}">
+                        <v:OutlineAttributeView />
                     </DataTemplate>
                 </ItemsControl.Resources>
             </ItemsControl>

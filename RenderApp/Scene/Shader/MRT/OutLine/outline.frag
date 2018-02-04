@@ -7,7 +7,12 @@ in vec2 g_texcoord;			//テクスチャ
 uniform mat4 ModelMatrix;
 uniform vec3 LightPos;
 uniform vec3 CameraPos;
-uniform mat4 CameraMatrix;
+
+out vec4 OutputColor0;
+out vec4 OutputColor1;
+out vec4 OutputColor2;
+out vec4 OutputColor3;
+
 vec3 GetADS(vec3 normal)
 {
 	//点からライト方向
@@ -26,9 +31,9 @@ void main(void)
 {	
 	vec4 pos = g_position/g_position.w;
 	pos = (pos + 1)* 0.5;
-	gl_FragData[0] = pos;
-	gl_FragData[1] = vec4((normalize(g_normal) + 1.0)*0.5,1.0);
-	gl_FragData[2] = vec4(g_color,1.0);
-	gl_FragData[3] = vec4(GetADS(g_normal),1.0);
+	OutputColor0 = pos;
+	OutputColor1 = vec4((normalize(g_normal) + 1.0)*0.5,1.0);
+	OutputColor2 = vec4(g_color,1.0);
+	OutputColor3 = vec4(1);
 }
 	

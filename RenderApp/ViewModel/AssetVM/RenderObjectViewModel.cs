@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Input;
-using KI.Analyzer;
-using KI.Foundation.Parameter;
-using KI.Gfx.Geometry;
 using KI.Renderer;
 using KI.Renderer.Attribute;
-using KI.Tool.Command;
 using KI.UI.ViewModel;
 using OpenTK;
-using RenderApp.Globals;
 
 namespace RenderApp.ViewModel
 {
@@ -34,19 +27,29 @@ namespace RenderApp.ViewModel
                 {
                     viewModel = new VertexParameterAttributeViewModel(this, attribute as VertexParameterAttribute);
                 }
-                else if(attribute is WireFrameAttribute)
+                else if (attribute is WireFrameAttribute)
                 {
                     viewModel = new WireFrameAttributeViewModel(this, attribute as WireFrameAttribute);
                 }
+                else if (attribute is OutlineAttribute)
+                {
+                    viewModel = new OutlineAttributeViewModel(this, attribute as OutlineAttribute);
+                }
 
-                viewModel.PropertyChanged += Collection_PropertyChanged;
-                Attributes.Add(viewModel);
+                if (viewModel != null)
+                {
+                    viewModel.PropertyChanged += Collection_PropertyChanged;
+                    Attributes.Add(viewModel);
+                }
             }
-        }
 
-        private void Collection_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            OnPropertyChanged(nameof(Attributes));
+            GeometryAttributes = new ObservableCollection<AttributeBase>();
+            foreach (var attribute in model.Attributes)
+            {
+                GeometryAttributes.Add(attribute);
+            }
+
+            SelectedGeometryAttribute = model.GeometryAttribute;
         }
 
         public Vector3 Rotate
@@ -111,5 +114,23 @@ namespace RenderApp.ViewModel
             get;
             set;
         }
+
+        public ObservableCollection<AttributeBase> GeometryAttributes
+        {
+            get;
+            set;
+        }
+
+        public AttributeBase SelectedGeometryAttribute
+        {
+            get;
+            set;
+        }
+
+        private void Collection_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(Attributes));
+        }
+
     }
 }

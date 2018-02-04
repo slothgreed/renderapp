@@ -177,6 +177,7 @@
     </Compile>
     <Compile Include="ViewModel\ControllerVM\IControllerViewModelBase.cs" />
     <Compile Include="ViewModel\LightViewModel.cs" />
+    <Compile Include="ViewModel\AttributeVM\OutlineAttributeViewModel.cs" />
     <Compile Include="ViewModel\PostEffectVM\BloomViewModel.cs" />
     <Compile Include="ViewModel\PostEffectVM\SobelViewModel.cs" />
     <Compile Include="ViewModel\NodeVM\RootNodeViewModelT4.cs">
@@ -197,6 +198,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>WorkspaceViewModelT4.tt</DependentUpon>
+    </Compile>
+    <Compile Include="View\AttributeView\OutlineAttributeView.xaml.cs">
+      <DependentUpon>OutlineAttributeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\DataVisualization.xaml.cs">
       <DependentUpon>DataVisualization.xaml</DependentUpon>
@@ -270,6 +274,10 @@
     <Compile Include="View\WorkspaceView.xaml.cs">
       <DependentUpon>WorkspaceView.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\AttributeView\OutlineAttributeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\DataVisualization.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

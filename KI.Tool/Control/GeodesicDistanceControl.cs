@@ -103,8 +103,8 @@ namespace KI.Tool.Control
                         
 
                         var colorAttribute = new VertexParameterAttribute("distanceColor", 
-                            renderObject.PolygonAttribute.VertexBuffer.ShallowCopy(), 
-                            renderObject.PolygonAttribute.Type, 
+                            renderObject.GeometryAttribute.VertexBuffer.ShallowCopy(), 
+                            renderObject.GeometryAttribute.Type, 
                             renderObject.Shader, 
                             geodesicDistance);
 

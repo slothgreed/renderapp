@@ -12,7 +12,7 @@ using OpenTK.Graphics.OpenGL;
 namespace KI.Renderer.Attribute
 {
     /// <summary>
-    /// 形状のアトリビュート
+    /// 標準アトリビュート
     /// </summary>
     public class GeometryAttribute : AttributeBase
     {

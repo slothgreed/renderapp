@@ -55,9 +55,9 @@ namespace KI.Renderer
         }
 
         /// <summary>
-        /// PolygonAttribute
+        /// ジオメトリステージのアトリビュート
         /// </summary>
-        public GeometryAttribute PolygonAttribute { get; private set; }
+        public GeometryAttribute GeometryAttribute { get; private set; }
 
         /// <summary>
         /// 形状ID
@@ -77,27 +77,27 @@ namespace KI.Renderer
         {
             get
             {
-                return PolygonAttribute.Visible;
+                return GeometryAttribute.Visible;
             }
             set
             {
-                PolygonAttribute.Visible = value;
+                GeometryAttribute.Visible = value;
             }
         }
 
         /// <summary>
-        /// メインのシェーダ
+        /// シェーダ
         /// </summary>
         public Shader Shader
         {
             get
             {
-                return PolygonAttribute.Shader;
+                return GeometryAttribute.Shader;
             }
 
             set
             {
-                PolygonAttribute.Shader = value;
+                GeometryAttribute.Shader = value;
             }
         }
 
@@ -178,9 +178,9 @@ namespace KI.Renderer
                 material = new GeometryAttribute("Attribute:" + Name, polygon, shader);
             }
 
-            if (PolygonAttribute == null)
+            if (GeometryAttribute == null)
             {
-                PolygonAttribute = material as GeometryAttribute;
+                GeometryAttribute = material as GeometryAttribute;
             }
 
             if (!Attributes.Contains(material))
@@ -208,7 +208,7 @@ namespace KI.Renderer
         /// <param name="e">イベント</param>
         private void OnPolygonUpdated(object sender, UpdatePolygonEventArgs e)
         {
-            PolygonAttribute.SetupBuffer();
+            GeometryAttribute.SetupBuffer();
         }
     }
 }

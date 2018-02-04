@@ -5,8 +5,8 @@ layout (location = 2) in vec3 color;
 layout (location = 3) in vec2 texcoord;
 
 out vec4 v_position;			//頂点
-out vec3 v_color;				//色
 out vec3 v_normal;				//法線
+out vec3 v_color;				//色
 out vec2 v_texcoord;			//テクスチャ座標
 
 void main(void)

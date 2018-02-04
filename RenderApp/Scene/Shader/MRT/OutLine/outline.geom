@@ -2,7 +2,6 @@
 #extension GL_EXT_geometry_shader4 : enable
 uniform mat4 MVP;					//ƒ‚ƒfƒ‹*camera*proj
 uniform float Offset;
-uniform vec3 CameraPos;
 uniform mat3 NormalMatrix;
 layout (triangles) in;
 layout( triangle_strip, max_vertices = 6) out;
