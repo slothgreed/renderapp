@@ -560,7 +560,7 @@ namespace KI.Gfx.KIShader
         /// <param name="outType"></param>
         /// <param name="outVertexNum"></param>
         /// <returns>プログラムID</returns>
-        protected int CreateShaderProgram(string vertexShaderCode, string geometryShaderCode, string fragmentShaderCode, int inType, int outType, int outVertexNum = -1)
+        protected int CreateShaderProgram(string vertexShaderCode, string fragmentShaderCode, string geometryShaderCode, int inType, int outType, int outVertexNum = -1)
         {
             int vshader = CompileShader(ShaderType.VertexShader, vertexShaderCode);
             int fshader = CompileShader(ShaderType.FragmentShader, fragmentShaderCode);
