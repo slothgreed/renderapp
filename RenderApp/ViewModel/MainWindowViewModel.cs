@@ -351,5 +351,13 @@ namespace RenderApp.ViewModel
                 WorkspaceViewModel.OpenWindow(windowType);
             }
         }
+
+        private void OpenAboutCommand()
+        {
+            var window = new View.AboutView();
+            window.Owner = Application.Current.MainWindow;
+            window.ShowDialog();
+        }
+
     }
 }

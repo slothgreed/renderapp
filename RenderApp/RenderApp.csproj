@@ -199,6 +199,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WorkspaceViewModelT4.tt</DependentUpon>
     </Compile>
+    <Compile Include="View\AboutView.xaml.cs">
+      <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AttributeView\OutlineAttributeView.xaml.cs">
       <DependentUpon>OutlineAttributeView.xaml</DependentUpon>
     </Compile>
@@ -274,6 +277,10 @@
     <Compile Include="View\WorkspaceView.xaml.cs">
       <DependentUpon>WorkspaceView.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\AboutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AttributeView\OutlineAttributeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -179,5 +179,18 @@ namespace RenderApp.ViewModel
 					return _OpenWindow;
 				}
 			}
-	}
+			private ICommand _OpenAbout;
+			public ICommand OpenAbout
+			{
+				get
+				{
+					if (_OpenAbout == null)
+					{
+						return _OpenAbout = CreateCommand(OpenAboutCommand);						
+					}
+
+					return _OpenAbout;
+				}
+			}
+    }
 }

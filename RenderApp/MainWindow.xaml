@@ -163,6 +163,8 @@
                     Header="Resource Directory" />
                 <MenuItem Command="{Binding OpenDebugWindow}" Header="DebugWindow" />
                 <MenuItem Command="{Binding DataVisualization}" Header="DataVisualization" />
+                <Separator />
+                <MenuItem Command="{Binding OpenAbout}" Header="Version" />
             </MenuItem>
         </Menu>
         <v:WorkspaceView Grid.Row="1" DataContext="{Binding WorkspaceViewModel}" />

@@ -23,7 +23,8 @@ using System.Windows.Input;
 		"DataVisualization",
 		"Undo",
 		"Redo",
-		"OpenWindow"
+		"OpenWindow",
+		"OpenAbout"
 	};
 
 #>
