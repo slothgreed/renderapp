@@ -30,12 +30,12 @@ namespace RenderApp.ViewModel
         {
             get
             {
-                return Model.Offset;
+                return Model.uOffset;
             }
 
             set
             {
-                Model.Offset = value;
+                Model.uOffset = value;
                 OnPropertyChanged(nameof(Offset));
             }
         }

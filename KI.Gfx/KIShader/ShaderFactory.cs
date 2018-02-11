@@ -90,6 +90,38 @@ namespace KI.Gfx.KIShader
         }
 
         /// <summary>
+        /// 頂点シェーダとフラグメントシェーダのみのシェーダの作成
+        /// </summary>
+        /// <param name="vPath">頂点シェーダ</param>
+        /// <param name="fPath">フラグシェーダ</param>
+        /// <param name="gPath">ジオメトリシェーダ</param>
+        /// <param name="tcPath">テッセレーション制御シェーダ</param>
+        /// <param name="tePath">テッセレーション評価シェーダ</param>
+        /// <returns>シェーダ</returns>
+        public Shader CreateTesselation(string vPath, string fPath, string gPath, string tcPath, string tePath, ShaderStage stage)
+        {
+            Shader shader = FindShader(vPath, fPath, gPath, tcPath, tePath);
+            if (shader == null)
+            {
+                string vname = Path.GetFileName(vPath);
+                string fname = Path.GetFileName(fPath);
+                string gname = Path.GetFileName(gPath);
+                string tcname = Path.GetFileName(tcPath);
+                string tename = Path.GetFileName(tePath);
+
+                ShaderProgram vert = ShaderProgramFactory.Instance.CreateShaderProgram(vPath, vPath);
+                ShaderProgram frag = ShaderProgramFactory.Instance.CreateShaderProgram(fPath, fPath);
+                ShaderProgram geom = ShaderProgramFactory.Instance.CreateShaderProgram(gPath, gPath);
+                ShaderProgram tcs = ShaderProgramFactory.Instance.CreateShaderProgram(tcPath, tcPath);
+                ShaderProgram tes = ShaderProgramFactory.Instance.CreateShaderProgram(tePath, tePath);
+                shader = new Shader(vert, frag, geom, tcs, tes, stage);
+                Shaders.Add(vname + fname + tcs + tes, shader);
+            }
+
+            return shader;
+        }
+
+        /// <summary>
         /// 解放処理
         /// </summary>
         public void Dispose()

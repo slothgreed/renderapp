@@ -44,7 +44,7 @@ namespace KI.Renderer
         /// <summary>
         /// ジオメトリステージのアトリビュート
         /// </summary>
-        public PolygonAttribute PolygonAttribute { get; private set; }
+        public AttributeBase PolygonAttribute { get; set; }
 
         /// <summary>
         /// 形状ID
@@ -125,37 +125,42 @@ namespace KI.Renderer
         /// <param name="scene">シーン</param>
         public override void RenderCore(Scene scene)
         {
-            foreach (var material in Attributes.Where(p => p.Visible))
+            foreach (var attribute in Attributes.Where(p => p.Visible))
             {
-                if (material.Shader == null)
-                {
-                    Logger.Log(Logger.LogLevel.Error, "not set shader");
-                    return;
-                }
-
-                if (material.VertexBuffer.Num == 0)
-                {
-                    Logger.Log(Logger.LogLevel.Error, "vertexs list is 0");
-                    return;
-                }
-
-                material.Binding();
-                ShaderHelper.InitializeState(material.Shader, scene, this, material.VertexBuffer, Polygon.Textures);
-                material.Shader.BindBuffer();
-                if (material.VertexBuffer.EnableIndexBuffer)
-                {
-                    DeviceContext.Instance.DrawElements(material.Type, material.VertexBuffer.Num, DrawElementsType.UnsignedInt, 0);
-                }
-                else
-                {
-                    DeviceContext.Instance.DrawArrays(material.Type, 0, material.VertexBuffer.Num);
-                }
-
-                material.Shader.UnBindBuffer();
-                material.UnBinding();
-
-                Logger.GLLog(Logger.LogLevel.Error);
+                RenderAttribute(scene, attribute);
             }
+        }
+
+        public void RenderAttribute(Scene scene, AttributeBase attribute)
+        {
+            if (attribute.Shader == null)
+            {
+                Logger.Log(Logger.LogLevel.Error, "not set shader");
+                return;
+            }
+
+            if (attribute.VertexBuffer.Num == 0)
+            {
+                Logger.Log(Logger.LogLevel.Error, "vertexs list is 0");
+                return;
+            }
+
+            attribute.Binding();
+            ShaderHelper.InitializeState(attribute.Shader, scene, this, attribute.VertexBuffer, Polygon.Textures);
+            attribute.Shader.BindBuffer();
+            if (attribute.VertexBuffer.EnableIndexBuffer)
+            {
+                DeviceContext.Instance.DrawElements(attribute.Type, attribute.VertexBuffer.Num, DrawElementsType.UnsignedInt, 0);
+            }
+            else
+            {
+                DeviceContext.Instance.DrawArrays(attribute.Type, 0, attribute.VertexBuffer.Num);
+            }
+
+            attribute.Shader.UnBindBuffer();
+            attribute.UnBinding();
+
+            Logger.GLLog(Logger.LogLevel.Error);
         }
 
         /// <summary>
@@ -169,10 +174,7 @@ namespace KI.Renderer
             VertexBuffer.SetupBuffer(Polygon);
 
             PolygonAttribute = new PolygonAttribute("Attribute:" + Name, VertexBuffer.ShallowCopy(), Polygon.Type, shader);
-            if (!Attributes.Contains(PolygonAttribute))
-            {
-                Attributes.Add(PolygonAttribute);
-            }
+            Attributes.Add(PolygonAttribute);
         }
 
         /// <summary>

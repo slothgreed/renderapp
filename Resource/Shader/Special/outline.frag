@@ -4,10 +4,9 @@ in vec3 g_color;			//色
 in vec3 g_normal;			//法線
 in vec2 g_texcoord;			//テクスチャ
 
-uniform mat4 ModelMatrix;
-uniform vec3 LightPos;
-uniform vec3 CameraPos;
-uniform mat4 CameraMatrix;
+uniform mat4 uModelMatrix;
+uniform vec3 uLightPosition;
+uniform vec3 uCameraPosition;
 out vec4 OutputColor0;
 out vec4 OutputColor1;
 out vec4 OutputColor2;
@@ -16,8 +15,8 @@ vec3 GetADS(vec3 normal)
 {
 	//点からライト方向
 	
-	vec3 lightDir = normalize(LightPos - (ModelMatrix * g_position).xyz);	
-	vec3 eye = normalize(CameraPos -  ( ModelMatrix * g_position).xyz);//点から視線方向
+	vec3 lightDir = normalize(uLightPosition - (uModelMatrix * g_position).xyz);	
+	vec3 eye = normalize(uCameraPosition -  ( uModelMatrix * g_position).xyz);//点から視線方向
 	
 	float diffuse = max(dot(lightDir,normal),0.0)* 0.5 + 0.5;
 	vec3 spec_half = normalize(lightDir + eye);//ハーフベクトル

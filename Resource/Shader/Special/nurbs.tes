@@ -1,7 +1,7 @@
 #version 400
 layout(quads,equal_spacing,ccw) in;
 
-uniform mat4 MVP;
+uniform mat4 uMVP;
 out vec3 te_position;
 vec4 getNormal(float param)
 {
@@ -75,6 +75,6 @@ void main()
 	p02 * uParam.z * dv.x + p12 * uParam.z * dv.y + p22 * uParam.z * dv.z + p32 * uParam.z * dv.w +
 	p03 * uParam.w * dv.x + p13 * uParam.w * dv.y + p23 * uParam.w * dv.z + p33 * uParam.w * dv.w;
 
-	gl_Position = MVP * point;
+	gl_Position = uMVP * point;
 	te_position = point.xyz;
 }

@@ -1009,6 +1009,12 @@ namespace KI.Gfx.KIShader
 
                             info.Name = code[2];
                             info.ShaderVariableType = ShaderVariableType.Uniform;
+
+                            if (!info.Name.StartsWith("u"))
+                            {
+                                Logger.Log(Logger.LogLevel.Error, "Uniform Name does not coding rule . name :" + info.Name);
+                            }
+
                             shaderVariable.Add(info.Name, info);
                         }
 

@@ -176,7 +176,7 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="ViewModel\ControllerVM\IControllerViewModelBase.cs" />
-    <Compile Include="ViewModel\LightViewModel.cs" />
+    <Compile Include="ViewModel\SceneNodeVM\LightViewModel.cs" />
     <Compile Include="ViewModel\AttributeVM\OutlineAttributeViewModel.cs" />
     <Compile Include="ViewModel\PostEffectVM\BloomViewModel.cs" />
     <Compile Include="ViewModel\PostEffectVM\SobelViewModel.cs" />
@@ -189,9 +189,10 @@
     <Compile Include="ViewModel\DockTabVM\DockPaneSelector.cs" />
     <Compile Include="ViewModel\DockTabVM\DockWindowViewModel.cs" />
     <Compile Include="ViewModel\ControllerVM\VoxelViewModel.cs" />
-    <Compile Include="ViewModel\AssetVM\RenderObjectViewModel.cs" />
+    <Compile Include="ViewModel\SceneNodeVM\RenderObjectViewModel.cs" />
     <Compile Include="ViewModel\RendererViewModel.cs" />
     <Compile Include="ViewModel\NodeVM\NodeItemViewModel.cs" />
+    <Compile Include="ViewModel\SceneNodeVM\SceneNodeViewModel.cs" />
     <Compile Include="ViewModel\ViewportViewModel.cs" />
     <Compile Include="ViewModel\WorkspaceViewModel.cs" />
     <Compile Include="ViewModel\WorkspaceViewModelT4.cs">
@@ -214,7 +215,7 @@
     <Compile Include="View\DebugWindow.xaml.cs">
       <DependentUpon>DebugWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\SceneNodeBase.xaml.cs">
+    <Compile Include="View\SceneNodeView\SceneNodeBase.xaml.cs">
       <DependentUpon>SceneNodeBase.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SceneNodeView\LightView.xaml.cs">
@@ -291,7 +292,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\SceneNodeBase.xaml">
+    <Page Include="View\SceneNodeView\SceneNodeBase.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -21,6 +21,6 @@ void main(void)
 	if(color.y < 0){ color.y = -color.y; }
 	if(color.z < 0){ color.z = -color.z; }
 	if(color.w < 0){ color.w = -color.w; }
-	OutputColor = color;
+	OutputColor = vec4(1);
 	//OutputColor = degamma(v_color);
 }

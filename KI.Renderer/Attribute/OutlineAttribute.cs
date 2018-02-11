@@ -9,16 +9,16 @@ namespace KI.Renderer.Attribute
     /// </summary>
     public class OutlineAttribute : AttributeBase
     {
-        public float Offset
+        public float uOffset
         {
             get
             {
-                return (float)Shader.GetValue(nameof(Offset));
+                return (float)Shader.GetValue(nameof(uOffset));
             }
 
             set
             {
-                Shader.SetValue(nameof(Offset), value);
+                Shader.SetValue(nameof(uOffset), value);
             }
         }
 
@@ -31,7 +31,7 @@ namespace KI.Renderer.Attribute
         public OutlineAttribute(string name, VertexBuffer vertexBuffer, PrimitiveType type, Shader shader)
             : base(name, vertexBuffer, type, shader)
         {
-            Offset = 0;
+            uOffset = 0.5f;
         }
     }
 }

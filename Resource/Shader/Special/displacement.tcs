@@ -7,9 +7,10 @@ in vec2 v_texcoord[];
 
 out vec3 tc_position[];
 out vec2 tc_texcoord[];
+out vec3 tc_normal[];
 
-uniform float Outer;
-uniform float Inner;
+uniform int uOuter;
+uniform int uInner;
 #define ID gl_InvocationID
 
 void main()
@@ -19,13 +20,13 @@ void main()
 	tc_normal[ID] = v_normal[ID];
 	tc_texcoord[ID] = v_texcoord[ID];
 	
-	gl_TessLevelOuter[0] = float(Outer);
-	gl_TessLevelOuter[1] = float(Outer);
-	gl_TessLevelOuter[2] = float(Outer);
-	gl_TessLevelOuter[3] = float(Outer);
+	gl_TessLevelOuter[0] = float(uOuter);
+	gl_TessLevelOuter[1] = float(uOuter);
+	gl_TessLevelOuter[2] = float(uOuter);
+	gl_TessLevelOuter[3] = float(uOuter);
 	
-	gl_TessLevelInner[0] = float(Inner);
-	gl_TessLevelInner[1] = float(Inner);
+	gl_TessLevelInner[0] = float(uInner);
+	gl_TessLevelInner[1] = float(uInner);
 		
 
 }

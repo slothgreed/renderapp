@@ -6,7 +6,6 @@ layout(vertices = 16) out;
 uniform int Outer;
 uniform int Inner;
 
-
 void main()
 {
 	

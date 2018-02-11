@@ -7,7 +7,7 @@ using OpenTK;
 
 namespace RenderApp.ViewModel
 {
-    public class RenderObjectViewModel : DockWindowViewModel
+    public class RenderObjectViewModel : SceneNodeViewModel
     {
         public RenderObjectViewModel(ViewModelBase parent)
             : base(parent, null, "No Geometry", Place.RightUp)
@@ -17,9 +17,8 @@ namespace RenderApp.ViewModel
         public RenderObjectViewModel(ViewModelBase parent, RenderObject model)
             : base(parent, model, "No Geometry", Place.RightUp)
         {
-            Model = model;
-
             Attributes = new ObservableCollection<ViewModelBase>();
+
             foreach (var attribute in model.Attributes.Where(p => (p is PolygonAttribute) == false))
             {
                 ViewModelBase viewModel = null;
@@ -52,62 +51,8 @@ namespace RenderApp.ViewModel
             SelectedGeometryAttribute = model.PolygonAttribute;
         }
 
-        public Vector3 Rotate
-        {
-            get
-            {
-                return Model.Rotate;
-            }
 
-            set
-            {
-                Model.Rotate = value;
-                OnPropertyChanged(nameof(Rotate));
-            }
-        }
 
-        public Vector3 Scale
-        {
-            get
-            {
-                return Model.Scale;
-            }
-
-            set
-            {
-                Model.Scale = value;
-                OnPropertyChanged(nameof(Scale));
-            }
-        }
-
-        public Vector3 Translate
-        {
-            get
-            {
-                return Model.Translate;
-            }
-
-            set
-            {
-                Model.Translate = value;
-                OnPropertyChanged(nameof(Translate));
-            }
-        }
-
-        private RenderObject _model;
-        public RenderObject Model
-        {
-            get
-            {
-                return _model;
-            }
-
-            private set
-            {
-                _model = value;
-                Title = Model.ToString();
-            }
-        }
 
         public ObservableCollection<ViewModelBase> Attributes
         {
@@ -123,8 +68,14 @@ namespace RenderApp.ViewModel
 
         public AttributeBase SelectedGeometryAttribute
         {
-            get;
-            set;
+            get
+            {
+                return ((RenderObject)Model).PolygonAttribute;
+            }
+            set
+            {
+                ((RenderObject)Model).PolygonAttribute = value;
+            }
         }
 
         private void Collection_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

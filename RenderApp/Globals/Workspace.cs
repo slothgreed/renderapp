@@ -98,28 +98,46 @@ namespace RenderApp.Globals
             //cubeMap.GenCubemap(paths);
             //ActiveScene.AddObject(cubeMap);
 
-            var bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/bunny.half");
-            //var bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/maxplanck.half");
-            //var bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/fandisk.half");
-            var renderBunny = RenderObjectFactory.Instance.CreateRenderObject("bunny", bunny);
-            //renderBunny.RotateX(-90);
-            MainScene.AddObject(renderBunny);
+            // bunny
+            {
+                //var bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/bunny.half");
+                //var renderBunny = RenderObjectFactory.Instance.CreateRenderObject("bunny", bunny);
+                //renderBunny.RotateX(-90);
+                //MainScene.AddObject(renderBunny);
 
-            //var bunny = AssetFactory.Instance.CreateLoad3DModel(Global.KIDirectory + @"\renderapp\resource\model\armadillo.half");
-            ////var bunny = AssetFactory.Instance.CreateLoad3DModel(Global.KIDirectory + @"\renderapp\resource\model\bunny.half");
-            ////List<RenderObject> bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/Sphere.stl");
-            //var renderBunny = RenderObjectFactory.Instance.CreateRenderObject("bunny", bunny);
-            ////renderBunny.RotateX(-90);
-            ////renderBunny.Scale = new OpenTK.Vector3(100);
-            //AddObject(renderBunny);
+                //// bunny attribute
+                //var attribute = new KI.Renderer.Attribute.OutlineAttribute(renderBunny.Name + "Outline",
+                //renderBunny.VertexBuffer.ShallowCopy(),
+                //renderBunny.Polygon.Type,
+                //ShaderCreater.Instance.CreateShader(ShaderType.Outline));
+                //renderBunny.Attributes.Add(attribute);
 
-            CommandManager.Instance.Execute(new CreateWireFrameCommand(MainScene, renderBunny), null, false);
-            var attribute = new KI.Renderer.Attribute.OutlineAttribute(renderBunny.Name + "Outline",
-                renderBunny.VertexBuffer.ShallowCopy(), 
-                renderBunny.Polygon.Type,
-                ShaderCreater.Instance.CreateShader(ShaderType.Outline));
-            renderBunny.Attributes.Add(attribute);
+                //var parentNode = MainScene.FindNode(renderBunny);
+                //MainScene.AddObject(attribute, parentNode);
 
+                //CommandManager.Instance.Execute(new CreateWireFrameCommand(MainScene, renderBunny), null, false);
+            }
+
+            // plane
+            {
+                var plane = AssetFactory.Instance.CreatePlane("plane").Polygons.First();
+                var renderPlane = RenderObjectFactory.Instance.CreateRenderObject("plane", plane);
+                MainScene.AddObject(renderPlane);
+
+                var normal = TextureFactory.Instance.CreateTexture(@"E:\MyProgram\KIProject\renderapp\Resource\Texture\Displacement\Normal.png");
+                var height = TextureFactory.Instance.CreateTexture(@"E:\MyProgram\KIProject\renderapp\Resource\Texture\Displacement\Height.png");
+                plane.AddTexture(KI.Gfx.KITexture.TextureKind.Normal, normal);
+                plane.AddTexture(KI.Gfx.KITexture.TextureKind.Height, height);
+                var nurbsAttribute = new KI.Renderer.Attribute.DisplacementAttribute(
+                    renderPlane.Name + "Displacement",
+                    renderPlane.VertexBuffer.ShallowCopy(),
+                    ShaderCreater.Instance.CreateShader(ShaderType.Displacement));
+                renderPlane.Attributes.Add(nurbsAttribute);
+
+                var parentNode = MainScene.FindNode(renderPlane);
+                MainScene.AddObject(nurbsAttribute, parentNode);
+
+            }
             //CommandManager.Instance.Execute(new CalculateVertexCurvatureCommand(MainScene, renderBunny), null, false);
         }
 

@@ -1,9 +1,8 @@
 #version 400
 #extension GL_EXT_geometry_shader4 : enable
-uniform mat4 MVP;					//ƒ‚ƒfƒ‹*camera*proj
-uniform float Offset;
-uniform vec3 CameraPos;
-uniform mat3 NormalMatrix;
+uniform mat4 uMVP;					//ƒ‚ƒfƒ‹*camera*proj
+uniform float uOffset;
+uniform mat3 uNormalMatrix;
 layout (triangles) in;
 layout( triangle_strip, max_vertices = 6) out;
 in vec4 v_position[];
@@ -25,9 +24,9 @@ void main (void)
 	for(int i = 0; i < gl_in.length(); i++)
 	{
 		vector = gravity - gl_in[i].gl_Position;
-		g_position =  MVP * (gl_in[i].gl_Position + Offset * vector);
+		g_position =  uMVP * (gl_in[i].gl_Position + uOffset * vector);
 		g_color = v_color[i];
-		g_normal = NormalMatrix * v_normal[i];
+		g_normal = uNormalMatrix * v_normal[i];
 		g_texcoord = v_texcoord[i];
 		gl_Position = g_position;
 		EmitVertex();
@@ -40,7 +39,7 @@ void main (void)
 		g_color = vec3(0);
 		g_normal = v_normal[i];
 		g_texcoord = v_texcoord[i];
-		gl_Position = MVP * gl_PositionIn[i];
+		gl_Position = uMVP * gl_PositionIn[i];
 		EmitVertex();
 	
 	}

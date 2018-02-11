@@ -139,9 +139,12 @@ namespace KI.Asset
                         Directory + @"Special\bezier.frag",
                         ShaderStage.Geometry);
                 case ShaderType.Displacement:
-                    return ShaderFactory.Instance.CreateShaderVF(
-                        Directory + @"Special\disp.vert",
-                        Directory + @"Special\disp.frag",
+                    return ShaderFactory.Instance.CreateTesselation(
+                        Directory + @"Special\displacement.vert",
+                        Directory + @"Special\displacement.frag",
+                        Directory + @"Special\displacement.geom",
+                        Directory + @"Special\displacement.tcs",
+                        Directory + @"Special\displacement.tes",
                         ShaderStage.Geometry);
                 case ShaderType.EffectLine:
                     return ShaderFactory.Instance.CreateShaderVF(
@@ -149,9 +152,12 @@ namespace KI.Asset
                         Directory + @"Special\effectline.frag",
                         ShaderStage.Geometry);
                 case ShaderType.NURBS:
-                    return ShaderFactory.Instance.CreateShaderVF(
+                    return ShaderFactory.Instance.CreateTesselation(
                         Directory + @"Special\nurbs.vert",
                         Directory + @"Special\nurbs.frag",
+                        Directory + @"Special\nurbs.geom",
+                        Directory + @"Special\nurbs.tcs",
+                        Directory + @"Special\nurbs.tes",
                         ShaderStage.Geometry);
                 case ShaderType.Fur:
                     return ShaderFactory.Instance.CreateShaderVF(

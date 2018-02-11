@@ -12,13 +12,11 @@ out vec3 tePatchDistance;
 out vec3 tCameraDir;
 out vec3 tLightDir;
 
-uniform sampler2D t_Height;
-uniform mat4 ModelMatrix;
-uniform mat4 NormalMatrix;
-uniform mat4 CameraMatrix;
-uniform vec3 LightPos;
-uniform vec3 CameraPos;
-uniform mat4 MVP;
+uniform sampler2D uHeightMap;
+uniform mat4 uModelMatrix;
+uniform vec3 uLightPosition;
+uniform vec3 uCameraPosition;
+uniform mat4 uMVP;
 void main()
 {
 	float u = gl_TessCoord.x;
@@ -31,15 +29,15 @@ void main()
 	tePatchDistance = gl_TessCoord;
 	
 	vec3 len = p2 - p0;
-	float height = texture(t_Height,gl_TessCoord.xy).x;
+	float height = texture(uHeightMap,gl_TessCoord.xy).x;
 	te_position = vec3((u * len.x) + p0.x,height,(v * len.z) + p0.z);
 	te_normal = tc_normal[0];
 	te_texcoord = gl_TessCoord.xy;
 
 
-	vec3 pos = (ModelMatrix * vec4(te_position,1.0)).xyz;
-	vec3 cameraDir = normalize(CameraPos - pos);
-	vec3 lightDir = normalize(LightPos - pos);
+	vec3 pos = (uModelMatrix * vec4(te_position,1.0)).xyz;
+	vec3 cameraDir = normalize(uCameraPosition - pos);
+	vec3 lightDir = normalize(uLightPosition - pos);
 
 	vec3 tnormal = normalize(te_normal);
 	vec3 ttangent = normalize(cross(tnormal,vec3(0,0,1)));
@@ -56,6 +54,6 @@ void main()
 	tLightDir.z =  dot(tnormal,lightDir);
 	normalize(tLightDir);
 
-	gl_Position = MVP * vec4(te_position,1);
+	gl_Position = uMVP * vec4(te_position,1);
 	
 }

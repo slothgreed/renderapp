@@ -49,7 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attribute\DirectionAttribute.cs" />
+    <Compile Include="Attribute\DisplacementAttribute.cs" />
     <Compile Include="Attribute\OutlineAttribute.cs" />
+    <Compile Include="Attribute\NURBSAttribute.cs" />
     <Compile Include="Attribute\VertexColorAttribute.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Light\DirectionLight.cs" />

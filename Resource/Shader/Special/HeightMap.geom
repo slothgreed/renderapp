@@ -12,8 +12,6 @@ void main()
     
     v_color.xyz = vec3(normalize(cross(A,B))) * vec3(0,1,0);
     v_color.w = 1;
-    
-	
 	
 	gl_Position = gl_in[0].gl_Position; EmitVertex();
 	gl_Position = gl_in[1].gl_Position; EmitVertex();

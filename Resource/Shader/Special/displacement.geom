@@ -1,7 +1,6 @@
 #version 400
 layout(triangles) in;
 layout(triangle_strip, max_vertices = 3) out;
-uniform mat3 NormalMatrix;
 
 in vec3 te_position[3];
 in vec3 te_normal[3];
@@ -14,6 +13,7 @@ in vec3 tePatchDistance[3];
 out vec3 gFacetNormal;
 out vec3 gPatchDistance;
 out vec3 gTriDistance;
+out vec4 g_position;
 out vec3 g_normal;
 out vec2 g_texcoord;
 
@@ -32,6 +32,7 @@ void main()
     gTriDistance = vec3(1, 0, 0);
 	g_tCameraDir = tCameraDir[0];
 	g_tLightDir = tLightDir[0];
+	g_position = gl_in[0].gl_Position;
     gl_Position = gl_in[0].gl_Position; EmitVertex();
 
     gPatchDistance = tePatchDistance[1];
@@ -40,6 +41,7 @@ void main()
 	g_texcoord = te_texcoord[1];
 	g_tCameraDir = tCameraDir[1];
 	g_tLightDir = tLightDir[1];
+	g_position = gl_in[1].gl_Position;
 	gl_Position = gl_in[1].gl_Position; EmitVertex();
 
     gPatchDistance = tePatchDistance[2];
@@ -48,6 +50,7 @@ void main()
 	g_texcoord = te_texcoord[2];
 	g_tCameraDir = tCameraDir[2];
 	g_tLightDir = tLightDir[2];
+	g_position = gl_in[2].gl_Position;
 	gl_Position = gl_in[2].gl_Position; EmitVertex();
 
     EndPrimitive();
