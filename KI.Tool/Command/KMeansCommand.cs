@@ -76,7 +76,8 @@ namespace KI.Tool.Command
                 "KMeansClustering", 
                 renderObject.GeometryAttribute.VertexBuffer.ShallowCopy(),
                 renderObject.Polygon.Type, 
-                renderObject.Shader, colors);
+                renderObject.Shader,
+                colors);
 
             renderObject.Attributes.Add(material);
             scene.AddObject(material, parentNode);

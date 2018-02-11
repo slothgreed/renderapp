@@ -114,7 +114,10 @@ namespace RenderApp.Globals
             //AddObject(renderBunny);
 
             CommandManager.Instance.Execute(new CreateWireFrameCommand(MainScene, renderBunny), null, false);
-            var attribute = new KI.Renderer.Attribute.OutlineAttribute(renderBunny.Name + "Outline", renderBunny.GeometryAttribute.VertexBuffer.ShallowCopy(), OpenTK.Graphics.OpenGL.PrimitiveType.Triangles, ShaderCreater.Instance.CreateShader(ShaderType.Outline));
+            var attribute = new KI.Renderer.Attribute.OutlineAttribute(renderBunny.Name + "Outline",
+                renderBunny.GeometryAttribute.VertexBuffer.ShallowCopy(), 
+                renderBunny.GeometryAttribute.Type,
+                ShaderCreater.Instance.CreateShader(ShaderType.Outline));
             renderBunny.Attributes.Add(attribute);
             //CommandManager.Instance.Execute(new CalculateVertexCurvatureCommand(MainScene, renderBunny), null, false);
         }

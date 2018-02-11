@@ -19,9 +19,9 @@ namespace KI.Renderer
         /// <param name="scene">シーン</param>
         /// <param name="renderObject">形状</param>
         /// <param name="vertexBuffer">頂点バッファ</param>
-        /// <param name="shader">レンダリング情報</param>
+        /// <param name="shader">シェーダ</param>
         /// <param name="textures">テクスチャ</param>
-        public static void InitializeState(Scene scene, RenderObject renderObject, VertexBuffer vertexBuffer, Shader shader, Dictionary<TextureKind, Texture> textures)
+        public static void InitializeState(Shader shader, Scene scene, RenderObject renderObject, VertexBuffer vertexBuffer,  Dictionary<TextureKind, Texture> textures)
         {
             foreach (ShaderProgramInfo info in shader.GetShaderVariable())
             {
@@ -44,7 +44,6 @@ namespace KI.Renderer
                         {
                             info.Variable = vertexBuffer.IndexBuffer;
                         }
-
                         break;
                     case "uGeometryID":
                         info.Variable = renderObject.ID;

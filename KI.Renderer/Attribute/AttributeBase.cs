@@ -5,7 +5,7 @@ using KI.Gfx.KIShader;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace KI.Renderer
+namespace KI.Renderer.Attribute
 {
     /// <summary>
     /// アトリビュート

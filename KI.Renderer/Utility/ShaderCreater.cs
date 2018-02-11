@@ -17,7 +17,8 @@ namespace KI.Asset
         EffectLine,
         NURBS,
         Fur,
-        Outline
+        Outline,
+        WireFrame
     }
 
     /// <summary>
@@ -162,6 +163,11 @@ namespace KI.Asset
                         Directory + @"Special\outline.vert",
                         Directory + @"Special\outline.frag",
                         Directory + @"Special\outline.geom",
+                        ShaderStage.Geometry);
+                case ShaderType.WireFrame:
+                    return ShaderFactory.Instance.CreateShaderVF(
+                        Directory + @"GBuffer\WireFrame.vert",
+                        Directory + @"GBuffer\WireFrame.frag",
                         ShaderStage.Geometry);
             }
 

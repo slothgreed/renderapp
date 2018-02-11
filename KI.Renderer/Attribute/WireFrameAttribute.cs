@@ -68,16 +68,6 @@ namespace KI.Renderer.Attribute
             vertexColorBuffer.SetData(colors, EArrayType.Vec3Array);
         }
 
-        public override void Binding()
-        {
-            base.Binding();
-        }
-
-        public override void UnBinding()
-        {
-            base.UnBinding();
-        }
-
         /// <summary>
         /// 解放処理
         /// </summary>

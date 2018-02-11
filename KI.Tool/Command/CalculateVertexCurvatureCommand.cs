@@ -2,18 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using KI.Analyzer;
-using KI.Analyzer.Algorithm;
 using KI.Asset;
 using KI.Foundation.Command;
 using KI.Foundation.Core;
 using KI.Foundation.Parameter;
-using KI.Foundation.Utility;
-using KI.Gfx.Geometry;
-using KI.Gfx.KIShader;
 using KI.Renderer;
 using KI.Renderer.Attribute;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 
 namespace KI.Tool.Command
 {
@@ -168,10 +163,7 @@ namespace KI.Tool.Command
             scene.AddObject(minAttribute, parentNode);
             scene.AddObject(maxAttribute, parentNode);
 
-            var wireFrameShader = ShaderFactory.Instance.CreateShaderVF(
-                ShaderCreater.Instance.Directory + @"GBuffer\WireFrame.vert",
-                ShaderCreater.Instance.Directory + @"GBuffer\WireFrame.frag",
-                ShaderStage.Geometry);
+            var wireFrameShader = ShaderCreater.Instance.CreateShader(Asset.ShaderType.WireFrame);
 
             var normals = renderObject.Polygon.Vertexs.Select(p => p.Normal).ToArray();
             var dirMinAttribute = new DirectionAttribute(renderObject.Name + " : MinDirection", wireFrameShader, dirMinLine.ToArray(), new Vector4(1, 0, 0, 1), normals);
