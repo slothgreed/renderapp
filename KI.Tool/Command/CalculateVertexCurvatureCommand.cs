@@ -114,37 +114,37 @@ namespace KI.Tool.Command
             var parentNode = Global.Renderer.ActiveScene.FindNode(renderObject);
 
             VertexParameterAttribute voronoiAttribute = new VertexParameterAttribute(renderObject.Name + " : Voronoi",
-                renderObject.GeometryAttribute.VertexBuffer.ShallowCopy(),
+                renderObject.PolygonAttribute.VertexBuffer.ShallowCopy(),
                 renderObject.Polygon.Type,
                 renderObject.Shader,
                 voronoiParam.Values);
 
             VertexParameterAttribute laplaceAttribute = new VertexParameterAttribute(renderObject.Name + " : Laplace",
-                renderObject.GeometryAttribute.VertexBuffer.ShallowCopy(),
+                renderObject.PolygonAttribute.VertexBuffer.ShallowCopy(),
                 renderObject.Polygon.Type,
                 renderObject.Shader,
                 laplaceParam.Values);
 
             VertexParameterAttribute meanAttribute = new VertexParameterAttribute(renderObject.Name + " : MeanCurvature",
-                renderObject.GeometryAttribute.VertexBuffer.ShallowCopy(),
+                renderObject.PolygonAttribute.VertexBuffer.ShallowCopy(),
                 renderObject.Polygon.Type,
                 renderObject.Shader,
                 meanParam.Values);
 
             VertexParameterAttribute gaussAttribute = new VertexParameterAttribute(renderObject.Name + " : GaussCurvature",
-                renderObject.GeometryAttribute.VertexBuffer.ShallowCopy(),
+                renderObject.PolygonAttribute.VertexBuffer.ShallowCopy(),
                 renderObject.Polygon.Type,
                 renderObject.Shader,
                 gaussParam.Values);
 
             VertexParameterAttribute minAttribute = new VertexParameterAttribute(renderObject.Name + " : MinCurvature",
-                renderObject.GeometryAttribute.VertexBuffer.ShallowCopy(),
+                renderObject.PolygonAttribute.VertexBuffer.ShallowCopy(),
                 renderObject.Polygon.Type,
                 renderObject.Shader,
                 minParam.Values);
 
             VertexParameterAttribute maxAttribute = new VertexParameterAttribute(renderObject.Name + " : MaxCurvature",
-                renderObject.GeometryAttribute.VertexBuffer.ShallowCopy(),
+                renderObject.PolygonAttribute.VertexBuffer.ShallowCopy(),
                 renderObject.Polygon.Type,
                 renderObject.Shader,
                 maxParam.Values);

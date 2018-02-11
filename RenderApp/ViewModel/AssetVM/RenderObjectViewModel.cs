@@ -20,7 +20,7 @@ namespace RenderApp.ViewModel
             Model = model;
 
             Attributes = new ObservableCollection<ViewModelBase>();
-            foreach (var attribute in model.Attributes.Where(p => (p is GeometryAttribute) == false))
+            foreach (var attribute in model.Attributes.Where(p => (p is PolygonAttribute) == false))
             {
                 ViewModelBase viewModel = null;
                 if (attribute is VertexParameterAttribute)
@@ -49,7 +49,7 @@ namespace RenderApp.ViewModel
                 GeometryAttributes.Add(attribute);
             }
 
-            SelectedGeometryAttribute = model.GeometryAttribute;
+            SelectedGeometryAttribute = model.PolygonAttribute;
         }
 
         public Vector3 Rotate

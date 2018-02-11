@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
-using RenderApp.Utility;
-
-namespace RenderApp
+﻿namespace RenderApp
 {
     //public class CLuminous : CShader
     //{
@@ -80,15 +71,15 @@ namespace RenderApp
     //    //    sphere = new CSphere(12, 20, 20, true, Vector3.UnitY);
     //    //    sphere.Translate(new Vector3(center.X,0, center.Z));
     //    //    m_SphereLight.Add(sphere);
-            
+
     //    //}
-        
+
     //    //public override void Dispose()
     //    //{
     //    //    base.Dispose();
     //    //    GlobalModel.Sphere.Clear();
     //    //}
-        
+
     //    //public override void AnimationTimer(int timerCount, float angleCount)
     //    //{
     //    //    int num = 10;

@@ -61,6 +61,21 @@
     <Compile Include="Attribute\AttributeBase.cs" />
     <Compile Include="Attribute\WireFrameAttribute.cs" />
     <Compile Include="SceneNode.cs" />
+    <Compile Include="Scene\Shader\Bezier.cs" />
+    <Compile Include="Scene\Shader\CColorShader.cs" />
+    <Compile Include="Scene\Shader\CDiffuse.cs" />
+    <Compile Include="Scene\Shader\DisplaceMentMap.cs" />
+    <Compile Include="Scene\Shader\HeightMap.cs" />
+    <Compile Include="Scene\Shader\CEffectLine.cs" />
+    <Compile Include="Scene\Shader\Luminous.cs" />
+    <Compile Include="Scene\Shader\Fur.cs" />
+    <Compile Include="Scene\Shader\ConstantShader.cs" />
+    <Compile Include="Scene\Shader\OutLine.cs" />
+    <Compile Include="Scene\Shader\NURBS.cs" />
+    <Compile Include="Scene\Shader\CDeffed.cs" />
+    <Compile Include="Scene\Shader\CResult.cs" />
+    <Compile Include="Scene\Shader\CShadowMap.cs" />
+    <Compile Include="Scene\Shader\SSAO.cs" />
     <Compile Include="Technique\OffScreen\Lighting\DeferredRendering.cs" />
     <Compile Include="Technique\OffScreen\Geometry\GBuffer.cs" />
     <Compile Include="Global.cs" />
@@ -116,5 +131,6 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

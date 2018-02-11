@@ -76,7 +76,7 @@ namespace KI.Tool.Command
             var parentNode = Global.Renderer.ActiveScene.FindNode(renderObject);
             WireFrameAttribute material = new WireFrameAttribute(
                 renderObject.Name + ": WireFrame",
-                renderObject.GeometryAttribute.VertexBuffer.ShallowCopy(),
+                renderObject.PolygonAttribute.VertexBuffer.ShallowCopy(),
                 renderObject.Shader,
                 wireFrameColors.ToArray(),
                 lineIndex.ToArray());

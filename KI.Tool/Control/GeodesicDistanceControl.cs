@@ -102,13 +102,13 @@ namespace KI.Tool.Control
                         
 
                         var colorAttribute = new VertexParameterAttribute("distanceColor", 
-                            renderObject.GeometryAttribute.VertexBuffer.ShallowCopy(), 
-                            renderObject.GeometryAttribute.Type, 
+                            renderObject.PolygonAttribute.VertexBuffer.ShallowCopy(), 
+                            renderObject.PolygonAttribute.Type, 
                             renderObject.Shader, 
                             geodesicDistance);
 
                         Polygon lineGeometry = new Polygon("geodesicDistance", lines);
-                        var lineAttribute = new GeometryAttribute("geodesicDistance", lineGeometry, renderObject.Shader);
+                        var lineAttribute = new PolygonAttribute("geodesicDistance", lineGeometry, renderObject.Shader);
                         renderObject.Attributes.Add(lineAttribute);
                         Global.Renderer.ActiveScene.AddObject(lineAttribute, parentNode);
                     }

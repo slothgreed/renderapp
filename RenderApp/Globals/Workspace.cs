@@ -115,10 +115,11 @@ namespace RenderApp.Globals
 
             CommandManager.Instance.Execute(new CreateWireFrameCommand(MainScene, renderBunny), null, false);
             var attribute = new KI.Renderer.Attribute.OutlineAttribute(renderBunny.Name + "Outline",
-                renderBunny.GeometryAttribute.VertexBuffer.ShallowCopy(), 
-                renderBunny.GeometryAttribute.Type,
+                renderBunny.PolygonAttribute.VertexBuffer.ShallowCopy(), 
+                renderBunny.PolygonAttribute.Type,
                 ShaderCreater.Instance.CreateShader(ShaderType.Outline));
             renderBunny.Attributes.Add(attribute);
+
             //CommandManager.Instance.Execute(new CalculateVertexCurvatureCommand(MainScene, renderBunny), null, false);
         }
 

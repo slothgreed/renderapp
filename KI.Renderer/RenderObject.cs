@@ -44,7 +44,7 @@ namespace KI.Renderer
         /// <summary>
         /// ジオメトリステージのアトリビュート
         /// </summary>
-        public GeometryAttribute GeometryAttribute { get; private set; }
+        public PolygonAttribute PolygonAttribute { get; private set; }
 
         /// <summary>
         /// 形状ID
@@ -56,6 +56,14 @@ namespace KI.Renderer
         /// </summary>
         public List<AttributeBase> Attributes { get; private set; } = new List<AttributeBase>();
 
+        /// <summary>
+        /// 頂点バッファ
+        /// </summary>
+        public VertexBuffer VertexBuffer
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// 可視不可視
@@ -64,11 +72,11 @@ namespace KI.Renderer
         {
             get
             {
-                return GeometryAttribute.Visible;
+                return PolygonAttribute.Visible;
             }
             set
             {
-                GeometryAttribute.Visible = value;
+                PolygonAttribute.Visible = value;
             }
         }
 
@@ -79,12 +87,12 @@ namespace KI.Renderer
         {
             get
             {
-                return GeometryAttribute.Shader;
+                return PolygonAttribute.Shader;
             }
 
             set
             {
-                GeometryAttribute.Shader = value;
+                PolygonAttribute.Shader = value;
             }
         }
 
@@ -161,12 +169,11 @@ namespace KI.Renderer
         private void SetPolygon(Polygon polygon, Shader shader)
         {
             Polygon = polygon;
+            PolygonAttribute = new PolygonAttribute("Attribute:" + Name, polygon, shader);
 
-            GeometryAttribute = new GeometryAttribute("Attribute:" + Name, polygon, shader);
-
-            if (!Attributes.Contains(GeometryAttribute))
+            if (!Attributes.Contains(PolygonAttribute))
             {
-                Attributes.Add(GeometryAttribute);
+                Attributes.Add(PolygonAttribute);
             }
 
         }
@@ -189,7 +196,7 @@ namespace KI.Renderer
         /// <param name="e">イベント</param>
         private void OnPolygonUpdated(object sender, UpdatePolygonEventArgs e)
         {
-            GeometryAttribute.SetupBuffer();
+            PolygonAttribute.SetupBuffer();
         }
     }
 }

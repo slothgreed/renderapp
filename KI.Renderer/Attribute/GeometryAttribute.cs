@@ -14,7 +14,7 @@ namespace KI.Renderer.Attribute
     /// <summary>
     /// 標準アトリビュート
     /// </summary>
-    public class GeometryAttribute : AttributeBase
+    public class PolygonAttribute : AttributeBase
     {
         /// <summary>
         /// ポリゴン情報
@@ -27,7 +27,7 @@ namespace KI.Renderer.Attribute
         /// <param name="name">名前</param>
         /// <param name="polygon">ポリゴン</param>
         /// <param name="shader">シェーダ</param>
-        public GeometryAttribute(string name, Polygon polygon, Shader shader)
+        public PolygonAttribute(string name, Polygon polygon, Shader shader)
             : base(name, polygon.Type, shader)
         {
             this.polygon = polygon;

@@ -237,7 +237,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Scene\Shader\Bezier\Bezier.cs" />
     <Compile Include="View\ControllerView\VoxelView.xaml.cs">
       <DependentUpon>VoxelView.xaml</DependentUpon>
     </Compile>
@@ -247,20 +246,6 @@
     <Compile Include="View\RendererView.xaml.cs">
       <DependentUpon>RendererView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Scene\Shader\HeightMap\HeightMap.cs" />
-    <Compile Include="Scene\Shader\Line\CEffectLine.cs" />
-    <Compile Include="Scene\Shader\MRT\Fur\Fur.cs" />
-    <Compile Include="Scene\Shader\NURBS\NURBS.cs" />
-    <Compile Include="Scene\Shader\MRT\OutLine\OutLine.cs" />
-    <Compile Include="Scene\Shader\OffScreen\Result\CResult.cs" />
-    <Compile Include="Scene\Shader\MRT\General\ConstantShader.cs" />
-    <Compile Include="Scene\Shader\Diffuse\CDiffuse.cs" />
-    <Compile Include="Scene\Shader\DisplaceMent\DisplaceMentMap.cs" />
-    <Compile Include="Scene\Shader\ColorRender\CColorShader.cs" />
-    <Compile Include="Scene\Shader\Luminous\Luminous.cs" />
-    <Compile Include="Scene\Shader\OffScreen\SSAO\SSAO.cs" />
-    <Compile Include="Scene\Shader\OffScreen\Defferd\CDeffed.cs" />
-    <Compile Include="Scene\Shader\OffScreen\Shadow\CShadowMap.cs" />
     <Compile Include="Utility\TrueTypeFont.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
@@ -375,55 +360,11 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </None>
     <None Include="packages.config" />
-    <None Include="Scene\Shader\Bezier\bezier.frag" />
-    <None Include="Scene\Shader\Bezier\bezier.tcs" />
-    <None Include="Scene\Shader\Bezier\bezier.tes" />
-    <None Include="Scene\Shader\Bezier\bezier.vert" />
-    <None Include="Scene\Shader\HeightMap\HeightMap.frag" />
-    <None Include="Scene\Shader\HeightMap\HeightMap.geom" />
-    <None Include="Scene\Shader\HeightMap\HeightMap.tcs" />
-    <None Include="Scene\Shader\HeightMap\HeightMap.tes" />
-    <None Include="Scene\Shader\HeightMap\HeightMap.vert" />
-    <None Include="Scene\Shader\Line\EffectLine.frag" />
-    <None Include="Scene\Shader\Line\EffectLine.geom" />
-    <None Include="Scene\Shader\Line\EffectLine.vert" />
-    <None Include="Scene\Shader\MRT\Fur\fur.frag" />
-    <None Include="Scene\Shader\MRT\Fur\fur.geom" />
-    <None Include="Scene\Shader\MRT\Fur\fur.vert" />
-    <None Include="Scene\Shader\MRT\OutLine\outline.frag" />
-    <None Include="Scene\Shader\MRT\OutLine\outline.geom" />
-    <None Include="Scene\Shader\MRT\OutLine\outline.vert" />
-    <None Include="Scene\Shader\NURBS\nurbs.frag" />
-    <None Include="Scene\Shader\NURBS\nurbs.geom" />
-    <None Include="Scene\Shader\NURBS\nurbs.tcs" />
-    <None Include="Scene\Shader\NURBS\nurbs.tes" />
-    <None Include="Scene\Shader\NURBS\nurbs.vert" />
-    <None Include="Scene\Shader\OffScreen\Result\result.frag" />
-    <None Include="Scene\Shader\OffScreen\Result\result.vert" />
-    <None Include="Scene\Shader\MRT\General\General.frag" />
-    <None Include="Scene\Shader\MRT\General\General.vert" />
-    <None Include="Scene\Shader\Diffuse\diffuse.frag" />
-    <None Include="Scene\Shader\Diffuse\diffuse.vert" />
-    <None Include="Scene\Shader\DisplaceMent\displacement.frag" />
-    <None Include="Scene\Shader\DisplaceMent\displacement.geom" />
-    <None Include="Scene\Shader\DisplaceMent\displacement.tcs" />
-    <None Include="Scene\Shader\DisplaceMent\displacement.tes" />
-    <None Include="Scene\Shader\DisplaceMent\displacement.vert" />
-    <None Include="Scene\Shader\ColorRender\line.frag" />
-    <None Include="Scene\Shader\ColorRender\line.vert" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Scene\Shader\Luminous\Luminous.frag" />
-    <None Include="Scene\Shader\Luminous\Luminous.vert" />
-    <None Include="Scene\Shader\OffScreen\Defferd\defferd.frag" />
-    <None Include="Scene\Shader\OffScreen\Defferd\defferd.vert" />
-    <None Include="Scene\Shader\OffScreen\Shadow\shadow.frag" />
-    <None Include="Scene\Shader\OffScreen\Shadow\shadow.vert" />
-    <None Include="Scene\Shader\OffScreen\SSAO\ssao.frag" />
-    <None Include="Scene\Shader\OffScreen\SSAO\ssao.vert" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -434,9 +375,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Thumbnail\noimage.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Scene\Shader\ShaderType\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="ViewModel\ControllerVM\ControllerViewModelT4.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
