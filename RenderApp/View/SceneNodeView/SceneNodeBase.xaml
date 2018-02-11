@@ -1,0 +1,26 @@
+﻿<UserControl
+    x:Class="RenderApp.View.SceneNodeBase"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:control="clr-namespace:KI.UI.Controls;assembly=KI.UI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:RenderApp.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    mc:Ignorable="d">
+    <StackPanel>
+        <WrapPanel Margin="2">
+            <TextBlock Text="Rotate" />
+            <control:Vector3EditBox Vector3Value="{Binding Rotate}" />
+        </WrapPanel>
+        <WrapPanel Margin="2">
+            <TextBlock Text="Scale" />
+            <control:Vector3EditBox Vector3Value="{Binding Scale}" />
+        </WrapPanel>
+        <WrapPanel Margin="2">
+            <TextBlock Text="Translate" />
+            <control:Vector3EditBox Vector3Value="{Binding Translate}" />
+        </WrapPanel>
+    </StackPanel>
+</UserControl>

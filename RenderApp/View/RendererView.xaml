@@ -6,7 +6,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:renderer="clr-namespace:KI.Renderer;assembly=KI.Renderer"
     xmlns:v="clr-namespace:RenderApp.View"
-    xmlns:vm="clr-namespace:RenderApp.ViewModel"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
@@ -30,16 +29,7 @@
                 IsChecked="{Binding EnablePostEffect}" />
         </WrapPanel>
         <Expander Header="Post Process">
-            <ItemsControl ItemsSource="{Binding PostProcesses}">
-                <ItemsControl.Resources>
-                    <DataTemplate DataType="{x:Type vm:BloomViewModel}">
-                        <v:BloomView />
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type vm:SobelViewModel}">
-                        <v:SobelView />
-                    </DataTemplate>
-                </ItemsControl.Resources>
-            </ItemsControl>
+            <v:PostEffectBase ItemsSource="{Binding PostProcesses}" />
         </Expander>
     </StackPanel>
 </UserControl>
