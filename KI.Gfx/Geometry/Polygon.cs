@@ -19,19 +19,6 @@ namespace KI.Gfx.Geometry
         VertexArray //VertexArray状態で入っている
     }
 
-    public enum VertexColor
-    {
-        Default,
-        WireFrame,
-        Voronoi,
-        MeanCurvature,
-        GaussCurvature,
-        MinCurvature,
-        MaxCurvature,
-        TmpParameter,
-    }
-
-
     /// <summary>
     /// 更新イベント
     /// </summary>
@@ -94,11 +81,6 @@ namespace KI.Gfx.Geometry
         /// 頂点インデックスリスト
         /// </summary>
         private List<int> index = new List<int>();
-
-        /// <summary>
-        /// 頂点カラーリスト
-        /// </summary>
-        private Dictionary<VertexColor, List<Vector3>> vertexColor = new Dictionary<VertexColor, List<Vector3>>();
 
         /// <summary>
         /// コンストラクタ
