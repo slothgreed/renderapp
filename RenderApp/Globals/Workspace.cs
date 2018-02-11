@@ -2,6 +2,7 @@
 using KI.Asset;
 using KI.Foundation.Command;
 using KI.Renderer;
+using KI.Renderer.Technique;
 using KI.Tool.Command;
 using OpenTK;
 

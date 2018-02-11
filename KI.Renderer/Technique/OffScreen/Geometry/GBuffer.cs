@@ -2,12 +2,12 @@
 using KI.Gfx.KITexture;
 using KI.Gfx.Render;
 
-namespace KI.Renderer
+namespace KI.Renderer.Technique
 {
     /// <summary>
     /// GBuffer
     /// </summary>
-    public class GBuffer : OffScreenTechnique
+    public class GBuffer : RenderTechnique
     {
         /// <summary>
         /// コンストラクタ

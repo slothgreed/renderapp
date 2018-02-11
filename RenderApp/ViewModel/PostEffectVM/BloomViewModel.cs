@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KI.Renderer;
+using KI.Renderer.Technique;
 using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel

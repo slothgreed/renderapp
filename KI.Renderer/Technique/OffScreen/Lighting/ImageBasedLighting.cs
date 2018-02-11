@@ -1,12 +1,12 @@
 ﻿using KI.Asset;
 using KI.Gfx.KITexture;
 
-namespace KI.Renderer
+namespace KI.Renderer.Technique
 {
     /// <summary>
     /// IBL
     /// </summary>
-    public class ImageBasedLighting : OffScreenTechnique
+    public class ImageBasedLighting : RenderTechnique
     {
         /// <summary>
         /// コンストラクタ

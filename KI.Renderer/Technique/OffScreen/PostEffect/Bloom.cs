@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace KI.Renderer
+namespace KI.Renderer.Technique
 {
     /// <summary>
     /// bloom
     /// </summary>
-    public partial class Bloom : OffScreenTechnique
+    public partial class Bloom : RenderTechnique
     {
         /// <summary>
         /// 重み

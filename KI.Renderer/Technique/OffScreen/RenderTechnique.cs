@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using KI.Asset;
 using KI.Foundation.Core;
@@ -8,12 +7,12 @@ using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
 using KI.Gfx.Render;
 
-namespace KI.Renderer
+namespace KI.Renderer.Technique
 {
     /// <summary>
     /// レンダーテクニック
     /// </summary>
-    public abstract class OffScreenTechnique : KIObject
+    public abstract class RenderTechnique : KIObject
     {
         /// <summary>
         /// 描画タイプ
@@ -26,7 +25,7 @@ namespace KI.Renderer
         /// <param name="name">名前</param>
         /// <param name="tech">レンダーテクニックの種類</param>
         /// <param name="type">レンダリングタイプ</param>
-        public OffScreenTechnique(string name, RenderTechniqueType tech, RenderType type)
+        public RenderTechnique(string name, RenderTechniqueType tech, RenderType type)
             : base(name)
         {
             renderType = type;
@@ -42,7 +41,7 @@ namespace KI.Renderer
         /// <param name="fragShader">フラグシェーダ</param>
         /// <param name="tech">レンダーテクニックの種類</param>
         /// <param name="type">レンダリングタイプ</param>
-        public OffScreenTechnique(string name, string vertexShader, string fragShader, RenderTechniqueType tech, RenderType type)
+        public RenderTechnique(string name, string vertexShader, string fragShader, RenderTechniqueType tech, RenderType type)
             : base(name)
         {
             renderType = type;

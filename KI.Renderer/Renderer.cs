@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using KI.Gfx.KITexture;
+using KI.Renderer.Technique;
 
 namespace KI.Renderer
 {

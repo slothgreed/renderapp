@@ -3,12 +3,12 @@ using KI.Asset;
 using KI.Gfx.GLUtil;
 using OpenTK.Graphics.OpenGL;
 
-namespace KI.Renderer
+namespace KI.Renderer.Technique
 {
     /// <summary>
     /// スクリーンスペースLIC
     /// </summary>
-    public partial class SSLIC : OffScreenTechnique
+    public partial class SSLIC : RenderTechnique
     {
         /// <summary>
         /// コンストラクタ

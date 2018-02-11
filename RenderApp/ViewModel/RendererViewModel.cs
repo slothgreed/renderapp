@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using KI.Renderer;
+using KI.Renderer.Technique;
 using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel

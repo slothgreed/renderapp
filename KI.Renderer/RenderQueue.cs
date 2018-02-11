@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using KI.Gfx.KITexture;
+using KI.Renderer.Technique;
 
 namespace KI.Renderer
 {
@@ -16,7 +14,7 @@ namespace KI.Renderer
         /// コンストラクタ
         /// </summary>
         /// <param name="technique">テクニック</param>
-        public RenderQueueEventArgs(OffScreenTechnique technique)
+        public RenderQueueEventArgs(RenderTechnique technique)
         {
             Technique = technique;
         }
@@ -24,7 +22,7 @@ namespace KI.Renderer
         /// <summary>
         /// テクニック
         /// </summary>
-        public OffScreenTechnique Technique { get; private set; }
+        public RenderTechnique Technique { get; private set; }
     }
 
     /// <summary>
@@ -35,7 +33,7 @@ namespace KI.Renderer
         /// <summary>
         /// レンダーテクニックリスト
         /// </summary>
-        private List<OffScreenTechnique> techniques = new List<OffScreenTechnique>();
+        private List<RenderTechnique> techniques = new List<RenderTechnique>();
 
         /// <summary>
         /// コンストラクタ
@@ -57,7 +55,7 @@ namespace KI.Renderer
         /// <summary>
         /// アイテム
         /// </summary>
-        public IEnumerable<OffScreenTechnique> Items
+        public IEnumerable<RenderTechnique> Items
         {
             get
             {
@@ -72,7 +70,7 @@ namespace KI.Renderer
         /// レンダーテクニックの追加
         /// </summary>
         /// <param name="technique">レンダーテクニック</param>
-        public void AddTechnique(OffScreenTechnique technique)
+        public void AddTechnique(RenderTechnique technique)
         {
             techniques.Add(technique);
             OnTechniqueAdded(technique);
@@ -82,7 +80,7 @@ namespace KI.Renderer
         /// レンダーテクニックの削除
         /// </summary>
         /// <param name="technique">レンダーテクニック</param>
-        public void RemoveTechnique(OffScreenTechnique technique)
+        public void RemoveTechnique(RenderTechnique technique)
         {
             technique.Dispose();
             techniques.Remove(technique);
@@ -181,7 +179,7 @@ namespace KI.Renderer
         /// テクニックの追加後イベント発行
         /// </summary>
         /// <param name="technique">レンダーテクニック</param>
-        private void OnTechniqueAdded(OffScreenTechnique technique)
+        private void OnTechniqueAdded(RenderTechnique technique)
         {
             TechniqueAdded?.Invoke(this, new RenderQueueEventArgs(technique));
         }
@@ -190,7 +188,7 @@ namespace KI.Renderer
         /// テクニックの削除後イベント発行
         /// </summary>
         /// <param name="technique">レンダーテクニック</param>
-        private void OnTechniqueRemoved(OffScreenTechnique technique)
+        private void OnTechniqueRemoved(RenderTechnique technique)
         {
             TechniqueRemoved?.Invoke(this, new RenderQueueEventArgs(technique));
         }

@@ -1,12 +1,12 @@
 ﻿using KI.Asset;
 using KI.Gfx.KITexture;
 
-namespace KI.Renderer
+namespace KI.Renderer.Technique
 {
     /// <summary>
     /// 形状選択ようのレンダリング
     /// </summary>
-    public partial class Selection : OffScreenTechnique
+    public partial class Selection : RenderTechnique
     {
         /// <summary>
         /// コンストラクタ

@@ -1,9 +1,9 @@
-﻿namespace KI.Renderer
+﻿namespace KI.Renderer.Technique
 {
     /// <summary>
     /// Sobel
     /// </summary>
-    public partial class Sobel : OffScreenTechnique
+    public partial class Sobel : RenderTechnique
     {
         /// <summary>
         /// 閾値の最大値

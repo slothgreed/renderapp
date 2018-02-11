@@ -1,11 +1,11 @@
 ﻿using KI.Gfx.Render;
 
-namespace KI.Renderer
+namespace KI.Renderer.Technique
 {
     /// <summary>
     /// シャドウマップ
     /// </summary>
-    public class ShadowMap : OffScreenTechnique
+    public class ShadowMap : RenderTechnique
     {
         /// <summary>
         /// コンストラクタ

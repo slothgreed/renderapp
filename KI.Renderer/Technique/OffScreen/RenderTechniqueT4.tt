@@ -32,18 +32,16 @@
 	"OutputBuffer",
 	new string[]{"Texture"	,"Texture"},
 	new string[]{"uSelectMap","uTarget"})
-
-
  };
 #>
 using System;
 using KI.Gfx.KITexture;
-namespace KI.Renderer
+namespace KI.Renderer.Technique
 {
 <#
 	for(int classIndex = 0; classIndex < classProperty.Length; classIndex++){
 #>
-	public partial class <#=classProperty[classIndex].Item1#> : OffScreenTechnique
+	public partial class <#=classProperty[classIndex].Item1#> : RenderTechnique
 	{
 <#
 	for(int propetyIndex = 0; propetyIndex < classProperty[classIndex].Item2.Length; propetyIndex++){

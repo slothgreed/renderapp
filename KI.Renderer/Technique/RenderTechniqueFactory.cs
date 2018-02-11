@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using KI.Foundation.Core;
-using KI.Gfx.KITexture;
+using KI.Renderer.Technique;
 
 namespace KI.Renderer
 {
@@ -26,7 +25,7 @@ namespace KI.Renderer
     /// <summary>
     /// レンダーテクニックのファクトリークラス
     /// </summary>
-    public class RenderTechniqueFactory : KIFactoryBase<OffScreenTechnique>
+    public class RenderTechniqueFactory : KIFactoryBase<RenderTechnique>
     {
         /// <summary>
         /// シェーダファイルクラス
@@ -73,9 +72,9 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="type">テクニックのタイプ</param>
         /// <returns>レンダーテクニック</returns>
-        public OffScreenTechnique CreateRenderTechnique(RenderTechniqueType type)
+        public RenderTechnique CreateRenderTechnique(RenderTechniqueType type)
         {
-            OffScreenTechnique technique = null;
+            RenderTechnique technique = null;
             switch (type)
             {
                 case RenderTechniqueType.Shadow:

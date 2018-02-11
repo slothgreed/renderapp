@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace KI.Renderer
+namespace KI.Renderer.Technique
 {
     /// <summary>
     /// SSAO
     /// </summary>
-    public partial class SSAO : OffScreenTechnique
+    public partial class SSAO : RenderTechnique
     {
         /// <summary>
         /// コンストラクタ
