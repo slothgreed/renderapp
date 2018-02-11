@@ -81,9 +81,8 @@ namespace KI.Tool.Command
             voxel = new VoxelSpace(renderObject.Polygon.Vertexs.Select(p => p.Position).ToList(), renderObject.Polygon.Index, partition, min, max);
             var mesh = GetVoxelObject();
 
-            RenderObject voxelObject = RenderObjectFactory.Instance.CreateRenderObject("Voxel :" + renderObject.Name);
             Polygon info = new Polygon("Voxel :" + renderObject.Name, mesh, PrimitiveType.Quads);
-            voxelObject.SetPolygon(info);
+            RenderObject voxelObject = RenderObjectFactory.Instance.CreateRenderObject("Voxel :" + renderObject.Name, info);
             voxelObject.Transformation(renderObject.ModelMatrix);
             scene.AddObject(voxelObject);
 

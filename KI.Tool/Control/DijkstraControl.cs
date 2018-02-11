@@ -72,9 +72,8 @@ namespace KI.Tool.Control
                         }
                     }
 
-                    RenderObject pointObject = RenderObjectFactory.Instance.CreateRenderObject("Picking");
                     Polygon polygon = new Polygon("Picking", new List<Vertex>() { new Vertex(0, vertex.Position, Vector3.UnitY) });
-                    pointObject.SetPolygon(polygon);
+                    RenderObject pointObject = RenderObjectFactory.Instance.CreateRenderObject("Picking", polygon);
                     pointObject.ModelMatrix = selectObject.ModelMatrix;
                     Global.Renderer.ActiveScene.AddObject(pointObject);
 
@@ -112,10 +111,8 @@ namespace KI.Tool.Control
             dijkstra = new DijkstraAlgorithm(selectObject.Polygon as HalfEdgeDS, selectStart, selectEnd);
             dijkstra.Execute();
 
-            RenderObject lineObject = RenderObjectFactory.Instance.CreateRenderObject("DijkstraLine");
-
             Polygon polygon = new Polygon("DijkstraLine", dijkstra.DijkstraLine());
-            lineObject.SetPolygon(polygon);
+            RenderObject lineObject = RenderObjectFactory.Instance.CreateRenderObject("DijkstraLine", polygon);
             lineObject.ModelMatrix = selectObject.ModelMatrix;
             Global.Renderer.ActiveScene.AddObject(lineObject);
             return true;

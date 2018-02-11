@@ -92,8 +92,7 @@ namespace KI.Tool.Command
             }
 
             var polygon = new Polygon("perceptron", vertexs);
-            RenderObject render = RenderObjectFactory.Instance.CreateRenderObject("perceptron");
-            render.SetPolygon(polygon);
+            RenderObject render = RenderObjectFactory.Instance.CreateRenderObject("perceptron", polygon);
             scene.AddObject(render);
 
             return CommandResult.Success;

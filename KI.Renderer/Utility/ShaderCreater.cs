@@ -42,15 +42,15 @@ namespace KI.Asset
         /// </summary>
         /// <param name="renderObject">描画オブジェクト</param>
         /// <returns>ファイルパス</returns>
-        public string GetVertexShader(RenderObject renderObject)
+        public string GetVertexShader(Polygon polygon)
         {
-            if (renderObject.Polygon.Type == PrimitiveType.Lines ||
-                renderObject.Polygon.Type == PrimitiveType.Points)
+            if (polygon.Type == PrimitiveType.Lines ||
+                polygon.Type == PrimitiveType.Points)
             {
                 return Directory + @"GBuffer\GeneralPC.vert";
             }
 
-            if (renderObject.Polygon.Textures.Count != 0)
+            if (polygon.Textures.Count != 0)
             {
                 return Directory + @"GBuffer\GeneralPNCT.vert";
             }
@@ -65,21 +65,21 @@ namespace KI.Asset
         /// </summary>
         /// <param name="renderObject">描画オブジェクト</param>
         /// <returns>ファイルパス</returns>
-        public string GetFragShader(RenderObject renderObject)
+        public string GetFragShader(Polygon polygon)
         {
-            string shaderPath = GetTextureFragShader(renderObject.Polygon);
+            string shaderPath = GetTextureFragShader(polygon);
             if (shaderPath != null)
             {
                 return shaderPath;
             }
 
-            if (renderObject.Polygon.Type == PrimitiveType.Lines ||
-                renderObject.Polygon.Type == PrimitiveType.Points)
+            if (polygon.Type == PrimitiveType.Lines ||
+                polygon.Type == PrimitiveType.Points)
             {
                 return Directory + @"GBuffer\GeneralPC.frag";
             }
 
-            if (renderObject.Polygon.Textures.Count != 0)
+            if (polygon.Textures.Count != 0)
             {
                 return Directory + @"GBuffer\GeneralPNT.frag";
             }
@@ -150,12 +150,12 @@ namespace KI.Asset
                 case ShaderType.NURBS:
                     return ShaderFactory.Instance.CreateShaderVF(
                         Directory + @"Special\nurbs.vert",
-                                                Directory + @"Special\nurbs.frag",
+                        Directory + @"Special\nurbs.frag",
                         ShaderStage.Geometry);
                 case ShaderType.Fur:
                     return ShaderFactory.Instance.CreateShaderVF(
                         Directory + @"Special\fur.vert",
-                                                Directory + @"Special\fur.frag",
+                        Directory + @"Special\fur.frag",
                         ShaderStage.Geometry);
                 case ShaderType.Outline:
                     return ShaderFactory.Instance.CreateGeometryShader(

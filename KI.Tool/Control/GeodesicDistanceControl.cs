@@ -49,9 +49,8 @@ namespace KI.Tool.Control
                     if (renderObject.Polygon is HalfEdgeDS)
                     {
                         geodesic = new GeodesicDistanceAlgorithm(renderObject.Polygon as HalfEdgeDS);
-                        RenderObject pointObject = RenderObjectFactory.Instance.CreateRenderObject("Picking");
                         Polygon polygon = new Polygon("Picking", new List<Vertex>() { new Vertex(0, selectVertex.Position, Vector3.UnitY) });
-                        pointObject.SetPolygon(polygon);
+                        RenderObject pointObject = RenderObjectFactory.Instance.CreateRenderObject("Picking", polygon);
                         pointObject.ModelMatrix = renderObject.ModelMatrix;
                         Global.Renderer.ActiveScene.AddObject(pointObject);
 

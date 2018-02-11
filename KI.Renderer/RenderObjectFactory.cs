@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using KI.Asset;
 using KI.Foundation.Core;
+using KI.Gfx.Geometry;
+using KI.Gfx.KIShader;
 using OpenTK;
 
 namespace KI.Renderer
@@ -24,9 +26,13 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="name">名前</param>
         /// <returns>描画オブジェクト</returns>
-        public RenderObject CreateRenderObject(string name)
+        public RenderObject CreateRenderObject(string name, Polygon polygon)
         {
-            var renderObject = new RenderObject(name);
+            string vert = ShaderCreater.Instance.GetVertexShader(polygon);
+            string frag = ShaderCreater.Instance.GetFragShader(polygon);
+            var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag, ShaderStage.Geometry);
+
+            var renderObject = new RenderObject(name, polygon, shader);
             AddItem(renderObject);
             return renderObject;
         }
@@ -39,9 +45,7 @@ namespace KI.Renderer
         /// <returns>描画オブジェクト</returns>
         public RenderObject CreateRenderObject(string name, IPolygon primitive)
         {
-            var renderObject = new RenderObject(name, primitive.Polygons.First());
-            AddItem(renderObject);
-            return renderObject;
+            return CreateRenderObject(name, primitive.Polygons.First());
         }
 
         /// <summary>
@@ -55,9 +59,8 @@ namespace KI.Renderer
             var list = new List<RenderObject>();
             foreach (var info in primitive.Polygons)
             {
-                var renderObject = new RenderObject(name, info);
+                var renderObject = CreateRenderObject(name, primitive);
                 list.Add(renderObject);
-                AddItem(renderObject);
             }
 
             return list;

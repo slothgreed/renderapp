@@ -29,29 +29,16 @@ namespace KI.Renderer
     /// </summary>
     public class RenderObject : SceneNode
     {
-        /// <summary>
-        /// 形状データ
-        /// </summary>
-        private Polygon polygon;
-
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        /// <param name="name">名前</param>
-        public RenderObject(string name)
-            : base(name)
-        {
-        }
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="polygon">形状</param>
-        public RenderObject(string name, Polygon polygon)
+        public RenderObject(string name, Polygon polygon, Shader shader)
             : base(name)
         {
-            SetPolygon(polygon, null);
+            SetPolygon(polygon, shader);
         }
 
         /// <summary>
@@ -100,6 +87,11 @@ namespace KI.Renderer
                 GeometryAttribute.Shader = value;
             }
         }
+
+        /// <summary>
+        /// 形状データ
+        /// </summary>
+        private Polygon polygon;
 
         /// <summary>
         /// 形状
@@ -166,26 +158,15 @@ namespace KI.Renderer
         /// 形状をセット
         /// </summary>
         /// <param name="polygon">形状情報</param>
-        public void SetPolygon(Polygon polygon, AttributeBase material = null)
+        private void SetPolygon(Polygon polygon, Shader shader)
         {
             Polygon = polygon;
 
-            if (material == null)
-            {
-                string vert = ShaderCreater.Instance.GetVertexShader(this);
-                string frag = ShaderCreater.Instance.GetFragShader(this);
-                var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag, ShaderStage.Geometry);
-                material = new GeometryAttribute("Attribute:" + Name, polygon, shader);
-            }
+            GeometryAttribute = new GeometryAttribute("Attribute:" + Name, polygon, shader);
 
-            if (GeometryAttribute == null)
+            if (!Attributes.Contains(GeometryAttribute))
             {
-                GeometryAttribute = material as GeometryAttribute;
-            }
-
-            if (!Attributes.Contains(material))
-            {
-                Attributes.Add(material);
+                Attributes.Add(GeometryAttribute);
             }
 
         }

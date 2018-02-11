@@ -85,8 +85,7 @@ namespace KI.Tool.Command
             }
 
             Polygon polygon = new Polygon("ConvexHull:" + renderObject.Name, meshs, PrimitiveType.Triangles);
-            RenderObject convex = RenderObjectFactory.Instance.CreateRenderObject("ConvexHull :" + renderObject.Name);
-            convex.SetPolygon(polygon);
+            RenderObject convex = RenderObjectFactory.Instance.CreateRenderObject("ConvexHull :" + renderObject.Name, polygon);
             convex.ModelMatrix = renderObject.ModelMatrix;
             scene.AddObject(convex);
 

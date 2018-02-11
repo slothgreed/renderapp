@@ -80,9 +80,8 @@ namespace KI.Tool.Command
             var voxel = new VoxelSpace(renderObject.Polygon.Vertexs.Select(p => p.Position).ToList(), renderObject.Polygon.Index, partition, min, max);
             var marching = new MarchingCubesAlgorithm(voxel, 0.8f);
 
-            RenderObject marghingObject = RenderObjectFactory.Instance.CreateRenderObject("MarchingCube :" + renderObject.Name);
-            var polygon = new Polygon(marghingObject.Name, marching.Meshs, PrimitiveType.Triangles);
-            marghingObject.SetPolygon(polygon);
+            var polygon = new Polygon("MarchingCube :" + renderObject.Name, marching.Meshs, PrimitiveType.Triangles);
+            RenderObject marghingObject = RenderObjectFactory.Instance.CreateRenderObject(polygon.Name, polygon);
             marghingObject.ModelMatrix = renderObject.ModelMatrix;
             scene.AddObject(marghingObject);
 

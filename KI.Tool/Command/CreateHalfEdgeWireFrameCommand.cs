@@ -87,9 +87,8 @@ namespace KI.Tool.Command
                 }
             }
 
-            RenderObject wireframe = RenderObjectFactory.Instance.CreateRenderObject("HalfEdgeWireFrame :" + renderObject.Name);
-
-            wireframe.SetPolygon(new Polygon("HalfEdgeWireFrame :" + renderObject.Name, lines));
+            var polygon = new Polygon("HalfEdgeWireFrame :" + renderObject.Name, lines);
+            RenderObject wireframe = RenderObjectFactory.Instance.CreateRenderObject("HalfEdgeWireFrame :" + renderObject.Name, polygon);
             wireframe.ModelMatrix = renderObject.ModelMatrix;
             scene.AddObject(wireframe);
 
