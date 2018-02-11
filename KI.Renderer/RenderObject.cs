@@ -174,7 +174,7 @@ namespace KI.Renderer
             {
                 string vert = ShaderCreater.Instance.GetVertexShader(this);
                 string frag = ShaderCreater.Instance.GetFragShader(this);
-                var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
+                var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag, ShaderStage.Geometry);
                 material = new GeometryAttribute("Attribute:" + Name, polygon, shader);
             }
 

@@ -61,10 +61,11 @@ namespace KI.Gfx.KIShader
         /// vert,frag専用ファイル名は同一のもの
         /// </summary>
         /// <param name="path">ファイルパス</param>
+        /// <param name="stage">シェーダステージ</param>
         /// <returns>シェーダ</returns>
-        public Shader CreateShaderVF(string path)
+        public Shader CreateShaderVF(string path, ShaderStage stage)
         {
-            return CreateShaderVF(path + ".vert", path + ".frag");
+            return CreateShaderVF(path + ".vert", path + ".frag", stage);
         }
 
         /// <summary>
@@ -73,7 +74,7 @@ namespace KI.Gfx.KIShader
         /// <param name="vPath">頂点パス</param>
         /// <param name="fPath">フラグパス</param>
         /// <returns>シェーダ</returns>
-        public Shader CreateShaderVF(string vPath, string fPath)
+        public Shader CreateShaderVF(string vPath, string fPath, ShaderStage stage)
         {
             Shader shader = FindShader(vPath, fPath);
             if (shader == null)
@@ -82,7 +83,7 @@ namespace KI.Gfx.KIShader
                 string fname = Path.GetFileName(fPath);
                 ShaderProgram vert = ShaderProgramFactory.Instance.CreateShaderProgram(vPath, vPath);
                 ShaderProgram frag = ShaderProgramFactory.Instance.CreateShaderProgram(fPath, fPath);
-                shader = new Shader(vert, frag);
+                shader = new Shader(vert, frag, stage);
                 Shaders.Add(vname + fname, shader);
             }
 
@@ -94,9 +95,9 @@ namespace KI.Gfx.KIShader
         /// </summary>
         /// <param name="path">ファイルパス</param>
         /// <returns>シェーダ</returns>
-        public Shader CreateGeometryShader(string path)
+        public Shader CreateGeometryShader(string path, ShaderStage stage)
         {
-            return CreateGeometryShader(path + ".vert", path + ".frag", path + ".geom");
+            return CreateGeometryShader(path + ".vert", path + ".frag", path + ".geom", stage);
         }
 
         /// <summary>
@@ -104,8 +105,10 @@ namespace KI.Gfx.KIShader
         /// </summary>
         /// <param name="vPath">頂点パス</param>
         /// <param name="fPath">フラグパス</param>
+        /// <param name="gPath">ジオメトリシェーダ</param>
+        /// <param name="stage">シェーダステージ</param>
         /// <returns>シェーダ</returns>
-        public Shader CreateGeometryShader(string vPath, string fPath, string gPath)
+        public Shader CreateGeometryShader(string vPath, string fPath, string gPath, ShaderStage stage)
         {
             Shader shader = FindShader(vPath, fPath, gPath);
             if (shader == null)
@@ -116,7 +119,7 @@ namespace KI.Gfx.KIShader
                 ShaderProgram vert = ShaderProgramFactory.Instance.CreateShaderProgram(vPath, vPath);
                 ShaderProgram frag = ShaderProgramFactory.Instance.CreateShaderProgram(fPath, fPath);
                 ShaderProgram geom = ShaderProgramFactory.Instance.CreateShaderProgram(gPath, gPath);
-                shader = new Shader(vert, frag, geom);
+                shader = new Shader(vert, frag, geom, stage);
                 Shaders.Add(vname + fname + geom, shader);
             }
 

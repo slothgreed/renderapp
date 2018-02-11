@@ -29,12 +29,12 @@ namespace RenderApp.View
             var version = assembly.GetName().Version;
             var fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
             var baseDate = new DateTime(2000, 1, 1);
-            this.Version.Content = string.Format("Version :{0}.{1}.{2}.{3}", 
+            this.Version.Content = string.Format("Version : {0}.{1}.{2}.{3}", 
                 fileVersionInfo.ProductMajorPart,
                 fileVersionInfo.ProductMinorPart,
                 fileVersionInfo.ProductBuildPart,
                 fileVersionInfo.ProductPrivatePart);
-            this.Build.Content = string.Format("Build Date {0}", baseDate.AddDays(version.Build).ToShortDateString());
+            this.Build.Content = string.Format("Build Date : {0}", baseDate.AddDays(version.Build).ToShortDateString());
         }
 
 

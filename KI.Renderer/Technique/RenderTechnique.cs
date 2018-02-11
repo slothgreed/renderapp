@@ -173,7 +173,7 @@ namespace KI.Renderer
             // gbuffer用 以外はシェーダ作成
             if (vertexShader != null && fragShader != null)
             {
-                ShaderItem = ShaderFactory.Instance.CreateShaderVF(vertexShader, fragShader);
+                ShaderItem = ShaderFactory.Instance.CreateShaderVF(vertexShader, fragShader, ShaderStage.PostEffect);
             }
 
             Plane = RenderObjectFactory.Instance.CreateRenderObject(Name, AssetFactory.Instance.CreatePlane(Name));

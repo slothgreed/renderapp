@@ -137,17 +137,17 @@ namespace KI.Asset
             switch (type)
             {
                 case ShaderType.Bezier:
-                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"Special\bezier");
+                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"Special\bezier", ShaderStage.Geometry);
                 case ShaderType.Displacement:
-                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"Special\disp");
+                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"Special\disp", ShaderStage.Geometry);
                 case ShaderType.EffectLine:
-                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"Special\effectline");
+                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"Special\effectline", ShaderStage.Geometry);
                 case ShaderType.NURBS:
-                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"Special\nurbs");
+                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"Special\nurbs", ShaderStage.Geometry);
                 case ShaderType.Fur:
-                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"Special\fur");
+                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"Special\fur", ShaderStage.Geometry);
                 case ShaderType.Outline:
-                    return ShaderFactory.Instance.CreateGeometryShader(Directory + @"Special\outline");
+                    return ShaderFactory.Instance.CreateGeometryShader(Directory + @"Special\outline", ShaderStage.Geometry);
             }
 
             return null;

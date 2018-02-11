@@ -8,6 +8,14 @@ using OpenTK.Graphics.OpenGL;
 
 namespace KI.Gfx.KIShader
 {
+    public enum ShaderStage
+    {
+        Geometry,
+        Deferred,
+        PostEffect,
+        Forward
+    }
+
     /// <summary>
     /// シェーダ
     /// </summary>
@@ -29,8 +37,10 @@ namespace KI.Gfx.KIShader
         /// </summary>
         /// <param name="vert">頂点シェーダ</param>
         /// <param name="frag">フラグシェーダ</param>
-        public Shader(ShaderProgram vert, ShaderProgram frag)
+        /// <param name="stage">シェーダステージ</param>
+        public Shader(ShaderProgram vert, ShaderProgram frag, ShaderStage stage)
         {
+            Stage = stage;
             if (vert.ShaderType == ShaderType.VertexShader && frag.ShaderType == ShaderType.FragmentShader)
             {
                 VertexShader = vert;
@@ -47,8 +57,11 @@ namespace KI.Gfx.KIShader
         /// <param name="vert">頂点シェーダ</param>
         /// <param name="frag">フラグシェーダ</param>
         /// <param name="geom">ジオメトリシェーダ</param>
-        public Shader(ShaderProgram vert, ShaderProgram frag, ShaderProgram geom)
+        /// <param name="stage">シェーダステージ</param>
+        public Shader(ShaderProgram vert, ShaderProgram frag, ShaderProgram geom, ShaderStage stage)
         {
+            Stage = stage;
+
             if (vert.ShaderType == ShaderType.VertexShader &&
                 frag.ShaderType == ShaderType.FragmentShader &&
                 geom.ShaderType == ShaderType.GeometryShader)
@@ -70,8 +83,11 @@ namespace KI.Gfx.KIShader
         /// <param name="geom">ジオメトリシェーダ</param>
         /// <param name="tcs">テッセレーション制御シェーダ</param>
         /// <param name="tes">テッセレーション評価シェーダ</param>
-        public Shader(ShaderProgram vert, ShaderProgram frag, ShaderProgram geom, ShaderProgram tcs, ShaderProgram tes)
+        /// <param name="stage">シェーダステージ</param>
+        public Shader(ShaderProgram vert, ShaderProgram frag, ShaderProgram geom, ShaderProgram tcs, ShaderProgram tes, ShaderStage stage)
         {
+            Stage = stage;
+
             if (vert.ShaderType == ShaderType.VertexShader &&
                 frag.ShaderType == ShaderType.FragmentShader &&
                 geom.ShaderType == ShaderType.GeometryShader &&
@@ -95,8 +111,11 @@ namespace KI.Gfx.KIShader
         /// <param name="frag">フラグシェーダ</param>
         /// <param name="tcs">テッセレーション制御シェーダ</param>
         /// <param name="tes">テッセレーション評価シェーダ</param>
-        public Shader(ShaderProgram vert, ShaderProgram frag, ShaderProgram tcs, ShaderProgram tes)
+        /// <param name="stage">シェーダステージ</param>
+        public Shader(ShaderProgram vert, ShaderProgram frag, ShaderProgram tcs, ShaderProgram tes, ShaderStage stage)
         {
+            Stage = stage;
+
             if (vert.ShaderType == ShaderType.VertexShader &&
                 frag.ShaderType == ShaderType.FragmentShader &&
                 tcs.ShaderType == ShaderType.TessControlShader &&
@@ -113,6 +132,11 @@ namespace KI.Gfx.KIShader
         }
         #endregion
         #region [member value]
+
+        /// <summary>
+        /// シェーダステージ
+        /// </summary>
+        public ShaderStage Stage { get; private set; }
 
         /// <summary>
         /// シェーダプログラム
