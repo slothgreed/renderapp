@@ -30,7 +30,6 @@ namespace KI.Renderer.Technique
                 {
                     EnvironmentProbe env = probe.KIObject as EnvironmentProbe;
                     Plane.Polygon.AddTexture(TextureKind.Cubemap, env.Cubemap);
-                    Plane.Shader = ShaderItem;
                     Plane.Render(scene);
                 }
             }

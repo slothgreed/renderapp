@@ -54,7 +54,6 @@ namespace KI.Renderer.Technique
                 GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
                 RenderTarget.ClearBuffer();
                 RenderTarget.BindRenderTarget(OutputTexture);
-                Plane.Shader = ShaderItem;
                 Plane.Render(scene);
                 RenderTarget.UnBindRenderTarget();
                 GL.Disable(EnableCap.Blend);

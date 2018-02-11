@@ -100,7 +100,6 @@ namespace KI.Renderer
                 PostEffect.Render(ActiveScene);
             }
 
-            OutputBuffer.uSelectMap = OutputBuffer.OutputTexture[0];
             OutputBuffer.uTarget = OutputTexture;
             OutputBuffer.Render(ActiveScene);
         }

@@ -43,7 +43,7 @@ namespace KI.Renderer.Technique
         /// </summary>
         /// <param name="width">横</param>
         /// <param name="height">縦</param>
-        public override void CreateRenderTarget(int width, int height)
+        protected override void CreateRenderTarget(int width, int height)
         {
             OutputTexture = new Texture[4]
             {

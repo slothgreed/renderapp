@@ -28,7 +28,6 @@ namespace KI.Renderer.Technique
             {
                 if (light.KIObject is Light)
                 {
-                    Plane.Shader = ShaderItem;
                     Plane.Render(scene);
                 }
             }

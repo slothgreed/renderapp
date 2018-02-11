@@ -64,11 +64,6 @@ namespace KI.Renderer.Technique
         public RenderTechniqueType Technique { get; private set; }
 
         /// <summary>
-        /// シェーダ
-        /// </summary>
-        public Shader ShaderItem { get; set; }
-
-        /// <summary>
         /// レンダリングターゲット
         /// </summary>
         public RenderTarget RenderTarget { get; set; }
@@ -79,7 +74,7 @@ namespace KI.Renderer.Technique
         public Texture[] OutputTexture { get; protected set; }
 
         /// <summary>
-        /// ポストプロセス用平面
+        /// オフスクリーン用平面
         /// </summary>
         protected RenderObject Plane { get; set; }
 
@@ -117,7 +112,6 @@ namespace KI.Renderer.Technique
             {
                 RenderTarget.ClearBuffer();
                 RenderTarget.BindRenderTarget(OutputTexture);
-                Plane.Shader = ShaderItem;
                 Plane.Render(scene);
                 RenderTarget.UnBindRenderTarget();
             }
@@ -135,7 +129,7 @@ namespace KI.Renderer.Technique
         /// </summary>
         /// <param name="width">横</param>
         /// <param name="height">縦</param>
-        public virtual void CreateRenderTarget(int width, int height)
+        protected virtual void CreateRenderTarget(int width, int height)
         {
             OutputTexture = new Texture[] { TextureFactory.Instance.CreateTexture("Texture:" + Name, width, height) };
             RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget("RenderTarget:" + Name, width, height, OutputTexture.Length);
@@ -151,7 +145,7 @@ namespace KI.Renderer.Technique
         /// <param name="memberName">シェーダ変数名</param>
         protected void SetValue<T>(ref T member, T value, [CallerMemberName]string memberName = "")
         {
-            if (ShaderItem.SetValue(memberName, value))
+            if (Plane.Shader.SetValue(memberName, value))
             {
                 member = value;
             }
@@ -168,13 +162,13 @@ namespace KI.Renderer.Technique
         /// <param name="fragShader">フラグシェーダ</param>
         private void Init(string vertexShader = null, string fragShader = null)
         {
+            Plane = RenderObjectFactory.Instance.CreateRenderObject(Name, AssetFactory.Instance.CreatePlane(Name));
             // gbuffer用 以外はシェーダ作成
             if (vertexShader != null && fragShader != null)
             {
-                ShaderItem = ShaderFactory.Instance.CreateShaderVF(vertexShader, fragShader, ShaderStage.PostEffect);
+                Plane.Shader = ShaderFactory.Instance.CreateShaderVF(vertexShader, fragShader, ShaderStage.PostEffect);
             }
 
-            Plane = RenderObjectFactory.Instance.CreateRenderObject(Name, AssetFactory.Instance.CreatePlane(Name));
             CreateRenderTarget(KI.Gfx.GLUtil.DeviceContext.Instance.Width, KI.Gfx.GLUtil.DeviceContext.Instance.Height);
             Initialize();
         }
