@@ -1,4 +1,5 @@
-﻿using KI.Asset;
+﻿using System.Runtime.CompilerServices;
+using KI.Asset;
 using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
 

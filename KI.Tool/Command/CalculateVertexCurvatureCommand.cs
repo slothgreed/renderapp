@@ -168,7 +168,10 @@ namespace KI.Tool.Command
             scene.AddObject(minAttribute, parentNode);
             scene.AddObject(maxAttribute, parentNode);
 
-            var wireFrameShader = ShaderFactory.Instance.CreateShaderVF(ShaderCreater.Instance.Directory + @"GBuffer\WireFrame", ShaderStage.Geometry);
+            var wireFrameShader = ShaderFactory.Instance.CreateShaderVF(
+                ShaderCreater.Instance.Directory + @"GBuffer\WireFrame.vert",
+                ShaderCreater.Instance.Directory + @"GBuffer\WireFrame.frag",
+                ShaderStage.Geometry);
 
             var normals = renderObject.Polygon.Vertexs.Select(p => p.Normal).ToArray();
             var dirMinAttribute = new DirectionAttribute(renderObject.Name + " : MinDirection", wireFrameShader, dirMinLine.ToArray(), new Vector4(1, 0, 0, 1), normals);

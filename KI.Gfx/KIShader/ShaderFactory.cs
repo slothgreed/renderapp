@@ -20,52 +20,25 @@ namespace KI.Gfx.KIShader
         public Dictionary<string, Shader> Shaders { get; } = new Dictionary<string, Shader>();
 
         /// <summary>
-        /// 同一シェーダの確認
+        /// 同一シェーダの探索
         /// </summary>
         /// <param name="vert">頂点シェーダ</param>
         /// <param name="frag">フラグシェーダ</param>
+        /// <param name="geom">ジオメトリシェーダ</param>
+        /// <param name="tcs">テッセレーション制御シェーダ</param>
+        /// <param name="tes">テッセレーション評価シェーダ</param>
         /// <returns>シェーダ</returns>
-        public Shader FindShader(string vert, string frag)
+        public Shader FindShader(string vert, string frag, string geom, string tcs, string tes)
         {
             foreach (var sh in Shaders.Values)
             {
-                if (sh.FindShaderCombi(vert, frag))
+                if (sh.FindShaderCombi(vert, frag, null, null, null))
                 {
                     return sh;
                 }
             }
 
             return null;
-        }
-
-        /// <summary>
-        /// 同一シェーダの確認
-        /// </summary>
-        /// <param name="vert">頂点シェーダ</param>
-        /// <param name="frag">フラグシェーダ</param>
-        /// <returns>シェーダ</returns>
-        public Shader FindShader(string vert, string frag, string geom)
-        {
-            foreach (var sh in Shaders.Values)
-            {
-                if (sh.FindShaderCombi(vert, frag, geom))
-                {
-                    return sh;
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// vert,frag専用ファイル名は同一のもの
-        /// </summary>
-        /// <param name="path">ファイルパス</param>
-        /// <param name="stage">シェーダステージ</param>
-        /// <returns>シェーダ</returns>
-        public Shader CreateShaderVF(string path, ShaderStage stage)
-        {
-            return CreateShaderVF(path + ".vert", path + ".frag", stage);
         }
 
         /// <summary>
@@ -76,7 +49,7 @@ namespace KI.Gfx.KIShader
         /// <returns>シェーダ</returns>
         public Shader CreateShaderVF(string vPath, string fPath, ShaderStage stage)
         {
-            Shader shader = FindShader(vPath, fPath);
+            Shader shader = FindShader(vPath, fPath, null, null, null);
             if (shader == null)
             {
                 string vname = Path.GetFileName(vPath);
@@ -91,16 +64,6 @@ namespace KI.Gfx.KIShader
         }
 
         /// <summary>
-        /// vert,frag専用ファイル名は同一のもの
-        /// </summary>
-        /// <param name="path">ファイルパス</param>
-        /// <returns>シェーダ</returns>
-        public Shader CreateGeometryShader(string path, ShaderStage stage)
-        {
-            return CreateGeometryShader(path + ".vert", path + ".frag", path + ".geom", stage);
-        }
-
-        /// <summary>
         /// 頂点シェーダとフラグメントシェーダとジオメトリシェーダのみのシェーダの作成
         /// </summary>
         /// <param name="vPath">頂点パス</param>
@@ -110,7 +73,7 @@ namespace KI.Gfx.KIShader
         /// <returns>シェーダ</returns>
         public Shader CreateGeometryShader(string vPath, string fPath, string gPath, ShaderStage stage)
         {
-            Shader shader = FindShader(vPath, fPath, gPath);
+            Shader shader = FindShader(vPath, fPath, gPath, null, null);
             if (shader == null)
             {
                 string vname = Path.GetFileName(vPath);

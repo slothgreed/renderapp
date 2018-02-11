@@ -25,11 +25,7 @@ namespace KI.Asset
     /// </summary>
     public class ShaderCreater
     {
-        /// <summary>
-        /// シングルトンインスタンス
-        /// </summary>
-        public static ShaderCreater Instance { get; } = new ShaderCreater();
-
+        public static ShaderCreater Instance = new ShaderCreater();
         /// <summary>
         /// シェーダディレクトリ
         /// </summary>
@@ -137,35 +133,39 @@ namespace KI.Asset
             switch (type)
             {
                 case ShaderType.Bezier:
-                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"Special\bezier", ShaderStage.Geometry);
+                    return ShaderFactory.Instance.CreateShaderVF(
+                        Directory + @"Special\bezier.vert",
+                        Directory + @"Special\bezier.frag",
+                        ShaderStage.Geometry);
                 case ShaderType.Displacement:
-                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"Special\disp", ShaderStage.Geometry);
+                    return ShaderFactory.Instance.CreateShaderVF(
+                        Directory + @"Special\disp.vert",
+                        Directory + @"Special\disp.frag",
+                        ShaderStage.Geometry);
                 case ShaderType.EffectLine:
-                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"Special\effectline", ShaderStage.Geometry);
+                    return ShaderFactory.Instance.CreateShaderVF(
+                        Directory + @"Special\effectline.vert",
+                        Directory + @"Special\effectline.frag",
+                        ShaderStage.Geometry);
                 case ShaderType.NURBS:
-                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"Special\nurbs", ShaderStage.Geometry);
+                    return ShaderFactory.Instance.CreateShaderVF(
+                        Directory + @"Special\nurbs.vert",
+                                                Directory + @"Special\nurbs.frag",
+                        ShaderStage.Geometry);
                 case ShaderType.Fur:
-                    return ShaderFactory.Instance.CreateShaderVF(Directory + @"Special\fur", ShaderStage.Geometry);
+                    return ShaderFactory.Instance.CreateShaderVF(
+                        Directory + @"Special\fur.vert",
+                                                Directory + @"Special\fur.frag",
+                        ShaderStage.Geometry);
                 case ShaderType.Outline:
-                    return ShaderFactory.Instance.CreateGeometryShader(Directory + @"Special\outline", ShaderStage.Geometry);
+                    return ShaderFactory.Instance.CreateGeometryShader(
+                        Directory + @"Special\outline.vert",
+                        Directory + @"Special\outline.frag",
+                        Directory + @"Special\outline.geom",
+                        ShaderStage.Geometry);
             }
 
             return null;
-        }
-
-        /// <summary>
-        /// 形状データのバッファ状態の取得
-        /// </summary>
-        /// <param name="buffer">バッファ</param>
-        /// <returns>enable</returns>
-        private bool CheckBufferEnable(BufferObject buffer)
-        {
-            if (buffer == null)
-            {
-                return false;
-            }
-
-            return buffer.Enable;
         }
     }
 }

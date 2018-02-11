@@ -180,70 +180,21 @@ namespace KI.Gfx.KIShader
 
         #endregion
 
-        public bool ExistShaderProgram(ShaderProgram prog, string path)
-        {
-            if (prog == null)
-            {
-                return false;
-            }
-
-            if (prog.FilePath == path)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        public bool FindShaderCombi(string vert, string frag)
-        {
-            if (ExistShaderProgram(VertexShader, vert) &&
-               ExistShaderProgram(FragShader, frag))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public bool FindShaderCombi(string vert, string frag, string geom)
-        {
-            if (ExistShaderProgram(VertexShader, vert) &&
-               ExistShaderProgram(FragShader, frag) &&
-               ExistShaderProgram(GeomShader, geom))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public bool FindShaderCombi(string vert, string frag, string tes, string tcs)
-        {
-            if (ExistShaderProgram(VertexShader, vert) &&
-               ExistShaderProgram(FragShader, frag) &&
-               ExistShaderProgram(TesShader, tes) &&
-               ExistShaderProgram(TcsShader, tcs))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
+        /// <summary>
+        /// 同一シェーダの探索
+        /// </summary>
+        /// <param name="vert">頂点シェーダ</param>
+        /// <param name="frag">フラグシェーダ</param>
+        /// <param name="geom">ジオメトリシェーダ</param>
+        /// <param name="tcs">テッセレーション制御シェーダ</param>
+        /// <param name="tes">テッセレーション評価シェーダ</param>
         public bool FindShaderCombi(string vert, string frag, string geom, string tes, string tcs)
         {
-            if (ExistShaderProgram(VertexShader, vert) &&
-               ExistShaderProgram(FragShader, frag) &&
-               ExistShaderProgram(GeomShader, geom) &&
-               ExistShaderProgram(TesShader, tes) &&
-               ExistShaderProgram(TcsShader, tcs))
+            if (VertexShader?.FilePath == vert &&
+               FragShader?.FilePath == frag &&
+               GeomShader?.FilePath == geom &&
+               TesShader?.FilePath == tes &&
+               TcsShader?.FilePath == tcs)
             {
                 return true;
             }

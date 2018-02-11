@@ -73,12 +73,6 @@ namespace KI.Asset
             return new Plane(name);
         }
 
-        //public List<RenderObject> CreateWorld(string name, Vector3 min, Vector3 max)
-        //{
-        //    Cube cube = new Cube("World", min, max);
-        //    return cube.ConvertGeometrys(true);
-        //}
-
         /// <summary>
         /// 3dモデルのロード
         /// </summary>
