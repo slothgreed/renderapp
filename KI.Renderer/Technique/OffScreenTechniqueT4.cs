@@ -2,7 +2,7 @@
 using KI.Gfx.KITexture;
 namespace KI.Renderer
 {
-	public partial class Selection : RenderTechnique
+	public partial class Selection : OffScreenTechnique
 	{
 		private int _uID;
 		public int uID
@@ -18,7 +18,7 @@ namespace KI.Renderer
 			}
 		}
 	}
-	public partial class Bloom : RenderTechnique
+	public partial class Bloom : OffScreenTechnique
 	{
 		private float _uScale;
 		public float uScale
@@ -73,7 +73,7 @@ namespace KI.Renderer
 			}
 		}
 	}
-	public partial class Sobel : RenderTechnique
+	public partial class Sobel : OffScreenTechnique
 	{
 		private Texture _uTarget;
 		public Texture uTarget
@@ -128,7 +128,7 @@ namespace KI.Renderer
 			}
 		}
 	}
-	public partial class SSAO : RenderTechnique
+	public partial class SSAO : OffScreenTechnique
 	{
 		private Texture _uPosition;
 		public Texture uPosition
@@ -170,7 +170,7 @@ namespace KI.Renderer
 			}
 		}
 	}
-	public partial class SSLIC : RenderTechnique
+	public partial class SSLIC : OffScreenTechnique
 	{
 		private Texture _uPosit;
 		public Texture uPosit
@@ -238,7 +238,7 @@ namespace KI.Renderer
 			}
 		}
 	}
-	public partial class OutputBuffer : RenderTechnique
+	public partial class OutputBuffer : OffScreenTechnique
 	{
 		private Texture _uSelectMap;
 		public Texture uSelectMap

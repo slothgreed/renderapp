@@ -6,7 +6,7 @@ namespace KI.Renderer
     /// <summary>
     /// 形状選択ようのレンダリング
     /// </summary>
-    public partial class Selection : RenderTechnique
+    public partial class Selection : OffScreenTechnique
     {
         /// <summary>
         /// コンストラクタ

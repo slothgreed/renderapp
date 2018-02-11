@@ -3,7 +3,7 @@
     /// <summary>
     /// Sobel
     /// </summary>
-    public partial class Sobel : RenderTechnique
+    public partial class Sobel : OffScreenTechnique
     {
         /// <summary>
         /// 閾値の最大値

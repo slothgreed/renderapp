@@ -5,7 +5,7 @@ namespace KI.Renderer
     /// <summary>
     /// シャドウマップ
     /// </summary>
-    public class ShadowMap : RenderTechnique
+    public class ShadowMap : OffScreenTechnique
     {
         /// <summary>
         /// コンストラクタ

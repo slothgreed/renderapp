@@ -6,12 +6,12 @@ namespace KI.Renderer
     /// <summary>
     /// Deferred Rendering
     /// </summary>
-    public class DeferredBuffer : RenderTechnique
+    public class DeferredRendering : OffScreenTechnique
     {
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public DeferredBuffer(string vertexShader, string fragShader)
+        public DeferredRendering(string vertexShader, string fragShader)
             : base("Deferred", vertexShader, fragShader, RenderTechniqueType.Deferred, RenderType.Original)
         {
         }

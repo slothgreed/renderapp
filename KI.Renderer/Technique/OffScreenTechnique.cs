@@ -13,7 +13,7 @@ namespace KI.Renderer
     /// <summary>
     /// レンダーテクニック
     /// </summary>
-    public abstract class RenderTechnique : KIObject
+    public abstract class OffScreenTechnique : KIObject
     {
         /// <summary>
         /// 描画タイプ
@@ -26,7 +26,7 @@ namespace KI.Renderer
         /// <param name="name">名前</param>
         /// <param name="tech">レンダーテクニックの種類</param>
         /// <param name="type">レンダリングタイプ</param>
-        public RenderTechnique(string name, RenderTechniqueType tech, RenderType type)
+        public OffScreenTechnique(string name, RenderTechniqueType tech, RenderType type)
             : base(name)
         {
             renderType = type;
@@ -42,7 +42,7 @@ namespace KI.Renderer
         /// <param name="fragShader">フラグシェーダ</param>
         /// <param name="tech">レンダーテクニックの種類</param>
         /// <param name="type">レンダリングタイプ</param>
-        public RenderTechnique(string name, string vertexShader, string fragShader, RenderTechniqueType tech, RenderType type)
+        public OffScreenTechnique(string name, string vertexShader, string fragShader, RenderTechniqueType tech, RenderType type)
             : base(name)
         {
             renderType = type;
@@ -140,7 +140,6 @@ namespace KI.Renderer
         {
             OutputTexture = new Texture[] { TextureFactory.Instance.CreateTexture("Texture:" + Name, width, height) };
             RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget("RenderTarget:" + Name, width, height, OutputTexture.Length);
-            //RenderTarget = RenderTargetFactory.Instance.Default;
             RenderTarget.SizeChanged(width, height);
         }
 

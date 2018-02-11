@@ -8,7 +8,7 @@ namespace KI.Renderer
     /// <summary>
     /// スクリーンスペースLIC
     /// </summary>
-    public partial class SSLIC : RenderTechnique
+    public partial class SSLIC : OffScreenTechnique
     {
         /// <summary>
         /// コンストラクタ

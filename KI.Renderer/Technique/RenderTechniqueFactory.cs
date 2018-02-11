@@ -26,7 +26,7 @@ namespace KI.Renderer
     /// <summary>
     /// レンダーテクニックのファクトリークラス
     /// </summary>
-    public class RenderTechniqueFactory : KIFactoryBase<RenderTechnique>
+    public class RenderTechniqueFactory : KIFactoryBase<OffScreenTechnique>
     {
         /// <summary>
         /// シェーダファイルクラス
@@ -73,9 +73,9 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="type">テクニックのタイプ</param>
         /// <returns>レンダーテクニック</returns>
-        public RenderTechnique CreateRenderTechnique(RenderTechniqueType type)
+        public OffScreenTechnique CreateRenderTechnique(RenderTechniqueType type)
         {
-            RenderTechnique technique = null;
+            OffScreenTechnique technique = null;
             switch (type)
             {
                 case RenderTechniqueType.Shadow:
@@ -85,7 +85,7 @@ namespace KI.Renderer
                     technique = new GBuffer();
                     break;
                 case RenderTechniqueType.Deferred:
-                    technique = new DeferredBuffer(DefaultShader[RenderTechniqueType.Deferred].Vertex, DefaultShader[RenderTechniqueType.Deferred].Frag);
+                    technique = new DeferredRendering(DefaultShader[RenderTechniqueType.Deferred].Vertex, DefaultShader[RenderTechniqueType.Deferred].Frag);
                     break;
                 case RenderTechniqueType.IBL:
                     technique = new ImageBasedLighting(DefaultShader[RenderTechniqueType.IBL].Vertex, DefaultShader[RenderTechniqueType.IBL].Frag);

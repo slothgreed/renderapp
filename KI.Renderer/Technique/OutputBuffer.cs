@@ -6,7 +6,7 @@ namespace KI.Renderer
     /// <summary>
     /// 最終出力用のバッファ
     /// </summary>
-    public partial class OutputBuffer : RenderTechnique
+    public partial class OutputBuffer : OffScreenTechnique
     {
         /// <summary>
         /// コンストラクタ

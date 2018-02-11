@@ -6,7 +6,7 @@ namespace KI.Renderer
     /// <summary>
     /// IBL
     /// </summary>
-    public class ImageBasedLighting : RenderTechnique
+    public class ImageBasedLighting : OffScreenTechnique
     {
         /// <summary>
         /// コンストラクタ

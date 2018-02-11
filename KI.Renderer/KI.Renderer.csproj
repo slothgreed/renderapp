@@ -68,9 +68,9 @@
     <Compile Include="Technique\OutputBuffer.cs" />
     <Compile Include="Technique\PostEffect\Bloom.cs" />
     <Compile Include="Technique\PostEffect\DOF.cs" />
-    <Compile Include="Technique\RenderTechnique.cs" />
-    <Compile Include="Technique\RenderTechniqueT4.cs">
-      <DependentUpon>RenderTechniqueT4.tt</DependentUpon>
+    <Compile Include="Technique\OffScreenTechnique.cs" />
+    <Compile Include="Technique\OffScreenTechniqueT4.cs">
+      <DependentUpon>OffScreenTechniqueT4.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
@@ -90,9 +90,9 @@
     <Compile Include="Technique\SSLIC.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Technique\RenderTechniqueT4.tt">
+    <Content Include="Technique\OffScreenTechniqueT4.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>RenderTechniqueT4.cs</LastGenOutput>
+      <LastGenOutput>OffScreenTechniqueT4.cs</LastGenOutput>
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Content>
   </ItemGroup>

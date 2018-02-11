@@ -5,7 +5,7 @@ namespace KI.Renderer
     /// <summary>
     /// SSAO
     /// </summary>
-    public partial class SSAO : RenderTechnique
+    public partial class SSAO : OffScreenTechnique
     {
         /// <summary>
         /// コンストラクタ

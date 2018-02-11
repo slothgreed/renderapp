@@ -5,7 +5,7 @@ namespace KI.Renderer
     /// <summary>
     /// bloom
     /// </summary>
-    public partial class Bloom : RenderTechnique
+    public partial class Bloom : OffScreenTechnique
     {
         /// <summary>
         /// 重み

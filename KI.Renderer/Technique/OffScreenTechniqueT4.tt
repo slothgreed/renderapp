@@ -43,7 +43,7 @@ namespace KI.Renderer
 <#
 	for(int classIndex = 0; classIndex < classProperty.Length; classIndex++){
 #>
-	public partial class <#=classProperty[classIndex].Item1#> : RenderTechnique
+	public partial class <#=classProperty[classIndex].Item1#> : OffScreenTechnique
 	{
 <#
 	for(int propetyIndex = 0; propetyIndex < classProperty[classIndex].Item2.Length; propetyIndex++){

@@ -7,7 +7,7 @@ namespace KI.Renderer
     /// <summary>
     /// GBuffer
     /// </summary>
-    public class GBuffer : RenderTechnique
+    public class GBuffer : OffScreenTechnique
     {
         /// <summary>
         /// コンストラクタ
