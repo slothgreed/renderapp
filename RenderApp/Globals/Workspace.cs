@@ -115,8 +115,8 @@ namespace RenderApp.Globals
 
             CommandManager.Instance.Execute(new CreateWireFrameCommand(MainScene, renderBunny), null, false);
             var attribute = new KI.Renderer.Attribute.OutlineAttribute(renderBunny.Name + "Outline",
-                renderBunny.PolygonAttribute.VertexBuffer.ShallowCopy(), 
-                renderBunny.PolygonAttribute.Type,
+                renderBunny.VertexBuffer.ShallowCopy(), 
+                renderBunny.Polygon.Type,
                 ShaderCreater.Instance.CreateShader(ShaderType.Outline));
             renderBunny.Attributes.Add(attribute);
 

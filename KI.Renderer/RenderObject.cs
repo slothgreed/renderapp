@@ -59,11 +59,7 @@ namespace KI.Renderer
         /// <summary>
         /// 頂点バッファ
         /// </summary>
-        public VertexBuffer VertexBuffer
-        {
-            get;
-            set;
-        }
+        public VertexBuffer VertexBuffer { get; set; }
 
         /// <summary>
         /// 可視不可視
@@ -169,13 +165,14 @@ namespace KI.Renderer
         private void SetPolygon(Polygon polygon, Shader shader)
         {
             Polygon = polygon;
-            PolygonAttribute = new PolygonAttribute("Attribute:" + Name, polygon, shader);
+            VertexBuffer = new VertexBuffer();
+            VertexBuffer.SetupBuffer(Polygon);
 
+            PolygonAttribute = new PolygonAttribute("Attribute:" + Name, VertexBuffer.ShallowCopy(), Polygon.Type, shader);
             if (!Attributes.Contains(PolygonAttribute))
             {
                 Attributes.Add(PolygonAttribute);
             }
-
         }
 
         /// <summary>
@@ -196,7 +193,9 @@ namespace KI.Renderer
         /// <param name="e">イベント</param>
         private void OnPolygonUpdated(object sender, UpdatePolygonEventArgs e)
         {
-            PolygonAttribute.SetupBuffer();
+            VertexBuffer.SetupBuffer(Polygon);
         }
+
+        
     }
 }

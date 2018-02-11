@@ -13,11 +13,6 @@ namespace KI.Renderer.Attribute
     public abstract class AttributeBase : KIObject
     {
         /// <summary>
-        /// 頂点バッファ
-        /// </summary>
-        public VertexBuffer VertexBuffer { get; set; }
-
-        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
@@ -51,7 +46,12 @@ namespace KI.Renderer.Attribute
         /// <summary>
         /// レンダリングするときの種類
         /// </summary>
-        public PrimitiveType Type { get; set; }
+        public PrimitiveType Type { get; private set; }
+
+        /// <summary>
+        /// 頂点バッファ
+        /// </summary>
+        public VertexBuffer VertexBuffer { get; protected set; }
 
         /// <summary>
         /// 可視不可視

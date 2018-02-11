@@ -28,10 +28,9 @@ namespace KI.Renderer.Attribute
         /// <param name="name">名前</param>
         /// <param name="type">レンダリングタイプ</param>
         /// <param name="shader">シェーダ</param>
-        public OutlineAttribute(string name, VertexBuffer vertexBuffer, PrimitiveType type, Shader shader) 
-            : base(name, type, shader)
+        public OutlineAttribute(string name, VertexBuffer vertexBuffer, PrimitiveType type, Shader shader)
+            : base(name, vertexBuffer, type, shader)
         {
-            VertexBuffer = vertexBuffer;
             Offset = 0;
         }
     }

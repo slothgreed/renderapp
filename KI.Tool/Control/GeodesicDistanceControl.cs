@@ -6,6 +6,7 @@ using KI.Analyzer;
 using KI.Analyzer.Algorithm;
 using KI.Foundation.Utility;
 using KI.Gfx.Geometry;
+using KI.Gfx.GLUtil.Buffer;
 using KI.Renderer;
 using KI.Renderer.Attribute;
 using KI.Tool.Utility;
@@ -102,13 +103,15 @@ namespace KI.Tool.Control
                         
 
                         var colorAttribute = new VertexParameterAttribute("distanceColor", 
-                            renderObject.PolygonAttribute.VertexBuffer.ShallowCopy(), 
-                            renderObject.PolygonAttribute.Type, 
+                            renderObject.VertexBuffer.ShallowCopy(), 
+                            renderObject.Polygon.Type, 
                             renderObject.Shader, 
                             geodesicDistance);
 
                         Polygon lineGeometry = new Polygon("geodesicDistance", lines);
-                        var lineAttribute = new PolygonAttribute("geodesicDistance", lineGeometry, renderObject.Shader);
+                        var vertexBuffer = new VertexBuffer();
+                        vertexBuffer.SetupBuffer(lineGeometry);
+                        var lineAttribute = new PolygonAttribute("geodesicDistance", vertexBuffer, lineGeometry.Type, renderObject.Shader);
                         renderObject.Attributes.Add(lineAttribute);
                         Global.Renderer.ActiveScene.AddObject(lineAttribute, parentNode);
                     }

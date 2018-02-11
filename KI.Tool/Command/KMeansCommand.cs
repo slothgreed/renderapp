@@ -74,7 +74,7 @@ namespace KI.Tool.Command
             var parentNode = scene.FindNode(renderObject);
             var material = new VertexColorAttribute(
                 "KMeansClustering", 
-                renderObject.PolygonAttribute.VertexBuffer.ShallowCopy(),
+                renderObject.VertexBuffer.ShallowCopy(),
                 renderObject.Polygon.Type, 
                 renderObject.Shader,
                 colors);
