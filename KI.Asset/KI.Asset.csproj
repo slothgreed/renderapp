@@ -60,7 +60,7 @@
     <Compile Include="Attribute\WireFrameAttribute.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="EnvironmentProbe.cs" />
-    <Compile Include="Global.cs" />
+    <Compile Include="AssetDirectory.cs" />
     <Compile Include="Loader\Converter\ConverterUtility.cs" />
     <Compile Include="Loader\Converter\HalfEdgeConverter.cs" />
     <Compile Include="Loader\Converter\OBJConverter.cs" />
