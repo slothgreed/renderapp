@@ -6,7 +6,7 @@ using OpenTK;
 namespace KI.Mathmatics
 {
     /// <summary>
-    /// 計算用Utility関数
+    /// 計算
     /// </summary>
     public class Calculator
     {

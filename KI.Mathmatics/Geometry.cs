@@ -7,9 +7,11 @@ using OpenTK;
 
 namespace KI.Mathmatics
 {
+    /// <summary>
+    /// 幾何学演算
+    /// </summary>
     public static class Geometry
     {
-
         /// <summary>
         /// 法線の算出
         /// </summary>
@@ -58,6 +60,5 @@ namespace KI.Mathmatics
 
             return (float)Math.Sqrt(value);
         }
-
     }
 }

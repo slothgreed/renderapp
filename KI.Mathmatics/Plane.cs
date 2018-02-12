@@ -7,6 +7,9 @@ using OpenTK;
 
 namespace KI.Mathmatics
 {
+    /// <summary>
+    /// 平面
+    /// </summary>
     public static class Plane
     {
         /// <summary>

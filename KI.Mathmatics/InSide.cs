@@ -7,6 +7,9 @@ using OpenTK;
 
 namespace KI.Mathmatics
 {
+    /// <summary>
+    /// 内外判定
+    /// </summary>
     public static class Inside
     {
         /// <summary>

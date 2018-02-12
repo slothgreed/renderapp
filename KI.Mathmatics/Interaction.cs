@@ -7,6 +7,9 @@ using OpenTK;
 
 namespace KI.Mathmatics
 {
+    /// <summary>
+    /// 交差判定
+    /// </summary>
     public class Interaction
     {
         /// <summary>

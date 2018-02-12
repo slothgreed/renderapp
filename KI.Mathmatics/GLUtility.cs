@@ -7,6 +7,9 @@ using OpenTK;
 
 namespace KI.Mathmatics
 {
+    /// <summary>
+    /// GL用Utility
+    /// </summary>
     public static class GLUtility
     {
         /// <summary>
