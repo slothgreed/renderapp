@@ -51,9 +51,9 @@ namespace KI.Asset
 
         public RenderTechniqueFactory()
         {
-            var directory = Global.ShaderDirectory;
-            var postEffect = Global.ShaderDirectory + @"\PostEffect";
-            var lighthing = Global.ShaderDirectory + @"\Lighthing";
+            var directory = AssetDirectory.ShaderDirectory;
+            var postEffect = AssetDirectory.ShaderDirectory + @"\PostEffect";
+            var lighthing = AssetDirectory.ShaderDirectory + @"\Lighthing";
             DefaultShader = new Dictionary<RenderTechniqueType, ShaderFile>();
             DefaultShader.Add(RenderTechniqueType.Shadow,    new ShaderFile() { Vertex = directory  + @"\shadow.vert",      Frag = directory  + @"\shadow.frag" });
             DefaultShader.Add(RenderTechniqueType.IBL,       new ShaderFile() { Vertex = lighthing  + @"\ibl.vert",         Frag = lighthing  + @"\ibl.frag" });

@@ -1,8 +1,6 @@
 ﻿using KI.Gfx.Geometry;
-using KI.Gfx.GLUtil;
 using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
-using KI.Asset;
 using OpenTK.Graphics.OpenGL;
 
 namespace KI.Asset
@@ -35,7 +33,7 @@ namespace KI.Asset
         {
             get
             {
-                return Global.ShaderDirectory + @"\";
+                return AssetDirectory.ShaderDirectory + @"\";
             }
         }
 

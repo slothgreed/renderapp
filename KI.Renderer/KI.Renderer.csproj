@@ -92,7 +92,6 @@
     <Compile Include="RenderQueue.cs" />
     <Compile Include="Renderer.cs" />
     <Compile Include="Technique\RenderTechniqueFactory.cs" />
-    <Compile Include="Utility\ShaderCreater.cs" />
     <Compile Include="Utility\ShaderHelper.cs" />
     <Compile Include="Technique\OffScreen\ShadowMap.cs" />
     <Compile Include="Technique\OffScreen\PostEffect\SSLIC.cs" />
