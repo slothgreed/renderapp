@@ -2,7 +2,6 @@
 using System.Runtime.CompilerServices;
 using KI.Asset;
 using KI.Foundation.Core;
-using KI.Foundation.Utility;
 using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
 using KI.Gfx.Render;
@@ -76,7 +75,7 @@ namespace KI.Asset.Technique
         /// <summary>
         /// オフスクリーン用平面
         /// </summary>
-        protected RenderObject Plane { get; set; }
+        protected RenderObject Rectanle { get; set; }
 
         /// <summary>
         /// バッファのクリア
@@ -112,7 +111,7 @@ namespace KI.Asset.Technique
             {
                 RenderTarget.ClearBuffer();
                 RenderTarget.BindRenderTarget(OutputTexture);
-                Plane.Render(scene);
+                Rectanle.Render(scene);
                 RenderTarget.UnBindRenderTarget();
             }
         }
@@ -145,7 +144,7 @@ namespace KI.Asset.Technique
         /// <param name="memberName">シェーダ変数名</param>
         protected void SetValue<T>(ref T member, T value, [CallerMemberName]string memberName = "")
         {
-            if (Plane.Shader.SetValue(memberName, value))
+            if (Rectanle.Shader.SetValue(memberName, value))
             {
                 member = value;
             }
@@ -162,11 +161,11 @@ namespace KI.Asset.Technique
         /// <param name="fragShader">フラグシェーダ</param>
         private void Init(string vertexShader = null, string fragShader = null)
         {
-            Plane = RenderObjectFactory.Instance.CreateRenderObject(Name, AssetFactory.Instance.CreatePlane(Name));
+            Rectanle = RenderObjectFactory.Instance.CreateRenderObject(Name, AssetFactory.Instance.CreateRectangle(Name));
             // gbuffer用 以外はシェーダ作成
             if (vertexShader != null && fragShader != null)
             {
-                Plane.Shader = ShaderFactory.Instance.CreateShaderVF(vertexShader, fragShader, ShaderStage.PostEffect);
+                Rectanle.Shader = ShaderFactory.Instance.CreateShaderVF(vertexShader, fragShader, ShaderStage.PostEffect);
             }
 
             CreateRenderTarget(KI.Gfx.GLUtil.DeviceContext.Instance.Width, KI.Gfx.GLUtil.DeviceContext.Instance.Height);

@@ -1,5 +1,4 @@
 ﻿using KI.Foundation.Core;
-using KI.Foundation.Utility;
 
 namespace KI.Gfx.GLUtil
 {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using KI.Foundation.Utility;
+using KI.Foundation.Core;
 using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;

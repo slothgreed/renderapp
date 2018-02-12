@@ -5,7 +5,6 @@ using KI.Asset;
 using KI.Foundation.Command;
 using KI.Foundation.Core;
 using KI.Gfx.Geometry;
-using KI.Asset;
 using OpenTK.Graphics.OpenGL;
 
 namespace KI.Tool.Command

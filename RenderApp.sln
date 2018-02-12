@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenderApp", "RenderApp\RenderApp.csproj", "{C3F6BAD0-F298-468B-A33B-220D78FD1048}"
 EndProject
@@ -22,6 +22,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KI.Tool", "KI.Tool\KI.Tool.csproj", "{C8DF6069-E673-4957-A173-2BFCA883B102}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KI.UI", "KI.UI\KI.UI.csproj", "{35F238B1-820C-4487-9081-A4AF3952219C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KI.Mathmatics", "KI.Mathmatics\KI.Mathmatics.csproj", "{5610EBDC-05D3-47CE-B954-BCC8E962D35A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -183,8 +185,27 @@ Global
 		{35F238B1-820C-4487-9081-A4AF3952219C}.Release|x64.Build.0 = Release|Any CPU
 		{35F238B1-820C-4487-9081-A4AF3952219C}.Release|x86.ActiveCfg = Release|Any CPU
 		{35F238B1-820C-4487-9081-A4AF3952219C}.Release|x86.Build.0 = Release|Any CPU
+		{5610EBDC-05D3-47CE-B954-BCC8E962D35A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5610EBDC-05D3-47CE-B954-BCC8E962D35A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5610EBDC-05D3-47CE-B954-BCC8E962D35A}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{5610EBDC-05D3-47CE-B954-BCC8E962D35A}.Debug|ARM.Build.0 = Debug|Any CPU
+		{5610EBDC-05D3-47CE-B954-BCC8E962D35A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5610EBDC-05D3-47CE-B954-BCC8E962D35A}.Debug|x64.Build.0 = Debug|Any CPU
+		{5610EBDC-05D3-47CE-B954-BCC8E962D35A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5610EBDC-05D3-47CE-B954-BCC8E962D35A}.Debug|x86.Build.0 = Debug|Any CPU
+		{5610EBDC-05D3-47CE-B954-BCC8E962D35A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5610EBDC-05D3-47CE-B954-BCC8E962D35A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5610EBDC-05D3-47CE-B954-BCC8E962D35A}.Release|ARM.ActiveCfg = Release|Any CPU
+		{5610EBDC-05D3-47CE-B954-BCC8E962D35A}.Release|ARM.Build.0 = Release|Any CPU
+		{5610EBDC-05D3-47CE-B954-BCC8E962D35A}.Release|x64.ActiveCfg = Release|Any CPU
+		{5610EBDC-05D3-47CE-B954-BCC8E962D35A}.Release|x64.Build.0 = Release|Any CPU
+		{5610EBDC-05D3-47CE-B954-BCC8E962D35A}.Release|x86.ActiveCfg = Release|Any CPU
+		{5610EBDC-05D3-47CE-B954-BCC8E962D35A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {15E413C3-E63F-4E9E-9720-1ACBE413083D}
 	EndGlobalSection
 EndGlobal

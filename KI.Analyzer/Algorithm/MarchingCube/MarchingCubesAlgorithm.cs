@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using KI.Foundation.Utility;
 using KI.Gfx.Geometry;
+using KI.Mathmatics;
 using OpenTK;
 
 namespace KI.Analyzer.Algorithm.MarchingCube
@@ -100,17 +100,17 @@ namespace KI.Analyzer.Algorithm.MarchingCube
             var pos1 = voxelSpace.GetPosition(xIndex, yIndex, zIndex, ver1);
             //return (pos0 + pos1) / 2;
 
-            if (Math.Abs(isoLevel - marching.Neight[ver0]) < KICalc.THRESHOLD05)
+            if (Math.Abs(isoLevel - marching.Neight[ver0]) < Calculator.THRESHOLD05)
             {
                 return pos0;
             }
 
-            if (Math.Abs(isoLevel - marching.Neight[ver1]) < KICalc.THRESHOLD05)
+            if (Math.Abs(isoLevel - marching.Neight[ver1]) < Calculator.THRESHOLD05)
             {
                 return pos1;
             }
 
-            if (Math.Abs(marching.Neight[ver1] - marching.Neight[ver0]) < KICalc.THRESHOLD05)
+            if (Math.Abs(marching.Neight[ver1] - marching.Neight[ver0]) < Calculator.THRESHOLD05)
             {
                 return pos1;
             }

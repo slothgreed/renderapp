@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using KI.Foundation.Core;
-using KI.Foundation.Utility;
 
 namespace KI.Asset.Loader.Loader
 {

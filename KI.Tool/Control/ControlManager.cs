@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
-using KI.Foundation.Utility;
+using KI.Foundation.Core;
 
 namespace KI.Tool.Control
 {

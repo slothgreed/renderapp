@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using KI.Foundation.Core;
-using KI.Foundation.Utility;
 using KI.Gfx.Geometry;
+using KI.Mathmatics;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
@@ -10,7 +10,7 @@ namespace KI.Asset
     /// <summary>
     /// 平面
     /// </summary>
-    public class Plane : KIObject, IPolygon
+    public class Rectangle : KIObject, IPolygon
     {
         #region [メンバ変数]
         /// <summary>
@@ -47,7 +47,7 @@ namespace KI.Asset
         /// <param name="q1">頂点1</param>
         /// <param name="q2">頂点2</param>
         /// <param name="q3">頂点3</param>
-        public Plane(string name, Vector3 q0, Vector3 q1, Vector3 q2, Vector3 q3)
+        public Rectangle(string name, Vector3 q0, Vector3 q1, Vector3 q2, Vector3 q3)
             : base(name)
         {
             quad0 = q0;
@@ -61,7 +61,7 @@ namespace KI.Asset
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
-        public Plane(string name)
+        public Rectangle(string name)
             : base(name)
         {
             quad0 = new Vector3(-1, -1, 0);
@@ -82,7 +82,7 @@ namespace KI.Asset
         /// </summary>
         public void CreatePolygon()
         {
-            surface = KICalc.GetPlaneFormula(quad0, quad1, quad2);
+            surface = Plane.Formula(quad0, quad1, quad2);
 
             Mesh mesh = new Mesh(
                 new Vertex(0, quad0, surface.Xyz, Vector2.Zero),

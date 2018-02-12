@@ -46,7 +46,7 @@ namespace KI.Asset.Technique
         /// <param name="scene">シーン</param>
         public override void Render(Scene scene)
         {
-            if (Plane != null)
+            if (Rectanle != null)
             {
                 var textures = Global.Renderer.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
                 var vector = textures[(int)GBuffer.OutputTextureType.Color];
@@ -54,7 +54,7 @@ namespace KI.Asset.Technique
                 GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
                 RenderTarget.ClearBuffer();
                 RenderTarget.BindRenderTarget(OutputTexture);
-                Plane.Render(scene);
+                Rectanle.Render(scene);
                 RenderTarget.UnBindRenderTarget();
                 GL.Disable(EnableCap.Blend);
             }

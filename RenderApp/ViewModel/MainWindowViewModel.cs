@@ -213,7 +213,7 @@ namespace RenderApp.ViewModel
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.MarchingCube:
-                    command = new CreateMarchingCubeCommand(workspace.MainScene, workspace.MainScene.SelectNode, 64);
+                    command = new CreateMarchingCubeCommand(workspace.MainScene, workspace.MainScene.SelectNode, 128);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case RAGeometry.HalfEdgeWireFrame:

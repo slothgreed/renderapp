@@ -15,7 +15,7 @@ namespace KI.Asset.Technique
             : base("SelectionBuffer", vertexShader, fragShader, RenderTechniqueType.Selection, RenderType.OffScreen)
         {
             var textures = Global.Renderer.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
-            Plane.Polygon.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Color]);
+            Rectanle.Polygon.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Color]);
         }
 
         /// <summary>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using KI.Foundation.Parameter;
-using KI.Foundation.Utility;
+using KI.Foundation.Core;
 using KI.Gfx.Geometry;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;

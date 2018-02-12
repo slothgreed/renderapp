@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using KI.Foundation.Core;
-using KI.Foundation.Utility;
-using KI.Gfx.Geometry;
 using OpenTK;
 
 namespace KI.Asset.Loader

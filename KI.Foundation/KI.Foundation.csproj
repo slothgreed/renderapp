@@ -71,8 +71,7 @@
       <DesignTime>True</DesignTime>
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Utility\KICalc.cs" />
-    <Compile Include="Utility\Logger.cs" />
+    <Compile Include="Core\Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

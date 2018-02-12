@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using KI.Foundation.Utility;
+using KI.Mathmatics;
 using OpenCvSharp;
 using OpenTK;
 
@@ -66,8 +66,8 @@ namespace KI.Analyzer.Algorithm
                     midPoint2 = (area2Edge.End.Position + area2Edge.Next.End.Position) / 2;
                 }
 
-                var area1 = KICalc.Area(midPoint1, edge.Start.Position, (edge.Start.Position + edge.End.Position) / 2);
-                var area2 = KICalc.Area(midPoint2, edge.Start.Position, (edge.Start.Position + edge.End.Position) / 2);
+                var area1 = Geometry.Area(midPoint1, edge.Start.Position, (edge.Start.Position + edge.End.Position) / 2);
+                var area2 = Geometry.Area(midPoint2, edge.Start.Position, (edge.Start.Position + edge.End.Position) / 2);
 
                 voronoi += area1 + area2;
             }
@@ -194,7 +194,7 @@ namespace KI.Analyzer.Algorithm
             }
 
             ellipse.Invert();
-            Vector3 result = KICalc.Multiply(ellipse, kapper);
+            Vector3 result = Calculator.Multiply(ellipse, kapper);
             float a = result.X;
             float b = result.Y / 2;
             float c = result.Z;

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using KI.Foundation.Utility;
 using KI.Gfx.Geometry;
+using KI.Mathmatics;
 using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
 using OpenCvSharp;
@@ -306,8 +306,8 @@ namespace KI.Analyzer
                             midPoint2 = (area2Edge.End.Position + area2Edge.Next.End.Position) / 2;
                         }
 
-                        var area1 = KICalc.Area(midPoint1, edge.Start.Position, (edge.Start.Position + edge.End.Position) / 2);
-                        var area2 = KICalc.Area(midPoint2, edge.Start.Position, (edge.Start.Position + edge.End.Position) / 2);
+                        var area1 = Geometry.Area(midPoint1, edge.Start.Position, (edge.Start.Position + edge.End.Position) / 2);
+                        var area2 = Geometry.Area(midPoint2, edge.Start.Position, (edge.Start.Position + edge.End.Position) / 2);
 
                         voronoi += area1 + area2;
                     }
@@ -511,7 +511,7 @@ namespace KI.Analyzer
             }
 
             ellipse.Invert();
-            Vector3 result = KICalc.Multiply(ellipse, kapper);
+            Vector3 result = Calculator.Multiply(ellipse, kapper);
             float a = result.X;
             float b = result.Y;
             float c = result.Z;
@@ -590,17 +590,17 @@ namespace KI.Analyzer
                 return false;
             }
 
-            if (Math.Abs(v1.Position.X - v2.Position.X) > KICalc.THRESHOLD05)
+            if (Math.Abs(v1.Position.X - v2.Position.X) > Calculator.THRESHOLD05)
             {
                 return false;
             }
 
-            if (Math.Abs(v1.Position.Y - v2.Position.Y) > KICalc.THRESHOLD05)
+            if (Math.Abs(v1.Position.Y - v2.Position.Y) > Calculator.THRESHOLD05)
             {
                 return false;
             }
 
-            if (Math.Abs(v1.Position.Z - v2.Position.Z) > KICalc.THRESHOLD05)
+            if (Math.Abs(v1.Position.Z - v2.Position.Z) > Calculator.THRESHOLD05)
             {
                 return false;
             }

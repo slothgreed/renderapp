@@ -1,6 +1,6 @@
 ﻿using System;
-using KI.Foundation.Utility;
 using KI.Gfx.Geometry;
+using KI.Mathmatics;
 using OpenTK;
 
 namespace KI.Analyzer
@@ -139,7 +139,7 @@ namespace KI.Analyzer
             {
                 if (radian == 0.0f)
                 {
-                    radian = KICalc.Radian(End - Start, Before.Opposite.End - Before.Opposite.Start);
+                    radian = Calculator.Radian(End - Start, Before.Opposite.End - Before.Opposite.Start);
                 }
 
                 return radian;

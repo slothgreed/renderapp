@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using KI.Foundation.Core;
-using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
 using KI.Gfx.KITexture;
 

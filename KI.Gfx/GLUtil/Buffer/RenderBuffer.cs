@@ -1,4 +1,4 @@
-﻿using KI.Foundation.Utility;
+﻿using KI.Foundation.Core;
 using OpenTK.Graphics.OpenGL;
 
 namespace KI.Gfx.GLUtil

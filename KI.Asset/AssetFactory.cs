@@ -68,9 +68,9 @@ namespace KI.Asset
         /// </summary>
         /// <param name="name">名前</param>
         /// <returns>平面</returns>
-        public IPolygon CreatePlane(string name)
+        public IPolygon CreateRectangle(string name)
         {
-            return new Plane(name);
+            return new Rectangle(name);
         }
 
         /// <summary>

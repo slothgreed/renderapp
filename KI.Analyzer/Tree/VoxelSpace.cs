@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using KI.Foundation.Utility;
+using KI.Mathmatics;
 using OpenTK;
 
 namespace KI.Analyzer
@@ -539,11 +538,11 @@ namespace KI.Analyzer
                 Vector3 tri3 = position[3 * i + 2];
 
                 //triを包括する部分のボクセルの最小値と最大値のインデックス
-                Vector3 minIndex = KICalc.MinVector(tri1, tri2);
-                minIndex = KICalc.MinVector(minIndex, tri3);
+                Vector3 minIndex = Vector3.ComponentMin(tri1, tri2);
+                minIndex = Vector3.ComponentMin(minIndex, tri3);
 
-                Vector3 maxIndex = KICalc.MaxVector(tri1, tri2);
-                maxIndex = KICalc.MaxVector(maxIndex, tri3);
+                Vector3 maxIndex = Vector3.ComponentMax(tri1, tri2);
+                maxIndex = Vector3.ComponentMax(maxIndex, tri3);
 
                 minIndex -= SpaceMin;
                 maxIndex -= SpaceMin;
@@ -587,9 +586,9 @@ namespace KI.Analyzer
             Vector3 maxVoxel = minVoxel + new Vector3(Interval);
 
             //点によるチェック
-            if (KICalc.InBox(tri1, minVoxel, maxVoxel)) { return true; }
-            if (KICalc.InBox(tri2, minVoxel, maxVoxel)) { return true; }
-            if (KICalc.InBox(tri3, minVoxel, maxVoxel)) { return true; }
+            if (Inside.Box(tri1, minVoxel, maxVoxel)) { return true; }
+            if (Inside.Box(tri2, minVoxel, maxVoxel)) { return true; }
+            if (Inside.Box(tri3, minVoxel, maxVoxel)) { return true; }
 
             //ボクセルの線と、三角形の面が交差するならtrue
             float maxValue = float.MaxValue;
@@ -606,46 +605,46 @@ namespace KI.Analyzer
             Vector3 v7 = new Vector3(minVoxel.X, minVoxel.Y + Interval, minVoxel.Z + Interval);
 
             //手前
-            if (KICalc.CrossPlanetoLinePos(tri1, tri2, tri3, v0, v1, ref maxValue, out tmp)) { return true; }
-            if (KICalc.CrossPlanetoLinePos(tri1, tri2, tri3, v1, v2, ref maxValue, out tmp)) { return true; }
-            if (KICalc.CrossPlanetoLinePos(tri1, tri2, tri3, v2, v3, ref maxValue, out tmp)) { return true; }
-            if (KICalc.CrossPlanetoLinePos(tri1, tri2, tri3, v3, v1, ref maxValue, out tmp)) { return true; }
+            if (Interaction.TriangleToLine(tri1, tri2, tri3, v0, v1, ref maxValue, out tmp)) { return true; }
+            if (Interaction.TriangleToLine(tri1, tri2, tri3, v1, v2, ref maxValue, out tmp)) { return true; }
+            if (Interaction.TriangleToLine(tri1, tri2, tri3, v2, v3, ref maxValue, out tmp)) { return true; }
+            if (Interaction.TriangleToLine(tri1, tri2, tri3, v3, v1, ref maxValue, out tmp)) { return true; }
             //奥
-            if (KICalc.CrossPlanetoLinePos(tri1, tri2, tri3, v4, v5, ref maxValue, out tmp)) { return true; }
-            if (KICalc.CrossPlanetoLinePos(tri1, tri2, tri3, v5, v6, ref maxValue, out tmp)) { return true; }
-            if (KICalc.CrossPlanetoLinePos(tri1, tri2, tri3, v6, v7, ref maxValue, out tmp)) { return true; }
-            if (KICalc.CrossPlanetoLinePos(tri1, tri2, tri3, v7, v4, ref maxValue, out tmp)) { return true; }
+            if (Interaction.TriangleToLine(tri1, tri2, tri3, v4, v5, ref maxValue, out tmp)) { return true; }
+            if (Interaction.TriangleToLine(tri1, tri2, tri3, v5, v6, ref maxValue, out tmp)) { return true; }
+            if (Interaction.TriangleToLine(tri1, tri2, tri3, v6, v7, ref maxValue, out tmp)) { return true; }
+            if (Interaction.TriangleToLine(tri1, tri2, tri3, v7, v4, ref maxValue, out tmp)) { return true; }
             //奥行き
-            if (KICalc.CrossPlanetoLinePos(tri1, tri2, tri3, v0, v4, ref maxValue, out tmp)) { return true; }
-            if (KICalc.CrossPlanetoLinePos(tri1, tri2, tri3, v1, v5, ref maxValue, out tmp)) { return true; }
-            if (KICalc.CrossPlanetoLinePos(tri1, tri2, tri3, v2, v6, ref maxValue, out tmp)) { return true; }
-            if (KICalc.CrossPlanetoLinePos(tri1, tri2, tri3, v3, v7, ref maxValue, out tmp)) { return true; }
+            if (Interaction.TriangleToLine(tri1, tri2, tri3, v0, v4, ref maxValue, out tmp)) { return true; }
+            if (Interaction.TriangleToLine(tri1, tri2, tri3, v1, v5, ref maxValue, out tmp)) { return true; }
+            if (Interaction.TriangleToLine(tri1, tri2, tri3, v2, v6, ref maxValue, out tmp)) { return true; }
+            if (Interaction.TriangleToLine(tri1, tri2, tri3, v3, v7, ref maxValue, out tmp)) { return true; }
 
             //三角形の線と、ボクセルの面が交差するならtrue
             //手前
-            if (KICalc.CrossPlanetoLinePos(v0, v1, v2, v3, tri1, tri2, ref maxValue, out tmp)) { return true; }
-            if (KICalc.CrossPlanetoLinePos(v0, v1, v2, v3, tri2, tri3, ref maxValue, out tmp)) { return true; }
-            if (KICalc.CrossPlanetoLinePos(v0, v1, v2, v3, tri3, tri1, ref maxValue, out tmp)) { return true; }
+            if (Interaction.RectangleToLine(v0, v1, v2, v3, tri1, tri2, ref maxValue, out tmp)) { return true; }
+            if (Interaction.RectangleToLine(v0, v1, v2, v3, tri2, tri3, ref maxValue, out tmp)) { return true; }
+            if (Interaction.RectangleToLine(v0, v1, v2, v3, tri3, tri1, ref maxValue, out tmp)) { return true; }
             //奥
-            if (KICalc.CrossPlanetoLinePos(v4, v5, v6, v7, tri1, tri2, ref maxValue, out tmp)) { return true; }
-            if (KICalc.CrossPlanetoLinePos(v4, v5, v6, v7, tri2, tri3, ref maxValue, out tmp)) { return true; }
-            if (KICalc.CrossPlanetoLinePos(v4, v5, v6, v7, tri3, tri1, ref maxValue, out tmp)) { return true; }
+            if (Interaction.RectangleToLine(v4, v5, v6, v7, tri1, tri2, ref maxValue, out tmp)) { return true; }
+            if (Interaction.RectangleToLine(v4, v5, v6, v7, tri2, tri3, ref maxValue, out tmp)) { return true; }
+            if (Interaction.RectangleToLine(v4, v5, v6, v7, tri3, tri1, ref maxValue, out tmp)) { return true; }
             //右
-            if (KICalc.CrossPlanetoLinePos(v1, v5, v6, v2, tri1, tri2, ref maxValue, out tmp)) { return true; }
-            if (KICalc.CrossPlanetoLinePos(v1, v5, v6, v2, tri2, tri3, ref maxValue, out tmp)) { return true; }
-            if (KICalc.CrossPlanetoLinePos(v1, v5, v6, v2, tri3, tri1, ref maxValue, out tmp)) { return true; }
+            if (Interaction.RectangleToLine(v1, v5, v6, v2, tri1, tri2, ref maxValue, out tmp)) { return true; }
+            if (Interaction.RectangleToLine(v1, v5, v6, v2, tri2, tri3, ref maxValue, out tmp)) { return true; }
+            if (Interaction.RectangleToLine(v1, v5, v6, v2, tri3, tri1, ref maxValue, out tmp)) { return true; }
             //左
-            if (KICalc.CrossPlanetoLinePos(v0, v3, v7, v4, tri1, tri2, ref maxValue, out tmp)) { return true; }
-            if (KICalc.CrossPlanetoLinePos(v0, v3, v7, v4, tri2, tri3, ref maxValue, out tmp)) { return true; }
-            if (KICalc.CrossPlanetoLinePos(v0, v3, v7, v4, tri3, tri1, ref maxValue, out tmp)) { return true; }
+            if (Interaction.RectangleToLine(v0, v3, v7, v4, tri1, tri2, ref maxValue, out tmp)) { return true; }
+            if (Interaction.RectangleToLine(v0, v3, v7, v4, tri2, tri3, ref maxValue, out tmp)) { return true; }
+            if (Interaction.RectangleToLine(v0, v3, v7, v4, tri3, tri1, ref maxValue, out tmp)) { return true; }
             //上
-            if (KICalc.CrossPlanetoLinePos(v2, v6, v7, v3, tri1, tri2, ref maxValue, out tmp)) { return true; }
-            if (KICalc.CrossPlanetoLinePos(v2, v6, v7, v3, tri2, tri3, ref maxValue, out tmp)) { return true; }
-            if (KICalc.CrossPlanetoLinePos(v2, v6, v7, v3, tri3, tri1, ref maxValue, out tmp)) { return true; }
+            if (Interaction.RectangleToLine(v2, v6, v7, v3, tri1, tri2, ref maxValue, out tmp)) { return true; }
+            if (Interaction.RectangleToLine(v2, v6, v7, v3, tri2, tri3, ref maxValue, out tmp)) { return true; }
+            if (Interaction.RectangleToLine(v2, v6, v7, v3, tri3, tri1, ref maxValue, out tmp)) { return true; }
             //下
-            if (KICalc.CrossPlanetoLinePos(v0, v4, v5, v1, tri1, tri2, ref maxValue, out tmp)) { return true; }
-            if (KICalc.CrossPlanetoLinePos(v0, v4, v5, v1, tri2, tri3, ref maxValue, out tmp)) { return true; }
-            if (KICalc.CrossPlanetoLinePos(v0, v4, v5, v1, tri3, tri1, ref maxValue, out tmp)) { return true; }
+            if (Interaction.RectangleToLine(v0, v4, v5, v1, tri1, tri2, ref maxValue, out tmp)) { return true; }
+            if (Interaction.RectangleToLine(v0, v4, v5, v1, tri2, tri3, ref maxValue, out tmp)) { return true; }
+            if (Interaction.RectangleToLine(v0, v4, v5, v1, tri3, tri1, ref maxValue, out tmp)) { return true; }
 
             return false;
         }

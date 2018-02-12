@@ -4,12 +4,12 @@ using System.Linq;
 using System.Windows.Forms;
 using KI.Analyzer;
 using KI.Analyzer.Algorithm;
-using KI.Foundation.Utility;
 using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Asset;
 using KI.Asset.Attribute;
 using KI.Tool.Utility;
+using KI.Mathmatics;
 using OpenTK;
 
 namespace KI.Tool.Control
@@ -71,7 +71,7 @@ namespace KI.Tool.Control
                                 var region1 = (float)Math.Floor(geodesicDistance[edge.Start.Index] / distBetweenLines);
                                 var region2 = (float)Math.Floor(geodesicDistance[edge.End.Index] / distBetweenLines);
 
-                                if (Math.Abs(region1 - region2) > KICalc.THRESHOLD05)
+                                if (Math.Abs(region1 - region2) > Calculator.THRESHOLD05)
                                 {
                                     float lamda = 0;
                                     if (region1 < region2)

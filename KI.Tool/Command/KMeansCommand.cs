@@ -3,10 +3,10 @@ using KI.Analyzer;
 using KI.Analyzer.Algorithm;
 using KI.Foundation.Command;
 using KI.Foundation.Core;
-using KI.Foundation.Utility;
 using KI.Asset;
 using KI.Asset.Attribute;
 using OpenTK;
+using KI.Mathmatics;
 
 namespace KI.Tool.Command
 {
@@ -64,7 +64,7 @@ namespace KI.Tool.Command
             var colors = new Vector3[halfEdgeDS.Vertexs.Count];
             foreach (var cluster in kmeansAlgorithm.Cluster)
             {
-                var color = KICalc.RandomColor();
+                var color = Calculator.RandomColor();
                 foreach (var vertex in cluster)
                 {
                     colors[vertex.Index] = color;

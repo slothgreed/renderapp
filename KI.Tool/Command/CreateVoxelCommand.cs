@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using KI.Analyzer;
 using KI.Foundation.Command;
-using KI.Foundation.Utility;
 using KI.Gfx.Geometry;
 using KI.Asset;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using KI.Mathmatics;
 
 namespace KI.Tool.Command
 {
@@ -77,7 +77,7 @@ namespace KI.Tool.Command
             Vector3 max;
             List<Vector3> voxelPosition = new List<Vector3>();
             List<Vector3> voxelNormal = new List<Vector3>();
-            KICalc.MinMax(renderObject.Polygon.Vertexs.Select(p => p.Position), out min, out max);
+            Calculator.MinMax(renderObject.Polygon.Vertexs.Select(p => p.Position), out min, out max);
             voxel = new VoxelSpace(renderObject.Polygon.Vertexs.Select(p => p.Position).ToList(), renderObject.Polygon.Index, partition, min, max);
             var mesh = GetVoxelObject();
 
@@ -152,7 +152,7 @@ namespace KI.Tool.Command
         /// <param name="q3">頂点4</param>
         private void SetCube(List<Mesh> meshs, Vector3 q0, Vector3 q1, Vector3 q2, Vector3 q3)
         {
-            Vector3 normal = KICalc.Normal(q1 - q0, q2 - q0);
+            Vector3 normal = Geometry.Normal(q1 - q0, q2 - q0);
 
             meshs.Add(
                 new Mesh(

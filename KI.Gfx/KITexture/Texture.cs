@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using KI.Foundation.Core;
-using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
 using OpenTK.Graphics.OpenGL;

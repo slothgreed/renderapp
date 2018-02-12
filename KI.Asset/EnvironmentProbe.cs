@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using KI.Foundation.Core;
-using KI.Foundation.Utility;
 using KI.Gfx.KITexture;
 
 namespace KI.Asset

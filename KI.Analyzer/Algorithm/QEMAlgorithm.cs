@@ -4,8 +4,8 @@ using System;
 using System.IO;
 using System.Linq;
 using KI.Foundation.Tree;
-using KI.Foundation.Utility;
 using OpenTK;
+using KI.Mathmatics;
 
 namespace KI.Analyzer.Algorithm
 {
@@ -45,7 +45,7 @@ namespace KI.Analyzer.Algorithm
                 }
                 set
                 {
-                    if (Math.Abs(value) < KICalc.THRESHOLD05)
+                    if (Math.Abs(value) < Calculator.THRESHOLD05)
                     {
                         cost = 0;
                     }

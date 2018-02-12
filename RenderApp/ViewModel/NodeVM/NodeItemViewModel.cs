@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using KI.Foundation.Tree;
-using KI.Foundation.Utility;
+using KI.Foundation.Core;
 using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel

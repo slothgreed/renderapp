@@ -4,11 +4,11 @@ using KI.Analyzer;
 using KI.Analyzer.Algorithm.MarchingCube;
 using KI.Foundation.Command;
 using KI.Foundation.Core;
-using KI.Foundation.Utility;
 using KI.Gfx.Geometry;
 using KI.Asset;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using KI.Mathmatics;
 
 namespace KI.Tool.Command
 {
@@ -74,9 +74,9 @@ namespace KI.Tool.Command
         {
             Vector3 min;
             Vector3 max;
-            KICalc.MinMax(renderObject.Polygon.Vertexs.Select(p => p.Position), out min, out max);
-            min -= Vector3.One * 10;
-            max += Vector3.One * 10;
+            Calculator.MinMax(renderObject.Polygon.Vertexs.Select(p => p.Position), out min, out max);
+            min -= Vector3.One;
+            max += Vector3.One;
             var voxel = new VoxelSpace(renderObject.Polygon.Vertexs.Select(p => p.Position).ToList(), renderObject.Polygon.Index, partition, min, max);
             var marching = new MarchingCubesAlgorithm(voxel, 0.8f);
 

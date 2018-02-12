@@ -38,7 +38,7 @@ namespace KI.Asset.Technique
                 {
                     var polygon = asset.KIObject as RenderObject;
                     var old = polygon.Shader;
-                    polygon.Shader = Plane.Shader;
+                    polygon.Shader = Rectanle.Shader;
                     polygon.Render(scene);
                     polygon.Shader = old;
                 }

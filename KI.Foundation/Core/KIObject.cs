@@ -1,4 +1,4 @@
-﻿using KI.Foundation.Utility;
+﻿using KI.Foundation.Core;
 
 namespace KI.Foundation.Core
 {

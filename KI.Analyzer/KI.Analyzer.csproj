@@ -94,7 +94,6 @@
     <Compile Include="Algorithm\VertexCurvatureAlgorithm.cs" />
     <Compile Include="Algorithm\VertexNormalAlgorithm.cs" />
     <Compile Include="Algorithm\VertexSaliencyAlgorithm.cs" />
-    <Compile Include="GeometryAnalyzer.cs" />
     <Compile Include="HalfEdge\HalfEdge.cs" />
     <Compile Include="HalfEdge\HalfEdgeDS.cs" />
     <Compile Include="HalfEdge\HalfEdgeDSEditor.cs" />
@@ -117,6 +116,10 @@
     <ProjectReference Include="..\KI.Gfx\KI.Gfx.csproj">
       <Project>{f5e989a2-028f-4e60-869c-ec57413376c6}</Project>
       <Name>KI.Gfx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KI.Mathmatics\KI.Mathmatics.csproj">
+      <Project>{5610ebdc-05d3-47ce-b954-bcc8e962d35a}</Project>
+      <Name>KI.Mathmatics</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

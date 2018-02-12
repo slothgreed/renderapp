@@ -25,7 +25,7 @@ namespace KI.Asset.Technique
         {
             uSelectMap = null;
             var textures = Global.Renderer.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
-            Plane.Polygon.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Color]);
+            Rectanle.Polygon.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Color]);
         }
 
         protected override void CreateRenderTarget(int width, int height)
@@ -43,7 +43,7 @@ namespace KI.Asset.Technique
         public override void Render(Scene scene)
         {
             //最終出力フレームバッファのバインドの必要なし
-            Plane.Render(scene);
+            Rectanle.Render(scene);
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using OpenTK.Graphics.OpenGL;
 
-namespace KI.Foundation.Utility
+namespace KI.Foundation.Core
 {
     /// <summary>
     /// ログクラス

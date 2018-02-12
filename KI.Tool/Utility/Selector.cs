@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using KI.Analyzer;
 using KI.Foundation.Tree;
-using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
 using KI.Asset;
 using OpenTK;
+using KI.Mathmatics;
 
 namespace KI.Tool.Utility
 {
@@ -171,7 +171,7 @@ namespace KI.Tool.Utility
             viewport[2] = DeviceContext.Instance.Width;
             viewport[3] = DeviceContext.Instance.Height;
 
-            KICalc.GetClickPos(
+            GLUtility.GetClickPos(
                 Global.Renderer.ActiveScene.MainCamera.Matrix,
                 Global.Renderer.ActiveScene.MainCamera.ProjMatrix,
                 viewport, mouse, out near, out far);
@@ -199,9 +199,9 @@ namespace KI.Tool.Utility
             foreach (var halfVertex in halfEdgeDS.HalfEdgeVertexs)
             {
                 Vector3 point = halfVertex.Position;
-                point = KICalc.Multiply(renderObject.ModelMatrix, point);
+                point = Calculator.Multiply(renderObject.ModelMatrix, point);
 
-                if (KICalc.PerpendicularPoint(point, near, far, out crossPos))
+                if (Interaction.PerpendicularPoint(point, near, far, out crossPos))
                 {
                     //線分から点までの距離が範囲内の頂点のうち
                     if ((crossPos - point).Length < THRESHOLD)
@@ -245,10 +245,10 @@ namespace KI.Tool.Utility
             {
                 foreach (var edge in halfEdgeDS.HalfEdges)
                 {
-                    Vector3 startPos = KICalc.Multiply(renderObject.ModelMatrix, edge.Start.Position);
-                    Vector3 endPos = KICalc.Multiply(renderObject.ModelMatrix, edge.End.Position);
+                    Vector3 startPos = Calculator.Multiply(renderObject.ModelMatrix, edge.Start.Position);
+                    Vector3 endPos = Calculator.Multiply(renderObject.ModelMatrix, edge.End.Position);
 
-                    if (KICalc.DistanceLineToLine(near, far, startPos, endPos, out distance))
+                    if (Distance.LineToLine(near, far, startPos, endPos, out distance))
                     {
                         //線分から点までの距離が範囲内の頂点のうち
                         if (distance < THRESHOLD)
@@ -293,11 +293,11 @@ namespace KI.Tool.Utility
                 foreach (var halfMesh in halfEdgeDS.HalfEdgeMeshs)
                 {
                     var vertexs = halfMesh.AroundVertex.ToArray();
-                    Vector3 multiVertex1 = KICalc.Multiply(renderObject.ModelMatrix, vertexs[0].Position);
-                    Vector3 multiVertex2 = KICalc.Multiply(renderObject.ModelMatrix, vertexs[1].Position);
-                    Vector3 multiVertex3 = KICalc.Multiply(renderObject.ModelMatrix, vertexs[2].Position);
+                    Vector3 multiVertex1 = Calculator.Multiply(renderObject.ModelMatrix, vertexs[0].Position);
+                    Vector3 multiVertex2 = Calculator.Multiply(renderObject.ModelMatrix, vertexs[1].Position);
+                    Vector3 multiVertex3 = Calculator.Multiply(renderObject.ModelMatrix, vertexs[2].Position);
                     Vector3 result = Vector3.Zero;
-                    if (KICalc.CrossPlanetoLinePos(multiVertex1, multiVertex2, multiVertex3, near, far, ref minLength, out result))
+                    if (Interaction.TriangleToLine(multiVertex1, multiVertex2, multiVertex3, near, far, ref minLength, out result))
                     {
                         mesh = halfMesh;
                         select = true;

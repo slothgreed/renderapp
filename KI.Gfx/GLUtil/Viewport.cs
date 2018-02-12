@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using KI.Foundation.Utility;
+using KI.Foundation.Core;
 using OpenTK;
 using OpenTK.Graphics;
 

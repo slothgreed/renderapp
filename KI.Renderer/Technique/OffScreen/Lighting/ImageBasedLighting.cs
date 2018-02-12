@@ -29,8 +29,8 @@ namespace KI.Asset.Technique
                 if (probe.KIObject is EnvironmentProbe)
                 {
                     EnvironmentProbe env = probe.KIObject as EnvironmentProbe;
-                    Plane.Polygon.AddTexture(TextureKind.Cubemap, env.Cubemap);
-                    Plane.Render(scene);
+                    Rectanle.Polygon.AddTexture(TextureKind.Cubemap, env.Cubemap);
+                    Rectanle.Render(scene);
                 }
             }
 
@@ -43,10 +43,10 @@ namespace KI.Asset.Technique
         public override void Initialize()
         {
             var textures = Global.Renderer.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
-            Plane.Polygon.AddTexture(TextureKind.Albedo, textures[(int)GBuffer.OutputTextureType.Posit]);
-            Plane.Polygon.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Normal]);
-            Plane.Polygon.AddTexture(TextureKind.World, textures[(int)GBuffer.OutputTextureType.Color]);
-            Plane.Polygon.AddTexture(TextureKind.Lighting, textures[(int)GBuffer.OutputTextureType.Light]);
+            Rectanle.Polygon.AddTexture(TextureKind.Albedo, textures[(int)GBuffer.OutputTextureType.Posit]);
+            Rectanle.Polygon.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Normal]);
+            Rectanle.Polygon.AddTexture(TextureKind.World, textures[(int)GBuffer.OutputTextureType.Color]);
+            Rectanle.Polygon.AddTexture(TextureKind.Lighting, textures[(int)GBuffer.OutputTextureType.Light]);
         }
     }
 }

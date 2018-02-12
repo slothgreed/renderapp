@@ -1,5 +1,5 @@
 ﻿using KI.Foundation.Core;
-using KI.Foundation.Utility;
+using KI.Mathmatics;
 using OpenTK;
 
 namespace KI.Asset
@@ -190,7 +190,7 @@ namespace KI.Asset
             if (exterior.Length != 0)
             {
                 exterior.Normalize();
-                float angle = KICalc.Radian(vector1, vector2, exterior);
+                float angle = Calculator.Radian(vector1, vector2, exterior);
                 Matrix4 mat = Matrix4.CreateFromAxisAngle(exterior, angle);
                 SetModelViewRotateXYZ(mat);
                 return;

@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
+using KI.Mathmatics;
 using OpenTK.Graphics.OpenGL;
 
 namespace KI.Asset.Attribute
@@ -60,7 +60,7 @@ namespace KI.Asset.Attribute
         /// <param name="heightValue">最大値</param>
         public void UpdateVertexColor(float lowValue, float heightValue)
         {
-            var colors = VertexParameter.Select(p => KICalc.GetPseudoColor(p, lowValue, heightValue)).ToArray();
+            var colors = VertexParameter.Select(p => PseudoColor.GetColor(p, lowValue, heightValue)).ToArray();
             vertexColorBuffer.SetData(colors, EArrayType.Vec3Array);
         }
 

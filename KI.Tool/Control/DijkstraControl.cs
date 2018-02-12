@@ -2,7 +2,6 @@
 using KI.Analyzer;
 using KI.Asset;
 using KI.Gfx.Geometry;
-using KI.Asset;
 using KI.Tool.Utility;
 using OpenTK;
 

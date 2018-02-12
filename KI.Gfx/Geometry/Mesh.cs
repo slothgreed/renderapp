@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using KI.Foundation.Utility;
+using KI.Mathmatics;
 using OpenTK;
 
 namespace KI.Gfx.Geometry
@@ -125,7 +125,7 @@ namespace KI.Gfx.Geometry
             {
                 if (area == 0)
                 {
-                    area = KICalc.Area(lines[0].Start.Position, lines[1].Start.Position, lines[2].Start.Position);
+                    area = KI.Mathmatics.Geometry.Area(lines[0].Start.Position, lines[1].Start.Position, lines[2].Start.Position);
                 }
 
                 return area;
@@ -141,7 +141,7 @@ namespace KI.Gfx.Geometry
             {
                 if (normal == Vector3.Zero)
                 {
-                    normal = KICalc.Normal(
+                    normal = KI.Mathmatics.Geometry.Normal(
                         lines[1].Start.Position - lines[0].Start.Position,
                         lines[2].Start.Position - lines[0].Start.Position);
                 }
@@ -160,7 +160,7 @@ namespace KI.Gfx.Geometry
                 if (plane == Vector4.Zero)
                 {
                     var positions = lines.Select(p => p.Start.Position).ToArray();
-                    plane = KICalc.GetPlaneFormula(positions[0], positions[1], positions[2]);
+                    plane = KI.Mathmatics.Plane.Formula(positions[0], positions[1], positions[2]);
                 }
 
                 return plane;

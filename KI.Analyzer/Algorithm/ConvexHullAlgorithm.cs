@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using KI.Foundation.Utility;
+using KI.Foundation.Core;
 using KI.Gfx.Geometry;
+using KI.Mathmatics;
 using OpenTK;
 
 namespace KI.Analyzer.Algorithm
@@ -249,7 +250,7 @@ namespace KI.Analyzer.Algorithm
             posit = Vector3.Zero;
             foreach (var pos in pointList)
             {
-                float dist = KICalc.DistancePlane(mesh.Plane, pos);
+                float dist = Distance.PlaneToPoint(mesh.Plane, pos);
                 if (Vector3.Dot(mesh.Normal, pos - mesh.Gravity) > 0)
                 {
                     if (maxDist < dist)
