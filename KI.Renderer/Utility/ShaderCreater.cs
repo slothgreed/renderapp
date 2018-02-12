@@ -18,7 +18,8 @@ namespace KI.Asset
         NURBS,
         Fur,
         Outline,
-        WireFrame
+        WireFrame,
+        Split
     }
 
     /// <summary>
@@ -140,11 +141,11 @@ namespace KI.Asset
                         ShaderStage.Geometry);
                 case ShaderType.Displacement:
                     return ShaderFactory.Instance.CreateTesselation(
-                        Directory + @"Special\displacement.vert",
-                        Directory + @"Special\displacement.frag",
-                        Directory + @"Special\displacement.geom",
-                        Directory + @"Special\displacement.tcs",
-                        Directory + @"Special\displacement.tes",
+                        Directory + @"Special\Tesselation\displacement.vert",
+                        Directory + @"Special\Tesselation\displacement.frag",
+                        Directory + @"Special\Tesselation\displacement.geom",
+                        Directory + @"Special\Tesselation\displacement.tcs",
+                        Directory + @"Special\Tesselation\displacement.tes",
                         ShaderStage.Geometry);
                 case ShaderType.EffectLine:
                     return ShaderFactory.Instance.CreateShaderVF(
@@ -153,11 +154,19 @@ namespace KI.Asset
                         ShaderStage.Geometry);
                 case ShaderType.NURBS:
                     return ShaderFactory.Instance.CreateTesselation(
-                        Directory + @"Special\nurbs.vert",
-                        Directory + @"Special\nurbs.frag",
-                        Directory + @"Special\nurbs.geom",
-                        Directory + @"Special\nurbs.tcs",
-                        Directory + @"Special\nurbs.tes",
+                        Directory + @"Special\Tesselation\nurbs.vert",
+                        Directory + @"Special\Tesselation\nurbs.frag",
+                        Directory + @"Special\Tesselation\nurbs.geom",
+                        Directory + @"Special\Tesselation\nurbs.tcs",
+                        Directory + @"Special\Tesselation\nurbs.tes",
+                        ShaderStage.Geometry);
+                case ShaderType.Split:
+                    return ShaderFactory.Instance.CreateTesselation(
+                        Directory + @"Special\Tesselation\split.vert",
+                        Directory + @"Special\Tesselation\split.frag",
+                        Directory + @"Special\Tesselation\split.geom",
+                        Directory + @"Special\Tesselation\split.tcs",
+                        Directory + @"Special\Tesselation\split.tes",
                         ShaderStage.Geometry);
                 case ShaderType.Fur:
                     return ShaderFactory.Instance.CreateShaderVF(

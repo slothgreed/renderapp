@@ -19,5 +19,8 @@
         <DataTemplate DataType="{x:Type vm:OutlineAttributeViewModel}">
             <local:OutlineAttributeView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:SplitAttributeViewModel}">
+            <local:SplitAttributeView />
+        </DataTemplate>
     </ItemsControl.Resources>
 </ItemsControl>

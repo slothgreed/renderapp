@@ -49,6 +49,7 @@ namespace RenderApp.View
                 }
 
                 this.ParameterKind.Items.Add("All");
+                this.Update(value);
             }
         }
 

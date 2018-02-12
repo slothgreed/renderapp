@@ -1,0 +1,20 @@
+#version 400
+layout(triangles, equal_spacing, ccw) in;
+
+in vec3 tc_position[];
+
+out vec3 tePatchDistance;
+
+uniform mat4 uMVP;
+void main()
+{
+	float u = gl_TessCoord.x;
+	float v = gl_TessCoord.y;
+	float w = gl_TessCoord.z;
+    vec3 p0 = tc_position[0].xyz;
+    vec3 p1 = tc_position[1].xyz;
+    vec3 p2 = tc_position[2].xyz;
+
+	tePatchDistance = gl_TessCoord;
+	gl_Position = uMVP * vec4( u*p0 + v*p1 + w*p2, 1);
+}

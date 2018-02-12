@@ -78,16 +78,6 @@ namespace KI.Tool.Command
             var minVecParam = new VectorParameter("MinVector", halfDS.HalfEdgeVertexs.Select(p => p.MinDirection).ToArray());
             var maxVecParam = new VectorParameter("MaxVector", halfDS.HalfEdgeVertexs.Select(p => p.MaxDirection).ToArray());
 
-            halfDS.AddParameter(voronoiParam);
-            halfDS.AddParameter(laplaceParam);
-            halfDS.AddParameter(meanParam);
-            halfDS.AddParameter(gaussParam);
-            halfDS.AddParameter(minParam);
-            halfDS.AddParameter(maxParam);
-            halfDS.AddParameter(laplaceVecParam);
-            halfDS.AddParameter(minVecParam);
-            halfDS.AddParameter(maxVecParam);
-
             var dirMinLine = new List<Vector3>();
             var dirMaxLine = new List<Vector3>();
             var laplaceLine = new List<Vector3>();

@@ -165,6 +165,7 @@
     <Compile Include="AppSystem.cs" />
     <Compile Include="Globals\Workspace.cs" />
     <Compile Include="ViewModel\AttributeVM\AttributeViewModel.cs" />
+    <Compile Include="ViewModel\AttributeVM\SplitAttributeViewModel.cs" />
     <Compile Include="ViewModel\AttributeVM\VertexParameterAttributeViewModel.cs" />
     <Compile Include="ViewModel\AttributeVM\WireFrameAttributeViewModel.cs" />
     <Compile Include="Globals\Project.cs" />
@@ -208,6 +209,9 @@
     </Compile>
     <Compile Include="View\AttributeView\AttributeBase.xaml.cs">
       <DependentUpon>AttributeBase.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AttributeView\SplitAttributeView.xaml.cs">
+      <DependentUpon>SplitAttributeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\DataVisualization.xaml.cs">
       <DependentUpon>DataVisualization.xaml</DependentUpon>
@@ -281,6 +285,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AttributeView\AttributeBase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AttributeView\SplitAttributeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

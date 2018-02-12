@@ -127,40 +127,35 @@ namespace KI.Renderer
         {
             foreach (var attribute in Attributes.Where(p => p.Visible))
             {
-                RenderAttribute(scene, attribute);
-            }
-        }
+                if (attribute.Shader == null)
+                {
+                    Logger.Log(Logger.LogLevel.Error, "not set shader");
+                    return;
+                }
 
-        public void RenderAttribute(Scene scene, AttributeBase attribute)
-        {
-            if (attribute.Shader == null)
-            {
-                Logger.Log(Logger.LogLevel.Error, "not set shader");
-                return;
-            }
+                if (attribute.VertexBuffer.Num == 0)
+                {
+                    Logger.Log(Logger.LogLevel.Error, "vertexs list is 0");
+                    return;
+                }
 
-            if (attribute.VertexBuffer.Num == 0)
-            {
-                Logger.Log(Logger.LogLevel.Error, "vertexs list is 0");
-                return;
-            }
+                attribute.Binding();
+                ShaderHelper.InitializeState(attribute.Shader, scene, this, attribute.VertexBuffer, Polygon.Textures);
+                attribute.Shader.BindBuffer();
+                if (attribute.VertexBuffer.EnableIndexBuffer)
+                {
+                    DeviceContext.Instance.DrawElements(attribute.Type, attribute.VertexBuffer.Num, DrawElementsType.UnsignedInt, 0);
+                }
+                else
+                {
+                    DeviceContext.Instance.DrawArrays(attribute.Type, 0, attribute.VertexBuffer.Num);
+                }
 
-            attribute.Binding();
-            ShaderHelper.InitializeState(attribute.Shader, scene, this, attribute.VertexBuffer, Polygon.Textures);
-            attribute.Shader.BindBuffer();
-            if (attribute.VertexBuffer.EnableIndexBuffer)
-            {
-                DeviceContext.Instance.DrawElements(attribute.Type, attribute.VertexBuffer.Num, DrawElementsType.UnsignedInt, 0);
-            }
-            else
-            {
-                DeviceContext.Instance.DrawArrays(attribute.Type, 0, attribute.VertexBuffer.Num);
-            }
+                attribute.Shader.UnBindBuffer();
+                attribute.UnBinding();
 
-            attribute.Shader.UnBindBuffer();
-            attribute.UnBinding();
-
-            Logger.GLLog(Logger.LogLevel.Error);
+                Logger.GLLog(Logger.LogLevel.Error);
+            }
         }
 
         /// <summary>
@@ -197,7 +192,5 @@ namespace KI.Renderer
         {
             VertexBuffer.SetupBuffer(Polygon);
         }
-
-        
     }
 }

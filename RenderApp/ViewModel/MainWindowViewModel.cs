@@ -323,14 +323,13 @@ namespace RenderApp.ViewModel
 
         private void DataVisualizationCommand()
         {
-            View.DebugWindow window = new View.DebugWindow();
-            View.DataVisualization dataVisualize = new View.DataVisualization();
-            var renderObject = workspace.MainScene.SelectNode as RenderObject;
-            dataVisualize.GraphName = "vertexParameter";
-            dataVisualize.ParameterList = ((HalfEdgeDS)renderObject.Polygon).Parameter;
-            dataVisualize.Update(((HalfEdgeDS)renderObject.Polygon).Parameter);
-            window.Content = dataVisualize;
-            window.Show();
+            //View.DebugWindow window = new View.DebugWindow();
+            //View.DataVisualization dataVisualize = new View.DataVisualization();
+            //var renderObject = workspace.MainScene.SelectNode as RenderObject;
+            //dataVisualize.GraphName = "vertexParameter";
+            //dataVisualize.ParameterList = ((HalfEdgeDS)renderObject.Polygon).Parameter;
+            //window.Content = dataVisualize;
+            //window.Show();
         }
 
         private void UndoCommand()

@@ -12,7 +12,7 @@ namespace KI.Renderer.Attribute
     /// <summary>
     /// ディスプレイスメントマップ
     /// </summary>
-    public class DisplacementAttribute : AttributeBase
+    public class SplitAttribute : AttributeBase
     {
         public int uOuter
         {
@@ -46,7 +46,7 @@ namespace KI.Renderer.Attribute
         /// <param name="name">名前</param>
         /// <param name="vertexBuffer">線分</param>
         /// <param name="shader">シェーダ</param>
-        public DisplacementAttribute(string name, VertexBuffer vertexBuffer, Shader shader)
+        public SplitAttribute(string name, VertexBuffer vertexBuffer, Shader shader)
             : base(name, vertexBuffer, PrimitiveType.Patches, shader)
         {
             uOuter = 2;

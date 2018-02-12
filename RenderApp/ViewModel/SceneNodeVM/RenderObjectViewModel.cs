@@ -34,6 +34,10 @@ namespace RenderApp.ViewModel
                 {
                     viewModel = new OutlineAttributeViewModel(this, attribute as OutlineAttribute);
                 }
+                else if (attribute is SplitAttribute)
+                {
+                    viewModel = new SplitAttributeViewModel(this, attribute as SplitAttribute);
+                }
 
                 if (viewModel != null)
                 {

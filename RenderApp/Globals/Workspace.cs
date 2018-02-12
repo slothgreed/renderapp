@@ -100,42 +100,48 @@ namespace RenderApp.Globals
 
             // bunny
             {
-                //var bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/bunny.half");
-                //var renderBunny = RenderObjectFactory.Instance.CreateRenderObject("bunny", bunny);
-                //renderBunny.RotateX(-90);
-                //MainScene.AddObject(renderBunny);
+                var bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/bunny.half");
+                var renderBunny = RenderObjectFactory.Instance.CreateRenderObject("bunny", bunny);
+                renderBunny.RotateX(-90);
+                MainScene.AddObject(renderBunny);
+                var parentNode = MainScene.FindNode(renderBunny);
 
-                //// bunny attribute
-                //var attribute = new KI.Renderer.Attribute.OutlineAttribute(renderBunny.Name + "Outline",
-                //renderBunny.VertexBuffer.ShallowCopy(),
-                //renderBunny.Polygon.Type,
-                //ShaderCreater.Instance.CreateShader(ShaderType.Outline));
-                //renderBunny.Attributes.Add(attribute);
+                // bunny attribute
+                var attribute = new KI.Renderer.Attribute.OutlineAttribute(renderBunny.Name + "Outline",
+                renderBunny.VertexBuffer.ShallowCopy(),
+                renderBunny.Polygon.Type,
+                ShaderCreater.Instance.CreateShader(ShaderType.Outline));
+                renderBunny.Attributes.Add(attribute);
+                MainScene.AddObject(attribute, parentNode);
 
-                //var parentNode = MainScene.FindNode(renderBunny);
-                //MainScene.AddObject(attribute, parentNode);
+                var splitAttribute = new KI.Renderer.Attribute.SplitAttribute(
+                    renderBunny.Name + "Split",
+                    renderBunny.VertexBuffer.ShallowCopy(),
+                    ShaderCreater.Instance.CreateShader(ShaderType.Split));
+                renderBunny.Attributes.Add(splitAttribute);
+                MainScene.AddObject(splitAttribute, parentNode);
 
-                //CommandManager.Instance.Execute(new CreateWireFrameCommand(MainScene, renderBunny), null, false);
+                CommandManager.Instance.Execute(new CreateWireFrameCommand(MainScene, renderBunny), null, false);
             }
 
             // plane
             {
-                var plane = AssetFactory.Instance.CreatePlane("plane").Polygons.First();
-                var renderPlane = RenderObjectFactory.Instance.CreateRenderObject("plane", plane);
-                MainScene.AddObject(renderPlane);
+                //var plane = AssetFactory.Instance.CreatePlane("plane").Polygons.First();
+                //var renderPlane = RenderObjectFactory.Instance.CreateRenderObject("plane", plane);
+                //MainScene.AddObject(renderPlane);
 
-                var normal = TextureFactory.Instance.CreateTexture(@"E:\MyProgram\KIProject\renderapp\Resource\Texture\Displacement\Normal.png");
-                var height = TextureFactory.Instance.CreateTexture(@"E:\MyProgram\KIProject\renderapp\Resource\Texture\Displacement\Height.png");
-                plane.AddTexture(KI.Gfx.KITexture.TextureKind.Normal, normal);
-                plane.AddTexture(KI.Gfx.KITexture.TextureKind.Height, height);
-                var nurbsAttribute = new KI.Renderer.Attribute.DisplacementAttribute(
-                    renderPlane.Name + "Displacement",
-                    renderPlane.VertexBuffer.ShallowCopy(),
-                    ShaderCreater.Instance.CreateShader(ShaderType.Displacement));
-                renderPlane.Attributes.Add(nurbsAttribute);
+                //var normal = TextureFactory.Instance.CreateTexture(@"E:\MyProgram\KIProject\renderapp\Resource\Texture\Displacement\Normal.png");
+                //var height = TextureFactory.Instance.CreateTexture(@"E:\MyProgram\KIProject\renderapp\Resource\Texture\Displacement\Height.png");
+                //plane.AddTexture(KI.Gfx.KITexture.TextureKind.Normal, normal);
+                //plane.AddTexture(KI.Gfx.KITexture.TextureKind.Height, height);
+                //var splitAttribute = new KI.Renderer.Attribute.DisplacementAttribute(
+                //    renderPlane.Name + "Split",
+                //    renderPlane.VertexBuffer.ShallowCopy(),
+                //    ShaderCreater.Instance.CreateShader(ShaderType.Split));
+                //renderPlane.Attributes.Add(splitAttribute);
 
-                var parentNode = MainScene.FindNode(renderPlane);
-                MainScene.AddObject(nurbsAttribute, parentNode);
+                //var parentNode = MainScene.FindNode(renderPlane);
+                //MainScene.AddObject(splitAttribute, parentNode);
 
             }
             //CommandManager.Instance.Execute(new CalculateVertexCurvatureCommand(MainScene, renderBunny), null, false);

@@ -41,26 +41,6 @@ namespace KI.Analyzer
         }
 
         /// <summary>
-        /// パラメータ
-        /// </summary>
-        public Dictionary<string, IParameter> Parameter
-        {
-            get
-            {
-                return parameters;
-            }
-        }
-
-        /// <summary>
-        /// パラメータの追加
-        /// </summary>
-        /// <param name="parameter"></param>
-        public void AddParameter(IParameter parameter)
-        {
-            parameters.Add(parameter.Name, parameter);
-        }
-
-        /// <summary>
         /// ハーフエッジのエディタ
         /// </summary>
         public HalfEdgeDSEditor Editor { get; private set; }
