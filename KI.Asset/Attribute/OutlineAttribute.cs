@@ -2,7 +2,7 @@
 using KI.Gfx.KIShader;
 using OpenTK.Graphics.OpenGL;
 
-namespace KI.Renderer.Attribute
+namespace KI.Asset.Attribute
 {
     /// <summary>
     /// 輪郭線のアトリビュート

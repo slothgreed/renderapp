@@ -7,7 +7,7 @@ using KI.Analyzer;
 using KI.Analyzer.Algorithm;
 using KI.Foundation.Command;
 using KI.Foundation.Core;
-using KI.Renderer;
+using KI.Asset;
 
 namespace KI.Tool.Command
 {

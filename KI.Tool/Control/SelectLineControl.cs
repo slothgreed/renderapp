@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using KI.Analyzer;
 using KI.Gfx.Geometry;
-using KI.Renderer;
+using KI.Asset;
 using KI.Tool.Utility;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;

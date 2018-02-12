@@ -5,7 +5,7 @@ using KI.Gfx.KIShader;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace KI.Renderer.Attribute
+namespace KI.Asset.Attribute
 {
     /// <summary>
     /// ベクトル表示用のアトリビュート

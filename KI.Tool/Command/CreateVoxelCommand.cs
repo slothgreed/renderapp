@@ -5,7 +5,7 @@ using KI.Analyzer;
 using KI.Foundation.Command;
 using KI.Foundation.Utility;
 using KI.Gfx.Geometry;
-using KI.Renderer;
+using KI.Asset;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 

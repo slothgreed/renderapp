@@ -2,7 +2,7 @@
 using KI.Foundation.Utility;
 using OpenTK;
 
-namespace KI.Renderer
+namespace KI.Asset
 {
     /// <summary>
     /// シーンノード

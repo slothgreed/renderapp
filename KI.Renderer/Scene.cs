@@ -4,7 +4,7 @@ using KI.Foundation.Core;
 using KI.Foundation.Tree;
 using OpenTK;
 
-namespace KI.Renderer
+namespace KI.Asset
 {
     /// <summary>
     /// シーンクラス

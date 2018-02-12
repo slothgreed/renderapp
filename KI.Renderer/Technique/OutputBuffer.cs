@@ -3,7 +3,7 @@ using KI.Asset;
 using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
 
-namespace KI.Renderer.Technique
+namespace KI.Asset.Technique
 {
     /// <summary>
     /// 最終出力用のバッファ

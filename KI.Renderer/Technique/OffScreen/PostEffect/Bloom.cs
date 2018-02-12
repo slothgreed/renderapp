@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace KI.Renderer.Technique
+namespace KI.Asset.Technique
 {
     /// <summary>
     /// bloom

@@ -1,5 +1,5 @@
 ﻿using System.Windows.Forms;
-using KI.Renderer;
+using KI.Asset;
 
 namespace KI.Tool.Control
 {

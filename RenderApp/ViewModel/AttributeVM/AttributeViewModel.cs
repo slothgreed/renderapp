@@ -1,4 +1,4 @@
-﻿using KI.Renderer.Attribute;
+﻿using KI.Asset.Attribute;
 using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel

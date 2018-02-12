@@ -1,16 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using KI.Asset;
 using KI.Foundation.Utility;
 using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
-using KI.Renderer.Attribute;
-using OpenTK;
+using KI.Asset.Attribute;
 using OpenTK.Graphics.OpenGL;
 
-namespace KI.Renderer
+namespace KI.Asset
 {
     /// <summary>
     /// レンダリング種類

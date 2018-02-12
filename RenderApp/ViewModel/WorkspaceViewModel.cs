@@ -3,8 +3,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using KI.Foundation.Tree;
 using KI.Gfx.GLUtil;
-using KI.Renderer;
-using KI.Renderer.Attribute;
+using KI.Asset;
+using KI.Asset.Attribute;
 using KI.UI.ViewModel;
 using RenderApp.Globals;
 

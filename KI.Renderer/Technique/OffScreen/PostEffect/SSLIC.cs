@@ -3,7 +3,7 @@ using KI.Asset;
 using KI.Gfx.GLUtil;
 using OpenTK.Graphics.OpenGL;
 
-namespace KI.Renderer.Technique
+namespace KI.Asset.Technique
 {
     /// <summary>
     /// スクリーンスペースLIC

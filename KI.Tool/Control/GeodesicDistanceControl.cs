@@ -7,8 +7,8 @@ using KI.Analyzer.Algorithm;
 using KI.Foundation.Utility;
 using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil.Buffer;
-using KI.Renderer;
-using KI.Renderer.Attribute;
+using KI.Asset;
+using KI.Asset.Attribute;
 using KI.Tool.Utility;
 using OpenTK;
 

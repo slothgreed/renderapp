@@ -1,8 +1,6 @@
-﻿using System.Linq;
-using KI.Asset;
+﻿using KI.Asset;
 using KI.Foundation.Command;
-using KI.Renderer;
-using KI.Renderer.Technique;
+using KI.Asset.Technique;
 using KI.Tool.Command;
 using OpenTK;
 
@@ -107,14 +105,14 @@ namespace RenderApp.Globals
                 var parentNode = MainScene.FindNode(renderBunny);
 
                 // bunny attribute
-                var attribute = new KI.Renderer.Attribute.OutlineAttribute(renderBunny.Name + "Outline",
+                var attribute = new KI.Asset.Attribute.OutlineAttribute(renderBunny.Name + "Outline",
                 renderBunny.VertexBuffer.ShallowCopy(),
                 renderBunny.Polygon.Type,
                 ShaderCreater.Instance.CreateShader(ShaderType.Outline));
                 renderBunny.Attributes.Add(attribute);
                 MainScene.AddObject(attribute, parentNode);
 
-                var splitAttribute = new KI.Renderer.Attribute.SplitAttribute(
+                var splitAttribute = new KI.Asset.Attribute.SplitAttribute(
                     renderBunny.Name + "Split",
                     renderBunny.VertexBuffer.ShallowCopy(),
                     ShaderCreater.Instance.CreateShader(ShaderType.Split));

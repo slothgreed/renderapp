@@ -7,7 +7,7 @@ using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
 using KI.Gfx.Render;
 
-namespace KI.Renderer.Technique
+namespace KI.Asset.Technique
 {
     /// <summary>
     /// レンダーテクニック

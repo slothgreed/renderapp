@@ -49,6 +49,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssetFactory.cs" />
+    <Compile Include="Attribute\AttributeBase.cs" />
+    <Compile Include="Attribute\DirectionAttribute.cs" />
+    <Compile Include="Attribute\GeometryAttribute.cs" />
+    <Compile Include="Attribute\NurbsAttribute.cs" />
+    <Compile Include="Attribute\OutlineAttribute.cs" />
+    <Compile Include="Attribute\SplitAttribute.cs" />
+    <Compile Include="Attribute\VertexColorAttribute.cs" />
+    <Compile Include="Attribute\VertexParameterAttribute.cs" />
+    <Compile Include="Attribute\WireFrameAttribute.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="EnvironmentProbe.cs" />
     <Compile Include="Loader\Converter\ConverterUtility.cs" />

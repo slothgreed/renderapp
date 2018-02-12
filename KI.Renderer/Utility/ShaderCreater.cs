@@ -2,7 +2,7 @@
 using KI.Gfx.GLUtil;
 using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
-using KI.Renderer;
+using KI.Asset;
 using OpenTK.Graphics.OpenGL;
 
 namespace KI.Asset

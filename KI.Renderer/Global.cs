@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace KI.Renderer
+namespace KI.Asset
 {
     /// <summary>
     /// グローバルクラス

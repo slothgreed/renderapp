@@ -9,7 +9,7 @@ using KI.Gfx.Geometry;
 using KI.Gfx.KIShader;
 using OpenTK;
 
-namespace KI.Renderer
+namespace KI.Asset
 {
     /// <summary>
     /// 描画オブジェクト作成ファクトリ

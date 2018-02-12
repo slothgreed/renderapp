@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using KI.Analyzer.Algorithm;
 using KI.Foundation.Command;
 using KI.Gfx.Geometry;
-using KI.Renderer;
+using KI.Asset;
 using OpenTK;
 
 namespace KI.Tool.Command

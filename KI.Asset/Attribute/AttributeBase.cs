@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using KI.Foundation.Core;
+﻿using KI.Foundation.Core;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
-using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace KI.Renderer.Attribute
+namespace KI.Asset.Attribute
 {
     /// <summary>
     /// アトリビュート

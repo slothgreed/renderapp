@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:renderer="clr-namespace:KI.Renderer;assembly=KI.Renderer"
+    xmlns:renderer="clr-namespace:KI.Asset;assembly=KI.Renderer"
     xmlns:v="clr-namespace:RenderApp.View"
     d:DesignHeight="300"
     d:DesignWidth="300"

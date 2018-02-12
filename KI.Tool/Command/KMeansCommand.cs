@@ -4,8 +4,8 @@ using KI.Analyzer.Algorithm;
 using KI.Foundation.Command;
 using KI.Foundation.Core;
 using KI.Foundation.Utility;
-using KI.Renderer;
-using KI.Renderer.Attribute;
+using KI.Asset;
+using KI.Asset.Attribute;
 using OpenTK;
 
 namespace KI.Tool.Command

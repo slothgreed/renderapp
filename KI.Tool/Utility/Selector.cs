@@ -3,7 +3,7 @@ using KI.Analyzer;
 using KI.Foundation.Tree;
 using KI.Foundation.Utility;
 using KI.Gfx.GLUtil;
-using KI.Renderer;
+using KI.Asset;
 using OpenTK;
 
 namespace KI.Tool.Utility

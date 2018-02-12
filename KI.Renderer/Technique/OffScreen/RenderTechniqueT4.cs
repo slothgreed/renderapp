@@ -1,6 +1,6 @@
 ﻿using System;
 using KI.Gfx.KITexture;
-namespace KI.Renderer.Technique
+namespace KI.Asset.Technique
 {
 	public partial class Selection : RenderTechnique
 	{

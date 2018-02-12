@@ -3,7 +3,7 @@ using System.Linq;
 using System.Windows.Forms;
 using KI.Analyzer;
 using KI.Gfx.Geometry;
-using KI.Renderer;
+using KI.Asset;
 using KI.Tool.Utility;
 using OpenTK;
 

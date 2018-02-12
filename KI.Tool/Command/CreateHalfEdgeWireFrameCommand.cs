@@ -5,7 +5,7 @@ using KI.Analyzer;
 using KI.Foundation.Command;
 using KI.Foundation.Core;
 using KI.Gfx.Geometry;
-using KI.Renderer;
+using KI.Asset;
 using OpenTK;
 
 namespace KI.Tool.Command

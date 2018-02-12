@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using KI.Gfx.GLUtil;
+﻿using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace KI.Renderer.Attribute
+namespace KI.Asset.Attribute
 {
     /// <summary>
     /// 頂点カラーのアトリビュート

@@ -1,6 +1,6 @@
 ﻿using OpenTK;
 
-namespace KI.Renderer
+namespace KI.Asset
 {
     /// <summary>
     /// スポットライト

@@ -1,6 +1,6 @@
 ﻿using KI.Foundation.Command;
 using KI.Foundation.Core;
-using KI.Renderer;
+using KI.Asset;
 using OpenTK.Graphics.OpenGL;
 
 namespace KI.Tool.Command
