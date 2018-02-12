@@ -34,18 +34,6 @@
             IsExpanded="True">
             <v:SceneNodeBase />
         </Expander>
-        <Expander IsExpanded="True">
-            <StackPanel>
-                <WrapPanel>
-                    <TextBlock Text="GeometryAttribute" />
-                    <ComboBox
-                        HorizontalAlignment="Stretch"
-                        ItemsSource="{Binding GeometryAttributes}"
-                        SelectedItem="{Binding SelectedGeometryAttribute}" />
-                </WrapPanel>
-            </StackPanel>
-        </Expander>
-
         <Expander
             Margin="2"
             Header="Attribute"

@@ -45,41 +45,12 @@ namespace RenderApp.ViewModel
                     Attributes.Add(viewModel);
                 }
             }
-
-            GeometryAttributes = new ObservableCollection<AttributeBase>();
-            foreach (var attribute in model.Attributes)
-            {
-                GeometryAttributes.Add(attribute);
-            }
-
-            SelectedGeometryAttribute = model.PolygonAttribute;
         }
-
-
-
 
         public ObservableCollection<ViewModelBase> Attributes
         {
             get;
             set;
-        }
-
-        public ObservableCollection<AttributeBase> GeometryAttributes
-        {
-            get;
-            set;
-        }
-
-        public AttributeBase SelectedGeometryAttribute
-        {
-            get
-            {
-                return ((RenderObject)Model).PolygonAttribute;
-            }
-            set
-            {
-                ((RenderObject)Model).PolygonAttribute = value;
-            }
         }
 
         private void Collection_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
