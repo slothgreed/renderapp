@@ -108,24 +108,12 @@
                 <Separator />
                 <MenuItem
                     Command="{Binding CreateObject}"
-                    CommandParameter="{x:Static local:RAGeometry.ConvexHull}"
-                    Header="ConvexHull" />
-                <MenuItem
-                    Command="{Binding CreateObject}"
-                    CommandParameter="{x:Static local:RAGeometry.MarchingCube}"
-                    Header="MarchingCube" />
-                <MenuItem
-                    Command="{Binding CreateObject}"
                     CommandParameter="{x:Static local:RAGeometry.AdaptiveMesh}"
                     Header="AdaptiveMesh" />
                 <MenuItem
                     Command="{Binding CreateObject}"
                     CommandParameter="{x:Static local:RAGeometry.QEM}"
                     Header="QEM" />
-                <MenuItem
-                    Command="{Binding CreateObject}"
-                    CommandParameter="{x:Static local:RAGeometry.Perceptron}"
-                    Header="Perceptron" />
                 <MenuItem
                     Command="{Binding CreateObject}"
                     CommandParameter="{x:Static local:RAGeometry.Kmeans}"
@@ -135,6 +123,19 @@
                     Command="{Binding CreateObject}"
                     CommandParameter="{x:Static local:RAGeometry.Voxelize}"
                     Header="Voxelize" />
+                <MenuItem
+                    Command="{Binding CreateObject}"
+                    CommandParameter="{x:Static local:RAGeometry.ConvexHull}"
+                    Header="ConvexHull" />
+                <MenuItem
+                    Command="{Binding CreateObject}"
+                    CommandParameter="{x:Static local:RAGeometry.MarchingCube}"
+                    Header="MarchingCube" />
+                <Separator/>
+                <MenuItem
+                    Command="{Binding CreateObject}"
+                    CommandParameter="{x:Static local:RAGeometry.Perceptron}"
+                    Header="Perceptron" />                
             </MenuItem>
 
             <MenuItem Header="View">

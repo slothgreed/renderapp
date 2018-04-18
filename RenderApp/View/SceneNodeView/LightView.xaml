@@ -22,15 +22,15 @@
             IsExpanded="True">
             <StackPanel>
                 <WrapPanel Margin="2">
-                    <TextBlock Text="Ambient" />
+                    <TextBlock Text="Ambient" Width="50"/>
                     <toolkit:ColorPicker ColorMode="ColorPalette" />
                 </WrapPanel>
                 <WrapPanel Margin="2">
-                    <TextBlock Text="Diffuse" />
-                    <toolkit:ColorPicker ColorMode="ColorCanvas" />
+                    <TextBlock Text="Diffuse" Width="50" />
+                    <toolkit:ColorPicker ColorMode="ColorPalette" />
                 </WrapPanel>
                 <WrapPanel Margin="2">
-                    <TextBlock Text="Specular" />
+                    <TextBlock Text="Specular" Width="50"/>
                     <toolkit:ColorPicker ColorMode="ColorPalette" />
                 </WrapPanel>
             </StackPanel>

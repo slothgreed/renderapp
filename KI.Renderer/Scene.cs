@@ -33,7 +33,9 @@ namespace KI.Asset
         public void Initialize()
         {
             MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
-            SunLight = RenderObjectFactory.Instance.CreateDirectionLight("SunLight", Vector3.UnitY * 10, Vector3.Zero);
+            SunLight = RenderObjectFactory.Instance.CreateDirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
+            var sphere = AssetFactory.Instance.CreateSphere("sphere", 0.1f, 32, 32, true);
+            SunLight.Model = RenderObjectFactory.Instance.CreateRenderObject("SunLight", sphere);
             AddObject(MainCamera);
             AddObject(SunLight);
         }

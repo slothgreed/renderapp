@@ -71,6 +71,24 @@ namespace KI.Asset
         /// </summary>
         public Texture ShadowMap { get; private set; }
 
+        private RenderObject model;
+        /// <summary>
+        /// ライトのモデル
+        /// </summary>
+        public RenderObject Model
+        {
+            get
+            {
+                return model;
+            }
+
+            set
+            {
+                model = value;
+                model.Translate = Position;
+            }
+        }
+        
         /// <summary>
         /// 解放処理
         /// </summary>

@@ -163,7 +163,7 @@ namespace KI.Asset
             }
 
             var meshs = new List<Mesh>();
-            for (int i = 0; i < position.Count; i += 3)
+            for (int i = 0; i < position.Count / 3; i++)
             {
                 meshs.Add(
                     new Mesh(

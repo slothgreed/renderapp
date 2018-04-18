@@ -89,15 +89,21 @@ namespace RenderApp.ViewModel
                 vm.PropertyChanged += RenderObjectViewModel_PropertyChanged;
                 workspace.MainScene.SelectNode = (SceneNode)node.KIObject;
             }
+            else if(node.KIObject is Light)
+            {
+                vm = new LightViewModel(this, node.KIObject as Light);
+                vm.PropertyChanged += RenderObjectViewModel_PropertyChanged;
+                workspace.MainScene.SelectNode = (SceneNode)node.KIObject;
+            }
 
             ReplaceTabWindow(vm);
         }
 
         public void ReplaceTabWindow(DockWindowViewModel window)
         {
-            if (window is RenderObjectViewModel)
+            if (window is SceneNodeViewModel)
             {
-                var oldItem = AnchorablesSources.FirstOrDefault(p => p is RenderObjectViewModel);
+                var oldItem = AnchorablesSources.FirstOrDefault(p => p is SceneNodeViewModel);
                 AnchorablesSources.Add(window);
                 AnchorablesSources.Remove(oldItem);
             }

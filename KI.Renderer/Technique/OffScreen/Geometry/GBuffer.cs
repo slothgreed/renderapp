@@ -73,10 +73,18 @@ namespace KI.Asset.Technique
             RenderTarget.BindRenderTarget(OutputTexture);
             foreach (var asset in scene.RootNode.AllChildren())
             {
-                if (asset.KIObject is RenderObject)
+                if (asset.KIObject is Light)
                 {
-                    var polygon = asset.KIObject as RenderObject;
-                    polygon.Render(scene);
+                    var light = asset.KIObject as Light;
+                    if (light.Model != null)
+                    {
+                        light.Model.Render(scene);
+                    }
+                }
+                else if (asset.KIObject is RenderObject)
+                {
+                    var renderObject = asset.KIObject as RenderObject;
+                    renderObject.Render(scene);
                 }
             }
 

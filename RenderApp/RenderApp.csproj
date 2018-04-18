@@ -41,6 +41,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>
     </DocumentationFile>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -169,7 +170,7 @@
     <Compile Include="ViewModel\AttributeVM\VertexParameterAttributeViewModel.cs" />
     <Compile Include="ViewModel\AttributeVM\WireFrameAttributeViewModel.cs" />
     <Compile Include="Globals\Project.cs" />
-    <Compile Include="Globals\Enum.cs" />
+    <Compile Include="Globals\Types.cs" />
     <Compile Include="ViewModel\ControllerVM\ControllerViewModelT4.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

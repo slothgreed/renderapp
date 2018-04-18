@@ -64,7 +64,7 @@ namespace KI.Tool.Command
             var colors = new Vector3[halfEdgeDS.Vertexs.Count];
             foreach (var cluster in kmeansAlgorithm.Cluster)
             {
-                var color = Calculator.RandomColor();
+                var color = RandamValue.Color();
                 foreach (var vertex in cluster)
                 {
                     colors[vertex.Index] = color;
