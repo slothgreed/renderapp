@@ -99,42 +99,50 @@
             <MenuItem Header="Analyze">
                 <MenuItem
                     Command="{Binding CreateObject}"
-                    CommandParameter="{x:Static local:RAGeometry.WireFrame}"
+                    CommandParameter="{x:Static local:AnalyzeCommand.WireFrame}"
                     Header="WireFrame" />
                 <MenuItem
                     Command="{Binding CreateObject}"
-                    CommandParameter="{x:Static local:RAGeometry.HalfEdgeWireFrame}"
+                    CommandParameter="{x:Static local:AnalyzeCommand.HalfEdgeWireFrame}"
                     Header="HalfEdgeWireFrame" />
                 <Separator />
                 <MenuItem
                     Command="{Binding CreateObject}"
-                    CommandParameter="{x:Static local:RAGeometry.AdaptiveMesh}"
+                    CommandParameter="{x:Static local:AnalyzeCommand.AdaptiveMesh}"
                     Header="AdaptiveMesh" />
                 <MenuItem
                     Command="{Binding CreateObject}"
-                    CommandParameter="{x:Static local:RAGeometry.QEM}"
+                    CommandParameter="{x:Static local:AnalyzeCommand.QEM}"
                     Header="QEM" />
                 <MenuItem
                     Command="{Binding CreateObject}"
-                    CommandParameter="{x:Static local:RAGeometry.Kmeans}"
+                    CommandParameter="{x:Static local:AnalyzeCommand.Kmeans}"
                     Header="Kmeans" />
+                <MenuItem
+                    Command="{Binding CreateObject}"
+                    CommandParameter="{x:Static local:AnalyzeCommand.Curvature}"
+                    Header="Curvature"/>
                 <Separator />
                 <MenuItem
                     Command="{Binding CreateObject}"
-                    CommandParameter="{x:Static local:RAGeometry.Voxelize}"
+                    CommandParameter="{x:Static local:AnalyzeCommand.Voxelize}"
                     Header="Voxelize" />
                 <MenuItem
                     Command="{Binding CreateObject}"
-                    CommandParameter="{x:Static local:RAGeometry.ConvexHull}"
+                    CommandParameter="{x:Static local:AnalyzeCommand.ConvexHull}"
                     Header="ConvexHull" />
                 <MenuItem
                     Command="{Binding CreateObject}"
-                    CommandParameter="{x:Static local:RAGeometry.MarchingCube}"
+                    CommandParameter="{x:Static local:AnalyzeCommand.MarchingCube}"
                     Header="MarchingCube" />
+                <MenuItem
+                    Command="{Binding CreateObject}"
+                    CommandParameter="{x:Static local:AnalyzeCommand.IsoLine}"
+                    Header="IsoLine"/>
                 <Separator/>
                 <MenuItem
                     Command="{Binding CreateObject}"
-                    CommandParameter="{x:Static local:RAGeometry.Perceptron}"
+                    CommandParameter="{x:Static local:AnalyzeCommand.Perceptron}"
                     Header="Perceptron" />                
             </MenuItem>
 

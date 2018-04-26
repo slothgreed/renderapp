@@ -43,16 +43,15 @@
         CubeMap
     }
 
-    public enum RAGeometry
+    public enum AnalyzeCommand
     {
         WireFrame,
         HalfEdge,
+        Curvature,
         HalfEdgeWireFrame,
         ConvexHull,
         MarchingCube,
-        STL,
-        OBJ,
-        File,
+        IsoLine,
         AdaptiveMesh,
         QEM,
         Perceptron,

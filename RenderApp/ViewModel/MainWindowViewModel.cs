@@ -200,43 +200,51 @@ namespace RenderApp.ViewModel
         #region [Model Menu Command]
         private void CreateObjectCommand(object createObjectMenu)
         {
-            RAGeometry menuParam = (RAGeometry)createObjectMenu;
+            AnalyzeCommand menuParam = (AnalyzeCommand)createObjectMenu;
             ICommand command = null;
             switch (menuParam)
             {
-                case RAGeometry.WireFrame:
+                case AnalyzeCommand.WireFrame:
                     command = new CreateWireFrameCommand(workspace.MainScene, workspace.MainScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
-                case RAGeometry.ConvexHull:
+                case AnalyzeCommand.ConvexHull:
                     command = new CreateConvexHullCommand(workspace.MainScene, workspace.MainScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
-                case RAGeometry.MarchingCube:
+                case AnalyzeCommand.MarchingCube:
                     command = new CreateMarchingCubeCommand(workspace.MainScene, workspace.MainScene.SelectNode, 128);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
-                case RAGeometry.HalfEdgeWireFrame:
+                case AnalyzeCommand.IsoLine:
+                    command = new CreateIsoLineCommand(workspace.MainScene, workspace.MainScene.SelectNode);
+                    CommandManager.Instance.Execute(command, null, true);
+                    break;
+                case AnalyzeCommand.HalfEdgeWireFrame:
                     command = new CreateHalfEdgeWireFrameCommand(workspace.MainScene, workspace.MainScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
-                case RAGeometry.AdaptiveMesh:
+                case AnalyzeCommand.AdaptiveMesh:
                     command = new AdaptiveMeshCommand(workspace.MainScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                         break;
-                case RAGeometry.QEM:
+                case AnalyzeCommand.QEM:
                     command = new QEMCommand(workspace.MainScene.SelectNode);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
-                case RAGeometry.Perceptron:
+                case AnalyzeCommand.Perceptron:
                     command = new PerceptronCommand(workspace.MainScene);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
-                case RAGeometry.Kmeans:
+                case AnalyzeCommand.Curvature:
+                    command = new CalculateVertexCurvatureCommand(workspace.MainScene, workspace.MainScene.SelectNode);
+                    CommandManager.Instance.Execute(command, null, true);
+                    break;
+                case AnalyzeCommand.Kmeans:
                     command = new KMeansCommand(workspace.MainScene, workspace.MainScene.SelectNode, 40, 10);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
-                case RAGeometry.Voxelize:
+                case AnalyzeCommand.Voxelize:
                     var window = new View.DebugWindow();
                     var voxelView = new View.Controller.VoxelView();
                     voxelView.DataContext = new VoxelViewModel(this);

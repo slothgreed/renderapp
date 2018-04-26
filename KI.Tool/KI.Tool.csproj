@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Command\AdaptiveMeshCommand.cs" />
     <Compile Include="Command\CalculateVertexCurvatureCommand.cs" />
+    <Compile Include="Command\CreateIsoLineCommand.cs" />
     <Compile Include="Command\CreateConvexHullCommand.cs" />
     <Compile Include="Command\CreateHalfEdgeWireFrameCommand.cs" />
     <Compile Include="Command\CreateMarchingCubeCommand.cs" />

@@ -80,6 +80,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithm\IsoLineAlgorithm.cs" />
     <Compile Include="Algorithm\GeodesicDistanceAlgorithm.cs" />
     <Compile Include="Algorithm\KMeansAlgorithm.cs" />
     <Compile Include="Algorithm\PerceptronAlgorithm.cs" />
