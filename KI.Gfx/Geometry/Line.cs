@@ -29,14 +29,25 @@ namespace KI.Gfx.Geometry
         }
 
         /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="start">始点</param>
+        /// <param name="end">終点</param>
+        public Line(Vector3 startVertex, Vector3 endVertex)
+        {
+            Start = new Vertex(0, startVertex);
+            End = new Vertex(0, endVertex);
+        }
+
+        /// <summary>
         /// 頂点1
         /// </summary>
-        public virtual Vertex Start { get; protected set; }
+        public virtual Vertex Start { get; set; }
 
         /// <summary>
         /// 頂点2
         /// </summary>
-        public virtual Vertex End { get; protected set; }
+        public virtual Vertex End { get; set; }
 
         /// <summary>
         /// エッジの長さ
@@ -57,6 +68,11 @@ namespace KI.Gfx.Geometry
         public virtual void Modified()
         {
             length = 0;
+        }
+
+        public override string ToString()
+        {
+            return "Start:" + Start.ToString() + "End:" + End.ToString();
         }
     }
 }

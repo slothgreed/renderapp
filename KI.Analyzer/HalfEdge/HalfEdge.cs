@@ -285,7 +285,7 @@ namespace KI.Analyzer
 
         public override string ToString()
         {
-            return Index.ToString();
+            return "Index:" + Index.ToString() + "Start:" + Start.ToString() + "End:" + End.ToString();
         }
     }
 }

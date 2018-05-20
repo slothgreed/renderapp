@@ -12,6 +12,7 @@ using KI.Foundation.Core;
 using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Mathmatics;
+using OpenTK;
 
 namespace KI.Tool.Command
 {
@@ -71,36 +72,37 @@ namespace KI.Tool.Command
             var halfDS = renderObject.Polygon as HalfEdgeDS;
             IsoLineAlgorithm algorithm = new IsoLineAlgorithm(halfDS);
 
-            algorithm.Calculate(0.1f);
+            algorithm.Calculate(0.05f);
 
-            List<Mesh> createMesh = new List<Mesh>();
-            for (int i = 0; i < algorithm.isoSpace.Length; i++)
+            List<Line> createLine = new List<Line>();
+            foreach (var isoSpace in algorithm.IsoSpace)
             {
-                var color = RandamValue.Color();
-                var meshes = algorithm.isoSpace[i].Edges.Select(p => p.Mesh);
-                foreach (var mesh in meshes)
+                foreach (var isoLine in isoSpace.IsoLines)
                 {
-                    var vertexs = mesh.Vertexs;
-                    Vertex[] createVertexs = new Vertex[vertexs.Count];
+                    float length = isoLine.Length;
+                    float sum = 0;
+                    foreach(var line in isoLine.Lines)
+                    {
+                        Vector3 color = PseudoColor.GetColor(sum, 0, length);
+                        var vertex1 = new Vertex(0, line.Start.Position, color);
 
-                    createVertexs[0] = new Vertex(0, vertexs[0].Position, color);
-                    createVertexs[1] = new Vertex(0, vertexs[1].Position, color);
-                    createVertexs[2] = new Vertex(0, vertexs[2].Position, color);
+                        Vector3 color2 = PseudoColor.GetColor(sum, 0, length);
+                        sum += line.Length;
+                        var vertex2 = new Vertex(0, line.End.Position, color);
 
-                    createMesh.Add(new Mesh(createVertexs[0], createVertexs[1], createVertexs[2]));
+                        createLine.Add(new Line(vertex1, vertex2));
+                    }
                 }
             }
 
-            Polygon polygon = new Polygon("IsoLinePoly_forDebug", createMesh, OpenTK.Graphics.OpenGL.PrimitiveType.Triangles);
+            Polygon lines = new Polygon("IsoLines", createLine);
             VertexBuffer vertexBuffer = new VertexBuffer();
-            vertexBuffer.SetupBuffer(polygon);
-
-            var polyAttribute = new PolygonAttribute("IsoLineAttribute", vertexBuffer, OpenTK.Graphics.OpenGL.PrimitiveType.Triangles, renderObject.Shader);
-            renderObject.Attributes.Add(polyAttribute);
+            vertexBuffer.SetupBuffer(lines);
+            var polyAttriute = new PolygonAttribute("IsoLines", vertexBuffer, OpenTK.Graphics.OpenGL.PrimitiveType.Lines, renderObject.Shader);
+            renderObject.Attributes.Add(polyAttriute);
 
             var parentNode = Global.Renderer.ActiveScene.FindNode(renderObject);
-            Global.Renderer.ActiveScene.AddObject(polyAttribute, parentNode);
-
+            Global.Renderer.ActiveScene.AddObject(polyAttriute, parentNode);
 
             return CommandResult.Success;
         }

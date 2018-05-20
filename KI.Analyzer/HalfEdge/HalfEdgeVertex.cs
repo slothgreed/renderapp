@@ -697,5 +697,10 @@ namespace KI.Analyzer
             DeleteFlag = true;
             aroundEdge = null;
         }
+
+        public override string ToString()
+        {
+            return Position.ToString();
+        }
     }
 }

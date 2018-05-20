@@ -16,10 +16,12 @@ namespace KI.Mathmatics
         /// 線と平面の交差判定
         /// http://www.sousakuba.com/Programming/gs_plane_line_intersect.html
         /// </summary>
-        /// <returns></returns>
-        public static Vector3 PlaneToLine(Vector3 start, Vector3 fin, Vector4 plane1)
+        /// <param name="start">始点</param>
+        /// <param name="end">終点</param>
+        /// <param name="plane1">平面の公式</param>
+        /// <returns>交点</returns>
+        public static bool PlaneToLine(Vector3 start, Vector3 end, Vector4 plane1, out Vector3 result)
         {
-            Vector3 result = new Vector3();
             Vector4 plane = new Vector4();
             plane = Plane.Normalize(plane1);
             Vector3 plane3 = new Vector3(plane);
@@ -27,7 +29,7 @@ namespace KI.Mathmatics
             Vector3 PA = new Vector3();
             Vector3 PB = new Vector3();
             PA = planeV - start;
-            PB = planeV - fin;
+            PB = planeV - end;
             float dotPA = Vector3.Dot(PA, plane3);
             float dotPB = Vector3.Dot(PB, plane3);
             if (Math.Abs(dotPA) < 0.0001) dotPA = 0;
@@ -35,31 +37,27 @@ namespace KI.Mathmatics
 
             if (dotPA == 0 && dotPB == 0)
             {
-                result.X = 0;
-                result.Y = 0;
-                result.Z = 0;
-                return result;
+                result = Vector3.Zero;
+                return false;
             }
             else if ((dotPA >= 0 && dotPB <= 0) || (dotPA <= 0 && dotPB >= 0))
             {
             }
             else
             {
-                result.X = 0;
-                result.Y = 0;
-                result.Z = 0;
-                return result;
+                result = Vector3.Zero;
+                return false;
             }
 
             Vector3 AB = new Vector3();
-            AB = fin - start;
+            AB = end - start;
             float ratio = (float)(Math.Abs(dotPA) / (Math.Abs(dotPA) + Math.Abs(dotPB)));
 
             result.X = start.X + (AB.X * ratio);
             result.Y = start.Y + (AB.Y * ratio);
             result.Z = start.Z + (AB.Z * ratio);
 
-            return result;
+            return true;
         }
 
         /// <summary>
@@ -77,7 +75,12 @@ namespace KI.Mathmatics
         public static bool RectangleToLine(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4, Vector3 near, Vector3 far, ref float min, out Vector3 result)
         {
             Vector4 surface = Plane.Formula(v1, v2, v3);
-            result = PlaneToLine(near, far, surface);
+
+            if (PlaneToLine(near, far, surface, out result) == false)
+            {
+                return false;
+            }
+
             float length;
             //交点あり
             if (result.Length != 0)
@@ -111,7 +114,11 @@ namespace KI.Mathmatics
         public static bool TriangleToLine(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 near, Vector3 far, ref float min, out Vector3 result)
         {
             Vector4 surface = Plane.Formula(v1, v2, v3);
-            result = PlaneToLine(near, far, surface);
+            if (PlaneToLine(near, far, surface, out result) == false)
+            {
+                return false;
+            }
+
             float length;
             //交点あり
             if (result.Length != 0)
