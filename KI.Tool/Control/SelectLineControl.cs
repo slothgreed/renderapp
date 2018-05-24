@@ -4,7 +4,7 @@ using KI.Gfx.Geometry;
 using KI.Asset;
 using KI.Tool.Utility;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
+using KI.Gfx;
 
 namespace KI.Tool.Control
 {
@@ -42,7 +42,7 @@ namespace KI.Tool.Control
                     selectVertex.Add(halfEdge.Start);
                     selectVertex.Add(halfEdge.End);
 
-                    renderObject.Polygon.UpdateVertexArray(OpenTK.Graphics.OpenGL.PrimitiveType.Lines);
+                    renderObject.Polygon.UpdateVertexArray(PolygonType.Lines);
                 }
             }
 
@@ -73,7 +73,7 @@ namespace KI.Tool.Control
 
             if (renderObject != null)
             {
-                renderObject.Polygon.UpdateVertexArray(PrimitiveType.Points);
+                renderObject.Polygon.UpdateVertexArray(PolygonType.Points);
             }
 
             selectVertex = null;

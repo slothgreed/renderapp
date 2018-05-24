@@ -5,7 +5,7 @@ using KI.Foundation.Parameter;
 using KI.Foundation.Core;
 using KI.Gfx.Geometry;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
+using KI.Gfx;
 
 namespace KI.Analyzer
 {
@@ -26,7 +26,7 @@ namespace KI.Analyzer
             : base(name)
         {
             Editor = new HalfEdgeDSEditor(this);
-            Type = PrimitiveType.Triangles;
+            Type = PolygonType.Triangles;
         }
 
         /// <summary>

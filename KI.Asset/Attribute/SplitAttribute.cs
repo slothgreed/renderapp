@@ -1,6 +1,6 @@
-﻿using KI.Gfx.GLUtil.Buffer;
+﻿using KI.Gfx;
+using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
-using OpenTK.Graphics.OpenGL;
 
 namespace KI.Asset.Attribute
 {
@@ -42,7 +42,7 @@ namespace KI.Asset.Attribute
         /// <param name="vertexBuffer">線分</param>
         /// <param name="shader">シェーダ</param>
         public SplitAttribute(string name, VertexBuffer vertexBuffer, Shader shader)
-            : base(name, vertexBuffer, PrimitiveType.Patches, shader)
+            : base(name, vertexBuffer, PolygonType.Patches, shader)
         {
             uOuter = 2;
             uInner = 2;

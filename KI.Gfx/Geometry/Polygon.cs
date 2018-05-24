@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using KI.Foundation.Core;
-using KI.Foundation.Parameter;
 using KI.Gfx.KITexture;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 
 namespace KI.Gfx.Geometry
 {
@@ -28,7 +26,7 @@ namespace KI.Gfx.Geometry
         /// コンストラクタ
         /// </summary>
         /// <param name="type">更新した形状種類</param>
-        public UpdatePolygonEventArgs(PrimitiveType type)
+        public UpdatePolygonEventArgs(PolygonType type)
         {
             Type = type;
         }
@@ -38,7 +36,7 @@ namespace KI.Gfx.Geometry
         /// </summary>
         /// <param name="type">更新した形状種類</param>
         /// <param name="type">更新した色情報</param>
-        public UpdatePolygonEventArgs(PrimitiveType type, List<Vector3> color)
+        public UpdatePolygonEventArgs(PolygonType type, List<Vector3> color)
         {
             Type = type;
             Color = color;
@@ -52,7 +50,7 @@ namespace KI.Gfx.Geometry
         /// <summary>
         /// 更新した形状種類
         /// </summary>
-        public PrimitiveType Type { get; private set; }
+        public PolygonType Type { get; private set; }
     }
 
     /// <summary>
@@ -100,7 +98,7 @@ namespace KI.Gfx.Geometry
             : base(name)
         {
             vertexs = vertex;
-            Type = PrimitiveType.Points;
+            Type = PolygonType.Points;
         }
 
         /// <summary>
@@ -112,7 +110,7 @@ namespace KI.Gfx.Geometry
             : base(name)
         {
             lines = line;
-            Type = PrimitiveType.Lines;
+            Type = PolygonType.Lines;
         }
 
         /// <summary>
@@ -121,7 +119,7 @@ namespace KI.Gfx.Geometry
         /// <param name="name">名前</param>
         /// <param name="mesh">メッシュ</param>
         /// <param name="type">種類</param>
-        public Polygon(string name, List<Mesh> mesh, PrimitiveType type)
+        public Polygon(string name, List<Mesh> mesh, PolygonType type)
             : base(name)
         {
             meshs = mesh;
@@ -135,7 +133,7 @@ namespace KI.Gfx.Geometry
         /// <param name="vertex">頂点リスト</param>
         /// <param name="indexList">頂点バッファリスト</param>
         /// <param name="type">種類</param>
-        public Polygon(string name, List<Vertex> vertex, List<int> indexList, PrimitiveType type)
+        public Polygon(string name, List<Vertex> vertex, List<int> indexList, PolygonType type)
             : base(name)
         {
             vertexs = vertex;
@@ -151,7 +149,7 @@ namespace KI.Gfx.Geometry
         /// <summary>
         /// 形状種類
         /// </summary>
-        public PrimitiveType Type { get; set; }
+        public PolygonType Type { get; set; }
 
         /// <summary>
         /// 頂点インデックスリスト
@@ -226,9 +224,9 @@ namespace KI.Gfx.Geometry
         /// 頂点バッファの更新
         /// </summary>
         /// <param name="type">形状タイプ</param>
-        public virtual void UpdateVertexArray(PrimitiveType type)
+        public virtual void UpdateVertexArray(PolygonType type)
         {
-            if (type == PrimitiveType.Lines &&
+            if (type == PolygonType.Lines &&
                 Index.Count != 0)
             {
                 Index.Clear();
@@ -242,10 +240,10 @@ namespace KI.Gfx.Geometry
                     }
                 }
 
-                OnUpdate(new UpdatePolygonEventArgs(PrimitiveType.Lines));
+                OnUpdate(new UpdatePolygonEventArgs(PolygonType.Lines));
             }
 
-            if (type == PrimitiveType.Triangles &&
+            if (type == PolygonType.Triangles &&
                 Index.Count != 0)
             {
                 Index.Clear();
@@ -255,7 +253,7 @@ namespace KI.Gfx.Geometry
                     Index.AddRange(mesh.Vertexs.Select(p => p.Index));
                 }
 
-                OnUpdate(new UpdatePolygonEventArgs(PrimitiveType.Triangles));
+                OnUpdate(new UpdatePolygonEventArgs(PolygonType.Triangles));
             }
         }
 
@@ -266,7 +264,7 @@ namespace KI.Gfx.Geometry
         /// <param name="vert">頂点</param>
         /// <param name="idx">頂点Index</param>
         /// <param name="type">形状タイプ</param>
-        public void UpdateIndexBuffer(List<Vertex> vert, List<int> idx, PrimitiveType type)
+        public void UpdateIndexBuffer(List<Vertex> vert, List<int> idx, PolygonType type)
         {
             vertexs = vert;
 

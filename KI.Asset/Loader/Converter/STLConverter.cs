@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using KI.Asset.Loader;
+using KI.Gfx;
 using KI.Gfx.Geometry;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 
 namespace KI.Asset.Loader.Converter
 {
@@ -51,7 +51,7 @@ namespace KI.Asset.Loader.Converter
                         new Vertex(i + 2, stlData.Position[3 * i + 2], stlData.Normal[3 * i + 2], Vector3.One)));
             }
 
-            Polygon info = new Polygon(stlData.FileName, mesh, PrimitiveType.Triangles);
+            Polygon info = new Polygon(stlData.FileName, mesh, PolygonType.Triangles);
             Polygons = new Polygon[] { info };
         }
     }

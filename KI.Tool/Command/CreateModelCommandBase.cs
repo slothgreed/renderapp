@@ -1,7 +1,7 @@
 ﻿using KI.Foundation.Command;
 using KI.Foundation.Core;
 using KI.Asset;
-using OpenTK.Graphics.OpenGL;
+using KI.Gfx;
 
 namespace KI.Tool.Command
 {
@@ -15,7 +15,7 @@ namespace KI.Tool.Command
             }
 
             RenderObject renderObject = asset as RenderObject;
-            if (renderObject.Polygon.Type != PrimitiveType.Triangles)
+            if (renderObject.Polygon.Type != PolygonType.Triangles)
             {
                 return CommandResult.Failed;
             }

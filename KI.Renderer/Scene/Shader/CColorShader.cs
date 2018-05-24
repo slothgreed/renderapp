@@ -4,7 +4,6 @@
 //using System.Text;
 //using System.Threading.Tasks;
 //using OpenTK;
-//using OpenTK.Graphics.OpenGL;
 //using RenderApp.Utility;
 //using RenderApp.Scene;
 //namespace RenderApp.AssetModel

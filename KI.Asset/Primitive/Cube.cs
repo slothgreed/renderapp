@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using KI.Gfx;
 using KI.Gfx.Geometry;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 
 namespace KI.Asset
 {
@@ -123,7 +123,7 @@ namespace KI.Asset
             List<Mesh> mesh = new List<Mesh>();
             mesh.Add(new Mesh(front0, front1, front2, front3));
 
-            return new Polygon(name, mesh, PrimitiveType.Quads);
+            return new Polygon(name, mesh, PolygonType.Quads);
         }
     }
 }

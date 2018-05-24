@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using KI.Asset.Loader.Loader;
+using KI.Gfx;
 using KI.Gfx.Geometry;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 
 
 namespace KI.Asset.Loader.Converter
@@ -55,7 +55,7 @@ namespace KI.Asset.Loader.Converter
             }
 
             List<int> index = plyData.FaceIndex.ToList();
-            Polygon info = new Polygon(plyData.FileName, vertexs, index, PrimitiveType.Triangles);
+            Polygon info = new Polygon(plyData.FileName, vertexs, index, PolygonType.Triangles);
             Polygons = new Polygon[] { info };
         }
     }

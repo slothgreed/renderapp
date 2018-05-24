@@ -1,4 +1,5 @@
 ﻿using System;
+using KI.Gfx;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
@@ -44,7 +45,7 @@ namespace KI.Asset.Attribute
         /// <param name="polygon">線分</param>
         /// <param name="shader">シェーダ</param>
         public DirectionAttribute(string name, Shader shader, Vector3[] lines, Vector4 color, Vector3[] normal = null, bool displayVector = true)
-            : base(name, PrimitiveType.Lines, shader)
+            : base(name, PolygonType.Lines, shader)
         {
             wireFrameColor = color;
             var vectors = lines;

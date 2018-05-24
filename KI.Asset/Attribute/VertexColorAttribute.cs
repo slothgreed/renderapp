@@ -1,4 +1,5 @@
-﻿using KI.Gfx.GLUtil;
+﻿using KI.Gfx;
+using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
 using OpenTK;
@@ -28,7 +29,7 @@ namespace KI.Asset.Attribute
         /// <param name="type">種類</param>
         /// <param name="shader">シェーダ</param>
         /// <param name="Color">色情報</param>
-        public VertexColorAttribute(string name, VertexBuffer vertexBuffer, PrimitiveType type, Shader shader, Vector3[] colors)
+        public VertexColorAttribute(string name, VertexBuffer vertexBuffer, PolygonType type, Shader shader, Vector3[] colors)
             : base(name, vertexBuffer, type, shader)
         {
             vertexColors = colors;

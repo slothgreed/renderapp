@@ -4,7 +4,7 @@ using KI.Gfx.Geometry;
 using KI.Asset;
 using KI.Tool.Utility;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
+using KI.Gfx;
 
 namespace KI.Tool.Control
 {
@@ -36,7 +36,7 @@ namespace KI.Tool.Control
             {
                 vertex.Color = Vector3.UnitY;
                 selectVertex.Add(vertex);
-                renderObject.Polygon.UpdateVertexArray(PrimitiveType.Points);
+                renderObject.Polygon.UpdateVertexArray(PolygonType.Points);
             }
 
             return true;
@@ -66,7 +66,7 @@ namespace KI.Tool.Control
 
             if (renderObject != null)
             {
-                renderObject.Polygon.UpdateVertexArray(PrimitiveType.Points);
+                renderObject.Polygon.UpdateVertexArray(PolygonType.Points);
             }
 
             selectVertex = null;

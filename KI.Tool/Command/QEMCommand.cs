@@ -8,6 +8,7 @@ using KI.Analyzer.Algorithm;
 using KI.Foundation.Command;
 using KI.Foundation.Core;
 using KI.Asset;
+using KI.Gfx;
 
 namespace KI.Tool.Command
 {
@@ -61,7 +62,7 @@ namespace KI.Tool.Command
 
             var adaptiveMesh = new QEMAlgorithm(halfDS, halfDS.Vertexs.Count / 2);
 
-            halfDS.UpdateVertexArray(OpenTK.Graphics.OpenGL.PrimitiveType.Triangles);
+            halfDS.UpdateVertexArray(PolygonType.Triangles);
 
             return CommandResult.Success;
         }

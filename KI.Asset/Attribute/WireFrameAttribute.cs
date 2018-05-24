@@ -1,4 +1,5 @@
-﻿using KI.Gfx.GLUtil;
+﻿using KI.Gfx;
+using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
 using OpenTK;
@@ -34,7 +35,7 @@ namespace KI.Asset.Attribute
         /// <param name="shader">シェーダ</param>
         /// <param name="Color">色情報</param>
         public WireFrameAttribute(string name, VertexBuffer vertexBuffer, Shader shader, Vector3[] color, int[] index)
-            : base(name, vertexBuffer, PrimitiveType.Lines, shader)
+            : base(name, vertexBuffer, PolygonType.Lines, shader)
         {
             colors = color;
             vertexColorBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);

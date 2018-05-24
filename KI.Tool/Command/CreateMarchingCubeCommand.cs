@@ -7,8 +7,8 @@ using KI.Foundation.Core;
 using KI.Gfx.Geometry;
 using KI.Asset;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 using KI.Mathmatics;
+using KI.Gfx;
 
 namespace KI.Tool.Command
 {
@@ -57,7 +57,7 @@ namespace KI.Tool.Command
                 return CommandResult.Failed;
             }
 
-            if (renderObject.Polygon.Type != PrimitiveType.Triangles)
+            if (renderObject.Polygon.Type != PolygonType.Triangles)
             {
                 return CommandResult.Failed;
             }
@@ -80,7 +80,7 @@ namespace KI.Tool.Command
             var voxel = new VoxelSpace(renderObject.Polygon.Vertexs.Select(p => p.Position).ToList(), renderObject.Polygon.Index, partition, min, max);
             var marching = new MarchingCubesAlgorithm(voxel, 0.8f);
 
-            var polygon = new Polygon("MarchingCube :" + renderObject.Name, marching.Meshs, PrimitiveType.Triangles);
+            var polygon = new Polygon("MarchingCube :" + renderObject.Name, marching.Meshs, PolygonType.Triangles);
             RenderObject marghingObject = RenderObjectFactory.Instance.CreateRenderObject(polygon.Name, polygon);
             marghingObject.ModelMatrix = renderObject.ModelMatrix;
             scene.AddObject(marghingObject);

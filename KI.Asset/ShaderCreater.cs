@@ -1,7 +1,7 @@
-﻿using KI.Gfx.Geometry;
+﻿using KI.Gfx;
+using KI.Gfx.Geometry;
 using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
-using OpenTK.Graphics.OpenGL;
 
 namespace KI.Asset
 {
@@ -44,8 +44,8 @@ namespace KI.Asset
         /// <returns>ファイルパス</returns>
         public string GetVertexShader(Polygon polygon)
         {
-            if (polygon.Type == PrimitiveType.Lines ||
-                polygon.Type == PrimitiveType.Points)
+            if (polygon.Type == PolygonType.Lines ||
+                polygon.Type == PolygonType.Points)
             {
                 return Directory + @"GBuffer\GeneralPC.vert";
             }
@@ -73,8 +73,8 @@ namespace KI.Asset
                 return shaderPath;
             }
 
-            if (polygon.Type == PrimitiveType.Lines ||
-                polygon.Type == PrimitiveType.Points)
+            if (polygon.Type == PolygonType.Lines ||
+                polygon.Type == PolygonType.Points)
             {
                 return Directory + @"GBuffer\GeneralPC.frag";
             }

@@ -6,8 +6,8 @@ using KI.Foundation.Command;
 using KI.Gfx.Geometry;
 using KI.Asset;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 using KI.Mathmatics;
+using KI.Gfx;
 
 namespace KI.Tool.Command
 {
@@ -81,7 +81,7 @@ namespace KI.Tool.Command
             voxel = new VoxelSpace(renderObject.Polygon.Vertexs.Select(p => p.Position).ToList(), renderObject.Polygon.Index, partition, min, max);
             var mesh = GetVoxelObject();
 
-            Polygon info = new Polygon("Voxel :" + renderObject.Name, mesh, PrimitiveType.Quads);
+            Polygon info = new Polygon("Voxel :" + renderObject.Name, mesh, PolygonType.Quads);
             RenderObject voxelObject = RenderObjectFactory.Instance.CreateRenderObject("Voxel :" + renderObject.Name, info);
             voxelObject.Transformation(renderObject.ModelMatrix);
             scene.AddObject(voxelObject);

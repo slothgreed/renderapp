@@ -101,7 +101,6 @@ namespace KI.Tool.Control
 
                         var parentNode = Global.Renderer.ActiveScene.FindNode(renderObject);
                         
-
                         var colorAttribute = new VertexParameterAttribute("distanceColor", 
                             renderObject.VertexBuffer.ShallowCopy(), 
                             renderObject.Polygon.Type, 

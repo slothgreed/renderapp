@@ -58,9 +58,10 @@ namespace KI.Gfx.GLUtil
         /// <param name="type">形状タイプ</param>
         /// <param name="first">開始番号</param>
         /// <param name="count">数</param>
-        public void DrawArrays(PrimitiveType type, int first, int count)
+        public void DrawArrays(PolygonType type, int first, int count)
         {
-            GL.DrawArrays(type, first, count);
+            PrimitiveType primitiveType = TypeUtility.ConvertPolygonType(type);
+            GL.DrawArrays(primitiveType, first, count);
         }
 
         /// <summary>
@@ -70,9 +71,10 @@ namespace KI.Gfx.GLUtil
         /// <param name="count">数</param>
         /// <param name="elementType">要素の型</param>
         /// <param name="indices">ポインタの場所</param>
-        public void DrawElements(PrimitiveType type, int count, DrawElementsType elementType, int indices)
+        public void DrawElements(PolygonType type, int count, DrawElementsType elementType, int indices)
         {
-            GL.DrawElements(type, count, elementType, indices);
+            PrimitiveType primitiveType = TypeUtility.ConvertPolygonType(type);
+            GL.DrawElements(primitiveType, count, elementType, indices);
         }
 
         /// <summary>

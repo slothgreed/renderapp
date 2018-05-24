@@ -4,8 +4,8 @@ using KI.Analyzer.Algorithm;
 using KI.Asset;
 using KI.Foundation.Command;
 using KI.Foundation.Core;
+using KI.Gfx;
 using KI.Gfx.Geometry;
-using OpenTK.Graphics.OpenGL;
 
 namespace KI.Tool.Command
 {
@@ -83,7 +83,7 @@ namespace KI.Tool.Command
                 meshs.Add(new Mesh(ver0, ver1, ver2));
             }
 
-            Polygon polygon = new Polygon("ConvexHull:" + renderObject.Name, meshs, PrimitiveType.Triangles);
+            Polygon polygon = new Polygon("ConvexHull:" + renderObject.Name, meshs, PolygonType.Triangles);
             RenderObject convex = RenderObjectFactory.Instance.CreateRenderObject("ConvexHull :" + renderObject.Name, polygon);
             convex.ModelMatrix = renderObject.ModelMatrix;
             scene.AddObject(convex);

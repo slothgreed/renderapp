@@ -6,6 +6,7 @@ using KI.Gfx.Geometry;
 using KI.Asset;
 using KI.Tool.Utility;
 using OpenTK;
+using KI.Gfx;
 
 namespace KI.Tool.Control
 {
@@ -65,7 +66,7 @@ namespace KI.Tool.Control
                     selectObject = renderObject;
                     selectHalfEdge = halfEdge;
 
-                    renderObject.Polygon.UpdateVertexArray(OpenTK.Graphics.OpenGL.PrimitiveType.Lines);
+                    renderObject.Polygon.UpdateVertexArray(PolygonType.Lines);
 
                 }
             }
@@ -90,7 +91,7 @@ namespace KI.Tool.Control
                     }
 
                     selectHalfEdge = null;
-                    selectObject.Polygon.UpdateVertexArray(OpenTK.Graphics.OpenGL.PrimitiveType.Lines);
+                    selectObject.Polygon.UpdateVertexArray(PolygonType.Lines);
                 }
             }
 
@@ -108,7 +109,7 @@ namespace KI.Tool.Control
                 selectHalfEdge.Start.Color = Vector3.Zero;
                 selectHalfEdge.End.Color = Vector3.Zero;
                 selectHalfEdge = null;
-                selectObject.Polygon.UpdateVertexArray(OpenTK.Graphics.OpenGL.PrimitiveType.Lines);
+                selectObject.Polygon.UpdateVertexArray(PolygonType.Lines);
             }
 
             return base.UnBinding();

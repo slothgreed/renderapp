@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using KI.Foundation.Core;
+using KI.Gfx;
 using KI.Gfx.Geometry;
 using KI.Mathmatics;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 
 namespace KI.Asset
 {
@@ -90,7 +90,7 @@ namespace KI.Asset
                 new Vertex(2, quad2, surface.Xyz, Vector2.One),
                 new Vertex(3, quad3, surface.Xyz, Vector2.UnitY));
 
-            var polygon = new Polygon(this.Name, new List<Mesh>() { mesh }, PrimitiveType.Quads);
+            var polygon = new Polygon(this.Name, new List<Mesh>() { mesh }, PolygonType.Quads);
 
             Polygons = new Polygon[] { polygon };
         }

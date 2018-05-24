@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using KI.Foundation.Core;
+using KI.Gfx;
 using KI.Gfx.Geometry;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 
 namespace KI.Asset
 {
@@ -172,7 +172,7 @@ namespace KI.Asset
                         new Vertex(i + 2, position[3 * i + 2], normal[3 * i + 2], texcoord[3 * i + 2])));
             }
 
-            var info = new Polygon(this.Name, meshs, PrimitiveType.Triangles);
+            var info = new Polygon(this.Name, meshs, PolygonType.Triangles);
 
             //info.ConvertVertexArray();
 

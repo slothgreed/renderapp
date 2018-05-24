@@ -2,7 +2,6 @@
 using System.Linq;
 using KI.Analyzer;
 using KI.Gfx.Geometry;
-using OpenTK.Graphics.OpenGL;
 
 namespace KI.Asset.Loader.Converter
 {

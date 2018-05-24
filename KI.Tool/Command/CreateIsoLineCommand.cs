@@ -9,6 +9,7 @@ using KI.Asset;
 using KI.Asset.Attribute;
 using KI.Foundation.Command;
 using KI.Foundation.Core;
+using KI.Gfx;
 using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Mathmatics;
@@ -98,7 +99,7 @@ namespace KI.Tool.Command
             Polygon isoLines = new Polygon("IsoLines", createLine);
             VertexBuffer vertexBuffer = new VertexBuffer();
             vertexBuffer.SetupLineBuffer(isoLines.Vertexs, isoLines.Index, isoLines.Lines);
-            var polyAttriute = new PolygonAttribute("IsoLines", vertexBuffer, OpenTK.Graphics.OpenGL.PrimitiveType.Lines, renderObject.Shader);
+            var polyAttriute = new PolygonAttribute("IsoLines", vertexBuffer, PolygonType.Lines, renderObject.Shader);
             renderObject.Attributes.Add(polyAttriute);
 
             var parentNode = Global.Renderer.ActiveScene.FindNode(renderObject);

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using KI.Asset.Loader;
+using KI.Gfx;
 using KI.Gfx.Geometry;
 using KI.Gfx.KITexture;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 
 namespace KI.Asset.Loader.Converter
 {
@@ -104,7 +104,7 @@ namespace KI.Asset.Loader.Converter
 
                 if (mesh.Count != 0)
                 {
-                    polygon = new Polygon(objData.FileName, mesh, PrimitiveType.Triangles);
+                    polygon = new Polygon(objData.FileName, mesh, PolygonType.Triangles);
                     SetMaterial(polygon, material);
                     if (polygon != null)
                     {

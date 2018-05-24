@@ -4,7 +4,6 @@ using KI.Foundation.Core;
 using KI.Asset;
 using KI.Asset.Attribute;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 
 namespace KI.Tool.Command
 {

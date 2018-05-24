@@ -1,6 +1,6 @@
-﻿using KI.Gfx.GLUtil.Buffer;
+﻿using KI.Gfx;
+using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
-using OpenTK.Graphics.OpenGL;
 
 namespace KI.Asset.Attribute
 {
@@ -28,7 +28,7 @@ namespace KI.Asset.Attribute
         /// <param name="name">名前</param>
         /// <param name="type">レンダリングタイプ</param>
         /// <param name="shader">シェーダ</param>
-        public OutlineAttribute(string name, VertexBuffer vertexBuffer, PrimitiveType type, Shader shader)
+        public OutlineAttribute(string name, VertexBuffer vertexBuffer, PolygonType type, Shader shader)
             : base(name, vertexBuffer, type, shader)
         {
             uOffset = 0.5f;

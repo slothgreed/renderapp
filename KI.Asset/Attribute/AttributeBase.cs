@@ -1,7 +1,7 @@
 ﻿using KI.Foundation.Core;
+using KI.Gfx;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
-using OpenTK.Graphics.OpenGL;
 
 namespace KI.Asset.Attribute
 {
@@ -16,7 +16,7 @@ namespace KI.Asset.Attribute
         /// <param name="name">名前</param>
         /// <param name="type">レンダリングタイプ</param>
         /// <param name="shader">シェーダ</param>
-        public AttributeBase(string name, PrimitiveType type, Shader shader)
+        public AttributeBase(string name, PolygonType type, Shader shader)
             : base(name)
         {
             Shader = shader;
@@ -28,7 +28,7 @@ namespace KI.Asset.Attribute
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="shader">シェーダ</param>
-        public AttributeBase(string name, VertexBuffer vertexBuffer, PrimitiveType type, Shader shader)
+        public AttributeBase(string name, VertexBuffer vertexBuffer, PolygonType type, Shader shader)
             : base(name)
         {
             VertexBuffer = vertexBuffer;
@@ -44,7 +44,7 @@ namespace KI.Asset.Attribute
         /// <summary>
         /// レンダリングするときの種類
         /// </summary>
-        public PrimitiveType Type { get; private set; }
+        public PolygonType Type { get; private set; }
 
         /// <summary>
         /// 頂点バッファ

@@ -6,6 +6,7 @@ using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
 using KI.Asset.Attribute;
+using KI.Gfx;
 using OpenTK.Graphics.OpenGL;
 
 namespace KI.Asset
@@ -165,11 +166,11 @@ namespace KI.Asset
             Polygon = polygon;
             VertexBuffer = new VertexBuffer();
 
-            if (polygon.Type == PrimitiveType.Points)
+            if (polygon.Type == PolygonType.Points)
             {
                 VertexBuffer.SetupPointBuffer(polygon.Vertexs, polygon.Index);
             }
-            else if (polygon.Type == PrimitiveType.Lines)
+            else if (polygon.Type == PolygonType.Lines)
             {
                 VertexBuffer.SetupLineBuffer(polygon.Vertexs, polygon.Index, polygon.Lines);
             }
@@ -200,11 +201,11 @@ namespace KI.Asset
         /// <param name="e">イベント</param>
         private void OnPolygonUpdated(object sender, UpdatePolygonEventArgs e)
         {
-            if (polygon.Type == PrimitiveType.Points)
+            if (polygon.Type == PolygonType.Points)
             {
                 VertexBuffer.SetupPointBuffer(polygon.Vertexs, polygon.Index);
             }
-            else if (polygon.Type == PrimitiveType.Lines)
+            else if (polygon.Type == PolygonType.Lines)
             {
                 VertexBuffer.SetupLineBuffer(polygon.Vertexs, polygon.Index, polygon.Lines);
             }

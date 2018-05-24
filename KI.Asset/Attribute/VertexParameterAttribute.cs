@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using KI.Gfx;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
@@ -39,7 +40,7 @@ namespace KI.Asset.Attribute
         /// <param name="type">種類</param>
         /// <param name="shader">シェーダ</param>
         /// <param name="Color">色情報</param>
-        public VertexParameterAttribute(string name, VertexBuffer vertexBuffer, PrimitiveType type, Shader shader, float[] parameter)
+        public VertexParameterAttribute(string name, VertexBuffer vertexBuffer, PolygonType type, Shader shader, float[] parameter)
             : base(name, vertexBuffer, type, shader)
         {
             Max = parameter.Max();
