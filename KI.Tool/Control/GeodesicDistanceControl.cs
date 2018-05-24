@@ -110,7 +110,7 @@ namespace KI.Tool.Control
 
                         Polygon lineGeometry = new Polygon("geodesicDistance", lines);
                         var vertexBuffer = new VertexBuffer();
-                        vertexBuffer.SetupBuffer(lineGeometry);
+                        vertexBuffer.SetupLineBuffer(lineGeometry.Vertexs, lineGeometry.Index, lineGeometry.Lines);
                         var lineAttribute = new PolygonAttribute("geodesicDistance", vertexBuffer, lineGeometry.Type, renderObject.Shader);
                         renderObject.Attributes.Add(lineAttribute);
                         Global.Renderer.ActiveScene.AddObject(lineAttribute, parentNode);

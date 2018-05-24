@@ -164,7 +164,19 @@ namespace KI.Asset
         {
             Polygon = polygon;
             VertexBuffer = new VertexBuffer();
-            VertexBuffer.SetupBuffer(Polygon);
+
+            if (polygon.Type == PrimitiveType.Points)
+            {
+                VertexBuffer.SetupPointBuffer(polygon.Vertexs, polygon.Index);
+            }
+            else if (polygon.Type == PrimitiveType.Lines)
+            {
+                VertexBuffer.SetupLineBuffer(polygon.Vertexs, polygon.Index, polygon.Lines);
+            }
+            else
+            {
+                VertexBuffer.SetupMeshBuffer(polygon.Vertexs, polygon.Index, polygon.Meshs, polygon.Type);
+            }
 
             PolygonAttribute = new PolygonAttribute("Attribute:" + Name, VertexBuffer.ShallowCopy(), Polygon.Type, shader);
             Attributes.Add(PolygonAttribute);
@@ -188,7 +200,18 @@ namespace KI.Asset
         /// <param name="e">イベント</param>
         private void OnPolygonUpdated(object sender, UpdatePolygonEventArgs e)
         {
-            VertexBuffer.SetupBuffer(Polygon);
+            if (polygon.Type == PrimitiveType.Points)
+            {
+                VertexBuffer.SetupPointBuffer(polygon.Vertexs, polygon.Index);
+            }
+            else if (polygon.Type == PrimitiveType.Lines)
+            {
+                VertexBuffer.SetupLineBuffer(polygon.Vertexs, polygon.Index, polygon.Lines);
+            }
+            else
+            {
+                VertexBuffer.SetupMeshBuffer(polygon.Vertexs, polygon.Index, polygon.Meshs, polygon.Type);
+            }
         }
     }
 }

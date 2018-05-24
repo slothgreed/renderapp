@@ -95,9 +95,9 @@ namespace KI.Tool.Command
                 }
             }
 
-            Polygon lines = new Polygon("IsoLines", createLine);
+            Polygon isoLines = new Polygon("IsoLines", createLine);
             VertexBuffer vertexBuffer = new VertexBuffer();
-            vertexBuffer.SetupBuffer(lines);
+            vertexBuffer.SetupLineBuffer(isoLines.Vertexs, isoLines.Index, isoLines.Lines);
             var polyAttriute = new PolygonAttribute("IsoLines", vertexBuffer, OpenTK.Graphics.OpenGL.PrimitiveType.Lines, renderObject.Shader);
             renderObject.Attributes.Add(polyAttriute);
 

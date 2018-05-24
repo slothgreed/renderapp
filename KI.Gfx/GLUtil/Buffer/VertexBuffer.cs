@@ -126,37 +126,59 @@ namespace KI.Gfx.GLUtil.Buffer
         }
 
         /// <summary>
-        /// バッファにデータの設定
+        /// 頂点バッファの設定（点群）
         /// </summary>
-        /// <param name="polygon">ポリゴン</param>
-        /// <param name="type">形状種類</param>
-        /// <param name="color">頂点カラーの設定</param>
-        public void SetupBuffer(Polygon polygon)
+        /// <param name="vertexSrc">頂点リスト</param>
+        /// <param name="indexSrc">インデクサ</param>
+        public void SetupPointBuffer(List<Vertex> vertexSrc, List<int> indexSrc)
         {
             int[] indexBuffer = null;
             Vector3[] position = null;
             Vector3[] normal = null;
             Vector3[] color = null;
             Vector2[] texCoord = null;
-            if (polygon.Index.Count != 0)
+            if (indexSrc != null && indexSrc.Count != 0)
             {
-                indexBuffer = polygon.Index.ToArray();
-                position = polygon.Vertexs.Select(p => p.Position).ToArray();
-                normal = polygon.Vertexs.Select(p => p.Normal).ToArray();
-                color = polygon.Vertexs.Select(p => p.Color).ToArray();
-                texCoord = polygon.Vertexs.Select(p => p.TexCoord).ToArray();
+                indexBuffer = indexSrc.ToArray();
+                position = vertexSrc.Select(p => p.Position).ToArray();
+                normal = vertexSrc.Select(p => p.Normal).ToArray();
+                color = vertexSrc.Select(p => p.Color).ToArray();
+                texCoord = vertexSrc.Select(p => p.TexCoord).ToArray();
             }
-            else if (polygon.Type == PrimitiveType.Points)
+            else
             {
-                position = polygon.Vertexs.Select(p => p.Position).ToArray();
-                normal = polygon.Vertexs.Select(p => p.Normal).ToArray();
-                color = polygon.Vertexs.Select(p => p.Color).ToArray();
-                texCoord = polygon.Vertexs.Select(p => p.TexCoord).ToArray();
+                position = vertexSrc.Select(p => p.Position).ToArray();
+                normal = vertexSrc.Select(p => p.Normal).ToArray();
+                color = vertexSrc.Select(p => p.Color).ToArray();
+                texCoord = vertexSrc.Select(p => p.TexCoord).ToArray();
             }
-            else if (polygon.Type == PrimitiveType.Lines)
+        }
+
+        /// <summary>
+        /// 頂点バッファの設定（線分）
+        /// </summary>
+        /// <param name="vertexSrc">頂点バッファ</param>
+        /// <param name="indexSrc">インデックスバッファ</param>
+        /// <param name="lines">線分</param>
+        public void SetupLineBuffer(List<Vertex> vertexSrc, List<int> indexSrc, List<Line> lineSrc)
+        {
+            int[] indexBuffer = null;
+            Vector3[] position = null;
+            Vector3[] normal = null;
+            Vector3[] color = null;
+            Vector2[] texCoord = null;
+            if (indexSrc != null && indexSrc.Count != 0)
+            {
+                indexBuffer = indexSrc.ToArray();
+                position = vertexSrc.Select(p => p.Position).ToArray();
+                normal = vertexSrc.Select(p => p.Normal).ToArray();
+                color = vertexSrc.Select(p => p.Color).ToArray();
+                texCoord = vertexSrc.Select(p => p.TexCoord).ToArray();
+            }
+            else
             {
                 var vertexs = new List<Vertex>();
-                foreach (var line in polygon.Lines)
+                foreach (var line in lineSrc)
                 {
                     vertexs.Add(line.Start);
                     vertexs.Add(line.End);
@@ -167,14 +189,39 @@ namespace KI.Gfx.GLUtil.Buffer
                 color = vertexs.Select(p => p.Color).ToArray();
                 texCoord = vertexs.Select(p => p.TexCoord).ToArray();
             }
+
+            SetBuffer(position, normal, color, texCoord, indexBuffer);
+        }
+
+        /// <summary>
+        /// 頂点バッファの設定（メッシュ）
+        /// </summary>
+        /// <param name="vertexSrc">頂点バッファ</param>
+        /// <param name="indexSrc">インデックスバッファ</param>
+        /// <param name="meshSrc">メッシュリスト</param>
+        public void SetupMeshBuffer(List<Vertex> vertexSrc, List<int> indexSrc, List<Mesh> meshSrc, PrimitiveType type)
+        {
+            int[] indexBuffer = null;
+            Vector3[] position = null;
+            Vector3[] normal = null;
+            Vector3[] color = null;
+            Vector2[] texCoord = null;
+            if (indexSrc != null && indexSrc.Count != 0)
+            {
+                indexBuffer = indexSrc.ToArray();
+                position = vertexSrc.Select(p => p.Position).ToArray();
+                normal = vertexSrc.Select(p => p.Normal).ToArray();
+                color = vertexSrc.Select(p => p.Color).ToArray();
+                texCoord = vertexSrc.Select(p => p.TexCoord).ToArray();
+            }
             else
             {
                 var vertexs = new List<Vertex>();
                 var normals = new List<Vector3>();
 
-                if (polygon.Type == PrimitiveType.Triangles)
+                if (type == PrimitiveType.Triangles)
                 {
-                    foreach (var mesh in polygon.Meshs)
+                    foreach (var mesh in meshSrc)
                     {
                         vertexs.AddRange(mesh.Vertexs);
 
@@ -190,7 +237,7 @@ namespace KI.Gfx.GLUtil.Buffer
                 }
                 else
                 {
-                    foreach (var mesh in polygon.Meshs)
+                    foreach (var mesh in meshSrc)
                     {
                         vertexs.AddRange(mesh.Vertexs);
                         var meshNormal =
