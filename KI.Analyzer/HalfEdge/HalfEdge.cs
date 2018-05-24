@@ -56,10 +56,6 @@ namespace KI.Analyzer
             set
             {
                 base.Start = value;
-                if (value != null)
-                {
-                    Start.Modified();
-                }
             }
         }
 
@@ -76,10 +72,6 @@ namespace KI.Analyzer
             set
             {
                 base.End = value;
-                if (value != null)
-                {
-                    End.Modified();
-                }
             }
         }
 
@@ -190,20 +182,6 @@ namespace KI.Analyzer
                 Next == Before ||
                 DeleteFlag;
             }
-        }
-
-        /// <summary>
-        /// 編集したときに呼ぶ
-        /// </summary>
-        public override void Modified()
-        {
-            radian = 0;
-            if (Mesh != null)
-            {
-                Mesh.Modified();
-            }
-
-            base.Modified();
         }
 
         #region [operator] 

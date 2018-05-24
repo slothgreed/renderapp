@@ -177,9 +177,15 @@ namespace KI.Gfx.GLUtil.Buffer
                     foreach (var mesh in polygon.Meshs)
                     {
                         vertexs.AddRange(mesh.Vertexs);
-                        normals.Add(mesh.Normal);
-                        normals.Add(mesh.Normal);
-                        normals.Add(mesh.Normal);
+
+                        var meshNormal = 
+                            Mathmatics.Geometry.Normal(
+                                    mesh.Lines[1].Start.Position - mesh.Lines[0].Start.Position,
+                                    mesh.Lines[2].Start.Position - mesh.Lines[0].Start.Position);
+
+                        normals.Add(meshNormal);
+                        normals.Add(meshNormal);
+                        normals.Add(meshNormal);
                     }
                 }
                 else
@@ -187,10 +193,15 @@ namespace KI.Gfx.GLUtil.Buffer
                     foreach (var mesh in polygon.Meshs)
                     {
                         vertexs.AddRange(mesh.Vertexs);
-                        normals.Add(mesh.Normal);
-                        normals.Add(mesh.Normal);
-                        normals.Add(mesh.Normal);
-                        normals.Add(mesh.Normal);
+                        var meshNormal =
+                            Mathmatics.Geometry.Normal(
+                                    mesh.Lines[1].Start.Position - mesh.Lines[0].Start.Position,
+                                    mesh.Lines[2].Start.Position - mesh.Lines[0].Start.Position);
+
+                        normals.Add(meshNormal);
+                        normals.Add(meshNormal);
+                        normals.Add(meshNormal);
+                        normals.Add(meshNormal);
                     }
                 }
 

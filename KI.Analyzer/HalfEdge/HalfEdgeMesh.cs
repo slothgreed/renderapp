@@ -13,6 +13,26 @@ namespace KI.Analyzer
     public class HalfEdgeMesh : Mesh
     {
         /// <summary>
+        /// 面積
+        /// </summary>
+        private float area = 0;
+
+        /// <summary>
+        /// 法線
+        /// </summary>
+        private Vector3 normal = Vector3.Zero;
+
+        /// <summary>
+        /// 平面の公式
+        /// </summary>
+        private Vector4 plane = Vector4.Zero;
+
+        /// <summary>
+        /// 重心
+        /// </summary>
+        private Vector3 gravity = Vector3.Zero;
+
+        /// <summary>
         /// エッジ
         /// </summary>
         public IEnumerable<HalfEdge> Edges
@@ -108,6 +128,78 @@ namespace KI.Analyzer
                 return AroundEdge.Any(p => p.DeleteFlag)
                     || AroundVertex.Any(p => p.DeleteFlag)
                     || DeleteFlag;
+            }
+        }
+
+        /// <summary>
+        /// 面積
+        /// </summary>
+        public float Area
+        {
+            get
+            {
+                if (area == 0)
+                {
+                    area = Mathmatics.Geometry.Area(Lines[0].Start.Position, Lines[1].Start.Position, Lines[2].Start.Position);
+                }
+
+                return area;
+            }
+        }
+
+        /// <summary>
+        /// 法線
+        /// </summary>
+        public Vector3 Normal
+        {
+            get
+            {
+                if (normal == Vector3.Zero)
+                {
+                    normal = Mathmatics.Geometry.Normal(
+                        Lines[1].Start.Position - Lines[0].Start.Position,
+                        Lines[2].Start.Position - Lines[0].Start.Position);
+                }
+
+                return normal;
+            }
+        }
+
+        /// <summary>
+        /// 平面の公式
+        /// </summary>
+        public Vector4 Plane
+        {
+            get
+            {
+                if (plane == Vector4.Zero)
+                {
+                    var positions = Lines.Select(p => p.Start.Position).ToArray();
+                    plane = KI.Mathmatics.Plane.Formula(positions[0], positions[1], positions[2]);
+                }
+
+                return plane;
+            }
+        }
+
+        /// <summary>
+        /// 重心
+        /// </summary>
+        public Vector3 Gravity
+        {
+            get
+            {
+                if (gravity == Vector3.Zero)
+                {
+                    foreach (var position in Lines.Select(p => p.Start.Position))
+                    {
+                        gravity += position;
+                    }
+
+                    gravity /= Lines.Count;
+                }
+
+                return gravity;
             }
         }
 

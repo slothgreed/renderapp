@@ -122,7 +122,6 @@ namespace KI.Analyzer
             set
             {
                 base.Position = value;
-                Modified();
             }
         }
 
@@ -615,29 +614,6 @@ namespace KI.Analyzer
         #endregion
 
         /// <summary>
-        /// 編集したときに呼ぶ
-        /// </summary>
-        public override void Modified()
-        {
-            if (AroundEdge != null)
-            {
-                foreach (var around in AroundEdge)
-                {
-                    around.Modified();
-                }
-            }
-
-            normal = Vector3.Zero;
-            voronoi = 0;
-            gaussCurvature = 0;
-            meanCurvature = 0;
-            minCurvature = 0;
-            maxCurvature = 0;
-            minDirection = Vector3.Zero;
-            maxDirection = Vector3.Zero;
-        }
-
-        /// <summary>
         /// エッジを含んでいるか確認
         /// </summary>
         /// <param name="halfEdge">ハーフエッジ</param>
@@ -676,7 +652,6 @@ namespace KI.Analyzer
             if (!aroundEdge.Contains(edge))
             {
                 aroundEdge.Add(edge);
-                Modified();
             }
         }
 

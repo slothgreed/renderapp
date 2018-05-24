@@ -117,12 +117,5 @@ namespace KI.Gfx.Geometry
         /// テクスチャ座標
         /// </summary>
         public Vector2 TexCoord { get; set; }
-
-        /// <summary>
-        /// 編集したときに呼ぶ
-        /// </summary>
-        public virtual void Modified()
-        {
-        }
     }
 }

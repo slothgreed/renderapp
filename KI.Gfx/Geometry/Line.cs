@@ -65,11 +65,6 @@ namespace KI.Gfx.Geometry
             }
         }
 
-        public virtual void Modified()
-        {
-            length = 0;
-        }
-
         public override string ToString()
         {
             return "Start:" + Start.ToString() + "End:" + End.ToString();
