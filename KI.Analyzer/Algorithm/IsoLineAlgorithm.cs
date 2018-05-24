@@ -140,7 +140,7 @@ namespace KI.Analyzer.Algorithm
                     float length = 0;
                     foreach (var line in Lines)
                     {
-                        length += line.Length;
+                        length += (line.Start.Position - line.End.Position).Length;
                     }
 
                     return length;

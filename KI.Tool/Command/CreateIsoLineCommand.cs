@@ -88,7 +88,7 @@ namespace KI.Tool.Command
                         var vertex1 = new Vertex(0, line.Start.Position, color);
 
                         Vector3 color2 = PseudoColor.GetColor(sum, 0, length);
-                        sum += line.Length;
+                        length += (line.Start.Position - line.End.Position).Length;
                         var vertex2 = new Vertex(0, line.End.Position, color);
 
                         createLine.Add(new Line(vertex1, vertex2));

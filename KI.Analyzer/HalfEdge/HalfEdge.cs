@@ -86,6 +86,16 @@ namespace KI.Analyzer
             }
         }
 
+        /// <summary>
+        /// エッジの長さ
+        /// </summary>
+        public float Length
+        {
+            get
+            {
+                return (Start.Position - End.Position).Length;
+            }
+        }
 
         /// <summary>
         /// メッシュ

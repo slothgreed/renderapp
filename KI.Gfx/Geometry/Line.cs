@@ -48,23 +48,7 @@ namespace KI.Gfx.Geometry
         /// 頂点2
         /// </summary>
         public virtual Vertex End { get; set; }
-
-        /// <summary>
-        /// エッジの長さ
-        /// </summary>
-        public float Length
-        {
-            get
-            {
-                if (length == 0)
-                {
-                    length = (Start.Position - End.Position).Length;
-                }
-
-                return length;
-            }
-        }
-
+        
         public override string ToString()
         {
             return "Start:" + Start.ToString() + "End:" + End.ToString();
