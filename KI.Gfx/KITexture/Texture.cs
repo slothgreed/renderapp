@@ -205,9 +205,10 @@ namespace KI.Gfx.KITexture
         /// <param name="rgba">色情報</param>
         public void GenTexture(float[,,] rgba)
         {
+            TextureBuffer.SetEmpty(rgba.GetLength(0), rgba.GetLength(1));
             TextureBuffer.BindBuffer();
 
-            SetupTexImage2D(TextureBuffer.Target, PixelInternalFormat.Four, rgba);
+            SetupTexImage2D(TextureBuffer.Target, PixelInternalFormat.Rgba, rgba);
 
             TextureBuffer.UnBindBuffer();
         }

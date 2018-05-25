@@ -53,6 +53,14 @@ namespace KI.Asset.Loader.Converter
             }
 
             ConverterUtility.NormalizeObject(halfEdge.Vertexs);
+
+            foreach (var vertex in halfEdge.Vertexs)
+            {
+                vertex.TexCoord = vertex.Position.Xz * 10;
+            }
+
+            var uvTexture = TextureFactory.Instance.CreateUVTexture(128);
+            halfEdge.Textures.Add(Gfx.KITexture.TextureKind.Albedo, uvTexture);
             Polygons = new Polygon[] { halfEdge };
         }
     }

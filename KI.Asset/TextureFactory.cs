@@ -27,6 +27,44 @@ namespace KI.Asset
         }
 
         /// <summary>
+        /// UVテクスチャの生成
+        /// </summary>
+        /// <param name="size">サイズ</param>
+        /// <returns>テクスチャ</returns>
+        public Texture CreateUVTexture(int size)
+        {
+            Texture texture = new Texture("UV Texture", TextureType.Texture2D);
+            float[,,] rgba = new float[size, size, 4];
+            float halfSize = size / 2;
+
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    if (halfSize < i && halfSize < j ||
+                        halfSize > i && halfSize > j)
+                    {
+                        rgba[i, j, 0] = 255;
+                        rgba[i, j, 1] = 255;
+                        rgba[i, j, 2] = 255;
+                        rgba[i, j, 3] = 255;
+                    }
+                    else
+                    {
+                        rgba[i, j, 0] = 0;
+                        rgba[i, j, 1] = 0;
+                        rgba[i, j, 2] = 0;
+                        rgba[i, j, 3] = 255;
+                    }
+                }
+            }
+
+            texture.GenTexture(rgba);
+
+            return texture;
+        }
+
+        /// <summary>
         /// 画像種類の取得
         /// </summary>
         /// <param name="path">パス</param>

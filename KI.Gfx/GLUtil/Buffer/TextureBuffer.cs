@@ -93,7 +93,7 @@ namespace KI.Gfx.GLUtil
             BindBuffer();
             Width = width;
             Height = height;
-            GL.TexImage2D(Target, 0, Format, width, height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.Byte, IntPtr.Zero);
+            GL.TexImage2D(Target, 0, Format, width, height, 0, PixelFormat.Rgba, PixelType.Byte, IntPtr.Zero);
             UnBindBuffer();
         }
 
@@ -105,7 +105,7 @@ namespace KI.Gfx.GLUtil
         public void SetEmpty(int width, int height)
         {
             BindBuffer();
-            GL.TexImage2D(Target, 0, Format, width, height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.Byte, IntPtr.Zero);
+            GL.TexImage2D(Target, 0, Format, width, height, 0, PixelFormat.Rgba, PixelType.Byte, IntPtr.Zero);
             Width = width;
             Height = height;
             UnBindBuffer();
