@@ -7,6 +7,7 @@ using KI.Analyzer;
 using KI.Analyzer.Algorithm;
 using KI.Asset;
 using KI.Asset.Attribute;
+using KI.Asset.Primitive;
 using KI.Foundation.Command;
 using KI.Foundation.Core;
 using KI.Gfx;

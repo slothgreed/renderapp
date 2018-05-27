@@ -8,6 +8,7 @@ using KI.Gfx.KIShader;
 using KI.Asset.Attribute;
 using KI.Gfx;
 using OpenTK.Graphics.OpenGL;
+using System;
 
 namespace KI.Asset
 {
@@ -199,7 +200,7 @@ namespace KI.Asset
         /// </summary>
         /// <param name="sender">ジオメトリ</param>
         /// <param name="e">イベント</param>
-        private void OnPolygonUpdated(object sender, UpdatePolygonEventArgs e)
+        private void OnPolygonUpdated(object sender, EventArgs e)
         {
             if (polygon.Type == PolygonType.Points)
             {

@@ -18,42 +18,6 @@ namespace KI.Gfx.Geometry
     }
 
     /// <summary>
-    /// 更新イベント
-    /// </summary>
-    public class UpdatePolygonEventArgs
-    {
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        /// <param name="type">更新した形状種類</param>
-        public UpdatePolygonEventArgs(PolygonType type)
-        {
-            Type = type;
-        }
-
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        /// <param name="type">更新した形状種類</param>
-        /// <param name="type">更新した色情報</param>
-        public UpdatePolygonEventArgs(PolygonType type, List<Vector3> color)
-        {
-            Type = type;
-            Color = color;
-        }
-
-        /// <summary>
-        /// 色情報
-        /// </summary>
-        public List<Vector3> Color { get; private set; }
-
-        /// <summary>
-        /// 更新した形状種類
-        /// </summary>
-        public PolygonType Type { get; private set; }
-    }
-
-    /// <summary>
     /// 形状
     /// </summary>
     public class Polygon : KIObject
@@ -144,7 +108,7 @@ namespace KI.Gfx.Geometry
         /// <summary>
         /// 形状情報更新イベント
         /// </summary>
-        public EventHandler<UpdatePolygonEventArgs> PolygonUpdated { get; set; }
+        public EventHandler PolygonUpdated { get; set; }
 
         /// <summary>
         /// 形状種類
@@ -224,9 +188,23 @@ namespace KI.Gfx.Geometry
         /// 頂点バッファの更新
         /// </summary>
         /// <param name="type">形状タイプ</param>
-        public virtual void UpdateVertexArray(PolygonType type)
+        public virtual void UpdateVertexArray()
         {
-            if (type == PolygonType.Lines &&
+            if (Type == PolygonType.Points &&
+                Index.Count != 0)
+            {
+                Index.Clear();
+
+                if (Vertexs != null)
+                {
+                    foreach (var vertex in Vertexs)
+                    {
+                        Index.Add(vertex.Index);
+                    }
+                }
+            }
+
+            if (Type == PolygonType.Lines &&
                 Index.Count != 0)
             {
                 Index.Clear();
@@ -240,10 +218,10 @@ namespace KI.Gfx.Geometry
                     }
                 }
 
-                OnUpdate(new UpdatePolygonEventArgs(PolygonType.Lines));
+                OnUpdate();
             }
 
-            if (type == PolygonType.Triangles &&
+            if (Type == PolygonType.Triangles &&
                 Index.Count != 0)
             {
                 Index.Clear();
@@ -253,29 +231,8 @@ namespace KI.Gfx.Geometry
                     Index.AddRange(mesh.Vertexs.Select(p => p.Index));
                 }
 
-                OnUpdate(new UpdatePolygonEventArgs(PolygonType.Triangles));
+                OnUpdate();
             }
-        }
-
-
-        /// <summary>
-        /// 頂点インデックスの更新
-        /// </summary>
-        /// <param name="vert">頂点</param>
-        /// <param name="idx">頂点Index</param>
-        /// <param name="type">形状タイプ</param>
-        public void UpdateIndexBuffer(List<Vertex> vert, List<int> idx, PolygonType type)
-        {
-            vertexs = vert;
-
-            if (idx != null)
-            {
-                index = idx;
-            }
-
-            Type = type;
-
-            OnUpdate(new UpdatePolygonEventArgs(type));
         }
 
         #region [convert mesh]
@@ -444,9 +401,9 @@ namespace KI.Gfx.Geometry
         /// 形状情報更新イベント
         /// </summary>
         /// <param name="type">形状種類</param>
-        protected void OnUpdate(UpdatePolygonEventArgs e)
+        protected void OnUpdate()
         {
-            PolygonUpdated?.Invoke(this, e);
+            PolygonUpdated?.Invoke(this, EventArgs.Empty);
         }
     }
 }

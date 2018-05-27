@@ -40,7 +40,7 @@ namespace KI.Tool.Control
                     {
                         vertex.Color = Vector3.UnitY;
                         selectVertex.Add(vertex);
-                        renderObject.Polygon.UpdateVertexArray(PolygonType.Points);
+                        renderObject.Polygon.UpdateVertexArray();
                     }
                 }
             }
@@ -72,7 +72,7 @@ namespace KI.Tool.Control
 
             if (renderObject != null)
             {
-                renderObject.Polygon.UpdateVertexArray(PolygonType.Points);
+                renderObject.Polygon.UpdateVertexArray();
             }
 
             selectVertex = null;

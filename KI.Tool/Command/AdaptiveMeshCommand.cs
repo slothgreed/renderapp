@@ -62,7 +62,7 @@ namespace KI.Tool.Command
 
             var adaptiveMesh = new AdaptiveMeshAlgorithm(halfDS, 1);
 
-            halfDS.UpdateVertexArray(PolygonType.Triangles);
+            halfDS.UpdateVertexArray();
 
             return CommandResult.Success;
         }

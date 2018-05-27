@@ -66,7 +66,7 @@ namespace KI.Tool.Control
                     selectObject = renderObject;
                     selectHalfEdge = halfEdge;
 
-                    renderObject.Polygon.UpdateVertexArray(PolygonType.Lines);
+                    renderObject.Polygon.UpdateVertexArray();
 
                 }
             }
@@ -91,7 +91,7 @@ namespace KI.Tool.Control
                     }
 
                     selectHalfEdge = null;
-                    selectObject.Polygon.UpdateVertexArray(PolygonType.Lines);
+                    selectObject.Polygon.UpdateVertexArray();
                 }
             }
 
@@ -109,7 +109,7 @@ namespace KI.Tool.Control
                 selectHalfEdge.Start.Color = Vector3.Zero;
                 selectHalfEdge.End.Color = Vector3.Zero;
                 selectHalfEdge = null;
-                selectObject.Polygon.UpdateVertexArray(PolygonType.Lines);
+                selectObject.Polygon.UpdateVertexArray();
             }
 
             return base.UnBinding();

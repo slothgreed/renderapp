@@ -62,7 +62,7 @@ namespace KI.Tool.Command
 
             var adaptiveMesh = new QEMAlgorithm(halfDS, halfDS.Vertexs.Count / 2);
 
-            halfDS.UpdateVertexArray(PolygonType.Triangles);
+            halfDS.UpdateVertexArray();
 
             return CommandResult.Success;
         }

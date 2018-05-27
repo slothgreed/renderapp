@@ -42,7 +42,7 @@ namespace KI.Tool.Control
                     selectVertex.Add(halfEdge.Start);
                     selectVertex.Add(halfEdge.End);
 
-                    renderObject.Polygon.UpdateVertexArray(PolygonType.Lines);
+                    renderObject.Polygon.UpdateVertexArray();
                 }
             }
 
@@ -73,7 +73,7 @@ namespace KI.Tool.Control
 
             if (renderObject != null)
             {
-                renderObject.Polygon.UpdateVertexArray(PolygonType.Points);
+                renderObject.Polygon.UpdateVertexArray();
             }
 
             selectVertex = null;
