@@ -44,7 +44,7 @@ namespace KI.Asset.Attribute
         /// <param name="name">名前</param>
         /// <param name="polygon">線分</param>
         /// <param name="shader">シェーダ</param>
-        public DirectionAttribute(string name, Shader shader, Vector3[] lines, Vector4 color, Vector3[] normal = null, bool displayVector = true)
+        public DirectionAttribute(string name, Shader shader, Vector3[] lines, Vector4 color, Vector3[] normal = null, bool displayVector = false)
             : base(name, PolygonType.Lines, shader)
         {
             wireFrameColor = color;

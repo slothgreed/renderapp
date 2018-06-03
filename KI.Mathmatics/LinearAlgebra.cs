@@ -33,7 +33,7 @@ namespace KI.Mathmatics
 
             Cv2.Eigen(cvMatrix, cvEigenValue, cvEigenVector);
 
-            eigenVector = Convert2dMatrix(cvMatrix);
+            eigenVector = Convert2dMatrix(cvEigenVector);
             eigenValue = ConvertValues(cvEigenValue);
         }
 

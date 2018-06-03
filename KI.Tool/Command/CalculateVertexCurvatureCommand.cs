@@ -162,7 +162,7 @@ namespace KI.Tool.Command
             scene.AddObject(dirMinAttribute, parentNode);
             scene.AddObject(dirMaxAttribute, parentNode);
 
-            var laplaceVecAttribute = new DirectionAttribute(renderObject.Name + " : MinDirection", wireFrameShader, laplaceLine.ToArray(), new Vector4(1, 0, 0, 1), normals);
+            var laplaceVecAttribute = new DirectionAttribute(renderObject.Name + " : LaplaceVec", wireFrameShader, laplaceLine.ToArray(), new Vector4(1, 0, 0, 1), normals);
             renderObject.Attributes.Add(laplaceVecAttribute);
             scene.AddObject(laplaceVecAttribute, parentNode);
 
