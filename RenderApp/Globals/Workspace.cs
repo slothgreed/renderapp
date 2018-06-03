@@ -120,6 +120,7 @@ namespace RenderApp.Globals
                 MainScene.AddObject(splitAttribute, parentNode);
 
                 CommandManager.Instance.Execute(new CreateWireFrameCommand(MainScene, renderBunny), null, false);
+                CommandManager.Instance.Execute(new CalculateVertexCurvatureCommand(MainScene, renderBunny));
             }
 
             // plane

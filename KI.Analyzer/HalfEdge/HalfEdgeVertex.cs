@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using KI.Gfx.Geometry;
 using KI.Mathmatics;
-using MathNet.Numerics.LinearAlgebra;
-using MathNet.Numerics.LinearAlgebra.Double;
-using OpenCvSharp;
 using OpenTK;
 
 namespace KI.Analyzer
@@ -515,33 +512,15 @@ namespace KI.Analyzer
             float b = result.Y;
             float c = result.Z;
 
-            CvMat eigenVector;
-            CvMat eigenValue;
-            CvMat matEplise = Cv.CreateMat(2, 2, MatrixType.F32C1);
-            matEplise.Set2D(0, 0, a);
-            matEplise.Set2D(0, 1, b / 2);
-            matEplise.Set2D(1, 0, b / 2);
-            matEplise.Set2D(1, 1, c);
-            eigenVector = Cv.CreateMat(2, 2, MatrixType.F32C1);
-            eigenValue = Cv.CreateMat(1, 2, MatrixType.F32C1);
-            Cv.Zero(eigenVector);
-            Cv.Zero(eigenValue);
-            Cv.EigenVV(matEplise, eigenVector, eigenValue);
+            var matrix = new float[,] { { a, b }, { b, c } };
+            float[,] eigenVector;
+            float[] eigenValue;
+            LinearAlgebra.EigenValue(matrix, out eigenVector, out eigenValue);
 
-            float max1 = (float)eigenVector.Get2D(0, 0).Val0;
-            float max2 = (float)eigenVector.Get2D(0, 1).Val0;
-            float min1 = (float)eigenVector.Get2D(1, 0).Val0;
-            float min2 = (float)eigenVector.Get2D(1, 1).Val0;
-
-            //var elipseMat = DenseMatrix.OfArray(new double[,] { { a, b / 2 }, { b / 2, c } });
-            //var eigen = elipseMat.Evd();
-            //var eigenVector2 = eigen.EigenVectors;
-            //var eigenValue2 = eigen.EigenValues;
-
-            //var max1 = (float)eigenVector2[0, 0];
-            //var max2 = (float)eigenVector2[0, 1];
-            //var min1 = (float)eigenVector2[1, 0];
-            //var min2 = (float)eigenVector2[1, 1];
+            float max1 = eigenVector[0, 0];
+            float max2 = eigenVector[0, 1];
+            float min1 = eigenVector[1, 0];
+            float min2 = eigenVector[1, 1];
 
             maxDirection = new Vector3(
                 baseU.X * max1 + baseV.X * max2,
