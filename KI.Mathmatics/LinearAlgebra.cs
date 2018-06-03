@@ -21,20 +21,35 @@ namespace KI.Mathmatics
         /// <param name="eigenValue">固有値</param>
         public static void  EigenValue(float[,] matrix, out float[,] eigenVector,out float[] eigenValue)
         {
-            Mat cvMatrix = new Mat(matrix.GetLength(0), matrix.GetLength(1), MatType.CV_32FC1);
-
-            cvMatrix.SetArray(0, 0, matrix[0, 0]);
-            cvMatrix.SetArray(0, 1, matrix[0, 1]);
-            cvMatrix.SetArray(1, 0, matrix[1, 0]);
-            cvMatrix.SetArray(1, 1, matrix[1, 1]);
-
+            Mat cvMatrix = Convert2dCvMatrix(matrix);
+            
             Mat cvEigenValue = new Mat(1, 2, MatType.CV_32FC1);
             Mat cvEigenVector = new Mat(2, 2, MatType.CV_32FC1);
 
             Cv2.Eigen(cvMatrix, cvEigenValue, cvEigenVector);
 
-            eigenVector = Convert2dMatrix(cvEigenVector);
             eigenValue = ConvertValues(cvEigenValue);
+            eigenVector = Convert2dMatrix(cvEigenVector);
+        }
+
+        /// <summary>
+        /// 2次元配列をcvMatに変換
+        /// </summary>
+        /// <param name="matrix"></param>
+        /// <returns></returns>
+        private static Mat Convert2dCvMatrix(float[,] matrix)
+        {
+            Mat cvMatrix = new Mat(matrix.GetLength(0), matrix.GetLength(1), MatType.CV_32FC1);
+
+            for(int i = 0; i < cvMatrix.Width; i++)
+            {
+                for (int j = 0; j < cvMatrix.Height; j++)
+                {
+                    cvMatrix.SetArray(i, j, matrix[i, j]);
+                }
+            }
+
+            return cvMatrix;
         }
 
         /// <summary>
