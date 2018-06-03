@@ -3,6 +3,7 @@ using System.Linq;
 using KI.Foundation.Tree;
 using KI.Foundation.Core;
 using KI.UI.ViewModel;
+using System.Collections.Specialized;
 
 namespace RenderApp.ViewModel
 {
@@ -151,11 +152,12 @@ namespace RenderApp.ViewModel
             Model = node;
         }
 
-        private void RemoveNodeEvent(object sender, NotifyNodeChangedEventArgs e)
+        private void RemoveNodeEvent(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (sender is KINode)
             {
-                NodeItemViewModel nodeVM = Children.Where(p => p.DisplayName == e.NewItems.Name).FirstOrDefault();
+                KINode node = e.NewItems as KINode;
+                NodeItemViewModel nodeVM = Children.Where(p => p.DisplayName == node.Name).FirstOrDefault();
                 if (nodeVM != null)
                 {
                     Children.Remove(nodeVM);
@@ -163,14 +165,14 @@ namespace RenderApp.ViewModel
             }
         }
 
-        private void InsertNodeEvent(object sender, NotifyNodeChangedEventArgs e)
+        private void InsertNodeEvent(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (sender is KINode)
             {
                 KINode node = sender as KINode;
-                if (Children.Count > e.NewIndex)
+                if (Children.Count > e.NewStartingIndex)
                 {
-                    Children.Insert(e.NewIndex, new NodeItemViewModel(this, node));
+                    Children.Insert(e.NewStartingIndex, new NodeItemViewModel(this, node));
                 }
                 else
                 {

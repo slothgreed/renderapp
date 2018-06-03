@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 
 namespace KI.Foundation.Core
@@ -14,13 +16,21 @@ namespace KI.Foundation.Core
         /// </summary>
         public KIFactoryBase()
         {
-            Items = new List<T>();
+            items = new List<T>();
+            Items = items;
         }
 
         /// <summary>
         /// アイテムリスト
         /// </summary>
-        public List<T> Items { get; }
+        private List<T> items { get; }
+
+        /// <summary>
+        /// 読み込み専用
+        /// </summary>
+        public IReadOnlyList<T> Items { get; }
+
+        public EventHandler<NotifyCollectionChangedEventArgs> ItemChanged { get; set; }
 
         /// <summary>
         /// アイテムの追加
@@ -30,8 +40,11 @@ namespace KI.Foundation.Core
         {
             if (value != null)
             {
-                Items.Add(value);
+                items.Add(value);
             }
+
+            var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, value);
+            OnFactoryItemChanged(args);
         }
 
         /// <summary>
@@ -40,14 +53,19 @@ namespace KI.Foundation.Core
         /// <param name="name">名前</param>
         public void RemoveByName(string name)
         {
-            for (int i = 0; i < Items.Count; i++)
+            var removeList = new List<T>();
+            for (int i = 0; i < items.Count; i++)
             {
-                if (Items[i].Name == name)
+                if (items[i].Name == name)
                 {
-                    Items.RemoveAt(i);
+                    removeList.Add(items[i]);
+                    items.RemoveAt(i);
                     i--;// 要素の++を無視するため、2番目を削除したら、次の探索は2番目をする
                 }
             }
+
+            var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, removeList);
+            OnFactoryItemChanged(args);
         }
 
         /// <summary>
@@ -57,15 +75,7 @@ namespace KI.Foundation.Core
         /// <returns>オブジェクト</returns>
         public T FindByName(string name)
         {
-            return Items.Where(p => p.Name == name).FirstOrDefault();
-        }
-
-        public void RemoveByValue(T value)
-        {
-            if (this.Items.Contains(value))
-            {
-                Items.Remove(value);
-            }
+            return items.Where(p => p.Name == name).FirstOrDefault();
         }
 
         /// <summary>
@@ -75,7 +85,7 @@ namespace KI.Foundation.Core
         /// <returns>名前</returns>
         public string FindByValue(T value)
         {
-            var item = Items.Where(p => p == value).FirstOrDefault();
+            var item = items.Where(p => p == value).FirstOrDefault();
 
             if (item == null)
             {
@@ -87,17 +97,34 @@ namespace KI.Foundation.Core
             }
         }
 
+
+        public void RemoveByValue(T value)
+        {
+            if (this.items.Contains(value))
+            {
+                items.Remove(value);
+            }
+
+            var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, value);
+            OnFactoryItemChanged(args);
+        }
+
         /// <summary>
         /// 解放処理
         /// </summary>
         public void Dispose()
         {
-            foreach (var item in Items)
+            foreach (var item in items)
             {
                 item.Dispose();
             }
 
-            Items.Clear();
+            items.Clear();
+        }
+
+        private void OnFactoryItemChanged(NotifyCollectionChangedEventArgs e)
+        {
+            ItemChanged?.Invoke(this, e);
         }
     }
 }

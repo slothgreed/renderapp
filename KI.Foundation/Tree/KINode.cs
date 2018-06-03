@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using KI.Foundation.Core;
 
@@ -34,12 +35,12 @@ namespace KI.Foundation.Tree
         /// <summary>
         /// ノード挿入イベント
         /// </summary>
-        public EventHandler<NotifyNodeChangedEventArgs> NodeInserted { get; set; }
+        public EventHandler<NotifyCollectionChangedEventArgs> NodeInserted { get; set; }
 
         /// <summary>
         /// ノード削除イベント
         /// </summary>
-        public EventHandler<NotifyNodeChangedEventArgs> NodeRemoved { get; set; }
+        public EventHandler<NotifyCollectionChangedEventArgs> NodeRemoved { get; set; }
 
         /// <summary>
         /// ノードの名前
@@ -221,7 +222,7 @@ namespace KI.Foundation.Tree
         /// <param name="removeNode">削除したノード</param>
         private void OnNodeRemoved(KINode removeNode)
         {
-            NodeRemoved?.Invoke(this, new NotifyNodeChangedEventArgs(NotifyNodeChangedAction.Remove, removeNode));
+            NodeRemoved?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, removeNode));
         }
 
         /// <summary>
@@ -231,7 +232,7 @@ namespace KI.Foundation.Tree
         /// <param name="insertNode">追加したノード</param>
         private void OnNodeInserted(int index, KINode insertNode)
         {
-            NodeInserted?.Invoke(insertNode, new NotifyNodeChangedEventArgs(NotifyNodeChangedAction.Add, insertNode, index));
+            NodeInserted?.Invoke(insertNode, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, insertNode, index));
         }
     }
 }

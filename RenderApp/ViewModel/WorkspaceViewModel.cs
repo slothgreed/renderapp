@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using KI.Foundation.Tree;
 using KI.Gfx.GLUtil;
 using KI.Asset;
-using KI.Asset.Attribute;
 using KI.UI.ViewModel;
 using RenderApp.Globals;
+using KI.Gfx.KIShader;
+using KI.Gfx.GLUtil.Buffer;
+using KI.Gfx.Render;
+using System;
+using System.Collections.Specialized;
 
 namespace RenderApp.ViewModel
 {
@@ -14,6 +17,7 @@ namespace RenderApp.ViewModel
     {
         public Workspace workspace;
         public RootNodeViewModel SceneNodeViewModel;
+        public RootNodeViewModel FactoryNodeViewModel;
         public RendererViewModel RendererViewModel;
         public ViewportViewModel ViewportViewModel;
 
@@ -21,18 +25,22 @@ namespace RenderApp.ViewModel
             : base(parent, workspace)
         {
             SceneNodeViewModel = new RootNodeViewModel(this, workspace.MainScene.RootNode, "Scene");
+            FactoryNodeViewModel = new RootNodeViewModel(this, new KINode("Library"), "Library");
             ViewportViewModel = new ViewportViewModel(this);
             RendererViewModel = new RendererViewModel(this);
 
             RendererViewModel.PropertyChanged += RendererViewModel_PropertyChanged;
             SceneNodeViewModel.PropertyChanged += SceneNodeViewModel_PropertyChanged;
+            FactoryNodeViewModel.PropertyChanged += LibraryNodeViewModel_PropertyChanged;
             ViewportViewModel.PropertyChanged += ViewportViewModel_PropertyChanged;
 
             AnchorablesSources = new ObservableCollection<ViewModelBase>();
             DocumentsSources = new ObservableCollection<ViewModelBase>();
             AnchorablesSources.Add(SceneNodeViewModel);
+            AnchorablesSources.Add(FactoryNodeViewModel);
             AnchorablesSources.Add(RendererViewModel);
             DocumentsSources.Add(ViewportViewModel);
+
             this.workspace = workspace;
         }
 
@@ -62,6 +70,11 @@ namespace RenderApp.ViewModel
                 UpdateSelectNode(SceneNodeViewModel.ActiveNode.Model);
             }
 
+            ViewportViewModel.Invalidate();
+        }
+
+        private void LibraryNodeViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
             ViewportViewModel.Invalidate();
         }
 
