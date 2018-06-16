@@ -33,8 +33,11 @@ namespace RenderApp.ViewModel
                         viewModel = new SobelViewModel(this, postprocess as Sobel);
                     }
 
-                    viewModel.PropertyChanged += CollectionPropertyChanged;
-                    postItem.Add(viewModel);
+                    if(viewModel != null)
+                    {
+                        viewModel.PropertyChanged += CollectionPropertyChanged;
+                        postItem.Add(viewModel);
+                    }
                 }
 
                 PostProcesses = postItem;

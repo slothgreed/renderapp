@@ -35,8 +35,8 @@ namespace ViewerTest
         public byte[,,] noize;
         public int noizeId;
         public int frameId;
-        public float dmax;
         public float tmax;  //荒さ
+        public bool first = true;
         //800x600のウィンドウを作る。タイトルは「0-3:GameWindow」
         public Game() : base(800, 800, GraphicsMode.Default, "0-3:GameWindow")
         {
@@ -48,7 +48,9 @@ namespace ViewerTest
         {
             base.OnLoad(e);
 
-            GL.ClearColor(Color4.White);
+
+            GL.Enable(EnableCap.DepthTest);
+            GL.Enable(EnableCap.Texture2D);
 
             ply = new PLYLoader(@"E:\MyProgram\KIProject\renderapp\ViewerTest\sphere1.ply");
 
@@ -66,39 +68,11 @@ namespace ViewerTest
                 var vectorY = ply.Propertys[5][i];
                 var vectorZ = ply.Propertys[6][i];
 
-                Vector3 tmp = new Vector3(x, y, z) - new Vector3(vectorX * dmax, vectorY * dmax, vectorZ * dmax);
+                Vector3 tmp = new Vector3(x, y, z) - new Vector3(vectorX, vectorY, vectorZ);
                 position.Add(new Vector3(x, y, z));
                 vector.Add(new Vector3(vectorX, vectorY, vectorZ).Normalized());
                 texcoord.Add(new Vector2(tmp.X, tmp.Y));
             }
-
-            //StreamWriter sw = new StreamWriter(@"plydata.txt", true, System.Text.Encoding.GetEncoding("Shift_JIS"));
-
-            //for (int i = 0; i < ply.FaceIndex.Count; i += 3)
-            //{
-            //    int pos0 = ply.FaceIndex[i];
-            //    int pos1 = ply.FaceIndex[i + 1];
-            //    int pos2 = ply.FaceIndex[i + 2];
-
-            //    string data = string.Format(@"{0},{1},{2},{3},{4},{5},{6},{7}" + Environment.NewLine,
-            //        position[pos0].X, position[pos0].Y, position[pos0].Z,
-            //        texcoord[pos0].X, texcoord[pos0].Y,
-            //        vector[pos0].X, vector[pos0].Y, vector[pos0].Z);
-            //    sw.Write(data);
-
-            //    data = string.Format(@"{0},{1},{2},{3},{4},{5},{6},{7}" + Environment.NewLine,
-            //        position[pos1].X, position[pos1].Y, position[pos1].Z,
-            //        texcoord[pos1].X, texcoord[pos1].Y,
-            //        vector[pos1].X, vector[pos1].Y, vector[pos1].Z);
-            //    sw.Write(data);
-
-            //    data = string.Format(@"{0},{1},{2},{3},{4},{5},{6},{7}" + Environment.NewLine,
-            //        position[pos2].X, position[pos2].Y, position[pos2].Z,
-            //        texcoord[pos2].X, texcoord[pos2].Y,
-            //        vector[pos2].X, vector[pos2].Y, vector[pos2].Z);
-            //    sw.Write(data);
-            //}
-            //sw.Close();
 
             string filePath = @"E:\MyProgram\KIProject\renderapp\ViewerTest\vectorfield.txt";
             string[] fileStream = File.ReadAllLines(filePath, System.Text.Encoding.GetEncoding("Shift_JIS"));
@@ -127,8 +101,6 @@ namespace ViewerTest
 
             }
 
-
-
             //テクスチャ用バッファの生成
             noizeId = GL.GenTexture();
             frameId = GL.GenTexture();
@@ -154,7 +126,6 @@ namespace ViewerTest
             GL.BindTexture(TextureTarget.Texture2D, 0);
 
             tmax = frame.GetLength(0) / (3.0f * noize.GetLength(0));
-            dmax = noize.GetLength(0);
         }
 
         //ウィンドウのサイズが変更された場合に実行される。
@@ -182,6 +153,11 @@ namespace ViewerTest
             {
                 CalcNoize();
             }
+
+            if(Keyboard[Key.R])
+            {
+                SwapBuffers();
+            }
         }
 
         private void CalcNoize()
@@ -189,6 +165,17 @@ namespace ViewerTest
             Random rand = new Random();
             frame = new byte[800, 800, 4];
             noize = new byte[64, 64, 4];
+
+            for (int i = 0; i < frame.GetLength(0); i++)
+            {
+                for (int j = 0; j < frame.GetLength(1); j++)
+                {
+                    frame[i, j, 0] = 0;
+                    frame[i, j, 1] = 0;
+                    frame[i, j, 2] = 0;
+                    frame[i, j, 3] = 255;
+                }
+            }
 
             var lut_r = new byte[256];
             var lut_g = new byte[256];
@@ -229,100 +216,61 @@ namespace ViewerTest
         {
             base.OnRenderFrame(e);
 
-            GL.ClearColor(Color4.White);
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            GL.Enable(EnableCap.DepthTest);
-            GL.Enable(EnableCap.Texture2D);
-            GL.BindTexture(TextureTarget.Texture2D, frameId);
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, frame.GetLength(0), frame.GetLength(1), 0, PixelFormat.Rgb, PixelType.UnsignedByte, frame);
-
-            #region[line]
-            //GL.Begin(BeginMode.Lines);
-            //for (int i = 0; i < ply.FaceIndex.Count; i += 3)
-            //{
-            //    int pos0 = ply.FaceIndex[i];
-            //    int pos1 = ply.FaceIndex[i + 1];
-            //    int pos2 = ply.FaceIndex[i + 2];
-
-            //    var tri0 = position[pos0];
-            //    var tri1 = position[pos1];
-            //    var tri2 = position[pos2];
-
-            //    var vec0 = vector[pos0];
-            //    var vec1 = vector[pos1];
-            //    var vec2 = vector[pos2];
-
-            //    GL.Vertex3(tri0);
-            //    GL.Vertex3(tri0 + vec0 * 0.1f);
-
-            //    GL.Vertex3(tri1);
-            //    GL.Vertex3(tri1 + vec1 * 0.1f);
-
-            //    GL.Vertex3(tri2);
-            //    GL.Vertex3(tri2 + vec2 * 0.1f);
-            //}
-            //GL.End();
-            #endregion
-
-            //GL.Begin(BeginMode.Lines);
-
-            //for (int i = 0; i < position.Count; i++)
-            //{
-            //    GL.Vertex3(position[i]);
-            //    GL.Vertex3(position[i] + vector[i].Normalized() * 0.01f);
-            //}
-
-            //GL.End();
-
-            GL.Begin(BeginMode.Triangles);
-
-            for (int i = 0; i < positionTest.Count; i++)
             {
-                GL.TexCoord2(texcoordTest[i]);
-                GL.Vertex3(positionTest[i]);
+                GL.ClearColor(Color4.White);
+                GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+                GL.BindTexture(TextureTarget.Texture2D, frameId);
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, frame.GetLength(0), frame.GetLength(1), 0, PixelFormat.Rgb, PixelType.UnsignedByte, frame);
+
+                GL.PointSize(5);
+                GL.Begin(BeginMode.Points);
+
+                for (int i = 0; i < position.Count; i++)
+                {
+                    GL.Vertex3(position[i]);
+                }
+
+                GL.End();
+
+                // direction の描画
+                GL.Begin(BeginMode.Lines);
+
+                for (int i = 0; i < position.Count; i++)
+                {
+                    GL.Vertex3(position[i]);
+                    GL.Vertex3(position[i] + vector[i].Normalized() * 0.01f);
+                }
+
+                GL.End();
+
+                // sphere の描画
+                GL.Begin(BeginMode.Triangles);
+                for (int i = 0; i < positionTest.Count; i++)
+                {
+                    GL.TexCoord2(texcoordTest[i]);
+                    GL.Vertex3(positionTest[i]);
+                }
+
+                GL.End();
+
+                GL.BindTexture(TextureTarget.Texture2D, 0);
             }
 
-            GL.End();
-
-            //GL.Begin(BeginMode.Triangles);
-            //for (int i = 0; i < ply.FaceIndex.Count; i += 3)
-            //{
-            //    int pos0 = ply.FaceIndex[i];
-            //    int pos1 = ply.FaceIndex[i + 1];
-            //    int pos2 = ply.FaceIndex[i + 2];
-
-            //    var tri0 = position[pos0];
-            //    var tri1 = position[pos1];
-            //    var tri2 = position[pos2];
-
-            //    var vec0 = vector[pos0];
-            //    var vec1 = vector[pos1];
-            //    var vec2 = vector[pos2];
-
-            //    GL.TexCoord2(texcoord[pos0]);
-            //    GL.Vertex3(tri0);
-
-            //    GL.TexCoord2(texcoord[pos1]);
-            //    GL.Vertex3(tri1);
-
-            //    GL.TexCoord2(texcoord[pos2]);
-            //    GL.Vertex3(tri2);
-            //}
-            //GL.End();
-
-            GL.BindTexture(TextureTarget.Texture2D, 0);
-
-            GL.BindTexture(TextureTarget.Texture2D, noizeId);
-            GL.Enable(EnableCap.Blend);
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-            GL.Begin(BeginMode.Quads);
-            GL.TexCoord2(0, 0); GL.Vertex3(0, 0, 40);
-            GL.TexCoord2(0, tmax); GL.Vertex3(0, 1, 40);
-            GL.TexCoord2(tmax, tmax); GL.Vertex3(1, 1, 40);
-            GL.TexCoord2(tmax, 0); GL.Vertex3(1, 0, 40);
-            GL.End();
-            GL.BindTexture(TextureTarget.Texture2D, 0);
-            GL.Disable(EnableCap.Blend);
+            {
+                GL.BindTexture(TextureTarget.Texture2D, noizeId);
+                GL.Enable(EnableCap.Blend);
+                //色 = 前景 * (前景のアルファ値) + 背景 * (1.0-背景のアルファ値)
+                GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+                GL.Begin(BeginMode.Quads);
+                GL.TexCoord2(0, 0); GL.Vertex3(0, 0, 1);
+                GL.TexCoord2(0, tmax); GL.Vertex3(0, 1, 1);
+                GL.TexCoord2(tmax, tmax); GL.Vertex3(1, 1, 1);
+                GL.TexCoord2(tmax, 0); GL.Vertex3(1, 0, 1);
+                GL.End();
+                GL.BindTexture(TextureTarget.Texture2D, 0);
+                GL.Disable(EnableCap.Blend);
+            }
 
             GL.ReadPixels(0, 0, frame.GetLength(0), frame.GetLength(1), PixelFormat.Rgb, PixelType.UnsignedByte, frame);
 

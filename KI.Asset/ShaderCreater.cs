@@ -1,4 +1,5 @@
-﻿using KI.Gfx;
+﻿using KI.Foundation.Core;
+using KI.Gfx;
 using KI.Gfx.Geometry;
 using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
@@ -19,6 +20,18 @@ namespace KI.Asset
         WireFrame,
         Split
     }
+
+    public enum GBufferType
+    {
+        PointColor,
+        PointNormalColor,
+        PointNormalTexcoord,
+        Albedo,
+        AlbedoNormal,
+        AlbedoSpecular,
+        AlbedoNormalSpecular
+    }
+
 
     /// <summary>
     /// シェーダ生成クラス
@@ -60,6 +73,46 @@ namespace KI.Asset
             }
         }
 
+        public string GetVertexShader(GBufferType type)
+        {
+            switch (type)
+            {
+                case GBufferType.PointColor:
+                    return Directory + @"GBuffer\GeneralPC.vert";
+                case GBufferType.PointNormalColor:
+                    return Directory + @"GBuffer\GeneralPNC.vert";
+                case GBufferType.PointNormalTexcoord:
+                    return Directory + @"GBuffer\GeneralPNT.vert";
+            }
+
+            return null;
+        }
+
+        public string GetFragShader(GBufferType type)
+        {
+            switch (type)
+            {
+                case GBufferType.PointColor:
+                    return Directory + @"GBuffer\GeneralPC.frag";
+                case GBufferType.PointNormalColor:
+                    return Directory + @"GBuffer\GeneralPNC.frag";
+                case GBufferType.PointNormalTexcoord:
+                    return Directory + @"GBuffer\GeneralPNT.frag";
+                case GBufferType.Albedo:
+                    return Directory + @"GBuffer\GeneralA.frag";
+                case GBufferType.AlbedoNormal:
+                    return Directory + @"GBuffer\GeneralAN.frag";
+                case GBufferType.AlbedoSpecular:
+                    return Directory + @"GBuffer\GeneralAS.frag";
+                case GBufferType.AlbedoNormalSpecular:
+                    return Directory + @"GBuffer\GeneralANS.frag";
+                default:
+                    break;
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// フラグシェーダの取得
         /// </summary>
@@ -94,7 +147,7 @@ namespace KI.Asset
         /// </summary>
         /// <param name="polygon">形状</param>
         /// <returns>ファイルパス</returns>
-        public string GetTextureFragShader(Polygon polygon)
+        private string GetTextureFragShader(Polygon polygon)
         {
             if (polygon.GetTexture(TextureKind.Albedo) != null &&
                 polygon.GetTexture(TextureKind.Normal) != null &&
@@ -118,6 +171,28 @@ namespace KI.Asset
             if (polygon.GetTexture(TextureKind.Albedo) != null)
             {
                 return Directory + @"GBuffer\GeneralA.frag";
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 指定シェーダの作成
+        /// </summary>
+        /// <param name="type">シェーダ種類</param>
+        /// <returns>シェーダ</returns>
+        public Shader CreateShader(GBufferType type)
+        {
+            var vertexShader = GetVertexShader(type);
+            var fragShader = GetFragShader(type);
+
+            if (vertexShader != null &&
+                fragShader != null)
+            {
+                return ShaderFactory.Instance.CreateShaderVF(
+                    vertexShader,
+                    fragShader,
+                    ShaderStage.Geometry);
             }
 
             return null;

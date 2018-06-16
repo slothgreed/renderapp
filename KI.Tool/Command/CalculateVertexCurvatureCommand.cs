@@ -102,40 +102,42 @@ namespace KI.Tool.Command
 
             var parentNode = Global.Renderer.ActiveScene.FindNode(renderObject);
 
+            var vertexShader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
+
             VertexParameterAttribute voronoiAttribute = new VertexParameterAttribute(renderObject.Name + " : Voronoi",
                 renderObject.VertexBuffer.ShallowCopy(),
                 renderObject.Polygon.Type,
-                renderObject.Shader,
+                vertexShader,
                 voronoiParam.Values);
 
             VertexParameterAttribute laplaceAttribute = new VertexParameterAttribute(renderObject.Name + " : Laplace",
                 renderObject.VertexBuffer.ShallowCopy(),
                 renderObject.Polygon.Type,
-                renderObject.Shader,
+                vertexShader,
                 laplaceParam.Values);
 
             VertexParameterAttribute meanAttribute = new VertexParameterAttribute(renderObject.Name + " : MeanCurvature",
                 renderObject.VertexBuffer.ShallowCopy(),
                 renderObject.Polygon.Type,
-                renderObject.Shader,
+                vertexShader,
                 meanParam.Values);
 
             VertexParameterAttribute gaussAttribute = new VertexParameterAttribute(renderObject.Name + " : GaussCurvature",
                 renderObject.VertexBuffer.ShallowCopy(),
                 renderObject.Polygon.Type,
-                renderObject.Shader,
+                vertexShader,
                 gaussParam.Values);
 
             VertexParameterAttribute minAttribute = new VertexParameterAttribute(renderObject.Name + " : MinCurvature",
                 renderObject.VertexBuffer.ShallowCopy(),
                 renderObject.Polygon.Type,
-                renderObject.Shader,
+                vertexShader,
                 minParam.Values);
 
             VertexParameterAttribute maxAttribute = new VertexParameterAttribute(renderObject.Name + " : MaxCurvature",
                 renderObject.VertexBuffer.ShallowCopy(),
                 renderObject.Polygon.Type,
-                renderObject.Shader,
+                vertexShader,
                 maxParam.Values);
 
             renderObject.Attributes.Add(voronoiAttribute);
@@ -152,7 +154,7 @@ namespace KI.Tool.Command
             scene.AddObject(minAttribute, parentNode);
             scene.AddObject(maxAttribute, parentNode);
 
-            var wireFrameShader = ShaderCreater.Instance.CreateShader(Asset.ShaderType.WireFrame);
+            var wireFrameShader = ShaderCreater.Instance.CreateShader(ShaderType.WireFrame);
 
             var normals = renderObject.Polygon.Vertexs.Select(p => p.Normal).ToArray();
             var dirMinAttribute = new DirectionAttribute(renderObject.Name + " : MinDirection", wireFrameShader, dirMinLine.ToArray(), new Vector4(1, 0, 0, 1), normals);

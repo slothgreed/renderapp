@@ -100,27 +100,28 @@ namespace RenderApp.Globals
             {
                 var bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/bunny.half");
                 var renderBunny = RenderObjectFactory.Instance.CreateRenderObject("bunny", bunny);
+                renderBunny.Shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
                 renderBunny.RotateX(-90);
                 MainScene.AddObject(renderBunny);
                 var parentNode = MainScene.FindNode(renderBunny);
 
                 // bunny attribute
-                var attribute = new KI.Asset.Attribute.OutlineAttribute(renderBunny.Name + "Outline",
-                renderBunny.VertexBuffer.ShallowCopy(),
-                renderBunny.Polygon.Type,
-                ShaderCreater.Instance.CreateShader(ShaderType.Outline));
-                renderBunny.Attributes.Add(attribute);
-                MainScene.AddObject(attribute, parentNode);
+                //var attribute = new KI.Asset.Attribute.OutlineAttribute(renderBunny.Name + "Outline",
+                //renderBunny.VertexBuffer.ShallowCopy(),
+                //renderBunny.Polygon.Type,
+                //ShaderCreater.Instance.CreateShader(ShaderType.Outline));
+                //renderBunny.Attributes.Add(attribute);
+                //MainScene.AddObject(attribute, parentNode);
 
-                var splitAttribute = new KI.Asset.Attribute.SplitAttribute(
-                    renderBunny.Name + "Split",
-                    renderBunny.VertexBuffer.ShallowCopy(),
-                    ShaderCreater.Instance.CreateShader(ShaderType.Split));
-                renderBunny.Attributes.Add(splitAttribute);
-                MainScene.AddObject(splitAttribute, parentNode);
+                //var splitAttribute = new KI.Asset.Attribute.SplitAttribute(
+                //    renderBunny.Name + "Split",
+                //    renderBunny.VertexBuffer.ShallowCopy(),
+                //    ShaderCreater.Instance.CreateShader(ShaderType.Split));
+                //renderBunny.Attributes.Add(splitAttribute);
+                //MainScene.AddObject(splitAttribute, parentNode);
 
                 CommandManager.Instance.Execute(new CreateWireFrameCommand(MainScene, renderBunny), null, false);
-                CommandManager.Instance.Execute(new CalculateVertexCurvatureCommand(MainScene, renderBunny));
+                //CommandManager.Instance.Execute(new CalculateVertexCurvatureCommand(MainScene, renderBunny));
             }
 
             // plane
@@ -160,22 +161,22 @@ namespace RenderApp.Globals
             Renderer.OutputBuffer = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output) as OutputBuffer;
             Renderer.OutputTexture = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
 
-            Bloom bloom = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Bloom) as Bloom;
-            bloom.uTarget = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
-            Renderer.PostEffect.AddTechnique(bloom);
+            //Bloom bloom = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Bloom) as Bloom;
+            //bloom.uTarget = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
+            //Renderer.PostEffect.AddTechnique(bloom);
 
-            Sobel sobel = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Sobel) as Sobel;
-            sobel.uTarget = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
-            Renderer.PostEffect.AddTechnique(sobel);
+            //Sobel sobel = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Sobel) as Sobel;
+            //sobel.uTarget = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
+            //Renderer.PostEffect.AddTechnique(sobel);
 
             //SSAO ssao = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.SSAO) as SSAO;
             //ssao.uPosition = gBufferTexture[(int)GBuffer.OutputTextureType.Posit];
             //ssao.uTarget = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
             //Renderer.PostEffect.AddTechnique(ssao);
 
-            //SSLIC sslic = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.SSLIC) as SSLIC;
-            //sslic.uVector = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
-            //Renderer.PostEffect.AddTechnique(sslic);
+            SSLIC sslic = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.SSLIC) as SSLIC;
+            sslic.uVector = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
+            Renderer.PostEffect.AddTechnique(sslic);
         }
     }
 }
