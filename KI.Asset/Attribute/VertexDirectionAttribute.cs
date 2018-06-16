@@ -9,9 +9,9 @@ using OpenTK.Graphics.OpenGL;
 namespace KI.Asset.Attribute
 {
     /// <summary>
-    /// ベクトル表示用のアトリビュート
+    /// 頂点方向のアトリビュート
     /// </summary>
-    public class DirectionAttribute : AttributeBase
+    public class VertexDirectionAttribute : AttributeBase
     {
         /// <summary>
         /// 配列バッファ
@@ -39,24 +39,31 @@ namespace KI.Asset.Attribute
         private float hatLength = 0.005f;
 
         /// <summary>
+        /// 方向
+        /// </summary>
+        public Vector3[] Direction { get; set; }
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="polygon">線分</param>
         /// <param name="shader">シェーダ</param>
-        public DirectionAttribute(string name, Shader shader, Vector3[] lines, Vector4 color, Vector3[] normal = null, bool displayVector = false)
+        public VertexDirectionAttribute(string name, Shader shader,Vector3[] position, Vector3[] direction, Vector4 color, Vector3[] normal = null, bool displayVector = false)
             : base(name, PolygonType.Lines, shader)
         {
             wireFrameColor = color;
-            var vectors = lines;
+            Direction = direction;
+
+            Vector3[] vectors;
 
             if (displayVector)
             {
-                vectors = CreateVectorLine(lines, normal);
+                vectors = CreateVectorLine(position,direction, normal);
             }
             else
             {
-                vectors = CreateLine(lines);
+                vectors = CreateLine(position, direction);
             }
 
             SetupBuffer(vectors);
@@ -79,18 +86,18 @@ namespace KI.Asset.Attribute
         /// <summary>
         /// 線分配列の算出
         /// </summary>
-        /// <param name="lines">線分</param>
-        /// <param name="normals">線分の法線</param>
+        /// <param name="position">位置</param>
+        /// <param name="direction">線分</param>
         /// <returns>ベクトル</returns>
-        private Vector3[] CreateLine(Vector3[] lines)
+        private Vector3[] CreateLine(Vector3[] position, Vector3[] direction)
         {
-            Vector3[] vectors = new Vector3[lines.Length];
+            Vector3[] vectors = new Vector3[direction.Length];
 
             var radian = MathHelper.RadiansToDegrees(vectorAngle);
-            for (int i = 0; i < lines.Length / 2; i++)
+            for (int i = 0; i < position.Length / 2; i++)
             {
-                var begin = lines[2 * i];
-                var end = lines[2 * i + 1];
+                var begin = position[i];
+                var end = position[i] + direction[i];
                 var vector = (end - begin).Normalized();
 
                 end = vector * vectorLength + begin;
@@ -107,20 +114,20 @@ namespace KI.Asset.Attribute
         /// <param name="lines">線分</param>
         /// <param name="normals">線分の法線</param>
         /// <returns>ベクトル</returns>
-        private Vector3[] CreateVectorLine(Vector3[] lines, Vector3[] normals)
+        private Vector3[] CreateVectorLine(Vector3[] position, Vector3[] direction, Vector3[] normals)
         {
             if (normals == null)
             {
                 throw new ArgumentNullException();
             }
 
-            Vector3[] vectors = new Vector3[lines.Length * 3];
+            Vector3[] vectors = new Vector3[direction.Length * 3];
 
             var radian = MathHelper.RadiansToDegrees(vectorAngle);
-            for (int i = 0; i < lines.Length / 2; i++)
+            for (int i = 0; i < position.Length; i++)
             {
-                var begin = lines[2 * i];
-                var end = lines[2 * i + 1];
+                var begin = position[i];
+                var end = position[i] + direction[i];
                 var vector = (end - begin).Normalized();
 
                 var matrix1 = Matrix4.CreateFromAxisAngle(normals[i], radian);
@@ -149,7 +156,7 @@ namespace KI.Asset.Attribute
             {
                 switch (info.Name)
                 {
-                    case "wireColor":
+                    case "u_wireColor":
                         info.Variable = wireFrameColor;
                         break;
                 }

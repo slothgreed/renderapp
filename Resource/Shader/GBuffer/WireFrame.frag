@@ -1,6 +1,6 @@
 #version 400
 in vec4 v_position;			
-uniform vec4 wireColor;
+uniform vec4 u_wireColor;
 
 out vec4 OutputColor0;
 out vec4 OutputColor1;
@@ -13,6 +13,6 @@ void main(void)
 	pos = (pos + 1)* 0.5;
 	OutputColor0 = vec4(pos.x,pos.y,pos.z,1.0);
 	OutputColor1 = vec4(1);
-	OutputColor2 = wireColor;
+	OutputColor2 = u_wireColor;
 	OutputColor3 = vec4(1);
 }

@@ -18,7 +18,8 @@ namespace KI.Asset
         Fur,
         Outline,
         WireFrame,
-        Split
+        Split,
+        VectorField
     }
 
     public enum GBufferType
@@ -256,6 +257,11 @@ namespace KI.Asset
                     return ShaderFactory.Instance.CreateShaderVF(
                         Directory + @"GBuffer\WireFrame.vert",
                         Directory + @"GBuffer\WireFrame.frag",
+                        ShaderStage.Geometry);
+                case ShaderType.VectorField:
+                    return ShaderFactory.Instance.CreateShaderVF(
+                        Directory + @"GBuffer\DirectionShader.vert",
+                        Directory + @"GBuffer\DirectionShader.frag",
                         ShaderStage.Geometry);
             }
 

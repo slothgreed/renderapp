@@ -1,6 +1,8 @@
-﻿using KI.Asset;
-using KI.Foundation.Command;
+﻿using System.Linq;
+using KI.Asset;
+using KI.Asset.Attribute;
 using KI.Asset.Technique;
+using KI.Foundation.Command;
 using KI.Tool.Command;
 using OpenTK;
 
@@ -121,7 +123,16 @@ namespace RenderApp.Globals
                 //MainScene.AddObject(splitAttribute, parentNode);
 
                 CommandManager.Instance.Execute(new CreateWireFrameCommand(MainScene, renderBunny), null, false);
-                //CommandManager.Instance.Execute(new CalculateVertexCurvatureCommand(MainScene, renderBunny));
+                CommandManager.Instance.Execute(new CalculateVertexCurvatureCommand(MainScene, renderBunny));
+
+                var vectorFiledAttribute = new VectorFieldAttribute(
+                    renderBunny.Name + ": VectorField",
+                    renderBunny.VertexBuffer.ShallowCopy(),
+                    ShaderCreater.Instance.CreateShader(ShaderType.VectorField),
+                    renderBunny.Attributes.OfType<VertexDirectionAttribute>().First().Direction,
+                    renderBunny.Polygon.Type);
+                renderBunny.Attributes.Add(vectorFiledAttribute);
+                MainScene.AddObject(vectorFiledAttribute, parentNode);
             }
 
             // plane

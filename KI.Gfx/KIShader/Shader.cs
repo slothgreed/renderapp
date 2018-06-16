@@ -257,6 +257,7 @@ namespace KI.Gfx.KIShader
                         case EArrayType.IntArray:
                         case EArrayType.FloatArray:
                         case EArrayType.DoubleArra:
+                            Logger.Log(Logger.LogLevel.Warning, "Not Supported ArrayType");
                             //GL.VertexAttribPointer(attribute.ShaderID, 2, VertexAttribPointerType.Float, false, Vector2.SizeInBytes, 0);
                             break;
                         case EArrayType.Vec2Array:
@@ -1012,7 +1013,7 @@ namespace KI.Gfx.KIShader
 
                             if (!info.Name.StartsWith("u"))
                             {
-                                Logger.Log(Logger.LogLevel.Error, "Uniform Name does not coding rule . name :" + info.Name);
+                                Logger.Log(Logger.LogLevel.Error, "Uniform Name does not coding rule . name :" + info.Name + Environment.NewLine + shader.FilePath);
                             }
 
                             shaderVariable.Add(info.Name, info);

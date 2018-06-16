@@ -76,29 +76,9 @@ namespace KI.Tool.Command
             var laplaceVecParam = new VectorParameter("LaplaceVector", halfDS.HalfEdgeVertexs.Select(p => p.LaplaceVector).ToArray());
             var minVecParam = new VectorParameter("MinVector", halfDS.HalfEdgeVertexs.Select(p => p.MinDirection).ToArray());
             var maxVecParam = new VectorParameter("MaxVector", halfDS.HalfEdgeVertexs.Select(p => p.MaxDirection).ToArray());
-
-            var dirMinLine = new List<Vector3>();
-            var dirMaxLine = new List<Vector3>();
-            var laplaceLine = new List<Vector3>();
-            foreach (var position in halfDS.HalfEdgeVertexs)
-            {
-                var minStart = new Vector3(position.Position);
-                var minEnd = new Vector3(position.Position + position.MinDirection);
-
-                var maxStart = new Vector3(position.Position);
-                var maxEnd = new Vector3(position.Position + position.MaxDirection);
-
-                dirMinLine.Add(minStart);
-                dirMinLine.Add(minEnd);
-                dirMaxLine.Add(maxStart);
-                dirMaxLine.Add(maxEnd);
-
-                var laplaceStart = new Vector3(position.Position);
-                var laplaceEnd = new Vector3(position.Position + position.LaplaceVector);
-
-                laplaceLine.Add(laplaceStart);
-                laplaceLine.Add(laplaceEnd);
-            }
+            var dirMinLine = halfDS.HalfEdgeVertexs.Select(p => p.MinDirection).ToArray();
+            var dirMaxLine = halfDS.HalfEdgeVertexs.Select(p => p.MinDirection).ToArray();
+            var laplaceLine = halfDS.HalfEdgeVertexs.Select(p => p.MinDirection).ToArray();
 
             var parentNode = Global.Renderer.ActiveScene.FindNode(renderObject);
 
@@ -156,15 +136,16 @@ namespace KI.Tool.Command
 
             var wireFrameShader = ShaderCreater.Instance.CreateShader(ShaderType.WireFrame);
 
+            var vertexs = renderObject.Polygon.Vertexs.Select(p =>p.Position).ToArray();
             var normals = renderObject.Polygon.Vertexs.Select(p => p.Normal).ToArray();
-            var dirMinAttribute = new DirectionAttribute(renderObject.Name + " : MinDirection", wireFrameShader, dirMinLine.ToArray(), new Vector4(1, 0, 0, 1), normals);
-            var dirMaxAttribute = new DirectionAttribute(renderObject.Name + " : MaxDirection", wireFrameShader, dirMaxLine.ToArray(), new Vector4(0, 1, 0, 1), normals);
+            var dirMinAttribute = new VertexDirectionAttribute(renderObject.Name + " : MinDirection", wireFrameShader, vertexs, dirMinLine, new Vector4(1, 0, 0, 1), normals);
+            var dirMaxAttribute = new VertexDirectionAttribute(renderObject.Name + " : MaxDirection", wireFrameShader, vertexs, dirMaxLine, new Vector4(0, 1, 0, 1), normals);
             renderObject.Attributes.Add(dirMinAttribute);
             renderObject.Attributes.Add(dirMaxAttribute);
             scene.AddObject(dirMinAttribute, parentNode);
             scene.AddObject(dirMaxAttribute, parentNode);
 
-            var laplaceVecAttribute = new DirectionAttribute(renderObject.Name + " : LaplaceVec", wireFrameShader, laplaceLine.ToArray(), new Vector4(1, 0, 0, 1), normals);
+            var laplaceVecAttribute = new VertexDirectionAttribute(renderObject.Name + " : LaplaceVec", wireFrameShader, vertexs, laplaceLine, new Vector4(1, 0, 0, 1), normals);
             renderObject.Attributes.Add(laplaceVecAttribute);
             scene.AddObject(laplaceVecAttribute, parentNode);
 
