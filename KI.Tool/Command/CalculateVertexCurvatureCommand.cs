@@ -73,12 +73,10 @@ namespace KI.Tool.Command
             var gaussParam = new ScalarParameter("GaussCurvature", halfDS.HalfEdgeVertexs.Select(p => p.GaussCurvature).ToArray());
             var minParam = new ScalarParameter("MinCurvature", halfDS.HalfEdgeVertexs.Select(p => p.MinCurvature).ToArray());
             var maxParam = new ScalarParameter("MaxCurvature", halfDS.HalfEdgeVertexs.Select(p => p.MaxCurvature).ToArray());
-            var laplaceVecParam = new VectorParameter("LaplaceVector", halfDS.HalfEdgeVertexs.Select(p => p.LaplaceVector).ToArray());
-            var minVecParam = new VectorParameter("MinVector", halfDS.HalfEdgeVertexs.Select(p => p.MinDirection).ToArray());
-            var maxVecParam = new VectorParameter("MaxVector", halfDS.HalfEdgeVertexs.Select(p => p.MaxDirection).ToArray());
+
             var dirMinLine = halfDS.HalfEdgeVertexs.Select(p => p.MinDirection).ToArray();
-            var dirMaxLine = halfDS.HalfEdgeVertexs.Select(p => p.MinDirection).ToArray();
-            var laplaceLine = halfDS.HalfEdgeVertexs.Select(p => p.MinDirection).ToArray();
+            var dirMaxLine = halfDS.HalfEdgeVertexs.Select(p => p.MaxDirection).ToArray();
+            var laplaceLine = halfDS.HalfEdgeVertexs.Select(p => p.LaplaceVector).ToArray();
 
             var parentNode = Global.Renderer.ActiveScene.FindNode(renderObject);
 
@@ -120,19 +118,19 @@ namespace KI.Tool.Command
                 vertexShader,
                 maxParam.Values);
 
-            renderObject.Attributes.Add(voronoiAttribute);
-            renderObject.Attributes.Add(laplaceAttribute);
-            renderObject.Attributes.Add(meanAttribute);
-            renderObject.Attributes.Add(gaussAttribute);
-            renderObject.Attributes.Add(minAttribute);
-            renderObject.Attributes.Add(maxAttribute);
+            //renderObject.Attributes.Add(voronoiAttribute);
+            //renderObject.Attributes.Add(laplaceAttribute);
+            //renderObject.Attributes.Add(meanAttribute);
+            //renderObject.Attributes.Add(gaussAttribute);
+            //renderObject.Attributes.Add(minAttribute);
+            //renderObject.Attributes.Add(maxAttribute);
 
-            scene.AddObject(voronoiAttribute, parentNode);
-            scene.AddObject(laplaceAttribute, parentNode);
-            scene.AddObject(meanAttribute, parentNode);
-            scene.AddObject(gaussAttribute, parentNode);
-            scene.AddObject(minAttribute, parentNode);
-            scene.AddObject(maxAttribute, parentNode);
+            //scene.AddObject(voronoiAttribute, parentNode);
+            //scene.AddObject(laplaceAttribute, parentNode);
+            //scene.AddObject(meanAttribute, parentNode);
+            //scene.AddObject(gaussAttribute, parentNode);
+            //scene.AddObject(minAttribute, parentNode);
+            //scene.AddObject(maxAttribute, parentNode);
 
             var wireFrameShader = ShaderCreater.Instance.CreateShader(ShaderType.WireFrame);
 

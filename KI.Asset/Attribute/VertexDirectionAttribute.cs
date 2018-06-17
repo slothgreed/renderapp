@@ -91,10 +91,10 @@ namespace KI.Asset.Attribute
         /// <returns>ベクトル</returns>
         private Vector3[] CreateLine(Vector3[] position, Vector3[] direction)
         {
-            Vector3[] vectors = new Vector3[direction.Length];
+            Vector3[] vectors = new Vector3[direction.Length * 2];
 
             var radian = MathHelper.RadiansToDegrees(vectorAngle);
-            for (int i = 0; i < position.Length / 2; i++)
+            for (int i = 0; i < position.Length; i++)
             {
                 var begin = position[i];
                 var end = position[i] + direction[i];
@@ -121,7 +121,7 @@ namespace KI.Asset.Attribute
                 throw new ArgumentNullException();
             }
 
-            Vector3[] vectors = new Vector3[direction.Length * 3];
+            Vector3[] vectors = new Vector3[direction.Length * 6];
 
             var radian = MathHelper.RadiansToDegrees(vectorAngle);
             for (int i = 0; i < position.Length; i++)

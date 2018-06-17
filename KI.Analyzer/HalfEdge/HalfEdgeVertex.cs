@@ -527,10 +527,20 @@ namespace KI.Analyzer
                 baseU.Y * max1 + baseV.Y * max2,
                 baseU.Z * max1 + baseV.Z * max2).Normalized();
 
+            if (Vector3.Dot(maxDirection, Vector3.One) < 0)
+            {
+                maxDirection = -maxDirection;
+            }
+
             minDirection = new Vector3(
                baseU.X * min1 + baseV.X * min2,
                baseU.Y * min1 + baseV.Y * min2,
                baseU.Z * min1 + baseV.Z * min2).Normalized();
+
+            if (Vector3.Dot(minDirection, Vector3.One) < 0)
+            {
+                minDirection = -minDirection;
+            }
         }
         #endregion
 
