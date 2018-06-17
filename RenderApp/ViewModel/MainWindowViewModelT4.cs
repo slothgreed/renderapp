@@ -62,6 +62,32 @@ namespace RenderApp.ViewModel
 					return _SaveAsProject;
 				}
 			}
+			private ICommand _ScreenShot;
+			public ICommand ScreenShot
+			{
+				get
+				{
+					if (_ScreenShot == null)
+					{
+						return _ScreenShot = CreateCommand(ScreenShotCommand);						
+					}
+
+					return _ScreenShot;
+				}
+			}
+			private ICommand _ScreenShotAll;
+			public ICommand ScreenShotAll
+			{
+				get
+				{
+					if (_ScreenShotAll == null)
+					{
+						return _ScreenShotAll = CreateCommand(ScreenShotAllCommand);						
+					}
+
+					return _ScreenShotAll;
+				}
+			}
 			private ICommand _LoadAsset;
 			public ICommand LoadAsset
 			{
@@ -192,5 +218,5 @@ namespace RenderApp.ViewModel
 					return _OpenAbout;
 				}
 			}
-    }
+	}
 }

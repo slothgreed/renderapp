@@ -10,6 +10,33 @@ namespace KI.Asset.Technique
     /// </summary>
     public partial class OutputBuffer : RenderTechnique
     {
+        private Texture _uSelectMap;
+        public Texture uSelectMap
+        {
+            get
+            {
+                return _uSelectMap;
+            }
+
+            set
+            {
+                SetValue<Texture>(ref _uSelectMap, value);
+            }
+        }
+        private Texture _uTarget;
+        public Texture uTarget
+        {
+            get
+            {
+                return _uTarget;
+            }
+
+            set
+            {
+                SetValue<Texture>(ref _uTarget, value);
+            }
+        }
+
         /// <summary>
         /// コンストラクタ
         /// </summary>

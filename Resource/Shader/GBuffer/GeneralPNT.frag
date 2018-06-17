@@ -1,7 +1,7 @@
 #version 400
 in vec4 v_position;
-in vec2 v_texcoord;
 in vec3 v_normal;
+in vec2 v_texcoord;
 uniform sampler2D uAlbedoMap;
 out vec4 OutputColor0;
 out vec4 OutputColor1;

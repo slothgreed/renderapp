@@ -1,4 +1,5 @@
 ﻿using System;
+using KI.Gfx.KITexture;
 
 namespace KI.Asset.Technique
 {
@@ -7,6 +8,46 @@ namespace KI.Asset.Technique
     /// </summary>
     public partial class SSAO : RenderTechnique
     {
+        private Texture _uPosition;
+        public Texture uPosition
+        {
+            get
+            {
+                return _uPosition;
+            }
+
+            set
+            {
+                SetValue<Texture>(ref _uPosition, value);
+            }
+        }
+        private Texture _uTarget;
+        public Texture uTarget
+        {
+            get
+            {
+                return _uTarget;
+            }
+
+            set
+            {
+                SetValue<Texture>(ref _uTarget, value);
+            }
+        }
+        private float[] _uSample;
+        public float[] uSample
+        {
+            get
+            {
+                return _uSample;
+            }
+
+            set
+            {
+                SetValue<float[]>(ref _uSample, value);
+            }
+        }
+
         /// <summary>
         /// コンストラクタ
         /// </summary>

@@ -19,7 +19,9 @@ namespace KI.Asset
         Outline,
         WireFrame,
         Split,
-        VectorField
+        VectorField,
+        SSLIC,
+        Output
     }
 
     public enum GBufferType
@@ -83,6 +85,10 @@ namespace KI.Asset
                 case GBufferType.PointNormalColor:
                     return Directory + @"GBuffer\GeneralPNC.vert";
                 case GBufferType.PointNormalTexcoord:
+                case GBufferType.Albedo:
+                case GBufferType.AlbedoNormal:
+                case GBufferType.AlbedoNormalSpecular:
+                case GBufferType.AlbedoSpecular:
                     return Directory + @"GBuffer\GeneralPNT.vert";
             }
 
@@ -263,6 +269,16 @@ namespace KI.Asset
                         Directory + @"GBuffer\DirectionShader.vert",
                         Directory + @"GBuffer\DirectionShader.frag",
                         ShaderStage.Geometry);
+                case ShaderType.SSLIC:
+                    return ShaderFactory.Instance.CreateShaderVF(
+                        Directory + @"PostEffect\sslic.vert",
+                        Directory + @"PostEffect\sslic.frag",
+                        ShaderStage.PostEffect);
+                case ShaderType.Output:
+                    return ShaderFactory.Instance.CreateShaderVF(
+                        Directory + @"PostEffect\output.vert",
+                        Directory + @"PostEffect\output.frag",
+                        ShaderStage.PostEffect);
             }
 
             return null;

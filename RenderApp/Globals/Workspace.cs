@@ -186,7 +186,6 @@ namespace RenderApp.Globals
             //Renderer.PostEffect.AddTechnique(ssao);
 
             SSLIC sslic = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.SSLIC) as SSLIC;
-            sslic.uVector = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
             Renderer.PostEffect.AddTechnique(sslic);
         }
     }

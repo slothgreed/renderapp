@@ -252,6 +252,12 @@ namespace ViewerTest
                     GL.Vertex3(positionTest[i]);
                 }
 
+                //for(int i = 0; i < position.Count; i++)
+                //{
+                //    GL.TexCoord2(texcoord[i]);
+                //    GL.Vertex3(position[i]);
+                //}
+
                 GL.End();
 
                 GL.BindTexture(TextureTarget.Texture2D, 0);

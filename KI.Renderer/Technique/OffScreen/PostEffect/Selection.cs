@@ -8,6 +8,20 @@ namespace KI.Asset.Technique
     /// </summary>
     public partial class Selection : RenderTechnique
     {
+        private int _uID;
+        public int uID
+        {
+            get
+            {
+                return _uID;
+            }
+
+            set
+            {
+                SetValue<int>(ref _uID, value);
+            }
+        }
+
         /// <summary>
         /// コンストラクタ
         /// </summary>

@@ -11,6 +11,10 @@ using KI.Tool.Command;
 using KI.Tool.Control;
 using RenderApp.Globals;
 using System.Windows;
+using System.Drawing;
+using System.Windows.Media.Imaging;
+using KI.Renderer;
+using KI.Asset.Technique;
 
 namespace RenderApp.ViewModel
 {
@@ -111,6 +115,29 @@ namespace RenderApp.ViewModel
             {
             }
         }
+        #endregion
+
+        #region [Edit Menu Command]
+
+        private void ScreenShotCommand()
+        {
+            var renderTarget = Workspace.Instance.Renderer.OutputBuffer.RenderTarget;
+            RendererUtility.ScreenShot("OutputBuffer.bmp", renderTarget, renderTarget.Width, renderTarget.Height);
+        }
+
+        private void ScreenShotAllCommand()
+        {
+            foreach (var renderer in Workspace.Instance.Renderer.RenderQueue.Items)
+            {
+                RendererUtility.ScreenShot(renderer.Name + ".bmp", renderer.RenderTarget, renderer.RenderTarget.Width, renderer.RenderTarget.Height);
+            }
+
+            foreach (var renderer in Workspace.Instance.Renderer.PostEffect.Items)
+            {
+                RendererUtility.ScreenShot(renderer.Name + ".bmp", renderer.RenderTarget, renderer.RenderTarget.Width, renderer.RenderTarget.Height);
+            }
+        }
+
         #endregion
 
         #region [Asset Menu Command]

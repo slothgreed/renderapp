@@ -15,12 +15,20 @@ namespace KI.Gfx.Render
         /// <summary>
         /// 幅
         /// </summary>
-        private int width = 0;
+        public int Width
+        {
+            get;
+            private set;
+        }
 
         /// <summary>
         /// 高さ
         /// </summary>
-        private int height = 0;
+        public int Height
+        {
+            get;
+            private set;
+        }
 
         /// <summary>
         /// テクスチャのアタッチメント
@@ -63,13 +71,13 @@ namespace KI.Gfx.Render
         /// <param name="height">縦</param>
         public void SizeChanged(int width, int height)
         {
-            if (width == this.width && this.height == height)
+            if (width == this.Width && this.Height == height)
             {
                 return;
             }
 
-            this.height = height;
-            this.width = width;
+            this.Height = height;
+            this.Width = width;
             RenderBuffer.SizeChanged(width, height);
         }
 
@@ -112,9 +120,9 @@ namespace KI.Gfx.Render
             {
                 GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, attachment[i], TextureTarget.Texture2D, outputs[i].DeviceID, 0);
 
-                if (outputs[i].Width != width || outputs[i].Height != height)
+                if (outputs[i].Width != Width || outputs[i].Height != Height)
                 {
-                    outputs[i].TextureBuffer.SizeChanged(width, height);
+                    outputs[i].TextureBuffer.SizeChanged(Width, Height);
                 }
             }
 
@@ -138,9 +146,9 @@ namespace KI.Gfx.Render
         /// <param name="num">出力バッファ数</param>
         private void Initialize(int width, int height, int num)
         {
-            RenderBuffer = new RenderBuffer();
-            this.width = width;
-            this.height = height;
+            RenderBuffer = BufferFactory.Instance.CreateRenderBuffer();
+            this.Width = width;
+            this.Height = height;
 
             for (int i = 0; i < num; i++)
             {
@@ -167,7 +175,7 @@ namespace KI.Gfx.Render
         {
             FrameBuffer.BindBuffer();
             RenderBuffer.GenBuffer();
-            RenderBuffer.Storage(RenderbufferStorage.DepthComponent, width, height);
+            RenderBuffer.Storage(RenderbufferStorage.DepthComponent, Width, Height);
             GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, RenderBuffer.DeviceID);
             RenderBuffer.UnBindBuffer();
             FrameBuffer.UnBindBuffer();

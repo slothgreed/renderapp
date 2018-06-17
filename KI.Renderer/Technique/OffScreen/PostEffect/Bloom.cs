@@ -1,4 +1,5 @@
 ﻿using System;
+using KI.Gfx.KITexture;
 
 namespace KI.Asset.Technique
 {
@@ -26,6 +27,59 @@ namespace KI.Asset.Technique
         /// 重みの値
         /// </summary>
         public float Sigma { get; set; } = 1;
+
+        private float _uScale;
+        public float uScale
+        {
+            get
+            {
+                return _uScale;
+            }
+
+            set
+            {
+                SetValue<float>(ref _uScale, value);
+            }
+        }
+        private float[] _uWeight;
+        public float[] uWeight
+        {
+            get
+            {
+                return _uWeight;
+            }
+
+            set
+            {
+                SetValue<float[]>(ref _uWeight, value);
+            }
+        }
+        private Texture _uTarget;
+        public Texture uTarget
+        {
+            get
+            {
+                return _uTarget;
+            }
+
+            set
+            {
+                SetValue<Texture>(ref _uTarget, value);
+            }
+        }
+        private bool _uHorizon;
+        public bool uHorizon
+        {
+            get
+            {
+                return _uHorizon;
+            }
+
+            set
+            {
+                SetValue<bool>(ref _uHorizon, value);
+            }
+        }
 
         /// <summary>
         /// コンストラクタ

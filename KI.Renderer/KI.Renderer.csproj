@@ -40,6 +40,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RendererUtility.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Light\DirectionLight.cs" />
     <Compile Include="Light\Light.cs" />
@@ -77,12 +79,6 @@
     <Compile Include="Technique\OffScreen\PostEffect\Bloom.cs" />
     <Compile Include="Technique\OffScreen\PostEffect\DOF.cs" />
     <Compile Include="Technique\OffScreen\RenderTechnique.cs" />
-    <Compile Include="Technique\OffScreen\RenderTechniqueT4.cs">
-      <DependentUpon>RenderTechniqueT4.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
     <Compile Include="Technique\OffScreen\PostEffect\Selection.cs" />
     <Compile Include="Technique\OffScreen\PostEffect\Sobel.cs" />
     <Compile Include="Technique\OffScreen\PostEffect\SSAO.cs" />
@@ -95,13 +91,6 @@
     <Compile Include="Utility\ShaderHelper.cs" />
     <Compile Include="Technique\OffScreen\ShadowMap.cs" />
     <Compile Include="Technique\OffScreen\PostEffect\SSLIC.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Technique\OffScreen\RenderTechniqueT4.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>RenderTechniqueT4.cs</LastGenOutput>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

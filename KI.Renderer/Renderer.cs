@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using KI.Gfx.KITexture;
 using KI.Asset.Technique;
+using System;
 
 namespace KI.Asset
 {

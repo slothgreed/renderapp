@@ -50,6 +50,11 @@
                 <MenuItem Command="{Binding SaveAsProject}" Header="SaveAs" />
             </MenuItem>
 
+            <MenuItem Header="Edit">
+                <MenuItem Command="{Binding ScreenShot}" Header="ScreenShot" />
+                <MenuItem Command="{Binding ScreenShotAll}" Header="ScreenShotAll" />
+            </MenuItem>
+
             <MenuItem Header="Asset">
                 <MenuItem
                     Command="{Binding LoadAsset}"
@@ -121,7 +126,7 @@
                 <MenuItem
                     Command="{Binding CreateObject}"
                     CommandParameter="{x:Static local:AnalyzeCommand.Curvature}"
-                    Header="Curvature"/>
+                    Header="Curvature" />
                 <Separator />
                 <MenuItem
                     Command="{Binding CreateObject}"
@@ -138,12 +143,12 @@
                 <MenuItem
                     Command="{Binding CreateObject}"
                     CommandParameter="{x:Static local:AnalyzeCommand.IsoLine}"
-                    Header="IsoLine"/>
-                <Separator/>
+                    Header="IsoLine" />
+                <Separator />
                 <MenuItem
                     Command="{Binding CreateObject}"
                     CommandParameter="{x:Static local:AnalyzeCommand.Perceptron}"
-                    Header="Perceptron" />                
+                    Header="Perceptron" />
             </MenuItem>
 
             <MenuItem Header="View">

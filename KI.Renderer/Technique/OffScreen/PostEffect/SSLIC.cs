@@ -1,6 +1,10 @@
 ﻿using System;
 using KI.Asset;
+using KI.Foundation.Core;
 using KI.Gfx.GLUtil;
+using KI.Gfx.GLUtil.Buffer;
+using KI.Gfx.KITexture;
+using KI.Gfx.Render;
 using OpenTK.Graphics.OpenGL;
 
 namespace KI.Asset.Technique
@@ -10,6 +14,24 @@ namespace KI.Asset.Technique
     /// </summary>
     public partial class SSLIC : RenderTechnique
     {
+        private Texture _uNoize;
+        public Texture uNoize
+        {
+            get
+            {
+                return _uNoize;
+            }
+
+            set
+            {
+                SetValue<Texture>(ref _uNoize, value);
+            }
+        }
+
+        RenderObject preRectangle;
+        RenderObject postRectangle;
+        Texture ssLicTex;
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -23,9 +45,8 @@ namespace KI.Asset.Technique
         /// </summary>
         public override void Initialize()
         {
-            uNoize = TextureFactory.Instance.CreateTexture("Noize", DeviceContext.Instance.Width, DeviceContext.Instance.Height);
-
-            CreateNoize(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
+            CreateNoizeTexture(64, 64);
+            CreateFrameBuffer(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
         }
 
         /// <summary>
@@ -37,7 +58,8 @@ namespace KI.Asset.Technique
         {
             base.SizeChanged(width, height);
 
-            CreateNoize(width, height);
+            CreateNoizeTexture(width, height);
+            CreateFrameBuffer(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
         }
 
         /// <summary>
@@ -46,18 +68,20 @@ namespace KI.Asset.Technique
         /// <param name="scene">シーン</param>
         public override void Render(Scene scene)
         {
-            if (Rectanle != null)
-            {
-                var textures = Global.Renderer.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
-                var vector = textures[(int)GBuffer.OutputTextureType.Color];
-                GL.Enable(EnableCap.Blend);
-                GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-                RenderTarget.ClearBuffer();
-                RenderTarget.BindRenderTarget(OutputTexture);
-                Rectanle.Render(scene);
-                RenderTarget.UnBindRenderTarget();
-                GL.Disable(EnableCap.Blend);
-            }
+            RenderTarget.ClearBuffer();
+            RenderTarget.BindRenderTarget(OutputTexture);
+
+            preRectangle.Render(scene);
+
+            //GL.Enable(EnableCap.Blend);
+            //GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+            //postRectangle.Render(scene);
+            //GL.Disable(EnableCap.Blend);
+
+            RenderTarget.UnBindRenderTarget();
+
+            var pixelData = RenderTarget.FrameBuffer.GetPixelData(DeviceContext.Instance.Width, DeviceContext.Instance.Height, PixelFormat.Rgba);
+            ssLicTex.GenTexture(pixelData);
         }
 
         /// <summary>
@@ -65,8 +89,13 @@ namespace KI.Asset.Technique
         /// </summary>
         /// <param name="width">ノイズテクスチャ横</param>
         /// <param name="height">ノイズテクスチャ縦</param>
-        private void CreateNoize(int width, int height)
+        private void CreateNoizeTexture(int width, int height)
         {
+            if (uNoize == null)
+            {
+                uNoize = TextureFactory.Instance.CreateTexture("Noize", 64, 64);
+            }
+
             float[,,] rgba = new float[width, height, 4];
             Random rand = new Random();
 
@@ -84,6 +113,45 @@ namespace KI.Asset.Technique
             }
 
             uNoize.GenTexture(rgba);
+        }
+
+        /// <summary>
+        /// レンダーターゲットの生成
+        /// </summary>
+        /// <param name="width">横</param>
+        /// <param name="height">縦</param>
+        private void CreateFrameBuffer(int width, int height)
+        {
+            var textures = Global.Renderer.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
+            var colorTexture = textures[(int)GBuffer.OutputTextureType.Light];
+
+            if (ssLicTex == null)
+            {
+                ssLicTex = TextureFactory.Instance.CreateTexture("SSLIC Texture", width, height);
+
+                preRectangle = RenderObjectFactory.Instance.CreateRenderObject("SSLIC Rectangle", AssetFactory.Instance.CreateRectangle("SSLIC Rectangle"));
+                preRectangle.Shader = ShaderCreater.Instance.CreateShader(ShaderType.Output);
+                preRectangle.Shader.SetValue("uTarget", colorTexture);
+
+                postRectangle = RenderObjectFactory.Instance.CreateRenderObject("SSLIC PostRectangle", AssetFactory.Instance.CreateRectangle("SSLIC PostRectangle"));
+                postRectangle.Shader = ShaderCreater.Instance.CreateShader(ShaderType.SSLIC);
+                postRectangle.Shader.SetValue("uVector", OutputTexture[0]);
+                postRectangle.Shader.SetValue("uNoize", uNoize);
+            }
+
+            float[,,] rgba = new float[DeviceContext.Instance.Width, DeviceContext.Instance.Height, 4];
+            for (int i = 0; i < rgba.GetLength(0); i++)
+            {
+                for (int j = 0; j < rgba.GetLength(1); j++)
+                {
+                    rgba[i, j, 0] = 255.0f;
+                    rgba[i, j, 1] = 0;
+                    rgba[i, j, 2] = 0;
+                    rgba[i, j, 3] = 255.0f;
+                }
+            }
+
+            ssLicTex.GenTexture(rgba);
         }
     }
 }

@@ -51,14 +51,14 @@ namespace KI.Gfx.KIShader
         public Shader CreateShaderVF(string vPath, string fPath, ShaderStage stage)
         {
             Shader shader = FindShader(vPath, fPath, null, null, null);
-            if (shader == null)
+            //if (shader == null)
             {
                 string vname = Path.GetFileName(vPath);
                 string fname = Path.GetFileName(fPath);
                 ShaderProgram vert = ShaderProgramFactory.Instance.CreateShaderProgram(vPath, vPath);
                 ShaderProgram frag = ShaderProgramFactory.Instance.CreateShaderProgram(fPath, fPath);
                 shader = new Shader(vert, frag, stage);
-                Shaders.Add(vname + fname, shader);
+                //Shaders.Add(vname + fname, shader);
             }
 
             return shader;
@@ -75,7 +75,7 @@ namespace KI.Gfx.KIShader
         public Shader CreateGeometryShader(string vPath, string fPath, string gPath, ShaderStage stage)
         {
             Shader shader = FindShader(vPath, fPath, gPath, null, null);
-            if (shader == null)
+            //if (shader == null)
             {
                 string vname = Path.GetFileName(vPath);
                 string fname = Path.GetFileName(fPath);
@@ -84,7 +84,7 @@ namespace KI.Gfx.KIShader
                 ShaderProgram frag = ShaderProgramFactory.Instance.CreateShaderProgram(fPath, fPath);
                 ShaderProgram geom = ShaderProgramFactory.Instance.CreateShaderProgram(gPath, gPath);
                 shader = new Shader(vert, frag, geom, stage);
-                Shaders.Add(vname + fname + geom, shader);
+                //Shaders.Add(vname + fname + geom, shader);
             }
 
             return shader;
@@ -102,7 +102,7 @@ namespace KI.Gfx.KIShader
         public Shader CreateTesselation(string vPath, string fPath, string gPath, string tcPath, string tePath, ShaderStage stage)
         {
             Shader shader = FindShader(vPath, fPath, gPath, tcPath, tePath);
-            if (shader == null)
+            //if (shader == null)
             {
                 string vname = Path.GetFileName(vPath);
                 string fname = Path.GetFileName(fPath);
@@ -116,7 +116,7 @@ namespace KI.Gfx.KIShader
                 ShaderProgram tcs = ShaderProgramFactory.Instance.CreateShaderProgram(tcPath, tcPath);
                 ShaderProgram tes = ShaderProgramFactory.Instance.CreateShaderProgram(tePath, tePath);
                 shader = new Shader(vert, frag, geom, tcs, tes, stage);
-                Shaders.Add(vname + fname + tcs + tes, shader);
+                //Shaders.Add(vname + fname + tcs + tes, shader);
             }
 
             return shader;
