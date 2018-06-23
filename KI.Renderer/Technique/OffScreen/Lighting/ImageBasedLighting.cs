@@ -23,7 +23,7 @@ namespace KI.Asset.Technique
         public override void Render(Scene scene)
         {
             RenderTarget.ClearBuffer();
-            RenderTarget.BindRenderTarget(OutputTexture);
+            RenderTarget.BindRenderTarget();
             foreach (var probe in scene.RootNode.AllChildren())
             {
                 if (probe.KIObject is EnvironmentProbe)

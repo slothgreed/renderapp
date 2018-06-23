@@ -147,7 +147,7 @@ namespace KI.Asset
             {
                 if (technique.Technique == type)
                 {
-                    return technique.OutputTexture;
+                    return technique.RenderTarget.RenderTexture;
                 }
             }
 
@@ -168,7 +168,7 @@ namespace KI.Asset
                     continue;
                 }
 
-                foreach (var texture in technique.OutputTexture)
+                foreach (var texture in technique.RenderTarget.RenderTexture)
                 {
                     yield return texture;
                 }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using KI.Foundation.Core;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
@@ -31,11 +33,6 @@ namespace KI.Gfx.Render
         }
 
         /// <summary>
-        /// テクスチャのアタッチメント
-        /// </summary>
-        private List<FramebufferAttachment> attachment = new List<FramebufferAttachment>();
-
-        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
@@ -50,15 +47,16 @@ namespace KI.Gfx.Render
         }
 
         /// <summary>
-        /// 描画場所
-        /// </summary>
-        public List<DrawBuffersEnum> OutputBuffers { get; private set; } = new List<DrawBuffersEnum>();
-
-        /// <summary>
         /// フレームバッファ
         /// </summary>
         public FrameBuffer FrameBuffer { get; private set; }
 
+        /// <summary>
+        /// レンダリング用テクスチャ
+        /// </summary>
+        public RenderTexture[] RenderTexture { get; private set; }
+
+        
         /// <summary>
         /// 初期化
         /// </summary>
@@ -69,13 +67,6 @@ namespace KI.Gfx.Render
         {
             this.Width = width;
             this.Height = height;
-
-            for (int i = 0; i < num; i++)
-            {
-                attachment.Add(FramebufferAttachment.ColorAttachment0 + i);
-                OutputBuffers.Add(DrawBuffersEnum.ColorAttachment0 + i);
-            }
-
             FrameBuffer.GenBuffer();
             FrameBuffer.SetupRenderBuffer(Width, Height);
         }
@@ -94,6 +85,12 @@ namespace KI.Gfx.Render
 
             this.Height = height;
             this.Width = width;
+
+            foreach (var texture in RenderTexture)
+            {
+                texture.TextureBuffer.SizeChanged(width, height);
+            }
+
             FrameBuffer.SizeChanged(width, height);
         }
 
@@ -118,30 +115,31 @@ namespace KI.Gfx.Render
         /// <summary>
         /// 出力バッファのバインド
         /// </summary>
-        /// <param name="output">出力バッファ</param>
-        public void BindRenderTarget(Texture output)
+        /// <param name="outputs">出力バッファ</param>
+        public void BindRenderTarget()
         {
-            BindRenderTarget(new Texture[] { output });
+            FrameBuffer.BindBuffer();
+            for (int i = 0; i < RenderTexture.Length; i++)
+            {
+                GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, RenderTexture[i].Attachment, TextureTarget.Texture2D, RenderTexture[i].DeviceID, 0);
+            }
+
+            GL.DrawBuffers(RenderTexture.Length, RenderTexture.Select(p => p.DrawBuffers).ToArray());
         }
 
         /// <summary>
-        /// 出力バッファのバインド
+        /// レンダリングテクスチャの設定
         /// </summary>
-        /// <param name="outputs">出力バッファ</param>
-        public void BindRenderTarget(Texture[] outputs)
+        /// <param name="texture">テクスチャ</param>
+        public void SetRenderTexture(RenderTexture[] texture)
         {
-            FrameBuffer.BindBuffer();
-            for (int i = 0; i < outputs.Length; i++)
+            RenderTexture = new RenderTexture[texture.Length];
+            for (int i = 0; i < texture.Length; i++)
             {
-                GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, attachment[i], TextureTarget.Texture2D, outputs[i].DeviceID, 0);
-
-                if (outputs[i].Width != Width || outputs[i].Height != Height)
-                {
-                    outputs[i].TextureBuffer.SizeChanged(Width, Height);
-                }
+                RenderTexture[i] = texture[i];
+                RenderTexture[i].Attachment = (FramebufferAttachment.ColorAttachment0 + i);
+                RenderTexture[i].DrawBuffers = (DrawBuffersEnum.ColorAttachment0 + i);
             }
-
-            GL.DrawBuffers(OutputBuffers.Count, OutputBuffers.ToArray());
         }
 
         /// <summary>

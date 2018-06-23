@@ -3,6 +3,7 @@ using System.IO;
 using KI.Foundation.Core;
 using KI.Gfx.GLUtil;
 using KI.Gfx.KITexture;
+using KI.Gfx.Render;
 
 namespace KI.Asset
 {
@@ -24,44 +25,6 @@ namespace KI.Asset
         public Texture CreateTexture(string path)
         {
             return CreateTexture(path, GettImageKind(path));
-        }
-
-        /// <summary>
-        /// UVテクスチャの生成
-        /// </summary>
-        /// <param name="size">サイズ</param>
-        /// <returns>テクスチャ</returns>
-        public Texture CreateUVTexture(int size)
-        {
-            Texture texture = new Texture("UV Texture", TextureType.Texture2D);
-            float[,,] rgba = new float[size, size, 4];
-            float halfSize = size / 2;
-
-            for (int i = 0; i < size; i++)
-            {
-                for (int j = 0; j < size; j++)
-                {
-                    if (halfSize < i && halfSize < j ||
-                        halfSize > i && halfSize > j)
-                    {
-                        rgba[i, j, 0] = 255;
-                        rgba[i, j, 1] = 255;
-                        rgba[i, j, 2] = 255;
-                        rgba[i, j, 3] = 255;
-                    }
-                    else
-                    {
-                        rgba[i, j, 0] = 0;
-                        rgba[i, j, 1] = 0;
-                        rgba[i, j, 2] = 0;
-                        rgba[i, j, 3] = 255;
-                    }
-                }
-            }
-
-            texture.GenTexture(rgba);
-
-            return texture;
         }
 
         /// <summary>
@@ -107,7 +70,46 @@ namespace KI.Asset
 
             ImageInfo image = CreateImageInfo(path, kind);
             Texture texture = new Texture(Path.GetFileName(path), TextureType.Texture2D);
+            AddItem(texture);
             texture.GenTexture(image);
+            return texture;
+        }
+
+        /// <summary>
+        /// UVテクスチャの生成
+        /// </summary>
+        /// <param name="size">サイズ</param>
+        /// <returns>テクスチャ</returns>
+        public Texture CreateUVTexture(int size)
+        {
+            Texture texture = new Texture("UV Texture", TextureType.Texture2D);
+            float[,,] rgba = new float[size, size, 4];
+            float halfSize = size / 2;
+
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    if (halfSize < i && halfSize < j ||
+                        halfSize > i && halfSize > j)
+                    {
+                        rgba[i, j, 0] = 255;
+                        rgba[i, j, 1] = 255;
+                        rgba[i, j, 2] = 255;
+                        rgba[i, j, 3] = 255;
+                    }
+                    else
+                    {
+                        rgba[i, j, 0] = 0;
+                        rgba[i, j, 1] = 0;
+                        rgba[i, j, 2] = 0;
+                        rgba[i, j, 3] = 255;
+                    }
+                }
+            }
+
+            texture.GenTexture(rgba);
+            AddItem(texture);
             return texture;
         }
 
@@ -120,7 +122,16 @@ namespace KI.Asset
         /// <returns>テクスチャ</returns>
         public Texture CreateTexture(string name, int width, int height)
         {
-            return new Texture(name, TextureType.Texture2D, width, height);
+            var texture = new Texture(name, TextureType.Texture2D, width, height);
+            AddItem(texture);
+            return texture;
+        }
+
+        public RenderTexture CreateRenderTexture(string name, int width, int height)
+        {
+            var renderTexture = new RenderTexture(name, width, height);
+            AddItem(renderTexture);
+            return renderTexture;
         }
 
         /// <summary>
@@ -145,6 +156,8 @@ namespace KI.Asset
             images.Add(CreateImageInfo(nz, GettImageKind(nz)));
             Texture texture = new Texture("Cubemap" + Path.GetFileName(px), TextureType.Cubemap);
             texture.GenCubemapTexture(images);
+            AddItem(texture);
+
             return texture;
         }
 

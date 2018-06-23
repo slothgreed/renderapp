@@ -59,6 +59,7 @@
     <Compile Include="GLUtil\Buffer\SamplerBuffer.cs" />
     <Compile Include="GLUtil\Buffer\TextureBuffer.cs" />
     <Compile Include="GLUtil\DeviceContext.cs" />
+    <Compile Include="Render\RenderTexture.cs" />
     <Compile Include="Type.cs" />
     <Compile Include="GLUtil\Viewport.cs" />
     <Compile Include="GLUtil\Buffer\FrameBuffer.cs" />

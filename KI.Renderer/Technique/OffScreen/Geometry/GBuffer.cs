@@ -35,7 +35,7 @@ namespace KI.Asset.Technique
         /// <returns>テクスチャ</returns>
         public Texture GetOutputTexture(OutputTextureType target)
         {
-            return OutputTexture[(int)target];
+            return RenderTarget.RenderTexture[(int)target];
         }
 
         /// <summary>
@@ -45,15 +45,16 @@ namespace KI.Asset.Technique
         /// <param name="height">縦</param>
         protected override void CreateRenderTarget(int width, int height)
         {
-            OutputTexture = new Texture[4]
+            var textures = new RenderTexture[4]
             {
-                TextureFactory.Instance.CreateTexture("GPosit", width, height),
-                TextureFactory.Instance.CreateTexture("GNormal", width, height),
-                TextureFactory.Instance.CreateTexture("GColor", width, height),
-                TextureFactory.Instance.CreateTexture("GLight", width, height)
+                TextureFactory.Instance.CreateRenderTexture("GPosit", width, height),
+                TextureFactory.Instance.CreateRenderTexture("GNormal", width, height),
+                TextureFactory.Instance.CreateRenderTexture("GColor", width, height),
+                TextureFactory.Instance.CreateRenderTexture("GLight", width, height)
             };
 
-            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget(Name, width, height, OutputTexture.Length);
+            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget(Name, width, height, textures.Length);
+            RenderTarget.SetRenderTexture(textures);
         }
 
         /// <summary>
@@ -70,7 +71,7 @@ namespace KI.Asset.Technique
         public override void Render(Scene scene)
         {
             ClearBuffer();
-            RenderTarget.BindRenderTarget(OutputTexture);
+            RenderTarget.BindRenderTarget();
             foreach (var asset in scene.RootNode.AllChildren())
             {
                 if (asset.KIObject is Light)

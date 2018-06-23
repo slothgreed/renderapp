@@ -112,7 +112,7 @@ namespace KI.Asset
         /// <param name="e">レンダーキューイベント</param>
         private void RenderQueue_TechniqueAdded(object sender, RenderQueueEventArgs e)
         {
-            foreach (var texture in e.Technique.OutputTexture)
+            foreach (var texture in e.Technique.RenderTarget.RenderTexture)
             {
                 ProcessingTexture.Add(texture);
             }

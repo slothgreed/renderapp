@@ -68,11 +68,6 @@ namespace KI.Asset.Technique
         public RenderTarget RenderTarget { get; set; }
 
         /// <summary>
-        /// 出力テクスチャ
-        /// </summary>
-        public Texture[] OutputTexture { get; protected set; }
-
-        /// <summary>
         /// オフスクリーン用平面
         /// </summary>
         protected RenderObject Rectanle { get; set; }
@@ -110,7 +105,7 @@ namespace KI.Asset.Technique
             if (renderType == RenderType.OffScreen)
             {
                 RenderTarget.ClearBuffer();
-                RenderTarget.BindRenderTarget(OutputTexture);
+                RenderTarget.BindRenderTarget();
                 Rectanle.Render(scene);
                 RenderTarget.UnBindRenderTarget();
             }
@@ -130,9 +125,9 @@ namespace KI.Asset.Technique
         /// <param name="height">縦</param>
         protected virtual void CreateRenderTarget(int width, int height)
         {
-            OutputTexture = new Texture[] { TextureFactory.Instance.CreateTexture("Texture:" + Name, width, height) };
-            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget("RenderTarget:" + Name, width, height, OutputTexture.Length);
-            RenderTarget.SizeChanged(width, height);
+            var texture = new RenderTexture[] { TextureFactory.Instance.CreateRenderTexture("Texture:" + Name, width, height) };
+            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget("RenderTarget:" + Name, width, height, 1);
+            RenderTarget.SetRenderTexture(texture);
         }
 
         /// <summary>

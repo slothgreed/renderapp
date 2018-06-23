@@ -31,7 +31,7 @@ namespace KI.Asset.Technique
         public override void Render(Scene scene)
         {
             ClearBuffer();
-            RenderTarget.BindRenderTarget(OutputTexture);
+            RenderTarget.BindRenderTarget();
             foreach (var asset in scene.RootNode.AllChildren())
             {
                 if (asset.KIObject is RenderObject)

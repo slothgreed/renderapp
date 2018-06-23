@@ -69,7 +69,7 @@ namespace KI.Asset.Technique
         public override void Render(Scene scene)
         {
             RenderTarget.ClearBuffer();
-            RenderTarget.BindRenderTarget(OutputTexture);
+            RenderTarget.BindRenderTarget();
 
             preRectangle.Render(scene);
 
@@ -136,7 +136,7 @@ namespace KI.Asset.Technique
 
                 postRectangle = RenderObjectFactory.Instance.CreateRenderObject("SSLIC PostRectangle", AssetFactory.Instance.CreateRectangle("SSLIC PostRectangle"));
                 postRectangle.Shader = ShaderCreater.Instance.CreateShader(ShaderType.SSLIC);
-                postRectangle.Shader.SetValue("uVector", OutputTexture[0]);
+                postRectangle.Shader.SetValue("uVector", RenderTarget.RenderTexture[0]);
                 postRectangle.Shader.SetValue("uNoize", uNoize);
             }
 
