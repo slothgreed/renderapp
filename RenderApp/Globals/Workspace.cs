@@ -162,8 +162,8 @@ namespace RenderApp.Globals
         {
             //RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Shadow));
             Renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer));
-            
-            var gBufferTexture = Renderer.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
+
+            var gBufferTexture = Renderer.RenderQueue.OutputTexture<GBuffer>();
 
             //RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.IBL));
             Renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Deferred));

@@ -13,7 +13,7 @@ namespace KI.Asset.Technique
         /// コンストラクタ
         /// </summary>
         public GBuffer()
-            : base("GBuffer", RenderTechniqueType.GBuffer, RenderType.Original)
+            : base("GBuffer", RenderType.Original)
         {
         }
 

@@ -24,11 +24,10 @@ namespace KI.Asset.Technique
         /// <param name="name">名前</param>
         /// <param name="tech">レンダーテクニックの種類</param>
         /// <param name="type">レンダリングタイプ</param>
-        public RenderTechnique(string name, RenderTechniqueType tech, RenderType type)
+        public RenderTechnique(string name, RenderType type)
             : base(name)
         {
             renderType = type;
-            Technique = tech;
             Init();
         }
 
@@ -38,13 +37,11 @@ namespace KI.Asset.Technique
         /// <param name="name">名前</param>
         /// <param name="vertexShader">頂点シェーダ</param>
         /// <param name="fragShader">フラグシェーダ</param>
-        /// <param name="tech">レンダーテクニックの種類</param>
         /// <param name="type">レンダリングタイプ</param>
-        public RenderTechnique(string name, string vertexShader, string fragShader, RenderTechniqueType tech, RenderType type)
+        public RenderTechnique(string name, string vertexShader, string fragShader, RenderType type)
             : base(name)
         {
             renderType = type;
-            Technique = tech;
             Init(vertexShader, fragShader);
         }
 
@@ -56,11 +53,6 @@ namespace KI.Asset.Technique
             Original,
             OffScreen
         }
-
-        /// <summary>
-        /// レンダーテクニックの種類
-        /// </summary>
-        public RenderTechniqueType Technique { get; private set; }
 
         /// <summary>
         /// レンダリングターゲット

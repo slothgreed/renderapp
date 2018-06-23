@@ -12,7 +12,7 @@ namespace KI.Asset.Technique
         /// コンストラクタ
         /// </summary>
         public DeferredRendering(string vertexShader, string fragShader)
-            : base("Deferred", vertexShader, fragShader, RenderTechniqueType.Deferred, RenderType.Original)
+            : base("Deferred", vertexShader, fragShader,RenderType.Original)
         {
         }
 
@@ -40,7 +40,7 @@ namespace KI.Asset.Technique
         /// </summary>
         public override void Initialize()
         {
-            var textures = Global.Renderer.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
+            var textures = Global.Renderer.RenderQueue.OutputTexture<GBuffer>();
             Rectanle.Polygon.AddTexture(TextureKind.World, textures[(int)GBuffer.OutputTextureType.Posit]);
             Rectanle.Polygon.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Normal]);
             Rectanle.Polygon.AddTexture(TextureKind.Albedo, textures[(int)GBuffer.OutputTextureType.Color]);

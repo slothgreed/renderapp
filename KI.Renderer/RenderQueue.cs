@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using KI.Gfx.KITexture;
 using KI.Asset.Technique;
+using System.Linq;
 
 namespace KI.Asset
 {
@@ -141,17 +142,18 @@ namespace KI.Asset
         /// </summary>
         /// <param name="type">テクニックのタイプ</param>
         /// <returns>出力テクスチャ</returns>
-        public Texture[] OutputTexture(RenderTechniqueType type)
+        public Texture[] OutputTexture<T>() where T : RenderTechnique
         {
-            foreach (var technique in techniques)
-            {
-                if (technique.Technique == type)
-                {
-                    return technique.RenderTarget.RenderTexture;
-                }
-            }
+            var technique = techniques.OfType<T>().FirstOrDefault();
 
-            return null;
+            if (technique == null)
+            {
+                return null;
+            }
+            else
+            {
+                return technique.RenderTarget.RenderTexture;
+            }
         }
 
         /// <summary>

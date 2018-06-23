@@ -13,7 +13,7 @@ namespace KI.Asset.Technique
         /// <param name="vertexShader">頂点シェーダファイル</param>
         /// <param name="fragShader">フラグメントシェーダファイル</param>
         public ShadowMap(string vertexShader, string fragShader)
-            : base("ShadowMap", vertexShader, fragShader, RenderTechniqueType.Shadow, RenderType.Original)
+            : base("ShadowMap", vertexShader, fragShader,  RenderType.Original)
         {
         }
 

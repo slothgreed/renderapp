@@ -36,7 +36,7 @@ namespace KI.Asset.Technique
         /// コンストラクタ
         /// </summary>
         public SSLIC(string vertexShader, string fragShader)
-            : base("SSLIC", vertexShader, fragShader, RenderTechniqueType.SSLIC, RenderType.Original)
+            : base("SSLIC", vertexShader, fragShader, RenderType.Original)
         {
         }
 
@@ -123,7 +123,7 @@ namespace KI.Asset.Technique
         /// <param name="height">縦</param>
         private void CreateFrameBuffer(int width, int height)
         {
-            var textures = Global.Renderer.RenderQueue.OutputTexture(RenderTechniqueType.GBuffer);
+            var textures = Global.Renderer.RenderQueue.OutputTexture<GBuffer>();
             var colorTexture = textures[(int)GBuffer.OutputTextureType.Light];
 
             if (ssLicTex == null)
