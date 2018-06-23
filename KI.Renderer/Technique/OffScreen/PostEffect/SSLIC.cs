@@ -94,6 +94,7 @@ namespace KI.Asset.Technique
             if (uNoize == null)
             {
                 uNoize = TextureFactory.Instance.CreateTexture("Noize", 64, 64);
+                uNoize.WrapMode = TextureWrapMode.Clamp;
             }
 
             float[,,] rgba = new float[width, height, 4];

@@ -1,4 +1,7 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
+using KI.Foundation.Core;
+using KI.Gfx.GLUtil.Buffer;
 using OpenTK.Graphics.OpenGL;
 
 namespace KI.Gfx.GLUtil
@@ -15,6 +18,12 @@ namespace KI.Gfx.GLUtil
         internal FrameBuffer(string name)
         {
             this.Name = name;
+        }
+
+        public RenderBuffer RenderBuffer
+        {
+            get;
+            private set;
         }
 
         /// <summary>
@@ -55,6 +64,7 @@ namespace KI.Gfx.GLUtil
         /// </summary>
         protected override void DisposeCore()
         {
+            RenderBuffer.Dispose();
             GL.DeleteFramebuffer(DeviceID);
         }
 
@@ -71,31 +81,61 @@ namespace KI.Gfx.GLUtil
             BindBuffer();
             float[,,] rgb = new float[width, height, 4];
 
-            Bitmap bmp = new Bitmap(width, height);
-            System.Drawing.Imaging.BitmapData data =
-                bmp.LockBits(new Rectangle(0, 0, width, height), 
-                System.Drawing.Imaging.ImageLockMode.WriteOnly,
-                System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-
-            GL.ReadPixels(0, 0, width, height, PixelFormat.Rgb, PixelType.UnsignedByte, data.Scan0);
-            bmp.UnlockBits(data);
-            bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
-
-
-            for (int i = 0; i < bmp.Width; i++)
+            using (Bitmap bmp = new Bitmap(width, height))
             {
-                for (int j = 0; j < bmp.Height; j++)
+                System.Drawing.Imaging.BitmapData data =
+                    bmp.LockBits(new Rectangle(0, 0, width, height),
+                    System.Drawing.Imaging.ImageLockMode.WriteOnly,
+                    System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+
+                GL.ReadPixels(0, 0, width, height, PixelFormat.Rgb, PixelType.UnsignedByte, data.Scan0);
+                bmp.UnlockBits(data);
+                bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
+
+                for (int i = 0; i < bmp.Width; i++)
                 {
-                    rgb[i, j, 0] = bmp.GetPixel(i, j).R;
-                    rgb[i, j, 1] = bmp.GetPixel(i, j).G;
-                    rgb[i, j, 2] = bmp.GetPixel(i, j).B;
-                    rgb[i, j, 3] = bmp.GetPixel(i, j).A;
+                    for (int j = 0; j < bmp.Height; j++)
+                    {
+                        rgb[i, j, 0] = bmp.GetPixel(i, j).R;
+                        rgb[i, j, 1] = bmp.GetPixel(i, j).G;
+                        rgb[i, j, 2] = bmp.GetPixel(i, j).B;
+                        rgb[i, j, 3] = bmp.GetPixel(i, j).A;
+                    }
                 }
+
+                bmp.Dispose();
             }
 
             UnBindBuffer();
 
             return rgb;
+        }
+
+        /// <summary>
+        /// レンダーバッファの設定
+        /// </summary>
+        /// <param name="width">幅</param>
+        /// <param name="height">高さ</param>
+        public void SetupRenderBuffer(int width, int height)
+        {
+            BindBuffer();
+            RenderBuffer = BufferFactory.Instance.CreateRenderBuffer();
+            RenderBuffer.GenBuffer();
+            RenderBuffer.Storage(RenderbufferStorage.DepthComponent, width, height);
+            GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, RenderBuffer.DeviceID);
+            RenderBuffer.UnBindBuffer();
+            UnBindBuffer();
+            Logger.GLLog(Logger.LogLevel.Error);
+        }
+
+        /// <summary>
+        /// サイズ変更
+        /// </summary>
+        /// <param name="width">幅</param>
+        /// <param name="height">高さ</param>
+        public void SizeChanged(int width, int height)
+        {
+            RenderBuffer.SizeChanged(width, height);
         }
     }
 }

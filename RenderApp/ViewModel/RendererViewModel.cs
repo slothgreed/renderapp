@@ -41,7 +41,7 @@ namespace RenderApp.ViewModel
                 }
 
                 PostProcesses = postItem;
-
+                EnablePostEffect = model.PostProcessMode;
                 OnPropertyChanged(nameof(Model));
             }
         }
@@ -81,11 +81,8 @@ namespace RenderApp.ViewModel
             }
             set
             {
-                if (Model.PostProcessMode != value)
-                {
-                    Model.PostProcessMode = value;
-                    OnPropertyChanged(nameof(EnablePostEffect));
-                }
+                Model.PostProcessMode = value;
+                OnPropertyChanged(nameof(EnablePostEffect));
             }
         }
 

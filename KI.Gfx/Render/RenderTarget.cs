@@ -60,9 +60,25 @@ namespace KI.Gfx.Render
         public FrameBuffer FrameBuffer { get; private set; }
 
         /// <summary>
-        /// レンダーバッファID
+        /// 初期化
         /// </summary>
-        public RenderBuffer RenderBuffer { get; private set; }
+        /// <param name="width">横</param>
+        /// <param name="height">縦</param>
+        /// <param name="num">出力バッファ数</param>
+        private void Initialize(int width, int height, int num)
+        {
+            this.Width = width;
+            this.Height = height;
+
+            for (int i = 0; i < num; i++)
+            {
+                attachment.Add(FramebufferAttachment.ColorAttachment0 + i);
+                OutputBuffers.Add(DrawBuffersEnum.ColorAttachment0 + i);
+            }
+
+            FrameBuffer.GenBuffer();
+            FrameBuffer.SetupRenderBuffer(Width, Height);
+        }
 
         /// <summary>
         /// サイズ変更
@@ -78,7 +94,7 @@ namespace KI.Gfx.Render
 
             this.Height = height;
             this.Width = width;
-            RenderBuffer.SizeChanged(width, height);
+            FrameBuffer.SizeChanged(width, height);
         }
 
         /// <summary>
@@ -96,7 +112,6 @@ namespace KI.Gfx.Render
         /// </summary>
         public override void Dispose()
         {
-            BufferFactory.Instance.RemoveByValue(RenderBuffer);
             BufferFactory.Instance.RemoveByValue(FrameBuffer);
         }
 
@@ -136,50 +151,6 @@ namespace KI.Gfx.Render
         {
             FrameBuffer.UnBindBuffer();
             GL.DrawBuffer(DrawBufferMode.Back);
-        }
-
-        /// <summary>
-        /// 初期化
-        /// </summary>
-        /// <param name="width">横</param>
-        /// <param name="height">縦</param>
-        /// <param name="num">出力バッファ数</param>
-        private void Initialize(int width, int height, int num)
-        {
-            RenderBuffer = BufferFactory.Instance.CreateRenderBuffer();
-            this.Width = width;
-            this.Height = height;
-
-            for (int i = 0; i < num; i++)
-            {
-                attachment.Add(FramebufferAttachment.ColorAttachment0 + i);
-                OutputBuffers.Add(DrawBuffersEnum.ColorAttachment0 + i);
-            }
-
-            CreateFrameBuffer();
-        }
-
-        /// <summary>
-        /// フレームバッファの作成
-        /// </summary>
-        private void CreateFrameBuffer()
-        {
-            FrameBuffer.GenBuffer();
-            CreateRenderBuffer();
-        }
-
-        /// <summary>
-        /// レンダーバッファの作成
-        /// </summary>
-        private void CreateRenderBuffer()
-        {
-            FrameBuffer.BindBuffer();
-            RenderBuffer.GenBuffer();
-            RenderBuffer.Storage(RenderbufferStorage.DepthComponent, Width, Height);
-            GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, RenderBuffer.DeviceID);
-            RenderBuffer.UnBindBuffer();
-            FrameBuffer.UnBindBuffer();
-            Logger.GLLog(Logger.LogLevel.Error);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace KI.Asset
         public Renderer()
         {
             ProcessingTexture = new List<Texture>();
-            PostProcessMode = false;
+            PostProcessMode = true;
             RenderQueue = new RenderQueue();
             PostEffect = new RenderQueue();
 
