@@ -129,12 +129,12 @@ namespace RenderApp.ViewModel
         {
             foreach (var renderer in Workspace.Instance.Renderer.RenderQueue.Items)
             {
-                RendererUtility.ScreenShot(renderer.Name + ".bmp", renderer.RenderTarget, renderer.RenderTarget.Width, renderer.RenderTarget.Height);
+                RendererUtility.ScreenShot(renderer.Name, renderer.RenderTarget, renderer.RenderTarget.Width, renderer.RenderTarget.Height);
             }
 
             foreach (var renderer in Workspace.Instance.Renderer.PostEffect.Items)
             {
-                RendererUtility.ScreenShot(renderer.Name + ".bmp", renderer.RenderTarget, renderer.RenderTarget.Width, renderer.RenderTarget.Height);
+                RendererUtility.ScreenShot(renderer.Name, renderer.RenderTarget, renderer.RenderTarget.Width, renderer.RenderTarget.Height);
             }
         }
 

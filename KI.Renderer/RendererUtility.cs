@@ -13,23 +13,31 @@ namespace KI.Renderer
     {
         public static void ScreenShot(string filename, RenderTarget renderTarget, int width, int height)
         {
-            Bitmap bmp = new Bitmap(width, height);
-
-            var pixelData = renderTarget.FrameBuffer.GetPixelData(DeviceContext.Instance.Width, DeviceContext.Instance.Height, OpenTK.Graphics.OpenGL.PixelFormat.Rgba);
-
-            for (int i = 0; i < bmp.Width; i++)
+            for (int k = 0; k < renderTarget.RenderTexture.Length; k++)
             {
-                for (int j = 0; j < bmp.Height; j++)
+                var pixelData = renderTarget.GetPixelData(DeviceContext.Instance.Width, DeviceContext.Instance.Height, OpenTK.Graphics.OpenGL.PixelFormat.Rgba, k);
+                if (pixelData == null)
                 {
-                    bmp.SetPixel(i, j, Color.FromArgb(
-                        (int)(pixelData[i, j, 2]),
-                        (int)(pixelData[i, j, 1]),
-                        (int)(pixelData[i, j, 0])));
+                    return;
+                }
+
+                using (Bitmap bmp = new Bitmap(width, height))
+                {
+                    for (int i = 0; i < bmp.Width; i++)
+                    {
+                        for (int j = 0; j < bmp.Height; j++)
+                        {
+                            bmp.SetPixel(i, j, Color.FromArgb(
+                                (int)(pixelData[i, j, 2]),
+                                (int)(pixelData[i, j, 1]),
+                                (int)(pixelData[i, j, 0])));
+                        }
+                    }
+
+                    bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
+                    bmp.Save(filename + k.ToString() + ".bmp");
                 }
             }
-
-            bmp.Save(filename);
-            bmp.Dispose();
         }
     }
 }

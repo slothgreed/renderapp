@@ -68,49 +68,6 @@ namespace KI.Gfx.GLUtil
             GL.DeleteFramebuffer(DeviceID);
         }
 
-
-        /// <summary>
-        /// ピクセルデータの取得
-        /// </summary>
-        /// <param name="width">幅</param>
-        /// <param name="height">高さ</param>
-        /// <param name="pixelFormat">ピクセルフォーマット</param>
-        /// <returns>ピクセルデータ</returns>
-        public float[,,] GetPixelData(int width, int height, PixelFormat pixelFormat)
-        {
-            BindBuffer();
-            float[,,] rgb = new float[width, height, 4];
-
-            using (Bitmap bmp = new Bitmap(width, height))
-            {
-                System.Drawing.Imaging.BitmapData data =
-                    bmp.LockBits(new Rectangle(0, 0, width, height),
-                    System.Drawing.Imaging.ImageLockMode.WriteOnly,
-                    System.Drawing.Imaging.PixelFormat.Format32bppRgb);
-
-                GL.ReadPixels(0, 0, width, height, PixelFormat.Rgb, PixelType.UnsignedByte, data.Scan0);
-                bmp.UnlockBits(data);
-                bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
-
-                for (int i = 0; i < bmp.Width; i++)
-                {
-                    for (int j = 0; j < bmp.Height; j++)
-                    {
-                        rgb[i, j, 0] = bmp.GetPixel(i, j).R;
-                        rgb[i, j, 1] = bmp.GetPixel(i, j).G;
-                        rgb[i, j, 2] = bmp.GetPixel(i, j).B;
-                        rgb[i, j, 3] = bmp.GetPixel(i, j).A;
-                    }
-                }
-
-                bmp.Dispose();
-            }
-
-            UnBindBuffer();
-
-            return rgb;
-        }
-
         /// <summary>
         /// レンダーバッファの設定
         /// </summary>

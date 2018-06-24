@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using KI.Foundation.Core;
 using KI.Gfx.GLUtil;
@@ -149,6 +150,54 @@ namespace KI.Gfx.Render
         {
             FrameBuffer.UnBindBuffer();
             GL.DrawBuffer(DrawBufferMode.Back);
+        }
+
+
+        /// <summary>
+        /// ピクセルデータの取得
+        /// </summary>
+        /// <param name="width">幅</param>
+        /// <param name="height">高さ</param>
+        /// <param name="pixelFormat">ピクセルフォーマット</param>
+        /// <param name="index">MRTのインデクス</param>
+        /// <returns>ピクセルデータ</returns>
+        public float[,,] GetPixelData(int width, int height, PixelFormat pixelFormat, int index)
+        {
+            FrameBuffer.BindBuffer();
+            float[,,] rgb = new float[width, height, 4];
+
+            if (index > RenderTexture.Length)
+            {
+                Logger.Log(Logger.LogLevel.Error, "Not RenderTargetNum");
+                return null;
+            }
+
+            GL.ReadBuffer((ReadBufferMode)RenderTexture[index].Attachment);
+            using (Bitmap bmp = new Bitmap(width, height))
+            {
+                System.Drawing.Imaging.BitmapData data =
+                    bmp.LockBits(new Rectangle(0, 0, width, height),
+                    System.Drawing.Imaging.ImageLockMode.WriteOnly,
+                    System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+
+                GL.ReadPixels(0, 0, width, height, PixelFormat.Rgb, PixelType.UnsignedByte, data.Scan0);
+                bmp.UnlockBits(data);
+
+                for (int i = 0; i < bmp.Width; i++)
+                {
+                    for (int j = 0; j < bmp.Height; j++)
+                    {
+                        rgb[i, j, 0] = bmp.GetPixel(i, j).R;
+                        rgb[i, j, 1] = bmp.GetPixel(i, j).G;
+                        rgb[i, j, 2] = bmp.GetPixel(i, j).B;
+                        rgb[i, j, 3] = bmp.GetPixel(i, j).A;
+                    }
+                }
+            }
+
+            FrameBuffer.UnBindBuffer();
+
+            return rgb;
         }
     }
 }
