@@ -6,8 +6,8 @@ namespace KI.Asset
 {
     public class HDRImage : ImageInfo
     {
-        public HDRImage(string path)
-            : base(path)
+        public HDRImage(string name)
+            : base(name)
         {
         }
 
@@ -23,9 +23,9 @@ namespace KI.Asset
             private set;
         }
 
-        private bool LoadHDRImageData()
+        private bool LoadHDRImageData(string filePath)
         {
-            StreamReader reader = new StreamReader(FilePath);
+            StreamReader reader = new StreamReader(filePath);
             if (reader == null)
                 return false;
 
@@ -89,9 +89,9 @@ namespace KI.Asset
             return true;
         }
 
-        public override bool LoadImageData()
+        public override bool Load(string filePath)
         {
-            return LoadHDRImageData();
+            return LoadHDRImageData(filePath);
         }
     }
 }

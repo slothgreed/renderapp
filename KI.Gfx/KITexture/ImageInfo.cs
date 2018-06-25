@@ -22,7 +22,7 @@ namespace KI.Gfx.KITexture
     /// <summary>
     /// 画像情報
     /// </summary>
-    public class ImageInfo : KIFile
+    public class ImageInfo : KIObject
     {
         /// <summary>
         /// ロック中か
@@ -33,8 +33,8 @@ namespace KI.Gfx.KITexture
         /// コンストラクタ
         /// </summary>
         /// <param name="path">パス</param>
-        public ImageInfo(string path)
-            : base(path)
+        public ImageInfo(string name)
+            : base(name)
         {
             Format = PixelFormat.Format32bppArgb;
         }
@@ -83,11 +83,12 @@ namespace KI.Gfx.KITexture
         /// <summary>
         /// 読み込み処理
         /// </summary>
+        /// <param name="filePath">ファイルパス</param>
         /// <returns>成功か</returns>
-        public virtual bool LoadImageData()
+        public virtual bool Load(string filePath)
         {
-            BmpImage = new Bitmap(FilePath);
-            if (System.IO.Path.GetExtension(FilePath) == ".bmp")
+            BmpImage = new Bitmap(filePath);
+            if (System.IO.Path.GetExtension(filePath) == ".bmp")
             {
                 BmpImage.RotateFlip(RotateFlipType.RotateNoneFlipY);
             }
@@ -97,10 +98,37 @@ namespace KI.Gfx.KITexture
             return true;
         }
 
+        public bool LoadRenderImage(int width, int height)
+        {
+            Width = width;
+            Height = height;
+            Format = PixelFormat.Format24bppRgb;
+
+            BmpImage = new Bitmap(width, height);
+
+            WriteLock();
+
+            OpenTK.Graphics.OpenGL.GL.ReadPixels(0, 0, width, height,
+                OpenTK.Graphics.OpenGL.PixelFormat.Bgr,
+                OpenTK.Graphics.OpenGL.PixelType.UnsignedByte,
+                BmpData.Scan0);
+
+            UnLock();
+
+            return true;
+        }
+
+        public void WriteLock()
+        {
+            isLock = true;
+            BmpData = BmpImage.LockBits(new Rectangle(0, 0, Width, Height),
+                ImageLockMode.WriteOnly, Format);
+        }
+
         /// <summary>
         /// ロック
         /// </summary>
-        public void Lock()
+        public void ReadLock()
         {
             isLock = true;
             BmpData = BmpImage.LockBits(new Rectangle(0, 0, Width, Height),
@@ -114,6 +142,11 @@ namespace KI.Gfx.KITexture
         {
             BmpImage.UnlockBits(BmpData);
             isLock = false;
+        }
+
+        public override void Dispose()
+        {
+            BmpImage.Dispose();
         }
     }
 }

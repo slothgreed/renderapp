@@ -35,15 +35,15 @@ namespace KI.Asset
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="path">ファイルパス</param>
-        public TGAImage(string path) :
-            base(path)
+        /// <param name="path">名前</param>
+        public TGAImage(string name) :
+            base(name)
         {
         }
 
-        public override bool LoadImageData()
+        public override bool Load(string filePath)
         {
-            return ReadTGAImage(FilePath);
+            return ReadTGAImage(filePath);
         }
 
         private void ReadHeaderData(BinaryReader binary)

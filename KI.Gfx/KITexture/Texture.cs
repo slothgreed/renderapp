@@ -174,7 +174,7 @@ namespace KI.Gfx.KITexture
             for (int i = 0; i < 6; i++)
             {
                 ImageInfo image = images[i];
-                image.Lock();
+                image.ReadLock();
                 //targetのPX～は、cubemapの2つ目以降から
                 SetupTexImage2D(target[i], image);
                 image.UnLock();
@@ -192,8 +192,7 @@ namespace KI.Gfx.KITexture
             TextureBuffer.BindBuffer();
             TextureBuffer.Width = image.Width;
             TextureBuffer.Height = image.Height;
-            image.LoadImageData();
-            image.Lock();
+            image.ReadLock();
             SetupTexImage2D(TextureBuffer.Target, image);
             image.UnLock();
             TextureBuffer.UnBindBuffer();

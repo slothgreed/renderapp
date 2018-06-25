@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using KI.Asset;
 using KI.Foundation.Core;
 using KI.Gfx.GLUtil;
@@ -28,9 +29,9 @@ namespace KI.Asset.Technique
             }
         }
 
-        RenderObject preRectangle;
         RenderObject postRectangle;
         Texture ssLicTex;
+        ImageInfo imageInfo = new ImageInfo("SSLIC : PreRendering");
 
         /// <summary>
         /// コンストラクタ
@@ -45,8 +46,8 @@ namespace KI.Asset.Technique
         /// </summary>
         public override void Initialize()
         {
-            CreateNoizeTexture(64, 64);
             CreateFrameBuffer(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
+            CreateNoizeTexture(64, 64);
         }
 
         /// <summary>
@@ -58,8 +59,8 @@ namespace KI.Asset.Technique
         {
             base.SizeChanged(width, height);
 
-            CreateNoizeTexture(width, height);
             CreateFrameBuffer(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
+            CreateNoizeTexture(64, 64);
         }
 
         /// <summary>
@@ -68,20 +69,25 @@ namespace KI.Asset.Technique
         /// <param name="scene">シーン</param>
         public override void Render(Scene scene)
         {
-            RenderTarget.ClearBuffer();
-            RenderTarget.BindRenderTarget();
+            var gBuffer = Global.Renderer.RenderQueue.Items.OfType<GBuffer>().First();
+            gBuffer.RenderTarget.GetPixelData(imageInfo, DeviceContext.Instance.Width, DeviceContext.Instance.Height, (int)GBuffer.OutputTextureType.Light);
+            ssLicTex.GenTexture(imageInfo);
 
-            preRectangle.Render(scene);
+            for (int i = 0; i < 10; i++)
+            {
+                RenderTarget.ClearBuffer();
+                RenderTarget.BindRenderTarget();
 
-            //GL.Enable(EnableCap.Blend);
-            //GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-            //postRectangle.Render(scene);
-            //GL.Disable(EnableCap.Blend);
+                GL.Enable(EnableCap.Blend);
+                GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+                postRectangle.Render(scene);
+                GL.Disable(EnableCap.Blend);
 
-            RenderTarget.UnBindRenderTarget();
+                RenderTarget.UnBindRenderTarget();
 
-            var pixelData = RenderTarget.FrameBuffer.GetPixelData(DeviceContext.Instance.Width, DeviceContext.Instance.Height, PixelFormat.Rgba);
-            ssLicTex.GenTexture(pixelData);
+                RenderTarget.GetPixelData(imageInfo, DeviceContext.Instance.Width, DeviceContext.Instance.Height, 0);
+                uNoize.GenTexture(imageInfo);
+            }
         }
 
         /// <summary>
@@ -91,12 +97,6 @@ namespace KI.Asset.Technique
         /// <param name="height">ノイズテクスチャ縦</param>
         private void CreateNoizeTexture(int width, int height)
         {
-            if (uNoize == null)
-            {
-                uNoize = TextureFactory.Instance.CreateTexture("Noize", 64, 64);
-                uNoize.WrapMode = TextureWrapMode.Clamp;
-            }
-
             float[,,] rgba = new float[width, height, 4];
             Random rand = new Random();
 
@@ -124,35 +124,18 @@ namespace KI.Asset.Technique
         private void CreateFrameBuffer(int width, int height)
         {
             var textures = Global.Renderer.RenderQueue.OutputTexture<GBuffer>();
-            var colorTexture = textures[(int)GBuffer.OutputTextureType.Light];
+            var vectorTexture = textures[(int)GBuffer.OutputTextureType.Light];
 
             if (ssLicTex == null)
             {
                 ssLicTex = TextureFactory.Instance.CreateTexture("SSLIC Texture", width, height);
-
-                preRectangle = RenderObjectFactory.Instance.CreateRenderObject("SSLIC Rectangle", AssetFactory.Instance.CreateRectangle("SSLIC Rectangle"));
-                preRectangle.Shader = ShaderCreater.Instance.CreateShader(ShaderType.Output);
-                preRectangle.Shader.SetValue("uTarget", colorTexture);
+                uNoize = TextureFactory.Instance.CreateTexture("SSLIC Texture", width, height);
 
                 postRectangle = RenderObjectFactory.Instance.CreateRenderObject("SSLIC PostRectangle", AssetFactory.Instance.CreateRectangle("SSLIC PostRectangle"));
                 postRectangle.Shader = ShaderCreater.Instance.CreateShader(ShaderType.SSLIC);
-                postRectangle.Shader.SetValue("uVector", RenderTarget.RenderTexture[0]);
+                postRectangle.Shader.SetValue("uVector", ssLicTex);
                 postRectangle.Shader.SetValue("uNoize", uNoize);
             }
-
-            float[,,] rgba = new float[DeviceContext.Instance.Width, DeviceContext.Instance.Height, 4];
-            for (int i = 0; i < rgba.GetLength(0); i++)
-            {
-                for (int j = 0; j < rgba.GetLength(1); j++)
-                {
-                    rgba[i, j, 0] = 255.0f;
-                    rgba[i, j, 1] = 0;
-                    rgba[i, j, 2] = 0;
-                    rgba[i, j, 3] = 255.0f;
-                }
-            }
-
-            ssLicTex.GenTexture(rgba);
         }
     }
 }

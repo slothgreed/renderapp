@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using KI.Gfx.GLUtil;
+using KI.Gfx.KITexture;
 using KI.Gfx.Render;
 
 namespace KI.Renderer
@@ -15,28 +16,15 @@ namespace KI.Renderer
         {
             for (int k = 0; k < renderTarget.RenderTexture.Length; k++)
             {
-                var pixelData = renderTarget.GetPixelData(DeviceContext.Instance.Width, DeviceContext.Instance.Height, OpenTK.Graphics.OpenGL.PixelFormat.Rgba, k);
-                if (pixelData == null)
+                ImageInfo imageInfo = new ImageInfo(filename + k.ToString() + ".jpg");
+
+                if (renderTarget.GetPixelData(imageInfo, DeviceContext.Instance.Width, DeviceContext.Instance.Height, k) == true)
                 {
-                    return;
+                    imageInfo.BmpImage.RotateFlip(RotateFlipType.RotateNoneFlipY);
+                    imageInfo.BmpImage.Save(imageInfo.Name);
                 }
 
-                using (Bitmap bmp = new Bitmap(width, height))
-                {
-                    for (int i = 0; i < bmp.Width; i++)
-                    {
-                        for (int j = 0; j < bmp.Height; j++)
-                        {
-                            bmp.SetPixel(i, j, Color.FromArgb(
-                                (int)(pixelData[i, j, 2]),
-                                (int)(pixelData[i, j, 1]),
-                                (int)(pixelData[i, j, 0])));
-                        }
-                    }
-
-                    bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
-                    bmp.Save(filename + k.ToString() + ".bmp");
-                }
+                imageInfo.Dispose();
             }
         }
     }

@@ -69,8 +69,11 @@ namespace KI.Asset
             }
 
             ImageInfo image = CreateImageInfo(path, kind);
+            image.Load(path);
             Texture texture = new Texture(Path.GetFileName(path), TextureType.Texture2D);
             texture.GenTexture(image);
+            image.Dispose();
+
             return texture;
         }
 
