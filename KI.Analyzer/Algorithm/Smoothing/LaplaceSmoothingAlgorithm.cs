@@ -55,30 +55,8 @@ namespace KI.Analyzer.Algorithm
             i = 0;
             foreach (var vertex in halfEdgeDS.HalfEdgeVertexs)
             {
-                //vertex.Position = laplacianPoint[i];
+                vertex.Position = laplacianPoint[i];
                 i++;
-            }
-
-            Vector3[] averagePoint = new Vector3[halfEdgeDS.Vertexs.Count];
-            i = 0;
-            foreach (var vertex in halfEdgeDS.HalfEdgeVertexs)
-            {
-                Vector3 sum = Vector3.Zero;
-                foreach (var around in vertex.AroundVertex)
-                {
-                    sum += around.Position;
-                }
-
-                averagePoint[i] = sum / vertex.AroundVertex.Count();
-                i++;
-            }
-
-            for (i = 0; i < averagePoint.Length; i++)
-            {
-                if((averagePoint[i] -laplacianPoint[i]).Length < Mathmatics.Calculator.THRESHOLD05)
-                {
-                    Console.WriteLine("Dif");
-                }
             }
         }
     }
