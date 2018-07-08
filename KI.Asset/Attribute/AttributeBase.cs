@@ -63,5 +63,10 @@ namespace KI.Asset.Attribute
         public virtual void UnBinding()
         {
         }
+
+        public void UpdateVertexBuffer(VertexBuffer vertexBuffer)
+        {
+            VertexBuffer = vertexBuffer;
+        }
     }
 }

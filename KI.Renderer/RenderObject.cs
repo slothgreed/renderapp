@@ -214,6 +214,8 @@ namespace KI.Asset
             {
                 VertexBuffer.SetupMeshBuffer(polygon.Vertexs, polygon.Index, polygon.Meshs, polygon.Type);
             }
+
+            PolygonAttribute.UpdateVertexBuffer(VertexBuffer);
         }
     }
 }

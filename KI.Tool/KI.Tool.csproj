@@ -58,6 +58,7 @@
     <Compile Include="Command\CreateModelCommandBase.cs" />
     <Compile Include="Command\CreateVoxelCommand.cs" />
     <Compile Include="Command\CreateWireFrameCommand.cs" />
+    <Compile Include="Command\SmoothingAlgorithm.cs" />
     <Compile Include="Control\GeodesicDistanceControl.cs" />
     <Compile Include="Command\KMeansCommand.cs" />
     <Compile Include="Command\PerceptronCommand.cs" />
