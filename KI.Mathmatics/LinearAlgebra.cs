@@ -19,10 +19,10 @@ namespace KI.Mathmatics
         /// <param name="matrix">行列</param>
         /// <param name="eivenVector">固有ベクトル</param>
         /// <param name="eigenValue">固有値</param>
-        public static void  EigenValue(float[,] matrix, out float[,] eigenVector,out float[] eigenValue)
+        public static void EigenValue(float[,] matrix, out float[,] eigenVector, out float[] eigenValue)
         {
             Mat cvMatrix = Convert2dCvMatrix(matrix);
-            
+
             Mat cvEigenValue = new Mat(1, 2, MatType.CV_32FC1);
             Mat cvEigenVector = new Mat(2, 2, MatType.CV_32FC1);
 
@@ -41,7 +41,7 @@ namespace KI.Mathmatics
         {
             Mat cvMatrix = new Mat(matrix.GetLength(0), matrix.GetLength(1), MatType.CV_32FC1);
 
-            for(int i = 0; i < cvMatrix.Width; i++)
+            for (int i = 0; i < cvMatrix.Width; i++)
             {
                 for (int j = 0; j < cvMatrix.Height; j++)
                 {

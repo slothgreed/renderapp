@@ -82,6 +82,17 @@ namespace KI.Analyzer
         private Vector3 maxDirection = Vector3.Zero;
 
         /// <summary>
+        /// 最大主方向の微分
+        /// </summary>
+        private float maxDerivative = 0;
+
+        /// <summary>
+        /// 最小主方向の微分
+        /// </summary>
+        private float minDerivative = 0;
+
+
+        /// <summary>
         /// パラメータ
         /// </summary>
         private Dictionary<VertexParam, object> parameter;
@@ -441,6 +452,23 @@ namespace KI.Analyzer
         }
 
         /// <summary>
+        /// 最大主曲率の微分係数
+        /// </summary>
+        public float MaxDerivaribe
+        {
+            get
+            {
+                if (maxDerivative == 0)
+                {
+                    SetCurvatureDirection();
+                }
+
+                return maxDerivative;
+            }
+        }
+
+
+        /// <summary>
         /// 最小主曲率方向
         /// </summary>
         public Vector3 MinDirection
@@ -455,6 +483,23 @@ namespace KI.Analyzer
                 return minDirection;
             }
         }
+
+        /// <summary>
+        /// 最小主曲率の微分係数
+        /// </summary>
+        public float MinDerivaribe
+        {
+            get
+            {
+                if (minDerivative == 0)
+                {
+                    SetCurvatureDirection();
+                }
+
+                return minDerivative;
+            }
+        }
+
 
         /// <summary>
         /// 曲率方向の算出
@@ -521,6 +566,14 @@ namespace KI.Analyzer
             float max2 = eigenVector[0, 1];
             float min1 = eigenVector[1, 0];
             float min2 = eigenVector[1, 1];
+
+            if (eigenValue[0] < eigenValue[1])
+            {
+                min1 = eigenVector[0, 0];
+                min2 = eigenVector[0, 1];
+                max1 = eigenVector[1, 0];
+                max2 = eigenVector[1, 1];
+            }
 
             maxDirection = new Vector3(
                 baseU.X * max1 + baseV.X * max2,

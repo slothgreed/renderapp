@@ -15,11 +15,6 @@ namespace KI.Analyzer
     public class HalfEdgeDS : Polygon
     {
         /// <summary>
-        /// パラメータ
-        /// </summary>
-        private Dictionary<string, IParameter> parameters = new Dictionary<string, IParameter>();
-
-        /// <summary>
         /// コンストラクタ
         /// </summary>
         public HalfEdgeDS(string name)
@@ -107,6 +102,22 @@ namespace KI.Analyzer
             {
                 return Lines.OfType<HalfEdge>();
             }
+        }
+
+        /// <summary>
+        /// ハーフエッジデータ構造のクローン
+        /// ファイルから読み取る
+        /// </summary>
+        /// <returns>クローン</returns>
+        public HalfEdgeDS CloneOriginal()
+        {
+            HalfEdgeDS dst = new HalfEdgeDS(Name + "_Clone");
+            if (HalfEdgeIO.ReadFile(Name, dst) == false)
+            {
+                Logger.Log(Logger.LogLevel.Error, "HalfEdgeDS CloneError");
+            }
+
+            return dst;
         }
 
         #region [make halfedge data structure]

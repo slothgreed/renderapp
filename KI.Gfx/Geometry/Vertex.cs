@@ -117,5 +117,20 @@ namespace KI.Gfx.Geometry
         /// テクスチャ座標
         /// </summary>
         public Vector2 TexCoord { get; set; }
+
+        /// <summary>
+        /// クローンの作成
+        /// </summary>
+        /// <returns>クローン</returns>
+        public Vertex Clone()
+        {
+            return new Vertex(Index, 
+                new Vector3(Position),
+                new Vector3(Normal),
+                new Vector3(Color),
+                new Vector2(TexCoord.X,TexCoord.Y)
+                );
+        }
+
     }
 }

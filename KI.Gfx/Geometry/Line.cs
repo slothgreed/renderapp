@@ -48,7 +48,17 @@ namespace KI.Gfx.Geometry
         /// 頂点2
         /// </summary>
         public virtual Vertex End { get; set; }
-        
+
+
+        /// <summary>
+        /// クローンの作成
+        /// </summary>
+        /// <returns>クローン</returns>
+        public Line Clone()
+        {
+            return new Line(Start.Clone(), End.Clone());
+        }
+
         public override string ToString()
         {
             return "Start:" + Start.ToString() + "End:" + End.ToString();

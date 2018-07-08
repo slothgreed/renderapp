@@ -8,7 +8,7 @@ using OpenTK;
 namespace KI.Analyzer.Algorithm
 {
     /// <summary>
-    /// 重心によるスムージングアルゴリズム
+    /// ラプラシアンによるスムージングアルゴリズム
     /// </summary>
     public class LaplaceSmoothingAlgorithm
     {
