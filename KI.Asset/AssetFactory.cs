@@ -73,6 +73,11 @@ namespace KI.Asset
             return new Rectangle(name);
         }
 
+        public IPolygon CreateTestSSLICModel()
+        {
+            return new SSLICTestConverter(null);
+        }
+
         /// <summary>
         /// 3dモデルのロード
         /// </summary>

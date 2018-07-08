@@ -98,10 +98,15 @@ namespace KI.Gfx.GLUtil
             GL.ReadPixels(0, 0, Width, Height, PixelFormat.Bgr, PixelType.UnsignedByte, data.Scan0);
         }
 
+        public void ClearColor(int r, int g, int b, int a)
+        {
+            GL.ClearColor(r, g, b, a);
+        }
+
         /// <summary>
         /// バッファをクリアします。
         /// </summary>
-        public void Clear()
+        public void ClearBuffer()
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         }

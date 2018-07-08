@@ -66,9 +66,11 @@
     <Compile Include="Loader\Converter\HalfEdgeConverter.cs" />
     <Compile Include="Loader\Converter\OBJConverter.cs" />
     <Compile Include="Loader\Converter\PLYConverter.cs" />
+    <Compile Include="Loader\Converter\SSLICTestConverter.cs" />
     <Compile Include="Loader\Converter\STLConverter.cs" />
     <Compile Include="Loader\Model\OBJLoader.cs" />
     <Compile Include="Loader\Model\PLYLoader.cs" />
+    <Compile Include="Loader\Model\SSLICTestLoader.cs" />
     <Compile Include="Loader\Model\STLLoader.cs" />
     <Compile Include="Loader\Image\HDRImage.cs" />
     <Compile Include="Loader\Image\TGAImage.cs" />

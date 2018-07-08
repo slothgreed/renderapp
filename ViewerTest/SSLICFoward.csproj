@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{81FF9E87-F6CD-4095-B284-CFA6E3830753}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ViewerTest</RootNamespace>
-    <AssemblyName>ViewerTest</AssemblyName>
+    <RootNamespace>SSLICForward</RootNamespace>
+    <AssemblyName>SSLICForward</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

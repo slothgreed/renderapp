@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using KI.Asset;
 using KI.Asset.Attribute;
 using KI.Asset.Technique;
@@ -98,42 +99,92 @@ namespace RenderApp.Globals
             //cubeMap.GenCubemap(paths);
             //ActiveScene.AddObject(cubeMap);
 
-            // bunny
+            // sslic test
             {
-                var bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/bunny.half");
+                var bunny = AssetFactory.Instance.CreateTestSSLICModel();
                 var renderBunny = RenderObjectFactory.Instance.CreateRenderObject("bunny", bunny);
-                renderBunny.Shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
-                renderBunny.RotateX(-90);
                 MainScene.AddObject(renderBunny);
+
                 var parentNode = MainScene.FindNode(renderBunny);
 
-                // bunny attribute
-                //var attribute = new KI.Asset.Attribute.OutlineAttribute(renderBunny.Name + "Outline",
-                //renderBunny.VertexBuffer.ShallowCopy(),
-                //renderBunny.Polygon.Type,
-                //ShaderCreater.Instance.CreateShader(ShaderType.Outline));
-                //renderBunny.Attributes.Add(attribute);
-                //MainScene.AddObject(attribute, parentNode);
+                List<Vector3> vertexs = new List<Vector3>();
+                List<Vector3> direction = new List<Vector3>();
+                List<Vector3> texcoord = new List<Vector3>();
+                foreach (var mesh in renderBunny.Polygon.Meshs)
+                {
+                    foreach (var vertex in mesh.Vertexs)
+                    {
+                        vertexs.Add(vertex.Position);
+                        // vector を normalに入れている
+                        direction.Add(vertex.Normal);
+                        texcoord.Add(new Vector3(vertex.TexCoord.X, vertex.TexCoord.Y, 0));
+                    }
+                }
 
-                //var splitAttribute = new KI.Asset.Attribute.SplitAttribute(
-                //    renderBunny.Name + "Split",
-                //    renderBunny.VertexBuffer.ShallowCopy(),
-                //    ShaderCreater.Instance.CreateShader(ShaderType.Split));
-                //renderBunny.Attributes.Add(splitAttribute);
-                //MainScene.AddObject(splitAttribute, parentNode);
+                //var wireFrameShader = ShaderCreater.Instance.CreateShader(ShaderType.WireFrame);
+                //var dirMinAttribute = new VertexDirectionAttribute(renderBunny.Name + " : MinDirection", wireFrameShader, vertexs.ToArray(), direction.ToArray(), new Vector4(1, 0, 0, 1));
+                //renderBunny.Attributes.Add(dirMinAttribute);
+                //MainScene.AddObject(dirMinAttribute, parentNode);
 
-                CommandManager.Instance.Execute(new CreateWireFrameCommand(MainScene, renderBunny), null, false);
-                CommandManager.Instance.Execute(new CalculateVertexCurvatureCommand(MainScene, renderBunny));
+
+                //VertexColorAttribute maxAttribute = new VertexColorAttribute(
+                //                        renderBunny.Name + " : MaxCurvature",
+                //                        renderBunny.VertexBuffer.ShallowCopy(),
+                //                        renderBunny.Polygon.Type,
+                //                        renderBunny.Shader,
+                //                        texcoord.ToArray());
+
+                //renderBunny.Attributes.Add(maxAttribute);
+                //MainScene.AddObject(maxAttribute, parentNode);
 
                 var vectorFiledAttribute = new VectorFieldAttribute(
-                    renderBunny.Name + ": VectorField",
-                    renderBunny.VertexBuffer.ShallowCopy(),
-                    ShaderCreater.Instance.CreateShader(ShaderType.VectorField),
-                    renderBunny.Attributes.OfType<VertexDirectionAttribute>().First().Direction,
-                    renderBunny.Polygon.Type);
+                                        renderBunny.Name + " : VectorField",
+                                        renderBunny.VertexBuffer.ShallowCopy(),
+                                        ShaderCreater.Instance.CreateShader(ShaderType.VectorField),
+                                        texcoord.ToArray(),
+                                        renderBunny.Polygon.Type);
+
                 renderBunny.Attributes.Add(vectorFiledAttribute);
                 MainScene.AddObject(vectorFiledAttribute, parentNode);
             }
+
+            // bunny
+            //{
+            //    var bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/bunny.half");
+            //    var renderBunny = RenderObjectFactory.Instance.CreateRenderObject("bunny", bunny);
+            //    renderBunny.Shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
+            //    renderBunny.RotateX(-90);
+            //    MainScene.AddObject(renderBunny);
+            //    var parentNode = MainScene.FindNode(renderBunny);
+
+
+            //    // bunny attribute
+            //    //var attribute = new KI.Asset.Attribute.OutlineAttribute(renderBunny.Name + "Outline",
+            //    //renderBunny.VertexBuffer.ShallowCopy(),
+            //    //renderBunny.Polygon.Type,
+            //    //ShaderCreater.Instance.CreateShader(ShaderType.Outline));
+            //    //renderBunny.Attributes.Add(attribute);
+            //    //MainScene.AddObject(attribute, parentNode);
+
+            //    //var splitAttribute = new KI.Asset.Attribute.SplitAttribute(
+            //    //    renderBunny.Name + "Split",
+            //    //    renderBunny.VertexBuffer.ShallowCopy(),
+            //    //    ShaderCreater.Instance.CreateShader(ShaderType.Split));
+            //    //renderBunny.Attributes.Add(splitAttribute);
+            //    //MainScene.AddObject(splitAttribute, parentNode);
+
+            //    CommandManager.Instance.Execute(new CreateWireFrameCommand(MainScene, renderBunny), null, false);
+            //    CommandManager.Instance.Execute(new CalculateVertexCurvatureCommand(MainScene, renderBunny));
+
+            //    var vectorFiledAttribute = new VectorFieldAttribute(
+            //        renderBunny.Name + ": VectorField",
+            //        renderBunny.VertexBuffer.ShallowCopy(),
+            //        ShaderCreater.Instance.CreateShader(ShaderType.VectorField),
+            //        renderBunny.Attributes.OfType<VertexDirectionAttribute>().First().Direction,
+            //        renderBunny.Polygon.Type);
+            //    renderBunny.Attributes.Add(vectorFiledAttribute);
+            //    MainScene.AddObject(vectorFiledAttribute, parentNode);
+            //}
 
             // plane
             {

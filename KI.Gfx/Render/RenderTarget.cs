@@ -95,13 +95,20 @@ namespace KI.Gfx.Render
             FrameBuffer.SizeChanged(width, height);
         }
 
+        public void ClearColor(int r, int g, int b, int a)
+        {
+            FrameBuffer.BindBuffer();
+            DeviceContext.Instance.ClearColor(r, g, b, a);
+            FrameBuffer.UnBindBuffer();
+        }
+
         /// <summary>
         /// バッファのクリア
         /// </summary>
         public void ClearBuffer()
         {
             FrameBuffer.BindBuffer();
-            DeviceContext.Instance.Clear();
+            DeviceContext.Instance.ClearBuffer();
             FrameBuffer.UnBindBuffer();
         }
 
@@ -156,9 +163,10 @@ namespace KI.Gfx.Render
         /// ピクセルデータの取得
         /// </summary>
         /// <param name="image">ピクセルデータの入った画像情報</param>
+        /// <param name="format">取得フォーマット</param>
         /// <param name="index">MRTのインデクス</param>
         /// <returns>成功か</returns>
-        public bool GetPixelData(ImageInfo image, int width, int height, int index)
+        public bool GetPixelData(ImageInfo image, int width, int height,PixelFormat format, int index)
         {
             if (index > RenderTexture.Length)
             {
@@ -168,7 +176,7 @@ namespace KI.Gfx.Render
 
             FrameBuffer.BindBuffer();
             GL.ReadBuffer((ReadBufferMode)RenderTexture[index].Attachment);
-            image.LoadRenderImage(width, height);
+            image.LoadRenderImage(width, height, format);
             FrameBuffer.UnBindBuffer();
 
             return true;

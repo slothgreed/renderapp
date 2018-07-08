@@ -18,7 +18,7 @@ namespace KI.Renderer
             {
                 ImageInfo imageInfo = new ImageInfo(filename + k.ToString() + ".jpg");
 
-                if (renderTarget.GetPixelData(imageInfo, DeviceContext.Instance.Width, DeviceContext.Instance.Height, k) == true)
+                if (renderTarget.GetPixelData(imageInfo, DeviceContext.Instance.Width, DeviceContext.Instance.Height, OpenTK.Graphics.OpenGL.PixelFormat.Bgr, k) == true)
                 {
                     imageInfo.BmpImage.RotateFlip(RotateFlipType.RotateNoneFlipY);
                     imageInfo.BmpImage.Save(imageInfo.Name);

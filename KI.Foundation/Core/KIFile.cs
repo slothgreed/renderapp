@@ -47,7 +47,7 @@ namespace KI.Foundation.Core
         /// <summary>
         /// ファイルパス
         /// </summary>
-        public string FilePath { get; private set; }
+        public string FilePath { get; set; }
 
         /// <summary>
         /// ファイル名

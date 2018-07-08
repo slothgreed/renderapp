@@ -264,6 +264,16 @@ namespace KI.Gfx.KITexture
             }
         }
 
+        public void SetupTexImage2D(TextureTarget target,ImageInfo image,PixelInternalFormat format,PixelFormat format2)
+        {
+            TextureBuffer.BindBuffer();
+            image.ReadLock();
+            GL.TexImage2D(target, 0, format, image.Width, image.Height,
+                            0, format2, PixelType.UnsignedByte, image.Scan0);
+            image.UnLock();
+            TextureBuffer.UnBindBuffer();
+        }
+
         /// <summary>
         /// wrapmodeの設定
         /// </summary>

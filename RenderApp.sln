@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenderApp", "RenderApp\RenderApp.csproj", "{C3F6BAD0-F298-468B-A33B-220D78FD1048}"
 EndProject
@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KI.Foundation", "KI.Foundat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KI.Gfx", "KI.Gfx\KI.Gfx.csproj", "{F5E989A2-028F-4E60-869C-EC57413376C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewerTest", "ViewerTest\ViewerTest.csproj", "{81FF9E87-F6CD-4095-B284-CFA6E3830753}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSLICFoward", "ViewerTest\SSLICFoward.csproj", "{81FF9E87-F6CD-4095-B284-CFA6E3830753}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KI.Analyzer", "KI.Analyzer\KI.Analyzer.csproj", "{E8959545-0813-4D45-8C9F-1ADE07F3A21F}"
 EndProject

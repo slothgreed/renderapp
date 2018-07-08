@@ -6,8 +6,9 @@ using OpenTK.Input;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Drawing;
 
-namespace ViewerTest
+namespace SSLICForward
 {
     class ViewerTest
     {
@@ -28,6 +29,7 @@ namespace ViewerTest
         public List<Vector3> position;
         public List<Vector2> texcoord;
         public List<Vector3> vector;
+        public IReadOnlyList<int> index;
         public List<Vector3> positionTest;
         public List<Vector2> texcoordTest;
         public List<Vector3> vectorTest;
@@ -51,6 +53,10 @@ namespace ViewerTest
 
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.Texture2D);
+            GL.Enable(EnableCap.Blend);
+            // 色 = 前景 * (前景のアルファ値) + 背景 * (1.0 - 前景のアルファ値)
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+
 
             ply = new PLYLoader(@"E:\MyProgram\KIProject\renderapp\ViewerTest\sphere1.ply");
 
@@ -58,6 +64,7 @@ namespace ViewerTest
             position = new List<Vector3>();
             vector = new List<Vector3>();
             texcoord = new List<Vector2>();
+            index = ply.FaceIndex;
             for (int i = 0; i < vertexNum; i++)
             {
                 var x = ply.Propertys[0][i] / 1.732050f + 0.5f;
@@ -96,9 +103,10 @@ namespace ViewerTest
                     .ToArray();
 
                 positionTest.Add(new Vector3(floatData[0], floatData[1], floatData[2]));
+
+                // screen上でのpositionのUV座標
                 texcoordTest.Add(new Vector2(floatData[3], floatData[4]));
                 vectorTest.Add(new Vector3(floatData[5], floatData[6], floatData[7]));
-
             }
 
             //テクスチャ用バッファの生成
@@ -125,7 +133,7 @@ namespace ViewerTest
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
             GL.BindTexture(TextureTarget.Texture2D, 0);
 
-            tmax = frame.GetLength(0) / (3.0f * noize.GetLength(0));
+            tmax = 1;// frame.GetLength(0) / (3.0f * noize.GetLength(0));
         }
 
         //ウィンドウのサイズが変更された場合に実行される。
@@ -211,63 +219,125 @@ namespace ViewerTest
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, noize.GetLength(0), noize.GetLength(1), 0, PixelFormat.Rgba, PixelType.UnsignedByte, noize);
             GL.BindTexture(TextureTarget.Texture2D, 0);
         }
+
+        private void RenderNoize()
+        {
+            GL.ClearColor(Color4.White);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            GL.BindTexture(TextureTarget.Texture2D, noizeId);
+            GL.Enable(EnableCap.Blend);
+            // 色 = 前景 * (前景のアルファ値) + 背景 * (1.0 - 背景のアルファ値)
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+            GL.Begin(BeginMode.Quads);
+            GL.TexCoord2(0, 0); GL.Vertex3(0, 0, 1);
+            GL.TexCoord2(0, tmax); GL.Vertex3(0, 1, 1);
+            GL.TexCoord2(tmax, tmax); GL.Vertex3(1, 1, 1);
+            GL.TexCoord2(tmax, 0); GL.Vertex3(1, 0, 1);
+            GL.End();
+            GL.BindTexture(TextureTarget.Texture2D, 0);
+            GL.Disable(EnableCap.Blend);
+        }
+
         //画面描画で実行される。
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             base.OnRenderFrame(e);
 
+            SSLICRender();
+            //Render();
+            //RenderNoize();
+
+            SwapBuffers();
+        }
+
+        private void Render()
+        {
+            GL.ClearColor(Color4.White);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
             {
-                GL.ClearColor(Color4.White);
-                GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-                GL.BindTexture(TextureTarget.Texture2D, frameId);
-                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, frame.GetLength(0), frame.GetLength(1), 0, PixelFormat.Rgb, PixelType.UnsignedByte, frame);
-
                 GL.PointSize(5);
+
                 GL.Begin(BeginMode.Points);
 
-                for (int i = 0; i < position.Count; i++)
-                {
-                    GL.Vertex3(position[i]);
-                }
-
-                GL.End();
-
-                // direction の描画
-                GL.Begin(BeginMode.Lines);
-
-                for (int i = 0; i < position.Count; i++)
-                {
-                    GL.Vertex3(position[i]);
-                    GL.Vertex3(position[i] + vector[i].Normalized() * 0.01f);
-                }
-
-                GL.End();
-
-                // sphere の描画
-                GL.Begin(BeginMode.Triangles);
-                for (int i = 0; i < positionTest.Count; i++)
-                {
-                    GL.TexCoord2(texcoordTest[i]);
-                    GL.Vertex3(positionTest[i]);
-                }
-
-                //for(int i = 0; i < position.Count; i++)
+                //for (int i = 0; i < position.Count; i++)
                 //{
-                //    GL.TexCoord2(texcoord[i]);
                 //    GL.Vertex3(position[i]);
                 //}
 
                 GL.End();
+            }
+
+            // direction の描画
+            {
+                GL.Begin(BeginMode.Lines);
+
+                //for (int i = 0; i < position.Count; i++)
+                //{
+                //    GL.Vertex3(position[i]);
+                //    GL.Vertex3(position[i] + vector[i].Normalized() * 0.01f);
+                //}
+
+                GL.End();
+            }
+
+            // sphere の描画
+            {
+                GL.Begin(BeginMode.Triangles);
+
+                for (int i = 0; i < positionTest.Count; i++)
+                {
+                    GL.Color3(texcoordTest[i].X, texcoordTest[i].Y, 0);
+                    GL.Vertex3(positionTest[i]);
+                }
+
+                //for (int i = 0; i < index.Count; i = i + 3)
+                //{
+                //    int one = index[i];
+                //    GL.Color3(texcoord[one].X, texcoord[one].Y, 0);
+                //    GL.Vertex3(position[one]);
+
+                //    int two = index[i + 1];
+                //    GL.Color3(texcoord[two].X, texcoord[two].Y, 0);
+                //    GL.Vertex3(position[two]);
+
+                //    int three = index[i + 2];
+                //    GL.Color3(texcoord[three].X, texcoord[three].Y, 0);
+                //    GL.Vertex3(position[three]);
+                //}
+
+                GL.End();
+            }
+        }
+
+
+        private void SSLICRender()
+        {
+            GL.ClearColor(Color4.White);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            {
+                GL.BindTexture(TextureTarget.Texture2D, frameId);
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, frame.GetLength(0), frame.GetLength(1), 0, PixelFormat.Rgb, PixelType.UnsignedByte, frame);
+
+                // sphere の描画
+                {
+                    GL.Begin(BeginMode.Triangles);
+
+                    for (int i = 0; i < positionTest.Count; i++)
+                    {
+                        GL.TexCoord2(texcoordTest[i]);
+                        GL.Vertex3(positionTest[i]);
+                    }
+                    GL.End();
+                }
 
                 GL.BindTexture(TextureTarget.Texture2D, 0);
             }
 
             {
                 GL.BindTexture(TextureTarget.Texture2D, noizeId);
-                GL.Enable(EnableCap.Blend);
-                //色 = 前景 * (前景のアルファ値) + 背景 * (1.0-背景のアルファ値)
-                GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
                 GL.Begin(BeginMode.Quads);
                 GL.TexCoord2(0, 0); GL.Vertex3(0, 0, 1);
                 GL.TexCoord2(0, tmax); GL.Vertex3(0, 1, 1);
@@ -275,13 +345,25 @@ namespace ViewerTest
                 GL.TexCoord2(tmax, 0); GL.Vertex3(1, 0, 1);
                 GL.End();
                 GL.BindTexture(TextureTarget.Texture2D, 0);
-                GL.Disable(EnableCap.Blend);
             }
 
             GL.ReadPixels(0, 0, frame.GetLength(0), frame.GetLength(1), PixelFormat.Rgb, PixelType.UnsignedByte, frame);
 
-            SwapBuffers();
+            Bitmap bmp = new Bitmap(800, 800);
+            var data = new System.Drawing.Imaging.BitmapData();
+            data = bmp.LockBits(new Rectangle(0, 0, 800, 800), 
+                System.Drawing.Imaging.ImageLockMode.WriteOnly,
+                System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+            GL.ReadPixels(0, 0, frame.GetLength(0), frame.GetLength(1), PixelFormat.Rgb, PixelType.UnsignedByte,data.Scan0);
+
+            bmp.UnlockBits(data);
+            bmp.Save(counter + ".jpg");
+            bmp.Dispose();
+            counter++;
         }
+
+
+        int counter = 0;
 
         /// <summary>
         /// 解放処理
@@ -290,6 +372,7 @@ namespace ViewerTest
         {
             GL.DeleteTexture(noizeId);
             GL.DeleteTexture(frameId);
+            GL.Disable(EnableCap.Blend);
             base.Dispose(manual);
         }
     }

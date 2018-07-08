@@ -193,7 +193,7 @@ namespace KI.Gfx.GLUtil
             if (nowRender)
                 return;
 
-            DeviceContext.Instance.Clear();
+            DeviceContext.Instance.ClearBuffer();
 
             if (OnRender != null)
             {
@@ -410,28 +410,6 @@ namespace KI.Gfx.GLUtil
             {
                 GLControl_Paint(null, null);
             }
-        }
-        #endregion
-
-        #region [Main Window Event]
-
-        /// <summary>
-        /// スクリーンショット
-        /// </summary>
-        /// <returns>ビットマップデータ</returns>
-        private Bitmap GetColorBufferData()
-        {
-            if (GraphicsContext.CurrentContext == null)
-                throw new GraphicsContextMissingException();
-
-            Rectangle r = new Rectangle(GLControl.Location, GLControl.Size);
-            Bitmap bmp = new Bitmap(GLControl.Width, GLControl.Height);
-            System.Drawing.Imaging.BitmapData data = bmp.LockBits(r, System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-            DeviceContext.Instance.ReadPixel(data);
-            bmp.UnlockBits(data);
-
-            bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
-            return bmp;
         }
         #endregion
     }

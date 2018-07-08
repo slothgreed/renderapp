@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 using KI.Foundation.Core;
 
 namespace KI.Gfx.KITexture
@@ -98,7 +99,14 @@ namespace KI.Gfx.KITexture
             return true;
         }
 
-        public bool LoadRenderImage(int width, int height)
+        /// <summary>
+        /// レンダリング結果を取得
+        /// </summary>
+        /// <param name="width">幅</param>
+        /// <param name="height">高さ</param>
+        /// <param name="format">フォーマット</param>
+        /// <returns></returns>
+        public bool LoadRenderImage(int width, int height, OpenTK.Graphics.OpenGL.PixelFormat format)
         {
             Width = width;
             Height = height;
@@ -109,7 +117,7 @@ namespace KI.Gfx.KITexture
             WriteLock();
 
             OpenTK.Graphics.OpenGL.GL.ReadPixels(0, 0, width, height,
-                OpenTK.Graphics.OpenGL.PixelFormat.Bgr,
+                format,
                 OpenTK.Graphics.OpenGL.PixelType.UnsignedByte,
                 BmpData.Scan0);
 
