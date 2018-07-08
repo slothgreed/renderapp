@@ -46,7 +46,7 @@ namespace KI.Foundation.Command
         /// </summary>
         /// <param name="command">コマンド</param>
         /// <param name="commandArg">コマンド引数</param>
-        public void Push(ICommand command, string commandArg)
+        public void Push(ICommand command, CommandArgs commandArg)
         {
             Push(new CommandInfo(command, commandArg));
         }
@@ -71,7 +71,7 @@ namespace KI.Foundation.Command
         /// </summary>
         /// <param name="command">コマンド</param>
         /// <param name="commandArg">コマンド引数</param>
-        public CommandInfo(ICommand command, string commandArg)
+        public CommandInfo(ICommand command, CommandArgs commandArg)
         {
             Command = command;
             CommandArg = commandArg;
@@ -85,6 +85,6 @@ namespace KI.Foundation.Command
         /// <summary>
         /// コマンド引数
         /// </summary>
-        public string CommandArg { get; private set; }
+        public CommandArgs CommandArg { get; private set; }
     }
 }

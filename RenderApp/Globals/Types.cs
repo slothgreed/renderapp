@@ -56,7 +56,8 @@
         QEM,
         Perceptron,
         Voxelize,
-        Kmeans
+        Kmeans,
+        Smoothing
     }
 
     public enum RAAsset

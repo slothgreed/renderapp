@@ -20,20 +20,28 @@
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        CommandResult CanExecute(string commandArg);
+        CommandResult CanExecute(CommandArgs commandArg);
 
         /// <summary>
         /// 処理の実行
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        CommandResult Execute(string commandArg);
+        CommandResult Execute(CommandArgs commandArg);
 
         /// <summary>
         /// Undo
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        CommandResult Undo(string commandArg);
+        CommandResult Undo(CommandArgs commandArg);
+    }
+
+    /// <summary>
+    /// コマンド引数
+    /// </summary>
+    public interface CommandArgs
+    {
+
     }
 }

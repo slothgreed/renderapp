@@ -42,7 +42,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>結果</returns>
-        public CommandResult CanExecute(string commandArg)
+        public CommandResult CanExecute(CommandArgs commandArg)
         {
             if (renderObject == null)
             {
@@ -62,7 +62,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>結果</returns>
-        public CommandResult Execute(string commandArg)
+        public CommandResult Execute(CommandArgs commandArg)
         {
             var halfDS = renderObject.Polygon as HalfEdgeDS;
             //var vertexInfo = new VertexCurvatureAlgorithm(halfDS);
@@ -150,7 +150,7 @@ namespace KI.Tool.Command
             return CommandResult.Success;
         }
 
-        public CommandResult Undo(string commandArg)
+        public CommandResult Undo(CommandArgs commandArg)
         {
             throw new NotImplementedException();
         }

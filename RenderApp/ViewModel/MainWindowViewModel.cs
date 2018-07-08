@@ -271,6 +271,10 @@ namespace RenderApp.ViewModel
                     command = new KMeansCommand(workspace.MainScene, workspace.MainScene.SelectNode, 40, 10);
                     CommandManager.Instance.Execute(command, null, true);
                     break;
+                case AnalyzeCommand.Smoothing:
+                    command = new SmoothingCommand(workspace.MainScene.SelectNode);
+                    CommandManager.Instance.Execute(command, null, true);
+                    break;
                 case AnalyzeCommand.Voxelize:
                     var window = new View.DebugWindow();
                     var voxelView = new View.Controller.VoxelView();

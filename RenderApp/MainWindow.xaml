@@ -121,6 +121,10 @@
                     Header="QEM" />
                 <MenuItem
                     Command="{Binding CreateObject}"
+                    CommandParameter="{x:Static local:AnalyzeCommand.Smoothing}"
+                    Header="Smoothing" />
+                <MenuItem
+                    Command="{Binding CreateObject}"
                     CommandParameter="{x:Static local:AnalyzeCommand.Kmeans}"
                     Header="Kmeans" />
                 <MenuItem

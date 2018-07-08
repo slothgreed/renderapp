@@ -41,7 +41,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandResult CanExecute(string commandArg)
+        public CommandResult CanExecute(CommandArgs commandArg)
         {
             if (renderObject == null)
             {
@@ -61,7 +61,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandResult Execute(string commandArg)
+        public CommandResult Execute(CommandArgs commandArg)
         {
             List<Vector3> position = new List<Vector3>();
             var color = new List<Vector3>();
@@ -100,7 +100,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandResult Undo(string commandArg)
+        public CommandResult Undo(CommandArgs commandArg)
         {
             throw new NotImplementedException();
         }

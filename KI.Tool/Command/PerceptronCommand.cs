@@ -35,7 +35,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>結果</returns>
-        public CommandResult CanExecute(string commandArg)
+        public CommandResult CanExecute(CommandArgs commandArg)
         {
             return CommandResult.Success;
         }
@@ -45,7 +45,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>結果</returns>
-        public CommandResult Execute(string commandArg)
+        public CommandResult Execute(CommandArgs commandArg)
         {
             var values = new float[100][];
             var result = new float[100];
@@ -98,7 +98,7 @@ namespace KI.Tool.Command
             return CommandResult.Success;
         }
 
-        public CommandResult Undo(string commandArg)
+        public CommandResult Undo(CommandArgs commandArg)
         {
             throw new NotImplementedException();
         }

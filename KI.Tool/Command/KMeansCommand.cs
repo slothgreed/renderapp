@@ -50,12 +50,12 @@ namespace KI.Tool.Command
             this.scene = scene;
         }
 
-        public CommandResult CanExecute(string commandArg)
+        public CommandResult CanExecute(CommandArgs commandArg)
         {
             return CanCreatePolygon(renderObject);
         }
 
-        public CommandResult Execute(string commandArg)
+        public CommandResult Execute(CommandArgs commandArg)
         {
             var halfEdgeDS = renderObject.Polygon as HalfEdgeDS;
             var kmeansAlgorithm = new KMeansAlgorithm(halfEdgeDS, clusterNum, iterateNum);
@@ -85,7 +85,7 @@ namespace KI.Tool.Command
             return CommandResult.Success;
         }
 
-        public CommandResult Undo(string commandArg)
+        public CommandResult Undo(CommandArgs commandArg)
         {
             throw new NotImplementedException();
         }

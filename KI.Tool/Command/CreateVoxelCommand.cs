@@ -61,7 +61,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandResult CanExecute(string commandArg)
+        public CommandResult CanExecute(CommandArgs commandArg)
         {
             return CanCreatePolygon(renderObject);
         }
@@ -71,7 +71,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandResult Execute(string commandArg)
+        public CommandResult Execute(CommandArgs commandArg)
         {
             Vector3 min;
             Vector3 max;
@@ -167,7 +167,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandResult Undo(string commandArg)
+        public CommandResult Undo(CommandArgs commandArg)
         {
             throw new NotImplementedException();
         }

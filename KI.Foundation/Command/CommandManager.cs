@@ -68,7 +68,7 @@ namespace KI.Foundation.Command
         /// <param name="undo">undoできるか</param>
         /// <param name="stack">コマンドリスト番号</param>
         /// <returns>成功したか</returns>
-        public CommandResult Execute(ICommand command, string commandArg = null, bool undo = true, int stack = 0)
+        public CommandResult Execute(ICommand command, CommandArgs commandArg = null, bool undo = true, int stack = 0)
         {
             if (commandList.Count < stack)
             {
