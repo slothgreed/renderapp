@@ -503,6 +503,7 @@ namespace KI.Analyzer
 
         /// <summary>
         /// 曲率方向の算出
+        /// Discrete Differential-Geometry Operators for Triangulated 2-Manifolds
         /// </summary>
         private void SetCurvatureDirection()
         {
@@ -594,6 +595,15 @@ namespace KI.Analyzer
             {
                 minDirection = -minDirection;
             }
+        }
+
+        /// <summary>
+        /// 曲率方向の算出
+        /// A Novel Cubic-Order Algorithm for Approximating Principal Direction Vectors
+        /// </summary>
+        private void SetCurvatureDirection2()
+        {
+
         }
         #endregion
 

@@ -38,25 +38,28 @@ namespace KI.Analyzer.Algorithm
         /// </summary>
         public void Calculate()
         {
-            Vector3[] laplacianPoint = new Vector3[halfEdgeDS.Vertexs.Count];
-            int i = 0;
-            foreach (var vertex in halfEdgeDS.HalfEdgeVertexs)
+            for (int num = 0; num < loopNum; num++)
             {
-                Vector3 sum = Vector3.Zero;
-                foreach (var around in vertex.AroundVertex)
+                Vector3[] laplacianPoint = new Vector3[halfEdgeDS.Vertexs.Count];
+                int i = 0;
+                foreach (var vertex in halfEdgeDS.HalfEdgeVertexs)
                 {
-                    sum += around.Position - vertex.Position;
+                    Vector3 sum = Vector3.Zero;
+                    foreach (var around in vertex.AroundVertex)
+                    {
+                        sum += around.Position - vertex.Position;
+                    }
+
+                    laplacianPoint[i] = sum / vertex.AroundVertex.Count() + vertex.Position;
+                    i++;
                 }
 
-                laplacianPoint[i] = sum / vertex.AroundVertex.Count() + vertex.Position;
-                i++;
-            }
-
-            i = 0;
-            foreach (var vertex in halfEdgeDS.HalfEdgeVertexs)
-            {
-                vertex.Position = laplacianPoint[i];
-                i++;
+                i = 0;
+                foreach (var vertex in halfEdgeDS.HalfEdgeVertexs)
+                {
+                    vertex.Position = laplacianPoint[i];
+                    i++;
+                }
             }
         }
     }

@@ -171,13 +171,13 @@
     <Compile Include="ViewModel\AttributeVM\WireFrameAttributeViewModel.cs" />
     <Compile Include="Globals\Project.cs" />
     <Compile Include="Globals\Types.cs" />
-    <Compile Include="ViewModel\ControllerVM\ControllerViewModelT4.cs">
+    <Compile Include="ViewModel\CommandVM\SmoothingCommandViewModel.cs" />
+    <Compile Include="ViewModel\CommandVM\CommandViewModelT4.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ControllerViewModelT4.tt</DependentUpon>
+      <DependentUpon>CommandViewModelT4.tt</DependentUpon>
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="ViewModel\ControllerVM\IControllerViewModelBase.cs" />
     <Compile Include="ViewModel\SceneNodeVM\LightViewModel.cs" />
     <Compile Include="ViewModel\AttributeVM\OutlineAttributeViewModel.cs" />
     <Compile Include="ViewModel\PostEffectVM\BloomViewModel.cs" />
@@ -190,7 +190,7 @@
     </Compile>
     <Compile Include="ViewModel\DockTabVM\DockPaneSelector.cs" />
     <Compile Include="ViewModel\DockTabVM\DockWindowViewModel.cs" />
-    <Compile Include="ViewModel\ControllerVM\VoxelViewModel.cs" />
+    <Compile Include="ViewModel\CommandVM\VoxelCommandViewModel.cs" />
     <Compile Include="ViewModel\SceneNodeVM\RenderObjectViewModel.cs" />
     <Compile Include="ViewModel\RendererViewModel.cs" />
     <Compile Include="ViewModel\NodeVM\NodeItemViewModel.cs" />
@@ -213,6 +213,9 @@
     </Compile>
     <Compile Include="View\AttributeView\SplitAttributeView.xaml.cs">
       <DependentUpon>SplitAttributeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CommandView\SmoothingCommandView.xaml.cs">
+      <DependentUpon>SmoothingCommandView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\DataVisualization.xaml.cs">
       <DependentUpon>DataVisualization.xaml</DependentUpon>
@@ -290,6 +293,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AttributeView\SplitAttributeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CommandView\SmoothingCommandView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -408,9 +415,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="ViewModel\ControllerVM\ControllerViewModelT4.tt">
+    <Content Include="ViewModel\CommandVM\CommandViewModelT4.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ControllerViewModelT4.cs</LastGenOutput>
+      <LastGenOutput>CommandViewModelT4.cs</LastGenOutput>
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Content>
     <Content Include="ViewModel\WorkspaceViewModelT4.tt">

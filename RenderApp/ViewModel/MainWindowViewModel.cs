@@ -272,13 +272,17 @@ namespace RenderApp.ViewModel
                     CommandManager.Instance.Execute(command, null, true);
                     break;
                 case AnalyzeCommand.Smoothing:
-                    command = new SmoothingCommand(workspace.MainScene.SelectNode);
-                    CommandManager.Instance.Execute(command, null, true);
+                    var commandWindow = new View.DebugWindow();
+                    var smoothingCommandView = new View.CommandView.SmoothingCommandView();
+                    smoothingCommandView.DataContext = new SmoothingCommandViewModel(this);
+                    commandWindow.Owner = Application.Current.MainWindow;
+                    commandWindow.Content = smoothingCommandView;
+                    commandWindow.Show();
                     break;
                 case AnalyzeCommand.Voxelize:
                     var window = new View.DebugWindow();
                     var voxelView = new View.Controller.VoxelView();
-                    voxelView.DataContext = new VoxelViewModel(this);
+                    voxelView.DataContext = new VoxelCommandViewModel(this);
                     window.Owner = Application.Current.MainWindow;
                     window.Content = voxelView;
                     window.Show();

@@ -17,18 +17,15 @@ namespace KI.Tool.Command
     /// </summary>
     public class SmoothingCommand : ICommand
     {
-        /// <summary>
-        /// レンダリング形状
-        /// </summary>
-        private RenderObject renderObject;
+        public SmoothingCommandArgs commandArgs;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="asset">算出オブジェクト</param>
-        public SmoothingCommand(KIObject asset)
+        public SmoothingCommand(SmoothingCommandArgs smoothingCommandArgs)
         {
-            renderObject = asset as RenderObject;
+            commandArgs = smoothingCommandArgs;
         }
 
         /// <summary>
@@ -38,12 +35,12 @@ namespace KI.Tool.Command
         /// <returns>結果</returns>
         public CommandResult CanExecute(CommandArgs commandArg)
         {
-            if (renderObject == null)
+            if (commandArgs.TargetObject == null)
             {
                 return CommandResult.Failed;
             }
 
-            if (renderObject.Polygon is HalfEdgeDS)
+            if (commandArgs.TargetObject.Polygon is HalfEdgeDS)
             {
                 return CommandResult.Success;
             }
@@ -58,9 +55,9 @@ namespace KI.Tool.Command
         /// <returns>結果</returns>
         public CommandResult Execute(CommandArgs commandArg)
         {
-            var halfDS = renderObject.Polygon as HalfEdgeDS;
+            var halfDS = commandArgs.TargetObject.Polygon as HalfEdgeDS;
 
-            var smoothing = new LaplaceSmoothingAlgorithm(halfDS, 1);
+            var smoothing = new LaplaceSmoothingAlgorithm(halfDS, commandArgs.LoopNum);
             smoothing.Calculate();
 
             halfDS.UpdateVertexArray();
@@ -71,6 +68,28 @@ namespace KI.Tool.Command
         public CommandResult Undo(CommandArgs commandArg)
         {
             throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
+    /// スムージングコマンド
+    /// </summary>
+    public class SmoothingCommandArgs
+    {
+        /// <summary>
+        /// 対象オブジェクト
+        /// </summary>
+        public RenderObject TargetObject;
+
+        /// <summary>
+        /// ループ回数
+        /// </summary>
+        public int LoopNum;
+
+        public SmoothingCommandArgs(RenderObject targetNode, int loopNum)
+        {
+            this.TargetObject = targetNode;
+            this.LoopNum = loopNum;
         }
     }
 }

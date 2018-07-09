@@ -109,7 +109,7 @@ namespace RenderApp.ViewModel
             {
                 return LightTemplate;
             }
-            else if (item is VoxelViewModel)
+            else if (item is VoxelCommandViewModel)
             {
                 return VoxelTemplate;
             }

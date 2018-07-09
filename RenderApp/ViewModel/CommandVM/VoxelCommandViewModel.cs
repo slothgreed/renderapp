@@ -8,7 +8,7 @@ using RenderApp.Globals;
 
 namespace RenderApp.ViewModel
 {
-    public partial class VoxelViewModel : DockWindowViewModel
+    public partial class VoxelCommandViewModel : DockWindowViewModel
     {
         private int partitionNum = 64;
 
@@ -16,7 +16,7 @@ namespace RenderApp.ViewModel
         /// コンストラクタ
         /// </summary>
         /// <param name="parent">親ビューモデル</param>
-        public VoxelViewModel(ViewModelBase parent)
+        public VoxelCommandViewModel(ViewModelBase parent)
             : base(parent, null, "VoxelView", Place.Floating)
         {
             var color = new System.Windows.Media.Color();
