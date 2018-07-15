@@ -92,6 +92,8 @@ namespace KI.Mathmatics
 
                     sum /= w[j];
                 }
+
+                tmp[j] = sum;
             }
 
             for (int j = 0; j < u.GetLength(1); j++)

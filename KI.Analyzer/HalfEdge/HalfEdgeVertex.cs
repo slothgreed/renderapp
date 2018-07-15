@@ -630,7 +630,7 @@ namespace KI.Analyzer
                 {
                     leftSide[3 + i + 0, 0] = 0.5f * UU;
                     leftSide[3 + i + 0, 1] = UV;
-                    leftSide[3 + i + 0, 2] = 0.5f * UV;
+                    leftSide[3 + i + 0, 2] = 0.5f * VV;
 
                     leftSide[3 * i + 0, 3] = dUU * UU;
                     leftSide[3 * i + 0, 4] = UU * dVV;
@@ -651,8 +651,8 @@ namespace KI.Analyzer
 
                     leftSide[3 * i + 1, 3] = 3.0f * UU;
                     leftSide[3 * i + 1, 4] = 2.0f * UV;
-                    leftSide[3 * i + 1, 5] = dUU * VV;
-                    leftSide[3 * i + 1, 6] = VV * dVV;
+                    leftSide[3 * i + 1, 5] = VV;
+                    leftSide[3 * i + 1, 6] = 0;
 
                     rightSide[3 * i + 1] = -dx / dz;
                 }
@@ -689,6 +689,10 @@ namespace KI.Analyzer
             float[] eigenValue;
             LinearAlgebra.EigenValue(matrix, out eigenVector, out eigenValue);
 
+            float t1x;
+            float t1y;
+            float t2x;
+            float t2y;
             if (eigenValue[0] < eigenValue[1])
             {
                 maxCurvature = eigenValue[1];
@@ -696,6 +700,11 @@ namespace KI.Analyzer
 
                 minDirection = Vector3.Multiply(tangent1, eigenVector[0, 0]) + Vector3.Multiply(tangent2, eigenVector[1, 0]);
                 maxDirection = Vector3.Multiply(tangent1, eigenVector[0, 1]) + Vector3.Multiply(tangent2, eigenVector[1, 1]);
+
+                t1x = eigenVector[0, 1];
+                t1y = eigenVector[1, 1];
+                t2x = eigenVector[0, 0];
+                t2y = eigenVector[1, 0];
             }
             else
             {
@@ -704,10 +713,24 @@ namespace KI.Analyzer
 
                 maxDirection = Vector3.Multiply(tangent1, eigenVector[0, 0]) + Vector3.Multiply(tangent2, eigenVector[1, 0]);
                 minDirection = Vector3.Multiply(tangent1, eigenVector[0, 1]) + Vector3.Multiply(tangent2, eigenVector[1, 1]);
+
+                t2x = eigenVector[0, 1];
+                t2y = eigenVector[1, 1];
+                t1x = eigenVector[0, 0];
+                t1y = eigenVector[1, 0];
             }
 
             maxDirection.Normalize();
             minDirection.Normalize();
+
+            float a00 = t1x;
+            float a10 = t1y;
+            maxDerivative = 6.0f * (a00 * (a00 * a00 * ksbResult[3] + a10 * a10 * ksbResult[5]) + a10 * (a00 * a00 * ksbResult[4] + a10 * a10 * ksbResult[6]));
+
+            a00 = t2x;
+            a10 = t1y;
+            minDerivative = 6.0f * (a00 * (a00 * a00 * ksbResult[3] + a10 * a10 * ksbResult[5]) + a10 * (a00 * a00 * ksbResult[4] + a10 * a10 * ksbResult[6]));
+
         }
         #endregion
 
