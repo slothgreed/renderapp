@@ -505,7 +505,7 @@ namespace KI.Analyzer
         /// 曲率方向の算出
         /// Discrete Differential-Geometry Operators for Triangulated 2-Manifolds
         /// </summary>
-        private void SetCurvatureDirection()
+        private void SetCurvatureDirection2()
         {
             Vector3 edge = AroundEdge.First().End.Position - AroundEdge.First().Start.Position;
             Vector3 numer = edge - (Vector3.Dot(edge, Normal) * Normal);
@@ -601,14 +601,14 @@ namespace KI.Analyzer
         /// 曲率方向の算出
         /// A Novel Cubic-Order Algorithm for Approximating Principal Direction Vectors
         /// </summary>
-        private void SetCurvatureDirection2()
+        private void SetCurvatureDirection()
         {
             Vector3 tangent1 = Vector3.Zero;
             Vector3 tangent2 = Vector3.Zero;
 
             var leftSide = new float[3 * aroundEdge.Count, 7];
             var rightSide = new float[3 * aroundEdge.Count];
-            Geometry.VirtualTangent(Normal, out tangent1, out tangent2);
+            Geometry.VirtualTangent(Normal, out tangent2, out tangent1);
 
             int i = 0;
             float dx = 0;

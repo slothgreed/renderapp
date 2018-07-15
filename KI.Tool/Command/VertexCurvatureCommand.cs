@@ -100,19 +100,19 @@ namespace KI.Tool.Command
                 vertexShader,
                 maxParam.Values);
 
-            //renderObject.Attributes.Add(voronoiAttribute);
-            //renderObject.Attributes.Add(laplaceAttribute);
-            //renderObject.Attributes.Add(meanAttribute);
-            //renderObject.Attributes.Add(gaussAttribute);
-            //renderObject.Attributes.Add(minAttribute);
-            //renderObject.Attributes.Add(maxAttribute);
+            //targetObject.Attributes.Add(voronoiAttribute);
+            //targetObject.Attributes.Add(laplaceAttribute);
+            //targetObject.Attributes.Add(meanAttribute);
+            //targetObject.Attributes.Add(gaussAttribute);
+            targetObject.Attributes.Add(minAttribute);
+            targetObject.Attributes.Add(maxAttribute);
 
             //scene.AddObject(voronoiAttribute, parentNode);
             //scene.AddObject(laplaceAttribute, parentNode);
             //scene.AddObject(meanAttribute, parentNode);
             //scene.AddObject(gaussAttribute, parentNode);
-            //scene.AddObject(minAttribute, parentNode);
-            //scene.AddObject(maxAttribute, parentNode);
+            scene.AddObject(minAttribute, parentNode);
+            scene.AddObject(maxAttribute, parentNode);
 
             var wireFrameShader = ShaderCreater.Instance.CreateShader(ShaderType.WireFrame);
 
