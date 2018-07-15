@@ -85,7 +85,6 @@ namespace RenderApp.ViewModel
         public DataTemplate RenderObjectTemplate { get; set; }
         public DataTemplate LightTemplate { get; set; }
         public DataTemplate RendererTemplate { get; set; }
-        public DataTemplate VoxelTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -108,10 +107,6 @@ namespace RenderApp.ViewModel
             else if (item is LightViewModel)
             {
                 return LightTemplate;
-            }
-            else if (item is VoxelCommandViewModel)
-            {
-                return VoxelTemplate;
             }
             else
             {

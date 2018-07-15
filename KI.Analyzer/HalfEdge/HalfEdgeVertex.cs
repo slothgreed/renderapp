@@ -603,7 +603,111 @@ namespace KI.Analyzer
         /// </summary>
         private void SetCurvatureDirection2()
         {
+            Vector3 tangent1 = Vector3.Zero;
+            Vector3 tangent2 = Vector3.Zero;
 
+            var leftSide = new float[3 * aroundEdge.Count, 7];
+            var rightSide = new float[3 * aroundEdge.Count];
+            Geometry.VirtualTangent(Normal, out tangent1, out tangent2);
+
+            int i = 0;
+            float dx = 0;
+            float dy = 0;
+            float dz = 0;
+
+            foreach (var around in AroundEdge)
+            {
+                var edge = around.End - around.Start;
+                dz = Vector3.Dot(edge, Normal);
+
+                var dUU = Vector3.Dot(edge, tangent1);
+                var dVV = Vector3.Dot(edge, tangent2);
+
+                var UU = dUU * dUU;
+                var UV = dUU * dVV;
+                var VV = dVV * dVV;
+
+                {
+                    leftSide[3 + i + 0, 0] = 0.5f * UU;
+                    leftSide[3 + i + 0, 1] = UV;
+                    leftSide[3 + i + 0, 2] = 0.5f * UV;
+
+                    leftSide[3 * i + 0, 3] = dUU * UU;
+                    leftSide[3 * i + 0, 4] = UU * dVV;
+                    leftSide[3 * i + 0, 5] = dUU * VV;
+                    leftSide[3 * i + 0, 6] = VV * dVV;
+
+                    rightSide[3 * i + 0] = dz;
+                }
+
+                dx = Vector3.Dot(around.End.Normal, tangent1);
+                dy = Vector3.Dot(around.End.normal, Normal);
+                dz = Vector3.Dot(around.End.Normal, tangent2);
+
+                {
+                    leftSide[3 + i + 1, 0] = dUU;
+                    leftSide[3 + i + 1, 1] = dVV;
+                    leftSide[3 + i + 1, 2] = 0.0f;
+
+                    leftSide[3 * i + 1, 3] = 3.0f * UU;
+                    leftSide[3 * i + 1, 4] = 2.0f * UV;
+                    leftSide[3 * i + 1, 5] = dUU * VV;
+                    leftSide[3 * i + 1, 6] = VV * dVV;
+
+                    rightSide[3 * i + 1] = -dx / dz;
+                }
+
+                {
+                    leftSide[3 + i + 2, 0] = 0.0f;
+                    leftSide[3 + i + 2, 1] = dUU;
+                    leftSide[3 + i + 2, 2] = dVV;
+
+                    leftSide[3 * i + 2, 3] = 0.0f;
+                    leftSide[3 * i + 2, 4] = UU;
+                    leftSide[3 * i + 2, 5] = 2.0f * UV;
+                    leftSide[3 * i + 2, 6] = 3.0f * VV;
+
+                    rightSide[3 * i + 2] = -dy / dz;
+                }
+
+                i++;
+            }
+
+            float[] svdW;
+            float[] svdU;
+            float[,] svdV;
+            float[] ksbResult;
+            LinearAlgebra.SVD(leftSide, out svdW, out svdU, out svdV);
+            LinearAlgebra.SVBKSB(leftSide, svdW, svdV, rightSide, out ksbResult);
+
+            var WeingartenA = ksbResult[0];
+            var WeingartenB = ksbResult[1];
+            var WeingartenC = ksbResult[2];
+
+            float[,] matrix = { { WeingartenA, WeingartenB }, { WeingartenB, WeingartenC } };
+            float[,] eigenVector;
+            float[] eigenValue;
+            LinearAlgebra.EigenValue(matrix, out eigenVector, out eigenValue);
+
+            if (eigenValue[0] < eigenValue[1])
+            {
+                maxCurvature = eigenValue[1];
+                minCurvature = eigenValue[0];
+
+                minDirection = Vector3.Multiply(tangent1, eigenVector[0, 0]) + Vector3.Multiply(tangent2, eigenVector[1, 0]);
+                maxDirection = Vector3.Multiply(tangent1, eigenVector[0, 1]) + Vector3.Multiply(tangent2, eigenVector[1, 1]);
+            }
+            else
+            {
+                maxCurvature = eigenValue[0];
+                minCurvature = eigenValue[1];
+
+                maxDirection = Vector3.Multiply(tangent1, eigenVector[0, 0]) + Vector3.Multiply(tangent2, eigenVector[1, 0]);
+                minDirection = Vector3.Multiply(tangent1, eigenVector[0, 1]) + Vector3.Multiply(tangent2, eigenVector[1, 1]);
+            }
+
+            maxDirection.Normalize();
+            minDirection.Normalize();
         }
         #endregion
 

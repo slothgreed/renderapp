@@ -38,7 +38,7 @@
             Margin="2"
             Header="Attribute"
             IsExpanded="True">
-            <v:AttributeBase ItemsSource="{Binding Attributes}" />
+            <v:AttributeViewBase ItemsSource="{Binding Attributes}" />
         </Expander>
     </StackPanel>
 </UserControl>

@@ -208,8 +208,8 @@
     <Compile Include="View\AttributeView\OutlineAttributeView.xaml.cs">
       <DependentUpon>OutlineAttributeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\AttributeView\AttributeBase.xaml.cs">
-      <DependentUpon>AttributeBase.xaml</DependentUpon>
+    <Compile Include="View\AttributeView\AttributeViewBase.xaml.cs">
+      <DependentUpon>AttributeViewBase.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\AttributeView\SplitAttributeView.xaml.cs">
       <DependentUpon>SplitAttributeView.xaml</DependentUpon>
@@ -229,8 +229,8 @@
     <Compile Include="View\SceneNodeView\LightView.xaml.cs">
       <DependentUpon>LightView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\PostEffectView\PostEffectBase.xaml.cs">
-      <DependentUpon>PostEffectBase.xaml</DependentUpon>
+    <Compile Include="View\PostEffectView\PostEffectViewBase.xaml.cs">
+      <DependentUpon>PostEffectViewBase.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PostEffectView\BloomView.xaml.cs">
       <DependentUpon>BloomView.xaml</DependentUpon>
@@ -288,7 +288,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\AttributeView\AttributeBase.xaml">
+    <Page Include="View\AttributeView\AttributeViewBase.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -316,7 +316,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\PostEffectView\PostEffectBase.xaml">
+    <Page Include="View\PostEffectView\PostEffectViewBase.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -29,7 +29,7 @@
                 IsChecked="{Binding EnablePostEffect}" />
         </WrapPanel>
         <Expander Header="Post Process">
-            <v:PostEffectBase ItemsSource="{Binding PostProcesses}" />
+            <v:PostEffectViewBase ItemsSource="{Binding PostProcesses}" />
         </Expander>
     </StackPanel>
 </UserControl>

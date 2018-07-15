@@ -60,5 +60,31 @@ namespace KI.Mathmatics
 
             return (float)Math.Sqrt(value);
         }
+
+        /// <summary>
+        /// 仮想タンジェントベクトルの算出
+        /// </summary>
+        /// <param name="normal">法線</param>
+        /// <param name="tangent1">タンジェント1</param>
+        /// <param name="tangent2">タンジェント2</param>
+        public static void VirtualTangent(Vector3 normal, out Vector3 tangent1, out Vector3 tangent2)
+        {
+            if (normal.X < normal.Y)
+            {
+                tangent1.X = 0;
+                tangent1.Y = -normal.Z;
+                tangent1.Z = normal.Y;
+            }
+            else
+            {
+                tangent1.X = normal.Z;
+                tangent1.Y = 0;
+                tangent1.Z = -normal.X;
+            }
+
+            tangent1.Normalize();
+            tangent2 = Vector3.Cross(normal, tangent1);
+            tangent2.Normalize();
+        }
     }
 }

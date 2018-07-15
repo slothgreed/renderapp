@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace RenderApp.View
 {
     /// <summary>
-    /// AttributeBase.xaml の相互作用ロジック
+    /// PostEffectViewBase.xaml の相互作用ロジック
     /// </summary>
-    public partial class AttributeBase : ItemsControl
+    public partial class PostEffectViewBase : ItemsControl
     {
-        public AttributeBase()
+        public PostEffectViewBase()
         {
             InitializeComponent();
         }
