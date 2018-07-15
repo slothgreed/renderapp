@@ -14,20 +14,15 @@ namespace KI.Tool.Command
     /// <summary>
     /// パーセプトロンコマンド
     /// </summary>
-    public class PerceptronCommand : ICommand
+    public class PerceptronCommand : CommandBase
     {
-        /// <summary>
-        /// シーン
-        /// </summary>
-        private Scene scene;
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="scene">シーン</param>
-        public PerceptronCommand(Scene scene)
+        public PerceptronCommand(PerceptronCommandArgs commandArgs)
+            :base(commandArgs)
         {
-            this.scene = scene;
         }
 
         /// <summary>
@@ -35,7 +30,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>結果</returns>
-        public CommandResult CanExecute(CommandArgs commandArg)
+        public override CommandResult CanExecute(CommandArgsBase commandArg)
         {
             return CommandResult.Success;
         }
@@ -45,7 +40,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>結果</returns>
-        public CommandResult Execute(CommandArgs commandArg)
+        public override CommandResult Execute(CommandArgsBase commandArg)
         {
             var values = new float[100][];
             var result = new float[100];
@@ -93,14 +88,35 @@ namespace KI.Tool.Command
 
             var polygon = new Polygon("perceptron", vertexs);
             RenderObject render = RenderObjectFactory.Instance.CreateRenderObject("perceptron", polygon);
-            scene.AddObject(render);
+            var perceptronCommandArgs = commandArg as PerceptronCommandArgs;
+            perceptronCommandArgs.Scene.AddObject(render);
 
             return CommandResult.Success;
         }
 
-        public CommandResult Undo(CommandArgs commandArg)
+        public override CommandResult Undo(CommandArgsBase commandArg)
         {
             throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
+    /// Perceptronのコマンド引数
+    /// </summary>
+    public class PerceptronCommandArgs : CommandArgsBase
+    {
+        /// <summary>
+        /// シーン
+        /// </summary>
+        public Scene Scene { get; private set; }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="targetObject">シーン</param>
+        public PerceptronCommandArgs(Scene scene)
+        {
+            Scene = scene;
         }
     }
 }

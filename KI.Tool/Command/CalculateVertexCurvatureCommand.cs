@@ -14,27 +14,16 @@ namespace KI.Tool.Command
     /// <summary>
     /// 曲率の算出コマンド
     /// </summary>
-    public class CalculateVertexCurvatureCommand : ICommand
+    public class VertexCurvatureCommand : CommandBase
     {
-        /// <summary>
-        /// レンダリング形状
-        /// </summary>
-        private RenderObject renderObject;
-
-        /// <summary>
-        /// シーン
-        /// </summary>
-        private Scene scene;
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="scene">シーン</param>
         /// <param name="asset">算出オブジェクト</param>
-        public CalculateVertexCurvatureCommand(Scene scene, KIObject asset)
+        public VertexCurvatureCommand(VertexCurvatureCommandArgs commandArgs)
+            :base(commandArgs)
         {
-            this.scene = scene;
-            renderObject = asset as RenderObject;
         }
 
         /// <summary>
@@ -42,19 +31,10 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>結果</returns>
-        public CommandResult CanExecute(CommandArgs commandArg)
+        public override CommandResult CanExecute(CommandArgsBase commandArg)
         {
-            if (renderObject == null)
-            {
-                return CommandResult.Failed;
-            }
-
-            if (renderObject.Polygon is HalfEdgeDS)
-            {
-                return CommandResult.Success;
-            }
-
-            return CommandResult.Failed;
+            var curvateureCommandArgs = commandArg as VertexCurvatureCommandArgs;
+            return CommandUtility.CanCreatePolygon(curvateureCommandArgs.TargetObject);
         }
 
         /// <summary>
@@ -62,9 +42,12 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>結果</returns>
-        public CommandResult Execute(CommandArgs commandArg)
+        public override CommandResult Execute(CommandArgsBase commandArg)
         {
-            var halfDS = renderObject.Polygon as HalfEdgeDS;
+            var curvateureCommandArgs = commandArg as VertexCurvatureCommandArgs;
+            var targetObject = curvateureCommandArgs.TargetObject;
+            var halfDS = curvateureCommandArgs.TargetObject.Polygon as HalfEdgeDS;
+            var scene = curvateureCommandArgs.Scene;
             //var vertexInfo = new VertexCurvatureAlgorithm(halfDS);
 
             var voronoiParam = new ScalarParameter("Voronoi", halfDS.HalfEdgeVertexs.Select(p => p.Voronoi).ToArray());
@@ -78,43 +61,43 @@ namespace KI.Tool.Command
             var dirMaxLine = halfDS.HalfEdgeVertexs.Select(p => p.MaxDirection).ToArray();
             var laplaceLine = halfDS.HalfEdgeVertexs.Select(p => p.LaplaceVector).ToArray();
 
-            var parentNode = Global.Renderer.ActiveScene.FindNode(renderObject);
+            var parentNode = Global.Renderer.ActiveScene.FindNode(targetObject);
 
             var vertexShader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
 
-            VertexParameterAttribute voronoiAttribute = new VertexParameterAttribute(renderObject.Name + " : Voronoi",
-                renderObject.VertexBuffer.ShallowCopy(),
-                renderObject.Polygon.Type,
+            VertexParameterAttribute voronoiAttribute = new VertexParameterAttribute(targetObject.Name + " : Voronoi",
+                targetObject.VertexBuffer.ShallowCopy(),
+                targetObject.Polygon.Type,
                 vertexShader,
                 voronoiParam.Values);
 
-            VertexParameterAttribute laplaceAttribute = new VertexParameterAttribute(renderObject.Name + " : Laplace",
-                renderObject.VertexBuffer.ShallowCopy(),
-                renderObject.Polygon.Type,
+            VertexParameterAttribute laplaceAttribute = new VertexParameterAttribute(targetObject.Name + " : Laplace",
+                targetObject.VertexBuffer.ShallowCopy(),
+                targetObject.Polygon.Type,
                 vertexShader,
                 laplaceParam.Values);
 
-            VertexParameterAttribute meanAttribute = new VertexParameterAttribute(renderObject.Name + " : MeanCurvature",
-                renderObject.VertexBuffer.ShallowCopy(),
-                renderObject.Polygon.Type,
+            VertexParameterAttribute meanAttribute = new VertexParameterAttribute(targetObject.Name + " : MeanCurvature",
+                targetObject.VertexBuffer.ShallowCopy(),
+                targetObject.Polygon.Type,
                 vertexShader,
                 meanParam.Values);
 
-            VertexParameterAttribute gaussAttribute = new VertexParameterAttribute(renderObject.Name + " : GaussCurvature",
-                renderObject.VertexBuffer.ShallowCopy(),
-                renderObject.Polygon.Type,
+            VertexParameterAttribute gaussAttribute = new VertexParameterAttribute(targetObject.Name + " : GaussCurvature",
+                targetObject.VertexBuffer.ShallowCopy(),
+                targetObject.Polygon.Type,
                 vertexShader,
                 gaussParam.Values);
 
-            VertexParameterAttribute minAttribute = new VertexParameterAttribute(renderObject.Name + " : MinCurvature",
-                renderObject.VertexBuffer.ShallowCopy(),
-                renderObject.Polygon.Type,
+            VertexParameterAttribute minAttribute = new VertexParameterAttribute(targetObject.Name + " : MinCurvature",
+                targetObject.VertexBuffer.ShallowCopy(),
+                targetObject.Polygon.Type,
                 vertexShader,
                 minParam.Values);
 
-            VertexParameterAttribute maxAttribute = new VertexParameterAttribute(renderObject.Name + " : MaxCurvature",
-                renderObject.VertexBuffer.ShallowCopy(),
-                renderObject.Polygon.Type,
+            VertexParameterAttribute maxAttribute = new VertexParameterAttribute(targetObject.Name + " : MaxCurvature",
+                targetObject.VertexBuffer.ShallowCopy(),
+                targetObject.Polygon.Type,
                 vertexShader,
                 maxParam.Values);
 
@@ -134,25 +117,52 @@ namespace KI.Tool.Command
 
             var wireFrameShader = ShaderCreater.Instance.CreateShader(ShaderType.WireFrame);
 
-            var vertexs = renderObject.Polygon.Vertexs.Select(p =>p.Position).ToArray();
-            var normals = renderObject.Polygon.Vertexs.Select(p => p.Normal).ToArray();
-            var dirMinAttribute = new VertexDirectionAttribute(renderObject.Name + " : MinDirection", wireFrameShader, vertexs, dirMinLine, new Vector4(1, 0, 0, 1), normals);
-            var dirMaxAttribute = new VertexDirectionAttribute(renderObject.Name + " : MaxDirection", wireFrameShader, vertexs, dirMaxLine, new Vector4(0, 1, 0, 1), normals);
-            renderObject.Attributes.Add(dirMinAttribute);
-            renderObject.Attributes.Add(dirMaxAttribute);
+            var vertexs = targetObject.Polygon.Vertexs.Select(p =>p.Position).ToArray();
+            var normals = targetObject.Polygon.Vertexs.Select(p => p.Normal).ToArray();
+            var dirMinAttribute = new VertexDirectionAttribute(targetObject.Name + " : MinDirection", wireFrameShader, vertexs, dirMinLine, new Vector4(1, 0, 0, 1), normals);
+            var dirMaxAttribute = new VertexDirectionAttribute(targetObject.Name + " : MaxDirection", wireFrameShader, vertexs, dirMaxLine, new Vector4(0, 1, 0, 1), normals);
+            targetObject.Attributes.Add(dirMinAttribute);
+            targetObject.Attributes.Add(dirMaxAttribute);
             scene.AddObject(dirMinAttribute, parentNode);
             scene.AddObject(dirMaxAttribute, parentNode);
 
-            var laplaceVecAttribute = new VertexDirectionAttribute(renderObject.Name + " : LaplaceVec", wireFrameShader, vertexs, laplaceLine, new Vector4(1, 0, 0, 1), normals);
-            renderObject.Attributes.Add(laplaceVecAttribute);
+            var laplaceVecAttribute = new VertexDirectionAttribute(targetObject.Name + " : LaplaceVec", wireFrameShader, vertexs, laplaceLine, new Vector4(1, 0, 0, 1), normals);
+            targetObject.Attributes.Add(laplaceVecAttribute);
             scene.AddObject(laplaceVecAttribute, parentNode);
 
             return CommandResult.Success;
         }
 
-        public CommandResult Undo(CommandArgs commandArg)
+        public override CommandResult Undo(CommandArgsBase commandArg)
         {
             throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
+    /// 曲率コマンド
+    /// </summary>
+    public class VertexCurvatureCommandArgs : CommandArgsBase
+    {
+        /// <summary>
+        /// 対象オブジェクト
+        /// </summary>
+        public RenderObject TargetObject { get; private set; }
+
+        /// <summary>
+        /// シーン
+        /// </summary>
+        public Scene Scene { get; private set; }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="targetNode">対象オブジェクト</param>
+        /// <param name="scene">シーン</param>
+        public VertexCurvatureCommandArgs(RenderObject targetNode, Scene scene)
+        {
+            this.TargetObject = targetNode;
+            this.Scene = scene;
         }
     }
 }

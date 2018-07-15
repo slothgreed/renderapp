@@ -15,20 +15,15 @@ namespace KI.Tool.Command
     /// <summary>
     /// QEMの実行
     /// </summary>
-    public class QEMCommand : ICommand
+    public class QEMCommand : CommandBase
     {
-        /// <summary>
-        /// レンダリング形状
-        /// </summary>
-        private RenderObject renderObject;
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="asset">算出オブジェクト</param>
-        public QEMCommand(KIObject asset)
+        public QEMCommand(QEMCommandArgs commandArgs)
+            :base(commandArgs)
         {
-            renderObject = asset as RenderObject;
         }
 
         /// <summary>
@@ -36,19 +31,10 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>結果</returns>
-        public CommandResult CanExecute(CommandArgs commandArg)
+        public override CommandResult CanExecute(CommandArgsBase commandArg)
         {
-            if (renderObject == null)
-            {
-                return CommandResult.Failed;
-            }
-
-            if (renderObject.Polygon is HalfEdgeDS)
-            {
-                return CommandResult.Success;
-            }
-
-            return CommandResult.Failed;
+            var qemCommandArgs = commandArg as VertexCurvatureCommandArgs;
+            return CommandUtility.CanCreatePolygon(qemCommandArgs.TargetObject);
         }
 
         /// <summary>
@@ -56,9 +42,10 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>結果</returns>
-        public CommandResult Execute(CommandArgs commandArg)
+        public override CommandResult Execute(CommandArgsBase commandArg)
         {
-            var halfDS = renderObject.Polygon as HalfEdgeDS;
+            var qemCommandArgs = commandArg as VertexCurvatureCommandArgs;
+            var halfDS = qemCommandArgs.TargetObject.Polygon as HalfEdgeDS;
 
             var adaptiveMesh = new QEMAlgorithm(halfDS, halfDS.Vertexs.Count / 2);
 
@@ -67,9 +54,30 @@ namespace KI.Tool.Command
             return CommandResult.Success;
         }
 
-        public CommandResult Undo(CommandArgs commandArg)
+        public override CommandResult Undo(CommandArgsBase commandArg)
         {
             throw new NotImplementedException();
         }
     }
+
+    /// <summary>
+    /// QEMのコマンド引数
+    /// </summary>
+    public class QEMCommandArgs : CommandArgsBase
+    {
+        /// <summary>
+        /// ターゲットオブジェクト
+        /// </summary>
+        public RenderObject TargetObject { get; private set; }
+        
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="targetObject">ターゲットオブジェクト</param>
+        public QEMCommandArgs(RenderObject targetObject)
+        {
+            TargetObject = targetObject;
+        }
+    }
+
 }

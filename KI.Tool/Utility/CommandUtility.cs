@@ -1,13 +1,18 @@
-﻿using KI.Foundation.Command;
-using KI.Foundation.Core;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using KI.Asset;
+using KI.Foundation.Command;
+using KI.Foundation.Core;
 using KI.Gfx;
 
-namespace KI.Tool.Command
+namespace KI.Tool
 {
-    public class CreateModelCommandBase
+    public static class CommandUtility
     {
-        protected CommandResult CanCreatePolygon(KIObject asset)
+        public static CommandResult CanCreatePolygon(KIObject asset)
         {
             if (!(asset is RenderObject))
             {

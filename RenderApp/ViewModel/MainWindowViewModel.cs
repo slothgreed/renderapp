@@ -228,48 +228,49 @@ namespace RenderApp.ViewModel
         private void CreateObjectCommand(object createObjectMenu)
         {
             AnalyzeCommand menuParam = (AnalyzeCommand)createObjectMenu;
-            ICommand command = null;
+            CommandBase command = null;
+            var targetObject = workspace.MainScene.SelectNode as RenderObject;
             switch (menuParam)
             {
                 case AnalyzeCommand.WireFrame:
-                    command = new CreateWireFrameCommand(workspace.MainScene, workspace.MainScene.SelectNode);
-                    CommandManager.Instance.Execute(command, null, true);
+                    command = new CreateWireFrameCommand(new WireFrameCommandArgs(targetObject, workspace.MainScene, OpenTK.Vector3.Zero));
+                    CommandManager.Instance.Execute(command, true);
                     break;
                 case AnalyzeCommand.ConvexHull:
-                    command = new CreateConvexHullCommand(workspace.MainScene, workspace.MainScene.SelectNode);
-                    CommandManager.Instance.Execute(command, null, true);
+                    command = new CreateConvexHullCommand(new ConvexHullCommandArgs(targetObject, workspace.MainScene));
+                    CommandManager.Instance.Execute(command, true);
                     break;
                 case AnalyzeCommand.MarchingCube:
-                    command = new CreateMarchingCubeCommand(workspace.MainScene, workspace.MainScene.SelectNode, 128);
-                    CommandManager.Instance.Execute(command, null, true);
+                    command = new CreateMarchingCubeCommand(new MarchingCubeCommandArgs(targetObject, workspace.MainScene, 128));
+                    CommandManager.Instance.Execute(command, true);
                     break;
                 case AnalyzeCommand.IsoLine:
-                    command = new CreateIsoLineCommand(workspace.MainScene, workspace.MainScene.SelectNode);
-                    CommandManager.Instance.Execute(command, null, true);
+                    command = new CreateIsoLineCommand(new IsoLineCommandArgs(targetObject, workspace.MainScene));
+                    CommandManager.Instance.Execute(command, true);
                     break;
                 case AnalyzeCommand.HalfEdgeWireFrame:
-                    command = new CreateHalfEdgeWireFrameCommand(workspace.MainScene, workspace.MainScene.SelectNode);
-                    CommandManager.Instance.Execute(command, null, true);
+                    command = new CreateHalfEdgeWireFrameCommand(new HalfEdgeWireFrameCommandArgs(targetObject, workspace.MainScene));
+                    CommandManager.Instance.Execute(command, true);
                     break;
                 case AnalyzeCommand.AdaptiveMesh:
-                    command = new AdaptiveMeshCommand(workspace.MainScene.SelectNode);
-                    CommandManager.Instance.Execute(command, null, true);
+                    command = new AdaptiveMeshCommand(new AdaptiveMeshCommandArgs(targetObject));
+                    CommandManager.Instance.Execute(command, true);
                         break;
                 case AnalyzeCommand.QEM:
-                    command = new QEMCommand(workspace.MainScene.SelectNode);
-                    CommandManager.Instance.Execute(command, null, true);
+                    command = new QEMCommand(new QEMCommandArgs(targetObject));
+                    CommandManager.Instance.Execute(command, true);
                     break;
                 case AnalyzeCommand.Perceptron:
-                    command = new PerceptronCommand(workspace.MainScene);
-                    CommandManager.Instance.Execute(command, null, true);
+                    command = new PerceptronCommand(new PerceptronCommandArgs(workspace.MainScene));
+                    CommandManager.Instance.Execute(command, true);
                     break;
                 case AnalyzeCommand.Curvature:
-                    command = new CalculateVertexCurvatureCommand(workspace.MainScene, workspace.MainScene.SelectNode);
-                    CommandManager.Instance.Execute(command, null, true);
+                    command = new VertexCurvatureCommand(new VertexCurvatureCommandArgs(targetObject, workspace.MainScene));
+                    CommandManager.Instance.Execute(command, true);
                     break;
                 case AnalyzeCommand.Kmeans:
-                    command = new KMeansCommand(workspace.MainScene, workspace.MainScene.SelectNode, 40, 10);
-                    CommandManager.Instance.Execute(command, null, true);
+                    command = new KMeansCommand(new KMeansCommandArgs(targetObject, workspace.MainScene, 40, 10));
+                    CommandManager.Instance.Execute(command, true);
                     break;
                 case AnalyzeCommand.Smoothing:
                     var commandWindow = new View.DebugWindow();

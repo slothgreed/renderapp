@@ -68,7 +68,7 @@ namespace KI.Foundation.Command
         /// <param name="undo">undoできるか</param>
         /// <param name="stack">コマンドリスト番号</param>
         /// <returns>成功したか</returns>
-        public CommandResult Execute(ICommand command, CommandArgs commandArg = null, bool undo = true, int stack = 0)
+        public CommandResult Execute(CommandBase command, bool undo = true, int stack = 0)
         {
             if (commandList.Count < stack)
             {
@@ -76,14 +76,14 @@ namespace KI.Foundation.Command
             }
 
             CommandResult error = CommandResult.None;
-            error = command.CanExecute(commandArg);
+            error = command.CanExecute(command.CommandArgs);
             if (error != CommandResult.Success)
             {
                 Logger.Log(Logger.LogLevel.Warning, "Command CanExecute Error", error.ToString());
                 return error;
             }
 
-            error = command.Execute(commandArg);
+            error = command.Execute(command.CommandArgs);
             if (error != CommandResult.Success)
             {
                 Logger.Log(Logger.LogLevel.Warning, "Command Execute Error", error.ToString());
@@ -92,7 +92,7 @@ namespace KI.Foundation.Command
 
             if (undo == true)
             {
-                commandList[stack].Push(command, commandArg);
+                commandList[stack].Push(command);
             }
 
             return CommandResult.Success;
@@ -106,14 +106,14 @@ namespace KI.Foundation.Command
         {
             if (commandList.Count < stack)
             {
-                CommandInfo info = commandList[stack].Pop();
-                if (info.Command.Undo(info.CommandArg) == CommandResult.Failed)
+                CommandBase command = commandList[stack].Pop();
+                if (command.Undo(command.CommandArgs) == CommandResult.Failed)
                 {
                     Logger.Log(Logger.LogLevel.Warning, "Undo Error");
                 }
                 else
                 {
-                    undoList[stack].Push(info);
+                    undoList[stack].Push(command);
                 }
             }
         }
@@ -126,8 +126,8 @@ namespace KI.Foundation.Command
         {
             if (undoList.Count < stack)
             {
-                CommandInfo info = undoList[stack].Pop();
-                Execute(info.Command, info.CommandArg, true, stack);
+                var command = undoList[stack].Pop();
+                Execute(command, true, stack);
             }
         }
     }

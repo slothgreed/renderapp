@@ -21,27 +21,16 @@ namespace KI.Tool.Command
     /// <summary>
     /// 等値線の作成コマンド
     /// </summary>
-    public class CreateIsoLineCommand : CreateModelCommandBase, ICommand
+    public class CreateIsoLineCommand : CommandBase
     {
-        /// <summary>
-        /// 形状
-        /// </summary>
-        private RenderObject renderObject;
-
-        /// <summary>
-        /// シーン
-        /// </summary>
-        private Scene scene;
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="scene">シーン</param>
         /// <param name="asset">作成するオブジェクト</param>
-        public CreateIsoLineCommand(Scene scene, KIObject asset)
+        public CreateIsoLineCommand(IsoLineCommandArgs commandArgs)
+            : base(commandArgs)
         {
-            this.scene = scene;
-            renderObject = asset as RenderObject;
         }
 
         /// <summary>
@@ -49,19 +38,10 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandResult CanExecute(CommandArgs commandArg)
+        public override CommandResult CanExecute(CommandArgsBase commandArg)
         {
-            if (renderObject == null)
-            {
-                return CommandResult.Failed;
-            }
-
-            if (renderObject.Polygon is HalfEdgeDS)
-            {
-                return CommandResult.Success;
-            }
-
-            return CommandResult.Failed;
+            var isoLineCommandArgs = commandArg as IsoLineCommandArgs;
+            return CommandUtility.CanCreatePolygon(isoLineCommandArgs.TargetObject);
         }
 
         /// <summary>
@@ -69,9 +49,13 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandResult Execute(CommandArgs commandArg)
+        public override CommandResult Execute(CommandArgsBase commandArg)
         {
-            var halfDS = renderObject.Polygon as HalfEdgeDS;
+            var isoLineCommandArgs = commandArg as VertexCurvatureCommandArgs;
+            var targetObject = isoLineCommandArgs.TargetObject;
+            var scene = isoLineCommandArgs.Scene;
+
+            var halfDS = targetObject.Polygon as HalfEdgeDS;
             IsoLineAlgorithm algorithm = new IsoLineAlgorithm(halfDS);
 
             algorithm.Calculate(0.05f);
@@ -100,18 +84,45 @@ namespace KI.Tool.Command
             Polygon isoLines = new Polygon("IsoLines", createLine);
             VertexBuffer vertexBuffer = new VertexBuffer();
             vertexBuffer.SetupLineBuffer(isoLines.Vertexs, isoLines.Index, isoLines.Lines);
-            var polyAttriute = new PolygonAttribute("IsoLines", vertexBuffer, PolygonType.Lines, renderObject.Shader);
-            renderObject.Attributes.Add(polyAttriute);
+            var polyAttriute = new PolygonAttribute("IsoLines", vertexBuffer, PolygonType.Lines, targetObject.Shader);
+            targetObject.Attributes.Add(polyAttriute);
 
-            var parentNode = Global.Renderer.ActiveScene.FindNode(renderObject);
-            Global.Renderer.ActiveScene.AddObject(polyAttriute, parentNode);
+            var parentNode = Global.Renderer.ActiveScene.FindNode(targetObject);
+            scene.AddObject(polyAttriute, parentNode);
 
             return CommandResult.Success;
         }
 
-        public CommandResult Undo(CommandArgs commandArg)
+        public override CommandResult Undo(CommandArgsBase commandArg)
         {
             throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
+    /// 等値線の作成コマンド
+    /// </summary>
+    public class IsoLineCommandArgs : CommandArgsBase
+    {
+        /// <summary>
+        /// 対象オブジェクト
+        /// </summary>
+        public RenderObject TargetObject { get; private set; }
+
+        /// <summary>
+        /// シーン
+        /// </summary>
+        public Scene Scene { get; private set; }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="targetNode">対象オブジェクト</param>
+        /// <param name="loopNum">ループ回数</param>
+        public IsoLineCommandArgs(RenderObject targetNode, Scene scene)
+        {
+            this.TargetObject = targetNode;
+            this.Scene = scene;
         }
     }
 }

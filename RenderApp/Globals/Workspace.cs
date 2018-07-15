@@ -122,8 +122,8 @@ namespace RenderApp.Globals
                 //renderBunny.Attributes.Add(splitAttribute);
                 //MainScene.AddObject(splitAttribute, parentNode);
 
-                CommandManager.Instance.Execute(new CreateWireFrameCommand(MainScene, renderBunny), null, false);
-                CommandManager.Instance.Execute(new CalculateVertexCurvatureCommand(MainScene, renderBunny));
+                CommandManager.Instance.Execute(new CreateWireFrameCommand(new WireFrameCommandArgs(renderBunny, MainScene, Vector3.Zero)), false);
+                CommandManager.Instance.Execute(new VertexCurvatureCommand(new VertexCurvatureCommandArgs(renderBunny, MainScene)));
 
                 var vectorFiledAttribute = new VectorFieldAttribute(
                     renderBunny.Name + ": VectorField",

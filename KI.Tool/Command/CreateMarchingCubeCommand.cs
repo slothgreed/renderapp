@@ -9,40 +9,24 @@ using KI.Asset;
 using OpenTK;
 using KI.Mathmatics;
 using KI.Gfx;
+using KI.Tool.Utility;
 
 namespace KI.Tool.Command
 {
     /// <summary>
     /// Marching Cube の作成
     /// </summary>
-    public class CreateMarchingCubeCommand : CreateModelCommandBase, ICommand
+    public class CreateMarchingCubeCommand : CommandBase
     {
-        /// <summary>
-        /// 形状
-        /// </summary>
-        private RenderObject renderObject;
-
-        /// <summary>
-        /// 分割数
-        /// </summary>
-        private int partition;
-
-        /// <summary>
-        /// シーン
-        /// </summary>
-        private Scene scene;
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="scene">シーン</param>
         /// <param name="asset">作成するオブジェクト</param>
         /// <param name="part">分割数</param>
-        public CreateMarchingCubeCommand(Scene scene, KIObject asset, int part)
+        public CreateMarchingCubeCommand(MarchingCubeCommandArgs marchingCommandArgs)
+            :base(marchingCommandArgs)
         {
-            renderObject = asset as RenderObject;
-            partition = part;
-            this.scene = scene;
         }
 
         /// <summary>
@@ -50,19 +34,11 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandResult CanExecute(CommandArgs commandArg)
+        public override CommandResult CanExecute(CommandArgsBase commandArg)
         {
-            if (renderObject == null)
-            {
-                return CommandResult.Failed;
-            }
-
-            if (renderObject.Polygon.Type != PolygonType.Triangles)
-            {
-                return CommandResult.Failed;
-            }
-
-            return CommandResult.Success;
+            var marchingCommandArgs = commandArg as MarchingCubeCommandArgs;
+            
+            return CommandUtility.CanCreatePolygon(marchingCommandArgs.TargetObject);
         }
 
         /// <summary>
@@ -70,20 +46,23 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandResult Execute(CommandArgs commandArg)
+        public override CommandResult Execute(CommandArgsBase commandArg)
         {
+            var marchingCommandArgs = commandArg as MarchingCubeCommandArgs;
+
             Vector3 min;
             Vector3 max;
-            Calculator.MinMax(renderObject.Polygon.Vertexs.Select(p => p.Position), out min, out max);
+            var targetObject = marchingCommandArgs.TargetObject;
+            Calculator.MinMax(targetObject.Polygon.Vertexs.Select(p => p.Position), out min, out max);
             min -= Vector3.One;
             max += Vector3.One;
-            var voxel = new VoxelSpace(renderObject.Polygon.Vertexs.Select(p => p.Position).ToList(), renderObject.Polygon.Index, partition, min, max);
+            var voxel = new VoxelSpace(targetObject.Polygon.Vertexs.Select(p => p.Position).ToList(), targetObject.Polygon.Index, marchingCommandArgs.Partition, min, max);
             var marching = new MarchingCubesAlgorithm(voxel, 0.8f);
 
-            var polygon = new Polygon("MarchingCube :" + renderObject.Name, marching.Meshs, PolygonType.Triangles);
+            var polygon = new Polygon("MarchingCube :" + targetObject.Name, marching.Meshs, PolygonType.Triangles);
             RenderObject marghingObject = RenderObjectFactory.Instance.CreateRenderObject(polygon.Name, polygon);
-            marghingObject.ModelMatrix = renderObject.ModelMatrix;
-            scene.AddObject(marghingObject);
+            marghingObject.ModelMatrix = targetObject.ModelMatrix;
+            marchingCommandArgs.Scene.AddObject(marghingObject);
 
             return CommandResult.Success;
         }
@@ -93,9 +72,44 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandResult Undo(CommandArgs commandArg)
+        public override CommandResult Undo(CommandArgsBase commandArg)
         {
             throw new NotImplementedException();
         }
+    }
+
+    /// <summary>
+    /// Marching Cube のコマンド
+    /// </summary>
+    public class MarchingCubeCommandArgs : CommandArgsBase
+    {
+        /// <summary>
+        /// ターゲットオブジェクト
+        /// </summary>
+        public RenderObject TargetObject { get; private set; }
+
+        /// <summary>
+        /// シーン
+        /// </summary>
+        public Scene Scene { get; private set; }
+
+        /// <summary>
+        /// 分割数
+        /// </summary>
+        public int Partition { get; private set; }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="targetObject">ターゲットオブジェクト</param>
+        /// <param name="scene">シーン</param>
+        /// <param name="part">分割数</param>
+        public MarchingCubeCommandArgs(RenderObject targetObject, Scene scene, int part)
+        {
+            Scene = scene;
+            TargetObject = targetObject;
+            Partition = part;
+        }
+
     }
 }

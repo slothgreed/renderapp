@@ -10,33 +10,16 @@ namespace KI.Tool.Command
     /// <summary>
     /// ワイヤフレームの作成
     /// </summary>
-    public class CreateWireFrameCommand : CreateModelCommandBase, ICommand
+    public class CreateWireFrameCommand : CommandBase
     {
-        /// <summary>
-        /// 形状
-        /// </summary>
-        private RenderObject renderObject;
-
-        /// <summary>
-        /// ワイヤフレーム色
-        /// </summary>
-        private Vector3 wireFrameColor;
-
-        /// <summary>
-        /// シーン
-        /// </summary>
-        private Scene scene;
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="scene">シーン</param>
         /// <param name="asset">作成するオブジェクト</param>
-        public CreateWireFrameCommand(Scene scene, KIObject asset)
+        public CreateWireFrameCommand(WireFrameCommandArgs commandArgs)
+            : base(commandArgs)
         {
-            renderObject = asset as RenderObject;
-            wireFrameColor = Vector3.Zero;
-            this.scene = scene;
         }
 
         /// <summary>
@@ -44,9 +27,10 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandResult CanExecute(CommandArgs commandArg)
+        public override CommandResult CanExecute(CommandArgsBase commandArg)
         {
-            return CanCreatePolygon(renderObject);
+            var wireCommandArgs = commandArg as WireFrameCommandArgs;
+            return CommandUtility.CanCreatePolygon(wireCommandArgs.TargetObject);
         }
 
         /// <summary>
@@ -54,11 +38,16 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandResult Execute(CommandArgs commandArg)
+        public override CommandResult Execute(CommandArgsBase commandArg)
         {
+            var wireCommandArgs = commandArg as WireFrameCommandArgs;
+            var targetObject = wireCommandArgs.TargetObject;
+            var scene = wireCommandArgs.Scene;
+            var color = wireCommandArgs.Color;
+
             List<int> lineIndex = new List<int>();
             List<Vector3> wireFrameColors = new List<Vector3>();
-            foreach (var mesh in renderObject.Polygon.Meshs)
+            foreach (var mesh in targetObject.Polygon.Meshs)
             {
                 for (int j = 0; j < mesh.Vertexs.Count - 1; j++)
                 {
@@ -68,19 +57,19 @@ namespace KI.Tool.Command
 
                 lineIndex.Add(mesh.Vertexs[mesh.Vertexs.Count - 1].Index);
                 lineIndex.Add(mesh.Vertexs[0].Index);
-                wireFrameColors.Add(wireFrameColor);
-                wireFrameColors.Add(wireFrameColor);
+                wireFrameColors.Add(color);
+                wireFrameColors.Add(color);
             }
 
-            var parentNode = Global.Renderer.ActiveScene.FindNode(renderObject);
+            var parentNode = Global.Renderer.ActiveScene.FindNode(targetObject);
             WireFrameAttribute material = new WireFrameAttribute(
-                renderObject.Name + ": WireFrame",
-                renderObject.VertexBuffer.ShallowCopy(),
-                renderObject.Shader,
+                targetObject.Name + ": WireFrame",
+                targetObject.VertexBuffer.ShallowCopy(),
+                targetObject.Shader,
                 wireFrameColors.ToArray(),
                 lineIndex.ToArray());
 
-            renderObject.Attributes.Add(material);
+            targetObject.Attributes.Add(material);
             scene.AddObject(material, parentNode);
 
             return CommandResult.Success;
@@ -91,9 +80,44 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandResult Undo(CommandArgs commandArg)
+        public override CommandResult Undo(CommandArgsBase commandArg)
         {
             return CommandResult.Failed;
+        }
+    }
+
+
+    /// <summary>
+    /// ワイヤフレームコマンド
+    /// </summary>
+    public class WireFrameCommandArgs : CommandArgsBase
+    {
+        /// <summary>
+        /// 対象オブジェクト
+        /// </summary>
+        public RenderObject TargetObject { get; private set; }
+
+        /// <summary>
+        /// シーン
+        /// </summary>
+        public Scene Scene { get; private set; }
+
+        /// <summary>
+        /// カラー
+        /// </summary>
+        public Vector3 Color { get; private set; }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="targetNode">対象オブジェクト</param>
+        /// <param name="scene">シーン</param>
+        /// <param name="color">カラー</param>
+        public WireFrameCommandArgs(RenderObject targetNode, Scene scene, Vector3 color)
+        {
+            this.TargetObject = targetNode;
+            this.Scene = scene;
+            this.Color = color;
         }
     }
 }

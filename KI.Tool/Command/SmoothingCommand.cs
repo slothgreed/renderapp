@@ -15,17 +15,15 @@ namespace KI.Tool.Command
     /// <summary>
     /// スムージングのコマンド
     /// </summary>
-    public class SmoothingCommand : ICommand
+    public class SmoothingCommand : CommandBase
     {
-        public SmoothingCommandArgs commandArgs;
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="asset">算出オブジェクト</param>
-        public SmoothingCommand(SmoothingCommandArgs smoothingCommandArgs)
+        public SmoothingCommand(SmoothingCommandArgs commandArgs)
+            : base(commandArgs)
         {
-            commandArgs = smoothingCommandArgs;
         }
 
         /// <summary>
@@ -33,14 +31,15 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>結果</returns>
-        public CommandResult CanExecute(CommandArgs commandArg)
+        public override CommandResult CanExecute(CommandArgsBase commandArg)
         {
-            if (commandArgs.TargetObject == null)
+            SmoothingCommandArgs smoothingCommandArgs = commandArg as SmoothingCommandArgs;
+            if (smoothingCommandArgs.TargetObject == null)
             {
                 return CommandResult.Failed;
             }
 
-            if (commandArgs.TargetObject.Polygon is HalfEdgeDS)
+            if (smoothingCommandArgs.TargetObject.Polygon is HalfEdgeDS)
             {
                 return CommandResult.Success;
             }
@@ -53,11 +52,13 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>結果</returns>
-        public CommandResult Execute(CommandArgs commandArg)
+        public override CommandResult Execute(CommandArgsBase commandArg)
         {
-            var halfDS = commandArgs.TargetObject.Polygon as HalfEdgeDS;
+            SmoothingCommandArgs smoothingCommandArgs = commandArg as SmoothingCommandArgs;
 
-            var smoothing = new LaplaceSmoothingAlgorithm(halfDS, commandArgs.LoopNum);
+            var halfDS = smoothingCommandArgs.TargetObject.Polygon as HalfEdgeDS;
+
+            var smoothing = new LaplaceSmoothingAlgorithm(halfDS, smoothingCommandArgs.LoopNum);
             smoothing.Calculate();
 
             halfDS.UpdateVertexArray();
@@ -65,7 +66,7 @@ namespace KI.Tool.Command
             return CommandResult.Success;
         }
 
-        public CommandResult Undo(CommandArgs commandArg)
+        public override CommandResult Undo(CommandArgsBase commandArg)
         {
             throw new NotImplementedException();
         }
@@ -74,18 +75,23 @@ namespace KI.Tool.Command
     /// <summary>
     /// スムージングコマンド
     /// </summary>
-    public class SmoothingCommandArgs
+    public class SmoothingCommandArgs : CommandArgsBase
     {
         /// <summary>
         /// 対象オブジェクト
         /// </summary>
-        public RenderObject TargetObject;
+        public RenderObject TargetObject { get; private set; }
 
         /// <summary>
         /// ループ回数
         /// </summary>
-        public int LoopNum;
+        public int LoopNum { get; private set; }
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="targetNode">対象オブジェクト</param>
+        /// <param name="loopNum">ループ回数</param>
         public SmoothingCommandArgs(RenderObject targetNode, int loopNum)
         {
             this.TargetObject = targetNode;

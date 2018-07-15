@@ -14,14 +14,14 @@ namespace KI.Foundation.Command
         /// <summary>
         /// コマンドリスト
         /// </summary>
-        private Stack<CommandInfo> commands;
+        private Stack<CommandBase> commands;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public CommandStack()
         {
-            commands = new Stack<CommandInfo>();
+            commands = new Stack<CommandBase>();
         }
 
         /// <summary>
@@ -36,55 +36,18 @@ namespace KI.Foundation.Command
         /// コマンドのpush
         /// </summary>
         /// <param name="info">コマンド情報</param>
-        public void Push(CommandInfo info)
+        public void Push(CommandBase info)
         {
             commands.Push(info);
-        }
-
-        /// <summary>
-        /// コマンドのpush
-        /// </summary>
-        /// <param name="command">コマンド</param>
-        /// <param name="commandArg">コマンド引数</param>
-        public void Push(ICommand command, CommandArgs commandArg)
-        {
-            Push(new CommandInfo(command, commandArg));
         }
 
         /// <summary>
         /// コマンドのPop
         /// </summary>
         /// <returns>コマンド</returns>
-        public CommandInfo Pop()
+        public CommandBase Pop()
         {
             return commands.Pop();
         }
-    }
-
-    /// <summary>
-    /// コマンド情報
-    /// </summary>
-    public class CommandInfo
-    {
-        /// <summary>
-        /// コマンド情報
-        /// </summary>
-        /// <param name="command">コマンド</param>
-        /// <param name="commandArg">コマンド引数</param>
-        public CommandInfo(ICommand command, CommandArgs commandArg)
-        {
-            Command = command;
-            CommandArg = commandArg;
-        }
-
-        /// <summary>
-        /// コマンド
-        /// </summary>
-        public ICommand Command { get; private set; }
-
-        /// <summary>
-        /// コマンド引数
-        /// </summary>
-        public CommandArgs CommandArg { get; private set; }
     }
 }

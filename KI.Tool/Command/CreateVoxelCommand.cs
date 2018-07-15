@@ -14,32 +14,17 @@ namespace KI.Tool.Command
     /// <summary>
     /// ボクセルの作成
     /// </summary>
-    public class CreateVoxelCommand : CreateModelCommandBase, ICommand
+    public class CreateVoxelCommand : CommandBase
     {
-        /// <summary>
-        /// 形状
-        /// </summary>
-        private RenderObject renderObject = null;
-
         /// <summary>
         /// ボクセル空間
         /// </summary>
-        public VoxelSpace voxel = null;
-        
-        /// <summary>
-        /// 分割数
-        /// </summary>
-        private int partition = 0;
+        private VoxelSpace voxel = null;
 
         /// <summary>
         /// ボクセルカラー
         /// </summary>
         private Vector3 voxelColor;
-
-        /// <summary>
-        /// シーン
-        /// </summary>
-        private Scene scene;
 
         /// <summary>
         /// コンストラクタ
@@ -48,12 +33,10 @@ namespace KI.Tool.Command
         /// <param name="asset">作成するオブジェクト</param>
         /// <param name="color">ボクセル色</param>
         /// <param name="part">分割数</param>
-        public CreateVoxelCommand(Scene scene, RenderObject asset, Vector3 color, int part)
+        public CreateVoxelCommand(VoxelCommandArgs voxelCommand)
+            :base(voxelCommand)
         {
-            renderObject = asset as RenderObject;
-            voxelColor = color;
-            partition = part;
-            this.scene = scene;
+            voxelColor = voxelCommand.Color;
         }
 
         /// <summary>
@@ -61,9 +44,10 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandResult CanExecute(CommandArgs commandArg)
+        public override CommandResult CanExecute(CommandArgsBase commandArg)
         {
-            return CanCreatePolygon(renderObject);
+            var voxelCommandArgs = commandArg as VertexCurvatureCommandArgs;
+            return CommandUtility.CanCreatePolygon(voxelCommandArgs.TargetObject);
         }
 
         /// <summary>
@@ -71,19 +55,24 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandResult Execute(CommandArgs commandArg)
+        public override CommandResult Execute(CommandArgsBase commandArg)
         {
+            var voxelCommandArgs = commandArg as VoxelCommandArgs;
+            var targetObject = voxelCommandArgs.TargetObject;
+            var partition = voxelCommandArgs.Partition;
+            var scene = voxelCommandArgs.Scene;
+
             Vector3 min;
             Vector3 max;
             List<Vector3> voxelPosition = new List<Vector3>();
             List<Vector3> voxelNormal = new List<Vector3>();
-            Calculator.MinMax(renderObject.Polygon.Vertexs.Select(p => p.Position), out min, out max);
-            voxel = new VoxelSpace(renderObject.Polygon.Vertexs.Select(p => p.Position).ToList(), renderObject.Polygon.Index, partition, min, max);
+            Calculator.MinMax(targetObject.Polygon.Vertexs.Select(p => p.Position), out min, out max);
+            voxel = new VoxelSpace(targetObject.Polygon.Vertexs.Select(p => p.Position).ToList(), targetObject.Polygon.Index, partition, min, max);
             var mesh = GetVoxelObject();
 
-            Polygon info = new Polygon("Voxel :" + renderObject.Name, mesh, PolygonType.Quads);
-            RenderObject voxelObject = RenderObjectFactory.Instance.CreateRenderObject("Voxel :" + renderObject.Name, info);
-            voxelObject.Transformation(renderObject.ModelMatrix);
+            Polygon info = new Polygon("Voxel :" + targetObject.Name, mesh, PolygonType.Quads);
+            RenderObject voxelObject = RenderObjectFactory.Instance.CreateRenderObject("Voxel :" + targetObject.Name, info);
+            voxelObject.Transformation(targetObject.ModelMatrix);
             scene.AddObject(voxelObject);
 
             return CommandResult.Success;
@@ -167,9 +156,49 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandResult Undo(CommandArgs commandArg)
+        public override CommandResult Undo(CommandArgsBase commandArg)
         {
             throw new NotImplementedException();
+        }
+    }
+
+
+    /// <summary>
+    /// ボクセルコマンド
+    /// </summary>
+    public class VoxelCommandArgs : CommandArgsBase
+    {
+        /// <summary>
+        /// 対象オブジェクト
+        /// </summary>
+        public RenderObject TargetObject { get; private set; }
+
+        /// <summary>
+        /// シーン
+        /// </summary>
+        public Scene Scene { get; private set; }
+
+        /// <summary>
+        /// 分割数
+        /// </summary>
+        public int Partition { get; private set; }
+
+        /// <summary>
+        /// ボクセルカラー
+        /// </summary>
+        public Vector3 Color { get; private set; }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="targetNode">対象オブジェクト</param>
+        /// <param name="scene">シーン</param>
+        public VoxelCommandArgs(RenderObject targetObject, Scene scene, int partition, Vector3 color)
+        {
+            this.TargetObject = targetObject;
+            this.Scene = scene;
+            this.Partition = partition;
+            this.Color = color;
         }
     }
 }

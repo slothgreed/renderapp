@@ -13,27 +13,16 @@ namespace KI.Tool.Command
     /// <summary>
     /// ハーフエッジのワイヤフレーム作成
     /// </summary>
-    public class CreateHalfEdgeWireFrameCommand : CreateModelCommandBase, ICommand
+    public class CreateHalfEdgeWireFrameCommand : CommandBase
     {
-        /// <summary>
-        /// 形状
-        /// </summary>
-        private RenderObject renderObject;
-
-        /// <summary>
-        /// シーン
-        /// </summary>
-        private Scene scene;
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="scene">シーン</param>
         /// <param name="asset">作成するオブジェクト</param>
-        public CreateHalfEdgeWireFrameCommand(Scene scene, KIObject asset)
+        public CreateHalfEdgeWireFrameCommand(HalfEdgeWireFrameCommandArgs commandArgs)
+            :base(commandArgs)
         {
-            this.scene = scene;
-            renderObject = asset as RenderObject;
         }
 
         /// <summary>
@@ -41,19 +30,10 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandResult CanExecute(CommandArgs commandArg)
+        public override CommandResult CanExecute(CommandArgsBase commandArg)
         {
-            if (renderObject == null)
-            {
-                return CommandResult.Failed;
-            }
-
-            if (renderObject.Polygon is HalfEdgeDS)
-            {
-                return CanCreatePolygon(renderObject);
-            }
-
-            return CommandResult.Failed;
+            var wireframeCommandArgs = commandArg as HalfEdgeWireFrameCommandArgs;
+            return CommandUtility.CanCreatePolygon(wireframeCommandArgs.TargetObject);
         }
 
         /// <summary>
@@ -61,12 +41,16 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandResult Execute(CommandArgs commandArg)
+        public override CommandResult Execute(CommandArgsBase commandArg)
         {
+            var wireFrameCommandArgs = commandArg as HalfEdgeWireFrameCommandArgs;
+            var targetObject = wireFrameCommandArgs.TargetObject;
+            var scene = wireFrameCommandArgs.Scene;
+
             List<Vector3> position = new List<Vector3>();
             var color = new List<Vector3>();
             List<Line> lines = new List<Line>();
-            var halfEdgeDS = renderObject.Polygon as HalfEdgeDS;
+            var halfEdgeDS = targetObject.Polygon as HalfEdgeDS;
             foreach (var mesh in halfEdgeDS.HalfEdgeMeshs)
             {
                 foreach (var edge in mesh.AroundEdge)
@@ -87,9 +71,9 @@ namespace KI.Tool.Command
                 }
             }
 
-            var polygon = new Polygon("HalfEdgeWireFrame :" + renderObject.Name, lines);
-            RenderObject wireframe = RenderObjectFactory.Instance.CreateRenderObject("HalfEdgeWireFrame :" + renderObject.Name, polygon);
-            wireframe.ModelMatrix = renderObject.ModelMatrix;
+            var polygon = new Polygon("HalfEdgeWireFrame :" + targetObject.Name, lines);
+            RenderObject wireframe = RenderObjectFactory.Instance.CreateRenderObject("HalfEdgeWireFrame :" + targetObject.Name, polygon);
+            wireframe.ModelMatrix = targetObject.ModelMatrix;
             scene.AddObject(wireframe);
 
             return CommandResult.Success;
@@ -100,9 +84,38 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandResult Undo(CommandArgs commandArg)
+        public override CommandResult Undo(CommandArgsBase commandArg)
         {
             throw new NotImplementedException();
         }
     }
+
+    /// <summary>
+    /// ハーフエッジのワイヤフレームコマンド
+    /// </summary>
+    public class HalfEdgeWireFrameCommandArgs : CommandArgsBase
+    {
+        /// <summary>
+        /// 対象オブジェクト
+        /// </summary>
+        public RenderObject TargetObject { get; private set; }
+
+        /// <summary>
+        /// シーン
+        /// </summary>
+        public Scene Scene { get; private set; }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="targetNode">対象オブジェクト</param>
+        /// <param name="loopNum">ループ回数</param>
+        public HalfEdgeWireFrameCommandArgs(RenderObject targetNode, Scene scene)
+        {
+            this.TargetObject = targetNode;
+            this.Scene = scene;
+        }
+    }
+
+
 }

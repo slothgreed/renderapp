@@ -13,28 +13,8 @@ namespace KI.Tool.Command
     /// <summary>
     /// K-Means コマンド
     /// </summary>
-    public class KMeansCommand : CreateModelCommandBase, ICommand
+    public class KMeansCommand : CommandBase
     {
-        /// <summary>
-        /// レンダリング形状
-        /// </summary>
-        private RenderObject renderObject;
-
-        /// <summary>
-        /// シーン
-        /// </summary>
-        private Scene scene;
-
-        /// <summary>
-        /// クラスタ数
-        /// </summary>
-        private int clusterNum = 0;
-
-        /// <summary>
-        /// 繰り返し回数
-        /// </summary>
-        private int iterateNum = 0;
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -42,23 +22,21 @@ namespace KI.Tool.Command
         /// <param name="asset">作成するオブジェクト</param>
         /// <param name="cluster">クラスタ数</param>
         /// <param name="iterate">繰り返し回数</param>
-        public KMeansCommand(Scene scene, KIObject asset, int cluster, int iterate)
+        public KMeansCommand(KMeansCommandArgs commandArg)
+            :base(commandArg)
         {
-            renderObject = asset as RenderObject;
-            clusterNum = cluster;
-            iterateNum = iterate;
-            this.scene = scene;
         }
 
-        public CommandResult CanExecute(CommandArgs commandArg)
+        public override CommandResult CanExecute(CommandArgsBase commandArg)
         {
-            return CanCreatePolygon(renderObject);
+            return CommandUtility.CanCreatePolygon((commandArg as KMeansCommandArgs).TargetObject);
         }
 
-        public CommandResult Execute(CommandArgs commandArg)
+        public override CommandResult Execute(CommandArgsBase commandArg)
         {
-            var halfEdgeDS = renderObject.Polygon as HalfEdgeDS;
-            var kmeansAlgorithm = new KMeansAlgorithm(halfEdgeDS, clusterNum, iterateNum);
+            var kmeansCommandArgs = commandArg as KMeansCommandArgs;
+            var halfEdgeDS = kmeansCommandArgs.TargetObject.Polygon as HalfEdgeDS;
+            var kmeansAlgorithm = new KMeansAlgorithm(halfEdgeDS, kmeansCommandArgs.ClusterNum, kmeansCommandArgs.IterateNum);
             kmeansAlgorithm.Calculate();
 
             var colors = new Vector3[halfEdgeDS.Vertexs.Count];
@@ -71,23 +49,66 @@ namespace KI.Tool.Command
                 }
             }
 
-            var parentNode = scene.FindNode(renderObject);
+            var targteObject = kmeansCommandArgs.TargetObject;
+
+            var parentNode = kmeansCommandArgs.Scene.FindNode(targteObject);
             var material = new VertexColorAttribute(
                 "KMeansClustering", 
-                renderObject.VertexBuffer.ShallowCopy(),
-                renderObject.Polygon.Type, 
-                renderObject.Shader,
+                targteObject.VertexBuffer.ShallowCopy(),
+                targteObject.Polygon.Type,
+                targteObject.Shader,
                 colors);
 
-            renderObject.Attributes.Add(material);
-            scene.AddObject(material, parentNode);
+            targteObject.Attributes.Add(material);
+            kmeansCommandArgs.Scene.AddObject(material, parentNode);
 
             return CommandResult.Success;
         }
 
-        public CommandResult Undo(CommandArgs commandArg)
+        public override CommandResult Undo(CommandArgsBase commandArg)
         {
             throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
+    /// KMeans のコマンド
+    /// </summary>
+    public class KMeansCommandArgs : CommandArgsBase
+    {
+        /// <summary>
+        /// 対象形状
+        /// </summary>
+        public RenderObject TargetObject;
+
+        /// <summary>
+        /// シーン
+        /// </summary>
+        public Scene Scene;
+
+        /// <summary>
+        /// クラスタ数
+        /// </summary>
+        public int ClusterNum = 0;
+
+        /// <summary>
+        /// 繰り返し回数
+        /// </summary>
+        public int IterateNum = 0;
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="targetObject">対象形状</param>
+        /// <param name="scene">シーン</param>
+        /// <param name="clusterNum">クラスタ数</param>
+        /// <param name="iterateNum">繰り返し回数</param>
+        public KMeansCommandArgs(RenderObject targetObject, Scene scene, int clusterNum, int iterateNum)
+        {
+            TargetObject = targetObject;
+            Scene = scene;
+            ClusterNum = clusterNum;
+            IterateNum = iterateNum;
         }
     }
 }

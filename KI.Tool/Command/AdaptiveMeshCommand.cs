@@ -15,20 +15,15 @@ namespace KI.Tool.Command
     /// <summary>
     /// 解適合格子メッシュの作成
     /// </summary>
-    public class AdaptiveMeshCommand : ICommand
+    public class AdaptiveMeshCommand : CommandBase
     {
-        /// <summary>
-        /// レンダリング形状
-        /// </summary>
-        private RenderObject renderObject;
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="asset">算出オブジェクト</param>
-        public AdaptiveMeshCommand(KIObject asset)
+        public AdaptiveMeshCommand(AdaptiveMeshCommandArgs commandArgs)
+            :base(commandArgs)
         {
-            renderObject = asset as RenderObject;
         }
 
         /// <summary>
@@ -36,19 +31,10 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>結果</returns>
-        public CommandResult CanExecute(CommandArgs commandArg)
+        public override CommandResult CanExecute(CommandArgsBase commandArg)
         {
-            if (renderObject == null)
-            {
-                return CommandResult.Failed;
-            }
-
-            if (renderObject.Polygon is HalfEdgeDS)
-            {
-                return CommandResult.Success;
-            }
-
-            return CommandResult.Failed;
+            var adaptiveCommandArgs = commandArg as AdaptiveMeshCommandArgs;
+            return CommandUtility.CanCreatePolygon(adaptiveCommandArgs.TargetObject);
         }
 
         /// <summary>
@@ -56,9 +42,10 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>結果</returns>
-        public CommandResult Execute(CommandArgs commandArg)
+        public override CommandResult Execute(CommandArgsBase commandArg)
         {
-            var halfDS = renderObject.Polygon as HalfEdgeDS;
+            var adaptiveCommandArgs = commandArg as AdaptiveMeshCommandArgs;
+            var halfDS = adaptiveCommandArgs.TargetObject.Polygon as HalfEdgeDS;
 
             var adaptiveMesh = new AdaptiveMeshAlgorithm(halfDS, 1);
 
@@ -67,9 +54,29 @@ namespace KI.Tool.Command
             return CommandResult.Success;
         }
 
-        public CommandResult Undo(CommandArgs commandArg)
+        public override CommandResult Undo(CommandArgsBase commandArg)
         {
             throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
+    /// 解適合格子メッシュのコマンド引数
+    /// </summary>
+    public class AdaptiveMeshCommandArgs : CommandArgsBase
+    {
+        /// <summary>
+        /// ターゲットオブジェクト
+        /// </summary>
+        public RenderObject TargetObject { get; private set; }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="targetObject">ターゲットオブジェクト</param>
+        public AdaptiveMeshCommandArgs(RenderObject targetObject)
+        {
+            TargetObject = targetObject;
         }
     }
 }

@@ -55,10 +55,9 @@
     <Compile Include="Command\CreateConvexHullCommand.cs" />
     <Compile Include="Command\CreateHalfEdgeWireFrameCommand.cs" />
     <Compile Include="Command\CreateMarchingCubeCommand.cs" />
-    <Compile Include="Command\CreateModelCommandBase.cs" />
     <Compile Include="Command\CreateVoxelCommand.cs" />
     <Compile Include="Command\CreateWireFrameCommand.cs" />
-    <Compile Include="Command\SmoothingAlgorithm.cs" />
+    <Compile Include="Command\SmoothingCommand.cs" />
     <Compile Include="Control\GeodesicDistanceControl.cs" />
     <Compile Include="Command\KMeansCommand.cs" />
     <Compile Include="Command\PerceptronCommand.cs" />
@@ -72,6 +71,7 @@
     <Compile Include="Control\SelectPointControl.cs" />
     <Compile Include="Control\SelectTriangleControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\CommandUtility.cs" />
     <Compile Include="Utility\Selector.cs" />
   </ItemGroup>
   <ItemGroup>

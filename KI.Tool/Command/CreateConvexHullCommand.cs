@@ -12,27 +12,16 @@ namespace KI.Tool.Command
     /// <summary>
     /// Convexhullの作成コマンド
     /// </summary>
-    public class CreateConvexHullCommand : CreateModelCommandBase, ICommand
+    public class CreateConvexHullCommand : CommandBase
     {
-        /// <summary>
-        /// 形状
-        /// </summary>
-        private RenderObject renderObject;
-
-        /// <summary>
-        /// シーン
-        /// </summary>
-        private Scene scene;
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="scene">シーン</param>
         /// <param name="asset">作成するオブジェクト</param>
-        public CreateConvexHullCommand(Scene scene, KIObject asset)
+        public CreateConvexHullCommand(ConvexHullCommandArgs commandArgs)
+            :base(commandArgs)
         {
-            this.scene = scene;
-            renderObject = asset as RenderObject;
         }
 
         /// <summary>
@@ -40,9 +29,10 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandResult CanExecute(CommandArgs commandArg)
+        public override CommandResult CanExecute(CommandArgsBase commandArg)
         {
-            return CanCreatePolygon(renderObject);
+            var convexCommandArgs = commandArg as ConvexHullCommandArgs;
+            return CommandUtility.CanCreatePolygon(convexCommandArgs.TargetObject);
         }
 
         /// <summary>
@@ -50,9 +40,13 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandResult Execute(CommandArgs commandArg)
+        public override CommandResult Execute(CommandArgsBase commandArg)
         {
-            ConvexHullAlgorithm convexHull = new ConvexHullAlgorithm(renderObject.Polygon.Vertexs);
+            var convexCommandArgs = commandArg as ConvexHullCommandArgs;
+            var targetObject = convexCommandArgs.TargetObject;
+            var scene = convexCommandArgs.Scene;
+
+            ConvexHullAlgorithm convexHull = new ConvexHullAlgorithm(targetObject.Polygon.Vertexs);
             List<Mesh> meshs = new List<Mesh>();
             foreach (var mesh in convexHull.Meshs)
             {
@@ -83,9 +77,9 @@ namespace KI.Tool.Command
                 meshs.Add(new Mesh(ver0, ver1, ver2));
             }
 
-            Polygon polygon = new Polygon("ConvexHull:" + renderObject.Name, meshs, PolygonType.Triangles);
-            RenderObject convex = RenderObjectFactory.Instance.CreateRenderObject("ConvexHull :" + renderObject.Name, polygon);
-            convex.ModelMatrix = renderObject.ModelMatrix;
+            Polygon polygon = new Polygon("ConvexHull:" + targetObject.Name, meshs, PolygonType.Triangles);
+            RenderObject convex = RenderObjectFactory.Instance.CreateRenderObject("ConvexHull :" + targetObject.Name, polygon);
+            convex.ModelMatrix = targetObject.ModelMatrix;
             scene.AddObject(convex);
 
             return CommandResult.Success;
@@ -96,9 +90,36 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public CommandResult Undo(CommandArgs commandArg)
+        public override CommandResult Undo(CommandArgsBase commandArg)
         {
             throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
+    /// 曲率コマンド
+    /// </summary>
+    public class ConvexHullCommandArgs : CommandArgsBase
+    {
+        /// <summary>
+        /// 対象オブジェクト
+        /// </summary>
+        public RenderObject TargetObject { get; private set; }
+
+        /// <summary>
+        /// シーン
+        /// </summary>
+        public Scene Scene { get; private set; }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="targetNode">対象オブジェクト</param>
+        /// <param name="loopNum">ループ回数</param>
+        public ConvexHullCommandArgs(RenderObject targetNode, Scene scene)
+        {
+            this.TargetObject = targetNode;
+            this.Scene = scene;
         }
     }
 }
