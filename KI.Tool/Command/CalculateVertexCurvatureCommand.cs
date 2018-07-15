@@ -19,8 +19,7 @@ namespace KI.Tool.Command
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="scene">シーン</param>
-        /// <param name="asset">算出オブジェクト</param>
+        /// <param name="commandArgs">コマンド引数</param>
         public VertexCurvatureCommand(VertexCurvatureCommandArgs commandArgs)
             :base(commandArgs)
         {

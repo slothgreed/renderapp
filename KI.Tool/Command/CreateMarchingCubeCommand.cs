@@ -21,11 +21,9 @@ namespace KI.Tool.Command
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="scene">シーン</param>
-        /// <param name="asset">作成するオブジェクト</param>
-        /// <param name="part">分割数</param>
-        public CreateMarchingCubeCommand(MarchingCubeCommandArgs marchingCommandArgs)
-            :base(marchingCommandArgs)
+        /// <param name="commandArgs">コマンド引数</param>
+        public CreateMarchingCubeCommand(MarchingCubeCommandArgs commandArgs)
+            :base(commandArgs)
         {
         }
 

@@ -19,7 +19,7 @@ namespace KI.Tool.Command
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="scene">シーン</param>
+        /// <param name="commandArgs">コマンド引数</param>
         public PerceptronCommand(PerceptronCommandArgs commandArgs)
             :base(commandArgs)
         {

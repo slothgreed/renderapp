@@ -29,14 +29,11 @@ namespace KI.Tool.Command
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="scene">シーン</param>
-        /// <param name="asset">作成するオブジェクト</param>
-        /// <param name="color">ボクセル色</param>
-        /// <param name="part">分割数</param>
-        public CreateVoxelCommand(VoxelCommandArgs voxelCommand)
-            :base(voxelCommand)
+        /// <param name="commandArgs">コマンド引数</param>
+        public CreateVoxelCommand(VoxelCommandArgs commandArgs)
+            :base(commandArgs)
         {
-            voxelColor = voxelCommand.Color;
+            voxelColor = commandArgs.Color;
         }
 
         /// <summary>

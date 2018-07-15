@@ -18,10 +18,7 @@ namespace KI.Tool.Command
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="scene">シーン</param>
-        /// <param name="asset">作成するオブジェクト</param>
-        /// <param name="cluster">クラスタ数</param>
-        /// <param name="iterate">繰り返し回数</param>
+        /// <param name="commandArgs">コマンド引数</param>
         public KMeansCommand(KMeansCommandArgs commandArg)
             :base(commandArg)
         {

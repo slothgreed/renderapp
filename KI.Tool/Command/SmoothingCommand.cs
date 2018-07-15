@@ -20,7 +20,7 @@ namespace KI.Tool.Command
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="asset">算出オブジェクト</param>
+        /// <param name="commandArgs">コマンド引数</param>
         public SmoothingCommand(SmoothingCommandArgs commandArgs)
             : base(commandArgs)
         {
