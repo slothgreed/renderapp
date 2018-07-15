@@ -51,7 +51,7 @@ namespace KI.Tool.Command
         /// <returns>成功値</returns>
         public override CommandResult Execute(CommandArgsBase commandArg)
         {
-            var isoLineCommandArgs = commandArg as VertexCurvatureCommandArgs;
+            var isoLineCommandArgs = commandArg as IsoLineCommandArgs;
             var targetObject = isoLineCommandArgs.TargetObject;
             var scene = isoLineCommandArgs.Scene;
 

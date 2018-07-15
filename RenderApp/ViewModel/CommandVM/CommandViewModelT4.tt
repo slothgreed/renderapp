@@ -5,6 +5,8 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ output extension=".cs" #>
 using System.Windows.Input;
+using KI.UI.ViewModel;
+
 <#
 	string[] _class =
 	{
@@ -22,7 +24,7 @@ namespace RenderApp.ViewModel
 	for(int classIndex = 0; classIndex < _class.Length; classIndex++)
 	{
 #>
-	public partial class <#=_class[classIndex]#>ViewModel : DockWindowViewModel
+	public partial class <#=_class[classIndex]#>ViewModel : ViewModelBase
 	{
 <#
 	for(int i =0 ; i < _command.Length; i++)

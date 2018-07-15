@@ -1,7 +1,9 @@
 ﻿using System.Windows.Input;
+using KI.UI.ViewModel;
+
 namespace RenderApp.ViewModel
 {
-	public partial class VoxelCommandViewModel : DockWindowViewModel
+	public partial class VoxelCommandViewModel : ViewModelBase
 	{
 		private ICommand _Execute;
 		public ICommand Execute
@@ -17,7 +19,7 @@ namespace RenderApp.ViewModel
 			}
 		}
 	}
-	public partial class SmoothingCommandViewModel : DockWindowViewModel
+	public partial class SmoothingCommandViewModel : ViewModelBase
 	{
 		private ICommand _Execute;
 		public ICommand Execute

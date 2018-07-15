@@ -255,7 +255,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="View\ControllerView\VoxelView.xaml.cs">
+    <Compile Include="View\CommandView\VoxelView.xaml.cs">
       <DependentUpon>VoxelView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SceneNodeView\RenderObjectView.xaml.cs">
@@ -344,7 +344,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\ControllerView\VoxelView.xaml">
+    <Page Include="View\CommandView\VoxelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

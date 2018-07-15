@@ -46,7 +46,7 @@ namespace KI.Tool.Command
         /// <returns>成功値</returns>
         public override CommandResult CanExecute(CommandArgsBase commandArg)
         {
-            var voxelCommandArgs = commandArg as VertexCurvatureCommandArgs;
+            var voxelCommandArgs = commandArg as VoxelCommandArgs;
             return CommandUtility.CanCreatePolygon(voxelCommandArgs.TargetObject);
         }
 

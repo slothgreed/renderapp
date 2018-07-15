@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace RenderApp.View.Controller
+namespace RenderApp.View.Command
 {
     /// <summary>
     /// VoxelDialogView.xaml の相互作用ロジック

@@ -282,7 +282,7 @@ namespace RenderApp.ViewModel
                     break;
                 case AnalyzeCommand.Voxelize:
                     var window = new View.DebugWindow();
-                    var voxelView = new View.Controller.VoxelView();
+                    var voxelView = new View.Command.VoxelView();
                     voxelView.DataContext = new VoxelCommandViewModel(this);
                     window.Owner = Application.Current.MainWindow;
                     window.Content = voxelView;

@@ -11,7 +11,7 @@ using RenderApp.Globals;
 
 namespace RenderApp.ViewModel
 {
-    public partial class SmoothingCommandViewModel : DockWindowViewModel
+    public partial class SmoothingCommandViewModel : ViewModelBase
     {
         private int loopNum = 100;
 
@@ -20,7 +20,7 @@ namespace RenderApp.ViewModel
         /// </summary>
         /// <param name="parent">親ビューモデル</param>
         public SmoothingCommandViewModel(ViewModelBase parent)
-            : base(parent, null, "Smoothing Command", Place.Floating)
+            : base(parent)
         {
         }
 

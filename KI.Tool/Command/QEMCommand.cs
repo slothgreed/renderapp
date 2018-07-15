@@ -33,7 +33,7 @@ namespace KI.Tool.Command
         /// <returns>結果</returns>
         public override CommandResult CanExecute(CommandArgsBase commandArg)
         {
-            var qemCommandArgs = commandArg as VertexCurvatureCommandArgs;
+            var qemCommandArgs = commandArg as QEMCommandArgs;
             return CommandUtility.CanCreatePolygon(qemCommandArgs.TargetObject);
         }
 
@@ -44,7 +44,7 @@ namespace KI.Tool.Command
         /// <returns>結果</returns>
         public override CommandResult Execute(CommandArgsBase commandArg)
         {
-            var qemCommandArgs = commandArg as VertexCurvatureCommandArgs;
+            var qemCommandArgs = commandArg as QEMCommandArgs;
             var halfDS = qemCommandArgs.TargetObject.Polygon as HalfEdgeDS;
 
             var adaptiveMesh = new QEMAlgorithm(halfDS, halfDS.Vertexs.Count / 2);
