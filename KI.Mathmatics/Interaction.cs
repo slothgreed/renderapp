@@ -176,5 +176,18 @@ namespace KI.Mathmatics
 
             return false;
         }
+
+        /// <summary>
+        /// 内分点
+        /// </summary>
+        /// <param name="m"></param>
+        /// <param name="n"></param>
+        /// <param name="position0"></param>
+        /// <param name="position1"></param>
+        /// <returns></returns>
+        public static bool Inter(float m, float n, Vector3 position0, Vector3 position1)
+        {
+
+        }
     }
 }
