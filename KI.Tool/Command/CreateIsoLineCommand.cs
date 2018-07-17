@@ -114,14 +114,20 @@ namespace KI.Tool.Command
         public Scene Scene { get; private set; }
 
         /// <summary>
+        /// 間隔
+        /// </summary>
+        public float Space { get; private set; }
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="targetNode">対象オブジェクト</param>
-        /// <param name="loopNum">ループ回数</param>
-        public IsoLineCommandArgs(RenderObject targetNode, Scene scene)
+        /// <param name="scene">シーン</param>
+        /// <param name="space">スペース</param>
+        public IsoLineCommandArgs(RenderObject targetNode, Scene scene, float space)
         {
             this.TargetObject = targetNode;
             this.Scene = scene;
+            this.Space = space;
         }
     }
 }

@@ -35,4 +35,20 @@ namespace RenderApp.ViewModel
 			}
 		}
 	}
+	public partial class IsoLineCommandViewModel : ViewModelBase
+	{
+		private ICommand _Execute;
+		public ICommand Execute
+		{
+			get
+			{
+				if (_Execute == null)
+				{
+					return _Execute = CreateCommand(ExecuteCommand);						
+				}
+
+				return _Execute;
+			}
+		}
+	}
 }

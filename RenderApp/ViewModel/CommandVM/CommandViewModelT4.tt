@@ -11,7 +11,8 @@ using KI.UI.ViewModel;
 	string[] _class =
 	{
 		"VoxelCommand",
-		"SmoothingCommand"
+		"SmoothingCommand",
+		"IsoLineCommand"
 	};
 	string[] _command = 
 	{

@@ -245,8 +245,12 @@ namespace RenderApp.ViewModel
                     CommandManager.Instance.Execute(command, true);
                     break;
                 case AnalyzeCommand.IsoLine:
-                    command = new CreateIsoLineCommand(new IsoLineCommandArgs(targetObject, workspace.MainScene));
-                    CommandManager.Instance.Execute(command, true);
+                    var icommandWindow = new View.DebugWindow();
+                    var islolineCommandView = new View.CommandView.IsoLineCommandView();
+                    islolineCommandView.DataContext = new IsoLineCommandViewModel(this);
+                    icommandWindow.Owner = Application.Current.MainWindow;
+                    icommandWindow.Content = islolineCommandView;
+                    icommandWindow.Show();
                     break;
                 case AnalyzeCommand.HalfEdgeWireFrame:
                     command = new CreateHalfEdgeWireFrameCommand(new HalfEdgeWireFrameCommandArgs(targetObject, workspace.MainScene));
@@ -282,7 +286,7 @@ namespace RenderApp.ViewModel
                     break;
                 case AnalyzeCommand.Voxelize:
                     var window = new View.DebugWindow();
-                    var voxelView = new View.Command.VoxelView();
+                    var voxelView = new View.Command.VoxelCommandView();
                     voxelView.DataContext = new VoxelCommandViewModel(this);
                     window.Owner = Application.Current.MainWindow;
                     window.Content = voxelView;

@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace RenderApp.View.CommandView
 {
     /// <summary>
-    /// SmoothingView.xaml の相互作用ロジック
+    /// IsoLineCommandView.xaml の相互作用ロジック
     /// </summary>
-    public partial class SmoothingCommandView : UserControl
+    public partial class IsoLineCommandView : UserControl
     {
-        public SmoothingCommandView()
+        public IsoLineCommandView()
         {
             InitializeComponent();
         }

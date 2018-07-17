@@ -171,6 +171,7 @@
     <Compile Include="ViewModel\AttributeVM\WireFrameAttributeViewModel.cs" />
     <Compile Include="Globals\Project.cs" />
     <Compile Include="Globals\Types.cs" />
+    <Compile Include="ViewModel\CommandVM\IsoLineCommandViewModel.cs" />
     <Compile Include="ViewModel\CommandVM\SmoothingCommandViewModel.cs" />
     <Compile Include="ViewModel\CommandVM\CommandViewModelT4.cs">
       <AutoGen>True</AutoGen>
@@ -214,6 +215,9 @@
     <Compile Include="View\AttributeView\SplitAttributeView.xaml.cs">
       <DependentUpon>SplitAttributeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\CommandView\IsoLineCommandView.xaml.cs">
+      <DependentUpon>IsoLineCommandView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CommandView\SmoothingCommandView.xaml.cs">
       <DependentUpon>SmoothingCommandView.xaml</DependentUpon>
     </Compile>
@@ -255,8 +259,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="View\CommandView\VoxelView.xaml.cs">
-      <DependentUpon>VoxelView.xaml</DependentUpon>
+    <Compile Include="View\CommandView\VoxelCommandView.xaml.cs">
+      <DependentUpon>VoxelCommandView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SceneNodeView\RenderObjectView.xaml.cs">
       <DependentUpon>RenderObjectView.xaml</DependentUpon>
@@ -293,6 +297,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AttributeView\SplitAttributeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CommandView\IsoLineCommandView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -344,7 +352,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\CommandView\VoxelView.xaml">
+    <Page Include="View\CommandView\VoxelCommandView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

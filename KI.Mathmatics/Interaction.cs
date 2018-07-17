@@ -187,7 +187,8 @@ namespace KI.Mathmatics
         /// <returns></returns>
         public static bool Inter(float m, float n, Vector3 position0, Vector3 position1)
         {
-
+            new NotImplementedException();
+            return true;
         }
     }
 }
