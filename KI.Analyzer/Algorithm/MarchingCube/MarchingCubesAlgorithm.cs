@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using KI.Analyzer.Algorithm.MarchingCube;
 using KI.Gfx.Geometry;
 using KI.Mathmatics;
 using OpenTK;

@@ -60,7 +60,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithm\FeatureLineAlgorithm.cs" />
+    <Compile Include="Algorithm\FeatureLine\FeatureLineAlgorithm.cs" />
+    <Compile Include="Algorithm\FeatureLine\FeatureLineGraph.cs" />
     <Compile Include="Algorithm\IsoLineAlgorithm.cs" />
     <Compile Include="Algorithm\GeodesicDistanceAlgorithm.cs" />
     <Compile Include="Algorithm\KMeansAlgorithm.cs" />

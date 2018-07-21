@@ -7,6 +7,7 @@ using KI.Asset;
 using OpenTK;
 using KI.Mathmatics;
 using KI.Gfx;
+using KI.Analyzer.Algorithm;
 
 namespace KI.Tool.Command
 {

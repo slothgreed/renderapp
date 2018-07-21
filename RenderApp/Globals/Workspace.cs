@@ -100,7 +100,7 @@ namespace RenderApp.Globals
 
             // bunny
             {
-                var bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/bunny.half");
+                var bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/moai.half");
                 var renderBunny = RenderObjectFactory.Instance.CreateRenderObject("bunny", bunny);
                 renderBunny.Shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
                 renderBunny.RotateX(-90);
