@@ -185,10 +185,10 @@ namespace KI.Mathmatics
         /// <param name="position0"></param>
         /// <param name="position1"></param>
         /// <returns></returns>
-        public static bool Inter(float m, float n, Vector3 position0, Vector3 position1)
+        public static Vector3 Inter(float m, float n, Vector3 position0, Vector3 position1)
         {
-            new NotImplementedException();
-            return true;
+            var val = Vector3.Multiply(position0, n) + Vector3.Multiply(position1, m);
+            return Vector3.Divide(val, m + n);
         }
     }
 }

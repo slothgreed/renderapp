@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Linq;
 using KI.Analyzer;
-using KI.Analyzer.Algorithm.MarchingCube;
 using KI.Foundation.Command;
-using KI.Foundation.Core;
 using KI.Gfx.Geometry;
 using KI.Asset;
 using OpenTK;
 using KI.Mathmatics;
 using KI.Gfx;
-using KI.Tool.Utility;
 
 namespace KI.Tool.Command
 {

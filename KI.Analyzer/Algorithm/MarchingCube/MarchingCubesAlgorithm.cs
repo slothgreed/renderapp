@@ -4,7 +4,7 @@ using KI.Gfx.Geometry;
 using KI.Mathmatics;
 using OpenTK;
 
-namespace KI.Analyzer.Algorithm.MarchingCube
+namespace KI.Analyzer.Algorithm
 {
     /// <summary>
     /// マーチングキューブ用のボクセル

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KI.Analyzer.Algorithm.FeatureLine;
 using KI.Mathmatics;
 using OpenTK;
 
@@ -29,9 +30,9 @@ namespace KI.Analyzer.Algorithm
         public void Calculate()
         {
             var ridges = new Feature();
-            var ridgeGraph = new Graph(halfEdgeDS.Vertexs.Count);
+            var ridgeGraph = new FeatureLineGraph(halfEdgeDS.Vertexs.Count);
             var ravines = new Feature();
-            var ravineGraph = new Graph(halfEdgeDS.Vertexs.Count);
+            var ravineGraph = new FeatureLineGraph(halfEdgeDS.Vertexs.Count);
 
             float ksf0;
             float ksf1;
@@ -124,18 +125,18 @@ namespace KI.Analyzer.Algorithm
         /// 頂点の追加
         /// </summary>
         /// <returns></returns>
-        private int AddConvexPoint(HalfEdgeVertex vertex0, HalfEdgeVertex vertex1, Feature ridges, Graph ridgeGraph)
+        private int AddConvexPoint(HalfEdgeVertex vertex0, HalfEdgeVertex vertex1, Feature ridges, FeatureLineGraph ridgeGraph)
         {
             int checkID = 0;
             // あればそれを
-            checkID = ridgeGraph.IsExistEdge(vertex0.Position, vertex1.Position);
+            checkID = ridgeGraph.GetEdgeIndex(vertex0.Index, vertex1.Index);
             if (checkID == -1)
             {
                 //なければ作る
                 var alpha = Math.Abs(vertex0.MaxDerivaribe);
                 var beta = Math.Abs(vertex1.MaxDerivaribe);
                 var position = Interaction.Inter(alpha, beta, vertex0.Position, vertex1.Position);
-                checkID = ridges.AddPoint(ridgeGraph.AddEdge(vertex0.Position, vertex1.Position), position, vertex0.Index, vertex1.Index, alpha, beta);
+                checkID = ridges.AddPoint(ridgeGraph.AddEdge(vertex0, vertex1), position, vertex0.Index, vertex1.Index, alpha, beta);
             }
 
             return checkID;
@@ -145,18 +146,18 @@ namespace KI.Analyzer.Algorithm
         /// 頂点の追加
         /// </summary>
         /// <returns></returns>
-        private int AddConcavePoint(HalfEdgeVertex vertex0, HalfEdgeVertex vertex1, Feature ridges, Graph ridgeGraph)
+        private int AddConcavePoint(HalfEdgeVertex vertex0, HalfEdgeVertex vertex1, Feature ridges, FeatureLineGraph ridgeGraph)
         {
             int checkID = 0;
             // あればそれを
-            checkID = ridgeGraph.IsExistEdge(vertex0.Position, vertex1.Position);
+            checkID = ridgeGraph.GetEdgeIndex(vertex0.Index, vertex1.Index);
             if (checkID == -1)
             {
                 //なければ作る
                 var alpha = Math.Abs(vertex0.MinDerivaribe);
                 var beta = Math.Abs(vertex1.MinDerivaribe);
                 var position = Interaction.Inter(alpha, beta, vertex0.Position, vertex1.Position);
-                checkID = ridges.AddPoint(ridgeGraph.AddEdge(vertex0.Position, vertex1.Position), position, vertex0.Index, vertex1.Index, alpha, beta);
+                checkID = ridges.AddPoint(ridgeGraph.AddEdge(vertex0, vertex1), position, vertex0.Index, vertex1.Index, alpha, beta);
             }
 
             return checkID;
@@ -229,24 +230,6 @@ namespace KI.Analyzer.Algorithm
             return 0;
         }
 
-        private class Graph
-        {
-            public Graph(int vertex)
-            {
-
-            }
-
-            public int IsExistEdge(Vector3 vertex0, Vector3 vertex1)
-            {
-                return 0;
-            }
-
-            public int AddEdge(Vector3 vertex0, Vector3 vertex1)
-            {
-                return 0;
-            }
-        }
-
         private class Feature
         {
             public Feature()
@@ -259,7 +242,7 @@ namespace KI.Analyzer.Algorithm
 
             }
 
-            public int AddPoint(int v, bool position, int index1, int index2, float alpha, float beta)
+            public int AddPoint(int v, Vector3 position, int index1, int index2, float alpha, float beta)
             {
                 throw new NotImplementedException();
             }
