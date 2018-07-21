@@ -608,7 +608,7 @@ namespace KI.Analyzer
 
             var leftSide = new float[3 * aroundEdge.Count, 7];
             var rightSide = new float[3 * aroundEdge.Count];
-            Geometry.VirtualTangent(Normal, out tangent2, out tangent1);
+            Geometry.VirtualTangent(Normal, out tangent1, out tangent2);
 
             int i = 0;
             float dx = 0;
@@ -628,9 +628,9 @@ namespace KI.Analyzer
                 var VV = dVV * dVV;
 
                 {
-                    leftSide[3 + i + 0, 0] = 0.5f * UU;
-                    leftSide[3 + i + 0, 1] = UV;
-                    leftSide[3 + i + 0, 2] = 0.5f * VV;
+                    leftSide[3 * i + 0, 0] = 0.5f * UU;
+                    leftSide[3 * i + 0, 1] = UV;
+                    leftSide[3 * i + 0, 2] = 0.5f * VV;
 
                     leftSide[3 * i + 0, 3] = dUU * UU;
                     leftSide[3 * i + 0, 4] = UU * dVV;
@@ -641,13 +641,13 @@ namespace KI.Analyzer
                 }
 
                 dx = Vector3.Dot(around.End.Normal, tangent1);
-                dy = Vector3.Dot(around.End.normal, Normal);
-                dz = Vector3.Dot(around.End.Normal, tangent2);
+                dy = Vector3.Dot(around.End.Normal, tangent2);
+                dz = Vector3.Dot(around.End.Normal, Normal);
 
                 {
-                    leftSide[3 + i + 1, 0] = dUU;
-                    leftSide[3 + i + 1, 1] = dVV;
-                    leftSide[3 + i + 1, 2] = 0.0f;
+                    leftSide[3 * i + 1, 0] = dUU;
+                    leftSide[3 * i + 1, 1] = dVV;
+                    leftSide[3 * i + 1, 2] = 0.0f;
 
                     leftSide[3 * i + 1, 3] = 3.0f * UU;
                     leftSide[3 * i + 1, 4] = 2.0f * UV;
@@ -658,9 +658,9 @@ namespace KI.Analyzer
                 }
 
                 {
-                    leftSide[3 + i + 2, 0] = 0.0f;
-                    leftSide[3 + i + 2, 1] = dUU;
-                    leftSide[3 + i + 2, 2] = dVV;
+                    leftSide[3 * i + 2, 0] = 0.0f;
+                    leftSide[3 * i + 2, 1] = dUU;
+                    leftSide[3 * i + 2, 2] = dVV;
 
                     leftSide[3 * i + 2, 3] = 0.0f;
                     leftSide[3 * i + 2, 4] = UU;

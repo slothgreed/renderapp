@@ -69,7 +69,7 @@ namespace KI.Mathmatics
         /// <param name="tangent2">タンジェント2</param>
         public static void VirtualTangent(Vector3 normal, out Vector3 tangent1, out Vector3 tangent2)
         {
-            if (normal.X < normal.Y)
+            if (Math.Abs(normal.X) < Math.Abs(normal.Y))
             {
                 tangent1.X = 0;
                 tangent1.Y = -normal.Z;

@@ -87,7 +87,7 @@ namespace KI.Mathmatics
                 {
                     for(int i = 0; i < u.GetLength(0); i++)
                     {
-                        sum += u[i, j] * b[j];
+                        sum += u[i, j] * b[i];
                     }
 
                     sum /= w[j];
