@@ -205,6 +205,8 @@ namespace KI.Analyzer.Algorithm
             Vector3 direction;
 
             ksf0 = vertex0.MinDerivaribe;
+
+            // 向きを揃える
             if (Vector3.Dot(vertex0.MinDirection, vertex1.MinDirection) < Calculator.THRESHOLD05)
             {
                 ksf1 = -vertex1.MinDerivaribe;
@@ -216,10 +218,12 @@ namespace KI.Analyzer.Algorithm
                 direction = vertex1.MinDirection;
             }
 
+            // 同じ向きで曲率の正負が異なるものが欲しい。
             if (ksf0 * ksf1 < Calculator.THRESHOLD05)
             {
                 var edge0 = vertex1 - vertex0;
                 var edge1 = vertex0 - vertex1;
+
                 if (ksf0 * Vector3.Dot(edge0, vertex0.MinDirection) > Calculator.THRESHOLD05 ||
                     ksf1 * Vector3.Dot(edge1, direction) > Calculator.THRESHOLD05)
                 {
