@@ -179,6 +179,7 @@
       <DependentUpon>CommandViewModelT4.tt</DependentUpon>
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="ViewModel\CommandVM\VoxelCommandViewModel.cs" />
     <Compile Include="ViewModel\SceneNodeVM\LightViewModel.cs" />
     <Compile Include="ViewModel\AttributeVM\OutlineAttributeViewModel.cs" />
     <Compile Include="ViewModel\PostEffectVM\BloomViewModel.cs" />
@@ -191,7 +192,6 @@
     </Compile>
     <Compile Include="ViewModel\DockTabVM\DockPaneSelector.cs" />
     <Compile Include="ViewModel\DockTabVM\DockWindowViewModel.cs" />
-    <Compile Include="ViewModel\CommandVM\VoxelCommandViewModel.cs" />
     <Compile Include="ViewModel\SceneNodeVM\RenderObjectViewModel.cs" />
     <Compile Include="ViewModel\RendererViewModel.cs" />
     <Compile Include="ViewModel\NodeVM\NodeItemViewModel.cs" />

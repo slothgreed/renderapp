@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command\AdaptiveMeshCommand.cs" />
+    <Compile Include="Command\CreateFeatureLineCommand.cs" />
     <Compile Include="Command\VertexCurvatureCommand.cs" />
     <Compile Include="Command\CreateIsoLineCommand.cs" />
     <Compile Include="Command\CreateConvexHullCommand.cs" />

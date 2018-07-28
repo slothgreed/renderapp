@@ -131,6 +131,10 @@
                     Command="{Binding CreateObject}"
                     CommandParameter="{x:Static local:AnalyzeCommand.Curvature}"
                     Header="Curvature" />
+                <MenuItem
+                    Command="{Binding CreateObject}"
+                    CommandParameter="{x:Static local:AnalyzeCommand.FeatureLine}"
+                    Header="FeatureLine" />
                 <Separator />
                 <MenuItem
                     Command="{Binding CreateObject}"

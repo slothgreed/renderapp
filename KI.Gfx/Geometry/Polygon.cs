@@ -58,11 +58,11 @@ namespace KI.Gfx.Geometry
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="vertex">頂点</param>
-        public Polygon(string name, List<Vertex> vertex)
+        public Polygon(string name, List<Vertex> vertex, PolygonType type = PolygonType.Points)
             : base(name)
         {
             vertexs = vertex;
-            Type = PolygonType.Points;
+            Type = type;
         }
 
         /// <summary>
@@ -70,11 +70,11 @@ namespace KI.Gfx.Geometry
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="line">線分リスト</param>
-        public Polygon(string name, List<Line> line)
+        public Polygon(string name, List<Line> line, PolygonType type = PolygonType.Lines)
             : base(name)
         {
             lines = line;
-            Type = PolygonType.Lines;
+            Type = type;
         }
 
         /// <summary>

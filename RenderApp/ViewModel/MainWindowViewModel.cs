@@ -284,6 +284,10 @@ namespace RenderApp.ViewModel
                     commandWindow.Content = smoothingCommandView;
                     commandWindow.Show();
                     break;
+                case AnalyzeCommand.FeatureLine:
+                    command = new CreateFeatureLineCommand(new FeatureLineCommandArgs(targetObject, workspace.MainScene));
+                    CommandManager.Instance.Execute(command, true);
+                    break;
                 case AnalyzeCommand.Voxelize:
                     var window = new View.DebugWindow();
                     var voxelView = new View.Command.VoxelCommandView();

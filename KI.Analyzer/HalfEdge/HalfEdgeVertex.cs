@@ -756,6 +756,7 @@ namespace KI.Analyzer
             return new Vector3(v1.Position * v2.Position);
         }
 
+        // 削除すること
         public static bool operator ==(HalfEdgeVertex v1, HalfEdgeVertex v2)
         {
             if (object.ReferenceEquals(v1, v2))

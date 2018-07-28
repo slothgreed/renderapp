@@ -40,6 +40,17 @@ namespace KI.Gfx.Geometry
         }
 
         /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="start">始点</param>
+        /// <param name="end">終点</param>
+        public Line(Vector3 startVertex, Vector3 endVertex, Vector3 color)
+        {
+            Start = new Vertex(0, startVertex, color);
+            End = new Vertex(0, endVertex, color);
+        }
+
+        /// <summary>
         /// 頂点1
         /// </summary>
         public virtual Vertex Start { get; set; }

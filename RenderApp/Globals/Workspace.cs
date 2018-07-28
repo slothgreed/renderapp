@@ -103,7 +103,7 @@ namespace RenderApp.Globals
                 var bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/moai.half");
                 var renderBunny = RenderObjectFactory.Instance.CreateRenderObject("bunny", bunny);
                 renderBunny.Shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
-                renderBunny.RotateX(-90);
+                //renderBunny.RotateX(-90);
                 MainScene.AddObject(renderBunny);
                 var parentNode = MainScene.FindNode(renderBunny);
 

@@ -195,6 +195,8 @@ namespace KI.Analyzer
         }
 
         #region [operator] 
+
+        // 削除すること
         public static bool operator ==(HalfEdge edge1, HalfEdge edge2)
         {
             //参照が同じならTrue
