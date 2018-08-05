@@ -89,9 +89,9 @@ namespace KI.Analyzer.Algorithm.FeatureLine
         /// <param name="edgeIndex2">エッジ番号</param>
         /// <param name="alpha">内分点の割合</param>
         /// <param name="beta">内分点の割合</param>
-        public HalfEdgeVertex AddVertex(HalfEdgeVertex vertex, int edgeIndex1, int edgeIndex2, float alpha, float beta)
+        public HalfEdgeVertex AddVertex(Vector3 position, int edgeIndex1, int edgeIndex2, float alpha, float beta)
         {
-            var featureVertex = new HalfEdgeVertex(vertex.Position, vertexs.Count);
+            var featureVertex = new HalfEdgeVertex(position, vertexs.Count);
             featureVertex.TmpParameter = new VertexParameter(edgeIndex1, edgeIndex2, alpha, beta);
 
             vertexs.Add(featureVertex);

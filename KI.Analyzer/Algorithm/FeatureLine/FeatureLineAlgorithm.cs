@@ -49,26 +49,24 @@ namespace KI.Analyzer.Algorithm
         /// </summary>
         public void Calculate()
         {
-
-
             foreach (var mesh in halfEdgeDS.HalfEdgeMeshs)
             {
-                bool convex = true;
-                bool concave = true;
+                bool convex = false;
+                bool concave = false;
                 int edge0_1 = 0;
                 int edge1_2 = 0;
                 int edge2_0 = 0;
 
                 foreach (var vertex in mesh.AroundVertex)
                 {
-                    if (vertex.MaxCurvature < Math.Abs(vertex.MinCurvature))
+                    if (vertex.MaxCurvature > Math.Abs(vertex.MinCurvature))
                     {
-                        convex = false;
+                        convex = true;
                     }
 
-                    if (-Math.Abs(vertex.MaxCurvature) < vertex.MinCurvature)
+                    if (-Math.Abs(vertex.MaxCurvature) > vertex.MinCurvature)
                     {
-                        concave = false;
+                        concave = true;
                     }
                 }
 
@@ -89,16 +87,16 @@ namespace KI.Analyzer.Algorithm
                         checkID1 = AddConvexPoint(vertex0, vertex1, ridges);
                         checkID2 = AddConvexPoint(vertex1, vertex2, ridges);
                     }
-                    else if (edge0_1 == 1 && edge1_2 == 1)
-                    {
-                        checkID1 = AddConvexPoint(vertex0, vertex1, ridges);
-                        checkID2 = AddConvexPoint(vertex1, vertex2, ridges);
-
-                    }
                     else if (edge1_2 == 1 && edge2_0 == 1)
                     {
                         checkID1 = AddConvexPoint(vertex1, vertex2, ridges);
                         checkID2 = AddConvexPoint(vertex2, vertex0, ridges);
+
+                    }
+                    else if (edge2_0 == 1 && edge0_1 == 1)
+                    {
+                        checkID1 = AddConvexPoint(vertex2, vertex0, ridges);
+                        checkID2 = AddConvexPoint(vertex0, vertex1, ridges);
                     }
 
                     if (checkID1 != null && checkID2 != null)
@@ -107,6 +105,8 @@ namespace KI.Analyzer.Algorithm
                     }
                 }
 
+                checkID1 = null;
+                checkID2 = null;
                 if (concave)
                 {
                     edge0_1 = CalculateConcaveParameter(vertex0, vertex1);
@@ -118,16 +118,16 @@ namespace KI.Analyzer.Algorithm
                         checkID1 = AddConcavePoint(vertex0, vertex1, ravines);
                         checkID2 = AddConcavePoint(vertex1, vertex2, ravines);
                     }
-                    else if (edge0_1 == 1 && edge1_2 == 1)
-                    {
-                        checkID1 = AddConcavePoint(vertex0, vertex1, ravines);
-                        checkID2 = AddConcavePoint(vertex1, vertex2, ravines);
-
-                    }
                     else if (edge1_2 == 1 && edge2_0 == 1)
                     {
                         checkID1 = AddConcavePoint(vertex1, vertex2, ravines);
                         checkID2 = AddConcavePoint(vertex2, vertex0, ravines);
+
+                    }
+                    else if (edge2_0 == 1 && edge0_1 == 1)
+                    {
+                        checkID1 = AddConcavePoint(vertex2, vertex0, ravines);
+                        checkID2 = AddConcavePoint(vertex0, vertex1, ravines);
                     }
 
                     if (checkID1 != null && checkID2 != null)
@@ -147,17 +147,16 @@ namespace KI.Analyzer.Algorithm
         /// <returns></returns>
         private HalfEdgeVertex AddConvexPoint(HalfEdgeVertex vertex0, HalfEdgeVertex vertex1, FeatureLineGraph ridges)
         {
-            HalfEdgeVertex checkID;
             HalfEdgeVertex addVertex = null;
-            checkID = ridges.GetVertexByGenerateEdgeIndex(vertex0.Index, vertex1.Index);
+            addVertex = ridges.GetVertexByGenerateEdgeIndex(vertex0.Index, vertex1.Index);
 
             // vertex0, vertex1 からなるエッジがないならば作る
-            if (checkID == null)
+            if (addVertex == null)
             {
                 var alpha = Math.Abs(vertex0.MaxDerivaribe);
                 var beta = Math.Abs(vertex1.MaxDerivaribe);
                 var position = Interaction.Inter(alpha, beta, vertex0.Position, vertex1.Position);
-                addVertex = ridges.AddVertex(vertex0, vertex0.Index, vertex1.Index, alpha, beta);
+                addVertex = ridges.AddVertex(position, vertex0.Index, vertex1.Index, alpha, beta);
             }
 
             return addVertex;
@@ -179,7 +178,7 @@ namespace KI.Analyzer.Algorithm
                 var alpha = Math.Abs(vertex0.MaxDerivaribe);
                 var beta = Math.Abs(vertex1.MaxDerivaribe);
                 var position = Interaction.Inter(alpha, beta, vertex0.Position, vertex1.Position);
-                addVertex = ravine.AddVertex(vertex0, vertex0.Index, vertex1.Index, alpha, beta);
+                addVertex = ravine.AddVertex(position, vertex0.Index, vertex1.Index, alpha, beta);
             }
 
             return addVertex;
@@ -195,7 +194,7 @@ namespace KI.Analyzer.Algorithm
             Vector3 direction;
 
             ksf0 = vertex0.MaxDerivaribe;
-            if (Vector3.Dot(vertex0.MaxDirection, vertex1.MaxDirection) < Calculator.THRESHOLD05)
+            if (Vector3.Dot(vertex0.MaxDirection, vertex1.MaxDirection) < 0)
             {
                 ksf1 = -vertex1.MaxDerivaribe;
                 direction = -vertex1.MaxDirection;
@@ -206,12 +205,12 @@ namespace KI.Analyzer.Algorithm
                 direction = vertex1.MaxDirection;
             }
 
-            if (ksf0 * ksf1 < Calculator.THRESHOLD05)
+            if (ksf0 * ksf1 < 0)
             {
                 var edge0 = vertex1 - vertex0;
                 var edge1 = vertex0 - vertex1;
-                if (ksf0 * Vector3.Dot(edge0, vertex0.MaxDirection) > Calculator.THRESHOLD05 ||
-                    ksf1 * Vector3.Dot(edge1, direction) > Calculator.THRESHOLD05)
+                if (ksf0 * Vector3.Dot(edge0, vertex0.MaxDirection) > 0 ||
+                    ksf1 * Vector3.Dot(edge1, direction) > 0)
                 {
                     return 1;
                 }
@@ -229,7 +228,7 @@ namespace KI.Analyzer.Algorithm
             ksf0 = vertex0.MinDerivaribe;
 
             // 向きを揃える
-            if (Vector3.Dot(vertex0.MinDirection, vertex1.MinDirection) < Calculator.THRESHOLD05)
+            if (Vector3.Dot(vertex0.MinDirection, vertex1.MinDirection) < 0)
             {
                 ksf1 = -vertex1.MinDerivaribe;
                 direction = -vertex1.MinDirection;
@@ -241,13 +240,13 @@ namespace KI.Analyzer.Algorithm
             }
 
             // 同じ向きで曲率の正負が異なるものが欲しい。
-            if (ksf0 * ksf1 < Calculator.THRESHOLD05)
+            if (ksf0 * ksf1 < 0)
             {
                 var edge0 = vertex1 - vertex0;
                 var edge1 = vertex0 - vertex1;
 
-                if (ksf0 * Vector3.Dot(edge0, vertex0.MinDirection) > Calculator.THRESHOLD05 ||
-                    ksf1 * Vector3.Dot(edge1, direction) > Calculator.THRESHOLD05)
+                if (ksf0 * Vector3.Dot(edge0, vertex0.MinDirection) < 0 ||
+                    ksf1 * Vector3.Dot(edge1, direction) < 0)
                 {
                     return 1;
                 }
