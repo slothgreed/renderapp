@@ -16,33 +16,34 @@ namespace KI.Tool.Command
     public class CreateFeatureLineCommand : CommandBase
     {
         /// <summary>
+        /// コマンド引数
+        /// </summary>
+        FeatureLineCommandArgs featureCommandArgs;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="commandArgs">コマンド引数</param>
         public CreateFeatureLineCommand(FeatureLineCommandArgs commandArgs)
-            : base(commandArgs)
         {
+            this.featureCommandArgs = commandArgs;
         }
 
         /// <summary>
         /// 実行できるか
         /// </summary>
-        /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public override CommandResult CanExecute(CommandArgsBase commandArg)
+        public override CommandResult CanExecute()
         {
-            var featureCommandArgs = commandArg as FeatureLineCommandArgs;
             return CommandUtility.CanCreatePolygon(featureCommandArgs.TargetObject);
         }
 
         /// <summary>
         /// 実行
         /// </summary>
-        /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public override CommandResult Execute(CommandArgsBase commandArg)
+        public override CommandResult Execute()
         {
-            var featureCommandArgs = commandArg as FeatureLineCommandArgs;
             var targetObject = featureCommandArgs.TargetObject;
             var scene = featureCommandArgs.Scene;
 
@@ -84,9 +85,8 @@ namespace KI.Tool.Command
         /// <summary>
         /// 元に戻す
         /// </summary>
-        /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public override CommandResult Undo(CommandArgsBase commandArg)
+        public override CommandResult Undo()
         {
             throw new NotImplementedException();
         }
@@ -95,7 +95,7 @@ namespace KI.Tool.Command
     /// <summary>
     /// 曲率コマンド
     /// </summary>
-    public class FeatureLineCommandArgs : CommandArgsBase
+    public class FeatureLineCommandArgs
     {
         /// <summary>
         /// 対象オブジェクト

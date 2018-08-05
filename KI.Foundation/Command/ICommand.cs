@@ -15,15 +15,12 @@
     /// </summary>
     public abstract class CommandBase
     {
-        public CommandArgsBase CommandArgs { get; private set; }
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="commandArgs">コマンド引数</param>
-        public CommandBase(CommandArgsBase commandArgs)
+        public CommandBase()
         {
-            CommandArgs = commandArgs;
         }
 
         /// <summary>
@@ -31,28 +28,20 @@
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public abstract CommandResult CanExecute(CommandArgsBase commandArg);
+        public abstract CommandResult CanExecute();
 
         /// <summary>
         /// 処理の実行
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public abstract CommandResult Execute(CommandArgsBase commandArg);
+        public abstract CommandResult Execute();
 
         /// <summary>
         /// Undo
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public abstract CommandResult Undo(CommandArgsBase commandArg);
-    }
-
-    /// <summary>
-    /// コマンド引数
-    /// </summary>
-    public interface CommandArgsBase
-    {
-
+        public abstract CommandResult Undo();
     }
 }

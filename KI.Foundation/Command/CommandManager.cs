@@ -76,14 +76,14 @@ namespace KI.Foundation.Command
             }
 
             CommandResult error = CommandResult.None;
-            error = command.CanExecute(command.CommandArgs);
+            error = command.CanExecute();
             if (error != CommandResult.Success)
             {
                 Logger.Log(Logger.LogLevel.Warning, "Command CanExecute Error", error.ToString());
                 return error;
             }
 
-            error = command.Execute(command.CommandArgs);
+            error = command.Execute();
             if (error != CommandResult.Success)
             {
                 Logger.Log(Logger.LogLevel.Warning, "Command Execute Error", error.ToString());
@@ -107,7 +107,7 @@ namespace KI.Foundation.Command
             if (commandList.Count < stack)
             {
                 CommandBase command = commandList[stack].Pop();
-                if (command.Undo(command.CommandArgs) == CommandResult.Failed)
+                if (command.Undo() == CommandResult.Failed)
                 {
                     Logger.Log(Logger.LogLevel.Warning, "Undo Error");
                 }

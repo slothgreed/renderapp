@@ -15,33 +15,34 @@ namespace KI.Tool.Command
     public class CreateConvexHullCommand : CommandBase
     {
         /// <summary>
+        /// コマンド引数
+        /// </summary>
+        private ConvexHullCommandArgs convexCommandArgs;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="commandArgs">コマンド引数</param>
         public CreateConvexHullCommand(ConvexHullCommandArgs commandArgs)
-            :base(commandArgs)
         {
+            convexCommandArgs = commandArgs;
         }
 
         /// <summary>
         /// 実行できるか
         /// </summary>
-        /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public override CommandResult CanExecute(CommandArgsBase commandArg)
+        public override CommandResult CanExecute()
         {
-            var convexCommandArgs = commandArg as ConvexHullCommandArgs;
             return CommandUtility.CanCreatePolygon(convexCommandArgs.TargetObject);
         }
 
         /// <summary>
         /// 実行
         /// </summary>
-        /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public override CommandResult Execute(CommandArgsBase commandArg)
+        public override CommandResult Execute()
         {
-            var convexCommandArgs = commandArg as ConvexHullCommandArgs;
             var targetObject = convexCommandArgs.TargetObject;
             var scene = convexCommandArgs.Scene;
 
@@ -87,9 +88,8 @@ namespace KI.Tool.Command
         /// <summary>
         /// 元に戻す
         /// </summary>
-        /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public override CommandResult Undo(CommandArgsBase commandArg)
+        public override CommandResult Undo()
         {
             throw new NotImplementedException();
         }
@@ -98,7 +98,7 @@ namespace KI.Tool.Command
     /// <summary>
     /// 曲率コマンド
     /// </summary>
-    public class ConvexHullCommandArgs : CommandArgsBase
+    public class ConvexHullCommandArgs
     {
         /// <summary>
         /// 対象オブジェクト

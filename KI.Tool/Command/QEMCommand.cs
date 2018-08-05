@@ -18,12 +18,17 @@ namespace KI.Tool.Command
     public class QEMCommand : CommandBase
     {
         /// <summary>
+        /// コマンド引数
+        /// </summary>
+        private QEMCommandArgs qemCommandArgs;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="commandArgs">コマンド引数</param>
         public QEMCommand(QEMCommandArgs commandArgs)
-            :base(commandArgs)
         {
+            qemCommandArgs = commandArgs;
         }
 
         /// <summary>
@@ -31,9 +36,8 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>結果</returns>
-        public override CommandResult CanExecute(CommandArgsBase commandArg)
+        public override CommandResult CanExecute()
         {
-            var qemCommandArgs = commandArg as QEMCommandArgs;
             return CommandUtility.CanCreatePolygon(qemCommandArgs.TargetObject);
         }
 
@@ -42,9 +46,8 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>結果</returns>
-        public override CommandResult Execute(CommandArgsBase commandArg)
+        public override CommandResult Execute()
         {
-            var qemCommandArgs = commandArg as QEMCommandArgs;
             var halfDS = qemCommandArgs.TargetObject.Polygon as HalfEdgeDS;
 
             var adaptiveMesh = new QEMAlgorithm(halfDS, halfDS.Vertexs.Count / 2);
@@ -54,7 +57,7 @@ namespace KI.Tool.Command
             return CommandResult.Success;
         }
 
-        public override CommandResult Undo(CommandArgsBase commandArg)
+        public override CommandResult Undo()
         {
             throw new NotImplementedException();
         }
@@ -63,7 +66,7 @@ namespace KI.Tool.Command
     /// <summary>
     /// QEMのコマンド引数
     /// </summary>
-    public class QEMCommandArgs : CommandArgsBase
+    public class QEMCommandArgs
     {
         /// <summary>
         /// ターゲットオブジェクト

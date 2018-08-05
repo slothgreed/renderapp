@@ -17,33 +17,34 @@ namespace KI.Tool.Command
     public class VertexCurvatureCommand : CommandBase
     {
         /// <summary>
+        /// コマンド引数
+        /// </summary>
+        private VertexCurvatureCommandArgs curvateureCommandArgs;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="commandArgs">コマンド引数</param>
         public VertexCurvatureCommand(VertexCurvatureCommandArgs commandArgs)
-            :base(commandArgs)
         {
+            curvateureCommandArgs = commandArgs;
         }
 
         /// <summary>
         /// 実行できるか
         /// </summary>
-        /// <param name="commandArg">コマンド引数</param>
         /// <returns>結果</returns>
-        public override CommandResult CanExecute(CommandArgsBase commandArg)
+        public override CommandResult CanExecute()
         {
-            var curvateureCommandArgs = commandArg as VertexCurvatureCommandArgs;
             return CommandUtility.CanCreatePolygon(curvateureCommandArgs.TargetObject);
         }
 
         /// <summary>
         /// 実行
         /// </summary>
-        /// <param name="commandArg">コマンド引数</param>
         /// <returns>結果</returns>
-        public override CommandResult Execute(CommandArgsBase commandArg)
+        public override CommandResult Execute()
         {
-            var curvateureCommandArgs = commandArg as VertexCurvatureCommandArgs;
             var targetObject = curvateureCommandArgs.TargetObject;
             var halfDS = curvateureCommandArgs.TargetObject.Polygon as HalfEdgeDS;
             var scene = curvateureCommandArgs.Scene;
@@ -132,7 +133,7 @@ namespace KI.Tool.Command
             return CommandResult.Success;
         }
 
-        public override CommandResult Undo(CommandArgsBase commandArg)
+        public override CommandResult Undo()
         {
             throw new NotImplementedException();
         }
@@ -141,7 +142,7 @@ namespace KI.Tool.Command
     /// <summary>
     /// 曲率コマンド
     /// </summary>
-    public class VertexCurvatureCommandArgs : CommandArgsBase
+    public class VertexCurvatureCommandArgs
     {
         /// <summary>
         /// 対象オブジェクト

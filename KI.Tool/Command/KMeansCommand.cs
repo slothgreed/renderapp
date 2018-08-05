@@ -16,22 +16,26 @@ namespace KI.Tool.Command
     public class KMeansCommand : CommandBase
     {
         /// <summary>
+        /// コマンド引数
+        /// </summary>
+        private KMeansCommandArgs kmeansCommandArgs;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="commandArgs">コマンド引数</param>
         public KMeansCommand(KMeansCommandArgs commandArg)
-            :base(commandArg)
         {
+            kmeansCommandArgs = commandArg;
         }
 
-        public override CommandResult CanExecute(CommandArgsBase commandArg)
+        public override CommandResult CanExecute()
         {
-            return CommandUtility.CanCreatePolygon((commandArg as KMeansCommandArgs).TargetObject);
+            return CommandUtility.CanCreatePolygon(kmeansCommandArgs.TargetObject);
         }
 
-        public override CommandResult Execute(CommandArgsBase commandArg)
+        public override CommandResult Execute()
         {
-            var kmeansCommandArgs = commandArg as KMeansCommandArgs;
             var halfEdgeDS = kmeansCommandArgs.TargetObject.Polygon as HalfEdgeDS;
             var kmeansAlgorithm = new KMeansAlgorithm(halfEdgeDS, kmeansCommandArgs.ClusterNum, kmeansCommandArgs.IterateNum);
             kmeansAlgorithm.Calculate();
@@ -62,7 +66,7 @@ namespace KI.Tool.Command
             return CommandResult.Success;
         }
 
-        public override CommandResult Undo(CommandArgsBase commandArg)
+        public override CommandResult Undo()
         {
             throw new NotImplementedException();
         }
@@ -71,7 +75,7 @@ namespace KI.Tool.Command
     /// <summary>
     /// KMeans のコマンド
     /// </summary>
-    public class KMeansCommandArgs : CommandArgsBase
+    public class KMeansCommandArgs
     {
         /// <summary>
         /// 対象形状

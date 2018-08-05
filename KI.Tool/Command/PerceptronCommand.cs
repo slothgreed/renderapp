@@ -17,20 +17,24 @@ namespace KI.Tool.Command
     public class PerceptronCommand : CommandBase
     {
         /// <summary>
+        /// コマンド引数
+        /// </summary>
+        private PerceptronCommandArgs perceptronCommandArgs;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="commandArgs">コマンド引数</param>
         public PerceptronCommand(PerceptronCommandArgs commandArgs)
-            :base(commandArgs)
         {
+            perceptronCommandArgs = commandArgs;
         }
 
         /// <summary>
         /// 実行できるか
         /// </summary>
-        /// <param name="commandArg">コマンド引数</param>
         /// <returns>結果</returns>
-        public override CommandResult CanExecute(CommandArgsBase commandArg)
+        public override CommandResult CanExecute()
         {
             return CommandResult.Success;
         }
@@ -40,7 +44,7 @@ namespace KI.Tool.Command
         /// </summary>
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>結果</returns>
-        public override CommandResult Execute(CommandArgsBase commandArg)
+        public override CommandResult Execute()
         {
             var values = new float[100][];
             var result = new float[100];
@@ -88,13 +92,12 @@ namespace KI.Tool.Command
 
             var polygon = new Polygon("perceptron", vertexs);
             RenderObject render = RenderObjectFactory.Instance.CreateRenderObject("perceptron", polygon);
-            var perceptronCommandArgs = commandArg as PerceptronCommandArgs;
             perceptronCommandArgs.Scene.AddObject(render);
 
             return CommandResult.Success;
         }
 
-        public override CommandResult Undo(CommandArgsBase commandArg)
+        public override CommandResult Undo()
         {
             throw new NotImplementedException();
         }
@@ -103,7 +106,7 @@ namespace KI.Tool.Command
     /// <summary>
     /// Perceptronのコマンド引数
     /// </summary>
-    public class PerceptronCommandArgs : CommandArgsBase
+    public class PerceptronCommandArgs
     {
         /// <summary>
         /// シーン

@@ -18,33 +18,34 @@ namespace KI.Tool.Command
     public class AdaptiveMeshCommand : CommandBase
     {
         /// <summary>
+        /// コマンド引数
+        /// </summary>
+        AdaptiveMeshCommandArgs adaptiveCommandArgs;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="commandArgs">コマンド引数</param>
         public AdaptiveMeshCommand(AdaptiveMeshCommandArgs commandArgs)
-            :base(commandArgs)
         {
+            adaptiveCommandArgs = commandArgs;
         }
 
         /// <summary>
         /// 実行できるか
         /// </summary>
-        /// <param name="commandArg">コマンド引数</param>
         /// <returns>結果</returns>
-        public override CommandResult CanExecute(CommandArgsBase commandArg)
+        public override CommandResult CanExecute()
         {
-            var adaptiveCommandArgs = commandArg as AdaptiveMeshCommandArgs;
             return CommandUtility.CanCreatePolygon(adaptiveCommandArgs.TargetObject);
         }
 
         /// <summary>
         /// 実行
         /// </summary>
-        /// <param name="commandArg">コマンド引数</param>
         /// <returns>結果</returns>
-        public override CommandResult Execute(CommandArgsBase commandArg)
+        public override CommandResult Execute()
         {
-            var adaptiveCommandArgs = commandArg as AdaptiveMeshCommandArgs;
             var halfDS = adaptiveCommandArgs.TargetObject.Polygon as HalfEdgeDS;
 
             var adaptiveMesh = new AdaptiveMeshAlgorithm(halfDS, 1);
@@ -54,7 +55,7 @@ namespace KI.Tool.Command
             return CommandResult.Success;
         }
 
-        public override CommandResult Undo(CommandArgsBase commandArg)
+        public override CommandResult Undo()
         {
             throw new NotImplementedException();
         }
@@ -63,7 +64,7 @@ namespace KI.Tool.Command
     /// <summary>
     /// 解適合格子メッシュのコマンド引数
     /// </summary>
-    public class AdaptiveMeshCommandArgs : CommandArgsBase
+    public class AdaptiveMeshCommandArgs
     {
         /// <summary>
         /// ターゲットオブジェクト

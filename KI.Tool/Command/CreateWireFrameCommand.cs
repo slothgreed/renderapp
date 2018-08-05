@@ -13,33 +13,34 @@ namespace KI.Tool.Command
     public class CreateWireFrameCommand : CommandBase
     {
         /// <summary>
+        /// コマンド引数
+        /// </summary>
+        private WireFrameCommandArgs wireCommandArgs;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="commandArgs">コマンド引数</param>
         public CreateWireFrameCommand(WireFrameCommandArgs commandArgs)
-            : base(commandArgs)
         {
+            wireCommandArgs = commandArgs;
         }
 
         /// <summary>
         /// 実行できるか
         /// </summary>
-        /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public override CommandResult CanExecute(CommandArgsBase commandArg)
+        public override CommandResult CanExecute()
         {
-            var wireCommandArgs = commandArg as WireFrameCommandArgs;
             return CommandUtility.CanCreatePolygon(wireCommandArgs.TargetObject);
         }
 
         /// <summary>
         /// 実行
         /// </summary>
-        /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public override CommandResult Execute(CommandArgsBase commandArg)
+        public override CommandResult Execute()
         {
-            var wireCommandArgs = commandArg as WireFrameCommandArgs;
             var targetObject = wireCommandArgs.TargetObject;
             var scene = wireCommandArgs.Scene;
             var color = wireCommandArgs.Color;
@@ -77,9 +78,8 @@ namespace KI.Tool.Command
         /// <summary>
         /// 元に戻す
         /// </summary>
-        /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public override CommandResult Undo(CommandArgsBase commandArg)
+        public override CommandResult Undo()
         {
             return CommandResult.Failed;
         }
@@ -89,7 +89,7 @@ namespace KI.Tool.Command
     /// <summary>
     /// ワイヤフレームコマンド
     /// </summary>
-    public class WireFrameCommandArgs : CommandArgsBase
+    public class WireFrameCommandArgs
     {
         /// <summary>
         /// 対象オブジェクト

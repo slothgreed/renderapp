@@ -27,34 +27,35 @@ namespace KI.Tool.Command
         private Vector3 voxelColor;
 
         /// <summary>
+        /// コマンド引数
+        /// </summary>
+        private VoxelCommandArgs voxelCommandArgs;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="commandArgs">コマンド引数</param>
         public CreateVoxelCommand(VoxelCommandArgs commandArgs)
-            :base(commandArgs)
         {
+            voxelCommandArgs = commandArgs;
             voxelColor = commandArgs.Color;
         }
 
         /// <summary>
         /// 実行できるか
         /// </summary>
-        /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public override CommandResult CanExecute(CommandArgsBase commandArg)
+        public override CommandResult CanExecute()
         {
-            var voxelCommandArgs = commandArg as VoxelCommandArgs;
             return CommandUtility.CanCreatePolygon(voxelCommandArgs.TargetObject);
         }
 
         /// <summary>
         /// 実行
         /// </summary>
-        /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public override CommandResult Execute(CommandArgsBase commandArg)
+        public override CommandResult Execute()
         {
-            var voxelCommandArgs = commandArg as VoxelCommandArgs;
             var targetObject = voxelCommandArgs.TargetObject;
             var partition = voxelCommandArgs.Partition;
             var scene = voxelCommandArgs.Scene;
@@ -151,9 +152,8 @@ namespace KI.Tool.Command
         /// <summary>
         /// 元に戻す
         /// </summary>
-        /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public override CommandResult Undo(CommandArgsBase commandArg)
+        public override CommandResult Undo()
         {
             throw new NotImplementedException();
         }
@@ -163,7 +163,7 @@ namespace KI.Tool.Command
     /// <summary>
     /// ボクセルコマンド
     /// </summary>
-    public class VoxelCommandArgs : CommandArgsBase
+    public class VoxelCommandArgs
     {
         /// <summary>
         /// 対象オブジェクト

@@ -24,33 +24,34 @@ namespace KI.Tool.Command
     public class CreateIsoLineCommand : CommandBase
     {
         /// <summary>
+        /// コマンド引数
+        /// </summary>
+        private IsoLineCommandArgs isoLineCommandArgs;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="commandArgs">コマンド引数</param>
         public CreateIsoLineCommand(IsoLineCommandArgs commandArgs)
-            : base(commandArgs)
         {
+            isoLineCommandArgs = commandArgs;
         }
 
         /// <summary>
         /// 実行できるか
         /// </summary>
-        /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public override CommandResult CanExecute(CommandArgsBase commandArg)
+        public override CommandResult CanExecute()
         {
-            var isoLineCommandArgs = commandArg as IsoLineCommandArgs;
             return CommandUtility.CanCreatePolygon(isoLineCommandArgs.TargetObject);
         }
 
         /// <summary>
         /// 実行
         /// </summary>
-        /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
-        public override CommandResult Execute(CommandArgsBase commandArg)
+        public override CommandResult Execute()
         {
-            var isoLineCommandArgs = commandArg as IsoLineCommandArgs;
             var targetObject = isoLineCommandArgs.TargetObject;
             var scene = isoLineCommandArgs.Scene;
 
@@ -92,7 +93,7 @@ namespace KI.Tool.Command
             return CommandResult.Success;
         }
 
-        public override CommandResult Undo(CommandArgsBase commandArg)
+        public override CommandResult Undo()
         {
             throw new NotImplementedException();
         }
@@ -101,7 +102,7 @@ namespace KI.Tool.Command
     /// <summary>
     /// 等値線の作成コマンド
     /// </summary>
-    public class IsoLineCommandArgs : CommandArgsBase
+    public class IsoLineCommandArgs
     {
         /// <summary>
         /// 対象オブジェクト

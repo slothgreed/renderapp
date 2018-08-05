@@ -55,7 +55,7 @@ namespace KI.UI.ViewModel
         /// <returns></returns>
         public ViewModelBase FindParent<T>() where T : ViewModelBase
         {
-            if(Parent == null)
+            if (Parent == null)
             {
                 return null;
             }
