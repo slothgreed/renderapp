@@ -74,6 +74,17 @@ namespace KI.Asset
         }
 
         /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <param name="radial">半径</param>
+        /// <param name="smoothNum">スムージング回数</param>
+        public IPolygon CreateIcosahedron(string name, float radial, int smoothNum)
+        {
+            return new Icosahedron(name, radial, smoothNum);
+        }
+
+        /// <summary>
         /// 3dモデルのロード
         /// </summary>
         /// <param name="filePath">ファイルパス</param>

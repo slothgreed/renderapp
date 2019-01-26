@@ -75,6 +75,7 @@
     <Compile Include="Primitive\Axis.cs" />
     <Compile Include="Primitive\Cube.cs" />
     <Compile Include="Primitive\GridPlane.cs" />
+    <Compile Include="Primitive\Icosahedron.cs" />
     <Compile Include="Primitive\IPolygon.cs" />
     <Compile Include="Primitive\Rectangle.cs" />
     <Compile Include="Primitive\Sphere.cs" />

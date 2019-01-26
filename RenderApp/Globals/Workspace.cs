@@ -133,6 +133,13 @@ namespace RenderApp.Globals
                     renderBunny.Polygon.Type);
                 renderBunny.Attributes.Add(vectorFiledAttribute);
                 MainScene.AddObject(vectorFiledAttribute, parentNode);
+
+
+                var icosahedron = AssetFactory.Instance.CreateIcosahedron("Icosahedron", 10, 10);
+                var renderIcosahedron = RenderObjectFactory.Instance.CreateRenderObject("Icosahedron", icosahedron);
+                MainScene.AddObject(renderIcosahedron);
+
+                //CommandManager.Instance.Execute(new CreateWireFrameCommand(new WireFrameCommandArgs(renderIcosahedron, MainScene, Vector3.Zero)), false);
             }
 
             // plane
