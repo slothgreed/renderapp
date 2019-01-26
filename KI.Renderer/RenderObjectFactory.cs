@@ -43,27 +43,9 @@ namespace KI.Asset
         /// <param name="name">名前</param>
         /// <param name="primitive">ジオメトリ</param>
         /// <returns>描画オブジェクト</returns>
-        public RenderObject CreateRenderObject(string name, IPolygon primitive)
+        public RenderObject CreateRenderObject(string name, ICreateModel primitive)
         {
-            return CreateRenderObject(name, primitive.Polygons.First());
-        }
-
-        /// <summary>
-        /// ジオメトリの描画オブジェクトの作成
-        /// </summary>
-        /// <param name="name">名前</param>
-        /// <param name="primitive">ジオメトリ</param>
-        /// <returns>描画オブジェクト</returns>
-        public IEnumerable<RenderObject> CreateRenderObjects(string name, IPolygon primitive)
-        {
-            var list = new List<RenderObject>();
-            foreach (var info in primitive.Polygons)
-            {
-                var renderObject = CreateRenderObject(name, primitive);
-                list.Add(renderObject);
-            }
-
-            return list;
+            return CreateRenderObject(name, primitive.Model);
         }
 
         /// <summary>

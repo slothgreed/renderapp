@@ -10,7 +10,7 @@ namespace KI.Asset
     /// <summary>
     /// 球
     /// </summary>
-    public class Sphere : KIObject, IPolygon
+    public class Sphere : KIObject, ICreateModel
     {
         /// <summary>
         /// 半径
@@ -47,18 +47,18 @@ namespace KI.Asset
             this.hpartition = hpartition;
             this.wpartition = wpartition;
             this.orient = orient;
-            CreatePolygon();
+            CreateModel();
         }
 
         /// <summary>
         /// 形状情報
         /// </summary>
-        public Polygon[] Polygons { get; private set; }
+        public Polygon Model { get; private set; }
 
         /// <summary>
         /// オブジェクトの設定
         /// </summary>
-        public void CreatePolygon()
+        public void CreateModel()
         {
             float theta = (float)Math.PI / hpartition;
             float phi = (float)Math.PI / wpartition;
@@ -172,11 +172,9 @@ namespace KI.Asset
                         new Vertex(i + 2, position[3 * i + 2], normal[3 * i + 2], texcoord[3 * i + 2])));
             }
 
-            var info = new Polygon(this.Name, meshs, PolygonType.Triangles);
+            Model = new Polygon(this.Name, meshs, PolygonType.Triangles);
 
             //info.ConvertVertexArray();
-
-            Polygons = new Polygon[] { info };
         }
 
         /// <summary>

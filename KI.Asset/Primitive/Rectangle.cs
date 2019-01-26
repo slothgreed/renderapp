@@ -10,7 +10,7 @@ namespace KI.Asset
     /// <summary>
     /// 平面
     /// </summary>
-    public class Rectangle : KIObject, IPolygon
+    public class Rectangle : KIObject, ICreateModel
     {
         #region [メンバ変数]
         /// <summary>
@@ -54,7 +54,7 @@ namespace KI.Asset
             quad1 = q1;
             quad2 = q2;
             quad3 = q3;
-            CreatePolygon();
+            CreateModel();
         }
 
         /// <summary>
@@ -68,19 +68,19 @@ namespace KI.Asset
             quad1 = new Vector3(1, -1, 0);
             quad2 = new Vector3(1, 1, 0);
             quad3 = new Vector3(-1, 1, 0);
-            CreatePolygon();
+            CreateModel();
         }
 
         /// <summary>
         /// 形状情報
         /// </summary>
-        public Polygon[] Polygons { get; private set; }
+        public Polygon Model { get; private set; }
 
         #region [形状の作成]
         /// <summary>
         /// 形状の作成
         /// </summary>
-        public void CreatePolygon()
+        public void CreateModel()
         {
             surface = Plane.Formula(quad0, quad1, quad2);
 
@@ -90,9 +90,7 @@ namespace KI.Asset
                 new Vertex(2, quad2, surface.Xyz, Vector2.One),
                 new Vertex(3, quad3, surface.Xyz, Vector2.UnitY));
 
-            var polygon = new Polygon(this.Name, new List<Mesh>() { mesh }, PolygonType.Quads);
-
-            Polygons = new Polygon[] { polygon };
+            Model = new Polygon(this.Name, new List<Mesh>() { mesh }, PolygonType.Quads);
         }
         #endregion
     }

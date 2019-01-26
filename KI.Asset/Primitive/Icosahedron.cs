@@ -9,7 +9,7 @@ using OpenTK;
 
 namespace KI.Asset
 {
-    class Icosahedron : KIObject, IPolygon
+    class Icosahedron : KIObject, ICreateModel
     {
 
         /// <summary>
@@ -33,16 +33,16 @@ namespace KI.Asset
         {
             this.radial = radial;
             this.smoothNum = smoothNum;
-            CreatePolygon();
+            CreateModel();
         }
 
-        public Polygon[] Polygons
+        public Polygon Model
         {
             get;
             private set;
         }
 
-        public void CreatePolygon()
+        public void CreateModel()
         {
             var position = new List<Vector3>();
             var normal = new List<Vector3>();
@@ -87,10 +87,7 @@ namespace KI.Asset
             //    vertexs.Add(new Vertex(i, position[i]));
             //}
 
-            var polygon = new Polygon(this.Name, vertexs, index, PolygonType.Triangles);
-
-            Polygons = new Polygon[] { polygon };
+            Model = new Polygon(this.Name, vertexs, index, PolygonType.Triangles);
         }
-
     }
 }

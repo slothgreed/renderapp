@@ -9,7 +9,7 @@ namespace KI.Asset.Loader.Converter
     /// <summary>
     /// STLのローダ現在テキストファイルのみ
     /// </summary>
-    public class STLConverter : IPolygon
+    public class STLConverter : ICreateModel
     {
         /// <summary>
         /// stlファイルのローダ
@@ -23,13 +23,13 @@ namespace KI.Asset.Loader.Converter
         public STLConverter(string filePath)
         {
             stlData = new STLLoader(filePath);
-            CreatePolygon();
+            CreateModel();
         }
 
         /// <summary>
         /// 形状情報
         /// </summary>
-        public Polygon[] Polygons
+        public Polygon Model
         {
             get;
             private set;
@@ -38,7 +38,7 @@ namespace KI.Asset.Loader.Converter
         /// <summary>
         /// 形状の作成
         /// </summary>
-        public void CreatePolygon()
+        public void CreateModel()
         {
             var mesh = new List<Mesh>();
 
@@ -51,8 +51,7 @@ namespace KI.Asset.Loader.Converter
                         new Vertex(i + 2, stlData.Position[3 * i + 2], stlData.Normal[3 * i + 2], Vector3.One)));
             }
 
-            Polygon info = new Polygon(stlData.FileName, mesh, PolygonType.Triangles);
-            Polygons = new Polygon[] { info };
+            Model = new Polygon(stlData.FileName, mesh, PolygonType.Triangles);
         }
     }
 }

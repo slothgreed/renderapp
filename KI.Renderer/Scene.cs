@@ -69,11 +69,8 @@ namespace KI.Asset
         public void AddObject(string filePath)
         {
             var model = AssetFactory.Instance.CreateLoad3DModel(filePath);
-            var renderObject = RenderObjectFactory.Instance.CreateRenderObjects(filePath, model);
-            foreach (var obj in renderObject)
-            {
-                AddObject(obj);
-            }
+            var renderObject = RenderObjectFactory.Instance.CreateRenderObject(filePath, model);
+            AddObject(renderObject);
         }
 
         public KINode FindNode(KIObject obj)

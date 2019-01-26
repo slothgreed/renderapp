@@ -8,7 +8,7 @@ namespace KI.Asset
     /// <summary>
     /// 軸
     /// </summary>
-    public class Axis : KIObject, IPolygon
+    public class Axis : KIObject, ICreateModel
     {
         /// <summary>
         /// 最小値
@@ -31,18 +31,18 @@ namespace KI.Asset
         {
             this.min = min;
             this.max = max;
-            CreatePolygon();
+            CreateModel();
         }
 
         /// <summary>
         /// 形状情報
         /// </summary>
-        public Polygon[] Polygons { get; private set; }
+        public Polygon Model { get; private set; }
 
         /// <summary>
         /// 軸作成
         /// </summary>
-        public void CreatePolygon()
+        public void CreateModel()
         {
             var position = new List<Vector3>();
             var color = new List<Vector3>();
@@ -60,8 +60,7 @@ namespace KI.Asset
             lines.Add(new Line(vertexs[2], vertexs[3]));
             lines.Add(new Line(vertexs[4], vertexs[5]));
 
-            Polygon info = new Polygon("Axis", lines);
-            Polygons = new Polygon[] { info };
+            Model = new Polygon("Axis", lines);
         }
     }
 }

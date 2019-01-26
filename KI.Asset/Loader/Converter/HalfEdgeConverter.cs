@@ -8,7 +8,7 @@ namespace KI.Asset.Loader.Converter
     /// <summary>
     /// ハーフエッジを独自形式に変換
     /// </summary>
-    public class HalfEdgeConverter : IPolygon
+    public class HalfEdgeConverter : ICreateModel
     {
         /// <summary>
         /// ハーフエッジ
@@ -23,7 +23,7 @@ namespace KI.Asset.Loader.Converter
         {
             halfEdge = new HalfEdgeDS(filePath);
             HalfEdgeIO.ReadFile(filePath, halfEdge);
-            CreatePolygon();
+            CreateModel();
         }
 
         /// <summary>
@@ -33,18 +33,18 @@ namespace KI.Asset.Loader.Converter
         public HalfEdgeConverter(HalfEdgeDS half)
         {
             halfEdge = half;
-            CreatePolygon();
+            CreateModel();
         }
 
         /// <summary>
         /// 形状
         /// </summary>
-        public Polygon[] Polygons { get; private set; }
+        public Polygon Model { get; private set; }
 
         /// <summary>
         /// 形状の作成
         /// </summary>
-        public void CreatePolygon()
+        public void CreateModel()
         {
             halfEdge.Index = new List<int>();
             foreach (var mesh in halfEdge.HalfEdgeMeshs)
@@ -61,7 +61,7 @@ namespace KI.Asset.Loader.Converter
 
             var uvTexture = TextureFactory.Instance.CreateUVTexture(128);
             halfEdge.Textures.Add(Gfx.KITexture.TextureKind.Albedo, uvTexture);
-            Polygons = new Polygon[] { halfEdge };
+            Model = halfEdge;
         }
     }
 }

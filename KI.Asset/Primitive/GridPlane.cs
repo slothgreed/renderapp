@@ -7,7 +7,7 @@ namespace KI.Asset.Primitive
     /// <summary>
     /// グリッド付き平面
     /// </summary>
-    public class GridPlane : IPolygon
+    public class GridPlane : ICreateModel
     {
         /// <summary>
         /// グリッドの範囲
@@ -28,18 +28,18 @@ namespace KI.Asset.Primitive
         {
             this.area = area;
             this.delta = space;
-            CreatePolygon();
+            CreateModel();
         }
 
         /// <summary>
         /// 形状
         /// </summary>
-        public Polygon[] Polygons { get; private set; }
+        public Polygon Model { get; private set; }
 
         /// <summary>
         /// 形状の作成
         /// </summary>
-        public void CreatePolygon()
+        public void CreateModel()
         {
             List<Vertex> vertexs = new List<Vertex>();
             List<Line> lines = new List<Line>();
@@ -76,8 +76,7 @@ namespace KI.Asset.Primitive
                 }
             }
 
-            var info = new Polygon("GridPlane", lines);
-            Polygons = new Polygon[] { info };
+            Model = new Polygon("GridPlane", lines);
         }
     }
 }

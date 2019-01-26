@@ -10,7 +10,7 @@ namespace KI.Asset.Loader.Converter
     /// <summary>
     /// objファイルデータを独自形式に変換
     /// </summary>
-    public class OBJConverter : IPolygon
+    public class OBJConverter // : ICreateModel : obj is not single object.
     {
         /// <summary>
         /// objファイルのデータ
@@ -24,13 +24,13 @@ namespace KI.Asset.Loader.Converter
         public OBJConverter(string filePath)
         {
             objData = new OBJLoader(filePath);
-            CreatePolygon();
+            CreateModel();
         }
 
         /// <summary>
         /// 形状情報
         /// </summary>
-        public Polygon[] Polygons
+        public Polygon[] Model
         {
             get;
             private set;
@@ -65,7 +65,7 @@ namespace KI.Asset.Loader.Converter
         /// <summary>
         /// 形状の作成
         /// </summary>
-        public void CreatePolygon()
+        public void CreateModel()
         {
             List<Polygon> polygons = new List<Polygon>();
 
@@ -113,7 +113,7 @@ namespace KI.Asset.Loader.Converter
                 }
             }
 
-            Polygons = polygons.ToArray();
+            Model = polygons.ToArray();
         }
     }
 }

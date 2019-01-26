@@ -11,7 +11,7 @@ namespace KI.Asset.Loader.Converter
     /// <summary>
     /// plyファイルデータを独自形式に変換
     /// </summary>
-    public class PLYConverter : IPolygon
+    public class PLYConverter : ICreateModel
     {
         /// <summary>
         /// plyファイルデータ
@@ -25,18 +25,18 @@ namespace KI.Asset.Loader.Converter
         public PLYConverter(string filePath)
         {
             plyData = new PLYLoader(filePath);
-            CreatePolygon();
+            CreateModel();
         }
 
         /// <summary>
         /// 形状情報
         /// </summary>
-        public Polygon[] Polygons { get; private set; }
+        public Polygon Model { get; private set; }
 
         /// <summary>
         /// 形状の作成
         /// </summary>
-        public void CreatePolygon()
+        public void CreateModel()
         {
             var vertexs = new List<Vertex>();
 
@@ -55,8 +55,7 @@ namespace KI.Asset.Loader.Converter
             }
 
             List<int> index = plyData.FaceIndex.ToList();
-            Polygon info = new Polygon(plyData.FileName, vertexs, index, PolygonType.Triangles);
-            Polygons = new Polygon[] { info };
+            Model = new Polygon(plyData.FileName, vertexs, index, PolygonType.Triangles);
         }
     }
 }

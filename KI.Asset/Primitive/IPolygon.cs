@@ -5,12 +5,12 @@ namespace KI.Asset
     /// <summary>
     /// 形状クラスのインタフェース
     /// </summary>
-    public interface IPolygon
+    public interface ICreateModel
     {
         /// <summary>
         /// 形状
         /// </summary>
-        Polygon[] Polygons
+        Polygon Model
         {
             get;
         }
@@ -18,6 +18,6 @@ namespace KI.Asset
         /// <summary>
         /// 形状の作成
         /// </summary>
-        void CreatePolygon();
+        void CreateModel();
     }
 }
