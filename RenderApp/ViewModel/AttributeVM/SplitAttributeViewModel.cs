@@ -8,7 +8,7 @@ using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel
 {
-    public class SplitAttributeViewModel : ViewModelBase
+    public class SplitAttributeViewModel : AttributeViewModel
     {
         /// <summary>
         /// モデル

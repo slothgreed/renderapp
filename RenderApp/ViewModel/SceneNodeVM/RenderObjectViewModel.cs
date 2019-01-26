@@ -38,6 +38,11 @@ namespace RenderApp.ViewModel
                 {
                     viewModel = new SplitAttributeViewModel(this, attribute as SplitAttribute);
                 }
+                else
+                {
+                    viewModel = new DefaultAttributeViewModel(this, attribute);
+                }
+
 
                 if (viewModel != null)
                 {

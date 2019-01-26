@@ -87,9 +87,6 @@ namespace KI.Tool.Command
             var polyAttriute = new PolygonAttribute("IsoLines", vertexBuffer, PolygonType.Lines, targetObject.Shader);
             targetObject.Attributes.Add(polyAttriute);
 
-            var parentNode = Global.Renderer.ActiveScene.FindNode(targetObject);
-            scene.AddObject(polyAttriute, parentNode);
-
             return CommandResult.Success;
         }
 

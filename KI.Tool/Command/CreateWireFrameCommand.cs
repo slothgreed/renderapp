@@ -47,18 +47,49 @@ namespace KI.Tool.Command
 
             List<int> lineIndex = new List<int>();
             List<Vector3> wireFrameColors = new List<Vector3>();
-            foreach (var mesh in targetObject.Polygon.Meshs)
-            {
-                for (int j = 0; j < mesh.Vertexs.Count - 1; j++)
-                {
-                    lineIndex.Add(mesh.Vertexs[j].Index);
-                    lineIndex.Add(mesh.Vertexs[j + 1].Index);
-                }
 
-                lineIndex.Add(mesh.Vertexs[mesh.Vertexs.Count - 1].Index);
-                lineIndex.Add(mesh.Vertexs[0].Index);
-                wireFrameColors.Add(color);
-                wireFrameColors.Add(color);
+            //if (targetObject.Polygon.Index.Count != 0)
+            //{
+            //    foreach (var index in targetObject.Polygon.Index)
+            //    {
+            //        lineIndex.Add(index);
+            //        wireFrameColors.Add(color);
+            //    }
+
+            //    for (int i = 0; i < targetObject.Polygon.Index.Count / 3; i++)
+            //    {
+            //        lineIndex.Add(targetObject.Polygon.Index[3 * i]);
+            //        lineIndex.Add(targetObject.Polygon.Index[3 * i + 1]);
+
+            //        lineIndex.Add(targetObject.Polygon.Index[3 * i + 1]);
+            //        lineIndex.Add(targetObject.Polygon.Index[3 * i + 2]);
+
+            //        lineIndex.Add(targetObject.Polygon.Index[3 * i + 2]);
+            //        lineIndex.Add(targetObject.Polygon.Index[3 * i]);
+
+            //        wireFrameColors.Add(color);
+            //        wireFrameColors.Add(color);
+            //        wireFrameColors.Add(color);
+            //    }
+            //}
+            //else
+            {
+                foreach (var mesh in targetObject.Polygon.Meshs)
+                {
+                    for (int j = 0; j < mesh.Vertexs.Count - 1; j++)
+                    {
+                        lineIndex.Add(mesh.Vertexs[j].Index);
+                        lineIndex.Add(mesh.Vertexs[j + 1].Index);
+                    }
+
+                    lineIndex.Add(mesh.Vertexs[mesh.Vertexs.Count - 1].Index);
+                    lineIndex.Add(mesh.Vertexs[0].Index);
+                    wireFrameColors.Add(color);
+                    wireFrameColors.Add(color);
+
+                    // 必要かわからない。
+                    //wireFrameColors.Add(color);
+                }
             }
 
             var parentNode = Global.Renderer.ActiveScene.FindNode(targetObject);
@@ -70,7 +101,6 @@ namespace KI.Tool.Command
                 lineIndex.ToArray());
 
             targetObject.Attributes.Add(material);
-            scene.AddObject(material, parentNode);
 
             return CommandResult.Success;
         }

@@ -96,8 +96,8 @@ namespace KI.Asset
             switch (extension)
             {
                 // obj is not single object.
-                case ".obj":
-                    return new OBJConverter(filePath);
+                //case ".obj":
+                //    return new OBJConverter(filePath);
                 case ".stl":
                     return new STLConverter(filePath);
                 case ".half":

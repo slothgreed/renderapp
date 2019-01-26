@@ -112,8 +112,6 @@ namespace KI.Tool.Command
             //scene.AddObject(laplaceAttribute, parentNode);
             //scene.AddObject(meanAttribute, parentNode);
             //scene.AddObject(gaussAttribute, parentNode);
-            scene.AddObject(minAttribute, parentNode);
-            scene.AddObject(maxAttribute, parentNode);
 
             var wireFrameShader = ShaderCreater.Instance.CreateShader(ShaderType.WireFrame);
 
@@ -123,12 +121,9 @@ namespace KI.Tool.Command
             var dirMaxAttribute = new VertexDirectionAttribute(targetObject.Name + " : MaxDirection", wireFrameShader, vertexs, dirMaxLine, new Vector4(0, 1, 0, 1), normals);
             targetObject.Attributes.Add(dirMinAttribute);
             targetObject.Attributes.Add(dirMaxAttribute);
-            scene.AddObject(dirMinAttribute, parentNode);
-            scene.AddObject(dirMaxAttribute, parentNode);
 
             var laplaceVecAttribute = new VertexDirectionAttribute(targetObject.Name + " : LaplaceVec", wireFrameShader, vertexs, laplaceLine, new Vector4(1, 0, 0, 1), normals);
             targetObject.Attributes.Add(laplaceVecAttribute);
-            scene.AddObject(laplaceVecAttribute, parentNode);
 
             return CommandResult.Success;
         }

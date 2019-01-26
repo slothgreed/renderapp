@@ -14,31 +14,33 @@
     d:DesignWidth="300"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <ObjectDataProvider
+        <!--<ObjectDataProvider
             x:Key="VertexColorEnum"
             MethodName="GetValues"
             ObjectType="{x:Type sys:Enum}">
             <ObjectDataProvider.MethodParameters>
                 <x:Type TypeName="geometry:VertexColor" />
             </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
+        </ObjectDataProvider>-->
 
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="Width" Value="120" />
         </Style>
     </UserControl.Resources>
-    <StackPanel>
-        <Expander
-            Margin="2"
-            Header="SRT"
-            IsExpanded="True">
-            <v:SceneNodeBase />
-        </Expander>
-        <Expander
-            Margin="2"
-            Header="Attribute"
-            IsExpanded="True">
-            <v:AttributeViewBase ItemsSource="{Binding Attributes}" />
-        </Expander>
-    </StackPanel>
+    <ScrollViewer>
+        <StackPanel>
+            <Expander
+                Margin="2"
+                Header="SRT"
+                IsExpanded="True">
+                <v:SceneNodeBase />
+            </Expander>
+            <Expander
+                Margin="2"
+                Header="Attribute"
+                IsExpanded="True">
+                <v:AttributeViewBase DataContext="{Binding}" />
+            </Expander>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

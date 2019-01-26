@@ -3,12 +3,12 @@ using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel
 {
-    public class AttributeViewModel : DockWindowViewModel
+    public class AttributeViewModel : ViewModelBase
     {
         private AttributeBase Model;
 
         public AttributeViewModel(ViewModelBase parent, AttributeBase model)
-            : base(parent, model, model?.Name, Place.RightUp)
+            : base(parent, model)
         {
             Model = model;
         }
@@ -18,6 +18,16 @@ namespace RenderApp.ViewModel
             get
             {
                 return Model.Name;
+            }
+        }
+
+        public bool Visible
+        {
+            get { return Model.Visible; }
+            set
+            {
+                Model.Visible = value;
+                OnPropertyChanged(nameof(Visible));
             }
         }
     }

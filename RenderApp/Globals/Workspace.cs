@@ -132,8 +132,6 @@ namespace RenderApp.Globals
                     renderBunny.Attributes.OfType<VertexDirectionAttribute>().First().Direction,
                     renderBunny.Polygon.Type);
                 renderBunny.Attributes.Add(vectorFiledAttribute);
-                MainScene.AddObject(vectorFiledAttribute, parentNode);
-
 
                 var icosahedron = AssetFactory.Instance.CreateIcosahedron("Icosahedron", 10, 10);
                 var renderIcosahedron = RenderObjectFactory.Instance.CreateRenderObject("Icosahedron", icosahedron);
