@@ -63,7 +63,7 @@ namespace KI.Analyzer
         public HalfEdgeMesh(HalfEdge edge1, HalfEdge edge2, HalfEdge edge3, int index = -1)
             : base(edge1, edge2, edge3)
         {
-            SetEdge(edge1, edge2, edge3);
+            SetupEdge(edge1, edge2, edge3);
             Index = index;
         }
 
@@ -215,6 +215,17 @@ namespace KI.Analyzer
             Lines.Add(edge2);
             Lines.Add(edge3);
 
+            SetupEdge(edge1, edge2, edge3);
+        }
+
+        /// <summary>
+        /// エッジに情報を加える
+        /// </summary>
+        /// <param name="edge1">エッジ1</param>
+        /// <param name="edge2">エッジ2</param>
+        /// <param name="edge3">エッジ3</param>
+        public void SetupEdge(HalfEdge edge1, HalfEdge edge2, HalfEdge edge3)
+        {
             HalfEdge.SetupNextBefore(edge1, edge2, edge3);
             edge1.Mesh = this;
             edge2.Mesh = this;

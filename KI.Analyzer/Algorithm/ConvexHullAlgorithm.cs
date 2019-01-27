@@ -38,6 +38,7 @@ namespace KI.Analyzer.Algorithm
 
             pointList.AddRange(position.Select(p => p.Position));
 
+
             QuickHullAlgorithm();
 
             Logger.Log(Logger.LogLevel.Allway, "MeshList :" + meshList.Count.ToString());
@@ -104,7 +105,7 @@ namespace KI.Analyzer.Algorithm
                     pointList.Remove(farPoint);
 
                     //簡単な高速化この処理が重い。
-                    if (pointList.Count > 5000)
+                    //if (pointList.Count > 5000)
                     {
                         DeleteInsideVertex();
                     }
@@ -191,6 +192,17 @@ namespace KI.Analyzer.Algorithm
                     }
                 }
             }
+
+#if DEBUG
+            //境界エッジがループでできていないとエラー
+            for (int i = 0; i < boundaryList.Count - 1; i++)
+            {
+                if (boundaryList[i].End != boundaryList[i + 1].Start)
+                {
+                    Logger.Log(Logger.LogLevel.Debug, "Error");
+                }
+            }
+#endif
 
             return boundaryList;
         }

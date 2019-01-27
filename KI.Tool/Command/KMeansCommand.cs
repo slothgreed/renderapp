@@ -52,7 +52,6 @@ namespace KI.Tool.Command
 
             var targteObject = kmeansCommandArgs.TargetObject;
 
-            var parentNode = kmeansCommandArgs.Scene.FindNode(targteObject);
             var material = new VertexColorAttribute(
                 "KMeansClustering", 
                 targteObject.VertexBuffer.ShallowCopy(),
@@ -61,7 +60,6 @@ namespace KI.Tool.Command
                 colors);
 
             targteObject.Attributes.Add(material);
-            kmeansCommandArgs.Scene.AddObject(material, parentNode);
 
             return CommandResult.Success;
         }
