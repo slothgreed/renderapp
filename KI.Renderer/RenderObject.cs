@@ -62,21 +62,6 @@ namespace KI.Asset
         public VertexBuffer VertexBuffer { get; set; }
 
         /// <summary>
-        /// 可視不可視
-        /// </summary>
-        public new bool Visible
-        {
-            get
-            {
-                return PolygonAttribute.Visible;
-            }
-            set
-            {
-                PolygonAttribute.Visible = value;
-            }
-        }
-
-        /// <summary>
         /// シェーダ
         /// </summary>
         public Shader Shader
@@ -189,9 +174,9 @@ namespace KI.Asset
         /// </summary>
         public override void Dispose()
         {
-            foreach (var material in Attributes)
+            foreach (var attribute in Attributes)
             {
-                material.Dispose();
+                attribute.Dispose();
             }
         }
 

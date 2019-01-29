@@ -19,7 +19,7 @@ namespace RenderApp.ViewModel
         {
             Attributes = new ObservableCollection<ViewModelBase>();
 
-            foreach (var attribute in model.Attributes.Where(p => (p is PolygonAttribute) == false))
+            foreach (var attribute in model.Attributes)
             {
                 ViewModelBase viewModel = null;
                 if (attribute is VertexParameterAttribute)
