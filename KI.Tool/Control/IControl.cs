@@ -97,7 +97,7 @@ namespace KI.Tool.Control
         /// </summary>
         /// <param name="e">キー</param>
         /// <returns>成功</returns>
-        public virtual bool KeyPress(KeyEventArgs e)
+        public virtual bool KeyDown(KeyEventArgs e)
         {
             return true;
         }

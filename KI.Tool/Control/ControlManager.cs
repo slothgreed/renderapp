@@ -91,8 +91,8 @@ namespace KI.Tool.Control
         /// <param name="e"></param>
         public void ProcessKeyInput(KeyEventArgs e)
         {
-            cameraController.KeyPress(e);
-            if (!Controllers[Mode].KeyPress(e))
+            cameraController.KeyDown(e);
+            if (!Controllers[Mode].KeyDown(e))
             {
                 Logger.Log(Logger.LogLevel.Warning, "Failed Command" + Mode.ToString());
             }

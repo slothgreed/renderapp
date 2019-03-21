@@ -10,20 +10,7 @@ namespace KI.Asset
     public class Camera : KIFile
     {
         #region [property method]
-        /// <summary>
-        /// カメラからの距離
-        /// </summary>
-        private float zoomLength;
 
-        /// <summary>
-        /// ズームイン倍率
-        /// </summary>
-        private float zoomInRatio = 1.1f;
-
-        /// <summary>
-        /// ズームアウト倍率
-        /// </summary>
-        private float zoomOutRatio = 0.9f;
 
         /// <summary>
         /// ズームの最小値
@@ -92,6 +79,16 @@ namespace KI.Asset
         public Matrix4 Matrix { get; private set; }
 
         /// <summary>
+        /// FOV
+        /// </summary>
+        public float FOV { get; private set; }
+
+        /// <summary>
+        /// FOVAspect
+        /// </summary>
+        public float FOVAspect { get; private set; }
+
+        /// <summary>
         /// 位置
         /// </summary>
         public Vector3 Position { get; private set; }
@@ -105,6 +102,11 @@ namespace KI.Asset
         /// 注視点
         /// </summary>
         public Vector3 LookAt { get; private set; }
+
+        /// <summary>
+        /// カメラからの距離
+        /// </summary>
+        public float LookAtDistance { get; private set; }
 
         /// <summary>
         /// 上方向
@@ -205,7 +207,7 @@ namespace KI.Asset
             pan = new Vector3(0.0f, 0, 0.0f);
             LookAt = Vector3.Zero;
             Up = Vector3.UnitY;
-            zoomLength = zoomMax;
+            LookAtDistance = zoomMax;
             Theta = 90.0f;
             Phi = 0.0f;
             UpdateCamera();
@@ -224,7 +226,9 @@ namespace KI.Asset
         /// <param name="aspect">比率</param>
         public void SetProjMatrix(float aspect)
         {
-            ProjMatrix = Matrix4.CreatePerspectiveFieldOfView((float)System.Math.PI / 4.0f, aspect, Near, Far);
+            FOV = (float)Math.PI / 4.0f;
+            FOVAspect = aspect;
+            ProjMatrix = Matrix4.CreatePerspectiveFieldOfView(FOV, aspect, Near, Far);
         }
 
         #region [カメラの平行移動]
@@ -332,31 +336,15 @@ namespace KI.Asset
         /// <summary>
         /// Viewのズーム[詳:m_ZoomMin,m_ZoomMax,m_ZoomInRatio,m_ZoomOutRatio]
         /// </summary>
-        /// <param name="celta">正のときズームイン負のときズームアウト</param>
-        public void Zoom(int celta)
+        /// <param name="lookAtDistance">LookAtまでの距離</param>
+        public void Zoom(float lookAtDistance)
         {
-            float ratio;
-            //倍率決め
-            if (celta > 0)
-            {
-                ratio = zoomInRatio;
-            }
-            else
-            {
-                ratio = zoomOutRatio;
-            }
             //拡大縮小
-            zoomLength *= ratio;
-            //if (m_ZoomLength < m_ZoomMin)
-            //{
-            //    m_ZoomLength = m_ZoomMin;
-            //}
-            //else if (m_ZoomLength > m_ZoomMax)
-            //{
-            //    m_ZoomLength = m_ZoomMax;
-            //}
+            LookAtDistance = lookAtDistance;
+
             UpdateCamera();
         }
+
         #endregion
 
         /// <summary>
@@ -365,7 +353,7 @@ namespace KI.Asset
         private void UpdateCamera()
         {
             Vector3 q_Move = GetSphericalMove();
-            Position = pan + (q_Move * zoomLength);
+            Position = pan + (q_Move * LookAtDistance);
             LookAt = pan;
             Matrix = Matrix4.LookAt(Position, LookAt, Up);
         }

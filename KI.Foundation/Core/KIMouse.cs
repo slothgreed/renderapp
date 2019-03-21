@@ -95,8 +95,6 @@ namespace KI.Foundation.Core
             else
             {
                 move = new Vector2(x - Before.X, Before.Y - y);
-                move.X /= 10.0f;
-                move.Y /= 10.0f;
             }
 
             Delta = move;

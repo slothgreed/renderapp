@@ -51,7 +51,7 @@ namespace RenderApp.ViewModel
             Viewport.Instance.OnMouseMove += OnMouseMoveEvent;
             Viewport.Instance.OnMouseUp += OnMouseMoveUpEvent;
             Viewport.Instance.OnMouseWheel += OnMouseWheelEvent;
-            Viewport.Instance.OnKeyPress += OnKeyPressEvent;
+            Viewport.Instance.OnKeyDown += OnKeyDownEvent;
             Viewport.Instance.OnRender += OnRenderEvent;
             Viewport.Instance.OnResize += OnResizeEvent;
             GLContext = new WindowsFormsHost()
@@ -106,7 +106,7 @@ namespace RenderApp.ViewModel
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnKeyPressEvent(object sender, KeyPressEventArgs e)
+        private void OnKeyDownEvent(object sender, KeyEventArgs e)
         {
             ControlManager.Instance.ProcessKeyInput(e);
         }

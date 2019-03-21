@@ -8,6 +8,17 @@ namespace KI.Tool.Control
     /// </summary>
     public class CameraControl : IControl
     {
+
+        /// <summary>
+        /// ズームイン倍率
+        /// </summary>
+        private float zoomInRatio = 1.1f;
+
+        /// <summary>
+        /// ズームアウト倍率
+        /// </summary>
+        private float zoomOutRatio = 0.9f;
+
         /// <summary>
         /// マウス押下
         /// </summary>
@@ -71,7 +82,7 @@ namespace KI.Tool.Control
                     break;
                 case MouseButtons.Right:
                     rightMouse.Move(mouse.X, mouse.Y);
-                    Global.Renderer.ActiveScene.MainCamera.Rotate(rightMouse.Delta.X, rightMouse.Delta.Y, 0);
+                    Global.Renderer.ActiveScene.MainCamera.Rotate(rightMouse.Delta.X * 0.5f, rightMouse.Delta.Y * 0.5f, 0);
                     break;
             }
 
@@ -111,7 +122,15 @@ namespace KI.Tool.Control
             switch (mouse.Button)
             {
                 case MouseButtons.None:
-                    Global.Renderer.ActiveScene.MainCamera.Zoom((int)mouse.Delta);
+                    Camera camera = Global.Renderer.ActiveScene.MainCamera;
+                    if (mouse.Delta > 0)
+                    {
+                        camera.Zoom(camera.LookAtDistance * zoomInRatio);
+                    }
+                    else
+                    {
+                        camera.Zoom(camera.LookAtDistance * zoomOutRatio);
+                    }
                     break;
             }
 
@@ -124,11 +143,11 @@ namespace KI.Tool.Control
         /// </summary>
         /// <param name="e">キー入力</param>
         /// <returns>成功</returns>
-        public override bool KeyPress(KeyEventArgs e)
+        public override bool KeyDown(KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F)
             {
-                Global.Renderer.ActiveScene.FitToScene();
+                Global.Renderer.ActiveScene.FitToScene(Global.Renderer.ActiveScene.MainCamera);
             }
 
             return true;

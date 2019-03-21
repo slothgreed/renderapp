@@ -61,6 +61,7 @@ namespace KI.Asset
         /// </summary>
         public Light SunLight { get; set; }
 
+
         #region [public scene method]
 
         /// <summary>
@@ -137,9 +138,15 @@ namespace KI.Asset
         /// <summary>
         /// シーンにカメラをフィットさせる
         /// </summary>
-        public void FitToScene()
+        public void FitToScene(Camera camera)
         {
+            Vector3 center = (WorldMax + WorldMin) / 2;
+            Vector3 position = camera.Position;
 
+            float bdbDist = (WorldMax - center).Length;
+
+            float distance = bdbDist / (float)Math.Sin(camera.FOV / 2.0f);
+            camera.Zoom(distance / camera.FOVAspect);
         }
 
         #endregion

@@ -89,7 +89,7 @@ namespace KI.Gfx.GLUtil
     /// </summary>
     /// <param name="sender">発生元</param>
     /// <param name="e">イベント</param>
-    public delegate void OnKeyPressHandler(object sender, System.Windows.Forms.KeyPressEventArgs e);
+    public delegate void OnKeyDownHandler(object sender, System.Windows.Forms.KeyEventArgs e);
 
     /// <summary>
     /// 描画用のGlobal変数を保持するクラス
@@ -144,7 +144,7 @@ namespace KI.Gfx.GLUtil
         /// <summary>
         /// キーダウンイベント
         /// </summary>
-        public event OnKeyPressHandler OnKeyPress;
+        public event OnKeyDownHandler OnKeyDown;
 
         /// <summary>
         /// レンダリングイベント
@@ -274,7 +274,7 @@ namespace KI.Gfx.GLUtil
             GLControl.MouseMove -= GLControl_MouseMove;
             GLControl.MouseUp -= GLControl_MouseUp;
             GLControl.MouseWheel -= GLControl_MouseWheel;
-            GLControl.KeyPress -= GLControl_KeyPress;
+            GLControl.KeyDown -= GLControl_KeyDown;
             GLControl.Paint -= GLControl_Paint;
             GLControl.Resize -= GLControl_Resize;
             GLControl = null;
@@ -306,7 +306,7 @@ namespace KI.Gfx.GLUtil
             GLControl.MouseMove += GLControl_MouseMove;
             GLControl.MouseUp += GLControl_MouseUp;
             GLControl.MouseWheel += GLControl_MouseWheel;
-            GLControl.KeyPress += GLControl_KeyPress;
+            GLControl.KeyDown += GLControl_KeyDown;
             GLControl.Paint += GLControl_Paint;
             GLControl.Resize += GLControl_Resize;
             GLControl.DragEnter += GLControl_DragEnter;
@@ -320,11 +320,11 @@ namespace KI.Gfx.GLUtil
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void GLControl_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        private void GLControl_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
-            if (OnKeyPress != null)
+            if (OnKeyDown != null)
             {
-                OnKeyPress(sender, e);
+                OnKeyDown(sender, e);
             }
 
             GLControl_Paint(null, null);
