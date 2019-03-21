@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 using KI.Foundation.Core;
 
 namespace KI.Tool.Control
@@ -87,6 +88,16 @@ namespace KI.Tool.Control
         /// </summary>
         /// <returns>成功</returns>
         public virtual bool UnBinding()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// キー押下イベント
+        /// </summary>
+        /// <param name="e">キー</param>
+        /// <returns>成功</returns>
+        public virtual bool KeyPress(KeyEventArgs e)
         {
             return true;
         }

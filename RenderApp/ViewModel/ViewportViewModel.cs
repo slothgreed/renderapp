@@ -51,6 +51,7 @@ namespace RenderApp.ViewModel
             Viewport.Instance.OnMouseMove += OnMouseMoveEvent;
             Viewport.Instance.OnMouseUp += OnMouseMoveUpEvent;
             Viewport.Instance.OnMouseWheel += OnMouseWheelEvent;
+            Viewport.Instance.OnKeyPress += OnKeyPressEvent;
             Viewport.Instance.OnRender += OnRenderEvent;
             Viewport.Instance.OnResize += OnResizeEvent;
             GLContext = new WindowsFormsHost()
@@ -101,13 +102,23 @@ namespace RenderApp.ViewModel
         }
 
         /// <summary>
+        /// キー押下イベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnKeyPressEvent(object sender, KeyPressEventArgs e)
+        {
+            ControlManager.Instance.ProcessKeyInput(e);
+        }
+
+        /// <summary>
         /// マウスホイール
         /// </summary>
         /// <param name="sender">送信元</param>
         /// <param name="e">イベント</param>
         private void OnMouseWheelEvent(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            ControlManager.Instance.ProcessInput(e, ControlManager.MOUSE_STATE.WHEEL);
+            ControlManager.Instance.ProcessMouseInput(e, ControlManager.MOUSE_STATE.WHEEL);
         }
 
         /// <summary>
@@ -117,7 +128,7 @@ namespace RenderApp.ViewModel
         /// <param name="e">イベント</param>
         private void OnMouseMoveUpEvent(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            ControlManager.Instance.ProcessInput(e, ControlManager.MOUSE_STATE.UP);
+            ControlManager.Instance.ProcessMouseInput(e, ControlManager.MOUSE_STATE.UP);
         }
 
         /// <summary>
@@ -127,7 +138,7 @@ namespace RenderApp.ViewModel
         /// <param name="e">イベント</param>
         private void OnMouseMoveEvent(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            ControlManager.Instance.ProcessInput(e, ControlManager.MOUSE_STATE.MOVE);
+            ControlManager.Instance.ProcessMouseInput(e, ControlManager.MOUSE_STATE.MOVE);
         }
 
         /// <summary>
@@ -137,7 +148,7 @@ namespace RenderApp.ViewModel
         /// <param name="e">イベント</param>
         private void OnMouseDownEvent(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            ControlManager.Instance.ProcessInput(e, ControlManager.MOUSE_STATE.DOWN);
+            ControlManager.Instance.ProcessMouseInput(e, ControlManager.MOUSE_STATE.DOWN);
         }
 
         #endregion

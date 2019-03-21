@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using KI.Asset;
 using KI.Foundation.Core;
 using KI.Foundation.Tree;
@@ -131,6 +132,14 @@ namespace KI.Asset
         public void DeleteObject(string key)
         {
             RootNode.RemoveRecursiveChild(key);
+        }
+
+        /// <summary>
+        /// シーンにカメラをフィットさせる
+        /// </summary>
+        public void FitToScene()
+        {
+
         }
 
         #endregion

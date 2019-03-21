@@ -86,11 +86,24 @@ namespace KI.Tool.Control
         }
 
         /// <summary>
-        /// 入力
+        /// キー入力
+        /// </summary>
+        /// <param name="e"></param>
+        public void ProcessKeyInput(KeyEventArgs e)
+        {
+            cameraController.KeyPress(e);
+            if (!Controllers[Mode].KeyPress(e))
+            {
+                Logger.Log(Logger.LogLevel.Warning, "Failed Command" + Mode.ToString());
+            }
+        }
+
+        /// <summary>
+        /// マウス入力
         /// </summary>
         /// <param name="mouse">マウス情報</param>
         /// <param name="state">状態</param>
-        public void ProcessInput(MouseEventArgs mouse, MOUSE_STATE state)
+        public void ProcessMouseInput(MouseEventArgs mouse, MOUSE_STATE state)
         {
             switch (state)
             {

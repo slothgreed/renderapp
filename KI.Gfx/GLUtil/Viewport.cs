@@ -85,6 +85,13 @@ namespace KI.Gfx.GLUtil
     public delegate void OnDragOverHandler(object sender, DragEventArgs e);
 
     /// <summary>
+    /// キーが押された時のイベント
+    /// </summary>
+    /// <param name="sender">発生元</param>
+    /// <param name="e">イベント</param>
+    public delegate void OnKeyPressHandler(object sender, System.Windows.Forms.KeyPressEventArgs e);
+
+    /// <summary>
     /// 描画用のGlobal変数を保持するクラス
     /// </summary>
     public class Viewport
@@ -133,6 +140,11 @@ namespace KI.Gfx.GLUtil
         /// マウスホイールイベント
         /// </summary>
         public event OnMouseWheelHandler OnMouseWheel;
+
+        /// <summary>
+        /// キーダウンイベント
+        /// </summary>
+        public event OnKeyPressHandler OnKeyPress;
 
         /// <summary>
         /// レンダリングイベント
@@ -262,6 +274,7 @@ namespace KI.Gfx.GLUtil
             GLControl.MouseMove -= GLControl_MouseMove;
             GLControl.MouseUp -= GLControl_MouseUp;
             GLControl.MouseWheel -= GLControl_MouseWheel;
+            GLControl.KeyPress -= GLControl_KeyPress;
             GLControl.Paint -= GLControl_Paint;
             GLControl.Resize -= GLControl_Resize;
             GLControl = null;
@@ -293,12 +306,28 @@ namespace KI.Gfx.GLUtil
             GLControl.MouseMove += GLControl_MouseMove;
             GLControl.MouseUp += GLControl_MouseUp;
             GLControl.MouseWheel += GLControl_MouseWheel;
+            GLControl.KeyPress += GLControl_KeyPress;
             GLControl.Paint += GLControl_Paint;
             GLControl.Resize += GLControl_Resize;
             GLControl.DragEnter += GLControl_DragEnter;
             GLControl.DragLeave += GLControl_DragLeave;
             GLControl.DragOver += GLControl_DragOver;
             GLControl.AllowDrop = true;
+        }
+
+        /// <summary>
+        /// コントロールにフォーカスがあるときにキーが押されると発生します
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GLControl_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        {
+            if (OnKeyPress != null)
+            {
+                OnKeyPress(sender, e);
+            }
+
+            GLControl_Paint(null, null);
         }
 
         /// <summary>

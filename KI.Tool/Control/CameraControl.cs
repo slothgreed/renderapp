@@ -67,7 +67,7 @@ namespace KI.Tool.Control
                     break;
                 case MouseButtons.Middle:
                     middleMouse.Move(mouse.X, mouse.Y);
-                    Global.Renderer.ActiveScene.MainCamera.Translate(middleMouse.Delta.X, middleMouse.Delta.Y, 0);
+                    Global.Renderer.ActiveScene.MainCamera.Translate(-middleMouse.Delta.X, -middleMouse.Delta.Y, 0);
                     break;
                 case MouseButtons.Right:
                     rightMouse.Move(mouse.X, mouse.Y);
@@ -113,6 +113,22 @@ namespace KI.Tool.Control
                 case MouseButtons.None:
                     Global.Renderer.ActiveScene.MainCamera.Zoom((int)mouse.Delta);
                     break;
+            }
+
+            return true;
+        }
+
+
+        /// <summary>
+        /// キー押下
+        /// </summary>
+        /// <param name="e">キー入力</param>
+        /// <returns>成功</returns>
+        public override bool KeyPress(KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F)
+            {
+                Global.Renderer.ActiveScene.FitToScene();
             }
 
             return true;
