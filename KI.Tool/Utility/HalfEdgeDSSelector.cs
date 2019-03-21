@@ -28,7 +28,7 @@ namespace KI.Tool.Utility
         public static bool PickPoint(Vector2 mouse, ref RenderObject selectObject, ref HalfEdgeVertex vertex)
         {
             bool select = false;
-            float minLength = float.MaxValue;
+            float maxInner = -1;
             Vector3 near = Vector3.Zero;
             Vector3 far = Vector3.Zero;
             GetMouseClipPosition(mouse, out near, out far);
@@ -45,7 +45,7 @@ namespace KI.Tool.Utility
                     continue;
                 }
 
-                if (PickPointCore(near, far, renderObject, ref minLength, ref vertex))
+                if (PickPointCore(near, far, renderObject, ref maxInner, ref vertex))
                 {
                     selectObject = renderObject;
                     select = true;
@@ -183,15 +183,17 @@ namespace KI.Tool.Utility
         /// <param name="near">近クリップ面</param>
         /// <param name="far">遠クリップ面</param>
         /// <param name="renderObject">選択形状</param>
-        /// <param name="minLength">この長さ以下の頂点を取得</param>
+        /// <param name="maxInner">この内積値以上の頂点を取得</param>
         /// <param name="vertex">選択Index</param>
         /// <returns>成功か</returns>
-        private static bool PickPointCore(Vector3 near, Vector3 far, RenderObject renderObject, ref float minLength, ref HalfEdgeVertex vertex)
+        private static bool PickPointCore(Vector3 near, Vector3 far, RenderObject renderObject, ref float maxInner, ref HalfEdgeVertex vertex)
         {
             if (!CanSelect(renderObject))
             {
                 return false;
             }
+
+#if false
 
             bool select = false;
             Vector3 crossPos = Vector3.Zero;
@@ -219,6 +221,29 @@ namespace KI.Tool.Utility
             }
 
             return select;
+#else
+            bool select = false;
+            Vector3 crossPos = Vector3.Zero;
+            var halfEdgeDS = renderObject.Polygon as HalfEdgeDS;
+            foreach (var halfVertex in halfEdgeDS.HalfEdgeVertexs)
+            {
+                Vector3 point = halfVertex.Position;
+                point = Calculator.Multiply(renderObject.ModelMatrix, point);
+
+                if (Interaction.PerpendicularPoint(point, near, far, out crossPos))
+                {
+                    float inner = Vector3.Dot(far, near);
+                    if(inner < maxInner)
+                    {
+                        maxInner = inner;
+                        vertex = halfVertex;
+                        select = true;
+                    }
+                }
+            }
+
+            return select;
+#endif
         }
 
         /// <summary>

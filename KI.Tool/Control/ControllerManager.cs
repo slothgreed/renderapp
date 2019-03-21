@@ -20,12 +20,12 @@ namespace KI.Tool.Control
     /// <summary>
     /// コントロールマネージャ
     /// </summary>
-    public class ControlManager : IControl
+    public class ControllerManager : IController
     {
         /// <summary>
         /// カメラコントローラ
         /// </summary>
-        private IControl cameraController = new CameraControl();
+        private IController cameraController = new CameraController();
 
         /// <summary>
         /// コントローラの現在のモード
@@ -35,14 +35,14 @@ namespace KI.Tool.Control
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        private ControlManager()
+        private ControllerManager()
         {
-            Controllers.Add(CONTROL_MODE.SelectTriangle, new SelectTriangleControl());
-            Controllers.Add(CONTROL_MODE.SelectLine, new SelectLineControl());
-            Controllers.Add(CONTROL_MODE.Dijkstra, new DijkstraControl());
-            Controllers.Add(CONTROL_MODE.Geodesic, new GeodesicDistanceControl());
-            Controllers.Add(CONTROL_MODE.SelectPoint, new SelectPointControl());
-            Controllers.Add(CONTROL_MODE.EdgeFlips, new EdgeFlipsControl());
+            Controllers.Add(CONTROL_MODE.SelectTriangle, new SelectTriangleController());
+            Controllers.Add(CONTROL_MODE.SelectLine, new SelectLineController());
+            Controllers.Add(CONTROL_MODE.Dijkstra, new DijkstraController());
+            Controllers.Add(CONTROL_MODE.Geodesic, new GeodesicDistanceController());
+            Controllers.Add(CONTROL_MODE.SelectPoint, new SelectPointController());
+            Controllers.Add(CONTROL_MODE.EdgeFlips, new EdgeFlipsController());
         }
 
         /// <summary>
@@ -60,12 +60,12 @@ namespace KI.Tool.Control
         /// <summary>
         /// シングルトンインスタンス
         /// </summary>
-        public static ControlManager Instance { get; } = new ControlManager();
+        public static ControllerManager Instance { get; } = new ControllerManager();
 
         /// <summary>
         /// コントロールリスト
         /// </summary>
-        public Dictionary<CONTROL_MODE, IControl> Controllers { get; set; } = new Dictionary<CONTROL_MODE, IControl>();
+        public Dictionary<CONTROL_MODE, IController> Controllers { get; set; } = new Dictionary<CONTROL_MODE, IController>();
 
         /// <summary>
         /// コントローラの現在のモード

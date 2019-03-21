@@ -23,7 +23,7 @@ namespace KI.Tool.Control
     /// <summary>
     /// エッジフリップ確認用
     /// </summary>
-    public class EdgeFlipsControl : IControl
+    public class EdgeFlipsController : IController
     {
         /// <summary>
         /// 選択形状

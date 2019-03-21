@@ -7,7 +7,7 @@ namespace KI.Tool.Control
     /// <summary>
     /// コントロールのインタフェース
     /// </summary>
-    public abstract class IControl
+    public abstract class IController
     {
         /// <summary>
         /// 左ボタン

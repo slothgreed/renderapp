@@ -11,7 +11,7 @@ namespace KI.Tool.Control
     /// <summary>
     /// 頂点選択コントローラ
     /// </summary>
-    public class SelectPointControl : IControl
+    public class SelectPointController : IController
     {
         /// <summary>
         /// 選択頂点

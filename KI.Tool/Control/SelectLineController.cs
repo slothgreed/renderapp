@@ -11,7 +11,7 @@ namespace KI.Tool.Control
     /// <summary>
     /// 線分の選択
     /// </summary>
-    public class SelectLineControl : IControl
+    public class SelectLineController : IController
     {
         /// <summary>
         /// 頂点の選択

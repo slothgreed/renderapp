@@ -10,7 +10,7 @@ namespace KI.Tool.Control
     /// <summary>
     /// ダイクストラ用のコントローラ
     /// </summary>
-    public class DijkstraControl : IControl
+    public class DijkstraController : IController
     {
         /// <summary>
         /// ダイクストラアルゴリズム

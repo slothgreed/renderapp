@@ -6,7 +6,7 @@ namespace KI.Tool.Control
     /// <summary>
     /// カメラコントローラ
     /// </summary>
-    public class CameraControl : IControl
+    public class CameraController : IController
     {
 
         /// <summary>

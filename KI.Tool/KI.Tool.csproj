@@ -59,21 +59,21 @@
     <Compile Include="Command\CreateVoxelCommand.cs" />
     <Compile Include="Command\CreateWireFrameCommand.cs" />
     <Compile Include="Command\SmoothingCommand.cs" />
-    <Compile Include="Control\GeodesicDistanceControl.cs" />
+    <Compile Include="Control\GeodesicDistanceController.cs" />
     <Compile Include="Command\KMeansCommand.cs" />
     <Compile Include="Command\PerceptronCommand.cs" />
     <Compile Include="Command\QEMCommand.cs" />
-    <Compile Include="Control\CameraControl.cs" />
-    <Compile Include="Control\ControlManager.cs" />
-    <Compile Include="Control\DijkstraControl.cs" />
-    <Compile Include="Control\EdgeFlipsControl.cs" />
-    <Compile Include="Control\IControl.cs" />
-    <Compile Include="Control\SelectLineControl.cs" />
-    <Compile Include="Control\SelectPointControl.cs" />
-    <Compile Include="Control\SelectTriangleControl.cs" />
+    <Compile Include="Control\CameraController.cs" />
+    <Compile Include="Control\ControllerManager.cs" />
+    <Compile Include="Control\DijkstraController.cs" />
+    <Compile Include="Control\EdgeFlipsController.cs" />
+    <Compile Include="Control\IController.cs" />
+    <Compile Include="Control\SelectLineController.cs" />
+    <Compile Include="Control\SelectPointController.cs" />
+    <Compile Include="Control\SelectTriangleController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\CommandUtility.cs" />
-    <Compile Include="Utility\Selector.cs" />
+    <Compile Include="Utility\HalfEdgeDSSelector.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KI.Analyzer\KI.Analyzer.csproj">

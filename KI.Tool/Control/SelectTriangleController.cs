@@ -11,7 +11,7 @@ namespace KI.Tool.Control
     /// <summary>
     /// 三角形の選択
     /// </summary>
-    public class SelectTriangleControl : IControl
+    public class SelectTriangleController : IController
     {
         /// <summary>
         /// 頂点の選択

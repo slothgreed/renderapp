@@ -17,7 +17,7 @@ namespace KI.Tool.Control
     /// <summary>
     /// 距離場算出用のコントローラ
     /// </summary>
-    public class GeodesicDistanceControl : IControl
+    public class GeodesicDistanceController : IController
     {
         /// <summary>
         /// 測地距離アルゴリズム
