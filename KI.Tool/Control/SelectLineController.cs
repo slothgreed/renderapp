@@ -34,6 +34,8 @@ namespace KI.Tool.Control
             {
                 HalfEdge halfEdge = null;
 
+                Clear();
+
                 if (HalfEdgeDSSelector.PickLine(leftMouse.Click, ref renderObject, ref halfEdge))
                 {
                     halfEdge.Start.Color = Vector3.UnitY;
@@ -66,6 +68,16 @@ namespace KI.Tool.Control
         /// <returns>成功</returns>
         public override bool UnBinding()
         {
+            Clear();
+
+            return base.UnBinding();
+        }
+
+        /// <summary>
+        /// 選択解除
+        /// </summary>
+        private void Clear()
+        {
             foreach (var vertex in selectVertex)
             {
                 vertex.Color = new Vector3(0.8f);
@@ -76,8 +88,7 @@ namespace KI.Tool.Control
                 renderObject.Polygon.UpdateVertexArray();
             }
 
-            selectVertex = null;
-            return base.UnBinding();
+            selectVertex.Clear();
         }
     }
 }

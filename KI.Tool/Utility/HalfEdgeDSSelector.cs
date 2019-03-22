@@ -232,8 +232,19 @@ namespace KI.Tool.Utility
 
                 if (Interaction.PerpendicularPoint(point, near, far, out crossPos))
                 {
-                    float inner = Vector3.Dot(far, near);
-                    if(inner < maxInner)
+                    Vector3 clickDirection = Vector3.Normalize(far - near);
+                    Vector3 pointDirection = Vector3.Normalize(point - near);
+
+                    float inner = Vector3.Dot(clickDirection, pointDirection);
+
+                    // 視線方向の頂点は裏向きなので選択しない。
+                    float pointOrient = Vector3.Dot(halfVertex.Normal, clickDirection);
+                    if(pointOrient > 0)
+                    {
+                        continue;
+                    }
+
+                    if (maxInner < inner)
                     {
                         maxInner = inner;
                         vertex = halfVertex;

@@ -25,16 +25,6 @@ namespace KI.Tool.Control
         private GeodesicDistanceAlgorithm geodesic;
 
         /// <summary>
-        /// 形状の選択
-        /// </summary>
-        private RenderObject selectObject;
-
-        /// <summary>
-        /// 選択した頂点の要素番号
-        /// </summary>
-        private int[] selectVertexIndex;
-
-        /// <summary>
         /// マウス押下
         /// </summary>
         /// <param name="mouse">マウス座標</param>

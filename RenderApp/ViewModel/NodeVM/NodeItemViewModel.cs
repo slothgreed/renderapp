@@ -156,7 +156,9 @@ namespace RenderApp.ViewModel
         {
             if (sender is KINode)
             {
-                KINode node = e.NewItems as KINode;
+                // 前まではこちらでいけてた。（何故）
+                // KINode node = e.NewItems[0] as KINode;
+                KINode node = e.OldItems[0] as KINode;
                 NodeItemViewModel nodeVM = Children.Where(p => p.DisplayName == node.Name).FirstOrDefault();
                 if (nodeVM != null)
                 {

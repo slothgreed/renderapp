@@ -11,10 +11,8 @@ using KI.Tool.Command;
 using KI.Tool.Control;
 using RenderApp.Globals;
 using System.Windows;
-using System.Drawing;
-using System.Windows.Media.Imaging;
 using KI.Renderer;
-using KI.Asset.Technique;
+using System.Reflection;
 
 namespace RenderApp.ViewModel
 {
@@ -122,19 +120,19 @@ namespace RenderApp.ViewModel
         private void ScreenShotCommand()
         {
             var renderTarget = Workspace.Instance.Renderer.OutputBuffer.RenderTarget;
-            RendererUtility.ScreenShot("OutputBuffer.bmp", renderTarget, renderTarget.Width, renderTarget.Height);
+            RendererUtility.ScreenShot("OutputBuffer", ".bmp", DeviceContext.Instance.Width, DeviceContext.Instance.Height);
         }
 
         private void ScreenShotAllCommand()
         {
             foreach (var renderer in Workspace.Instance.Renderer.RenderQueue.Items)
             {
-                RendererUtility.ScreenShot(renderer.Name, renderer.RenderTarget, renderer.RenderTarget.Width, renderer.RenderTarget.Height);
+                RendererUtility.ScreenShot(renderer.Name, ".bmp", renderer.RenderTarget);
             }
 
             foreach (var renderer in Workspace.Instance.Renderer.PostEffect.Items)
             {
-                RendererUtility.ScreenShot(renderer.Name, renderer.RenderTarget, renderer.RenderTarget.Width, renderer.RenderTarget.Height);
+                RendererUtility.ScreenShot(renderer.Name, ".bmp", renderer.RenderTarget);
             }
         }
 
@@ -408,5 +406,11 @@ namespace RenderApp.ViewModel
             window.ShowDialog();
         }
 
+        private void OpenExecuteFolderCommand()
+        {
+            var exeFilePath = Assembly.GetEntryAssembly().Location;
+
+            System.Diagnostics.Process.Start("explorer.exe", @"/select," + exeFilePath);  
+        }
     }
 }

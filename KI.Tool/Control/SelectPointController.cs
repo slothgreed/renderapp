@@ -30,6 +30,8 @@ namespace KI.Tool.Control
         /// <returns>成功</returns>
         public override bool Down(System.Windows.Forms.MouseEventArgs mouse)
         {
+            Clear();
+
             HalfEdgeVertex vertex = null;
 
             if (HalfEdgeDSSelector.PickPoint(leftMouse.Click, ref renderObject, ref vertex))
@@ -59,6 +61,13 @@ namespace KI.Tool.Control
         /// <returns>成功</returns>
         public override bool UnBinding()
         {
+            Clear();
+
+            return base.UnBinding();
+        }
+
+        private void Clear()
+        {
             foreach (var vertex in selectVertex)
             {
                 vertex.Color = new Vector3(0.8f);
@@ -69,8 +78,7 @@ namespace KI.Tool.Control
                 renderObject.Polygon.UpdateVertexArray();
             }
 
-            selectVertex = null;
-            return base.UnBinding();
+            selectVertex.Clear();
         }
     }
 }

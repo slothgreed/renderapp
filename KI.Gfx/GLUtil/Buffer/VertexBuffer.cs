@@ -151,6 +151,8 @@ namespace KI.Gfx.GLUtil.Buffer
                 color = vertexSrc.Select(p => p.Color).ToArray();
                 texCoord = vertexSrc.Select(p => p.TexCoord).ToArray();
             }
+
+            SetBuffer(position, normal, color, texCoord, indexBuffer);
         }
 
         /// <summary>

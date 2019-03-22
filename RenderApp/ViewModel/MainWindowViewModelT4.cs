@@ -205,6 +205,19 @@ namespace RenderApp.ViewModel
 					return _OpenWindow;
 				}
 			}
+			private ICommand _OpenExecuteFolder;
+			public ICommand OpenExecuteFolder
+			{
+				get
+				{
+					if (_OpenExecuteFolder == null)
+					{
+						return _OpenExecuteFolder = CreateCommand(OpenExecuteFolderCommand);						
+					}
+
+					return _OpenExecuteFolder;
+				}
+			}
 			private ICommand _OpenAbout;
 			public ICommand OpenAbout
 			{

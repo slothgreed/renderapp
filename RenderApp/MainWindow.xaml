@@ -91,6 +91,7 @@
                     Command="{Binding Controller}"
                     CommandParameter="{x:Static control:CONTROL_MODE.EdgeFlips}"
                     Header="EdgeEditor" />
+                <Separator/>
                 <MenuItem
                     Command="{Binding Controller}"
                     CommandParameter="{x:Static control:CONTROL_MODE.Dijkstra}"
@@ -185,6 +186,7 @@
                     Header="Resource Directory" />
                 <MenuItem Command="{Binding OpenDebugWindow}" Header="DebugWindow" />
                 <MenuItem Command="{Binding DataVisualization}" Header="DataVisualization" />
+                <MenuItem Command="{Binding OpenExecuteFolder}" Header="OpenExecuteFolder"/>
                 <Separator />
                 <MenuItem Command="{Binding OpenAbout}" Header="Version" />
             </MenuItem>
