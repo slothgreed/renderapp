@@ -38,6 +38,11 @@ namespace KI.Tool.Control
 
                 if (HalfEdgeDSSelector.PickTriangle(leftMouse.Click, ref renderObject, ref mesh))
                 {
+                    if(mesh == null)
+                    {
+                        return false;
+                    }
+
                     foreach (var vertex in mesh.AroundVertex)
                     {
                         vertex.Color = Vector3.UnitY;

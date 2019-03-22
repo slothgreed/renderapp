@@ -1,5 +1,6 @@
 ﻿using System.Windows.Forms;
 using KI.Asset;
+using OpenTK;
 
 namespace KI.Tool.Control
 {
@@ -78,11 +79,11 @@ namespace KI.Tool.Control
                     break;
                 case MouseButtons.Middle:
                     middleMouse.Move(mouse.X, mouse.Y);
-                    Global.Renderer.ActiveScene.MainCamera.Translate(-middleMouse.Delta.X, -middleMouse.Delta.Y, 0);
+                    Translate(Global.Renderer.ActiveScene.MainCamera, new Vector3(-middleMouse.Delta.X, -middleMouse.Delta.Y, 0));
                     break;
                 case MouseButtons.Right:
                     rightMouse.Move(mouse.X, mouse.Y);
-                    Global.Renderer.ActiveScene.MainCamera.Rotate(rightMouse.Delta.X * 0.5f, rightMouse.Delta.Y * 0.5f, 0);
+                    Rotate(Global.Renderer.ActiveScene.MainCamera, new Vector3(-rightMouse.Delta.X, -rightMouse.Delta.Y, 0));
                     break;
             }
 
@@ -125,11 +126,11 @@ namespace KI.Tool.Control
                     Camera camera = Global.Renderer.ActiveScene.MainCamera;
                     if (mouse.Delta > 0)
                     {
-                        camera.Zoom(camera.LookAtDistance * zoomInRatio);
+                        camera.LookAtDistance = camera.LookAtDistance * zoomInRatio;
                     }
                     else
                     {
-                        camera.Zoom(camera.LookAtDistance * zoomOutRatio);
+                        camera.LookAtDistance = camera.LookAtDistance * zoomOutRatio;
                     }
                     break;
             }
@@ -151,6 +152,33 @@ namespace KI.Tool.Control
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// 平行移動
+        /// </summary>
+        /// <param name="camera">カメラ</param>
+        /// <param name="delta">移動量</param>
+        private void Translate(Camera camera, Vector3 delta)
+        {
+            Vector3 vectorX = camera.Matrix.Column0.Xyz;
+            Vector3 vectorY = camera.Matrix.Column1.Xyz;
+
+            vectorX *= delta.X;
+            vectorY *= delta.Y;
+            Vector3 value = (vectorX + vectorY) * camera.LookAtDistance * 0.01f;
+            camera.LookAt = camera.LookAt + value;
+        }
+
+
+        /// <summary>
+        /// 回転
+        /// </summary>
+        /// <param name="camera">カメラ</param>
+        /// <param name="delta">移動量</param>
+        private void Rotate(Camera camera, Vector3 delta)
+        {
+            camera.Rotate(delta * 0.5f);
         }
 
         /// <summary>

@@ -146,7 +146,9 @@ namespace KI.Asset
             float bdbDist = (WorldMax - center).Length;
 
             float distance = bdbDist / (float)Math.Sin(camera.FOV / 2.0f);
-            camera.Zoom(distance / camera.FOVAspect);
+
+            camera.LookAt = center;
+            camera.LookAtDistance = distance / camera.FOVAspect;
         }
 
         #endregion
