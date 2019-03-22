@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using KI.Asset;
 using KI.Asset.Attribute;
 using KI.Asset.Technique;
@@ -78,25 +79,7 @@ namespace RenderApp.Globals
             //    ActiveScene.AddObject(duck);
             //}
 
-            //List<RenderObject> worlds = AssetFactory.Instance.CreateWorld("World", ActiveScene.WorldMin, ActiveScene.WorldMax);
-            //string[] paths = new string[]{
-            //        ProjectInfo.TextureDirectory + @"\cubemap\posx.jpg",
-            //        ProjectInfo.TextureDirectory + @"\cubemap\posy.jpg",
-            //        ProjectInfo.TextureDirectory + @"\cubemap\posz.jpg",
-            //        ProjectInfo.TextureDirectory + @"\cubemap\negx.jpg",
-            //        ProjectInfo.TextureDirectory + @"\cubemap\negy.jpg",
-            //        ProjectInfo.TextureDirectory + @"\cubemap\negz.jpg"
-            //};
-
-            //for (int i = 0; i < 6; i++)
-            //{
-            //    var texture = TextureFactory.Instance.CreateTexture(paths[i]);
-            //    worlds[i].AddTexture(TextureKind.Albedo, texture);
-            //    ActiveScene.AddObject(worlds[i]);
-            //}
-            //EnvironmentProbe cubeMap = AssetFactory.Instance.CreateEnvironmentMap("world");
-            //cubeMap.GenCubemap(paths);
-            //ActiveScene.AddObject(cubeMap);
+            CreateEnvironmentCube(MainScene.WorldMin * 5, MainScene.WorldMax * 5);
 
             // bunny
             {
@@ -161,6 +144,69 @@ namespace RenderApp.Globals
 
             }
             //CommandManager.Instance.Execute(new CalculateVertexCurvatureCommand(MainScene, renderBunny), null, false);
+        }
+
+        private void CreateEnvironmentCube(Vector3 min, Vector3 max)
+        {
+            string[] cubemap = new string[6];
+            cubemap[0] = ProjectInfo.TextureDirectory + @"\cubemap\posx.jpg";
+            cubemap[1] = ProjectInfo.TextureDirectory + @"\cubemap\posy.jpg";
+            cubemap[2] = ProjectInfo.TextureDirectory + @"\cubemap\posz.jpg";
+            cubemap[3] = ProjectInfo.TextureDirectory + @"\cubemap\negx.jpg";
+            cubemap[4] = ProjectInfo.TextureDirectory + @"\cubemap\negy.jpg";
+            cubemap[5] = ProjectInfo.TextureDirectory + @"\cubemap\negz.jpg";
+
+            var pxTexture = TextureFactory.Instance.CreateTexture(cubemap[0]);
+            var pyTexture = TextureFactory.Instance.CreateTexture(cubemap[1]);
+            var pzTexture = TextureFactory.Instance.CreateTexture(cubemap[2]);
+            var nxTexture = TextureFactory.Instance.CreateTexture(cubemap[3]);
+            var nyTexture = TextureFactory.Instance.CreateTexture(cubemap[4]);
+            var nzTexture = TextureFactory.Instance.CreateTexture(cubemap[5]);
+
+            Vector3 v0 = new Vector3(min.X, min.Y, min.Z);
+            Vector3 v1 = new Vector3(max.X, min.Y, min.Z);
+            Vector3 v2 = new Vector3(max.X, max.Y, min.Z);
+            Vector3 v3 = new Vector3(min.X, max.Y, min.Z);
+            Vector3 v4 = new Vector3(min.X, min.Y, max.Z);
+            Vector3 v5 = new Vector3(max.X, min.Y, max.Z);
+            Vector3 v6 = new Vector3(max.X, max.Y, max.Z);
+            Vector3 v7 = new Vector3(min.X, max.Y, max.Z);
+
+            Rectangle front  = new Rectangle("Front", v2, v3, v0, v1);
+            front.Model.AddTexture(KI.Gfx.KITexture.TextureKind.Albedo, nzTexture);
+
+            Rectangle left   = new Rectangle("Left", v3, v7, v4, v0);
+            left.Model.AddTexture(KI.Gfx.KITexture.TextureKind.Albedo, pxTexture);
+
+            Rectangle back   = new Rectangle("Back", v7, v6, v5, v4);
+            back.Model.AddTexture(KI.Gfx.KITexture.TextureKind.Albedo, pzTexture);
+
+            Rectangle right  = new Rectangle("Right", v6, v2, v1, v5);
+            right.Model.AddTexture(KI.Gfx.KITexture.TextureKind.Albedo, nxTexture);
+
+            Rectangle top    = new Rectangle("Top", v3, v2, v6, v7);
+            top.Model.AddTexture(KI.Gfx.KITexture.TextureKind.Albedo, pyTexture);
+
+            Rectangle bottom = new Rectangle("Bottom", v0, v4, v5, v1);
+            bottom.Model.AddTexture(KI.Gfx.KITexture.TextureKind.Albedo, nyTexture);
+
+            RenderObject renderFront = RenderObjectFactory.Instance.CreateRenderObject(front.Name, front);
+            RenderObject renderLeft = RenderObjectFactory.Instance.CreateRenderObject(left.Name, left);
+            RenderObject renderBack = RenderObjectFactory.Instance.CreateRenderObject(back.Name, back);
+            RenderObject renderRight = RenderObjectFactory.Instance.CreateRenderObject(right.Name, right);
+            RenderObject renderTop = RenderObjectFactory.Instance.CreateRenderObject(top.Name, top);
+            RenderObject renderBottom = RenderObjectFactory.Instance.CreateRenderObject(bottom.Name, bottom);
+
+            MainScene.AddObject(renderFront);
+            MainScene.AddObject(renderLeft);
+            MainScene.AddObject(renderBack);
+            MainScene.AddObject(renderRight);
+            MainScene.AddObject(renderTop);
+            MainScene.AddObject(renderBottom);
+
+            //EnvironmentProbe cubeMap = AssetFactory.Instance.CreateEnvironmentMap("world");
+            //cubeMap.GenCubemap(cubemap[0], cubemap[1], cubemap[2], cubemap[3], cubemap[4], cubemap[5]);
+            //MainScene.AddObject(cubeMap);
         }
 
         public void InitializeRenderer(int width, int height)

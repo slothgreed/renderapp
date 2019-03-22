@@ -31,7 +31,7 @@ namespace KI.Asset
         /// <param name="min">最小値</param>
         /// <param name="max">最大値</param>
         /// <param name="reverse">向き</param>
-        public Cube(Vector3 min, Vector3 max, bool reverse)
+        public Cube(Vector3 min, Vector3 max, bool reverse = false)
         {
             this.min = min;
             this.max = max;
@@ -68,20 +68,20 @@ namespace KI.Asset
             var mesh = new List<Mesh>();
             if (reverse == false)
             {
-                mesh.Add(CreateMesh("Front", v0, v3, v2, v1));
-                mesh.Add(CreateMesh("Left", v0, v4, v7, v3));
-                mesh.Add(CreateMesh("Back", v4, v5, v6, v7));
-                mesh.Add(CreateMesh("Right", v1, v2, v6, v5));
-                mesh.Add(CreateMesh("Top", v2, v3, v7, v6));
+                mesh.Add(CreateMesh("Front" , v0, v3, v2, v1));
+                mesh.Add(CreateMesh("Left"  , v0, v4, v7, v3));
+                mesh.Add(CreateMesh("Back"  , v4, v5, v6, v7));
+                mesh.Add(CreateMesh("Right" , v1, v2, v6, v5));
+                mesh.Add(CreateMesh("Top"   , v2, v3, v7, v6));
                 mesh.Add(CreateMesh("Bottom", v1, v5, v4, v0));
             }
             else
             {
-                mesh.Add(CreateMesh("Front", v3, v0, v1, v2));
-                mesh.Add(CreateMesh("Left", v7, v4, v0, v3));
-                mesh.Add(CreateMesh("Back", v6, v5, v4, v7));
-                mesh.Add(CreateMesh("Right", v2, v1, v5, v6));
-                mesh.Add(CreateMesh("Top", v2, v6, v7, v3));
+                mesh.Add(CreateMesh("Front" , v3, v0, v1, v2));
+                mesh.Add(CreateMesh("Left"  , v7, v4, v0, v3));
+                mesh.Add(CreateMesh("Back"  , v6, v5, v4, v7));
+                mesh.Add(CreateMesh("Right" , v2, v1, v5, v6));
+                mesh.Add(CreateMesh("Top"   , v2, v6, v7, v3));
                 mesh.Add(CreateMesh("Bottom", v1, v0, v4, v5));
             }
 

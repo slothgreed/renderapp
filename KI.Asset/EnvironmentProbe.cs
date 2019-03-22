@@ -32,21 +32,6 @@ namespace KI.Asset
         /// <summary>
         /// Cubemapの作成
         /// </summary>
-        /// <param name="paths">テクスチャパス</param>
-        public void GenCubemap(string[] paths)
-        {
-            if (paths.Length != 6)
-            {
-                Logger.Log(Logger.LogLevel.Error, "not set 6 paths ");
-                return;
-            }
-
-            GenCubemap(paths[0], paths[1], paths[2], paths[3], paths[4], paths[5]);
-        }
-
-        /// <summary>
-        /// Cubemapの作成
-        /// </summary>
         /// <param name="px">テクスチャPX</param>
         /// <param name="py">テクスチャPY</param>
         /// <param name="pz">テクスチャPZ</param>

@@ -28,6 +28,11 @@ namespace RenderApp.ViewModel
         {
             get
             {
+                if(Workspace.Instance.MainScene.SelectNode == null)
+                {
+                    return string.Empty;
+                }
+
                 return Workspace.Instance.MainScene.SelectNode.Name;
             }
             set
