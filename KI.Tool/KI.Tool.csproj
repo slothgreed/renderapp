@@ -64,7 +64,6 @@
     <Compile Include="Command\PerceptronCommand.cs" />
     <Compile Include="Command\QEMCommand.cs" />
     <Compile Include="Control\CameraController.cs" />
-    <Compile Include="Control\ControllerManager.cs" />
     <Compile Include="Control\DijkstraController.cs" />
     <Compile Include="Control\EdgeFlipsController.cs" />
     <Compile Include="Control\IController.cs" />

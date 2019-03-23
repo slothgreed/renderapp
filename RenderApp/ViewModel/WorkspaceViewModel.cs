@@ -20,6 +20,7 @@ namespace RenderApp.ViewModel
         public RootNodeViewModel FactoryNodeViewModel;
         public RendererViewModel RendererViewModel;
         public ViewportViewModel ViewportViewModel;
+        public PropertyGridViewModel PropertyGridViewModel;
 
         public WorkspaceViewModel(ViewModelBase parent, Workspace workspace)
             : base(parent, workspace)
@@ -28,17 +29,20 @@ namespace RenderApp.ViewModel
             FactoryNodeViewModel = new RootNodeViewModel(this, new KINode("Library"), "Library");
             ViewportViewModel = new ViewportViewModel(this);
             RendererViewModel = new RendererViewModel(this);
+            PropertyGridViewModel = new PropertyGridViewModel(this, null);
 
             RendererViewModel.PropertyChanged += RendererViewModel_PropertyChanged;
             SceneNodeViewModel.PropertyChanged += SceneNodeViewModel_PropertyChanged;
             FactoryNodeViewModel.PropertyChanged += LibraryNodeViewModel_PropertyChanged;
             ViewportViewModel.PropertyChanged += ViewportViewModel_PropertyChanged;
+            PropertyGridViewModel.PropertyChanged += PropertyGridViewModel_PropertyChanged;
 
             AnchorablesSources = new ObservableCollection<ViewModelBase>();
             DocumentsSources = new ObservableCollection<ViewModelBase>();
             AnchorablesSources.Add(SceneNodeViewModel);
             AnchorablesSources.Add(FactoryNodeViewModel);
             AnchorablesSources.Add(RendererViewModel);
+            AnchorablesSources.Add(PropertyGridViewModel);
             DocumentsSources.Add(ViewportViewModel);
 
             this.workspace = workspace;
@@ -84,6 +88,11 @@ namespace RenderApp.ViewModel
         }
 
         private void RenderObjectViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            ViewportViewModel.Invalidate();
+        }
+
+        private void PropertyGridViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             ViewportViewModel.Invalidate();
         }

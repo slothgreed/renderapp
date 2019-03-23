@@ -2,7 +2,6 @@
     x:Class="RenderApp.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:control="clr-namespace:KI.Tool.Control;assembly=KI.Tool"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
@@ -73,32 +72,32 @@
             <MenuItem Header="Controller">
                 <MenuItem
                     Command="{Binding Controller}"
-                    CommandParameter="{x:Static control:CONTROL_MODE.SelectTriangle}"
+                    CommandParameter="{x:Static vm:CONTROL_MODE.SelectTriangle}"
                     Header="Default" />
                 <MenuItem
                     Command="{Binding Controller}"
-                    CommandParameter="{x:Static control:CONTROL_MODE.SelectTriangle}"
+                    CommandParameter="{x:Static vm:CONTROL_MODE.SelectTriangle}"
                     Header="SelectTriangle" />
                 <MenuItem
                     Command="{Binding Controller}"
-                    CommandParameter="{x:Static control:CONTROL_MODE.SelectLine}"
+                    CommandParameter="{x:Static vm:CONTROL_MODE.SelectLine}"
                     Header="SelectLine" />
                 <MenuItem
                     Command="{Binding Controller}"
-                    CommandParameter="{x:Static control:CONTROL_MODE.SelectPoint}"
+                    CommandParameter="{x:Static vm:CONTROL_MODE.SelectPoint}"
                     Header="SelectPoint" />
                 <MenuItem
                     Command="{Binding Controller}"
-                    CommandParameter="{x:Static control:CONTROL_MODE.EdgeFlips}"
+                    CommandParameter="{x:Static vm:CONTROL_MODE.EdgeFlips}"
                     Header="EdgeEditor" />
                 <Separator/>
                 <MenuItem
                     Command="{Binding Controller}"
-                    CommandParameter="{x:Static control:CONTROL_MODE.Dijkstra}"
+                    CommandParameter="{x:Static vm:CONTROL_MODE.Dijkstra}"
                     Header="Dijkstra" />
                 <MenuItem
                     Command="{Binding Controller}"
-                    CommandParameter="{x:Static control:CONTROL_MODE.Geodesic}"
+                    CommandParameter="{x:Static vm:CONTROL_MODE.Geodesic}"
                     Header="Geodesic" />
             </MenuItem>
 

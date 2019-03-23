@@ -85,6 +85,7 @@ namespace RenderApp.ViewModel
         public DataTemplate RenderObjectTemplate { get; set; }
         public DataTemplate LightTemplate { get; set; }
         public DataTemplate RendererTemplate { get; set; }
+        public DataTemplate PropertyGridTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -103,6 +104,10 @@ namespace RenderApp.ViewModel
             else if (item is RendererViewModel)
             {
                 return RendererTemplate;
+            }
+            else if(item is PropertyGridViewModel)
+            {
+                return PropertyGridTemplate;
             }
             else if (item is LightViewModel)
             {

@@ -51,6 +51,11 @@
                             <v:RendererView />
                         </DataTemplate>
                     </vm:DockPaneTemplateSelector.RendererTemplate>
+                    <vm:DockPaneTemplateSelector.PropertyGridTemplate>
+                        <DataTemplate>
+                            <v:PropertyGridView/>
+                        </DataTemplate>
+                    </vm:DockPaneTemplateSelector.PropertyGridTemplate>
                 </vm:DockPaneTemplateSelector>
             </avalon:DockingManager.LayoutItemTemplateSelector>
             <avalon:DockingManager.LayoutItemContainerStyle>

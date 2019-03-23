@@ -308,13 +308,13 @@ namespace RenderApp.ViewModel
         {
             get
             {
-                return ControllerManager.Instance.Mode;
+                return WorkspaceViewModel.ViewportViewModel.Mode;
             }
 
             set
             {
                 OnPropertyChanging(nameof(ControlMode));
-                ControllerManager.Instance.Mode = value;
+                WorkspaceViewModel.ViewportViewModel.Mode = value;
                 OnPropertyChanged(nameof(ControlMode));
             }
         }

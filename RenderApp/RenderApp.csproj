@@ -181,6 +181,7 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="ViewModel\CommandVM\VoxelCommandViewModel.cs" />
+    <Compile Include="ViewModel\PropertyGridViewModel.cs" />
     <Compile Include="ViewModel\SceneNodeVM\LightViewModel.cs" />
     <Compile Include="ViewModel\AttributeVM\OutlineAttributeViewModel.cs" />
     <Compile Include="ViewModel\PostEffectVM\BloomViewModel.cs" />
@@ -227,6 +228,9 @@
     </Compile>
     <Compile Include="View\DebugWindow.xaml.cs">
       <DependentUpon>DebugWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PropertyGridView.xaml.cs">
+      <DependentUpon>PropertyGridView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SceneNodeView\SceneNodeBase.xaml.cs">
       <DependentUpon>SceneNodeBase.xaml</DependentUpon>
@@ -314,6 +318,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DebugWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PropertyGridView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

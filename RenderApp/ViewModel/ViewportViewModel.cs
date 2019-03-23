@@ -1,12 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
+using KI.Foundation.Core;
 using KI.Gfx.GLUtil;
 using KI.Tool.Control;
 using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel
 {
+    /// <summary>
+    /// コントローラのモード
+    /// </summary>
+    public enum CONTROL_MODE
+    {
+        SelectTriangle,
+        SelectLine,
+        SelectPoint,
+        EdgeFlips,
+        Dijkstra,
+        Geodesic
+    }
+
     /// <summary>
     /// Viewportのヴューモデル
     /// </summary>
@@ -24,6 +39,70 @@ namespace RenderApp.ViewModel
         public ViewportViewModel(ViewModelBase parent)
             : base(parent, null, "Render App", Place.Floating)
         {
+            Controllers.Add(CONTROL_MODE.SelectTriangle, new SelectTriangleController());
+            Controllers.Add(CONTROL_MODE.SelectLine, new SelectLineController());
+            Controllers.Add(CONTROL_MODE.Dijkstra, new DijkstraController());
+            Controllers.Add(CONTROL_MODE.Geodesic, new GeodesicDistanceController());
+            Controllers.Add(CONTROL_MODE.SelectPoint, new SelectPointController());
+            Controllers.Add(CONTROL_MODE.EdgeFlips, new EdgeFlipsController());
+        }
+
+        /// <summary>
+        /// カメラコントローラ
+        /// </summary>
+        private IController cameraController = new CameraController();
+
+        /// <summary>
+        /// コントローラの現在のモード
+        /// </summary>
+        private CONTROL_MODE mode = CONTROL_MODE.SelectTriangle;
+
+        /// <summary>
+        /// マウスの状態
+        /// </summary>
+        public enum MOUSE_STATE
+        {
+            DOWN,
+            MOVE,
+            UP,
+            CLICK,
+            WHEEL,
+        }
+
+        /// <summary>
+        /// コントロールリスト
+        /// </summary>
+        public Dictionary<CONTROL_MODE, IController> Controllers { get; set; } = new Dictionary<CONTROL_MODE, IController>();
+
+        /// <summary>
+        /// コントローラの現在のモード
+        /// </summary>
+        public CONTROL_MODE Mode
+        {
+            get
+            {
+                return mode;
+            }
+
+            set
+            {
+                Controllers[mode].UnBinding();
+                mode = value;
+                Controllers[mode].Binding();
+            }
+        }
+
+        /// <summary>
+        /// キー入力
+        /// </summary>
+        /// <param name="e"></param>
+        public void ProcessKeyInput(KeyEventArgs e)
+        {
+            cameraController.KeyDown(e);
+            if (!Controllers[Mode].KeyDown(e))
+            {
+                Logger.Log(Logger.LogLevel.Warning, "Failed Command" + Mode.ToString());
+            }
         }
 
         /// <summary>
@@ -108,7 +187,7 @@ namespace RenderApp.ViewModel
         /// <param name="e"></param>
         private void OnKeyDownEvent(object sender, KeyEventArgs e)
         {
-            ControllerManager.Instance.ProcessKeyInput(e);
+            ProcessKeyInput(e);
         }
 
         /// <summary>
@@ -118,7 +197,7 @@ namespace RenderApp.ViewModel
         /// <param name="e">イベント</param>
         private void OnMouseWheelEvent(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            ControllerManager.Instance.ProcessMouseInput(e, ControllerManager.MOUSE_STATE.WHEEL);
+            ProcessMouseInput(e, MOUSE_STATE.WHEEL);
         }
 
         /// <summary>
@@ -128,7 +207,7 @@ namespace RenderApp.ViewModel
         /// <param name="e">イベント</param>
         private void OnMouseMoveUpEvent(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            ControllerManager.Instance.ProcessMouseInput(e, ControllerManager.MOUSE_STATE.UP);
+            ProcessMouseInput(e, MOUSE_STATE.UP);
         }
 
         /// <summary>
@@ -138,7 +217,7 @@ namespace RenderApp.ViewModel
         /// <param name="e">イベント</param>
         private void OnMouseMoveEvent(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            ControllerManager.Instance.ProcessMouseInput(e, ControllerManager.MOUSE_STATE.MOVE);
+            ProcessMouseInput(e, MOUSE_STATE.MOVE);
         }
 
         /// <summary>
@@ -148,9 +227,61 @@ namespace RenderApp.ViewModel
         /// <param name="e">イベント</param>
         private void OnMouseDownEvent(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            ControllerManager.Instance.ProcessMouseInput(e, ControllerManager.MOUSE_STATE.DOWN);
+            ProcessMouseInput(e, MOUSE_STATE.DOWN);
         }
 
+
+        /// <summary>
+        /// マウス入力
+        /// </summary>
+        /// <param name="mouse">マウス情報</param>
+        /// <param name="state">状態</param>
+        public void ProcessMouseInput(MouseEventArgs mouse, MOUSE_STATE state)
+        {
+            switch (state)
+            {
+                case MOUSE_STATE.DOWN:
+                    cameraController.Down(mouse);
+                    if (!Controllers[Mode].Down(mouse))
+                    {
+                        Logger.Log(Logger.LogLevel.Warning, "Failed Command" + Mode.ToString());
+                    }
+
+                    break;
+                case MOUSE_STATE.CLICK:
+                    cameraController.Click(mouse);
+                    if (!Controllers[Mode].Click(mouse))
+                    {
+                        Logger.Log(Logger.LogLevel.Warning, "Failed Command" + Mode.ToString());
+                    }
+
+                    break;
+                case MOUSE_STATE.MOVE:
+                    cameraController.Move(mouse);
+                    if (!Controllers[Mode].Move(mouse))
+                    {
+                        Logger.Log(Logger.LogLevel.Warning, "Failed Command" + Mode.ToString());
+                    }
+
+                    break;
+                case MOUSE_STATE.UP:
+                    cameraController.Up(mouse);
+                    if (!Controllers[Mode].Up(mouse))
+                    {
+                        Logger.Log(Logger.LogLevel.Warning, "Failed Command" + Mode.ToString());
+                    }
+
+                    break;
+                case MOUSE_STATE.WHEEL:
+                    cameraController.Wheel(mouse);
+                    if (!Controllers[Mode].Wheel(mouse))
+                    {
+                        Logger.Log(Logger.LogLevel.Warning, "Failed Command" + Mode.ToString());
+                    }
+
+                    break;
+            }
+        }
         #endregion
     }
 }
