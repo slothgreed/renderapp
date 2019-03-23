@@ -67,6 +67,7 @@
     <Compile Include="Control\DijkstraController.cs" />
     <Compile Include="Control\EdgeFlipsController.cs" />
     <Compile Include="Control\IController.cs" />
+    <Compile Include="Control\SelectItemEventArgs.cs" />
     <Compile Include="Control\SelectLineController.cs" />
     <Compile Include="Control\SelectPointController.cs" />
     <Compile Include="Control\SelectTriangleController.cs" />
@@ -102,6 +103,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="EventArgs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

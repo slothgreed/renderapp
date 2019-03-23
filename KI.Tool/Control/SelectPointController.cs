@@ -4,19 +4,32 @@ using KI.Gfx.Geometry;
 using KI.Asset;
 using KI.Tool.Utility;
 using OpenTK;
-using KI.Gfx;
 
 namespace KI.Tool.Control
 {
+
+    /// <summary>
+    /// 点を選択したイベント
+    /// </summary>
+    /// <param name="sender">発生元</param>
+    /// <param name="e">イベント</param>
+    public delegate void OnPointSelectedHandler(object sender, ItemSelectedEventArgs e);
+
     /// <summary>
     /// 頂点選択コントローラ
     /// </summary>
     public class SelectPointController : IController
     {
+
+        /// <summary>
+        /// Viewport上で頂点したイベント
+        /// </summary>
+        public event OnPointSelectedHandler PointSelected;
+
         /// <summary>
         /// 選択頂点
         /// </summary>
-        private List<Vertex> selectVertex;
+        private Vertex selectVertex;
 
         /// <summary>
         /// 描画オブジェクト
@@ -37,8 +50,10 @@ namespace KI.Tool.Control
             if (HalfEdgeDSSelector.PickPoint(leftMouse.Click, ref renderObject, ref vertex))
             {
                 vertex.Color = Vector3.UnitY;
-                selectVertex.Add(vertex);
+                selectVertex = vertex;
                 renderObject.Polygon.UpdateVertexArray();
+
+                OnSelectPoint(selectVertex);
             }
 
             return true;
@@ -50,7 +65,6 @@ namespace KI.Tool.Control
         /// <returns>成功</returns>
         public override bool Binding()
         {
-            selectVertex = new List<Vertex>();
 
             return base.Binding();
         }
@@ -68,9 +82,9 @@ namespace KI.Tool.Control
 
         private void Clear()
         {
-            foreach (var vertex in selectVertex)
+            if(selectVertex != null)
             {
-                vertex.Color = new Vector3(0.8f);
+                selectVertex.Color = new Vector3(0.8f);
             }
 
             if (renderObject != null)
@@ -78,7 +92,11 @@ namespace KI.Tool.Control
                 renderObject.Polygon.UpdateVertexArray();
             }
 
-            selectVertex.Clear();
+        }
+
+        private void OnSelectPoint(Vertex item)
+        {
+            PointSelected?.Invoke(this, new ItemSelectedEventArgs(item));
         }
     }
 }

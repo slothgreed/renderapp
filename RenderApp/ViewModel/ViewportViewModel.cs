@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 using KI.Foundation.Core;
 using KI.Gfx.GLUtil;
+using KI.Tool;
 using KI.Tool.Control;
 using KI.UI.ViewModel;
 
@@ -22,6 +23,7 @@ namespace RenderApp.ViewModel
         Geodesic
     }
 
+
     /// <summary>
     /// Viewportのヴューモデル
     /// </summary>
@@ -39,12 +41,22 @@ namespace RenderApp.ViewModel
         public ViewportViewModel(ViewModelBase parent)
             : base(parent, null, "Render App", Place.Floating)
         {
-            Controllers.Add(CONTROL_MODE.SelectTriangle, new SelectTriangleController());
-            Controllers.Add(CONTROL_MODE.SelectLine, new SelectLineController());
-            Controllers.Add(CONTROL_MODE.Dijkstra, new DijkstraController());
-            Controllers.Add(CONTROL_MODE.Geodesic, new GeodesicDistanceController());
-            Controllers.Add(CONTROL_MODE.SelectPoint, new SelectPointController());
-            Controllers.Add(CONTROL_MODE.EdgeFlips, new EdgeFlipsController());
+            SelectPointController SelectPointController = new SelectPointController();
+            SelectPointController.PointSelected += SelectPointController_PointSelected;
+
+            SelectLineController SelectLineController = new SelectLineController();
+            SelectTriangleController SelectTriangleController = new SelectTriangleController();
+            DijkstraController DijkstraController = new DijkstraController();
+            GeodesicDistanceController GeodesicDistanceController = new GeodesicDistanceController();
+            EdgeFlipsController EdgeFlipsController = new EdgeFlipsController();
+
+            Controllers.Add(CONTROL_MODE.SelectPoint, SelectPointController);
+            Controllers.Add(CONTROL_MODE.SelectLine, SelectLineController);
+            Controllers.Add(CONTROL_MODE.SelectTriangle, SelectTriangleController);
+
+            Controllers.Add(CONTROL_MODE.Dijkstra, DijkstraController);
+            Controllers.Add(CONTROL_MODE.Geodesic, GeodesicDistanceController);
+            Controllers.Add(CONTROL_MODE.EdgeFlips, EdgeFlipsController);
         }
 
         /// <summary>
@@ -149,6 +161,11 @@ namespace RenderApp.ViewModel
 
         #region [Viewport Method]
 
+        private void SelectPointController_PointSelected(object sender, ItemSelectedEventArgs e)
+        {
+            OnItemSelected(e);
+        }
+
         /// <summary>
         /// 読み込みイベント
         /// </summary>
@@ -156,7 +173,6 @@ namespace RenderApp.ViewModel
         /// <param name="e"></param>
         public void OnLoadedEvent(object sender, EventArgs e)
         {
-
             OnPropertyChanged("Loaded");
         }
 

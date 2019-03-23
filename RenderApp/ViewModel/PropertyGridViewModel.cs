@@ -12,6 +12,19 @@ namespace RenderApp.ViewModel
     /// </summary>
     public class PropertyGridViewModel : DockWindowViewModel
     {
+        public object Model
+        {
+            get
+            {
+                return DataModel;
+            }
+            set
+            {
+                OnPropertyChanging(nameof(DataModel));
+                DataModel = value;
+                OnPropertyChanged(nameof(DataModel));
+            }
+        }
         /// <summary>
         /// コンストラクタ
         /// </summary>

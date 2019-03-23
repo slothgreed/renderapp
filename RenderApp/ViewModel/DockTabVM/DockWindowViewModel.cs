@@ -1,7 +1,15 @@
-﻿using KI.UI.ViewModel;
+﻿using KI.Tool;
+using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel
 {
+    /// <summary>
+    /// 点を選択したイベント
+    /// </summary>
+    /// <param name="sender">発生元</param>
+    /// <param name="e">イベント</param>
+    public delegate void OnItemSelectedEventHandler(object sender, ItemSelectedEventArgs e);
+
     public abstract class DockWindowViewModel : ViewModelBase
     {
         public enum Place
@@ -12,6 +20,11 @@ namespace RenderApp.ViewModel
             RightDown,
             Floating
         }
+
+        /// <summary>
+        /// 選択イベント
+        /// </summary>
+        public event OnItemSelectedEventHandler ItemSelected;
 
         public DockWindowViewModel(ViewModelBase parent, object model, string title, Place place)
             : base(parent, model)
@@ -37,5 +50,19 @@ namespace RenderApp.ViewModel
         {
             get; private set;
         }
+
+
+        /// <summary>
+        /// 選択イベント
+        /// </summary>
+        /// <param name="アイテム"></param>
+        protected virtual void OnItemSelected(ItemSelectedEventArgs eventArgs)
+        {
+            if (ItemSelected != null)
+            {
+                ItemSelected(this, eventArgs);
+            }
+        }
+
     }
 }

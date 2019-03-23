@@ -54,8 +54,8 @@ namespace KI.Tool.Command
             var laplaceParam = new ScalarParameter("Laplace", halfDS.HalfEdgeVertexs.Select(p => p.Laplace).ToArray());
             var meanParam = new ScalarParameter("MeanCurvature", halfDS.HalfEdgeVertexs.Select(p => p.MeanCurvature).ToArray());
             var gaussParam = new ScalarParameter("GaussCurvature", halfDS.HalfEdgeVertexs.Select(p => p.GaussCurvature).ToArray());
-            var minParam = new ScalarParameter("MinCurvature", halfDS.HalfEdgeVertexs.Select(p => p.MinDerivaribe).ToArray());
-            var maxParam = new ScalarParameter("MaxCurvature", halfDS.HalfEdgeVertexs.Select(p => p.MaxDerivaribe).ToArray());
+            var minParam = new ScalarParameter("MinCurvature", halfDS.HalfEdgeVertexs.Select(p => p.MinCurvature).ToArray());
+            var maxParam = new ScalarParameter("MaxCurvature", halfDS.HalfEdgeVertexs.Select(p => p.MaxCurvature).ToArray());
 
             var dirMinLine = halfDS.HalfEdgeVertexs.Select(p => p.MinDirection).ToArray();
             var dirMaxLine = halfDS.HalfEdgeVertexs.Select(p => p.MaxDirection).ToArray();

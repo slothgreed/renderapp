@@ -5,11 +5,8 @@ using KI.Gfx.GLUtil;
 using KI.Asset;
 using KI.UI.ViewModel;
 using RenderApp.Globals;
-using KI.Gfx.KIShader;
-using KI.Gfx.GLUtil.Buffer;
-using KI.Gfx.Render;
 using System;
-using System.Collections.Specialized;
+using KI.Tool;
 
 namespace RenderApp.ViewModel
 {
@@ -35,6 +32,7 @@ namespace RenderApp.ViewModel
             SceneNodeViewModel.PropertyChanged += SceneNodeViewModel_PropertyChanged;
             FactoryNodeViewModel.PropertyChanged += LibraryNodeViewModel_PropertyChanged;
             ViewportViewModel.PropertyChanged += ViewportViewModel_PropertyChanged;
+            ViewportViewModel.ItemSelected += ViewportViewModel_ItemSelected;
             PropertyGridViewModel.PropertyChanged += PropertyGridViewModel_PropertyChanged;
 
             AnchorablesSources = new ObservableCollection<ViewModelBase>();
@@ -46,6 +44,11 @@ namespace RenderApp.ViewModel
             DocumentsSources.Add(ViewportViewModel);
 
             this.workspace = workspace;
+        }
+
+        private void ViewportViewModel_ItemSelected(object sender, ItemSelectedEventArgs e)
+        {
+            PropertyGridViewModel.Model = e.SelectItem;
         }
 
         private void ViewportViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -96,6 +99,8 @@ namespace RenderApp.ViewModel
         {
             ViewportViewModel.Invalidate();
         }
+
+
 
         public void UpdateSelectNode(KINode node)
         {
