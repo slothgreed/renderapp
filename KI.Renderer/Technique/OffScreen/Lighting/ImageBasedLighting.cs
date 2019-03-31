@@ -43,10 +43,26 @@ namespace KI.Asset.Technique
         public override void Initialize()
         {
             var textures = Global.Renderer.RenderQueue.OutputTexture<GBuffer>();
-            Rectanle.Polygon.AddTexture(TextureKind.Albedo, textures[(int)GBuffer.OutputTextureType.Posit]);
+            Rectanle.Polygon.AddTexture(TextureKind.Albedo, textures[(int)GBuffer.OutputTextureType.Color]);
             Rectanle.Polygon.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Normal]);
-            Rectanle.Polygon.AddTexture(TextureKind.World, textures[(int)GBuffer.OutputTextureType.Color]);
+            Rectanle.Polygon.AddTexture(TextureKind.World, textures[(int)GBuffer.OutputTextureType.Posit]);
             Rectanle.Polygon.AddTexture(TextureKind.Lighting, textures[(int)GBuffer.OutputTextureType.Light]);
         }
+
+        private Texture _uCubeMap;
+        public Texture uCubeMap
+        {
+            get
+            {
+                return _uCubeMap;
+            }
+
+            set
+            {
+                SetValue(ref _uCubeMap, value);
+            }
+        }
+
+
     }
 }

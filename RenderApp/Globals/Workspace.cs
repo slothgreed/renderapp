@@ -4,6 +4,7 @@ using KI.Asset;
 using KI.Asset.Attribute;
 using KI.Asset.Technique;
 using KI.Foundation.Command;
+using KI.Foundation.Tree;
 using KI.Tool.Command;
 using OpenTK;
 
@@ -59,7 +60,13 @@ namespace RenderApp.Globals
         /// </summary>
         public void InitializeScene()
         {
-            MainScene.Initialize();
+            MainScene.MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
+            MainScene.SunLight = RenderObjectFactory.Instance.CreateDirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
+            var sphere = AssetFactory.Instance.CreateSphere("sphere", 0.1f, 32, 32, true);
+            MainScene.SunLight.Model = RenderObjectFactory.Instance.CreateRenderObject("SunLight", sphere);
+            MainScene.AddObject(MainScene.MainCamera);
+            MainScene.AddObject(MainScene.SunLight);
+
             var axis = AssetFactory.Instance.CreateAxis("axis", Vector3.Zero, MainScene.WorldMax);
             var axisObject = RenderObjectFactory.Instance.CreateRenderObject(axis.ToString(), axis);
             MainScene.AddObject(axisObject);
@@ -83,9 +90,9 @@ namespace RenderApp.Globals
 
             // bunny
             {
-                var bunny = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/moai.half");
-                var renderBunny = RenderObjectFactory.Instance.CreateRenderObject("bunny", bunny);
-                renderBunny.Shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
+                var moai = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/moai.half");
+                var renderBunny = RenderObjectFactory.Instance.CreateRenderObject("moai", moai);
+                renderBunny.Shader = ShaderCreater.Instance.CreateShader(GBufferType.PointNormalColor);
                 //renderBunny.RotateX(-90);
                 MainScene.AddObject(renderBunny);
                 var parentNode = MainScene.FindNode(renderBunny);
@@ -197,16 +204,18 @@ namespace RenderApp.Globals
             RenderObject renderTop = RenderObjectFactory.Instance.CreateRenderObject(top.Name, top);
             RenderObject renderBottom = RenderObjectFactory.Instance.CreateRenderObject(bottom.Name, bottom);
 
-            MainScene.AddObject(renderFront);
-            MainScene.AddObject(renderLeft);
-            MainScene.AddObject(renderBack);
-            MainScene.AddObject(renderRight);
-            MainScene.AddObject(renderTop);
-            MainScene.AddObject(renderBottom);
+            KINode cubeMapNode = new KINode("CubeMap");
+            MainScene.AddObject(cubeMapNode);
+            MainScene.AddObject(renderFront, cubeMapNode);
+            MainScene.AddObject(renderLeft, cubeMapNode);
+            MainScene.AddObject(renderBack, cubeMapNode);
+            MainScene.AddObject(renderRight, cubeMapNode);
+            MainScene.AddObject(renderTop, cubeMapNode);
+            MainScene.AddObject(renderBottom, cubeMapNode);
 
-            //EnvironmentProbe cubeMap = AssetFactory.Instance.CreateEnvironmentMap("world");
-            //cubeMap.GenCubemap(cubemap[0], cubemap[1], cubemap[2], cubemap[3], cubemap[4], cubemap[5]);
-            //MainScene.AddObject(cubeMap);
+            EnvironmentProbe cubeMap = AssetFactory.Instance.CreateEnvironmentMap("CubeMapObject");
+            cubeMap.GenCubemap(cubemap[0], cubemap[1], cubemap[2], cubemap[3], cubemap[4], cubemap[5]);
+            MainScene.AddObject(cubeMap);
         }
 
         public void InitializeRenderer(int width, int height)
@@ -238,6 +247,11 @@ namespace RenderApp.Globals
 
             //SSLIC sslic = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.SSLIC) as SSLIC;
             //Renderer.PostEffect.AddTechnique(sslic);
+
+            var probe = MainScene.FindObject("CubeMapObject") as EnvironmentProbe;
+            ImageBasedLighting ibl = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.IBL) as ImageBasedLighting;
+            Renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.IBL));
+            ibl.uCubeMap = probe.Cubemap;
         }
     }
 }

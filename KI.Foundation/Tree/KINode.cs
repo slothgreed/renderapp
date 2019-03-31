@@ -45,7 +45,11 @@ namespace KI.Foundation.Tree
         /// <summary>
         /// ノードの名前
         /// </summary>
-        public string Name { get; private set; }
+        public string Name
+        {
+            get;
+            private set;
+        }
 
         /// <summary>
         /// 親ノード
@@ -89,9 +93,7 @@ namespace KI.Foundation.Tree
             //if (FindChild(child.Name) == null)
             {
                 KINode node = new KINode(child);
-                node.Parent = this;
-                Children.Add(node);
-                OnNodeInserted(Children.Count, node);
+                AddChild(node);
             }
         }
 
@@ -161,13 +163,19 @@ namespace KI.Foundation.Tree
         {
             foreach (var child in Children)
             {
-                if (child.KIObject.Name == name)
+                if (child.Name == name)
                 {
                     return child;
                 }
+
+                var result = child.FindRecursiveChild(name);
+                if(result != null)
+                {
+                    return result;
+                }
             }
 
-            return FindRecursiveChild(name);
+            return null;
         }
 
         #endregion

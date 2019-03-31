@@ -8,15 +8,29 @@ using KI.Gfx;
 
 namespace KI.Tool.Control
 {
+
+    /// <summary>
+    /// 点を選択したイベント
+    /// </summary>
+    /// <param name="sender">発生元</param>
+    /// <param name="e">イベント</param>
+    public delegate void OnLineSelectedHandler(object sender, ItemSelectedEventArgs e);
+
     /// <summary>
     /// 線分の選択
     /// </summary>
     public class SelectLineController : IController
     {
+
+        /// <summary>
+        /// Viewport上で頂点したイベント
+        /// </summary>
+        public event OnLineSelectedHandler LineSelected;
+
         /// <summary>
         /// 頂点の選択
         /// </summary>
-        private List<Vertex> selectVertex = new List<Vertex>();
+        private HalfEdge selectEdge;
 
         /// <summary>
         /// 描画オブジェクト
@@ -41,8 +55,7 @@ namespace KI.Tool.Control
                     halfEdge.Start.Color = Vector3.UnitY;
                     halfEdge.End.Color = Vector3.UnitY;
 
-                    selectVertex.Add(halfEdge.Start);
-                    selectVertex.Add(halfEdge.End);
+                    selectEdge = halfEdge;
 
                     renderObject.Polygon.UpdateVertexArray();
                 }
@@ -57,7 +70,7 @@ namespace KI.Tool.Control
         /// <returns>成功</returns>
         public override bool Binding()
         {
-            selectVertex = new List<Vertex>();
+            selectEdge = null;
 
             return base.Binding();
         }
@@ -78,9 +91,10 @@ namespace KI.Tool.Control
         /// </summary>
         private void Clear()
         {
-            foreach (var vertex in selectVertex)
+            if(selectEdge != null)
             {
-                vertex.Color = new Vector3(0.8f);
+                selectEdge.Start.Color = new Vector3(0.8f);
+                selectEdge.End.Color = new Vector3(0.8f);
             }
 
             if (renderObject != null)
@@ -88,7 +102,14 @@ namespace KI.Tool.Control
                 renderObject.Polygon.UpdateVertexArray();
             }
 
-            selectVertex.Clear();
+            selectEdge = null;
+        }
+
+
+        private void OnSelectLine(Vertex item)
+        {
+            LineSelected?.Invoke(this, new ItemSelectedEventArgs(item));
         }
     }
+
 }

@@ -8,15 +8,29 @@ using KI.Gfx;
 
 namespace KI.Tool.Control
 {
+
+    /// <summary>
+    /// 面を選択したイベント
+    /// </summary>
+    /// <param name="sender">発生元</param>
+    /// <param name="e">イベント</param>
+    public delegate void OnTriangleSelectedHandler(object sender, ItemSelectedEventArgs e);
+
     /// <summary>
     /// 三角形の選択
     /// </summary>
     public class SelectTriangleController : IController
     {
+
         /// <summary>
-        /// 頂点の選択
+        /// Viewport上で頂点したイベント
         /// </summary>
-        private List<Vertex> selectVertex = new List<Vertex>();
+        public event OnTriangleSelectedHandler TriangleSelected;
+
+        /// <summary>
+        /// 面の選択
+        /// </summary>
+        private HalfEdgeMesh selectMesh;
 
         /// <summary>
         /// 描画オブジェクト
@@ -43,12 +57,15 @@ namespace KI.Tool.Control
                         return false;
                     }
 
-                    foreach (var vertex in mesh.AroundVertex)
+                    selectMesh = mesh;
+                    foreach (var vertex in selectMesh.AroundVertex)
                     {
                         vertex.Color = Vector3.UnitY;
-                        selectVertex.Add(vertex);
                         renderObject.Polygon.UpdateVertexArray();
                     }
+
+                    OnSelectMesh(selectMesh);
+
                 }
             }
 
@@ -61,7 +78,7 @@ namespace KI.Tool.Control
         /// <returns>成功</returns>
         public override bool Binding()
         {
-            selectVertex = new List<Vertex>();
+            selectMesh = null;
 
             return base.Binding();
         }
@@ -82,9 +99,13 @@ namespace KI.Tool.Control
         /// </summary>
         private void Clear()
         {
-            foreach (var vertex in selectVertex)
+            if(selectMesh != null)
             {
-                vertex.Color = new Vector3(0.8f);
+                foreach (var vertex in selectMesh.AroundVertex)
+                {
+                    vertex.Color = new Vector3(0.8f);
+                    renderObject.Polygon.UpdateVertexArray();
+                }
             }
 
             if (renderObject != null)
@@ -92,7 +113,13 @@ namespace KI.Tool.Control
                 renderObject.Polygon.UpdateVertexArray();
             }
 
-            selectVertex.Clear();
+            selectMesh = null;
+        }
+
+
+        private void OnSelectMesh(HalfEdgeMesh item)
+        {
+            TriangleSelected?.Invoke(this, new ItemSelectedEventArgs(item));
         }
     }
 }

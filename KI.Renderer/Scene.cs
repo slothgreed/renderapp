@@ -31,16 +31,6 @@ namespace KI.Asset
             RootNode = new KINode("ROOT");
         }
 
-        public void Initialize()
-        {
-            MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
-            SunLight = RenderObjectFactory.Instance.CreateDirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
-            var sphere = AssetFactory.Instance.CreateSphere("sphere", 0.1f, 32, 32, true);
-            SunLight.Model = RenderObjectFactory.Instance.CreateRenderObject("SunLight", sphere);
-            AddObject(MainCamera);
-            AddObject(SunLight);
-        }
-
         /// <summary>
         /// ルートノード
         /// </summary>
@@ -124,6 +114,21 @@ namespace KI.Asset
             {
                 parent.AddChild(obj);
             }
+        }
+
+        /// <summary>
+        /// オブジェクトの追加
+        /// </summary>
+        /// <param name="value">追加するオブジェクトリスト</param>
+        /// <param name="parent">親</param>
+        public void AddObject(KINode value, KINode parent = null)
+        {
+            if (parent == null)
+            {
+                parent = RootNode;
+            }
+
+            parent.AddChild(value);
         }
 
         /// <summary>

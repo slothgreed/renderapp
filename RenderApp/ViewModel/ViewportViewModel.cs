@@ -45,7 +45,11 @@ namespace RenderApp.ViewModel
             SelectPointController.PointSelected += SelectPointController_PointSelected;
 
             SelectLineController SelectLineController = new SelectLineController();
+            SelectLineController.LineSelected += SelectPointController_PointSelected;
+
             SelectTriangleController SelectTriangleController = new SelectTriangleController();
+            SelectTriangleController.TriangleSelected += SelectPointController_PointSelected;
+
             DijkstraController DijkstraController = new DijkstraController();
             GeodesicDistanceController GeodesicDistanceController = new GeodesicDistanceController();
             EdgeFlipsController EdgeFlipsController = new EdgeFlipsController();

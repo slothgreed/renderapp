@@ -38,7 +38,7 @@ namespace KI.Asset.Technique
 
             set
             {
-                SetValue<float>(ref _uScale, value);
+                SetValue(ref _uScale, value);
             }
         }
         private float[] _uWeight;
@@ -51,7 +51,7 @@ namespace KI.Asset.Technique
 
             set
             {
-                SetValue<float[]>(ref _uWeight, value);
+                SetValue(ref _uWeight, value);
             }
         }
         private Texture _uTarget;
@@ -64,7 +64,7 @@ namespace KI.Asset.Technique
 
             set
             {
-                SetValue<Texture>(ref _uTarget, value);
+                SetValue(ref _uTarget, value);
             }
         }
         private bool _uHorizon;
@@ -77,7 +77,7 @@ namespace KI.Asset.Technique
 
             set
             {
-                SetValue<bool>(ref _uHorizon, value);
+                SetValue(ref _uHorizon, value);
             }
         }
 

@@ -55,8 +55,8 @@ namespace RenderApp.ViewModel
         {
             if (e.PropertyName == "Loaded")
             {
-                workspace.InitializeRenderer(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
                 workspace.InitializeScene();
+                workspace.InitializeRenderer(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
                 RendererViewModel.Model = workspace.Renderer;
             }
             else if (e.PropertyName == "Resize")

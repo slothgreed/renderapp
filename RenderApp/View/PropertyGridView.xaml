@@ -10,11 +10,7 @@
 
         <xctk:PropertyGrid AutoGenerateProperties="True"
                            Background="White"
-                           SelectedObject="{Binding DataModel}">
-            <xctk:PropertyGrid.PropertyDefinitions>
-                <xctk:PropertyDefinition TargetProperties="FirstName"/>
-                <xctk:PropertyDefinition TargetProperties="FavoriteColor"/>
-                <xctk:PropertyDefinition TargetProperties="PetNames"/>
-            </xctk:PropertyGrid.PropertyDefinitions>
+                           SelectedObject="{Binding DataModel}"
+                           IsReadOnly="True">
         </xctk:PropertyGrid>
 </UserControl>

@@ -24,7 +24,7 @@ namespace KI.Asset
         /// <returns>テクスチャ</returns>
         public Texture CreateTexture(string path)
         {
-            return CreateTexture(path, GettImageKind(path));
+            return CreateTexture(path, GetImageKind(path));
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace KI.Asset
         /// </summary>
         /// <param name="path">パス</param>
         /// <returns>画像種類</returns>
-        public ImageKind GettImageKind(string path)
+        public ImageKind GetImageKind(string path)
         {
             string extension = System.IO.Path.GetExtension(path);
             extension = extension.ToLower();
@@ -69,7 +69,6 @@ namespace KI.Asset
             }
 
             ImageInfo image = CreateImageInfo(path, kind);
-            image.Load(path);
             Texture texture = new Texture(Path.GetFileName(path), TextureType.Texture2D);
             texture.GenTexture(image);
             image.Dispose();
@@ -134,7 +133,7 @@ namespace KI.Asset
         }
 
         /// <summary>
-        /// キューブマップの作成
+        /// キューブマップの作成(実際にCubeMapをレンダリングしていると同じテクスチャを2つ持つ状態になっている)
         /// </summary>
         /// <param name="px">PXファイルパス</param>
         /// <param name="py">PYファイルパス</param>
@@ -146,13 +145,12 @@ namespace KI.Asset
         public Texture CreateCubemapTexture(string px, string py, string pz, string nx, string ny, string nz)
         {
             List<ImageInfo> images = new List<ImageInfo>();
-
-            images.Add(CreateImageInfo(px, GettImageKind(px)));
-            images.Add(CreateImageInfo(py, GettImageKind(py)));
-            images.Add(CreateImageInfo(pz, GettImageKind(pz)));
-            images.Add(CreateImageInfo(nx, GettImageKind(nx)));
-            images.Add(CreateImageInfo(ny, GettImageKind(ny)));
-            images.Add(CreateImageInfo(nz, GettImageKind(nz)));
+            images.Add(CreateImageInfo(px, GetImageKind(px)));
+            images.Add(CreateImageInfo(py, GetImageKind(py)));
+            images.Add(CreateImageInfo(pz, GetImageKind(pz)));
+            images.Add(CreateImageInfo(nx, GetImageKind(nx)));
+            images.Add(CreateImageInfo(ny, GetImageKind(ny)));
+            images.Add(CreateImageInfo(nz, GetImageKind(nz)));
             Texture texture = new Texture("Cubemap" + Path.GetFileName(px), TextureType.Cubemap);
             texture.GenCubemapTexture(images);
 
@@ -167,20 +165,27 @@ namespace KI.Asset
         /// <returns>画像</returns>
         private ImageInfo CreateImageInfo(string path, ImageKind kind)
         {
+            ImageInfo image;
             switch (kind)
             {
                 case ImageKind.PNG:
                 case ImageKind.JPG:
                 case ImageKind.BMP:
-                    return new ImageInfo(path);
+                    image = new ImageInfo(path);
+                    break;
                 case ImageKind.TGA:
-                    return new TGAImage(path);
+                    image = new TGAImage(path);
+                    break;
                 case ImageKind.HDR:
-                    return new HDRImage(path);
+                    image = new HDRImage(path);
+                    break;
                 default:
                     Logger.Log(Logger.LogLevel.Error, "not support texture");
                     return null;
             }
+
+            image.Load(path);
+            return image;
         }
     }
 }
