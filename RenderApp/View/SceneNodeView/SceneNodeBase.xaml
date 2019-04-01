@@ -12,15 +12,15 @@
     <StackPanel>
         <WrapPanel Margin="2">
             <TextBlock Text="Rotate" />
-            <control:Vector3EditBox Vector3Value="{Binding Rotate}" />
+            <control:Vector3EditBoxView Vector3Value="{Binding Rotate}" />
         </WrapPanel>
         <WrapPanel Margin="2">
             <TextBlock Text="Scale" />
-            <control:Vector3EditBox Vector3Value="{Binding Scale}" />
+            <control:Vector3EditBoxView Vector3Value="{Binding Scale}" />
         </WrapPanel>
         <WrapPanel Margin="2">
             <TextBlock Text="Translate" />
-            <control:Vector3EditBox Vector3Value="{Binding Translate}" />
+            <control:Vector3EditBoxView Vector3Value="{Binding Translate}" />
         </WrapPanel>
     </StackPanel>
 </UserControl>

@@ -20,12 +20,12 @@ namespace KI.UI.Controls
     /// <summary>
     /// Vector3EditBoxView.xaml の相互作用ロジック
     /// </summary>
-    public partial class Vector3EditBox : UserControl
+    public partial class Vector3EditBoxView : UserControl
     {
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public Vector3EditBox()
+        public Vector3EditBoxView()
         {
             InitializeComponent();
         }
@@ -37,7 +37,7 @@ namespace KI.UI.Controls
             DependencyProperty.Register(
                 "XValue",
                 typeof(float),
-                typeof(Vector3EditBox),
+                typeof(Vector3EditBoxView),
                 new FrameworkPropertyMetadata(0.0f, new PropertyChangedCallback(OnXValueChanged)));
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace KI.UI.Controls
             DependencyProperty.Register(
                 "YValue",
                 typeof(float),
-                typeof(Vector3EditBox),
+                typeof(Vector3EditBoxView),
                 new FrameworkPropertyMetadata(0.0f, new PropertyChangedCallback(OnYValueChanged)));
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace KI.UI.Controls
             DependencyProperty.Register(
                 "ZValue",
                 typeof(float),
-                typeof(Vector3EditBox),
+                typeof(Vector3EditBoxView),
                 new FrameworkPropertyMetadata(
                     0.0f,
                     new PropertyChangedCallback(OnZValueChanged)));
@@ -69,7 +69,7 @@ namespace KI.UI.Controls
             DependencyProperty.Register(
                 "Vector3Value",
                 typeof(Vector3),
-                typeof(Vector3EditBox),
+                typeof(Vector3EditBoxView),
                 new FrameworkPropertyMetadata(
                     Vector3.Zero, 
                     FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
@@ -118,7 +118,7 @@ namespace KI.UI.Controls
         /// <param name="e">イベントデータ</param>
         private static void OnXValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Vector3EditBox property = (Vector3EditBox)d;
+            Vector3EditBoxView property = (Vector3EditBoxView)d;
             property.OnVectorValueChanged(new Vector3((float)e.NewValue, property.YValue, property.ZValue));
         }
 
@@ -129,7 +129,7 @@ namespace KI.UI.Controls
         /// <param name="e">イベントデータ</param>
         private static void OnYValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Vector3EditBox property = (Vector3EditBox)d;
+            Vector3EditBoxView property = (Vector3EditBoxView)d;
             property.OnVectorValueChanged(new Vector3(property.XValue, (float)e.NewValue, property.ZValue));
         }
 
@@ -140,7 +140,7 @@ namespace KI.UI.Controls
         /// <param name="e">イベントデータ</param>
         private static void OnZValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Vector3EditBox property = (Vector3EditBox)d;
+            Vector3EditBoxView property = (Vector3EditBoxView)d;
             property.OnVectorValueChanged(new Vector3(property.XValue, property.YValue, (float)e.NewValue));
         }
 
@@ -151,7 +151,7 @@ namespace KI.UI.Controls
         /// <param name="e">イベントデータ</param>
         private static void OnVectorValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Vector3EditBox property = (Vector3EditBox)d;
+            Vector3EditBoxView property = (Vector3EditBoxView)d;
             property.OnVectorValueChanged((Vector3)e.NewValue);
         }
 

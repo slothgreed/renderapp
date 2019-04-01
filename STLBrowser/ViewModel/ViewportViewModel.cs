@@ -6,6 +6,8 @@ using KI.UI.ViewModel;
 using KI.Tool;
 using KI.Tool.Control;
 using KI.Asset;
+using OpenTK;
+using KI.Asset.Technique;
 
 namespace STLBrowser.ViewModel
 {
@@ -78,10 +80,17 @@ namespace STLBrowser.ViewModel
             Global.Renderer.ActiveScene = MainScene;
 
             MainScene.MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
+            MainScene.SunLight = RenderObjectFactory.Instance.CreateDirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
             var sphere = AssetFactory.Instance.CreateSphere("sphere", 0.1f, 32, 32, true);
             MainScene.SunLight.Model = RenderObjectFactory.Instance.CreateRenderObject("SunLight", sphere);
             MainScene.AddObject(MainScene.MainCamera);
             MainScene.AddObject(MainScene.SunLight);
+
+            Renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer));
+            var gBufferTexture = Renderer.RenderQueue.OutputTexture<GBuffer>();
+            Renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Deferred));
+            Renderer.OutputBuffer = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output) as OutputBuffer;
+            Renderer.OutputTexture = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
         }
         private void OnResizeEvent(object sender, EventArgs e)
         {
