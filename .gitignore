@@ -6,4 +6,5 @@ packages/
 *.vs
 *.suo
 *.Cache
+*.opendb
 RenderApp.v12.suo
