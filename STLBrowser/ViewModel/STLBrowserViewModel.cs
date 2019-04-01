@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.IO;
-using KI.Foundation.ViewModel;
-using STLBrowser.Model;
-using RenderApp;
+using KI.UI.ViewModel;
+
 namespace STLBrowser.ViewModel
 {
     public class STLBrowserViewModel : ViewModelBase
@@ -24,7 +19,8 @@ namespace STLBrowser.ViewModel
             }
         }
 
-        public STLBrowserViewModel(string path)
+        public STLBrowserViewModel(ViewModelBase parent, string path)
+            : base(parent)
         {
             path = @"C:\Users\ido\Documents\KIProject\renderapp\RenderApp\Resource\Model";
 
@@ -39,7 +35,7 @@ namespace STLBrowser.ViewModel
                 {
                     if (Path.GetExtension(file) == ".stl")
                     {
-                        STLFiles.Add(new ThumbnailFileViewModel(Path.GetFileName(file), file));
+                        STLFiles.Add(new ThumbnailFileViewModel(this, Path.GetFileName(file), file));
                     }
                 }
             }

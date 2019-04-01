@@ -13,6 +13,7 @@ using RenderApp.Globals;
 using System.Windows;
 using KI.Renderer;
 using System.Reflection;
+using KI.Tool;
 
 namespace RenderApp.ViewModel
 {

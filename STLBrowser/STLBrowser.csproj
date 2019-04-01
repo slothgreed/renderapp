@@ -132,6 +132,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KI.Asset\KI.Asset.csproj">
+      <Project>{197a747a-9d2b-4273-bdc6-02941c876cb2}</Project>
+      <Name>KI.Asset</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KI.Foundation\KI.Foundation.csproj">
       <Project>{cfc71ace-112a-467f-96ec-6566d4a6dfc6}</Project>
       <Name>KI.Foundation</Name>
@@ -139,6 +143,22 @@
     <ProjectReference Include="..\KI.Gfx\KI.Gfx.csproj">
       <Project>{f5e989a2-028f-4e60-869c-ec57413376c6}</Project>
       <Name>KI.Gfx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KI.Mathmatics\KI.Mathmatics.csproj">
+      <Project>{5610ebdc-05d3-47ce-b954-bcc8e962d35a}</Project>
+      <Name>KI.Mathmatics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KI.Renderer\KI.Renderer.csproj">
+      <Project>{8bda5035-5778-4460-8166-e6b2bd477e29}</Project>
+      <Name>KI.Renderer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KI.Tool\KI.Tool.csproj">
+      <Project>{c8df6069-e673-4957-a173-2bfca883b102}</Project>
+      <Name>KI.Tool</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KI.UI\KI.UI.csproj">
+      <Project>{35F238B1-820C-4487-9081-A4AF3952219C}</Project>
+      <Name>KI.UI</Name>
     </ProjectReference>
     <ProjectReference Include="..\RenderApp\RenderApp.csproj">
       <Project>{c3f6bad0-f298-468b-a33b-220d78fd1048}</Project>

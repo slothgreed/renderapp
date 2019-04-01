@@ -165,6 +165,7 @@
     </ApplicationDefinition>
     <Compile Include="AppSystem.cs" />
     <Compile Include="Globals\Workspace.cs" />
+    <Compile Include="Loader\RALoader.cs" />
     <Compile Include="ViewModel\AttributeVM\AttributeViewModel.cs" />
     <Compile Include="ViewModel\AttributeVM\DefaultAttributeViewModel.cs" />
     <Compile Include="ViewModel\AttributeVM\SplitAttributeViewModel.cs" />

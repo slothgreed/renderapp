@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.IO;
-using KI.Foundation.ViewModel;
+using KI.UI.ViewModel;
+
 namespace STLBrowser.ViewModel
 {
     public class DirectoryViewModel : ViewModelBase 
@@ -28,7 +25,8 @@ namespace STLBrowser.ViewModel
             set;
         }
 
-        public DirectoryViewModel(string path)
+        public DirectoryViewModel(ViewModelBase parent, string path)
+            : base(parent)
         {
             FileName = Path.GetFileName(path);
             Directorys = new List<DirectoryViewModel>();
@@ -39,12 +37,12 @@ namespace STLBrowser.ViewModel
                 string[] directory = System.IO.Directory.GetDirectories(path, "*");
                 foreach (var dir in directory)
                 {
-                    Directorys.Add(new DirectoryViewModel(dir));
+                    Directorys.Add(new DirectoryViewModel(this, dir));
                 }
                 string[] files = System.IO.Directory.GetFiles(path);
                 foreach (var file in files)
                 {
-                    Directorys.Add(new DirectoryViewModel(file));
+                    Directorys.Add(new DirectoryViewModel(this, file));
                 }
             }
         }

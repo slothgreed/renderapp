@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Windows.Forms.Integration;
 using System.Windows.Forms;
-using RenderApp;
-using RenderApp.RAControl;
-using KI.Foundation.ViewModel;
 using KI.Gfx.GLUtil;
+using KI.UI.ViewModel;
+using KI.Tool;
+using KI.Tool.Control;
+using KI.Asset;
+
 namespace STLBrowser.ViewModel
 {
     public class ViewportViewModel : ViewModelBase
@@ -18,7 +20,7 @@ namespace STLBrowser.ViewModel
                 {
                     _glContext = new WindowsFormsHost()
                     {
-                        Child = Viewport.Instance.glControl
+                        Child = Viewport.Instance.GLControl
                     };
                 }
                 return _glContext;
@@ -41,7 +43,8 @@ namespace STLBrowser.ViewModel
             }
         }
 
-        public ViewportViewModel()
+        public ViewportViewModel(ViewModelBase parent)
+            : base(parent)
         {
             Viewport.Instance.OnLoaded += OnLoadedEvent;
             Viewport.Instance.OnResize += OnResizeEvent;
@@ -52,45 +55,96 @@ namespace STLBrowser.ViewModel
             Viewport.Instance.OnMouseDown += OnMouseDownEvent;
         }
 
+        /// <summary>
+        /// カメラコントローラ
+        /// </summary>
+        private IController cameraController = new CameraController();
+
+        /// <summary>
+        /// シーン
+        /// </summary>
+        public Scene MainScene { get; set; }
+
+        /// <summary>
+        /// レンダラー
+        /// </summary>
+        public Renderer Renderer { get; set; }
+
         public void OnLoadedEvent(object sender, EventArgs e)
         {
-            SceneManager.Instance.Create("MainScene");
-            SceneManager.Instance.CreateMainCamera();
-            SceneManager.Instance.CreateSceneLight();
-            SceneManager.Instance.RenderSystem.Initialize(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
+            MainScene = new Scene("MainScene");
+            Renderer = new Renderer();
+            Global.Renderer = Renderer;
+            Global.Renderer.ActiveScene = MainScene;
+
+            MainScene.MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
+            var sphere = AssetFactory.Instance.CreateSphere("sphere", 0.1f, 32, 32, true);
+            MainScene.SunLight.Model = RenderObjectFactory.Instance.CreateRenderObject("SunLight", sphere);
+            MainScene.AddObject(MainScene.MainCamera);
+            MainScene.AddObject(MainScene.SunLight);
         }
         private void OnResizeEvent(object sender, EventArgs e)
         {
-            if (SceneManager.Instance.ActiveScene != null)
+            if (MainScene != null)
             {
-                SceneManager.Instance.ActiveScene.MainCamera.SetProjMatrix((float)DeviceContext.Instance.Width / DeviceContext.Instance.Height);
+                MainScene.MainCamera.SetProjMatrix((float)DeviceContext.Instance.Width / DeviceContext.Instance.Height);
             }
-            SceneManager.Instance.RenderSystem.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
+            
+            Renderer.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
         }
 
         private void OnRenderEvent(object sender, PaintEventArgs e)
         {
-            SceneManager.Instance.RenderSystem.Render();
+            Renderer.Render();
         }
 
         private void OnMouseWheelEvent(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            ControlManager.Instance.ProcessInput(e, ControlManager.MOUSE_STATE.WHEEL);
+            ProcessMouseInput(e, MOUSE_STATE.WHEEL);
         }
 
         private void OnMouseMoveUpEvent(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            ControlManager.Instance.ProcessInput(e, ControlManager.MOUSE_STATE.UP);
+            ProcessMouseInput(e, MOUSE_STATE.UP);
         }
 
         private void OnMouseMoveEvent(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            ControlManager.Instance.ProcessInput(e, ControlManager.MOUSE_STATE.MOVE);
+            ProcessMouseInput(e, MOUSE_STATE.MOVE);
         }
 
         private void OnMouseDownEvent(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            ControlManager.Instance.ProcessInput(e, ControlManager.MOUSE_STATE.DOWN);
+            ProcessMouseInput(e, MOUSE_STATE.DOWN);
+        }
+
+
+
+        /// <summary>
+        /// マウス入力
+        /// </summary>
+        /// <param name="mouse">マウス情報</param>
+        /// <param name="state">状態</param>
+        public void ProcessMouseInput(MouseEventArgs mouse, MOUSE_STATE state)
+        {
+            switch (state)
+            {
+                case MOUSE_STATE.DOWN:
+                    cameraController.Down(mouse);
+                    break;
+                case MOUSE_STATE.CLICK:
+                    cameraController.Click(mouse);
+                    break;
+                case MOUSE_STATE.MOVE:
+                    cameraController.Move(mouse);
+                    break;
+                case MOUSE_STATE.UP:
+                    cameraController.Up(mouse);
+                    break;
+                case MOUSE_STATE.WHEEL:
+                    cameraController.Wheel(mouse);
+                    break;
+            }
         }
     }
 }

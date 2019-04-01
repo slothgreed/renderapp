@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using System.Windows.Input;
-using KI.Foundation.ViewModel;
-
+﻿using System.Windows.Input;
+using KI.UI.ViewModel;
 
 namespace STLBrowser.ViewModel
 {
@@ -71,14 +64,15 @@ namespace STLBrowser.ViewModel
         {
 
         }
-        public FileTreeViewModel(string path)
+        public FileTreeViewModel(ViewModelBase parent, string path)
+            : base(parent)
         {
             FolderPath = path;
         }
 
         public void CreateDirectoryTree(string path)
         {
-            Root = new DirectoryViewModel(path);
+            Root = new DirectoryViewModel(this, path);
         }
     }
 }

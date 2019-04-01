@@ -54,7 +54,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\DirectoryAccessor.cs" />
+    <Compile Include="Controls\DirectoryAccessorView.xaml.cs">
+      <DependentUpon>DirectoryAccessorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DragBehavior.cs" />
     <Compile Include="Controls\DropBehavior.cs" />
     <Compile Include="Controls\KITextBox.cs" />
@@ -68,6 +70,10 @@
     <Compile Include="ViewModel\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\DirectoryAccessorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resource.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

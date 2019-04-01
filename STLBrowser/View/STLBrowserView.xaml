@@ -2,7 +2,7 @@
     x:Class="STLBrowser.View.STLBrowserView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:control="clr-namespace:KI.Foundation.Control;assembly=KI.Foundation"
+    xmlns:control="clr-namespace:KI.UI.Themes;assembly=KI.UI"
     xmlns:v="clr-namespace:STLBrowser.View"
     xmlns:vm="clr-namespace:STLBrowser.ViewModel">
     <ScrollViewer>
@@ -14,7 +14,7 @@
             </ItemsControl.Template>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <control:ThumbnailFile />
+                    <control:ThumbnailFileView />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

@@ -4,7 +4,7 @@
         xmlns:vm="clr-namespace:STLBrowser.ViewModel"
         xmlns:v="clr-namespace:STLBrowser.View"
         Title="MainWindow" Height="350" Width="525"
-                xmlns:controls="clr-namespace:KI.Foundation.Control;assembly=KI.Foundation">
+        xmlns:controls="clr-namespace:KI.Foundation.Control;assembly=KI.Foundation">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>

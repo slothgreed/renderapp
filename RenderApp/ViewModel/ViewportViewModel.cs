@@ -11,20 +11,6 @@ using KI.UI.ViewModel;
 namespace RenderApp.ViewModel
 {
     /// <summary>
-    /// コントローラのモード
-    /// </summary>
-    public enum CONTROL_MODE
-    {
-        SelectTriangle,
-        SelectLine,
-        SelectPoint,
-        EdgeFlips,
-        Dijkstra,
-        Geodesic
-    }
-
-
-    /// <summary>
     /// Viewportのヴューモデル
     /// </summary>
     public class ViewportViewModel : DockWindowViewModel
@@ -73,17 +59,6 @@ namespace RenderApp.ViewModel
         /// </summary>
         private CONTROL_MODE mode = CONTROL_MODE.SelectTriangle;
 
-        /// <summary>
-        /// マウスの状態
-        /// </summary>
-        public enum MOUSE_STATE
-        {
-            DOWN,
-            MOVE,
-            UP,
-            CLICK,
-            WHEEL,
-        }
 
         /// <summary>
         /// コントロールリスト

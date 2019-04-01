@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using KI.Foundation.ViewModel;
+﻿using KI.UI.ViewModel;
+
 namespace STLBrowser.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
@@ -44,11 +40,13 @@ namespace STLBrowser.ViewModel
                 SetValue(ref _ViewportViewModel, value);
             }
         }
+
         public MainWindowViewModel()
+            : base(null)
         {
-            FileTreeViewModel = new FileTreeViewModel(@"C:\Users\ido\Documents\KIProject\RenderApp");
-            STLBrowserViewModel = new STLBrowserViewModel(@"C:\Users\ido\Documents\KIProject\RenderApp");
-            ViewportViewModel = new ViewportViewModel();
+            FileTreeViewModel = new FileTreeViewModel(this, @"C:\Users\ido\Documents\KIProject\RenderApp");
+            STLBrowserViewModel = new STLBrowserViewModel(this, @"C:\Users\ido\Documents\KIProject\RenderApp");
+            ViewportViewModel = new ViewportViewModel(this);
         }
     }
 }
