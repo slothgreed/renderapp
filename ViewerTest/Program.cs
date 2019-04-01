@@ -6,7 +6,7 @@ using OpenTK.Input;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-
+#pragma warning disable
 namespace ViewerTest
 {
     class ViewerTest

@@ -8,6 +8,7 @@ using OpenTK;
 using KI.Asset.Technique;
 using KI.Tool.Control;
 using KI.Tool;
+using RenderApp.Tool.Control;
 
 namespace STLBrowser.ViewModel
 {

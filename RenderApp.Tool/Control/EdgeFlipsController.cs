@@ -42,11 +42,6 @@ namespace RenderApp.Tool.Control
         public EdgeEditMode Mode { get; private set; } = EdgeEditMode.EdgeCollapse;
 
         /// <summary>
-        /// 頂点の選択
-        /// </summary>
-        private List<HalfEdge> selectVertex;
-
-        /// <summary>
         /// マウス押下処理
         /// </summary>
         /// <param name="mouse">マウスイベント</param>

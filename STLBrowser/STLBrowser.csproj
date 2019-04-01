@@ -182,6 +182,10 @@
       <Project>{35F238B1-820C-4487-9081-A4AF3952219C}</Project>
       <Name>KI.UI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RenderApp.Tool\RenderApp.Tool.csproj">
+      <Project>{c8df6069-e673-4957-a173-2bfca883b102}</Project>
+      <Name>RenderApp.Tool</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RenderApp\RenderApp.csproj">
       <Project>{c3f6bad0-f298-468b-a33b-220d78fd1048}</Project>
       <Name>RenderApp</Name>

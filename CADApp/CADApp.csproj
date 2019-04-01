@@ -78,6 +78,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Control\CameraController.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ViewportViewModel.cs" />
     <Compile Include="View\ViewportView.xaml.cs">
@@ -163,10 +164,6 @@
     <ProjectReference Include="..\KI.UI\KI.UI.csproj">
       <Project>{35f238b1-820c-4487-9081-a4af3952219c}</Project>
       <Name>KI.UI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RenderApp.Tool\RenderApp.Tool.csproj">
-      <Project>{C8DF6069-E673-4957-A173-2BFCA883B102}</Project>
-      <Name>RenderApp.Tool</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
