@@ -31,7 +31,6 @@ namespace STLBrowser.ViewModel
             FileName = Path.GetFileName(path);
             Directorys = new List<DirectoryViewModel>();
 
-
             if (Directory.Exists(path))
             {
                 string[] directory = System.IO.Directory.GetDirectories(path, "*");
