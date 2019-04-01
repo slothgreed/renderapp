@@ -1,4 +1,4 @@
-﻿namespace KI.Foundation.Command
+﻿namespace KI.Tool.Command
 {
     /// <summary>
     /// コマンドの結果

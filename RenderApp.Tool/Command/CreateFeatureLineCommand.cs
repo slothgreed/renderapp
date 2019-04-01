@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using KI.Analyzer;
 using KI.Analyzer.Algorithm;
 using KI.Asset;
-using KI.Foundation.Command;
-using KI.Foundation.Core;
-using KI.Gfx;
 using KI.Gfx.Geometry;
+using KI.Tool.Command;
 
 namespace RenderApp.Tool.Command
 {

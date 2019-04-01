@@ -5,6 +5,7 @@ using KI.Asset;
 using RenderApp.Tool.Utility;
 using OpenTK;
 using KI.Gfx;
+using KI.Tool.Control;
 
 namespace RenderApp.Tool.Control
 {

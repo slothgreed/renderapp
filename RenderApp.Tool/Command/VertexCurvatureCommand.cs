@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using KI.Analyzer;
 using KI.Asset;
-using KI.Foundation.Command;
-using KI.Foundation.Core;
 using KI.Foundation.Parameter;
 using KI.Asset.Attribute;
 using OpenTK;
+using KI.Tool.Command;
 
 namespace RenderApp.Tool.Command
 {

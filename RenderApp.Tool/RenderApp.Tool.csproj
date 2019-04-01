@@ -67,7 +67,6 @@
     <Compile Include="Control\CameraController.cs" />
     <Compile Include="Control\DijkstraController.cs" />
     <Compile Include="Control\EdgeFlipsController.cs" />
-    <Compile Include="Control\IController.cs" />
     <Compile Include="Control\SelectItemEventArgs.cs" />
     <Compile Include="Control\SelectLineController.cs" />
     <Compile Include="Control\SelectPointController.cs" />
@@ -100,6 +99,10 @@
     <ProjectReference Include="..\KI.Renderer\KI.Renderer.csproj">
       <Project>{8bda5035-5778-4460-8166-e6b2bd477e29}</Project>
       <Name>KI.Renderer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KI.Tool\KI.Tool.csproj">
+      <Project>{d28f9cc5-69ee-4073-ae0d-c90abf486ef2}</Project>
+      <Name>KI.Tool</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

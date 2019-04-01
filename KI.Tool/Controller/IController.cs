@@ -1,8 +1,7 @@
-﻿using System;
-using System.Windows.Forms;
-using KI.Foundation.Core;
+﻿using System.Windows.Forms;
+using KI.Tool.Core;
 
-namespace RenderApp.Tool.Control
+namespace KI.Tool.Control
 {
     /// <summary>
     /// コントロールのインタフェース

@@ -78,9 +78,17 @@
       <Project>{8bda5035-5778-4460-8166-e6b2bd477e29}</Project>
       <Name>KI.Renderer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KI.Tool\KI.Tool.csproj">
+      <Project>{d28f9cc5-69ee-4073-ae0d-c90abf486ef2}</Project>
+      <Name>KI.Tool</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KI.UI\KI.UI.csproj">
       <Project>{35f238b1-820c-4487-9081-a4af3952219c}</Project>
       <Name>KI.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RenderApp.Tool\RenderApp.Tool.csproj">
+      <Project>{c8df6069-e673-4957-a173-2bfca883b102}</Project>
+      <Name>RenderApp.Tool</Name>
     </ProjectReference>
     <ProjectReference Include="..\RenderApp\RenderApp.csproj">
       <Project>{c3f6bad0-f298-468b-a33b-220d78fd1048}</Project>

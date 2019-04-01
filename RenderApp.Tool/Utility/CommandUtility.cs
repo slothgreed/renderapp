@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using KI.Asset;
-using KI.Foundation.Command;
+﻿using KI.Asset;
 using KI.Foundation.Core;
 using KI.Gfx;
+using KI.Tool.Command;
 
 namespace RenderApp.Tool
 {

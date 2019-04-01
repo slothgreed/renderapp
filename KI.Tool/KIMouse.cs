@@ -1,6 +1,6 @@
 ﻿using OpenTK;
 
-namespace KI.Foundation.Core
+namespace KI.Tool.Core
 {
     /// <summary>
     /// マウスのクラス(右左ホイールは各インスタンス生成すること)

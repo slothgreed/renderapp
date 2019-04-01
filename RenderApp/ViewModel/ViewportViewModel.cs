@@ -7,6 +7,8 @@ using KI.Gfx.GLUtil;
 using RenderApp.Tool;
 using RenderApp.Tool.Control;
 using KI.UI.ViewModel;
+using KI.Tool.Control;
+using KI.Tool;
 
 namespace RenderApp.ViewModel
 {

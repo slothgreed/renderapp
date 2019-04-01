@@ -1,19 +1,18 @@
 ﻿using System;
 using System.IO;
 using KI.Asset;
-using KI.Foundation.Command;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
 using KI.Gfx.Render;
 using KI.UI.ViewModel;
 using RenderApp.Tool.Command;
-using RenderApp.Tool.Control;
 using RenderApp.Globals;
 using System.Windows;
 using KI.Renderer;
 using System.Reflection;
 using RenderApp.Tool;
+using KI.Tool.Command;
 
 namespace RenderApp.ViewModel
 {

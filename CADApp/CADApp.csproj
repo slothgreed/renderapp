@@ -156,9 +156,17 @@
       <Project>{8bda5035-5778-4460-8166-e6b2bd477e29}</Project>
       <Name>KI.Renderer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KI.Tool\KI.Tool.csproj">
+      <Project>{D28F9CC5-69EE-4073-AE0D-C90ABF486EF2}</Project>
+      <Name>KI.Tool</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KI.UI\KI.UI.csproj">
       <Project>{35f238b1-820c-4487-9081-a4af3952219c}</Project>
       <Name>KI.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RenderApp.Tool\RenderApp.Tool.csproj">
+      <Project>{C8DF6069-E673-4957-A173-2BFCA883B102}</Project>
+      <Name>RenderApp.Tool</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

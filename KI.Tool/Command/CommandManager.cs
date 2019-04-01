@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using KI.Foundation.Core;
 
-namespace KI.Foundation.Command
+namespace KI.Tool.Command
 {
     /// <summary>
     /// コマンドマネージャ

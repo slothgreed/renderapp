@@ -4,6 +4,7 @@ using KI.Gfx.Geometry;
 using KI.Asset;
 using RenderApp.Tool.Utility;
 using OpenTK;
+using KI.Tool.Control;
 
 namespace RenderApp.Tool.Control
 {

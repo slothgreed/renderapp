@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using KI.Foundation.Command;
-using KI.Foundation.Core;
 using KI.Asset;
 using KI.Asset.Attribute;
 using OpenTK;
+using KI.Tool.Command;
 
 namespace RenderApp.Tool.Command
 {

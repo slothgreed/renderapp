@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using KI.Analyzer.Algorithm;
-using KI.Foundation.Command;
 using KI.Gfx.Geometry;
 using KI.Asset;
 using OpenTK;
+using KI.Tool.Command;
 
 namespace RenderApp.Tool.Command
 {

@@ -1,5 +1,6 @@
 ﻿using System.Windows.Forms;
 using KI.Asset;
+using KI.Tool.Control;
 using OpenTK;
 
 namespace RenderApp.Tool.Control
