@@ -49,6 +49,20 @@ namespace KI.Asset
             return new Axis(name, min, max);
         }
 
+
+        /// <summary>
+        /// グリッド平面の作成
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <param name="area">大きさ</param>
+        /// <param name="space">間隔</param>
+        /// <param name="color">色</param>
+        /// <returns>グリッド平面</returns>
+        public ICreateModel CreateGridPlane(string name, float area, float space, Vector3 color)
+        {
+            return new GridPlane(name, area, space, color);
+        }
+
         /// <summary>
         /// 球の作成
         /// </summary>

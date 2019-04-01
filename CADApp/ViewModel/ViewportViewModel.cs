@@ -9,7 +9,7 @@ using KI.Asset;
 using OpenTK;
 using KI.Asset.Technique;
 
-namespace STLBrowser.ViewModel
+namespace CADApp.ViewModel
 {
     public class ViewportViewModel : ViewModelBase
     {
@@ -74,24 +74,17 @@ namespace STLBrowser.ViewModel
 
         public void OnLoadedEvent(object sender, EventArgs e)
         {
+            DeviceContext.Instance.SetClearColor(1, 1, 1, 1);
             MainScene = new Scene("MainScene");
             Renderer = new Renderer();
             Global.Renderer = Renderer;
             Global.Renderer.ActiveScene = MainScene;
 
-            MainScene.MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
-            MainScene.SunLight = RenderObjectFactory.Instance.CreateDirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
-            var sphere = AssetFactory.Instance.CreateSphere("sphere", 0.1f, 32, 32, true);
-            MainScene.SunLight.Model = RenderObjectFactory.Instance.CreateRenderObject("SunLight", sphere);
-            MainScene.AddObject(MainScene.MainCamera);
-            MainScene.AddObject(MainScene.SunLight);
+            InitializeScene();
+            InitializeRenderer();
 
-            Renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer));
-            var gBufferTexture = Renderer.RenderQueue.OutputTexture<GBuffer>();
-            Renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Deferred));
-            Renderer.OutputBuffer = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output) as OutputBuffer;
-            Renderer.OutputTexture = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
         }
+
         private void OnResizeEvent(object sender, EventArgs e)
         {
             if (MainScene != null)
@@ -127,7 +120,32 @@ namespace STLBrowser.ViewModel
             ProcessMouseInput(e, MOUSE_STATE.DOWN);
         }
 
+        private void InitializeScene()
+        {
+            MainScene.MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
+            MainScene.SunLight = RenderObjectFactory.Instance.CreateDirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
+            var sphere = AssetFactory.Instance.CreateSphere("sphere", 0.1f, 32, 32, true);
+            MainScene.SunLight.Model = RenderObjectFactory.Instance.CreateRenderObject("SunLight", sphere);
+            MainScene.AddObject(MainScene.MainCamera);
+            MainScene.AddObject(MainScene.SunLight);
 
+            var axis = AssetFactory.Instance.CreateAxis("axis", Vector3.Zero, MainScene.WorldMax);
+            var axisObject = RenderObjectFactory.Instance.CreateRenderObject(axis.ToString(), axis);
+            MainScene.AddObject(axisObject);
+
+            var grid = AssetFactory.Instance.CreateGridPlane("gridPlane", 1, 0.01f, Vector3.One);
+            var girdObject = RenderObjectFactory.Instance.CreateRenderObject(grid.ToString(), grid);
+            MainScene.AddObject(girdObject);
+        }
+
+        private void InitializeRenderer()
+        {
+            Renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer));
+            var gBufferTexture = Renderer.RenderQueue.OutputTexture<GBuffer>();
+            Renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Deferred));
+            Renderer.OutputBuffer = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output) as OutputBuffer;
+            Renderer.OutputTexture = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
+        }
 
         /// <summary>
         /// マウス入力

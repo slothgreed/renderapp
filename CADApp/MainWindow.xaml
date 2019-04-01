@@ -4,9 +4,36 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CADApp"
+        xmlns:ribbon="urn:fluent-ribbon"
+        xmlns:view="clr-namespace:CADApp.View"
+        xmlns:vm="clr-namespace:CADApp.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         
+        <ribbon:Ribbon Grid.Row="0">
+            <ribbon:RibbonTabItem Header="ファイル">
+                <ribbon:RibbonGroupBox Header="ファイル">
+                    <ribbon:Button Header="新規作成"/>
+                    <ribbon:Button Header="読込"/>
+                    <ribbon:Button Header="保存"/>
+                    <ribbon:Button Header="別名保存"/>
+                </ribbon:RibbonGroupBox>
+            </ribbon:RibbonTabItem>
+            <ribbon:RibbonTabItem Header="編集">
+                <ribbon:RibbonGroupBox Header="コマンド">
+                    <ribbon:Button Header="Undo"/>
+                    <ribbon:Button Header="Redo"/>
+                </ribbon:RibbonGroupBox>
+            </ribbon:RibbonTabItem>
+        </ribbon:Ribbon>
+        <view:ViewportView Grid.Row="1" DataContext="{Binding ViewportViewModel}"/>
     </Grid>
 </Window>

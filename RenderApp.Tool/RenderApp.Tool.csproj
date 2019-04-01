@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8BDA5035-5778-4460-8166-E6B2BD477E29}</ProjectGuid>
+    <ProjectGuid>{C8DF6069-E673-4957-A173-2BFCA883B102}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KI.Renderer</RootNamespace>
-    <AssemblyName>KI.Renderer</AssemblyName>
+    <RootNamespace>RenderApp.Tool</RootNamespace>
+    <AssemblyName>RenderApp.Tool</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -40,7 +40,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,53 +49,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RendererUtility.cs" />
-    <Compile Include="Scene.cs" />
-    <Compile Include="Light\DirectionLight.cs" />
-    <Compile Include="Light\Light.cs" />
-    <Compile Include="Light\PointLight.cs" />
-    <Compile Include="Light\SpotLight.cs" />
-    <Compile Include="SceneNode.cs" />
-    <Compile Include="Scene\Shader\Bezier.cs" />
-    <Compile Include="Scene\Shader\CColorShader.cs" />
-    <Compile Include="Scene\Shader\CDiffuse.cs" />
-    <Compile Include="Scene\Shader\DisplaceMentMap.cs" />
-    <Compile Include="Scene\Shader\HeightMap.cs" />
-    <Compile Include="Scene\Shader\CEffectLine.cs" />
-    <Compile Include="Scene\Shader\Luminous.cs" />
-    <Compile Include="Scene\Shader\Fur.cs" />
-    <Compile Include="Scene\Shader\ConstantShader.cs" />
-    <Compile Include="Scene\Shader\OutLine.cs" />
-    <Compile Include="Scene\Shader\NURBS.cs" />
-    <Compile Include="Scene\Shader\CDeffed.cs" />
-    <Compile Include="Scene\Shader\CResult.cs" />
-    <Compile Include="Scene\Shader\CShadowMap.cs" />
-    <Compile Include="Scene\Shader\SSAO.cs" />
-    <Compile Include="Technique\OffScreen\Lighting\DeferredRendering.cs" />
-    <Compile Include="Technique\OffScreen\Geometry\GBuffer.cs" />
-    <Compile Include="Global.cs" />
-    <Compile Include="Technique\OffScreen\Lighting\ImageBasedLighting.cs" />
-    <Compile Include="Technique\OutputBuffer.cs" />
-    <Compile Include="Technique\OffScreen\PostEffect\Bloom.cs" />
-    <Compile Include="Technique\OffScreen\PostEffect\DOF.cs" />
-    <Compile Include="Technique\OffScreen\RenderTechnique.cs" />
-    <Compile Include="Technique\OffScreen\PostEffect\Selection.cs" />
-    <Compile Include="Technique\OffScreen\PostEffect\Sobel.cs" />
-    <Compile Include="Technique\OffScreen\PostEffect\SSAO.cs" />
+    <Compile Include="Command\AdaptiveMeshCommand.cs" />
+    <Compile Include="Command\CreateFeatureLineCommand.cs" />
+    <Compile Include="Command\VertexCurvatureCommand.cs" />
+    <Compile Include="Command\CreateIsoLineCommand.cs" />
+    <Compile Include="Command\CreateConvexHullCommand.cs" />
+    <Compile Include="Command\CreateHalfEdgeWireFrameCommand.cs" />
+    <Compile Include="Command\CreateMarchingCubeCommand.cs" />
+    <Compile Include="Command\CreateVoxelCommand.cs" />
+    <Compile Include="Command\CreateWireFrameCommand.cs" />
+    <Compile Include="Command\SmoothingCommand.cs" />
+    <Compile Include="Control\ControllerType.cs" />
+    <Compile Include="Control\GeodesicDistanceController.cs" />
+    <Compile Include="Command\KMeansCommand.cs" />
+    <Compile Include="Command\PerceptronCommand.cs" />
+    <Compile Include="Command\QEMCommand.cs" />
+    <Compile Include="Control\CameraController.cs" />
+    <Compile Include="Control\DijkstraController.cs" />
+    <Compile Include="Control\EdgeFlipsController.cs" />
+    <Compile Include="Control\IController.cs" />
+    <Compile Include="Control\SelectItemEventArgs.cs" />
+    <Compile Include="Control\SelectLineController.cs" />
+    <Compile Include="Control\SelectPointController.cs" />
+    <Compile Include="Control\SelectTriangleController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RenderObject.cs" />
-    <Compile Include="RenderObjectFactory.cs" />
-    <Compile Include="RenderQueue.cs" />
-    <Compile Include="Renderer.cs" />
-    <Compile Include="Technique\RenderTechniqueFactory.cs" />
-    <Compile Include="Utility\ShaderHelper.cs" />
-    <Compile Include="Technique\OffScreen\ShadowMap.cs" />
-    <Compile Include="Technique\OffScreen\PostEffect\SSLIC.cs" />
+    <Compile Include="Utility\CommandUtility.cs" />
+    <Compile Include="Utility\HalfEdgeDSSelector.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\KI.Analyzer\KI.Analyzer.csproj">
+      <Project>{e8959545-0813-4d45-8c9f-1ade07f3a21f}</Project>
+      <Name>KI.Analyzer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KI.Asset\KI.Asset.csproj">
       <Project>{197a747a-9d2b-4273-bdc6-02941c876cb2}</Project>
       <Name>KI.Asset</Name>
@@ -112,10 +97,23 @@
       <Project>{5610ebdc-05d3-47ce-b954-bcc8e962d35a}</Project>
       <Name>KI.Mathmatics</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KI.Renderer\KI.Renderer.csproj">
+      <Project>{8bda5035-5778-4460-8166-e6b2bd477e29}</Project>
+      <Name>KI.Renderer</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="EventArgs\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

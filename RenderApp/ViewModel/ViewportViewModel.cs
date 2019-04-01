@@ -4,8 +4,8 @@ using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 using KI.Foundation.Core;
 using KI.Gfx.GLUtil;
-using KI.Tool;
-using KI.Tool.Control;
+using RenderApp.Tool;
+using RenderApp.Tool.Control;
 using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel

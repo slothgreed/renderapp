@@ -7,13 +7,13 @@ using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
 using KI.Gfx.Render;
 using KI.UI.ViewModel;
-using KI.Tool.Command;
-using KI.Tool.Control;
+using RenderApp.Tool.Command;
+using RenderApp.Tool.Control;
 using RenderApp.Globals;
 using System.Windows;
 using KI.Renderer;
 using System.Reflection;
-using KI.Tool;
+using RenderApp.Tool;
 
 namespace RenderApp.ViewModel
 {
