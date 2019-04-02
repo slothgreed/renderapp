@@ -1,5 +1,4 @@
-﻿using KI.Asset;
-using KI.Gfx.KITexture;
+﻿using KI.Gfx.KITexture;
 using KI.Gfx.Render;
 
 namespace KI.Asset.Technique

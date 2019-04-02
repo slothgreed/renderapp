@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
+﻿using System.Linq;
 using KI.Foundation.Core;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;

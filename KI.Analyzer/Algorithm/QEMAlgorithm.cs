@@ -4,8 +4,8 @@ using System;
 using System.IO;
 using System.Linq;
 using KI.Foundation.Tree;
-using OpenTK;
 using KI.Mathmatics;
+using OpenTK;
 
 namespace KI.Analyzer.Algorithm
 {

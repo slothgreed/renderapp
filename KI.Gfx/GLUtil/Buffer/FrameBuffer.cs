@@ -1,6 +1,4 @@
-﻿using System;
-using System.Drawing;
-using KI.Foundation.Core;
+﻿using KI.Foundation.Core;
 using KI.Gfx.GLUtil.Buffer;
 using OpenTK.Graphics.OpenGL;
 

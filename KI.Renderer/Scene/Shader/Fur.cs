@@ -30,7 +30,7 @@
 //        private int uFurBumpTexture;
 //        private Texture FurTexture = null;
 //        private Texture FurBumpTexture = null;
-        
+
 //        protected override void SetUniformName()
 //        {
 //            uModelMatrix = GL.GetUniformLocation(Program,"ModelMatrix");

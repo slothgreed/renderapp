@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace KI.UI.ViewModel
+﻿namespace KI.UI.ViewModel
 {
     public class ThumbnailFileViewModel : ViewModelBase
     {

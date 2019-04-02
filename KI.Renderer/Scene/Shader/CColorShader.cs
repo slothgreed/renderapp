@@ -28,7 +28,7 @@
 //        public CLine m_Line;
 //        public CPoint m_Point;
 //        public CAxis m_Axis;
-       
+
 //        /// <summary>
 //        /// ユニフォーム名の取得
 //        /// </summary>
@@ -38,14 +38,14 @@
 //        }
 //        protected override int LoadShader()
 //        {
-      
+
 //            string vertShader;
 //            string fragShader;
 //            vertShader = Encoding.UTF8.GetString(Properties.Resources.line_vert);
 //            fragShader = Encoding.UTF8.GetString(Properties.Resources.line_frag);
 //            return CreateShaderProgram(vertShader, fragShader);
 //        }
-                       
+
 //        public override void Initialize()
 //        {
 //            m_Axis = new CAxis(Global.WorldMin, Global.WorldMax);
@@ -65,7 +65,7 @@
 //        ///// </summary>
 //        //protected override void Render()
 //        //{
-            
+
 //        //    if (m_Line != null)
 //        //    {
 //        //        m_Line.SetUniformMVP(m_uniform.MVP, RenderObject.Camera.GetProjMatrix(), RenderObject.Camera.GetCameraMatrix());
@@ -82,6 +82,6 @@
 //        public override void ShaderRender(CModel model)
 //        {
 //        }
-        
+
 //    }
 //}

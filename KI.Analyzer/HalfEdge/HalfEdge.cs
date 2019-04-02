@@ -1,5 +1,4 @@
-﻿using System;
-using KI.Gfx.Geometry;
+﻿using KI.Gfx.Geometry;
 using KI.Mathmatics;
 using OpenTK;
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using KI.Foundation.Core;
 using KI.Gfx.KITexture;
-using OpenTK;
 
 namespace KI.Gfx.Geometry
 {

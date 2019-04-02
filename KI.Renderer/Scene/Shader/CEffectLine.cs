@@ -38,7 +38,7 @@
 //            uProjMatrix = GL.GetUniformLocation(Program, "ProjMatrix");
 //            uTexture = GL.GetUniformLocation(Program, "texture_2D");
 //        }
-        
+
 //        public override void ShaderRender(CModel model)
 //        {
 //            GL.ActiveTexture(TextureUnit.Texture0);

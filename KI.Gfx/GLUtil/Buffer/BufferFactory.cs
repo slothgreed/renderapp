@@ -1,5 +1,4 @@
-﻿using System;
-using KI.Foundation.Core;
+﻿using KI.Foundation.Core;
 using OpenTK.Graphics.OpenGL;
 
 namespace KI.Gfx.GLUtil.Buffer

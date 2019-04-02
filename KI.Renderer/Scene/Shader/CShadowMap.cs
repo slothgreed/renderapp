@@ -31,7 +31,7 @@
 //            fragShader = Encoding.UTF8.GetString(Properties.Resources.shadow_frag);
 //            return CreateShaderProgram(vertShader, fragShader);
 //        }
-       
+
 //        protected override void SetUniformName()
 //        {
 //            uMVP = GL.GetUniformLocation(Program, "MVP");

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 namespace RenderApp.ViewModel
 {
-	public partial class RootNodeViewModel
+    public partial class RootNodeViewModel
 	{
 		private ICommand _Delete;
 		public ICommand Delete

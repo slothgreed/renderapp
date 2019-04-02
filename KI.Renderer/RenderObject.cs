@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using KI.Asset.Attribute;
 using KI.Foundation.Core;
+using KI.Gfx;
 using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
-using KI.Asset.Attribute;
-using KI.Gfx;
 using OpenTK.Graphics.OpenGL;
-using System;
 
 namespace KI.Asset
 {

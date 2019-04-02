@@ -3,9 +3,9 @@ using KI.Analyzer;
 using KI.Analyzer.Algorithm;
 using KI.Asset;
 using KI.Asset.Attribute;
-using OpenTK;
 using KI.Mathmatics;
 using KI.Tool.Command;
+using OpenTK;
 
 namespace RenderApp.Tool.Command
 {

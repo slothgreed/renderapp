@@ -1,5 +1,4 @@
-﻿using KI.Foundation.Core;
-using KI.Gfx;
+﻿using KI.Gfx;
 using KI.Gfx.Geometry;
 using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;

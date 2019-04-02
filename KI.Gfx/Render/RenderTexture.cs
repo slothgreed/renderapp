@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using KI.Gfx.KITexture;
+﻿using KI.Gfx.KITexture;
 using OpenTK.Graphics.OpenGL;
 
 namespace KI.Gfx.Render

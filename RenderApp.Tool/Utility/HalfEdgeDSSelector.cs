@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using KI.Analyzer;
+using KI.Asset;
 using KI.Foundation.Tree;
 using KI.Gfx.GLUtil;
-using KI.Asset;
-using OpenTK;
 using KI.Mathmatics;
+using OpenTK;
 
 namespace RenderApp.Tool.Utility
 {

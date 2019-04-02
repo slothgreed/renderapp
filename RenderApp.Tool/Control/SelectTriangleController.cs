@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using KI.Analyzer;
-using KI.Gfx.Geometry;
+﻿using KI.Analyzer;
 using KI.Asset;
-using RenderApp.Tool.Utility;
-using OpenTK;
-using KI.Gfx;
 using KI.Tool.Control;
+using OpenTK;
+using RenderApp.Tool.Utility;
 
 namespace RenderApp.Tool.Control
 {

@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Windows.Forms.Integration;
 using System.Windows.Forms;
-using KI.Gfx.GLUtil;
-using KI.UI.ViewModel;
+using System.Windows.Forms.Integration;
+using CADApp.Tool.Control;
 using KI.Asset;
-using OpenTK;
 using KI.Asset.Technique;
-using KI.Tool.Control;
+using KI.Gfx.GLUtil;
 using KI.Tool;
-using CADApp.Control;
+using KI.Tool.Control;
+using KI.UI.ViewModel;
+using OpenTK;
 
 namespace CADApp.ViewModel
 {
@@ -144,7 +144,7 @@ namespace CADApp.ViewModel
             Renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer));
             var gBufferTexture = Renderer.RenderQueue.OutputTexture<GBuffer>();
             Renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Deferred));
-            Renderer.OutputBuffer = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output) as OutputBuffer;
+            Renderer.OutputBuffer  = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output) as OutputBuffer;
             Renderer.OutputTexture = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
         }
 

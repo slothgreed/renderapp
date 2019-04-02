@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using KI.Asset;
 using KI.Foundation.Core;
 using KI.Gfx.KIShader;
-using KI.Gfx.KITexture;
 using KI.Gfx.Render;
 
 namespace KI.Asset.Technique

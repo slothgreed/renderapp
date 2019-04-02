@@ -37,13 +37,13 @@
 //            uLightPos = GL.GetUniformLocation(Program, "LightPos");
 //            uModelMatrix = GL.GetUniformLocation(Program, "ModelMatrix");
 //            uMVP = GL.GetUniformLocation(Program, "MVP");
-            
+
 //            uCameraPos = GL.GetUniformLocation(Program, "CameraPos");
-            
+
 //            ut_2D = GL.GetUniformLocation(Program, "t_2D");
 //            ut_Normal = GL.GetUniformLocation(Program, "t_Normal");
 //            ut_Height = GL.GetUniformLocation(Program, "t_Height");
-            
+
 //            uOuter = GL.GetUniformLocation(Program, "Outer");
 //            uInner = GL.GetUniformLocation(Program, "Inner");
 

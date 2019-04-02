@@ -27,10 +27,10 @@
 //            string fragShader;
 //            vertShader = Encoding.UTF8.GetString(Properties.Resources.ssao_vert);
 //            fragShader = Encoding.UTF8.GetString(Properties.Resources.ssao_frag);
-            
+
 //            return CreateShaderProgram(vertShader, fragShader);
 //        }
-        
+
 //        public override void Initialize()
 //        {
 
@@ -60,6 +60,6 @@
 //        {
 //            m_TextureId = textureId;
 //        }
-        
+
 //    }
 //}

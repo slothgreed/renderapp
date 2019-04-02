@@ -1,5 +1,4 @@
-﻿using KI.Foundation.Core;
-using KI.Gfx.KITexture;
+﻿using KI.Gfx.KITexture;
 using OpenTK;
 
 namespace KI.Asset

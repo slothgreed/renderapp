@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 #pragma warning disable
 namespace ViewerTest
 {

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using KI.Foundation.Core;
 
 namespace KI.Gfx.KIShader
 {

@@ -59,7 +59,7 @@
     <Compile Include="Command\CreateVoxelCommand.cs" />
     <Compile Include="Command\CreateWireFrameCommand.cs" />
     <Compile Include="Command\SmoothingCommand.cs" />
-    <Compile Include="Control\ControllerType.cs" />
+    <Compile Include="Utility\ControllerType.cs" />
     <Compile Include="Control\GeodesicDistanceController.cs" />
     <Compile Include="Command\KMeansCommand.cs" />
     <Compile Include="Command\PerceptronCommand.cs" />
@@ -108,9 +108,7 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="EventArgs\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
+﻿using OpenTK;
 
 namespace KI.Gfx.Geometry
 {
@@ -13,11 +8,6 @@ namespace KI.Gfx.Geometry
     public class Line
     {
         /// <summary>
-        /// 長さ
-        /// </summary>
-        private float length = 0;
-
-        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="start">始点</param>
@@ -25,7 +15,7 @@ namespace KI.Gfx.Geometry
         public Line(Vertex startVertex, Vertex endVertex)
         {
             Start = startVertex;
-            End = endVertex;
+            End   = endVertex;
         }
 
         /// <summary>
@@ -36,7 +26,7 @@ namespace KI.Gfx.Geometry
         public Line(Vector3 startVertex, Vector3 endVertex)
         {
             Start = new Vertex(0, startVertex);
-            End = new Vertex(0, endVertex);
+            End   = new Vertex(0, endVertex);
         }
 
         /// <summary>
@@ -47,7 +37,7 @@ namespace KI.Gfx.Geometry
         public Line(Vector3 startVertex, Vector3 endVertex, Vector3 color)
         {
             Start = new Vertex(0, startVertex, color);
-            End = new Vertex(0, endVertex, color);
+            End   = new Vertex(0, endVertex, color);
         }
 
         /// <summary>

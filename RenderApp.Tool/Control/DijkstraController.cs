@@ -2,9 +2,9 @@
 using KI.Analyzer;
 using KI.Asset;
 using KI.Gfx.Geometry;
-using RenderApp.Tool.Utility;
-using OpenTK;
 using KI.Tool.Control;
+using OpenTK;
+using RenderApp.Tool.Utility;
 
 namespace RenderApp.Tool.Control
 {

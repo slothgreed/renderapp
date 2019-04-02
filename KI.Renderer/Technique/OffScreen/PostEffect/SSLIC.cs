@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Linq;
-using KI.Asset;
-using KI.Foundation.Core;
 using KI.Gfx.GLUtil;
-using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KITexture;
 using KI.Gfx.Render;
 using OpenTK.Graphics.OpenGL;

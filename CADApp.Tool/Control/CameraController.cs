@@ -3,7 +3,7 @@ using KI.Asset;
 using KI.Tool.Control;
 using OpenTK;
 
-namespace CADApp.Control
+namespace CADApp.Tool.Control
 {
     /// <summary>
     /// カメラコントローラ

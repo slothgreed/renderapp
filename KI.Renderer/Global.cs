@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace KI.Asset
+﻿namespace KI.Asset
 {
     /// <summary>
     /// グローバルクラス

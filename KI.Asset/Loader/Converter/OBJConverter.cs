@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using KI.Asset.Loader;
 using KI.Gfx;
 using KI.Gfx.Geometry;
 using KI.Gfx.KITexture;

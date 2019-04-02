@@ -72,8 +72,8 @@
 //            ufogEnd = GL.GetUniformLocation(Program, "fogEnd");
 //            ufogColor = GL.GetUniformLocation(Program, "fogColor");
 //        }
-        
+
 //        #endregion
-       
+
 //    }
 //}

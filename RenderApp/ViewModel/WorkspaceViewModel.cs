@@ -1,11 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
+using KI.Asset;
 using KI.Foundation.Tree;
 using KI.Gfx.GLUtil;
-using KI.Asset;
 using KI.UI.ViewModel;
 using RenderApp.Globals;
-using System;
 using RenderApp.Tool;
 
 namespace RenderApp.ViewModel

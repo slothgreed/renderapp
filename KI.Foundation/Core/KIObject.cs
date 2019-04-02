@@ -1,6 +1,4 @@
-﻿using KI.Foundation.Core;
-
-namespace KI.Foundation.Core
+﻿namespace KI.Foundation.Core
 {
     /// <summary>
     /// オブジェクト

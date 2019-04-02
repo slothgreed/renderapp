@@ -4,14 +4,14 @@ using System.Linq;
 using System.Windows.Forms;
 using KI.Analyzer;
 using KI.Analyzer.Algorithm;
-using KI.Gfx.Geometry;
-using KI.Gfx.GLUtil.Buffer;
 using KI.Asset;
 using KI.Asset.Attribute;
-using RenderApp.Tool.Utility;
+using KI.Gfx.Geometry;
+using KI.Gfx.GLUtil.Buffer;
 using KI.Mathmatics;
-using OpenTK;
 using KI.Tool.Control;
+using OpenTK;
+using RenderApp.Tool.Utility;
 
 namespace RenderApp.Tool.Control
 {

@@ -1,5 +1,4 @@
-﻿using KI.Mathmatics;
-using OpenTK;
+﻿using OpenTK;
 
 namespace KI.Gfx.Geometry
 {

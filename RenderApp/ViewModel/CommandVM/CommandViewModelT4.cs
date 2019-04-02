@@ -3,7 +3,7 @@ using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel
 {
-	public partial class VoxelCommandViewModel : ViewModelBase
+    public partial class VoxelCommandViewModel : ViewModelBase
 	{
 		private ICommand _Execute;
 		public ICommand Execute
