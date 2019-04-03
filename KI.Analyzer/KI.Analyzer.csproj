@@ -85,6 +85,9 @@
     <Compile Include="HalfEdge\HalfEdgeMesh.cs" />
     <Compile Include="HalfEdge\HalfEdgeVertex.cs" />
     <Compile Include="IVertexColorParameter.cs" />
+    <Compile Include="Parameter\IParameter.cs" />
+    <Compile Include="Parameter\ScalarParameter.cs" />
+    <Compile Include="Parameter\VectorParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tree\BDB.cs" />
     <Compile Include="Tree\DistanceField.cs" />

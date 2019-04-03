@@ -1,6 +1,6 @@
 ﻿using OpenTK;
 
-namespace KI.Foundation.Parameter
+namespace KI.Analyzer.Parameter
 {
     /// <summary>
     /// ベクトルパラメータ

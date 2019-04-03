@@ -1,4 +1,4 @@
-﻿namespace KI.Foundation.Parameter
+﻿namespace KI.Analyzer.Parameter
 {
     /// <summary>
     /// パラメータのインタフェースクラス

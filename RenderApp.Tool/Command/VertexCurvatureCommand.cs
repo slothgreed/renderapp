@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using KI.Analyzer;
+using KI.Analyzer.Parameter;
 using KI.Asset;
 using KI.Asset.Attribute;
-using KI.Foundation.Parameter;
 using KI.Tool.Command;
 using OpenTK;
 using RenderApp.Model;

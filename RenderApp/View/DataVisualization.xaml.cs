@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Windows.Forms.Integration;
-using KI.Foundation.Parameter;
+using KI.Analyzer.Parameter;
 
 namespace RenderApp.View
 {

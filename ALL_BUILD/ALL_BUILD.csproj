@@ -50,6 +50,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CADApp.Model\CADApp.Model.csproj">
+      <Project>{64a84876-ee83-4042-a5c9-bc467b83591e}</Project>
+      <Name>CADApp.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CADApp.Tool\CADApp.Tool.csproj">
       <Project>{63784908-38d4-4ef6-82f9-ea50eec662e2}</Project>
       <Name>CADApp.Tool</Name>

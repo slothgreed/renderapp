@@ -2,7 +2,7 @@
 using System.Linq;
 using KI.Foundation.Core;
 
-namespace KI.Foundation.Parameter
+namespace KI.Analyzer.Parameter
 {
     /// <summary>
     /// 値のパラメータ
