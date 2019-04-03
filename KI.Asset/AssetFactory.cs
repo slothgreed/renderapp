@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using KI.Analyzer;
-using KI.Asset.Loader.Converter;
+using KI.Asset.Loader.Importer;
 using KI.Foundation.Core;
 using KI.Gfx.Geometry;
 using OpenTK;
@@ -113,11 +113,11 @@ namespace KI.Asset
                 //case ".obj":
                 //    return new OBJConverter(filePath);
                 case ".stl":
-                    return new STLConverter(filePath);
+                    return new STLImporter(filePath);
                 case ".half":
-                    return new HalfEdgeConverter(filePath);
+                    return new HalfEdgeImporter(filePath);
                 case ".ply":
-                    return new PLYConverter(filePath);
+                    return new PLYImporter(filePath);
             }
 
             return null;
@@ -133,7 +133,7 @@ namespace KI.Asset
         /// <returns>ハーフエッジ</returns>
         public ICreateModel CreateHalfEdge(string name, List<Vector3> position, List<int> index)
         {
-            return new HalfEdgeConverter(new HalfEdgeDS(name, position, index));
+            return new HalfEdgeImporter(new HalfEdgeDS(name, position, index));
         }
     }
 }

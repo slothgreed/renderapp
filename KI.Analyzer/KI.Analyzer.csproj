@@ -84,7 +84,7 @@
     <Compile Include="HalfEdge\HalfEdgeIO.cs" />
     <Compile Include="HalfEdge\HalfEdgeMesh.cs" />
     <Compile Include="HalfEdge\HalfEdgeVertex.cs" />
-    <Compile Include="IVertexColorParameter.cs" />
+    <Compile Include="Parameter\IVertexColorParameter.cs" />
     <Compile Include="Parameter\IParameter.cs" />
     <Compile Include="Parameter\ScalarParameter.cs" />
     <Compile Include="Parameter\VectorParameter.cs" />

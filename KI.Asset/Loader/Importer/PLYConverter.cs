@@ -6,12 +6,12 @@ using KI.Gfx.Geometry;
 using OpenTK;
 
 
-namespace KI.Asset.Loader.Converter
+namespace KI.Asset.Loader.Importer
 {
     /// <summary>
     /// plyファイルデータを独自形式に変換
     /// </summary>
-    public class PLYConverter : ICreateModel
+    public class PLYImporter : ICreateModel
     {
         /// <summary>
         /// plyファイルデータ
@@ -22,7 +22,7 @@ namespace KI.Asset.Loader.Converter
         /// plyファイルのローダ
         /// </summary>
         /// <param name="filePath">ファイルパス</param>
-        public PLYConverter(string filePath)
+        public PLYImporter(string filePath)
         {
             plyData = new PLYLoader(filePath);
             CreateModel();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using KI.Analyzer.Paramter;
 using OpenTK;
 
 namespace KI.Analyzer.Algorithm

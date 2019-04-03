@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using KI.Gfx.Geometry;
 using OpenTK;
 
-namespace KI.Asset.Loader.Converter
+namespace KI.Asset.Loader.Importer
 {
-    public static class ConverterUtility
+    public static class ImporterUtility
     {
         /// <summary>
         /// オブジェクトを(-1,-1,-1)(1,1,1)の空間に正規化する

@@ -4,12 +4,12 @@ using KI.Gfx.Geometry;
 using KI.Gfx.KITexture;
 using OpenTK;
 
-namespace KI.Asset.Loader.Converter
+namespace KI.Asset.Loader.Importer
 {
     /// <summary>
     /// objファイルデータを独自形式に変換
     /// </summary>
-    public class OBJConverter // : ICreateModel : obj is not single object.
+    public class OBJImporter // : ICreateModel : obj is not single object.
     {
         /// <summary>
         /// objファイルのデータ
@@ -20,7 +20,7 @@ namespace KI.Asset.Loader.Converter
         /// objファイルのローダ
         /// </summary>
         /// <param name="filePath">ファイルパス</param>
-        public OBJConverter(string filePath)
+        public OBJImporter(string filePath)
         {
             objData = new OBJLoader(filePath);
             CreateModel();

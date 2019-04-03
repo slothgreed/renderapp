@@ -3,12 +3,12 @@ using KI.Gfx;
 using KI.Gfx.Geometry;
 using OpenTK;
 
-namespace KI.Asset.Loader.Converter
+namespace KI.Asset.Loader.Importer
 {
     /// <summary>
     /// STLのローダ現在テキストファイルのみ
     /// </summary>
-    public class STLConverter : ICreateModel
+    public class STLImporter : ICreateModel
     {
         /// <summary>
         /// stlファイルのローダ
@@ -19,7 +19,7 @@ namespace KI.Asset.Loader.Converter
         /// STLのローダ。
         /// </summary>
         /// <param name="filePath">ファイルパス</param>
-        public STLConverter(string filePath)
+        public STLImporter(string filePath)
         {
             stlData = new STLLoader(filePath);
             CreateModel();
@@ -45,9 +45,9 @@ namespace KI.Asset.Loader.Converter
             {
                 mesh.Add(
                     new Mesh(
-                        new Vertex(i, stlData.Position[3 * i], stlData.Normal[3 * i], Vector3.One),
-                        new Vertex(i + 1, stlData.Position[3 * i + 1], stlData.Normal[3 * i + 1], Vector3.One),
-                        new Vertex(i + 2, stlData.Position[3 * i + 2], stlData.Normal[3 * i + 2], Vector3.One)));
+                        new Vertex(i + 0, stlData.Position[i + 0], stlData.Normal[i + 0], Vector3.One),
+                        new Vertex(i + 1, stlData.Position[i + 1], stlData.Normal[i + 1], Vector3.One),
+                        new Vertex(i + 2, stlData.Position[i + 2], stlData.Normal[i + 2], Vector3.One)));
             }
 
             Model = new Polygon(stlData.FileName, mesh, PolygonType.Triangles);

@@ -3,12 +3,12 @@ using System.Linq;
 using KI.Analyzer;
 using KI.Gfx.Geometry;
 
-namespace KI.Asset.Loader.Converter
+namespace KI.Asset.Loader.Importer
 {
     /// <summary>
     /// ハーフエッジを独自形式に変換
     /// </summary>
-    public class HalfEdgeConverter : ICreateModel
+    public class HalfEdgeImporter : ICreateModel
     {
         /// <summary>
         /// ハーフエッジ
@@ -19,7 +19,7 @@ namespace KI.Asset.Loader.Converter
         /// コンストラクタ
         /// </summary>
         /// <param name="filePath">ファイルパス</param>
-        public HalfEdgeConverter(string filePath)
+        public HalfEdgeImporter(string filePath)
         {
             halfEdge = new HalfEdgeDS(filePath);
             HalfEdgeIO.ReadFile(filePath, halfEdge);
@@ -30,7 +30,7 @@ namespace KI.Asset.Loader.Converter
         /// コンストラクタ
         /// </summary>
         /// <param name="half">ハーフエッジ</param>
-        public HalfEdgeConverter(HalfEdgeDS half)
+        public HalfEdgeImporter(HalfEdgeDS half)
         {
             halfEdge = half;
             CreateModel();
@@ -52,7 +52,7 @@ namespace KI.Asset.Loader.Converter
                 halfEdge.Index.AddRange(mesh.AroundVertex.Select(p => p.Index));
             }
 
-            ConverterUtility.NormalizeObject(halfEdge.Vertexs);
+            ImporterUtility.NormalizeObject(halfEdge.Vertexs);
 
             foreach (var vertex in halfEdge.Vertexs)
             {

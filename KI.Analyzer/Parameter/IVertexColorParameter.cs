@@ -1,4 +1,4 @@
-﻿namespace KI.Analyzer
+﻿namespace KI.Analyzer.Paramter
 {
     public interface IVertexColorParameter
     {
