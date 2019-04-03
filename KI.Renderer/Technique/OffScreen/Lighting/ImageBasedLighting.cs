@@ -10,8 +10,8 @@ namespace KI.Asset.Technique
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ImageBasedLighting(string vertexShader, string fragShader)
-            : base("IBL", vertexShader, fragShader,RenderType.Original)
+        public ImageBasedLighting(Renderer renderer, string vertexShader, string fragShader)
+            : base("IBL", renderer, vertexShader, fragShader,RenderType.Original)
         {
         }
 
@@ -41,7 +41,7 @@ namespace KI.Asset.Technique
         /// </summary>
         public override void Initialize()
         {
-            var textures = Global.Renderer.RenderQueue.OutputTexture<GBuffer>();
+            var textures = Renderer.RenderQueue.OutputTexture<GBuffer>();
             Rectanle.Polygon.AddTexture(TextureKind.Albedo, textures[(int)GBuffer.OutputTextureType.Color]);
             Rectanle.Polygon.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Normal]);
             Rectanle.Polygon.AddTexture(TextureKind.World, textures[(int)GBuffer.OutputTextureType.Posit]);

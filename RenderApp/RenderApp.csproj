@@ -164,15 +164,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppSystem.cs" />
-    <Compile Include="Globals\Workspace.cs" />
-    <Compile Include="Loader\RALoader.cs" />
     <Compile Include="ViewModel\AttributeVM\AttributeViewModel.cs" />
     <Compile Include="ViewModel\AttributeVM\DefaultAttributeViewModel.cs" />
     <Compile Include="ViewModel\AttributeVM\SplitAttributeViewModel.cs" />
     <Compile Include="ViewModel\AttributeVM\VertexParameterAttributeViewModel.cs" />
     <Compile Include="ViewModel\AttributeVM\WireFrameAttributeViewModel.cs" />
-    <Compile Include="Globals\Project.cs" />
-    <Compile Include="Globals\Types.cs" />
     <Compile Include="ViewModel\CommandVM\IsoLineCommandViewModel.cs" />
     <Compile Include="ViewModel\CommandVM\SmoothingCommandViewModel.cs" />
     <Compile Include="ViewModel\CommandVM\CommandViewModelT4.cs">
@@ -259,7 +255,6 @@
       <DependentUpon>MainWindowViewModelT4.tt</DependentUpon>
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Globals\ProjectInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -471,6 +466,10 @@
     <ProjectReference Include="..\KI.UI\KI.UI.csproj">
       <Project>{35f238b1-820c-4487-9081-a4af3952219c}</Project>
       <Name>KI.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RenderApp.Model\RenderApp.Model.csproj">
+      <Project>{5e5560a2-6673-49f1-8089-c557c6172738}</Project>
+      <Name>RenderApp.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\RenderApp.Tool\RenderApp.Tool.csproj">
       <Project>{c8df6069-e673-4957-a173-2bfca883b102}</Project>

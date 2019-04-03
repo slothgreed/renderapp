@@ -6,6 +6,7 @@ using KI.Asset.Attribute;
 using KI.Foundation.Parameter;
 using KI.Tool.Command;
 using OpenTK;
+using RenderApp.Model;
 
 namespace RenderApp.Tool.Command
 {
@@ -59,7 +60,7 @@ namespace RenderApp.Tool.Command
             var dirMaxLine = halfDS.HalfEdgeVertexs.Select(p => p.MaxDirection).ToArray();
             var laplaceLine = halfDS.HalfEdgeVertexs.Select(p => p.LaplaceVector).ToArray();
 
-            var parentNode = Global.Renderer.ActiveScene.FindNode(targetObject);
+            var parentNode = Workspace.Instance.Renderer.ActiveScene.FindNode(targetObject);
 
             var vertexShader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
 

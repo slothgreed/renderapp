@@ -55,6 +55,10 @@
     <Folder Include="Command\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CADApp.Model\CADApp.Model.csproj">
+      <Project>{64A84876-EE83-4042-A5C9-BC467B83591E}</Project>
+      <Name>CADApp.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KI.Analyzer\KI.Analyzer.csproj">
       <Project>{e8959545-0813-4d45-8c9f-1ade07f3a21f}</Project>
       <Name>KI.Analyzer</Name>

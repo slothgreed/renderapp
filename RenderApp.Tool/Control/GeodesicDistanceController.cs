@@ -11,6 +11,7 @@ using KI.Gfx.GLUtil.Buffer;
 using KI.Mathmatics;
 using KI.Tool.Control;
 using OpenTK;
+using RenderApp.Model;
 using RenderApp.Tool.Utility;
 
 namespace RenderApp.Tool.Control
@@ -44,7 +45,7 @@ namespace RenderApp.Tool.Control
                         Polygon polygon = new Polygon("Picking", new List<Vertex>() { new Vertex(0, selectVertex.Position, Vector3.UnitY) });
                         RenderObject pointObject = RenderObjectFactory.Instance.CreateRenderObject("Picking", polygon);
                         pointObject.ModelMatrix = renderObject.ModelMatrix;
-                        Global.Renderer.ActiveScene.AddObject(pointObject);
+                        Workspace.Instance.Renderer.ActiveScene.AddObject(pointObject);
 
 
                         geodesic.SelectPoint(selectVertex.Index);
@@ -90,7 +91,7 @@ namespace RenderApp.Tool.Control
                             }
                         }
 
-                        var parentNode = Global.Renderer.ActiveScene.FindNode(renderObject);
+                        var parentNode = Workspace.Instance.Renderer.ActiveScene.FindNode(renderObject);
                         
                         var colorAttribute = new VertexParameterAttribute("distanceColor", 
                             renderObject.VertexBuffer.ShallowCopy(), 
@@ -103,7 +104,7 @@ namespace RenderApp.Tool.Control
                         vertexBuffer.SetupLineBuffer(lineGeometry.Vertexs, lineGeometry.Index, lineGeometry.Lines);
                         var lineAttribute = new PolygonAttribute("geodesicDistance", vertexBuffer, lineGeometry.Type, renderObject.Shader);
                         renderObject.Attributes.Add(lineAttribute);
-                        Global.Renderer.ActiveScene.AddObject(lineAttribute, parentNode);
+                        Workspace.Instance.Renderer.ActiveScene.AddObject(lineAttribute, parentNode);
                     }
                 }
             }

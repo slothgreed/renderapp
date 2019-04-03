@@ -84,8 +84,8 @@ namespace KI.Asset.Technique
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public Bloom(string vertexShader, string fragShader)
-            : base("Bloom", vertexShader, fragShader, RenderType.OffScreen)
+        public Bloom(Renderer renderer, string vertexShader, string fragShader)
+            : base("Bloom", renderer, vertexShader, fragShader, RenderType.OffScreen)
         {
         }
 

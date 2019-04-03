@@ -10,7 +10,7 @@ using KI.Gfx.Render;
 using KI.Renderer;
 using KI.Tool.Command;
 using KI.UI.ViewModel;
-using RenderApp.Globals;
+using RenderApp.Model;
 using RenderApp.Tool;
 using RenderApp.Tool.Command;
 

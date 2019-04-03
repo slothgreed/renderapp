@@ -24,10 +24,10 @@ namespace KI.Asset.Technique
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public Selection(string vertexShader, string fragShader)
-            : base("SelectionBuffer", vertexShader, fragShader, RenderType.OffScreen)
+        public Selection(Renderer renderer, string vertexShader, string fragShader)
+            : base("SelectionBuffer", renderer, vertexShader, fragShader, RenderType.OffScreen)
         {
-            var textures = Global.Renderer.RenderQueue.OutputTexture<GBuffer>();
+            var textures = Renderer.RenderQueue.OutputTexture<GBuffer>();
             Rectanle.Polygon.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Color]);
         }
 
@@ -44,11 +44,11 @@ namespace KI.Asset.Technique
         /// </summary>
         public void SelectObject()
         {
-            if (Global.Renderer.ActiveScene.SelectNode != null)
+            if (Renderer.ActiveScene.SelectNode != null)
             {
-                if (Global.Renderer.ActiveScene.SelectNode is RenderObject)
+                if (Renderer.ActiveScene.SelectNode is RenderObject)
                 {
-                    var renderObject = Global.Renderer.ActiveScene.SelectNode as RenderObject;
+                    var renderObject = Renderer.ActiveScene.SelectNode as RenderObject;
                     uID = renderObject.ID;
                 }
                 else

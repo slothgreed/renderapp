@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
+using CADApp.Model;
 using CADApp.Tool.Control;
 using KI.Asset;
 using KI.Asset.Technique;
@@ -78,8 +79,10 @@ namespace CADApp.ViewModel
             DeviceContext.Instance.SetClearColor(1, 1, 1, 1);
             MainScene = new Scene("MainScene");
             Renderer = new Renderer();
-            Global.Renderer = Renderer;
-            Global.Renderer.ActiveScene = MainScene;
+            Renderer.ActiveScene = MainScene;
+
+            Workspace.Instance.MainScene = MainScene;
+            Workspace.Instance.Renderer = Renderer;
 
             InitializeScene();
             InitializeRenderer();
@@ -101,22 +104,22 @@ namespace CADApp.ViewModel
             Renderer.Render();
         }
 
-        private void OnMouseWheelEvent(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void OnMouseWheelEvent(object sender, MouseEventArgs e)
         {
             ProcessMouseInput(e, MOUSE_STATE.WHEEL);
         }
 
-        private void OnMouseMoveUpEvent(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void OnMouseMoveUpEvent(object sender, MouseEventArgs e)
         {
             ProcessMouseInput(e, MOUSE_STATE.UP);
         }
 
-        private void OnMouseMoveEvent(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void OnMouseMoveEvent(object sender, MouseEventArgs e)
         {
             ProcessMouseInput(e, MOUSE_STATE.MOVE);
         }
 
-        private void OnMouseDownEvent(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void OnMouseDownEvent(object sender, MouseEventArgs e)
         {
             ProcessMouseInput(e, MOUSE_STATE.DOWN);
         }
@@ -141,6 +144,7 @@ namespace CADApp.ViewModel
 
         private void InitializeRenderer()
         {
+            RenderTechniqueFactory.Instance.Renderer = Renderer;
             Renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer));
             var gBufferTexture = Renderer.RenderQueue.OutputTexture<GBuffer>();
             Renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Deferred));

@@ -3,6 +3,7 @@ using KI.Asset;
 using KI.Asset.Attribute;
 using KI.Tool.Command;
 using OpenTK;
+using RenderApp.Model;
 
 namespace RenderApp.Tool.Command
 {
@@ -91,7 +92,7 @@ namespace RenderApp.Tool.Command
                 }
             }
 
-            var parentNode = Global.Renderer.ActiveScene.FindNode(targetObject);
+            var parentNode = Workspace.Instance.Renderer.ActiveScene.FindNode(targetObject);
             WireFrameAttribute material = new WireFrameAttribute(
                 targetObject.Name + ": WireFrame",
                 targetObject.VertexBuffer.ShallowCopy(),

@@ -10,6 +10,7 @@
     xmlns:tool="clr-namespace:RenderApp.Tool;assembly=RenderApp.Tool"
     xmlns:v="clr-namespace:RenderApp.View"
     xmlns:vm="clr-namespace:RenderApp.ViewModel"
+    xmlns:model="clr-namespace:RenderApp.Model;assembly=RenderApp.Model"
     Title="RenderingApplication"
     Width="1200"
     Height="600"
@@ -58,15 +59,15 @@
             <MenuItem Header="Asset">
                 <MenuItem
                     Command="{Binding LoadAsset}"
-                    CommandParameter="{x:Static local:RAAsset.Model}"
+                    CommandParameter="{x:Static model:RAAsset.Model}"
                     Header="Model" />
                 <MenuItem
                     Command="{Binding LoadAsset}"
-                    CommandParameter="{x:Static local:RAAsset.Texture}"
+                    CommandParameter="{x:Static model:RAAsset.Texture}"
                     Header="Texture" />
                 <MenuItem
                     Command="{Binding LoadAsset}"
-                    CommandParameter="{x:Static local:RAAsset.Shader}"
+                    CommandParameter="{x:Static model:RAAsset.Shader}"
                     Header="Shader" />
             </MenuItem>
 
@@ -105,84 +106,84 @@
             <MenuItem Header="Analyze">
                 <MenuItem
                     Command="{Binding CreateObject}"
-                    CommandParameter="{x:Static local:AnalyzeCommand.WireFrame}"
+                    CommandParameter="{x:Static tool:AnalyzeCommand.WireFrame}"
                     Header="WireFrame" />
                 <MenuItem
                     Command="{Binding CreateObject}"
-                    CommandParameter="{x:Static local:AnalyzeCommand.HalfEdgeWireFrame}"
+                    CommandParameter="{x:Static tool:AnalyzeCommand.HalfEdgeWireFrame}"
                     Header="HalfEdgeWireFrame" />
                 <Separator />
                 <MenuItem
                     Command="{Binding CreateObject}"
-                    CommandParameter="{x:Static local:AnalyzeCommand.AdaptiveMesh}"
+                    CommandParameter="{x:Static tool:AnalyzeCommand.AdaptiveMesh}"
                     Header="AdaptiveMesh" />
                 <MenuItem
                     Command="{Binding CreateObject}"
-                    CommandParameter="{x:Static local:AnalyzeCommand.QEM}"
+                    CommandParameter="{x:Static tool:AnalyzeCommand.QEM}"
                     Header="QEM" />
                 <MenuItem
                     Command="{Binding CreateObject}"
-                    CommandParameter="{x:Static local:AnalyzeCommand.Smoothing}"
+                    CommandParameter="{x:Static tool:AnalyzeCommand.Smoothing}"
                     Header="Smoothing" />
                 <MenuItem
                     Command="{Binding CreateObject}"
-                    CommandParameter="{x:Static local:AnalyzeCommand.Kmeans}"
+                    CommandParameter="{x:Static tool:AnalyzeCommand.Kmeans}"
                     Header="Kmeans" />
                 <MenuItem
                     Command="{Binding CreateObject}"
-                    CommandParameter="{x:Static local:AnalyzeCommand.Curvature}"
+                    CommandParameter="{x:Static tool:AnalyzeCommand.Curvature}"
                     Header="Curvature" />
                 <MenuItem
                     Command="{Binding CreateObject}"
-                    CommandParameter="{x:Static local:AnalyzeCommand.FeatureLine}"
+                    CommandParameter="{x:Static tool:AnalyzeCommand.FeatureLine}"
                     Header="FeatureLine" />
                 <Separator />
                 <MenuItem
                     Command="{Binding CreateObject}"
-                    CommandParameter="{x:Static local:AnalyzeCommand.Voxelize}"
+                    CommandParameter="{x:Static tool:AnalyzeCommand.Voxelize}"
                     Header="Voxelize" />
                 <MenuItem
                     Command="{Binding CreateObject}"
-                    CommandParameter="{x:Static local:AnalyzeCommand.ConvexHull}"
+                    CommandParameter="{x:Static tool:AnalyzeCommand.ConvexHull}"
                     Header="ConvexHull" />
                 <MenuItem
                     Command="{Binding CreateObject}"
-                    CommandParameter="{x:Static local:AnalyzeCommand.MarchingCube}"
+                    CommandParameter="{x:Static tool:AnalyzeCommand.MarchingCube}"
                     Header="MarchingCube" />
                 <MenuItem
                     Command="{Binding CreateObject}"
-                    CommandParameter="{x:Static local:AnalyzeCommand.IsoLine}"
+                    CommandParameter="{x:Static tool:AnalyzeCommand.IsoLine}"
                     Header="IsoLine" />
                 <Separator />
                 <MenuItem
                     Command="{Binding CreateObject}"
-                    CommandParameter="{x:Static local:AnalyzeCommand.Perceptron}"
+                    CommandParameter="{x:Static tool:AnalyzeCommand.Perceptron}"
                     Header="Perceptron" />
             </MenuItem>
 
             <MenuItem Header="View">
                 <MenuItem
                     Command="{Binding OpenWindow}"
-                    CommandParameter="{x:Static local:AppWindow.Project}"
+                    CommandParameter="{x:Static model:AppWindow.Project}"
                     Header="Project" />
                 <MenuItem
                     Command="{Binding OpenWindow}"
-                    CommandParameter="{x:Static local:AppWindow.Scene}"
+                    CommandParameter="{x:Static model:AppWindow.Scene}"
                     Header="Scene" />
                 <MenuItem
                     Command="{Binding OpenWindow}"
-                    CommandParameter="{x:Static local:AppWindow.RenderSystem}"
+                    CommandParameter="{x:Static model:AppWindow.RenderSystem}"
                     Header="RenderSystem" />
                 <MenuItem
                     Command="{Binding OpenWindow}"
-                    CommandParameter="{x:Static local:AppWindow.Viewport}"
+                    CommandParameter="{x:Static model:AppWindow.Viewport}"
                     Header="Viewport" />
             </MenuItem>
 
             <MenuItem Header="Help">
                 <MenuItem
                     Command="{Binding OpenExplorer}"
-                    CommandParameter="{x:Static local:ProjectInfo.ResourceDirectory}"
+                    CommandParameter="{x:Static model:ProjectInfo.ResourceDirectory}"
                     Header="Resource Directory" />
                 <MenuItem Command="{Binding OpenDebugWindow}" Header="DebugWindow" />
                 <MenuItem Command="{Binding DataVisualization}" Header="DataVisualization" />

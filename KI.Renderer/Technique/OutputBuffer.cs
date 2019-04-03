@@ -37,8 +37,8 @@ namespace KI.Asset.Technique
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public OutputBuffer(string vertexShader, string fragShader)
-            : base("OutputBuffer", vertexShader, fragShader, RenderType.Original)
+        public OutputBuffer(Renderer renderer, string vertexShader, string fragShader)
+            : base("OutputBuffer", renderer, vertexShader, fragShader, RenderType.Original)
         {
         }
 
@@ -48,7 +48,7 @@ namespace KI.Asset.Technique
         public override void Initialize()
         {
             uSelectMap = null;
-            var textures = Global.Renderer.RenderQueue.OutputTexture<GBuffer>();
+            var textures = Renderer.RenderQueue.OutputTexture<GBuffer>();
             Rectanle.Polygon.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Color]);
         }
 

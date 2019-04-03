@@ -77,8 +77,7 @@ namespace STLBrowser.ViewModel
         {
             MainScene = new Scene("MainScene");
             Renderer = new Renderer();
-            Global.Renderer = Renderer;
-            Global.Renderer.ActiveScene = MainScene;
+            Renderer.ActiveScene = MainScene;
 
             MainScene.MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
             MainScene.SunLight = RenderObjectFactory.Instance.CreateDirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);

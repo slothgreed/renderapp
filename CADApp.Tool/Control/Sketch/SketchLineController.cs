@@ -5,14 +5,11 @@ namespace CADApp.Tool.Control
 {
     class SketchLineController : IController
     {
+        /// <summary>
+        /// 配置するZ位置
+        /// </summary>
         private float zPosition = 0;
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="mouse"></param>
-        /// <returns></returns>
         public override bool Move(MouseEventArgs mouse)
         {
 

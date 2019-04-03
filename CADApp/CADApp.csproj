@@ -132,6 +132,10 @@
     <Folder Include="Model\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CADApp.Model\CADApp.Model.csproj">
+      <Project>{64A84876-EE83-4042-A5C9-BC467B83591E}</Project>
+      <Name>CADApp.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CADApp.Tool\CADApp.Tool.csproj">
       <Project>{63784908-38d4-4ef6-82f9-ea50eec662e2}</Project>
       <Name>CADApp.Tool</Name>

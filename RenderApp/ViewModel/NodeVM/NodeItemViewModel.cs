@@ -4,6 +4,7 @@ using System.Linq;
 using KI.Foundation.Core;
 using KI.Foundation.Tree;
 using KI.UI.ViewModel;
+using RenderApp.Model;
 
 namespace RenderApp.ViewModel
 {

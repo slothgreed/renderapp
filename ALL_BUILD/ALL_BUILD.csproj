@@ -50,6 +50,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CADApp.Tool\CADApp.Tool.csproj">
+      <Project>{63784908-38d4-4ef6-82f9-ea50eec662e2}</Project>
+      <Name>CADApp.Tool</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CADApp\CADApp.csproj">
       <Project>{9c5eda2e-270e-4cf0-8d59-479285c074f3}</Project>
       <Name>CADApp</Name>
@@ -85,6 +89,10 @@
     <ProjectReference Include="..\KI.UI\KI.UI.csproj">
       <Project>{35f238b1-820c-4487-9081-a4af3952219c}</Project>
       <Name>KI.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RenderApp.Model\RenderApp.Model.csproj">
+      <Project>{5e5560a2-6673-49f1-8089-c557c6172738}</Project>
+      <Name>RenderApp.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\RenderApp.Tool\RenderApp.Tool.csproj">
       <Project>{c8df6069-e673-4957-a173-2bfca883b102}</Project>

@@ -1,7 +1,7 @@
 ﻿using KI.Asset;
 using KI.Tool.Command;
 using KI.UI.ViewModel;
-using RenderApp.Globals;
+using RenderApp.Model;
 using RenderApp.Tool.Command;
 
 namespace RenderApp.ViewModel

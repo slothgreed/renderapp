@@ -2,6 +2,7 @@
 using KI.Asset;
 using KI.Tool.Control;
 using OpenTK;
+using RenderApp.Model;
 
 namespace RenderApp.Tool.Control
 {
@@ -80,11 +81,11 @@ namespace RenderApp.Tool.Control
                     break;
                 case MouseButtons.Middle:
                     middleMouse.Move(mouse.X, mouse.Y);
-                    Translate(Global.Renderer.ActiveScene.MainCamera, new Vector3(-middleMouse.Delta.X, -middleMouse.Delta.Y, 0));
+                    Translate(Workspace.Instance.Renderer.ActiveScene.MainCamera, new Vector3(-middleMouse.Delta.X, -middleMouse.Delta.Y, 0));
                     break;
                 case MouseButtons.Right:
                     rightMouse.Move(mouse.X, mouse.Y);
-                    Rotate(Global.Renderer.ActiveScene.MainCamera, new Vector3(-rightMouse.Delta.X, -rightMouse.Delta.Y, 0));
+                    Rotate(Workspace.Instance.Renderer.ActiveScene.MainCamera, new Vector3(-rightMouse.Delta.X, -rightMouse.Delta.Y, 0));
                     break;
             }
 
@@ -124,7 +125,7 @@ namespace RenderApp.Tool.Control
             switch (mouse.Button)
             {
                 case MouseButtons.None:
-                    Camera camera = Global.Renderer.ActiveScene.MainCamera;
+                    Camera camera = Workspace.Instance.Renderer.ActiveScene.MainCamera;
                     if (mouse.Delta > 0)
                     {
                         camera.LookAtDistance = camera.LookAtDistance * zoomInRatio;
@@ -149,7 +150,7 @@ namespace RenderApp.Tool.Control
         {
             if (e.KeyCode == Keys.F)
             {
-                Global.Renderer.ActiveScene.FitToScene(Global.Renderer.ActiveScene.MainCamera);
+                Workspace.Instance.Renderer.ActiveScene.FitToScene(Workspace.Instance.Renderer.ActiveScene.MainCamera);
             }
 
             return true;

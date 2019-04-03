@@ -33,8 +33,8 @@ namespace KI.Asset.Technique
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public SSLIC(string vertexShader, string fragShader)
-            : base("SSLIC", vertexShader, fragShader, RenderType.Original)
+        public SSLIC(Renderer renderer, string vertexShader, string fragShader)
+            : base("SSLIC", renderer, vertexShader, fragShader, RenderType.Original)
         {
         }
 
@@ -66,7 +66,7 @@ namespace KI.Asset.Technique
         /// <param name="scene">シーン</param>
         public override void Render(Scene scene)
         {
-            var gBuffer = Global.Renderer.RenderQueue.Items.OfType<GBuffer>().First();
+            var gBuffer = Renderer.RenderQueue.Items.OfType<GBuffer>().First();
             gBuffer.RenderTarget.GetPixelData(imageInfo, DeviceContext.Instance.Width, DeviceContext.Instance.Height, (int)GBuffer.OutputTextureType.Light);
             ssLicTex.GenTexture(imageInfo);
 
@@ -120,7 +120,7 @@ namespace KI.Asset.Technique
         /// <param name="height">縦</param>
         private void CreateFrameBuffer(int width, int height)
         {
-            var textures = Global.Renderer.RenderQueue.OutputTexture<GBuffer>();
+            var textures = Renderer.RenderQueue.OutputTexture<GBuffer>();
             var vectorTexture = textures[(int)GBuffer.OutputTextureType.Light];
 
             if (ssLicTex == null)

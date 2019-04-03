@@ -1,4 +1,4 @@
-﻿namespace RenderApp
+﻿namespace RenderApp.Model
 {
     public enum EAssetType
     {
@@ -41,24 +41,6 @@
         Texture2D,
         FrameBuffer,
         CubeMap
-    }
-
-    public enum AnalyzeCommand
-    {
-        WireFrame,
-        HalfEdge,
-        Curvature,
-        HalfEdgeWireFrame,
-        ConvexHull,
-        MarchingCube,
-        IsoLine,
-        AdaptiveMesh,
-        QEM,
-        Perceptron,
-        FeatureLine,
-        Voxelize,
-        Kmeans,
-        Smoothing
     }
 
     public enum RAAsset

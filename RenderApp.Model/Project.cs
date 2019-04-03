@@ -6,7 +6,7 @@ using KI.Gfx;
 using KI.Gfx.Geometry;
 using KI.Gfx.KITexture;
 
-namespace RenderApp.Globals
+namespace RenderApp.Model
 {
     /// <summary>
     /// プロジェクト
@@ -56,7 +56,7 @@ namespace RenderApp.Globals
         /// 子供の追加
         /// </summary>
         /// <param name="child">子供</param>
-        internal void AddChild(KIObject child)
+        public void AddChild(KIObject child)
         {
             if (child is Polygon)
             {

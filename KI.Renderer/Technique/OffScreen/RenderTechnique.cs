@@ -17,15 +17,26 @@ namespace KI.Asset.Technique
         private RenderType renderType;
 
         /// <summary>
+        /// レンダラ
+        /// </summary>
+        public Renderer Renderer
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
+        /// <param name="renderer">レンダラ</param>
         /// <param name="tech">レンダーテクニックの種類</param>
         /// <param name="type">レンダリングタイプ</param>
-        public RenderTechnique(string name, RenderType type)
+        public RenderTechnique(string name, Renderer renderer, RenderType type)
             : base(name)
         {
             renderType = type;
+            Renderer = renderer;
             Init();
         }
 
@@ -33,13 +44,15 @@ namespace KI.Asset.Technique
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
+        /// <param name="renderer">レンダラ</param>
         /// <param name="vertexShader">頂点シェーダ</param>
         /// <param name="fragShader">フラグシェーダ</param>
         /// <param name="type">レンダリングタイプ</param>
-        public RenderTechnique(string name, string vertexShader, string fragShader, RenderType type)
+        public RenderTechnique(string name, Renderer renderer, string vertexShader, string fragShader, RenderType type)
             : base(name)
         {
             renderType = type;
+            Renderer = renderer;
             Init(vertexShader, fragShader);
         }
 

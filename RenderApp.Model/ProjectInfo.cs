@@ -1,6 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
-namespace RenderApp
+namespace RenderApp.Model
 {
     /// <summary>
     /// プロジェクト情報
@@ -68,7 +69,7 @@ namespace RenderApp
         {
             if (Path.GetExtension(filePath) != "proj")
             {
-                throw new FileFormatException("extention error");
+                throw new Exception("extention error");
             }
 
             return true;

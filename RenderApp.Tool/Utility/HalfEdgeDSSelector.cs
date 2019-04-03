@@ -5,6 +5,7 @@ using KI.Foundation.Tree;
 using KI.Gfx.GLUtil;
 using KI.Mathmatics;
 using OpenTK;
+using RenderApp.Model;
 
 namespace RenderApp.Tool.Utility
 {
@@ -34,7 +35,7 @@ namespace RenderApp.Tool.Utility
             GetMouseClipPosition(mouse, out near, out far);
 
             RenderObject renderObject = null;
-            foreach (KINode polygonNode in Global.Renderer.ActiveScene.RootNode.AllChildren())
+            foreach (KINode polygonNode in Workspace.Instance.Renderer.ActiveScene.RootNode.AllChildren())
             {
                 if (polygonNode.KIObject is RenderObject)
                 {
@@ -70,7 +71,7 @@ namespace RenderApp.Tool.Utility
             GetMouseClipPosition(mouse, out near, out far);
 
             RenderObject renderObject;
-            foreach (KINode polygonNode in Global.Renderer.ActiveScene.RootNode.AllChildren())
+            foreach (KINode polygonNode in Workspace.Instance.Renderer.ActiveScene.RootNode.AllChildren())
             {
                 renderObject = null;
                 if (polygonNode.KIObject is RenderObject)
@@ -111,7 +112,7 @@ namespace RenderApp.Tool.Utility
             GetMouseClipPosition(mouse, out near, out far);
 
             RenderObject renderObject;
-            foreach (KINode polygonNode in Global.Renderer.ActiveScene.RootNode.AllChildren())
+            foreach (KINode polygonNode in Workspace.Instance.Renderer.ActiveScene.RootNode.AllChildren())
             {
                 renderObject = null;
                 if (polygonNode.KIObject is RenderObject)
@@ -172,8 +173,8 @@ namespace RenderApp.Tool.Utility
             viewport[3] = DeviceContext.Instance.Height;
 
             GLUtility.GetClickPos(
-                Global.Renderer.ActiveScene.MainCamera.Matrix,
-                Global.Renderer.ActiveScene.MainCamera.ProjMatrix,
+                Workspace.Instance.Renderer.ActiveScene.MainCamera.Matrix,
+                Workspace.Instance.Renderer.ActiveScene.MainCamera.ProjMatrix,
                 viewport, mouse, out near, out far);
         }
 
