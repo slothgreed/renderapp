@@ -109,23 +109,22 @@ namespace KI.Analyzer
         /// ダイクストラの算出結果
         /// </summary>
         /// <returns>ダイクストラの線算出</returns>
-        public List<Line> DijkstraLine()
+        public void CreateDijkstraLine(out List<Vertex> vertex, out List<int> indexs)
         {
-            List<Line> line = new List<Line>();
+            vertex = new List<Vertex>();
+            indexs = new List<int>();
+
             Node current = nodes[endIndex];
             while (current != nodes[startIndex])
             {
-                var newVertex0 = new Vertex(2 * line.Count, current.Vertex);
-                var newVertex1 = new Vertex(2 * line.Count + 1, current.MinRouteNode.Vertex);
+                vertex.Add(new Vertex(vertex.Count, current.Vertex.Position, Vector3.UnitY));
+                vertex.Add(new Vertex(vertex.Count, current.MinRouteNode.Vertex.Position, Vector3.UnitY));
 
-                newVertex0.Color = Vector3.UnitY;
-                newVertex1.Color = Vector3.UnitY;
+                indexs.Add(vertex.Count - 2);
+                indexs.Add(vertex.Count - 1);
 
-                line.Add(new Line(newVertex0, newVertex1));
                 current = current.MinRouteNode;
             }
-
-            return line;
         }
 
         /// <summary>

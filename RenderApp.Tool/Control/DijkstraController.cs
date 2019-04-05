@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using KI.Analyzer;
 using KI.Asset;
+using KI.Gfx;
 using KI.Gfx.Geometry;
 using KI.Tool.Control;
 using OpenTK;
@@ -112,7 +113,11 @@ namespace RenderApp.Tool.Control
             dijkstra = new DijkstraAlgorithm(selectObject.Polygon as HalfEdgeDS, selectStart, selectEnd);
             dijkstra.Execute();
 
-            Polygon polygon = new Polygon("DijkstraLine", dijkstra.DijkstraLine());
+            List<Vertex> vertexs;
+            List<int> indexs;
+            dijkstra.CreateDijkstraLine(out vertexs, out indexs);
+
+            Polygon polygon = new Polygon("DijkstraLine", vertexs, indexs, PolygonType.Lines);
             RenderObject lineObject = RenderObjectFactory.Instance.CreateRenderObject("DijkstraLine", polygon);
             lineObject.ModelMatrix = selectObject.ModelMatrix;
             Workspace.Instance.Renderer.ActiveScene.AddObject(lineObject);
