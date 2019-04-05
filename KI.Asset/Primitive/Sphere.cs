@@ -162,17 +162,19 @@ namespace KI.Asset
                 }
             }
 
-            var meshs = new List<Mesh>();
+            var vertexs = new List<Vertex>();
+            var indexs = new List<int>();
             for (int i = 0; i < position.Count / 3; i++)
             {
-                meshs.Add(
-                    new Mesh(
-                        new Vertex(i, position[3 * i], normal[3 * i], texcoord[3 * i]),
-                        new Vertex(i + 1, position[3 * i + 1], normal[3 * i + 1], texcoord[3 * i + 1]),
-                        new Vertex(i + 2, position[3 * i + 2], normal[3 * i + 2], texcoord[3 * i + 2])));
+                vertexs.Add(new Vertex(3 * i, position[3 * i], normal[3 * i], texcoord[3 * i]));
+                vertexs.Add(new Vertex(3 * i + 1, position[3 * i + 1], normal[3 * i + 1], texcoord[3 * i + 1]));
+                vertexs.Add(new Vertex(3 * i + 2, position[3 * i + 2], normal[3 * i + 2], texcoord[3 * i + 2]));
+                indexs.Add(3 * i);
+                indexs.Add(3 * i + 1);
+                indexs.Add(3 * i + 2);
             }
 
-            Model = new Polygon(this.Name, meshs, PolygonType.Triangles);
+            Model = new Polygon(this.Name, vertexs,indexs, PolygonType.Triangles);
 
             //info.ConvertVertexArray();
         }

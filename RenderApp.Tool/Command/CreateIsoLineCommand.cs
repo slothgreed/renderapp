@@ -55,7 +55,8 @@ namespace RenderApp.Tool.Command
 
             algorithm.Calculate(0.05f);
 
-            List<Line> createLine = new List<Line>();
+            List<Vertex> vertexs = new List<Vertex>();
+            List<int> createLine = new List<int>();
             foreach (var isoSpace in algorithm.IsoSpace)
             {
                 foreach (var isoLine in isoSpace.IsoLines)
@@ -65,18 +66,21 @@ namespace RenderApp.Tool.Command
                     foreach(var line in isoLine.Lines)
                     {
                         Vector3 color = PseudoColor.GetColor(sum, 0, length);
-                        var vertex1 = new Vertex(0, line.Start.Position, color);
+                        var vertex1 = new Vertex(vertexs.Count, line.Start.Position, color);
+                        vertexs.Add(vertex1);
 
                         Vector3 color2 = PseudoColor.GetColor(sum, 0, length);
                         sum += (line.Start.Position - line.End.Position).Length;
-                        var vertex2 = new Vertex(0, line.End.Position, color);
+                        var vertex2 = new Vertex(vertexs.Count, line.End.Position, color);
+                        vertexs.Add(vertex2);
 
-                        createLine.Add(new Line(vertex1, vertex2));
+                        createLine.Add(vertex1.Index);
+                        createLine.Add(vertex2.Index);
                     }
                 }
             }
 
-            Polygon isoLines = new Polygon("IsoLines", createLine);
+            Polygon isoLines = new Polygon("IsoLines", vertexs, createLine, PolygonType.Lines);
             VertexBuffer vertexBuffer = new VertexBuffer();
             vertexBuffer.SetupLineBuffer(isoLines.Vertexs, isoLines.Index, isoLines.Lines);
             var polyAttriute = new PolygonAttribute("IsoLines", vertexBuffer, PolygonType.Lines, targetObject.Shader);

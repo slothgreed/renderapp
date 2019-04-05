@@ -39,18 +39,17 @@ namespace KI.Asset.Loader.Importer
         /// </summary>
         public void CreateModel()
         {
-            var mesh = new List<Mesh>();
+            var vertex = new List<Vertex>();
+            var index = new List<int>();
 
             for (int i = 0; i < stlData.Position.Count; i += 3)
             {
-                mesh.Add(
-                    new Mesh(
-                        new Vertex(i + 0, stlData.Position[i + 0], stlData.Normal[i + 0], Vector3.One),
-                        new Vertex(i + 1, stlData.Position[i + 1], stlData.Normal[i + 1], Vector3.One),
-                        new Vertex(i + 2, stlData.Position[i + 2], stlData.Normal[i + 2], Vector3.One)));
+                vertex.Add(new Vertex(i + 0, stlData.Position[i + 0], stlData.Normal[i + 0], Vector3.One));
+                vertex.Add(new Vertex(i + 1, stlData.Position[i + 1], stlData.Normal[i + 1], Vector3.One));
+                vertex.Add(new Vertex(i + 2, stlData.Position[i + 2], stlData.Normal[i + 2], Vector3.One));
             }
 
-            Model = new Polygon(stlData.FileName, mesh, PolygonType.Triangles);
+            Model = new Polygon(stlData.FileName, vertex, index, PolygonType.Triangles);
         }
     }
 }
