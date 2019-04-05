@@ -15,7 +15,7 @@ namespace RenderApp.Tool
             }
 
             RenderObject renderObject = asset as RenderObject;
-            if (renderObject.Polygon.Type != PolygonType.Triangles)
+            if (renderObject.Type != PolygonType.Triangles)
             {
                 return CommandResult.Failed;
             }

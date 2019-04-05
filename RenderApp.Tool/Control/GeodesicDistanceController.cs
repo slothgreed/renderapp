@@ -96,7 +96,7 @@ namespace RenderApp.Tool.Control
                         
                         var colorAttribute = new VertexParameterAttribute("distanceColor", 
                             renderObject.VertexBuffer.ShallowCopy(), 
-                            renderObject.Polygon.Type, 
+                            renderObject.Type, 
                             renderObject.Shader, 
                             geodesicDistance);
 

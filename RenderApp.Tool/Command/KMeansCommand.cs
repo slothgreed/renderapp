@@ -54,7 +54,7 @@ namespace RenderApp.Tool.Command
             var material = new VertexColorAttribute(
                 "KMeansClustering", 
                 targteObject.VertexBuffer.ShallowCopy(),
-                targteObject.Polygon.Type,
+                targteObject.Type,
                 targteObject.Shader,
                 colors);
 

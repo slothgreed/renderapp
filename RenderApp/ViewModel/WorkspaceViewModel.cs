@@ -217,7 +217,7 @@ namespace RenderApp.ViewModel
                     renderBunny.VertexBuffer.ShallowCopy(),
                     ShaderCreater.Instance.CreateShader(ShaderType.VectorField),
                     renderBunny.Attributes.OfType<VertexDirectionAttribute>().First().Direction,
-                    renderBunny.Polygon.Type);
+                    renderBunny.Type);
                 renderBunny.Attributes.Add(vectorFiledAttribute);
 
                 //var icosahedron = AssetFactory.Instance.CreateIcosahedron("Icosahedron", 0.5f, 1);

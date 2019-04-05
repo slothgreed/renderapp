@@ -99,6 +99,17 @@ namespace KI.Asset
         }
 
         /// <summary>
+        /// ポリゴンの種類(いずれPolygon.Typeを消してRenderObjectがTypeを持つようにする)
+        /// </summary>
+        public PolygonType Type
+        {
+            get
+            {
+                return Polygon.Type;
+            }
+        }
+
+        /// <summary>
         /// 描画
         /// </summary>
         /// <param name="scene">シーン</param>
@@ -146,20 +157,20 @@ namespace KI.Asset
             Polygon = polygon;
             VertexBuffer = new VertexBuffer();
 
-            if (polygon.Type == PolygonType.Points)
+            if (Type == PolygonType.Points)
             {
                 VertexBuffer.SetupPointBuffer(polygon.Vertexs, polygon.Index);
             }
-            else if (polygon.Type == PolygonType.Lines)
+            else if (Type == PolygonType.Lines)
             {
                 VertexBuffer.SetupLineBuffer(polygon.Vertexs, polygon.Index, polygon.Lines);
             }
             else
             {
-                VertexBuffer.SetupMeshBuffer(polygon.Vertexs, polygon.Index, polygon.Meshs, polygon.Type);
+                VertexBuffer.SetupMeshBuffer(polygon.Vertexs, polygon.Index, polygon.Meshs, Type);
             }
 
-            PolygonAttribute = new PolygonAttribute("Attribute:" + Name, VertexBuffer.ShallowCopy(), Polygon.Type, shader);
+            PolygonAttribute = new PolygonAttribute("Attribute:" + Name, VertexBuffer.ShallowCopy(), Type, shader);
             Attributes.Add(PolygonAttribute);
         }
 
@@ -179,17 +190,17 @@ namespace KI.Asset
         /// </summary>
         public void UpdateVertexBufferObject()
         {
-            if (polygon.Type == PolygonType.Points)
+            if (Type == PolygonType.Points)
             {
                 VertexBuffer.SetupPointBuffer(polygon.Vertexs, polygon.Index);
             }
-            else if (polygon.Type == PolygonType.Lines)
+            else if (Type == PolygonType.Lines)
             {
                 VertexBuffer.SetupLineBuffer(polygon.Vertexs, polygon.Index, polygon.Lines);
             }
             else
             {
-                VertexBuffer.SetupMeshBuffer(polygon.Vertexs, polygon.Index, polygon.Meshs, polygon.Type);
+                VertexBuffer.SetupMeshBuffer(polygon.Vertexs, polygon.Index, polygon.Meshs, Type);
             }
 
             PolygonAttribute.UpdateVertexBuffer(VertexBuffer);
