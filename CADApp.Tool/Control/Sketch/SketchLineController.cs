@@ -38,7 +38,7 @@ namespace CADApp.Tool.Control
                 Vector3 interPoint;
                 if (Interaction.PlaneToLine(camera.Position, far, Workspace.Instance.WorkPlane.Formula, out interPoint))
                 {
-                    int pointIndex = pointObject.Polygon.Vertexs.Count;
+                    int pointIndex = pointList.Count;
                     pointList.Add(new Vertex(pointIndex, interPoint, Vector3.UnitX));
 
                     pointObject.Visible = true;
