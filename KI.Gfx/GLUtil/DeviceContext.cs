@@ -13,7 +13,7 @@ namespace KI.Gfx.GLUtil
         private DeviceContext()
         {
         }
-        
+
         /// <summary>
         /// インスタンス
         /// </summary>
@@ -22,12 +22,29 @@ namespace KI.Gfx.GLUtil
         /// <summary>
         /// 横
         /// </summary>
-        public int Width { get; set; }
+        public int Width
+        {
+            get { return viewportRect[2]; }
+            set { viewportRect[2] = value; }
+        }
 
         /// <summary>
         /// 縦
         /// </summary>
-        public int Height { get; set; }
+        public int Height
+        {
+            get { return viewportRect[3]; }
+            set { viewportRect[3] = value; }
+        }
+
+        private int[] viewportRect;
+        public int[] ViewportRect
+        {
+            get
+            {
+                return viewportRect;
+            }
+        }
 
         /// <summary>
         /// 初期化
@@ -49,6 +66,7 @@ namespace KI.Gfx.GLUtil
             GL.PolygonOffset(1.0f, 1.0f);
             GL.FrontFace(FrontFaceDirection.Ccw);
 
+            viewportRect = new int[] { 0, 0, 0, 0 };
             SizeChanged(width, height);
         }
 

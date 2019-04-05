@@ -14,12 +14,12 @@ namespace KI.Mathmatics
         /// </summary>
         /// <param name="start">始点</param>
         /// <param name="end">終点</param>
-        /// <param name="plane1">平面の公式</param>
+        /// <param name="planeFormula">平面の公式</param>
         /// <returns>交点</returns>
-        public static bool PlaneToLine(Vector3 start, Vector3 end, Vector4 plane1, out Vector3 result)
+        public static bool PlaneToLine(Vector3 start, Vector3 end, Vector4 planeFormula, out Vector3 result)
         {
             Vector4 plane = new Vector4();
-            plane = Plane.Normalize(plane1);
+            plane = Plane.Normalize(planeFormula);
             Vector3 plane3 = new Vector3(plane);
             Vector3 planeV = new Vector3(plane.X * plane.W, plane.Y * plane.W, plane.Z * plane.W);
             Vector3 PA = new Vector3();

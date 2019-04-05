@@ -47,9 +47,10 @@ namespace KI.Gfx.Geometry
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
-        public Polygon(string name)
+        public Polygon(string name, PolygonType type = PolygonType.Points)
            : base(name)
         {
+            Type = type;
         }
 
         /// <summary>
@@ -400,7 +401,7 @@ namespace KI.Gfx.Geometry
         /// 形状情報更新イベント
         /// </summary>
         /// <param name="type">形状種類</param>
-        protected void OnUpdate()
+        public void OnUpdate()
         {
             PolygonUpdated?.Invoke(this, EventArgs.Empty);
         }

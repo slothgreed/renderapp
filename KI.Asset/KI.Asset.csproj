@@ -63,11 +63,11 @@
     <Compile Include="Camera.cs" />
     <Compile Include="EnvironmentProbe.cs" />
     <Compile Include="AssetDirectory.cs" />
-    <Compile Include="Loader\Importer\ConverterUtility.cs" />
-    <Compile Include="Loader\Importer\HalfEdgeConverter.cs" />
-    <Compile Include="Loader\Importer\OBJConverter.cs" />
-    <Compile Include="Loader\Importer\PLYConverter.cs" />
-    <Compile Include="Loader\Importer\STLConverter.cs" />
+    <Compile Include="Loader\Importer\HalfEdgeImporter.cs" />
+    <Compile Include="Loader\Importer\ImporterUtility.cs" />
+    <Compile Include="Loader\Importer\OBJImporter.cs" />
+    <Compile Include="Loader\Importer\PLYImporter.cs" />
+    <Compile Include="Loader\Importer\STLImporter.cs" />
     <Compile Include="Loader\Model\OBJLoader.cs" />
     <Compile Include="Loader\Model\PLYLoader.cs" />
     <Compile Include="Loader\Model\STLLoader.cs" />

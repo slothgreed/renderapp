@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 using CADApp.Model;
@@ -64,6 +65,21 @@ namespace CADApp.ViewModel
         /// </summary>
         private IController cameraController = new CameraController();
 
+        private Dictionary<CONTROLLER_TYPE, IController> Controller = new Dictionary<CONTROLLER_TYPE, IController>();
+
+        CONTROLLER_TYPE currentController;
+
+        public CONTROLLER_TYPE CurrentController
+        {
+            get { return currentController; }
+            set
+            {
+                Controller[currentController].UnBinding();
+                currentController = value;
+                Controller[currentController].Binding();
+            }
+        }
+
         /// <summary>
         /// シーン
         /// </summary>
@@ -83,6 +99,9 @@ namespace CADApp.ViewModel
 
             Workspace.Instance.MainScene = MainScene;
             Workspace.Instance.Renderer = Renderer;
+
+            Controller.Add(CONTROLLER_TYPE.SketchLine, new SketchLineController());
+            CurrentController = CONTROLLER_TYPE.SketchLine;
 
             InitializeScene();
             InitializeRenderer();
@@ -162,18 +181,23 @@ namespace CADApp.ViewModel
             switch (state)
             {
                 case MOUSE_STATE.DOWN:
+                    Controller[CurrentController].Down(mouse);
                     cameraController.Down(mouse);
                     break;
                 case MOUSE_STATE.CLICK:
+                    Controller[CurrentController].Click(mouse);
                     cameraController.Click(mouse);
                     break;
                 case MOUSE_STATE.MOVE:
+                    Controller[CurrentController].Move(mouse);
                     cameraController.Move(mouse);
                     break;
                 case MOUSE_STATE.UP:
+                    Controller[CurrentController].Up(mouse);
                     cameraController.Up(mouse);
                     break;
                 case MOUSE_STATE.WHEEL:
+                    Controller[CurrentController].Wheel(mouse);
                     cameraController.Wheel(mouse);
                     break;
             }

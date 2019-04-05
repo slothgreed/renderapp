@@ -128,9 +128,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\CADApp.Model\CADApp.Model.csproj">
       <Project>{64A84876-EE83-4042-A5C9-BC467B83591E}</Project>

@@ -16,7 +16,11 @@ namespace KI.Asset
         /// <summary>
         /// 平面の公式
         /// </summary>
-        private Vector4 surface = new Vector4();
+        public Vector4 Formula
+        {
+            get;
+            private set;
+        }
 
         /// <summary>
         /// 頂点0
@@ -82,13 +86,13 @@ namespace KI.Asset
         /// </summary>
         public void CreateModel()
         {
-            surface = Plane.Formula(quad0, quad1, quad2);
+            Formula = Plane.Formula(quad0, quad1, quad2);
 
             Mesh mesh = new Mesh(
-                new Vertex(0, quad0, surface.Xyz, Vector3.UnitX, Vector2.Zero),
-                new Vertex(1, quad1, surface.Xyz, Vector3.UnitY, Vector2.UnitX),
-                new Vertex(2, quad2, surface.Xyz, Vector3.UnitZ, Vector2.One),
-                new Vertex(3, quad3, surface.Xyz, Vector3.One, Vector2.UnitY));
+                new Vertex(0, quad0, Formula.Xyz, Vector3.UnitX, Vector2.Zero),
+                new Vertex(1, quad1, Formula.Xyz, Vector3.UnitY, Vector2.UnitX),
+                new Vertex(2, quad2, Formula.Xyz, Vector3.UnitZ, Vector2.One),
+                new Vertex(3, quad3, Formula.Xyz, Vector3.One, Vector2.UnitY));
 
             Model = new Polygon(this.Name, new List<Mesh>() { mesh }, PolygonType.Quads);
         }

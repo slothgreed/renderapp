@@ -189,6 +189,15 @@ namespace KI.Gfx.GLUtil
         /// </summary>
         public GLControl GLControl { get; private set; }
 
+        public int[] ViewportRect
+        {
+            get
+            {
+                return DeviceContext.Instance.ViewportRect;
+            }
+        }
+
+
         #endregion
         #region [context event]
 

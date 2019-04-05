@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace CADApp.Tool.Control
 {
-    enum CONTROLLER_TYPE
+    public enum CONTROLLER_TYPE
     {
-
+        SketchLine
     }
 }
