@@ -23,20 +23,23 @@ namespace CADApp.Tool.Control
 
         public override bool Move(MouseEventArgs mouse)
         {
-            Vector2 clickPos = leftMouse.Click;
-            Camera camera = Workspace.Instance.MainScene.MainCamera;
-
-            Vector3 near;
-            Vector3 far;
-            GLUtility.GetClickPos(camera.Matrix, camera.ProjMatrix, Viewport.Instance.ViewportRect, clickPos, out near, out far);
-
-            Vector3 direction = (camera.Position - far).Normalized();
-            Vector3 interPoint;
-            if (Interaction.PlaneToLine(camera.Position, far, Workspace.Instance.WorkPlane.Formula, out interPoint))
+            if (mouse.Button == MouseButtons.Left)
             {
-                pointObject.Polygon.Vertexs.Add(new Vertex(0, interPoint, Vector3.UnitX));
-                pointObject.Polygon.OnUpdate();
+                Vector2 clickPos = new Vector2(mouse.X, mouse.Y);
+                Camera camera = Workspace.Instance.MainScene.MainCamera;
 
+                Vector3 near;
+                Vector3 far;
+                GLUtility.GetClickPos(camera.Matrix, camera.ProjMatrix, Viewport.Instance.ViewportRect, clickPos, out near, out far);
+
+                Vector3 direction = (camera.Position - far).Normalized();
+                Vector3 interPoint;
+                if (Interaction.PlaneToLine(camera.Position, far, Workspace.Instance.WorkPlane.Formula, out interPoint))
+                {
+                    pointObject.Visible = true;
+                    pointObject.Polygon.Vertexs.Add(new Vertex(0, interPoint, Vector3.UnitX));
+                    pointObject.UpdateVertexBufferObject();
+                }
             }
 
             return true;
@@ -53,9 +56,11 @@ namespace CADApp.Tool.Control
             Polygon line = new Polygon("Line", PolygonType.Lines);
             var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
             pointObject = new RenderObject("Point", point, shader);
+            pointObject.Visible = false;
             Workspace.Instance.MainScene.AddObject(pointObject);
 
             lineObject = new RenderObject("Line", line, shader);
+            lineObject.Visible = false;
             Workspace.Instance.MainScene.AddObject(lineObject);
             return base.Binding();
         }
