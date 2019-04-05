@@ -85,13 +85,8 @@ namespace RenderApp.Tool.Control
             if(selectVertex != null)
             {
                 selectVertex.Color = new Vector3(0.8f);
+                renderObject.UpdateVertexBufferObject();
             }
-
-            if (renderObject != null)
-            {
-                renderObject.Polygon.UpdateVertexArray();
-            }
-
         }
 
         private void OnSelectPoint(Vertex item)

@@ -401,7 +401,7 @@ namespace KI.Gfx.Geometry
         /// 形状情報更新イベント
         /// </summary>
         /// <param name="type">形状種類</param>
-        public void OnUpdate()
+        private void OnUpdate()
         {
             PolygonUpdated?.Invoke(this, EventArgs.Empty);
         }

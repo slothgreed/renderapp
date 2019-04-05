@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using KI.Gfx.Geometry;
 using OpenTK;
@@ -129,7 +130,7 @@ namespace KI.Gfx.GLUtil.Buffer
         /// </summary>
         /// <param name="vertexSrc">頂点リスト</param>
         /// <param name="indexSrc">インデクサ</param>
-        public void SetupPointBuffer(List<Vertex> vertexSrc, List<int> indexSrc)
+        public void SetupPointBuffer(IEnumerable<Vertex> vertexSrc, List<int> indexSrc)
         {
             int[] indexBuffer = null;
             Vector3[] position = null;
@@ -161,7 +162,7 @@ namespace KI.Gfx.GLUtil.Buffer
         /// <param name="vertexSrc">頂点バッファ</param>
         /// <param name="indexSrc">インデックスバッファ</param>
         /// <param name="lines">線分</param>
-        public void SetupLineBuffer(List<Vertex> vertexSrc, List<int> indexSrc, List<Line> lineSrc)
+        public void SetupLineBuffer(IEnumerable<Vertex> vertexSrc, List<int> indexSrc, List<Line> lineSrc)
         {
             int[] indexBuffer = null;
             Vector3[] position = null;
@@ -200,7 +201,7 @@ namespace KI.Gfx.GLUtil.Buffer
         /// <param name="vertexSrc">頂点バッファ</param>
         /// <param name="indexSrc">インデックスバッファ</param>
         /// <param name="meshSrc">メッシュリスト</param>
-        public void SetupMeshBuffer(List<Vertex> vertexSrc, List<int> indexSrc, List<Mesh> meshSrc, PolygonType type)
+        public void SetupMeshBuffer(IEnumerable<Vertex> vertexSrc, List<int> indexSrc, List<Mesh> meshSrc, PolygonType type)
         {
             int[] indexBuffer = null;
             Vector3[] position = null;
@@ -226,7 +227,7 @@ namespace KI.Gfx.GLUtil.Buffer
                     {
                         vertexs.AddRange(mesh.Vertexs);
 
-                        var meshNormal = 
+                        var meshNormal =
                             Mathmatics.Geometry.Normal(
                                     mesh.Lines[1].Start.Position - mesh.Lines[0].Start.Position,
                                     mesh.Lines[2].Start.Position - mesh.Lines[0].Start.Position);

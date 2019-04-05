@@ -31,10 +31,6 @@ namespace KI.Analyzer
 
             try
             {
-                halfEdge.Vertexs.Clear();
-                halfEdge.Lines.Clear();
-                halfEdge.Vertexs.Clear();
-
                 string[] fileData = File.ReadAllLines(inputFile, System.Text.Encoding.GetEncoding("Shift_JIS"));
                 ReadHalfEdgeData(fileData, halfEdge);
                 return true;

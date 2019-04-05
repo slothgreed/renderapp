@@ -21,11 +21,6 @@ namespace KI.Tool.Core
         public Vector2 Click { get; private set; }
 
         /// <summary>
-        /// 前回のクリック位置
-        /// </summary>
-        public Vector2 ClickBefore { get; private set; }
-
-        /// <summary>
         /// 現在のマウス位置
         /// </summary>
         public Vector2 Current { get; private set; }
@@ -51,7 +46,6 @@ namespace KI.Tool.Core
             Before = Current;
             Current = new Vector2(x, y);
 
-            ClickBefore = Click;
             Click = Current;
         }
 
@@ -84,7 +78,7 @@ namespace KI.Tool.Core
         /// <param name="x">x座標</param>
         /// <param name="y">y座標</param>
         /// <returns>移動量</returns>
-        private Vector2 Drag(int x, int y)
+        private void Drag(int x, int y)
         {
             Vector2 move;
 
@@ -98,7 +92,6 @@ namespace KI.Tool.Core
             }
 
             Delta = move;
-            return move;
         }
     }
 }

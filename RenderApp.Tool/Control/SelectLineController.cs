@@ -56,7 +56,7 @@ namespace RenderApp.Tool.Control
 
                     selectEdge = halfEdge;
 
-                    renderObject.Polygon.UpdateVertexArray();
+                    renderObject.UpdateVertexBufferObject();
                 }
             }
 
@@ -94,11 +94,7 @@ namespace RenderApp.Tool.Control
             {
                 selectEdge.Start.Color = new Vector3(0.8f);
                 selectEdge.End.Color = new Vector3(0.8f);
-            }
-
-            if (renderObject != null)
-            {
-                renderObject.Polygon.UpdateVertexArray();
+                renderObject.UpdateVertexBufferObject();
             }
 
             selectEdge = null;

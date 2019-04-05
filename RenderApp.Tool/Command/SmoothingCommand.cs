@@ -55,7 +55,7 @@ namespace RenderApp.Tool.Command
             var smoothing = new LaplaceSmoothingAlgorithm(halfDS, smoothingCommandArgs.LoopNum);
             smoothing.Calculate();
 
-            halfDS.UpdateVertexArray();
+            smoothingCommandArgs.TargetObject.UpdateVertexBufferObject();
 
             return CommandResult.Success;
         }

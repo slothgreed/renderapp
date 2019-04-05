@@ -59,8 +59,9 @@ namespace RenderApp.Tool.Control
                     foreach (var vertex in selectMesh.AroundVertex)
                     {
                         vertex.Color = Vector3.UnitY;
-                        renderObject.Polygon.UpdateVertexArray();
                     }
+
+                    renderObject.UpdateVertexBufferObject();
 
                     OnSelectMesh(selectMesh);
 
@@ -102,13 +103,12 @@ namespace RenderApp.Tool.Control
                 foreach (var vertex in selectMesh.AroundVertex)
                 {
                     vertex.Color = new Vector3(0.8f);
-                    renderObject.Polygon.UpdateVertexArray();
                 }
             }
 
             if (renderObject != null)
             {
-                renderObject.Polygon.UpdateVertexArray();
+                renderObject.UpdateVertexBufferObject();
             }
 
             selectMesh = null;

@@ -41,9 +41,7 @@ namespace RenderApp.Tool.Command
         public override CommandResult Execute()
         {
             var halfDS = adaptiveCommandArgs.TargetObject.Polygon as HalfEdgeDS;
-
             var adaptiveMesh = new AdaptiveMeshAlgorithm(halfDS, 1);
-
             halfDS.UpdateVertexArray();
 
             return CommandResult.Success;
