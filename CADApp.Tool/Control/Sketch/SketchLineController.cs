@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Collections.Generic;
+using System.Windows.Forms;
 using CADApp.Model;
 using KI.Asset;
 using KI.Gfx;
@@ -21,7 +22,9 @@ namespace CADApp.Tool.Control
 
         RenderObject lineObject;
 
-        public override bool Move(KIMouseEventArgs mouse)
+        List<Vertex> pointList;
+
+        public override bool Down(KIMouseEventArgs mouse)
         {
             if (mouse.Button == MOUSE_BUTTON.Left)
             {
@@ -35,22 +38,32 @@ namespace CADApp.Tool.Control
                 Vector3 interPoint;
                 if (Interaction.PlaneToLine(camera.Position, far, Workspace.Instance.WorkPlane.Formula, out interPoint))
                 {
+                    int pointIndex = pointObject.Polygon.Vertexs.Count;
+                    pointList.Add(new Vertex(pointIndex, interPoint, Vector3.UnitX));
+
                     pointObject.Visible = true;
-                    pointObject.Polygon.Vertexs.Add(new Vertex(0, interPoint, Vector3.UnitX));
+
+                    pointObject.Polygon.Vertexs.Add(pointList[pointIndex]);
                     pointObject.UpdateVertexBufferObject();
+
+                    lineObject.Polygon.Vertexs.Add(pointList[pointIndex]);
+
+                    if (pointList.Count >= 2)
+                    {
+                        lineObject.Visible = true;
+                        lineObject.Polygon.Index.Add(lineObject.Polygon.Vertexs.Count - 2);
+                        lineObject.Polygon.Index.Add(lineObject.Polygon.Vertexs.Count - 1);
+                        lineObject.UpdateVertexBufferObject();
+                    }
                 }
             }
 
             return true;
         }
 
-        public override bool Click(KIMouseEventArgs mouse)
-        {
-            return base.Click(mouse);
-        }
-
         public override bool Binding()
         {
+            pointList = new List<Vertex>();
             Polygon point = new Polygon("Point");
             Polygon line = new Polygon("Line", PolygonType.Lines);
             var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
