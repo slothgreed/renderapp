@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using KI.Foundation.Core;
+using KI.Gfx;
 using KI.Gfx.Geometry;
 using OpenTK;
 
@@ -51,8 +52,7 @@ namespace KI.Asset
         public void CreateModel()
         {
             List<Vertex> vertexs = new List<Vertex>();
-            List<Line> lines = new List<Line>();
-            List<Vector3> position = new List<Vector3>();
+            List<int> lineIndex = new List<int>();
 
             Vector3 line_start1 = new Vector3();
             Vector3 line_fin1 = new Vector3();
@@ -79,13 +79,15 @@ namespace KI.Asset
                     vertexs.Add(start2);
                     var fin2 = new Vertex(vertexs.Count, line_fin2, Vector3.Zero);
                     vertexs.Add(fin2);
-
-                    lines.Add(new Line(start1, fin1));
-                    lines.Add(new Line(start2, fin2));
                 }
             }
 
-            Model = new Polygon("GridPlane", lines);
+            for (int i = 0; i < vertexs.Count; i++)
+            {
+                lineIndex.Add(i);
+            }
+
+            Model = new Polygon("GridPlane", vertexs, lineIndex, PolygonType.Lines);
         }
     }
 }
