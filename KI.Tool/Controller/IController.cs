@@ -1,5 +1,5 @@
 ﻿using System.Windows.Forms;
-using KI.Tool.Core;
+using KI.Gfx.GLUtil;
 
 namespace KI.Tool.Control
 {
@@ -9,26 +9,11 @@ namespace KI.Tool.Control
     public abstract class IController
     {
         /// <summary>
-        /// 左ボタン
-        /// </summary>
-        protected static KIMouse leftMouse { get; } = new KIMouse();
-
-        /// <summary>
-        /// 真ん中ボタン
-        /// </summary>
-        protected static KIMouse middleMouse { get; } = new KIMouse();
-
-        /// <summary>
-        /// 右ボタン
-        /// </summary>
-        protected static KIMouse rightMouse { get; } = new KIMouse();
-
-        /// <summary>
         /// マウス押下
         /// </summary>
         /// <param name="mouse">マウスイベント</param>
         /// <returns>成功</returns>
-        public virtual bool Down(MouseEventArgs mouse)
+        public virtual bool Down(KIMouseEventArgs mouse)
         {
             return true;
         }
@@ -38,7 +23,7 @@ namespace KI.Tool.Control
         /// </summary>
         /// <param name="mouse">マウスイベント</param>
         /// <returns>成功</returns>
-        public virtual bool Click(MouseEventArgs mouse)
+        public virtual bool Click(KIMouseEventArgs mouse)
         {
             return true;
         }
@@ -48,7 +33,7 @@ namespace KI.Tool.Control
         /// </summary>
         /// <param name="mouse">マウスイベント</param>
         /// <returns>成功</returns>
-        public virtual bool Move(MouseEventArgs mouse)
+        public virtual bool Move(KIMouseEventArgs mouse)
         {
             return true;
         }
@@ -58,7 +43,7 @@ namespace KI.Tool.Control
         /// </summary>
         /// <param name="mouse">マウスイベント</param>
         /// <returns>成功</returns>
-        public virtual bool Up(MouseEventArgs mouse)
+        public virtual bool Up(KIMouseEventArgs mouse)
         {
             return true;
         }
@@ -68,7 +53,7 @@ namespace KI.Tool.Control
         /// </summary>
         /// <param name="mouse">マウスイベント</param>
         /// <returns>成功</returns>
-        public virtual bool Wheel(MouseEventArgs mouse)
+        public virtual bool Wheel(KIMouseEventArgs mouse)
         {
             return true;
         }

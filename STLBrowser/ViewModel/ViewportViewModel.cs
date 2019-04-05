@@ -107,24 +107,24 @@ namespace STLBrowser.ViewModel
             Renderer.Render();
         }
 
-        private void OnMouseWheelEvent(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void OnMouseWheelEvent(object sender, KIMouseEventArgs e)
         {
-            ProcessMouseInput(e, MOUSE_STATE.WHEEL);
+            ProcessMouseInput(e);
         }
 
-        private void OnMouseMoveUpEvent(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void OnMouseMoveUpEvent(object sender, KIMouseEventArgs e)
         {
-            ProcessMouseInput(e, MOUSE_STATE.UP);
+            ProcessMouseInput(e);
         }
 
-        private void OnMouseMoveEvent(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void OnMouseMoveEvent(object sender, KIMouseEventArgs e)
         {
-            ProcessMouseInput(e, MOUSE_STATE.MOVE);
+            ProcessMouseInput(e);
         }
 
-        private void OnMouseDownEvent(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void OnMouseDownEvent(object sender, KIMouseEventArgs e)
         {
-            ProcessMouseInput(e, MOUSE_STATE.DOWN);
+            ProcessMouseInput(e);
         }
 
 
@@ -134,9 +134,9 @@ namespace STLBrowser.ViewModel
         /// </summary>
         /// <param name="mouse">マウス情報</param>
         /// <param name="state">状態</param>
-        public void ProcessMouseInput(MouseEventArgs mouse, MOUSE_STATE state)
+        public void ProcessMouseInput(KIMouseEventArgs mouse)
         {
-            switch (state)
+            switch (mouse.MouseState)
             {
                 case MOUSE_STATE.DOWN:
                     cameraController.Down(mouse);

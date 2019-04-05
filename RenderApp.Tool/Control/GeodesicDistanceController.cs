@@ -7,6 +7,7 @@ using KI.Analyzer.Algorithm;
 using KI.Asset;
 using KI.Asset.Attribute;
 using KI.Gfx.Geometry;
+using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Mathmatics;
 using KI.Tool.Control;
@@ -31,13 +32,13 @@ namespace RenderApp.Tool.Control
         /// </summary>
         /// <param name="mouse">マウス座標</param>
         /// <returns>成功</returns>
-        public override bool Down(MouseEventArgs mouse)
+        public override bool Down(KIMouseEventArgs mouse)
         {
             RenderObject renderObject = null;
-            if (mouse.Button == System.Windows.Forms.MouseButtons.Left)
+            if (mouse.Button == MOUSE_BUTTON.Middle)
             {
                 HalfEdgeVertex selectVertex = null;
-                if (HalfEdgeDSSelector.PickPoint(leftMouse.Click, ref renderObject, ref selectVertex))
+                if (HalfEdgeDSSelector.PickPoint(mouse.Current, ref renderObject, ref selectVertex))
                 {
                     if (renderObject.Polygon is HalfEdgeDS)
                     {

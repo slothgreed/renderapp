@@ -192,9 +192,9 @@ namespace RenderApp.ViewModel
         /// </summary>
         /// <param name="sender">送信元</param>
         /// <param name="e">イベント</param>
-        private void OnMouseWheelEvent(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void OnMouseWheelEvent(object sender, KIMouseEventArgs e)
         {
-            ProcessMouseInput(e, MOUSE_STATE.WHEEL);
+            ProcessMouseInput(e);
         }
 
         /// <summary>
@@ -202,9 +202,9 @@ namespace RenderApp.ViewModel
         /// </summary>
         /// <param name="sender">送信元</param>
         /// <param name="e">イベント</param>
-        private void OnMouseMoveUpEvent(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void OnMouseMoveUpEvent(object sender, KIMouseEventArgs e)
         {
-            ProcessMouseInput(e, MOUSE_STATE.UP);
+            ProcessMouseInput(e);
         }
 
         /// <summary>
@@ -212,9 +212,9 @@ namespace RenderApp.ViewModel
         /// </summary>
         /// <param name="sender">送信元</param>
         /// <param name="e">イベント</param>
-        private void OnMouseMoveEvent(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void OnMouseMoveEvent(object sender, KIMouseEventArgs e)
         {
-            ProcessMouseInput(e, MOUSE_STATE.MOVE);
+            ProcessMouseInput(e);
         }
 
         /// <summary>
@@ -222,9 +222,9 @@ namespace RenderApp.ViewModel
         /// </summary>
         /// <param name="sender">送信元</param>
         /// <param name="e">イベント</param>
-        private void OnMouseDownEvent(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void OnMouseDownEvent(object sender, KIMouseEventArgs e)
         {
-            ProcessMouseInput(e, MOUSE_STATE.DOWN);
+            ProcessMouseInput(e);
         }
 
 
@@ -232,10 +232,9 @@ namespace RenderApp.ViewModel
         /// マウス入力
         /// </summary>
         /// <param name="mouse">マウス情報</param>
-        /// <param name="state">状態</param>
-        public void ProcessMouseInput(MouseEventArgs mouse, MOUSE_STATE state)
+        public void ProcessMouseInput(KIMouseEventArgs mouse)
         {
-            switch (state)
+            switch (mouse.MouseState)
             {
                 case MOUSE_STATE.DOWN:
                     cameraController.Down(mouse);

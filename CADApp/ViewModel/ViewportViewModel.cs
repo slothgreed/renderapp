@@ -123,22 +123,22 @@ namespace CADApp.ViewModel
             Renderer.Render();
         }
 
-        private void OnMouseWheelEvent(object sender, MouseEventArgs e)
+        private void OnMouseWheelEvent(object sender, KIMouseEventArgs e)
         {
             ProcessMouseInput(e, MOUSE_STATE.WHEEL);
         }
 
-        private void OnMouseMoveUpEvent(object sender, MouseEventArgs e)
+        private void OnMouseMoveUpEvent(object sender, KIMouseEventArgs e)
         {
             ProcessMouseInput(e, MOUSE_STATE.UP);
         }
 
-        private void OnMouseMoveEvent(object sender, MouseEventArgs e)
+        private void OnMouseMoveEvent(object sender, KIMouseEventArgs e)
         {
             ProcessMouseInput(e, MOUSE_STATE.MOVE);
         }
 
-        private void OnMouseDownEvent(object sender, MouseEventArgs e)
+        private void OnMouseDownEvent(object sender, KIMouseEventArgs e)
         {
             ProcessMouseInput(e, MOUSE_STATE.DOWN);
         }
@@ -176,7 +176,7 @@ namespace CADApp.ViewModel
         /// </summary>
         /// <param name="mouse">マウス情報</param>
         /// <param name="state">状態</param>
-        public void ProcessMouseInput(MouseEventArgs mouse, MOUSE_STATE state)
+        public void ProcessMouseInput(KIMouseEventArgs mouse, MOUSE_STATE state)
         {
             switch (state)
             {

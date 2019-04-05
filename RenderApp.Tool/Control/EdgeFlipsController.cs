@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using KI.Analyzer;
 using KI.Asset;
+using KI.Gfx.GLUtil;
 using KI.Tool.Control;
 using OpenTK;
 using RenderApp.Tool.Utility;
@@ -43,14 +44,14 @@ namespace RenderApp.Tool.Control
         /// </summary>
         /// <param name="mouse">マウスイベント</param>
         /// <returns>成功</returns>
-        public override bool Down(MouseEventArgs mouse)
+        public override bool Down(KIMouseEventArgs mouse)
         {
-            if (mouse.Button == System.Windows.Forms.MouseButtons.Left)
+            if (mouse.Button == MOUSE_BUTTON.Left)
             {
                 RenderObject renderObject = null;
                 HalfEdgeVertex halfEdgeVertex = null;
 
-                if (HalfEdgeDSSelector.PickPoint(leftMouse.Click, ref renderObject, ref halfEdgeVertex))
+                if (HalfEdgeDSSelector.PickPoint(mouse.Current, ref renderObject, ref halfEdgeVertex))
                 {
                     HalfEdge halfEdge = halfEdgeVertex.AroundEdge.First();
                     halfEdge.Start.Color = Vector3.UnitY;
@@ -64,7 +65,7 @@ namespace RenderApp.Tool.Control
                 }
             }
 
-            if (mouse.Button == MouseButtons.Middle)
+            if (mouse.Button == MOUSE_BUTTON.Middle)
             {
                 if (selectHalfEdge != null)
                 {

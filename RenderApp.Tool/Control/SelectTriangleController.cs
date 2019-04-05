@@ -1,5 +1,6 @@
 ﻿using KI.Analyzer;
 using KI.Asset;
+using KI.Gfx.GLUtil;
 using KI.Tool.Control;
 using OpenTK;
 using RenderApp.Tool.Utility;
@@ -40,15 +41,15 @@ namespace RenderApp.Tool.Control
         /// </summary>
         /// <param name="mouse">マウスイベント</param>
         /// <returns>成功</returns>
-        public override bool Down(System.Windows.Forms.MouseEventArgs mouse)
+        public override bool Down(KIMouseEventArgs mouse)
         {
-            if (mouse.Button == System.Windows.Forms.MouseButtons.Left)
+            if (mouse.Button == MOUSE_BUTTON.Left)
             {
                 Clear();
 
                 HalfEdgeMesh mesh = null;
 
-                if (HalfEdgeDSSelector.PickTriangle(leftMouse.Click, ref renderObject, ref mesh))
+                if (HalfEdgeDSSelector.PickTriangle(mouse.Current, ref renderObject, ref mesh))
                 {
                     if(mesh == null)
                     {

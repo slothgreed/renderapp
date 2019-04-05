@@ -19,28 +19,28 @@ namespace KI.Gfx.GLUtil
     /// </summary>
     /// <param name="sender">発生元</param>
     /// <param name="e">イベント</param>
-    public delegate void OnMouseDownHandler(object sender, MouseEventArgs e);
+    public delegate void OnMouseDownHandler(object sender, KIMouseEventArgs e);
 
     /// <summary>
     /// マウス移動イベント
     /// </summary>
     /// <param name="sender">発生元</param>
     /// <param name="e">イベント</param>
-    public delegate void OnMouseMoveHandler(object sender, MouseEventArgs e);
+    public delegate void OnMouseMoveHandler(object sender, KIMouseEventArgs e);
 
     /// <summary>
     /// マウス押上げイベント
     /// </summary>
     /// <param name="sender">発生元</param>
     /// <param name="e">イベント</param>
-    public delegate void OnMouseUpHandler(object sender, MouseEventArgs e);
+    public delegate void OnMouseUpHandler(object sender, KIMouseEventArgs e);
 
     /// <summary>
     /// マウスホイールイベント
     /// </summary>
     /// <param name="sender">発生元</param>
     /// <param name="e">イベント</param>
-    public delegate void OnMouseWheelHandler(object sender, MouseEventArgs e);
+    public delegate void OnMouseWheelHandler(object sender, KIMouseEventArgs e);
 
     /// <summary>
     /// レンダリングイベント
@@ -89,7 +89,7 @@ namespace KI.Gfx.GLUtil
     /// </summary>
     /// <param name="sender">発生元</param>
     /// <param name="e">イベント</param>
-    public delegate void OnKeyDownHandler(object sender, System.Windows.Forms.KeyEventArgs e);
+    public delegate void OnKeyDownHandler(object sender, KeyEventArgs e);
 
     /// <summary>
     /// 描画用のGlobal変数を保持するクラス
@@ -329,7 +329,7 @@ namespace KI.Gfx.GLUtil
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void GLControl_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        private void GLControl_KeyDown(object sender, KeyEventArgs e)
         {
             if (OnKeyDown != null)
             {
@@ -390,7 +390,7 @@ namespace KI.Gfx.GLUtil
         {
             if (OnMouseWheel != null)
             {
-                OnMouseWheel(sender, e);
+                OnMouseWheel(sender, new KIMouseEventArgs(e, MOUSE_STATE.WHEEL));
             }
 
             GLControl_Paint(null, null);
@@ -405,7 +405,7 @@ namespace KI.Gfx.GLUtil
         {
             if (OnMouseDown != null)
             {
-                OnMouseDown(sender, e);
+                OnMouseDown(sender, new KIMouseEventArgs(e, MOUSE_STATE.DOWN));
             }
 
             GLControl_Paint(null, null);
@@ -420,7 +420,7 @@ namespace KI.Gfx.GLUtil
         {
             if (OnMouseUp != null)
             {
-                OnMouseUp(sender, e);
+                OnMouseUp(sender, new KIMouseEventArgs(e, MOUSE_STATE.UP));
             }
 
             GLControl_Paint(null, null);
@@ -441,7 +441,7 @@ namespace KI.Gfx.GLUtil
             GLControl.Focus();
             if (OnMouseMove != null)
             {
-                OnMouseMove(sender, e);
+                OnMouseMove(sender, new KIMouseEventArgs(e, MOUSE_STATE.MOVE));
             }
 
             if (e.Button != MouseButtons.None)

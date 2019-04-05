@@ -1,6 +1,7 @@
 ﻿using KI.Analyzer;
 using KI.Asset;
 using KI.Gfx.Geometry;
+using KI.Gfx.GLUtil;
 using KI.Tool.Control;
 using OpenTK;
 using RenderApp.Tool.Utility;
@@ -41,19 +42,22 @@ namespace RenderApp.Tool.Control
         /// </summary>
         /// <param name="mouse">マウス</param>
         /// <returns>成功</returns>
-        public override bool Down(System.Windows.Forms.MouseEventArgs mouse)
+        public override bool Down(KIMouseEventArgs mouse)
         {
             Clear();
 
             HalfEdgeVertex vertex = null;
 
-            if (HalfEdgeDSSelector.PickPoint(leftMouse.Click, ref renderObject, ref vertex))
+            if (mouse.Button == MOUSE_BUTTON.Left)
             {
-                vertex.Color = Vector3.UnitY;
-                selectVertex = vertex;
-                renderObject.Polygon.UpdateVertexArray();
+                if (HalfEdgeDSSelector.PickPoint(mouse.Current, ref renderObject, ref vertex))
+                {
+                    vertex.Color = Vector3.UnitY;
+                    selectVertex = vertex;
+                    renderObject.UpdateVertexBufferObject();
 
-                OnSelectPoint(selectVertex);
+                    OnSelectPoint(selectVertex);
+                }
             }
 
             return true;

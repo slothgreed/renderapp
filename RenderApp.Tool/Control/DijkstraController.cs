@@ -3,6 +3,7 @@ using KI.Analyzer;
 using KI.Asset;
 using KI.Gfx;
 using KI.Gfx.Geometry;
+using KI.Gfx.GLUtil;
 using KI.Tool.Control;
 using OpenTK;
 using RenderApp.Model;
@@ -40,13 +41,13 @@ namespace RenderApp.Tool.Control
         /// </summary>
         /// <param name="mouse">マウス</param>
         /// <returns>成功</returns>
-        public override bool Down(System.Windows.Forms.MouseEventArgs mouse)
+        public override bool Down(KIMouseEventArgs mouse)
         {
             RenderObject renderObject = null;
-            if (mouse.Button == System.Windows.Forms.MouseButtons.Left)
+            if (mouse.Button == MOUSE_BUTTON.Left)
             {
                 HalfEdgeVertex vertex = null;
-                if (HalfEdgeDSSelector.PickPoint(leftMouse.Click, ref renderObject, ref vertex))
+                if (HalfEdgeDSSelector.PickPoint(mouse.Current, ref renderObject, ref vertex))
                 {
                     // 初回
                     if (selectObject == null)

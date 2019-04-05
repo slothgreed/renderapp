@@ -21,16 +21,15 @@ namespace CADApp.Tool.Control
 
         RenderObject lineObject;
 
-        public override bool Move(MouseEventArgs mouse)
+        public override bool Move(KIMouseEventArgs mouse)
         {
-            if (mouse.Button == MouseButtons.Left)
+            if (mouse.Button == MOUSE_BUTTON.Left)
             {
-                Vector2 clickPos = new Vector2(mouse.X, mouse.Y);
                 Camera camera = Workspace.Instance.MainScene.MainCamera;
 
                 Vector3 near;
                 Vector3 far;
-                GLUtility.GetClickPos(camera.Matrix, camera.ProjMatrix, Viewport.Instance.ViewportRect, clickPos, out near, out far);
+                GLUtility.GetClickPos(camera.Matrix, camera.ProjMatrix, Viewport.Instance.ViewportRect, mouse.Current, out near, out far);
 
                 Vector3 direction = (camera.Position - far).Normalized();
                 Vector3 interPoint;
@@ -45,7 +44,7 @@ namespace CADApp.Tool.Control
             return true;
         }
 
-        public override bool Click(MouseEventArgs mouse)
+        public override bool Click(KIMouseEventArgs mouse)
         {
             return base.Click(mouse);
         }

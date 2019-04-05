@@ -49,15 +49,17 @@
     <Compile Include="Command\CommandManager.cs" />
     <Compile Include="Command\CommandStack.cs" />
     <Compile Include="Command\ICommand.cs" />
-    <Compile Include="ControllerType.cs" />
     <Compile Include="Controller\IController.cs" />
-    <Compile Include="KIMouse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KI.Foundation\KI.Foundation.csproj">
       <Project>{cfc71ace-112a-467f-96ec-6566d4a6dfc6}</Project>
       <Name>KI.Foundation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KI.Gfx\KI.Gfx.csproj">
+      <Project>{F5E989A2-028F-4E60-869C-EC57413376C6}</Project>
+      <Name>KI.Gfx</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

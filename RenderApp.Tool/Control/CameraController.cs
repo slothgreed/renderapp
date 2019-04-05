@@ -1,5 +1,6 @@
 ﻿using System.Windows.Forms;
 using KI.Asset;
+using KI.Gfx.GLUtil;
 using KI.Tool.Control;
 using OpenTK;
 using RenderApp.Model;
@@ -23,92 +24,19 @@ namespace RenderApp.Tool.Control
         private float zoomOutRatio = 0.9f;
 
         /// <summary>
-        /// マウス押下
-        /// </summary>
-        /// <param name="mouse">マウスイベント</param>
-        /// <returns>成功</returns>
-        public override bool Down(MouseEventArgs mouse)
-        {
-            switch (mouse.Button)
-            {
-                case MouseButtons.Left:
-                    leftMouse.Down(mouse.X, mouse.Y);
-                    break;
-                case MouseButtons.Middle:
-                    middleMouse.Down(mouse.X, mouse.Y);
-                    break;
-                case MouseButtons.Right:
-                    rightMouse.Down(mouse.X, mouse.Y);
-                    break;
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// マウスクリック
-        /// </summary>
-        /// <param name="mouse">マウスイベント</param>
-        /// <returns>成功</returns>
-        public override bool Click(MouseEventArgs mouse)
-        {
-            //switch (mouse.Button)
-            //{
-            //    case MouseButtons.Left:
-            //        LeftMouse.Click(mouse.X, mouse.Y);
-            //        break;
-            //    case MouseButtons.Middle:
-            //        MiddleMouse.Click(mouse.X, mouse.Y);
-            //        break;
-            //    case MouseButtons.Right:
-            //        LeftMouse.Click(mouse.X, mouse.Y);
-            //        break;
-            //}
-            return true;
-        }
-
-        /// <summary>
         /// マウス移動
         /// </summary>
         /// <param name="mouse">マウスイベント</param>
         /// <returns>成功</returns>
-        public override bool Move(MouseEventArgs mouse)
+        public override bool Move(KIMouseEventArgs mouse)
         {
             switch (mouse.Button)
             {
-                case MouseButtons.Left:
-                    leftMouse.Move(mouse.X, mouse.Y);
+                case MOUSE_BUTTON.Middle:
+                    Translate(Workspace.Instance.Renderer.ActiveScene.MainCamera, new Vector3(-mouse.Delta.X, -mouse.Delta.Y, 0));
                     break;
-                case MouseButtons.Middle:
-                    middleMouse.Move(mouse.X, mouse.Y);
-                    Translate(Workspace.Instance.Renderer.ActiveScene.MainCamera, new Vector3(-middleMouse.Delta.X, -middleMouse.Delta.Y, 0));
-                    break;
-                case MouseButtons.Right:
-                    rightMouse.Move(mouse.X, mouse.Y);
-                    Rotate(Workspace.Instance.Renderer.ActiveScene.MainCamera, new Vector3(-rightMouse.Delta.X, -rightMouse.Delta.Y, 0));
-                    break;
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// マウス押上げ
-        /// </summary>
-        /// <param name="mouse">マウスイベント</param>
-        /// <returns>成功</returns>
-        public override bool Up(MouseEventArgs mouse)
-        {
-            switch (mouse.Button)
-            {
-                case MouseButtons.Left:
-                    leftMouse.Up(mouse.X, mouse.Y);
-                    break;
-                case MouseButtons.Middle:
-                    middleMouse.Up(mouse.X, mouse.Y);
-                    break;
-                case MouseButtons.Right:
-                    leftMouse.Up(mouse.X, mouse.Y);
+                case MOUSE_BUTTON.Right:
+                    Rotate(Workspace.Instance.Renderer.ActiveScene.MainCamera, new Vector3(-mouse.Delta.X, -mouse.Delta.Y, 0));
                     break;
             }
 
@@ -120,13 +48,13 @@ namespace RenderApp.Tool.Control
         /// </summary>
         /// <param name="mouse">マウスイベント</param>
         /// <returns>成功</returns>
-        public override bool Wheel(MouseEventArgs mouse)
+        public override bool Wheel(KIMouseEventArgs mouse)
         {
             switch (mouse.Button)
             {
-                case MouseButtons.None:
+                case MOUSE_BUTTON.None:
                     Camera camera = Workspace.Instance.Renderer.ActiveScene.MainCamera;
-                    if (mouse.Delta > 0)
+                    if (mouse.Wheel > 0)
                     {
                         camera.LookAtDistance = camera.LookAtDistance * zoomInRatio;
                     }
