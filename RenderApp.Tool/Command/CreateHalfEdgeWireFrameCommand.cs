@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using KI.Analyzer;
 using KI.Asset;
+using KI.Gfx;
 using KI.Gfx.Geometry;
 using KI.Tool.Command;
 using OpenTK;
@@ -45,9 +46,8 @@ namespace RenderApp.Tool.Command
             var targetObject = wireframeCommandArgs.TargetObject;
             var scene = wireframeCommandArgs.Scene;
 
-            List<Vector3> position = new List<Vector3>();
-            var color = new List<Vector3>();
-            List<Line> lines = new List<Line>();
+            List<Vertex> position = new List<Vertex>();
+            List<int> lines = new List<int>();
             var halfEdgeDS = targetObject.Polygon as HalfEdgeDS;
             foreach (var mesh in halfEdgeDS.HalfEdgeMeshs)
             {
@@ -56,20 +56,18 @@ namespace RenderApp.Tool.Command
                     var start = (edge.Start.Position - mesh.Gravity) * 0.8f;
                     var end = (edge.End.Position - mesh.Gravity) * 0.8f;
 
-                    position.Add(start + mesh.Gravity);
-                    position.Add(end + mesh.Gravity);
+                    Vertex vertex1 = new Vertex(position.Count, start + mesh.Gravity, Vector3.UnitZ);
+                    Vertex vertex2 = new Vertex(position.Count + 1, end + mesh.Gravity, Vector3.UnitZ);
 
-                    color.Add(Vector3.UnitZ);
-                    color.Add(Vector3.UnitZ);
+                    position.Add(vertex1);
+                    position.Add(vertex2);
 
-                    lines.Add(
-                        new Line(
-                            new Vertex(2 * lines.Count, start + mesh.Gravity, Vector3.UnitZ), 
-                            new Vertex(2 * lines.Count + 1, end + mesh.Gravity, Vector3.UnitZ)));
+                    lines.Add(vertex1.Index);
+                    lines.Add(vertex2.Index);
                 }
             }
 
-            var polygon = new Polygon("HalfEdgeWireFrame :" + targetObject.Name, lines);
+            var polygon = new Polygon("HalfEdgeWireFrame :" + targetObject.Name, position, lines, PolygonType.Lines);
             RenderObject wireframe = RenderObjectFactory.Instance.CreateRenderObject("HalfEdgeWireFrame :" + targetObject.Name, polygon);
             wireframe.ModelMatrix = targetObject.ModelMatrix;
             scene.AddObject(wireframe);
