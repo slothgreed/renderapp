@@ -68,7 +68,6 @@ namespace RenderApp.Tool.Control
             return true;
         }
 
-
         /// <summary>
         /// キー押下
         /// </summary>
@@ -99,7 +98,6 @@ namespace RenderApp.Tool.Control
             Vector3 value = (vectorX + vectorY) * camera.LookAtDistance * 0.01f;
             camera.LookAt = camera.LookAt + value;
         }
-
 
         /// <summary>
         /// 回転

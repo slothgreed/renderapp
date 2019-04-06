@@ -23,7 +23,7 @@ namespace RenderApp.ViewModel
         {
             get
             {
-                if(Workspace.Instance.MainScene.SelectNode == null)
+                if (Workspace.Instance.MainScene.SelectNode == null)
                 {
                     return string.Empty;
                 }

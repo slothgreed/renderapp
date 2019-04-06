@@ -429,7 +429,6 @@ namespace KI.Analyzer
             }
         }
 
-
         private bool HasError(HalfEdgeVertex vertex)
         {
             foreach (var edge in HalfEdge.HalfEdges)

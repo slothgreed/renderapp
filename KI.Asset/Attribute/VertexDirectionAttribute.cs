@@ -49,7 +49,7 @@ namespace KI.Asset.Attribute
         /// <param name="name">名前</param>
         /// <param name="polygon">線分</param>
         /// <param name="shader">シェーダ</param>
-        public VertexDirectionAttribute(string name, Shader shader,Vector3[] position, Vector3[] direction, Vector4 color, Vector3[] normal = null, bool displayVector = false)
+        public VertexDirectionAttribute(string name, Shader shader, Vector3[] position, Vector3[] direction, Vector4 color, Vector3[] normal = null, bool displayVector = false)
             : base(name, PolygonType.Lines, shader)
         {
             wireFrameColor = color;
@@ -59,7 +59,7 @@ namespace KI.Asset.Attribute
 
             if (displayVector)
             {
-                vectors = CreateVectorLine(position,direction, normal);
+                vectors = CreateVectorLine(position, direction, normal);
             }
             else
             {
@@ -78,7 +78,7 @@ namespace KI.Asset.Attribute
 
             VertexBuffer = new VertexBuffer();
             vertexPositionBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
-            vertexPositionBuffer.SetData(lines,EArrayType.Vec3Array);
+            vertexPositionBuffer.SetData(lines, EArrayType.Vec3Array);
             VertexBuffer.PositionBuffer = vertexPositionBuffer;
             VertexBuffer.Num = lines.Length;
         }

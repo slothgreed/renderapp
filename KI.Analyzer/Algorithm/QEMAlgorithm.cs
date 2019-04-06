@@ -182,7 +182,6 @@ namespace KI.Analyzer.Algorithm
             return Vector4.Dot(result, vec);
         }
 
-
         /// <summary>
         /// コストの算出
         /// </summary>

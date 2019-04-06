@@ -167,7 +167,6 @@ namespace KI.Analyzer.Algorithm
             }
         }
 
-
         /// <summary>
         /// サイズフィールド
         /// </summary>

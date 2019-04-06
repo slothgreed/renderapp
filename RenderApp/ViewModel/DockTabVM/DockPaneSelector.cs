@@ -105,7 +105,7 @@ namespace RenderApp.ViewModel
             {
                 return RendererTemplate;
             }
-            else if(item is PropertyGridViewModel)
+            else if (item is PropertyGridViewModel)
             {
                 return PropertyGridTemplate;
             }

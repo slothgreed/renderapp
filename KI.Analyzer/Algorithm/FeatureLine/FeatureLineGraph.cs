@@ -93,7 +93,6 @@ namespace KI.Analyzer.Algorithm.FeatureLine
             return featureVertex;
         }
 
-
         /// <summary>
         /// エッジの追加
         /// </summary>
@@ -135,7 +134,7 @@ namespace KI.Analyzer.Algorithm.FeatureLine
         }
 
         /// <summary>
-        ///エッジの接続を行う
+        /// エッジの接続を行う
         /// </summary>
         public void Connect()
         {

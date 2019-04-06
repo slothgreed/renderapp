@@ -49,7 +49,6 @@ namespace KI.Asset
             return new Axis(name, min, max);
         }
 
-
         /// <summary>
         /// グリッド平面の作成
         /// </summary>
@@ -122,7 +121,6 @@ namespace KI.Asset
 
             return null;
         }
-
 
         /// <summary>
         /// ハーフエッジの作成

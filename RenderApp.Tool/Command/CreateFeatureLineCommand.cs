@@ -49,7 +49,7 @@ namespace RenderApp.Tool.Command
             featureLine.Calculate();
 
             var convexLine = new List<Line>();
-            for(int i = 0; i < featureLine.GetConvexLines().Length; i++)
+            for (int i = 0; i < featureLine.GetConvexLines().Length; i++)
             {
                 foreach (var line in featureLine.GetConvexLines()[i])
                 {
@@ -70,7 +70,6 @@ namespace RenderApp.Tool.Command
             RenderObject convexObject = RenderObjectFactory.Instance.CreateRenderObject("Convex :" + targetObject.Name, convexModel);
             convexObject.ModelMatrix = targetObject.ModelMatrix;
             scene.AddObject(convexObject);
-
 
             Polygon concaveModel = new Polygon("Concave:" + targetObject.Name, concaveLine);
             RenderObject concaveObject = RenderObjectFactory.Instance.CreateRenderObject("Concave :" + targetObject.Name, concaveModel);

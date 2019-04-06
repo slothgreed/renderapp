@@ -41,7 +41,6 @@ namespace KI.Analyzer
             }
         }
 
-
         /// <summary>
         /// コンストラクタ
         /// </summary>

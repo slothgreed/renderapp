@@ -38,7 +38,6 @@ namespace KI.Analyzer.Algorithm
 
             pointList.AddRange(position.Select(p => p.Position));
 
-
             QuickHullAlgorithm();
 
             Logger.Log(Logger.LogLevel.Allway, "MeshList :" + meshList.Count.ToString());

@@ -58,7 +58,7 @@
 //        }
 //        public void SetFurTexture(string fileName)
 //        {
-//            if(FurTexture != null)
+//            if (FurTexture != null)
 //            {
 //                FurTexture.Dispose();
 //            }

@@ -54,7 +54,6 @@ namespace KI.Gfx.Render
         /// </summary>
         public RenderTexture[] RenderTexture { get; private set; }
 
-        
         /// <summary>
         /// 初期化
         /// </summary>

@@ -12,6 +12,11 @@ namespace RenderApp.ViewModel
 
     public abstract class DockWindowViewModel : ViewModelBase
     {
+        /// <summary>
+        /// 選択イベント
+        /// </summary>
+        public event OnItemSelectedEventHandler ItemSelected;
+
         public enum Place
         {
             LeftUp,
@@ -20,11 +25,6 @@ namespace RenderApp.ViewModel
             RightDown,
             Floating
         }
-
-        /// <summary>
-        /// 選択イベント
-        /// </summary>
-        public event OnItemSelectedEventHandler ItemSelected;
 
         public DockWindowViewModel(ViewModelBase parent, object model, string title, Place place)
             : base(parent, model)

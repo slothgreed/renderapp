@@ -80,7 +80,7 @@ namespace KI.Asset
         /// <returns>レンダーテクニック</returns>
         public RenderTechnique CreateRenderTechnique(RenderTechniqueType type)
         {
-            if(Renderer == null)
+            if (Renderer == null)
             {
                 Logger.Log(Logger.LogLevel.Error, "Set Renderer");
             }

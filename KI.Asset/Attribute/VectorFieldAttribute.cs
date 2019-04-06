@@ -26,7 +26,7 @@ namespace KI.Asset.Attribute
 
         public override void Binding()
         {
-            foreach(var info in Shader.GetShaderVariable())
+            foreach (var info in Shader.GetShaderVariable())
             {
                 switch (info.Name)
                 {

@@ -240,7 +240,7 @@ namespace RenderApp.Tool.Utility
 
                     // 視線方向の頂点は裏向きなので選択しない。
                     float pointOrient = Vector3.Dot(halfVertex.Normal, clickDirection);
-                    if(pointOrient > 0)
+                    if (pointOrient > 0)
                     {
                         continue;
                     }

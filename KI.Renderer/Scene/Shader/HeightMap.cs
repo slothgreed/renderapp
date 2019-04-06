@@ -58,7 +58,7 @@
 //            GL.Uniform1(uRatio, Ratio);
 //            GL.Uniform1(uOuter, Outer);
 //            GL.Uniform1(uInner, Inner);
-//            if(model.GetTextureNum() == 1)
+//            if (model.GetTextureNum() == 1)
 //            {
 //                GL.ActiveTexture(TextureUnit.Texture0);
 //                GL.BindTexture(TextureTarget.Texture2D,model.GetTexture()[0].ID);

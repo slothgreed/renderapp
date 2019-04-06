@@ -86,7 +86,7 @@ namespace RenderApp.Tool.Control
 
         private void Clear()
         {
-            if(selectVertex != null)
+            if (selectVertex != null)
             {
                 selectVertex.Color = new Vector3(0.8f);
                 renderObject.UpdateVertexBufferObject();

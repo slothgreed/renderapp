@@ -77,7 +77,7 @@ namespace KI.Gfx.GLUtil
         /// <param name="g">緑</param>
         /// <param name="b">青</param>
         /// <param name="a">アルファ</param>
-        public void SetClearColor(float r,float g, float b, float a)
+        public void SetClearColor(float r, float g, float b, float a)
         {
             GL.ClearColor(r, g, b, a);
         }

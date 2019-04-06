@@ -50,7 +50,6 @@ namespace KI.Gfx.Geometry
         /// </summary>
         public virtual Vertex End { get; set; }
 
-
         /// <summary>
         /// クローンの作成
         /// </summary>

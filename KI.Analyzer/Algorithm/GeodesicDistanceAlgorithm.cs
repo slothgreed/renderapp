@@ -93,7 +93,7 @@ namespace KI.Analyzer.Algorithm
             foreach (var vertex in halfEdgeDS.HalfEdgeVertexs)
             {
                 var sum = 0.0f;
-                foreach(var mesh in vertex.AroundMesh)
+                foreach (var mesh in vertex.AroundMesh)
                 {
                     sum += mesh.Area;
                 }
@@ -103,7 +103,6 @@ namespace KI.Analyzer.Algorithm
 
             var HeatMatrix = areaMatrix.Add(laplaceMatrix.Multiply(time) as DenseMatrix) as DenseMatrix;
             heatFlowCholesky = HeatMatrix.Cholesky();
-
 
             //var file = new System.IO.StreamWriter(@"C:\Users\stmnd\Desktop\laplaceMatrix.txt");
             //for (int i = 0; i < laplaceMatrix.ColumnCount; i++)

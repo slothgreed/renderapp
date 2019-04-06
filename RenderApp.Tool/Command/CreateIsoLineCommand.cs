@@ -63,7 +63,7 @@ namespace RenderApp.Tool.Command
                 {
                     float length = isoLine.Length;
                     float sum = 0;
-                    foreach(var line in isoLine.Lines)
+                    foreach (var line in isoLine.Lines)
                     {
                         Vector3 color = PseudoColor.GetColor(sum, 0, length);
                         var vertex1 = new Vertex(vertexs.Count, line.Start.Position, color);

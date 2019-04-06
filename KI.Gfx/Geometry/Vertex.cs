@@ -123,13 +123,11 @@ namespace KI.Gfx.Geometry
         /// <returns>クローン</returns>
         public Vertex Clone()
         {
-            return new Vertex(Index, 
+            return new Vertex(Index,
                 new Vector3(Position),
                 new Vector3(Normal),
                 new Vector3(Color),
-                new Vector2(TexCoord.X,TexCoord.Y)
-                );
+                new Vector2(TexCoord.X, TexCoord.Y));
         }
-
     }
 }

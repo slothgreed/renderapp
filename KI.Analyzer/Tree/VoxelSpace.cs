@@ -271,7 +271,6 @@ namespace KI.Analyzer
             return position;
         }
 
-
         /// <summary>
         /// ボクセルの最小座標を返却
         /// </summary>

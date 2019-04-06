@@ -121,7 +121,7 @@ namespace KI.Asset
         /// <param name="scene">シーン</param>
         public void Render(Scene scene)
         {
-            if(Visible == true)
+            if (Visible == true)
             {
                 RenderCore(scene);
             }

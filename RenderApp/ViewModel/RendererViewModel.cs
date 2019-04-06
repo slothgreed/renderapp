@@ -33,7 +33,7 @@ namespace RenderApp.ViewModel
                         viewModel = new SobelViewModel(this, postprocess as Sobel);
                     }
 
-                    if(viewModel != null)
+                    if (viewModel != null)
                     {
                         viewModel.PropertyChanged += CollectionPropertyChanged;
                         postItem.Add(viewModel);

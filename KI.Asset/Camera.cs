@@ -93,7 +93,6 @@ namespace KI.Asset
             }
         }
 
-
         /// <summary>
         /// 上方向
         /// </summary>
@@ -129,7 +128,6 @@ namespace KI.Asset
         public float Far { get; set; } = 1000;
 
         #region [回転関連]
-
 
         /// <summary>
         /// 球面座標の角度

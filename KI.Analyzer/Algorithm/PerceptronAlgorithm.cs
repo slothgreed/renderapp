@@ -81,7 +81,7 @@ namespace KI.Analyzer.Algorithm
                 int errors = 0;
                 for (int j = 0; j < inputData.Length; j++)
                 {
-                    float updateWeight = eta * (results[i] - Predict(inputData[i],weights));
+                    float updateWeight = eta * (results[i] - Predict(inputData[i], weights));
                     for (int k = 0; k < weights.Length; k++)
                     {
                         weights[k] = updateWeight * inputData[j][k];
@@ -130,14 +130,13 @@ namespace KI.Analyzer.Algorithm
             }
         }
 
-
         /// <summary>
         /// 予測
         /// </summary>
         /// <param name="inputData">データ</param>
         /// <param name="weights">重み</param>
         /// <returns>結果</returns>
-        public int Predict(float[] inputData,float[] weights)
+        public int Predict(float[] inputData, float[] weights)
         {
             return Heaviside(Sum(inputData, weights));
         }

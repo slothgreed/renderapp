@@ -17,7 +17,6 @@ namespace KI.Gfx.KIShader
         /// シェーダ
         /// </summary>
         public Dictionary<string, Shader> Shaders { get; } = new Dictionary<string, Shader>();
-        public static object RenderTargetFactory { get; set; }
 
         /// <summary>
         /// 同一シェーダの探索

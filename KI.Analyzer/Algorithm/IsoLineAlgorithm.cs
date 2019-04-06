@@ -53,7 +53,7 @@ namespace KI.Analyzer.Algorithm
             IsoLineSpace[] isoLines = new IsoLineSpace[spaceNum];
 
             // 空間の計算
-            for(int i = 0; i < isoLines.Length; i++)
+            for (int i = 0; i < isoLines.Length; i++)
             {
                 float height = bdb.Min.Z + i * space;
                 isoLines[i] = new IsoLineSpace(height);
@@ -198,7 +198,7 @@ namespace KI.Analyzer.Algorithm
                         downFlag = true;
                     }
 
-                    if(vertex.Position.Z > Height)
+                    if (vertex.Position.Z > Height)
                     {
                         upFlag = true;
                     }
@@ -244,7 +244,7 @@ namespace KI.Analyzer.Algorithm
             /// <param name="crossLine">等値線</param>
             public void SetIsoLines(List<Line> crossLine)
             {
-                if(crossLine.Count == 0)
+                if (crossLine.Count == 0)
                 {
                     return;
                 }

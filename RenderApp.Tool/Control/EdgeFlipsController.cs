@@ -74,7 +74,7 @@ namespace RenderApp.Tool.Control
                     switch (Mode)
                     {
                         case EdgeEditMode.EdgeCollapse:
-                            halfEdgeDS.Editor.EdgeCollapse(selectHalfEdge,(selectHalfEdge.Start.Position + selectHalfEdge.End.Position) / 2);
+                            halfEdgeDS.Editor.EdgeCollapse(selectHalfEdge, (selectHalfEdge.Start.Position + selectHalfEdge.End.Position) / 2);
                             break;
                         case EdgeEditMode.EdgeFlips:
                             halfEdgeDS.Editor.EdgeFlips(selectHalfEdge);

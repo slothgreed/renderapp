@@ -168,6 +168,7 @@ namespace KI.Gfx.KIShader
         /// <param name="geom">ジオメトリシェーダ</param>
         /// <param name="tcs">テッセレーション制御シェーダ</param>
         /// <param name="tes">テッセレーション評価シェーダ</param>
+        /// <returns>成功</returns>
         public bool FindShaderCombi(string vert, string frag, string geom, string tes, string tcs)
         {
             if (VertexShader?.FilePath == vert &&
@@ -298,7 +299,7 @@ namespace KI.Gfx.KIShader
         /// <returns>変数</returns>
         public object GetValue(string name)
         {
-            if(shaderVariable.ContainsKey(name))
+            if (shaderVariable.ContainsKey(name))
             {
                 return shaderVariable[name].Variable;
             }

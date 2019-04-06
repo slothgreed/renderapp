@@ -114,7 +114,7 @@ namespace RenderApp.Tool.Command
 
             var wireFrameShader = ShaderCreater.Instance.CreateShader(ShaderType.WireFrame);
 
-            var vertexs = targetObject.Polygon.Vertexs.Select(p =>p.Position).ToArray();
+            var vertexs = targetObject.Polygon.Vertexs.Select(p => p.Position).ToArray();
             var normals = targetObject.Polygon.Vertexs.Select(p => p.Normal).ToArray();
             var dirMinAttribute = new VertexDirectionAttribute(targetObject.Name + " : MinDirection", wireFrameShader, vertexs, dirMinLine, new Vector4(1, 0, 0, 1), normals);
             var dirMaxAttribute = new VertexDirectionAttribute(targetObject.Name + " : MaxDirection", wireFrameShader, vertexs, dirMaxLine, new Vector4(0, 1, 0, 1), normals);

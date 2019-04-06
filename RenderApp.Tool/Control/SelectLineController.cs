@@ -91,7 +91,7 @@ namespace RenderApp.Tool.Control
         /// </summary>
         private void Clear()
         {
-            if(selectEdge != null)
+            if (selectEdge != null)
             {
                 selectEdge.Start.Color = new Vector3(0.8f);
                 selectEdge.End.Color = new Vector3(0.8f);

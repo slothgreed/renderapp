@@ -169,7 +169,7 @@ namespace KI.Foundation.Tree
                 }
 
                 var result = child.FindRecursiveChild(name);
-                if(result != null)
+                if (result != null)
                 {
                     return result;
                 }

@@ -51,7 +51,7 @@ namespace RenderApp.Tool.Control
 
                 if (HalfEdgeDSSelector.PickTriangle(mouse.Current, ref renderObject, ref mesh))
                 {
-                    if(mesh == null)
+                    if (mesh == null)
                     {
                         return false;
                     }
@@ -99,7 +99,7 @@ namespace RenderApp.Tool.Control
         /// </summary>
         private void Clear()
         {
-            if(selectMesh != null)
+            if (selectMesh != null)
             {
                 foreach (var vertex in selectMesh.AroundVertex)
                 {
@@ -114,7 +114,6 @@ namespace RenderApp.Tool.Control
 
             selectMesh = null;
         }
-
 
         private void OnSelectMesh(HalfEdgeMesh item)
         {

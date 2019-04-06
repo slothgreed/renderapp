@@ -13,7 +13,6 @@ namespace KI.Gfx.Geometry
         /// </summary>
         private List<Line> lines = new List<Line>();
 
-
         /// <summary>
         /// コンストラクタ
         /// </summary>

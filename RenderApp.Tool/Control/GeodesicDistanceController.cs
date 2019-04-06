@@ -48,7 +48,6 @@ namespace RenderApp.Tool.Control
                         pointObject.ModelMatrix = renderObject.ModelMatrix;
                         Workspace.Instance.Renderer.ActiveScene.AddObject(pointObject);
 
-
                         geodesic.SelectPoint(selectVertex.Index);
                         geodesic.Compute();
                         var geodesicDistance = geodesic.DistanceField;

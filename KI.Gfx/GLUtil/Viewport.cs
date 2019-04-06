@@ -197,7 +197,6 @@ namespace KI.Gfx.GLUtil
             }
         }
 
-
         #endregion
         #region [context event]
 

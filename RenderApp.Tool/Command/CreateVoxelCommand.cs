@@ -159,7 +159,6 @@ namespace RenderApp.Tool.Command
         }
     }
 
-
     /// <summary>
     /// ボクセルコマンド
     /// </summary>

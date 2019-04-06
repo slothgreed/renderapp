@@ -154,7 +154,7 @@ namespace ViewerTest
                 CalcNoize();
             }
 
-            if(Keyboard[Key.R])
+            if (Keyboard[Key.R])
             {
                 SwapBuffers();
             }
