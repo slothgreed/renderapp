@@ -47,7 +47,7 @@ namespace KI.Gfx.KIShader
         /// <param name="vPath">頂点パス</param>
         /// <param name="fPath">フラグパス</param>
         /// <returns>シェーダ</returns>
-        public Shader CreateShaderVF(string vPath, string fPath, ShaderStage stage)
+        public Shader CreateShaderVF(string vPath, string fPath)
         {
             Shader shader = FindShader(vPath, fPath, null, null, null);
             //if (shader == null)
@@ -56,7 +56,7 @@ namespace KI.Gfx.KIShader
                 string fname = Path.GetFileName(fPath);
                 ShaderProgram vert = ShaderProgramFactory.Instance.CreateShaderProgram(vPath, vPath);
                 ShaderProgram frag = ShaderProgramFactory.Instance.CreateShaderProgram(fPath, fPath);
-                shader = new Shader(vert, frag, stage);
+                shader = new Shader(vert, frag);
                 //Shaders.Add(vname + fname, shader);
             }
 
@@ -71,7 +71,7 @@ namespace KI.Gfx.KIShader
         /// <param name="gPath">ジオメトリシェーダ</param>
         /// <param name="stage">シェーダステージ</param>
         /// <returns>シェーダ</returns>
-        public Shader CreateGeometryShader(string vPath, string fPath, string gPath, ShaderStage stage)
+        public Shader CreateGeometryShader(string vPath, string fPath, string gPath)
         {
             Shader shader = FindShader(vPath, fPath, gPath, null, null);
             //if (shader == null)
@@ -82,7 +82,7 @@ namespace KI.Gfx.KIShader
                 ShaderProgram vert = ShaderProgramFactory.Instance.CreateShaderProgram(vPath, vPath);
                 ShaderProgram frag = ShaderProgramFactory.Instance.CreateShaderProgram(fPath, fPath);
                 ShaderProgram geom = ShaderProgramFactory.Instance.CreateShaderProgram(gPath, gPath);
-                shader = new Shader(vert, frag, geom, stage);
+                shader = new Shader(vert, frag, geom);
                 //Shaders.Add(vname + fname + geom, shader);
             }
 
@@ -98,7 +98,7 @@ namespace KI.Gfx.KIShader
         /// <param name="tcPath">テッセレーション制御シェーダ</param>
         /// <param name="tePath">テッセレーション評価シェーダ</param>
         /// <returns>シェーダ</returns>
-        public Shader CreateTesselation(string vPath, string fPath, string gPath, string tcPath, string tePath, ShaderStage stage)
+        public Shader CreateTesselation(string vPath, string fPath, string gPath, string tcPath, string tePath)
         {
             Shader shader = FindShader(vPath, fPath, gPath, tcPath, tePath);
             //if (shader == null)
@@ -114,7 +114,7 @@ namespace KI.Gfx.KIShader
                 ShaderProgram geom = ShaderProgramFactory.Instance.CreateShaderProgram(gPath, gPath);
                 ShaderProgram tcs = ShaderProgramFactory.Instance.CreateShaderProgram(tcPath, tcPath);
                 ShaderProgram tes = ShaderProgramFactory.Instance.CreateShaderProgram(tePath, tePath);
-                shader = new Shader(vert, frag, geom, tcs, tes, stage);
+                shader = new Shader(vert, frag, geom, tcs, tes);
                 //Shaders.Add(vname + fname + tcs + tes, shader);
             }
 

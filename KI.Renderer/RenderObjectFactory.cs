@@ -24,7 +24,7 @@ namespace KI.Asset
         {
             string vert = ShaderCreater.Instance.GetVertexShader(polygon);
             string frag = ShaderCreater.Instance.GetFragShader(polygon);
-            var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag, ShaderStage.Geometry);
+            var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
 
             var renderObject = new RenderObject(name, polygon, shader);
             AddItem(renderObject);

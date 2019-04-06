@@ -163,7 +163,7 @@ namespace KI.Asset.Technique
             // gbuffer用 以外はシェーダ作成
             if (vertexShader != null && fragShader != null)
             {
-                Rectanle.Shader = ShaderFactory.Instance.CreateShaderVF(vertexShader, fragShader, ShaderStage.PostEffect);
+                Rectanle.Shader = ShaderFactory.Instance.CreateShaderVF(vertexShader, fragShader);
             }
 
             CreateRenderTarget(KI.Gfx.GLUtil.DeviceContext.Instance.Width, KI.Gfx.GLUtil.DeviceContext.Instance.Height);
