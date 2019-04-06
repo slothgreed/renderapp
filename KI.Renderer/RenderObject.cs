@@ -183,6 +183,8 @@ namespace KI.Renderer
             {
                 attribute.Dispose();
             }
+
+            base.Dispose();
         }
 
         /// <summary>

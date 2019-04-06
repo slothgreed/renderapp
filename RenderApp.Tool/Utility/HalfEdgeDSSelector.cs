@@ -38,9 +38,9 @@ namespace RenderApp.Tool.Utility
             RenderObject renderObject = null;
             foreach (KINode polygonNode in Workspace.Instance.RenderSystem.ActiveScene.RootNode.AllChildren())
             {
-                if (polygonNode.KIObject is RenderObject)
+                if (polygonNode is RenderObject)
                 {
-                    renderObject = polygonNode.KIObject as RenderObject;
+                    renderObject = polygonNode as RenderObject;
                 }
                 else
                 {
@@ -72,12 +72,12 @@ namespace RenderApp.Tool.Utility
             GetMouseClipPosition(mouse, out near, out far);
 
             RenderObject renderObject;
-            foreach (KINode polygonNode in Workspace.Instance.RenderSystem.ActiveScene.RootNode.AllChildren())
+            foreach (SceneNode polygonNode in Workspace.Instance.RenderSystem.ActiveScene.RootNode.AllChildren())
             {
                 renderObject = null;
-                if (polygonNode.KIObject is RenderObject)
+                if (polygonNode is RenderObject)
                 {
-                    renderObject = polygonNode.KIObject as RenderObject;
+                    renderObject = polygonNode as RenderObject;
                 }
                 else
                 {
@@ -116,9 +116,9 @@ namespace RenderApp.Tool.Utility
             foreach (KINode polygonNode in Workspace.Instance.RenderSystem.ActiveScene.RootNode.AllChildren())
             {
                 renderObject = null;
-                if (polygonNode.KIObject is RenderObject)
+                if (polygonNode is RenderObject)
                 {
-                    renderObject = polygonNode.KIObject as RenderObject;
+                    renderObject = polygonNode as RenderObject;
                 }
                 else
                 {

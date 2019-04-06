@@ -36,7 +36,7 @@
             <Controls:MultiSelectTreeView.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type vm:NodeItemViewModel}" ItemsSource="{Binding Children}">
                     <StackPanel Orientation="Horizontal">
-                        <CheckBox IsChecked="{Binding Model.KIObject.Visible}" />
+                        <CheckBox IsChecked="{Binding Model.Visible}" />
                         <TextBlock
                             Margin="6,0,0,0"
                             Padding="3,0"

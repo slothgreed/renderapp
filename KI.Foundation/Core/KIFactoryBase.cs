@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using KI.Foundation.Tree;
 
 namespace KI.Foundation.Core
 {

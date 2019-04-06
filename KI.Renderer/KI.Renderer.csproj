@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EmptyNode.cs" />
+    <Compile Include="EnvironmentProbe.cs" />
     <Compile Include="RendererUtility.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Light\DirectionLight.cs" />

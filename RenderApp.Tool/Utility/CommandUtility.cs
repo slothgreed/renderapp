@@ -1,6 +1,4 @@
-﻿using KI.Asset;
-using KI.Foundation.Core;
-using KI.Gfx;
+﻿using KI.Gfx;
 using KI.Renderer;
 using KI.Tool.Command;
 
@@ -8,7 +6,7 @@ namespace RenderApp.Tool
 {
     public static class CommandUtility
     {
-        public static CommandResult CanCreatePolygon(KIObject asset)
+        public static CommandResult CanCreatePolygon(SceneNode asset)
         {
             if (!(asset is RenderObject))
             {

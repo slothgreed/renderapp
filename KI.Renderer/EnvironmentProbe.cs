@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
-using KI.Foundation.Core;
+﻿using System;
+using System.Collections.Generic;
+using KI.Asset;
 using KI.Gfx.KITexture;
 
-namespace KI.Asset
+namespace KI.Renderer
 {
     /// <summary>
     /// 環境プローブ
     /// </summary>
-    public class EnvironmentProbe : KIObject
+    public class EnvironmentProbe : SceneNode
     {
         /// <summary>
         /// テクスチャパスリスト
@@ -43,6 +44,15 @@ namespace KI.Asset
             Cubemap = TextureFactory.Instance.CreateCubemapTexture(px, py, pz, nx, ny, nz);
             texturePath.Add(px); texturePath.Add(py); texturePath.Add(pz);
             texturePath.Add(nx); texturePath.Add(ny); texturePath.Add(nz);
+        }
+
+        /// <summary>
+        /// 何も描画しない
+        /// </summary>
+        /// <param name="scene">シーン</param>
+        public override void RenderCore(Scene scene)
+        {
+            return;
         }
     }
 }

@@ -87,12 +87,5 @@ namespace KI.Renderer
                 model.Translate = Position;
             }
         }
-        
-        /// <summary>
-        /// 解放処理
-        /// </summary>
-        public override void Dispose()
-        {
-        }
     }
 }

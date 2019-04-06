@@ -32,11 +32,11 @@ namespace KI.Renderer.Technique
         {
             ClearBuffer();
             RenderTarget.BindRenderTarget();
-            foreach (var asset in scene.RootNode.AllChildren())
+            foreach (var node in scene.RootNode.AllChildren())
             {
-                if (asset.KIObject is RenderObject)
+                if (node is RenderObject)
                 {
-                    var polygon = asset.KIObject as RenderObject;
+                    var polygon = node as RenderObject;
                     var old = polygon.Shader;
                     polygon.Shader = Rectanle.Shader;
                     polygon.Render(scene);

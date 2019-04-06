@@ -1,4 +1,4 @@
-﻿using KI.Foundation.Core;
+﻿using KI.Foundation.Tree;
 using KI.Mathmatics;
 using OpenTK;
 
@@ -7,7 +7,7 @@ namespace KI.Renderer
     /// <summary>
     /// シーンノード
     /// </summary>
-    public abstract class SceneNode : KIObject
+    public abstract class SceneNode : KINode
     {
         /// <summary>
         /// 平行移動

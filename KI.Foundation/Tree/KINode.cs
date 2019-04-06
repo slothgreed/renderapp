@@ -9,16 +9,16 @@ namespace KI.Foundation.Tree
     /// <summary>
     /// ノード
     /// </summary>
-    public class KINode
+    public class KINode : KIObject
     {
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="kiobject">ノードの中身</param>
         public KINode(KIObject kiobject)
+            : base(kiobject.Name)
         {
             KIObject = kiobject;
-            Name = kiobject.Name;
             Children = new List<KINode>();
         }
 
@@ -27,8 +27,8 @@ namespace KI.Foundation.Tree
         /// </summary>
         /// <param name="name">ノードの名前</param>
         public KINode(string name)
+            : base(name)
         {
-            Name = name;
             Children = new List<KINode>();
         }
 
@@ -41,15 +41,6 @@ namespace KI.Foundation.Tree
         /// ノード削除イベント
         /// </summary>
         public EventHandler<NotifyCollectionChangedEventArgs> NodeRemoved { get; set; }
-
-        /// <summary>
-        /// ノードの名前
-        /// </summary>
-        public string Name
-        {
-            get;
-            private set;
-        }
 
         /// <summary>
         /// 親ノード
@@ -183,7 +174,7 @@ namespace KI.Foundation.Tree
         /// <summary>
         /// 解放処理
         /// </summary>
-        public void Dispose()
+        public override void Dispose()
         {
             if (KIObject != null)
             {
@@ -194,6 +185,8 @@ namespace KI.Foundation.Tree
             {
                 child.Dispose();
             }
+
+            base.Dispose();
         }
         #region [getter]
         /// <summary>

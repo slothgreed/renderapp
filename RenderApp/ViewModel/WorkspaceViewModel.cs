@@ -78,7 +78,7 @@ namespace RenderApp.ViewModel
         {
             if (e.PropertyName == nameof(SceneNodeViewModel.ActiveNode))
             {
-                UpdateSelectNode(SceneNodeViewModel.ActiveNode.Model);
+                UpdateSelectNode(SceneNodeViewModel.ActiveNode.Model as SceneNode);
             }
 
             ViewportViewModel.Invalidate();
@@ -106,7 +106,7 @@ namespace RenderApp.ViewModel
 
 
 
-        public void UpdateSelectNode(KINode node)
+        public void UpdateSelectNode(SceneNode node)
         {
             if (node.KIObject == null)
             {
@@ -114,17 +114,17 @@ namespace RenderApp.ViewModel
             }
 
             DockWindowViewModel vm = null;
-            if (node.KIObject is RenderObject)
+            if (node is RenderObject)
             {
-                vm = new RenderObjectViewModel(this, node.KIObject as RenderObject);
+                vm = new RenderObjectViewModel(this, node as RenderObject);
                 vm.PropertyChanged += RenderObjectViewModel_PropertyChanged;
-                workspace.MainScene.SelectNode = (SceneNode)node.KIObject;
+                workspace.MainScene.SelectNode = node;
             }
-            else if (node.KIObject is Light)
+            else if (node is Light)
             {
-                vm = new LightViewModel(this, node.KIObject as Light);
+                vm = new LightViewModel(this, node as Light);
                 vm.PropertyChanged += RenderObjectViewModel_PropertyChanged;
-                workspace.MainScene.SelectNode = (SceneNode)node.KIObject;
+                workspace.MainScene.SelectNode = node;
             }
 
             ReplaceTabWindow(vm);
@@ -314,7 +314,7 @@ namespace RenderApp.ViewModel
             mainScene.AddObject(renderTop, cubeMapNode);
             mainScene.AddObject(renderBottom, cubeMapNode);
 
-            EnvironmentProbe cubeMap = AssetFactory.Instance.CreateEnvironmentMap("CubeMapObject");
+            EnvironmentProbe cubeMap = new EnvironmentProbe("CubeMapObject");
             cubeMap.GenCubemap(cubemap[0], cubemap[1], cubemap[2], cubemap[3], cubemap[4], cubemap[5]);
             mainScene.AddObject(cubeMap);
         }
@@ -351,7 +351,7 @@ namespace RenderApp.ViewModel
             //SSLIC sslic = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.SSLIC) as SSLIC;
             //renderer.PostEffect.AddTechnique(sslic);
 
-            var probe = workspace.MainScene.FindObject("CubeMapObject") as EnvironmentProbe;
+            var probe = workspace.MainScene.FindNode("CubeMapObject") as EnvironmentProbe;
             ImageBasedLighting ibl = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.IBL) as ImageBasedLighting;
             renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.IBL));
             ibl.uCubeMap = probe.Cubemap;

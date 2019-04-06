@@ -61,7 +61,6 @@
     <Compile Include="Attribute\VertexParameterAttribute.cs" />
     <Compile Include="Attribute\WireFrameAttribute.cs" />
     <Compile Include="Camera.cs" />
-    <Compile Include="EnvironmentProbe.cs" />
     <Compile Include="AssetDirectory.cs" />
     <Compile Include="Loader\Importer\HalfEdgeImporter.cs" />
     <Compile Include="Loader\Importer\ImporterUtility.cs" />

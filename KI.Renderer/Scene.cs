@@ -28,13 +28,13 @@ namespace KI.Renderer
         /// <param name="name">シーン名</param>
         public Scene(string name)
         {
-            RootNode = new KINode("ROOT");
+            RootNode = new EmptyNode("ROOT");
         }
 
         /// <summary>
         /// ルートノード
         /// </summary>
-        public KINode RootNode { get; set; }
+        public SceneNode RootNode { get; set; }
 
         /// <summary>
         /// 選択中のアセット
@@ -65,7 +65,7 @@ namespace KI.Renderer
             AddObject(renderObject);
         }
 
-        public KINode FindNode(KIObject obj)
+        public KINode FindNode(SceneNode obj)
         {
             return RootNode.FindRecursiveChild(obj.Name);
         }
@@ -75,7 +75,7 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="key">キー</param>
         /// <returns>オブジェクト</returns>
-        public KIObject FindObject(string key)
+        public KINode FindNode(string key)
         {
             KINode obj = RootNode.FindRecursiveChild(key);
             if (obj == null)
@@ -84,7 +84,7 @@ namespace KI.Renderer
             }
             else
             {
-                return obj.KIObject;
+                return obj;
             }
         }
 

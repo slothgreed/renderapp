@@ -74,17 +74,17 @@ namespace KI.Renderer.Technique
             RenderTarget.BindRenderTarget();
             foreach (var asset in scene.RootNode.AllChildren())
             {
-                if (asset.KIObject is Light)
+                if (asset is Light)
                 {
-                    var light = asset.KIObject as Light;
+                    var light = asset as Light;
                     if (light.Model != null)
                     {
                         light.Model.Render(scene);
                     }
                 }
-                else if (asset.KIObject is RenderObject)
+                else if (asset is RenderObject)
                 {
-                    var renderObject = asset.KIObject as RenderObject;
+                    var renderObject = asset as RenderObject;
                     renderObject.Render(scene);
                 }
             }

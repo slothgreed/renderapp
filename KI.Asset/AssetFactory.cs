@@ -18,16 +18,6 @@ namespace KI.Asset
         public static AssetFactory Instance { get; } = new AssetFactory();
 
         /// <summary>
-        /// 環境プローブの作成
-        /// </summary>
-        /// <param name="name">名前</param>
-        /// <returns>環境プローブ</returns>
-        public EnvironmentProbe CreateEnvironmentMap(string name)
-        {
-            return new EnvironmentProbe(name);
-        }
-
-        /// <summary>
         /// カメラの作成
         /// </summary>
         /// <param name="name">名前</param>
