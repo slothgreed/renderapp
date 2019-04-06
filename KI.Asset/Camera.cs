@@ -1,5 +1,5 @@
 ﻿using System;
-using KI.Foundation.Core;
+using KI.Foundation.Tree;
 using OpenTK;
 
 namespace KI.Asset
@@ -7,7 +7,7 @@ namespace KI.Asset
     /// <summary>
     /// カメラ
     /// </summary>
-    public class Camera : KIFile
+    public class Camera : KINode
     {
         #region [property method]
 
