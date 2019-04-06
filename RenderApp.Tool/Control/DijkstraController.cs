@@ -57,7 +57,7 @@ namespace RenderApp.Tool.Control
                     }
                     else if (selectObject != renderObject)
                     {
-                        Workspace.Instance.Renderer.ActiveScene.DeleteObject("Picking");
+                        Workspace.Instance.RenderSystem.ActiveScene.DeleteObject("Picking");
                         // 前回と選択した形状が違う
                         selectObject = renderObject;
                         selectStart = vertex;
@@ -78,7 +78,7 @@ namespace RenderApp.Tool.Control
                     Polygon polygon = new Polygon("Picking", new List<Vertex>() { new Vertex(0, vertex.Position, Vector3.UnitY) });
                     RenderObject pointObject = RenderObjectFactory.Instance.CreateRenderObject("Picking", polygon);
                     pointObject.ModelMatrix = selectObject.ModelMatrix;
-                    Workspace.Instance.Renderer.ActiveScene.AddObject(pointObject);
+                    Workspace.Instance.RenderSystem.ActiveScene.AddObject(pointObject);
 
                     if (selectStart != null && selectEnd != null)
                     {
@@ -86,7 +86,7 @@ namespace RenderApp.Tool.Control
                         selectObject = null;
                         selectStart = null;
                         selectEnd = null;
-                        Workspace.Instance.Renderer.ActiveScene.DeleteObject("Picking");
+                        Workspace.Instance.RenderSystem.ActiveScene.DeleteObject("Picking");
                     }
                 }
             }
@@ -100,8 +100,8 @@ namespace RenderApp.Tool.Control
         /// <returns>成功</returns>
         public override bool UnBinding()
         {
-            Workspace.Instance.Renderer.ActiveScene.DeleteObject("Picking");
-            Workspace.Instance.Renderer.ActiveScene.DeleteObject("DijkstraLine");
+            Workspace.Instance.RenderSystem.ActiveScene.DeleteObject("Picking");
+            Workspace.Instance.RenderSystem.ActiveScene.DeleteObject("DijkstraLine");
             return true;
         }
 
@@ -121,7 +121,7 @@ namespace RenderApp.Tool.Control
             Polygon polygon = new Polygon("DijkstraLine", vertexs, indexs, PolygonType.Lines);
             RenderObject lineObject = RenderObjectFactory.Instance.CreateRenderObject("DijkstraLine", polygon);
             lineObject.ModelMatrix = selectObject.ModelMatrix;
-            Workspace.Instance.Renderer.ActiveScene.AddObject(lineObject);
+            Workspace.Instance.RenderSystem.ActiveScene.AddObject(lineObject);
             return true;
         }
     }

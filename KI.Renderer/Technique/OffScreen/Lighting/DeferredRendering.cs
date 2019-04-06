@@ -10,7 +10,7 @@ namespace KI.Asset.Technique
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public DeferredRendering(Renderer renderer, string vertexShader, string fragShader)
+        public DeferredRendering(RenderSystem renderer, string vertexShader, string fragShader)
             : base("Deferred", renderer, vertexShader, fragShader,RenderType.Original)
         {
         }

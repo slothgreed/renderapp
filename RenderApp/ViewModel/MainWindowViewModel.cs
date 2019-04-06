@@ -119,18 +119,18 @@ namespace RenderApp.ViewModel
 
         private void ScreenShotCommand()
         {
-            var renderTarget = Workspace.Instance.Renderer.OutputBuffer.RenderTarget;
+            var renderTarget = Workspace.Instance.RenderSystem.OutputBuffer.RenderTarget;
             RendererUtility.ScreenShot("OutputBuffer", ".bmp", DeviceContext.Instance.Width, DeviceContext.Instance.Height);
         }
 
         private void ScreenShotAllCommand()
         {
-            foreach (var renderer in Workspace.Instance.Renderer.RenderQueue.Items)
+            foreach (var renderer in Workspace.Instance.RenderSystem.RenderQueue.Items)
             {
                 RendererUtility.ScreenShot(renderer.Name, ".bmp", renderer.RenderTarget);
             }
 
-            foreach (var renderer in Workspace.Instance.Renderer.PostEffect.Items)
+            foreach (var renderer in Workspace.Instance.RenderSystem.PostEffect.Items)
             {
                 RendererUtility.ScreenShot(renderer.Name, ".bmp", renderer.RenderTarget);
             }
@@ -336,7 +336,7 @@ namespace RenderApp.ViewModel
         public void ClosedCommand()
         {
             Viewport.Instance.Dispose();
-            workspace.Renderer.Dispose();
+            workspace.RenderSystem.Dispose();
             ShaderFactory.Instance.Dispose();
             RenderTargetFactory.Instance.Dispose();
             TextureFactory.Instance.Dispose();

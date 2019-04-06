@@ -67,7 +67,7 @@ namespace KI.Asset
             DefaultShader.Add(RenderTechniqueType.Output,    new ShaderFile() { Vertex = postEffect + @"\output.vert",      Frag = postEffect + @"\output.frag" });
         }
 
-        public Renderer Renderer
+        public RenderSystem Renderer
         {
             get;
             set;

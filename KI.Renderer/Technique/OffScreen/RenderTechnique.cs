@@ -19,7 +19,7 @@ namespace KI.Asset.Technique
         /// <summary>
         /// レンダラ
         /// </summary>
-        public Renderer Renderer
+        public RenderSystem Renderer
         {
             get;
             private set;
@@ -32,7 +32,7 @@ namespace KI.Asset.Technique
         /// <param name="renderer">レンダラ</param>
         /// <param name="tech">レンダーテクニックの種類</param>
         /// <param name="type">レンダリングタイプ</param>
-        public RenderTechnique(string name, Renderer renderer, RenderType type)
+        public RenderTechnique(string name, RenderSystem renderer, RenderType type)
             : base(name)
         {
             renderType = type;
@@ -48,7 +48,7 @@ namespace KI.Asset.Technique
         /// <param name="vertexShader">頂点シェーダ</param>
         /// <param name="fragShader">フラグシェーダ</param>
         /// <param name="type">レンダリングタイプ</param>
-        public RenderTechnique(string name, Renderer renderer, string vertexShader, string fragShader, RenderType type)
+        public RenderTechnique(string name, RenderSystem renderer, string vertexShader, string fragShader, RenderType type)
             : base(name)
         {
             renderType = type;

@@ -33,10 +33,10 @@ namespace CADApp.Tool.Control
             switch (mouse.Button)
             {
                 case MOUSE_BUTTON.Middle:
-                    Translate(Workspace.Instance.Renderer.ActiveScene.MainCamera, new Vector3(-mouse.Delta.X, -mouse.Delta.Y, 0));
+                    Translate(Workspace.Instance.RenderSystem.ActiveScene.MainCamera, new Vector3(-mouse.Delta.X, -mouse.Delta.Y, 0));
                     break;
                 case MOUSE_BUTTON.Right:
-                    Rotate(Workspace.Instance.Renderer.ActiveScene.MainCamera, new Vector3(-mouse.Delta.X, -mouse.Delta.Y, 0));
+                    Rotate(Workspace.Instance.RenderSystem.ActiveScene.MainCamera, new Vector3(-mouse.Delta.X, -mouse.Delta.Y, 0));
                     break;
             }
 
@@ -53,7 +53,7 @@ namespace CADApp.Tool.Control
             switch (mouse.Button)
             {
                 case MOUSE_BUTTON.None:
-                    Camera camera = Workspace.Instance.Renderer.ActiveScene.MainCamera;
+                    Camera camera = Workspace.Instance.RenderSystem.ActiveScene.MainCamera;
                     if (mouse.Wheel > 0)
                     {
                         camera.LookAtDistance = camera.LookAtDistance * zoomInRatio;
@@ -78,7 +78,7 @@ namespace CADApp.Tool.Control
         {
             if (e.KeyCode == Keys.F)
             {
-                Workspace.Instance.Renderer.ActiveScene.FitToScene(Workspace.Instance.Renderer.ActiveScene.MainCamera);
+                Workspace.Instance.RenderSystem.ActiveScene.FitToScene(Workspace.Instance.RenderSystem.ActiveScene.MainCamera);
             }
 
             return true;

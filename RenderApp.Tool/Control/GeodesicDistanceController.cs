@@ -47,7 +47,7 @@ namespace RenderApp.Tool.Control
                         Polygon polygon = new Polygon("Picking", new List<Vertex>() { new Vertex(0, selectVertex.Position, Vector3.UnitY) });
                         RenderObject pointObject = RenderObjectFactory.Instance.CreateRenderObject("Picking", polygon);
                         pointObject.ModelMatrix = renderObject.ModelMatrix;
-                        Workspace.Instance.Renderer.ActiveScene.AddObject(pointObject);
+                        Workspace.Instance.RenderSystem.ActiveScene.AddObject(pointObject);
 
                         geodesic.SelectPoint(selectVertex.Index);
                         geodesic.Compute();
@@ -92,7 +92,7 @@ namespace RenderApp.Tool.Control
                             }
                         }
 
-                        var parentNode = Workspace.Instance.Renderer.ActiveScene.FindNode(renderObject);
+                        var parentNode = Workspace.Instance.RenderSystem.ActiveScene.FindNode(renderObject);
                         
                         var colorAttribute = new VertexParameterAttribute("distanceColor", 
                             renderObject.VertexBuffer.ShallowCopy(), 
@@ -105,7 +105,7 @@ namespace RenderApp.Tool.Control
                         vertexBuffer.SetupLineBuffer(lineGeometry.Vertexs, lineGeometry.Index, lineGeometry.Lines);
                         var lineAttribute = new PolygonAttribute("geodesicDistance", vertexBuffer, PolygonType.Lines, renderObject.Shader);
                         renderObject.Attributes.Add(lineAttribute);
-                        Workspace.Instance.Renderer.ActiveScene.AddObject(lineAttribute, parentNode);
+                        Workspace.Instance.RenderSystem.ActiveScene.AddObject(lineAttribute, parentNode);
                     }
                 }
             }

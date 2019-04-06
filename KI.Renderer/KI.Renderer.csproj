@@ -85,7 +85,7 @@
     <Compile Include="RenderObject.cs" />
     <Compile Include="RenderObjectFactory.cs" />
     <Compile Include="RenderQueue.cs" />
-    <Compile Include="Renderer.cs" />
+    <Compile Include="RenderSystem.cs" />
     <Compile Include="Technique\RenderTechniqueFactory.cs" />
     <Compile Include="Utility\ShaderHelper.cs" />
     <Compile Include="Technique\OffScreen\ShadowMap.cs" />

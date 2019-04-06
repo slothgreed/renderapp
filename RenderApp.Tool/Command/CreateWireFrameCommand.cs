@@ -92,7 +92,7 @@ namespace RenderApp.Tool.Command
                 }
             }
 
-            var parentNode = Workspace.Instance.Renderer.ActiveScene.FindNode(targetObject);
+            var parentNode = Workspace.Instance.RenderSystem.ActiveScene.FindNode(targetObject);
             WireFrameAttribute material = new WireFrameAttribute(
                 targetObject.Name + ": WireFrame",
                 targetObject.VertexBuffer.ShallowCopy(),

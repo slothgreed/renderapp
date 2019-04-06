@@ -60,16 +60,16 @@ namespace RenderApp.ViewModel
             if (e.PropertyName == "Loaded")
             {
                 Initialize();
-                RendererViewModel.Model = workspace.Renderer;
+                RendererViewModel.Model = workspace.RenderSystem;
             }
             else if (e.PropertyName == "Resize")
             {
                 workspace.MainScene.MainCamera.SetProjMatrix((float)DeviceContext.Instance.Width / DeviceContext.Instance.Height);
-                workspace.Renderer.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
+                workspace.RenderSystem.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
             }
             else if (e.PropertyName == "Renderer")
             {
-                workspace.Renderer.Render();
+                workspace.RenderSystem.Render();
             }
         }
 
@@ -320,7 +320,7 @@ namespace RenderApp.ViewModel
 
         public void InitializeRenderer(int width, int height)
         {
-            var renderer = workspace.Renderer;
+            var renderer = workspace.RenderSystem;
             RenderTechniqueFactory.Instance.Renderer = renderer;
             //renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Shadow));
             renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer));

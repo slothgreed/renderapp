@@ -7,12 +7,12 @@ namespace KI.Asset
     /// <summary>
     /// レンダリングシステム
     /// </summary>
-    public class Renderer
+    public class RenderSystem
     {
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public Renderer()
+        public RenderSystem()
         {
             ProcessingTexture = new List<Texture>();
             PostProcessMode = true;

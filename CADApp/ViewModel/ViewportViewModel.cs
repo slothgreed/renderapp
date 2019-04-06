@@ -89,17 +89,17 @@ namespace CADApp.ViewModel
         /// <summary>
         /// レンダラー
         /// </summary>
-        public Renderer Renderer { get; set; }
+        public RenderSystem Renderer { get; set; }
 
         public void OnLoadedEvent(object sender, EventArgs e)
         {
             DeviceContext.Instance.SetClearColor(1, 1, 1, 1);
             MainScene = new Scene("MainScene");
-            Renderer = new Renderer();
+            Renderer = new RenderSystem();
             Renderer.ActiveScene = MainScene;
 
             Workspace.Instance.MainScene = MainScene;
-            Workspace.Instance.Renderer = Renderer;
+            Workspace.Instance.RenderSystem = Renderer;
 
             Controller.Add(CONTROLLER_TYPE.SketchLine, new SketchLineController());
             CurrentController = CONTROLLER_TYPE.SketchLine;

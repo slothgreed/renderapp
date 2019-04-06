@@ -37,7 +37,7 @@ namespace KI.Asset.Technique
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public OutputBuffer(Renderer renderer, string vertexShader, string fragShader)
+        public OutputBuffer(RenderSystem renderer, string vertexShader, string fragShader)
             : base("OutputBuffer", renderer, vertexShader, fragShader, RenderType.Original)
         {
         }

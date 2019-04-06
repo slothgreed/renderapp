@@ -42,13 +42,13 @@ namespace RenderApp.Model
         /// <summary>
         /// レンダラー
         /// </summary>
-        public Renderer Renderer { get; set; }
+        public RenderSystem RenderSystem { get; set; }
 
         public void Initialize()
         {
             MainScene = new Scene("MainScene");
-            Renderer = new Renderer();
-            Renderer.ActiveScene = MainScene;
+            RenderSystem = new RenderSystem();
+            RenderSystem.ActiveScene = MainScene;
         }
     }
 }

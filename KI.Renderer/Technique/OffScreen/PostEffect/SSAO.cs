@@ -51,7 +51,7 @@ namespace KI.Asset.Technique
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public SSAO(Renderer renderer, string vertexShader, string fragShader)
+        public SSAO(RenderSystem renderer, string vertexShader, string fragShader)
             : base("SSAO", renderer, vertexShader, fragShader, RenderType.OffScreen)
         {
         }

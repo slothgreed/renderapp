@@ -43,13 +43,13 @@ namespace CADApp.Model
         /// <summary>
         /// レンダラー
         /// </summary>
-        public Renderer Renderer { get; set; }
+        public RenderSystem RenderSystem { get; set; }
 
         public void Initialize()
         {
             MainScene = new Scene("MainScene");
-            Renderer = new Renderer();
-            Renderer.ActiveScene = MainScene;
+            RenderSystem = new RenderSystem();
+            RenderSystem.ActiveScene = MainScene;
             WorkPlane = new Rectangle("WorkPlane", Vector3.Zero, Vector3.UnitX, Vector3.UnitX + Vector3.UnitZ, Vector3.UnitZ);
         }
     }

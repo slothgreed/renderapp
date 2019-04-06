@@ -10,7 +10,7 @@ namespace KI.Asset.Technique
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ImageBasedLighting(Renderer renderer, string vertexShader, string fragShader)
+        public ImageBasedLighting(RenderSystem renderer, string vertexShader, string fragShader)
             : base("IBL", renderer, vertexShader, fragShader,RenderType.Original)
         {
         }

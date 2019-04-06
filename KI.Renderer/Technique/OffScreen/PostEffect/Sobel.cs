@@ -73,7 +73,7 @@ namespace KI.Asset.Technique
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public Sobel(Renderer renderer, string vertexShader, string fragShader)
+        public Sobel(RenderSystem renderer, string vertexShader, string fragShader)
             : base("Sobel", renderer, vertexShader, fragShader, RenderType.OffScreen)
         {
         }

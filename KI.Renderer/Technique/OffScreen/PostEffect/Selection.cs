@@ -24,7 +24,7 @@ namespace KI.Asset.Technique
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public Selection(Renderer renderer, string vertexShader, string fragShader)
+        public Selection(RenderSystem renderer, string vertexShader, string fragShader)
             : base("SelectionBuffer", renderer, vertexShader, fragShader, RenderType.OffScreen)
         {
             var textures = Renderer.RenderQueue.OutputTexture<GBuffer>();

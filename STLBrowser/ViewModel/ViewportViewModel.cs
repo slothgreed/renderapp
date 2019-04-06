@@ -72,12 +72,12 @@ namespace STLBrowser.ViewModel
         /// <summary>
         /// レンダラー
         /// </summary>
-        public Renderer Renderer { get; set; }
+        public RenderSystem Renderer { get; set; }
 
         public void OnLoadedEvent(object sender, EventArgs e)
         {
             MainScene = new Scene("MainScene");
-            Renderer = new Renderer();
+            Renderer = new RenderSystem();
             Renderer.ActiveScene = MainScene;
 
             MainScene.MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");

@@ -33,7 +33,7 @@ namespace KI.Asset.Technique
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public SSLIC(Renderer renderer, string vertexShader, string fragShader)
+        public SSLIC(RenderSystem renderer, string vertexShader, string fragShader)
             : base("SSLIC", renderer, vertexShader, fragShader, RenderType.Original)
         {
         }
