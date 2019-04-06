@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq;
+using KI.Asset;
 using KI.Gfx.GLUtil;
 using KI.Gfx.KITexture;
 using KI.Gfx.Render;
 using OpenTK.Graphics.OpenGL;
 
-namespace KI.Asset.Technique
+namespace KI.Renderer.Technique
 {
     /// <summary>
     /// スクリーンスペースLIC
@@ -66,7 +67,7 @@ namespace KI.Asset.Technique
         /// <param name="scene">シーン</param>
         public override void Render(Scene scene)
         {
-            var gBuffer = Renderer.RenderQueue.Items.OfType<GBuffer>().First();
+            var gBuffer = RenderSystem.RenderQueue.Items.OfType<GBuffer>().First();
             gBuffer.RenderTarget.GetPixelData(imageInfo, DeviceContext.Instance.Width, DeviceContext.Instance.Height, (int)GBuffer.OutputTextureType.Light);
             ssLicTex.GenTexture(imageInfo);
 
@@ -120,7 +121,7 @@ namespace KI.Asset.Technique
         /// <param name="height">縦</param>
         private void CreateFrameBuffer(int width, int height)
         {
-            var textures = Renderer.RenderQueue.OutputTexture<GBuffer>();
+            var textures = RenderSystem.RenderQueue.OutputTexture<GBuffer>();
             var vectorTexture = textures[(int)GBuffer.OutputTextureType.Light];
 
             if (ssLicTex == null)
@@ -129,7 +130,7 @@ namespace KI.Asset.Technique
                 uNoize = TextureFactory.Instance.CreateTexture("SSLIC Texture", width, height);
 
                 postRectangle = RenderObjectFactory.Instance.CreateRenderObject("SSLIC PostRectangle", AssetFactory.Instance.CreateRectangle("SSLIC PostRectangle"));
-                postRectangle.Shader = ShaderCreater.Instance.CreateShader(ShaderType.SSLIC);
+                postRectangle.Shader = ShaderCreater.Instance.CreateShader(Asset.ShaderType.SSLIC);
                 postRectangle.Shader.SetValue("uVector", ssLicTex);
                 postRectangle.Shader.SetValue("uNoize", uNoize);
             }

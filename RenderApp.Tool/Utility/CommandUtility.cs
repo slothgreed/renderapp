@@ -1,6 +1,7 @@
 ﻿using KI.Asset;
 using KI.Foundation.Core;
 using KI.Gfx;
+using KI.Renderer;
 using KI.Tool.Command;
 
 namespace RenderApp.Tool

@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
 using KI.Analyzer;
 using KI.Analyzer.Algorithm;
-using KI.Asset;
 using KI.Asset.Attribute;
 using KI.Gfx;
 using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Mathmatics;
+using KI.Renderer;
 using KI.Tool.Control;
 using OpenTK;
 using RenderApp.Model;

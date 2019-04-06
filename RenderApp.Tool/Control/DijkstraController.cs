@@ -4,6 +4,7 @@ using KI.Asset;
 using KI.Gfx;
 using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil;
+using KI.Renderer;
 using KI.Tool.Control;
 using OpenTK;
 using RenderApp.Model;

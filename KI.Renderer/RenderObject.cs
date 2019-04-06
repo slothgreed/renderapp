@@ -10,7 +10,7 @@ using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
 using OpenTK.Graphics.OpenGL;
 
-namespace KI.Asset
+namespace KI.Renderer
 {
     /// <summary>
     /// レンダリング種類

@@ -2,7 +2,7 @@
 using KI.Mathmatics;
 using OpenTK;
 
-namespace KI.Asset
+namespace KI.Renderer
 {
     /// <summary>
     /// シーンノード

@@ -1,4 +1,5 @@
 ﻿using KI.Asset;
+using KI.Renderer;
 using KI.Tool.Command;
 using KI.UI.ViewModel;
 using RenderApp.Model;
@@ -51,7 +52,7 @@ namespace RenderApp.ViewModel
 
         private void ExecuteCommand()
         {
-            CommandBase command = new CreateIsoLineCommand(new IsoLineCommandArgs(Workspace.Instance.MainScene.SelectNode as RenderObject,Workspace.Instance.MainScene, Space));
+            CommandBase command = new CreateIsoLineCommand(new IsoLineCommandArgs(Workspace.Instance.MainScene.SelectNode as RenderObject, Workspace.Instance.MainScene, Space));
             CommandManager.Instance.Execute(command, true);
         }
     }

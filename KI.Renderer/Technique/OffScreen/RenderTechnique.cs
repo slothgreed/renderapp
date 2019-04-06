@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using KI.Asset;
 using KI.Foundation.Core;
 using KI.Gfx.KIShader;
 using KI.Gfx.Render;
 
-namespace KI.Asset.Technique
+namespace KI.Renderer.Technique
 {
     /// <summary>
     /// レンダーテクニック
@@ -19,7 +20,7 @@ namespace KI.Asset.Technique
         /// <summary>
         /// レンダラ
         /// </summary>
-        public RenderSystem Renderer
+        public RenderSystem RenderSystem
         {
             get;
             private set;
@@ -36,7 +37,7 @@ namespace KI.Asset.Technique
             : base(name)
         {
             renderType = type;
-            Renderer = renderer;
+            RenderSystem = renderer;
             Init();
         }
 
@@ -52,7 +53,7 @@ namespace KI.Asset.Technique
             : base(name)
         {
             renderType = type;
-            Renderer = renderer;
+            RenderSystem = renderer;
             Init(vertexShader, fragShader);
         }
 

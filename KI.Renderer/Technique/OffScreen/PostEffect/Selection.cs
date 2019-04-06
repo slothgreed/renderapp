@@ -1,6 +1,6 @@
 ﻿using KI.Gfx.KITexture;
 
-namespace KI.Asset.Technique
+namespace KI.Renderer.Technique
 {
     /// <summary>
     /// 形状選択ようのレンダリング
@@ -27,7 +27,7 @@ namespace KI.Asset.Technique
         public Selection(RenderSystem renderer, string vertexShader, string fragShader)
             : base("SelectionBuffer", renderer, vertexShader, fragShader, RenderType.OffScreen)
         {
-            var textures = Renderer.RenderQueue.OutputTexture<GBuffer>();
+            var textures = RenderSystem.RenderQueue.OutputTexture<GBuffer>();
             Rectanle.Polygon.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Color]);
         }
 
@@ -44,11 +44,11 @@ namespace KI.Asset.Technique
         /// </summary>
         public void SelectObject()
         {
-            if (Renderer.ActiveScene.SelectNode != null)
+            if (RenderSystem.ActiveScene.SelectNode != null)
             {
-                if (Renderer.ActiveScene.SelectNode is RenderObject)
+                if (RenderSystem.ActiveScene.SelectNode is RenderObject)
                 {
-                    var renderObject = Renderer.ActiveScene.SelectNode as RenderObject;
+                    var renderObject = RenderSystem.ActiveScene.SelectNode as RenderObject;
                     uID = renderObject.ID;
                 }
                 else

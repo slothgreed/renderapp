@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using KI.Analyzer;
 using KI.Asset;
 using KI.Gfx.GLUtil;
+using KI.Renderer;
 using KI.Tool.Control;
 using OpenTK;
 using RenderApp.Tool.Utility;

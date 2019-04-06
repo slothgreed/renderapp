@@ -1,6 +1,6 @@
 ﻿using KI.Gfx.KITexture;
 
-namespace KI.Asset.Technique
+namespace KI.Renderer.Technique
 {
     /// <summary>
     /// 最終出力用のバッファ
@@ -48,7 +48,7 @@ namespace KI.Asset.Technique
         public override void Initialize()
         {
             uSelectMap = null;
-            var textures = Renderer.RenderQueue.OutputTexture<GBuffer>();
+            var textures = RenderSystem.RenderQueue.OutputTexture<GBuffer>();
             Rectanle.Polygon.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Color]);
         }
 

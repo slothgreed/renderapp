@@ -1,9 +1,10 @@
-﻿using KI.Foundation.Core;
+﻿using KI.Asset;
+using KI.Foundation.Core;
 using KI.Gfx.Geometry;
 using KI.Gfx.KIShader;
 using OpenTK;
 
-namespace KI.Asset
+namespace KI.Renderer
 {
     /// <summary>
     /// 描画オブジェクト作成ファクトリ

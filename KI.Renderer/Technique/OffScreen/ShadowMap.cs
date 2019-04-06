@@ -1,6 +1,6 @@
 ﻿using KI.Gfx.Render;
 
-namespace KI.Asset.Technique
+namespace KI.Renderer.Technique
 {
     /// <summary>
     /// シャドウマップ

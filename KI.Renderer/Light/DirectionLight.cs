@@ -1,6 +1,6 @@
 ﻿using OpenTK;
 
-namespace KI.Asset
+namespace KI.Renderer
 {
     /// <summary>
     /// 平行光源

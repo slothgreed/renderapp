@@ -2,9 +2,9 @@
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 using KI.Asset;
-using KI.Asset.Technique;
 using KI.Gfx.GLUtil;
-using KI.Tool;
+using KI.Renderer;
+using KI.Renderer.Technique;
 using KI.Tool.Control;
 using KI.UI.ViewModel;
 using OpenTK;

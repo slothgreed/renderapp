@@ -1,6 +1,7 @@
-﻿using KI.Gfx.KITexture;
+﻿using KI.Asset;
+using KI.Gfx.KITexture;
 
-namespace KI.Asset.Technique
+namespace KI.Renderer.Technique
 {
     /// <summary>
     /// IBL
@@ -41,7 +42,7 @@ namespace KI.Asset.Technique
         /// </summary>
         public override void Initialize()
         {
-            var textures = Renderer.RenderQueue.OutputTexture<GBuffer>();
+            var textures = RenderSystem.RenderQueue.OutputTexture<GBuffer>();
             Rectanle.Polygon.AddTexture(TextureKind.Albedo, textures[(int)GBuffer.OutputTextureType.Color]);
             Rectanle.Polygon.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Normal]);
             Rectanle.Polygon.AddTexture(TextureKind.World, textures[(int)GBuffer.OutputTextureType.Posit]);

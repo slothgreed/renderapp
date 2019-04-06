@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using KI.Asset.Technique;
 using KI.Gfx.KITexture;
+using KI.Renderer.Technique;
 
-namespace KI.Asset
+namespace KI.Renderer
 {
     /// <summary>
     /// レンダーキューイベント

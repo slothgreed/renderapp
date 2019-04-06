@@ -1,4 +1,5 @@
 ﻿using KI.Asset;
+using KI.Renderer;
 using KI.UI.ViewModel;
 using OpenTK;
 
@@ -6,7 +7,7 @@ namespace RenderApp.ViewModel
 {
     public class SceneNodeViewModel : DockWindowViewModel
     {
-        public SceneNodeViewModel(ViewModelBase parent, SceneNode scene, string name, DockWindowViewModel.Place place)
+        public SceneNodeViewModel(ViewModelBase parent, SceneNode scene, string name, Place place)
             : base(parent, scene, name, place)
         {
             Model = scene;

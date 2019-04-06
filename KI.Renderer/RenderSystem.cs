@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using KI.Asset.Technique;
 using KI.Gfx.KITexture;
+using KI.Renderer.Technique;
 
-namespace KI.Asset
+namespace KI.Renderer
 {
     /// <summary>
     /// レンダリングシステム

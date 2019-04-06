@@ -4,6 +4,7 @@ using KI.Analyzer;
 using KI.Analyzer.Algorithm;
 using KI.Asset;
 using KI.Gfx.Geometry;
+using KI.Renderer;
 using KI.Tool.Command;
 
 namespace RenderApp.Tool.Command

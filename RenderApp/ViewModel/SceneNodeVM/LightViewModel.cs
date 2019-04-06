@@ -1,4 +1,5 @@
 ﻿using KI.Asset;
+using KI.Renderer;
 using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel

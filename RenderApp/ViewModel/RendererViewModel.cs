@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
-using KI.Asset;
-using KI.Asset.Technique;
+using KI.Renderer;
+using KI.Renderer.Technique;
 using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel

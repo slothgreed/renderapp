@@ -6,7 +6,7 @@ using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
 using OpenTK;
 
-namespace KI.Asset
+namespace KI.Renderer
 {
     /// <summary>
     /// シェーダヘルパ

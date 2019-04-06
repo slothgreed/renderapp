@@ -2,9 +2,10 @@
 using System.Linq;
 using KI.Asset;
 using KI.Asset.Attribute;
-using KI.Asset.Technique;
 using KI.Foundation.Tree;
 using KI.Gfx.GLUtil;
+using KI.Renderer;
+using KI.Renderer.Technique;
 using KI.Tool.Command;
 using KI.UI.ViewModel;
 using OpenTK;

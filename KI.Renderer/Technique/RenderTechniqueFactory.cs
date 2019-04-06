@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
-using KI.Asset.Technique;
+using KI.Asset;
 using KI.Foundation.Core;
+using KI.Renderer.Technique;
 
-namespace KI.Asset
+namespace KI.Renderer
 {
     /// <summary>
     /// レンダーテクニック種類

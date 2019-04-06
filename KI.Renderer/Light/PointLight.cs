@@ -1,6 +1,6 @@
 ﻿using OpenTK;
 
-namespace KI.Asset
+namespace KI.Renderer
 {
     /// <summary>
     /// 点光源

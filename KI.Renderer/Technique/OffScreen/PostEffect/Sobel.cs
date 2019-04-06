@@ -1,6 +1,6 @@
 ﻿using KI.Gfx.KITexture;
 
-namespace KI.Asset.Technique
+namespace KI.Renderer.Technique
 {
     /// <summary>
     /// Sobel

@@ -6,6 +6,7 @@ using KI.Gfx;
 using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil;
 using KI.Mathmatics;
+using KI.Renderer;
 using KI.Tool.Control;
 using OpenTK;
 

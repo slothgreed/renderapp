@@ -1,9 +1,4 @@
-﻿using System.Linq;
-using KI.Asset;
-using KI.Asset.Attribute;
-using KI.Asset.Technique;
-using KI.Foundation.Tree;
-using OpenTK;
+﻿using KI.Renderer;
 
 namespace RenderApp.Model
 {

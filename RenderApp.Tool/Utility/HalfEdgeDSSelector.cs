@@ -4,6 +4,7 @@ using KI.Asset;
 using KI.Foundation.Tree;
 using KI.Gfx.GLUtil;
 using KI.Mathmatics;
+using KI.Renderer;
 using OpenTK;
 using RenderApp.Model;
 
