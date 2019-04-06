@@ -108,7 +108,7 @@ namespace RenderApp.ViewModel
 
         public void UpdateSelectNode(SceneNode node)
         {
-            if (node.KIObject == null)
+            if (node == null)
             {
                 return;
             }

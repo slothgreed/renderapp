@@ -12,7 +12,8 @@ namespace CADApp.Model.Assembly
 
         RenderObject polygonObject;
 
-        public Sketch()
+        public Sketch(string name)
+           : base(name)
         {
 
         }

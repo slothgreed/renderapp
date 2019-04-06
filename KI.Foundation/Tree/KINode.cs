@@ -209,15 +209,6 @@ namespace KI.Foundation.Tree
         #endregion
 
         /// <summary>
-        /// オブジェクトを表す文字列
-        /// </summary>
-        /// <returns>文字列</returns>
-        public override string ToString()
-        {
-            return Name;
-        }
-
-        /// <summary>
         /// ノード削除イベント
         /// </summary>
         /// <param name="removeNode">削除したノード</param>
