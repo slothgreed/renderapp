@@ -4,6 +4,7 @@ using KI.Analyzer;
 using KI.Analyzer.Parameter;
 using KI.Asset;
 using KI.Asset.Attribute;
+using KI.Gfx;
 using KI.Renderer;
 using KI.Tool.Command;
 using OpenTK;
@@ -113,7 +114,7 @@ namespace RenderApp.Tool.Command
             //scene.AddObject(meanAttribute, parentNode);
             //scene.AddObject(gaussAttribute, parentNode);
 
-            var wireFrameShader = ShaderCreater.Instance.CreateShader(ShaderType.WireFrame);
+            var wireFrameShader = ShaderCreater.Instance.CreateShader(SHADER_TYPE.WireFrame);
 
             var vertexs = targetObject.Polygon.Vertexs.Select(p => p.Position).ToArray();
             var normals = targetObject.Polygon.Vertexs.Select(p => p.Normal).ToArray();

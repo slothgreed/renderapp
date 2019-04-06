@@ -61,7 +61,6 @@
     <Compile Include="Attribute\VertexParameterAttribute.cs" />
     <Compile Include="Attribute\WireFrameAttribute.cs" />
     <Compile Include="Camera.cs" />
-    <Compile Include="AssetDirectory.cs" />
     <Compile Include="Loader\Importer\HalfEdgeImporter.cs" />
     <Compile Include="Loader\Importer\ImporterUtility.cs" />
     <Compile Include="Loader\Importer\OBJImporter.cs" />
@@ -80,7 +79,6 @@
     <Compile Include="Primitive\Rectangle.cs" />
     <Compile Include="Primitive\Sphere.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShaderCreater.cs" />
     <Compile Include="TextureFactory.cs" />
   </ItemGroup>
   <ItemGroup>

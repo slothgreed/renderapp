@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using KI.Asset;
+using KI.Gfx;
 using KI.Gfx.GLUtil;
 using KI.Gfx.KITexture;
 using KI.Gfx.Render;
@@ -130,7 +131,7 @@ namespace KI.Renderer.Technique
                 uNoize = TextureFactory.Instance.CreateTexture("SSLIC Texture", width, height);
 
                 postRectangle = RenderObjectFactory.Instance.CreateRenderObject("SSLIC PostRectangle", AssetFactory.Instance.CreateRectangle("SSLIC PostRectangle"));
-                postRectangle.Shader = ShaderCreater.Instance.CreateShader(Asset.ShaderType.SSLIC);
+                postRectangle.Shader = ShaderCreater.Instance.CreateShader(SHADER_TYPE.SSLIC);
                 postRectangle.Shader.SetValue("uVector", ssLicTex);
                 postRectangle.Shader.SetValue("uNoize", uNoize);
             }

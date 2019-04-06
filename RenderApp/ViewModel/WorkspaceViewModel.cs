@@ -3,6 +3,7 @@ using System.Linq;
 using KI.Asset;
 using KI.Asset.Attribute;
 using KI.Foundation.Tree;
+using KI.Gfx;
 using KI.Gfx.GLUtil;
 using KI.Renderer;
 using KI.Renderer.Technique;
@@ -216,7 +217,7 @@ namespace RenderApp.ViewModel
                 var vectorFiledAttribute = new VectorFieldAttribute(
                     renderBunny.Name + ": VectorField",
                     renderBunny.VertexBuffer.ShallowCopy(),
-                    ShaderCreater.Instance.CreateShader(ShaderType.VectorField),
+                    ShaderCreater.Instance.CreateShader(SHADER_TYPE.VectorField),
                     renderBunny.Attributes.OfType<VertexDirectionAttribute>().First().Direction,
                     renderBunny.Type);
                 renderBunny.Attributes.Add(vectorFiledAttribute);

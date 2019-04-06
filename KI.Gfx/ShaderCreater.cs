@@ -1,14 +1,13 @@
-﻿using KI.Gfx;
-using KI.Gfx.Geometry;
+﻿using KI.Gfx.Geometry;
 using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
 
-namespace KI.Asset
+namespace KI.Gfx
 {
     /// <summary>
     /// シェーダ種類
     /// </summary>
-    public enum ShaderType
+    public enum SHADER_TYPE
     {
         Bezier,
         Displacement,
@@ -48,7 +47,7 @@ namespace KI.Asset
         {
             get
             {
-                return AssetDirectory.ShaderDirectory + @"\";
+                return GfxConstants.ShaderDirectory + @"\";
             }
         }
 
@@ -208,61 +207,61 @@ namespace KI.Asset
         /// </summary>
         /// <param name="type">シェーダ種類</param>
         /// <returns>シェーダ</returns>
-        public Shader CreateShader(ShaderType type)
+        public Shader CreateShader(SHADER_TYPE type)
         {
             switch (type)
             {
-                case ShaderType.Bezier:
+                case SHADER_TYPE.Bezier:
                     return ShaderFactory.Instance.CreateShaderVF(
                         Directory + @"Special\bezier.vert",
                         Directory + @"Special\bezier.frag");
-                case ShaderType.Displacement:
+                case SHADER_TYPE.Displacement:
                     return ShaderFactory.Instance.CreateTesselation(
                         Directory + @"Special\Tesselation\displacement.vert",
                         Directory + @"Special\Tesselation\displacement.frag",
                         Directory + @"Special\Tesselation\displacement.geom",
                         Directory + @"Special\Tesselation\displacement.tcs",
                         Directory + @"Special\Tesselation\displacement.tes");
-                case ShaderType.EffectLine:
+                case SHADER_TYPE.EffectLine:
                     return ShaderFactory.Instance.CreateShaderVF(
                         Directory + @"Special\effectline.vert",
                         Directory + @"Special\effectline.frag");
-                case ShaderType.NURBS:
+                case SHADER_TYPE.NURBS:
                     return ShaderFactory.Instance.CreateTesselation(
                         Directory + @"Special\Tesselation\nurbs.vert",
                         Directory + @"Special\Tesselation\nurbs.frag",
                         Directory + @"Special\Tesselation\nurbs.geom",
                         Directory + @"Special\Tesselation\nurbs.tcs",
                         Directory + @"Special\Tesselation\nurbs.tes");
-                case ShaderType.Split:
+                case SHADER_TYPE.Split:
                     return ShaderFactory.Instance.CreateTesselation(
                         Directory + @"Special\Tesselation\split.vert",
                         Directory + @"Special\Tesselation\split.frag",
                         Directory + @"Special\Tesselation\split.geom",
                         Directory + @"Special\Tesselation\split.tcs",
                         Directory + @"Special\Tesselation\split.tes");
-                case ShaderType.Fur:
+                case SHADER_TYPE.Fur:
                     return ShaderFactory.Instance.CreateShaderVF(
                         Directory + @"Special\fur.vert",
                         Directory + @"Special\fur.frag");
-                case ShaderType.Outline:
+                case SHADER_TYPE.Outline:
                     return ShaderFactory.Instance.CreateGeometryShader(
                         Directory + @"Special\outline.vert",
                         Directory + @"Special\outline.frag",
                         Directory + @"Special\outline.geom");
-                case ShaderType.WireFrame:
+                case SHADER_TYPE.WireFrame:
                     return ShaderFactory.Instance.CreateShaderVF(
                         Directory + @"GBuffer\WireFrame.vert",
                         Directory + @"GBuffer\WireFrame.frag");
-                case ShaderType.VectorField:
+                case SHADER_TYPE.VectorField:
                     return ShaderFactory.Instance.CreateShaderVF(
                         Directory + @"GBuffer\DirectionShader.vert",
                         Directory + @"GBuffer\DirectionShader.frag");
-                case ShaderType.SSLIC:
+                case SHADER_TYPE.SSLIC:
                     return ShaderFactory.Instance.CreateShaderVF(
                         Directory + @"PostEffect\sslic.vert",
                         Directory + @"PostEffect\sslic.frag");
-                case ShaderType.Output:
+                case SHADER_TYPE.Output:
                     return ShaderFactory.Instance.CreateShaderVF(
                         Directory + @"PostEffect\output.vert",
                         Directory + @"PostEffect\output.frag");

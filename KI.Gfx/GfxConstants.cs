@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace KI.Asset
+namespace KI.Gfx
 {
     /// <summary>
     /// AssetDirectoryクラス
     /// </summary>
-    public static class AssetDirectory
+    public static class GfxConstants
     {
         /// <summary>
         /// KIProjectDirecoty

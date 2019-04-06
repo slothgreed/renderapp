@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using KI.Asset;
 using KI.Foundation.Core;
+using KI.Gfx;
 using KI.Renderer.Technique;
 
 namespace KI.Renderer
@@ -52,9 +53,9 @@ namespace KI.Renderer
 
         public RenderTechniqueFactory()
         {
-            var directory = AssetDirectory.ShaderDirectory;
-            var postEffect = AssetDirectory.ShaderDirectory + @"\PostEffect";
-            var lighthing = AssetDirectory.ShaderDirectory + @"\Lighthing";
+            var directory = GfxConstants.ShaderDirectory;
+            var postEffect = GfxConstants.ShaderDirectory + @"\PostEffect";
+            var lighthing = GfxConstants.ShaderDirectory + @"\Lighthing";
             DefaultShader = new Dictionary<RenderTechniqueType, ShaderFile>();
             DefaultShader.Add(RenderTechniqueType.Shadow,    new ShaderFile() { Vertex = directory  + @"\shadow.vert",      Frag = directory  + @"\shadow.frag" });
             DefaultShader.Add(RenderTechniqueType.IBL,       new ShaderFile() { Vertex = lighthing  + @"\ibl.vert",         Frag = lighthing  + @"\ibl.frag" });
