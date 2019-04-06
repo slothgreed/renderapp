@@ -75,6 +75,7 @@ namespace ViewerTest
                                 throw new Exception("can't parse vertexNum");
                             }
                         }
+
                         if (lineData[1] == "face")
                         {
                             if (!int.TryParse(lineData[2], out faceNum))

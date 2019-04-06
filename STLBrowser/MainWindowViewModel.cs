@@ -11,11 +11,13 @@ namespace STLBrowser.ViewModel
             {
                 return _FileTreeViewModel;
             }
+
             set
             {
                 SetValue(ref _FileTreeViewModel, value);
             }
         }
+
         private STLBrowserViewModel _STLBrowserViewModel;
         public STLBrowserViewModel STLBrowserViewModel
         {

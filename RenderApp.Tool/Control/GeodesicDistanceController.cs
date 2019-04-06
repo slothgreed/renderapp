@@ -6,6 +6,7 @@ using KI.Analyzer;
 using KI.Analyzer.Algorithm;
 using KI.Asset;
 using KI.Asset.Attribute;
+using KI.Gfx;
 using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
@@ -102,7 +103,7 @@ namespace RenderApp.Tool.Control
                         Polygon lineGeometry = new Polygon("geodesicDistance", lines);
                         var vertexBuffer = new VertexBuffer();
                         vertexBuffer.SetupLineBuffer(lineGeometry.Vertexs, lineGeometry.Index, lineGeometry.Lines);
-                        var lineAttribute = new PolygonAttribute("geodesicDistance", vertexBuffer, lineGeometry.Type, renderObject.Shader);
+                        var lineAttribute = new PolygonAttribute("geodesicDistance", vertexBuffer, PolygonType.Lines, renderObject.Shader);
                         renderObject.Attributes.Add(lineAttribute);
                         Workspace.Instance.Renderer.ActiveScene.AddObject(lineAttribute, parentNode);
                     }

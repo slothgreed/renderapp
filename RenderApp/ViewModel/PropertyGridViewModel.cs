@@ -13,6 +13,7 @@ namespace RenderApp.ViewModel
             {
                 return DataModel;
             }
+
             set
             {
                 OnPropertyChanging(nameof(DataModel));
@@ -20,6 +21,7 @@ namespace RenderApp.ViewModel
                 OnPropertyChanged(nameof(DataModel));
             }
         }
+
         /// <summary>
         /// コンストラクタ
         /// </summary>

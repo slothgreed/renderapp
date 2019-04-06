@@ -169,6 +169,7 @@ namespace KI.Analyzer.Algorithm.FeatureLine
             {
                 feature.Lines.Add(edge);
             }
+
             featureList.Add(feature);
         }
 

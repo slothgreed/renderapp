@@ -26,6 +26,7 @@ namespace STLBrowser.ViewModel
                         Child = Viewport.Instance.GLControl
                     };
                 }
+
                 return _glContext;
             }
         }
@@ -92,6 +93,7 @@ namespace STLBrowser.ViewModel
             Renderer.OutputBuffer = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output) as OutputBuffer;
             Renderer.OutputTexture = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
         }
+
         private void OnResizeEvent(object sender, EventArgs e)
         {
             if (MainScene != null)

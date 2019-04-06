@@ -114,6 +114,7 @@ namespace RenderApp.Tool.Command
         /// 間隔
         /// </summary>
         public float Space { get; private set; }
+
         /// <summary>
         /// コンストラクタ
         /// </summary>

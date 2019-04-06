@@ -62,6 +62,7 @@ namespace RenderApp.Tool.Control
                     {
                         camera.LookAtDistance = camera.LookAtDistance * zoomOutRatio;
                     }
+
                     break;
             }
 

@@ -40,6 +40,7 @@ namespace RenderApp.ViewModel
             {
                 return _title;
             }
+
             protected set
             {
                 SetValue<string>(ref _title, value);

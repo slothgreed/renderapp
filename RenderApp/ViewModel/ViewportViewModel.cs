@@ -107,6 +107,7 @@ namespace RenderApp.ViewModel
             {
                 return glContext;
             }
+
             private set
             {
                 SetValue(ref glContext, value);

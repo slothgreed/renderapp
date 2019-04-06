@@ -28,6 +28,7 @@ namespace CADApp.ViewModel
                         Child = Viewport.Instance.GLControl
                     };
                 }
+
                 return _glContext;
             }
         }

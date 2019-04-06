@@ -29,6 +29,7 @@ namespace RenderApp.ViewModel
             {
                 return selectColor;
             }
+
             set
             {
                 selectColor = value;

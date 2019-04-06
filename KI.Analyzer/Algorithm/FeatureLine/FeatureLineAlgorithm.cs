@@ -23,6 +23,7 @@ namespace KI.Analyzer.Algorithm
         FeatureLineGraph ravines = new FeatureLineGraph();
 
         private HalfEdgeDS halfEdgeDS;
+
         /// <summary>
         /// コンストラクタ
         /// </summary>

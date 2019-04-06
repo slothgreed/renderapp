@@ -12,6 +12,7 @@ namespace STLBrowser.ViewModel
             {
                 return _FolderPath;
             }
+
             set
             {
                 SetValue(ref _FolderPath, value);
@@ -26,6 +27,7 @@ namespace STLBrowser.ViewModel
             {
                 return _root;
             }
+
             set
             {
                 SetValue(ref _root, value);
@@ -40,6 +42,7 @@ namespace STLBrowser.ViewModel
                 {
                     _OpenFolder = CreateCommand(OnOpenFolderCommand);
                 }
+
                 return _OpenFolder;
             }
         }
@@ -60,10 +63,12 @@ namespace STLBrowser.ViewModel
                 return _SelectedItemChanged;
             }
         }
+
         private void OnSelectedFolderChanged(object sender)
         {
 
         }
+
         public FileTreeViewModel(ViewModelBase parent, string path)
             : base(parent)
         {

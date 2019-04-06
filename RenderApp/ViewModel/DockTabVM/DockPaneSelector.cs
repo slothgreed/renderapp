@@ -42,6 +42,7 @@ namespace RenderApp.ViewModel
                     {
                         layout.FloatingWindows.Add(new LayoutAnchorableFloatingWindow());
                     }
+
                     layout.LeftSide.Children.First().Children.Add(anchorableToShow);
                     break;
                 default:

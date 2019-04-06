@@ -34,6 +34,7 @@ namespace CADApp.Model
         /// 作業平面
         /// </summary>
         public Rectangle WorkPlane;
+
         /// <summary>
         /// シーン
         /// </summary>

@@ -62,6 +62,7 @@ namespace RenderApp.ViewModel
             {
                 return lowValue;
             }
+
             set
             {
                 SetValue(ref lowValue, value);
@@ -76,6 +77,7 @@ namespace RenderApp.ViewModel
             {
                 return heightValue;
             }
+
             set
             {
                 SetValue(ref heightValue, value);

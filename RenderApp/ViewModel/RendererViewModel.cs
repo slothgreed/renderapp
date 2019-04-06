@@ -79,6 +79,7 @@ namespace RenderApp.ViewModel
 
                 return Model.PostProcessMode;
             }
+
             set
             {
                 Model.PostProcessMode = value;
@@ -93,6 +94,7 @@ namespace RenderApp.ViewModel
             {
                 return postProcesses;
             }
+
             set
             {
                 postProcesses = value;

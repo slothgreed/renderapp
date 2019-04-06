@@ -62,6 +62,7 @@ namespace CADApp.Tool.Control
                     {
                         camera.LookAtDistance = camera.LookAtDistance * zoomOutRatio;
                     }
+
                     break;
             }
 

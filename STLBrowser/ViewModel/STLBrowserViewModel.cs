@@ -13,6 +13,7 @@ namespace STLBrowser.ViewModel
             {
                 return _STLFiles;
             }
+
             set
             {
                 SetValue(ref _STLFiles, value);

@@ -281,6 +281,7 @@ namespace KI.Analyzer
                 return laplaceVector;
             }
         }
+
         /// <summary>
         /// ボロノイ領域
         /// </summary>

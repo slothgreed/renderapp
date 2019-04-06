@@ -44,6 +44,7 @@ namespace KI.Analyzer.Algorithm
                 {
                     return cost;
                 }
+
                 set
                 {
                     if (Math.Abs(value) < Calculator.THRESHOLD05)

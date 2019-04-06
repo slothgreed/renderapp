@@ -11,6 +11,7 @@ namespace CADApp.ViewModel
             {
                 return _ViewportViewModel;
             }
+
             set
             {
                 SetValue(ref _ViewportViewModel, value);

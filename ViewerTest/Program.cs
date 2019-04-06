@@ -18,6 +18,7 @@ namespace ViewerTest
             {
                 window.Run(30.0);
             }
+
             return 0;
         }
     }
@@ -91,6 +92,7 @@ namespace ViewerTest
                 {
                     break;
                 }
+
                 float[] floatData = lineData
                     .Select(p => float.Parse(p))
                     .ToArray();
