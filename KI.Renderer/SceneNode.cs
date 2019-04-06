@@ -107,8 +107,6 @@ namespace KI.Renderer
         /// </summary>
         public bool Visible { get; set; } = true;
 
-        #region [modelmatrix]
-
         /// <summary>
         /// レンダリングコア
         /// </summary>
@@ -126,6 +124,8 @@ namespace KI.Renderer
                 RenderCore(scene);
             }
         }
+
+        #region [modelmatrix]
 
         /// <summary>
         /// X軸で回転
@@ -209,7 +209,6 @@ namespace KI.Renderer
             ModelMatrix = Matrix4.Identity;
             ModelMatrix *= matrix;
         }
-        #endregion
 
         /// <summary>
         /// モデルビューに平行移動を適用
@@ -257,5 +256,8 @@ namespace KI.Renderer
             ModelMatrix = ModelMatrix.ClearTranslation();
             ModelMatrix *= Matrix4.CreateTranslation(translate);
         }
+
+        #endregion
+
     }
 }
