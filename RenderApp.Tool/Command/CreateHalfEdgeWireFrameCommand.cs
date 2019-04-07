@@ -69,7 +69,7 @@ namespace RenderApp.Tool.Command
             }
 
             var polygon = new Polygon("HalfEdgeWireFrame :" + targetObject.Name, position, lines, PolygonType.Lines);
-            RenderObject wireframe = RenderObjectFactory.Instance.CreateRenderObject("HalfEdgeWireFrame :" + targetObject.Name, polygon);
+            PolygonNode wireframe = SceneNodeFactory.Instance.CreatePolygonNode("HalfEdgeWireFrame :" + targetObject.Name, polygon);
             wireframe.ModelMatrix = targetObject.ModelMatrix;
             scene.AddObject(wireframe);
 
@@ -94,7 +94,7 @@ namespace RenderApp.Tool.Command
         /// <summary>
         /// 対象オブジェクト
         /// </summary>
-        public RenderObject TargetObject { get; private set; }
+        public PolygonNode TargetObject { get; private set; }
 
         /// <summary>
         /// シーン
@@ -106,7 +106,7 @@ namespace RenderApp.Tool.Command
         /// </summary>
         /// <param name="targetNode">対象オブジェクト</param>
         /// <param name="loopNum">ループ回数</param>
-        public HalfEdgeWireFrameCommandArgs(RenderObject targetNode, Scene scene)
+        public HalfEdgeWireFrameCommandArgs(PolygonNode targetNode, Scene scene)
         {
             this.TargetObject = targetNode;
             this.Scene = scene;

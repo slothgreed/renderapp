@@ -34,9 +34,9 @@ namespace KI.Renderer.Technique
             RenderTarget.BindRenderTarget();
             foreach (var node in scene.RootNode.AllChildren())
             {
-                if (node is RenderObject)
+                if (node is PolygonNode)
                 {
-                    var polygon = node as RenderObject;
+                    var polygon = node as PolygonNode;
                     var old = polygon.Shader;
                     polygon.Shader = Rectanle.Shader;
                     polygon.Render(scene);

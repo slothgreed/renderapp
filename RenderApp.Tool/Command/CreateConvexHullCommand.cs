@@ -78,7 +78,7 @@ namespace RenderApp.Tool.Command
             }
 
             Polygon polygon = new Polygon("ConvexHull:" + targetObject.Name, meshs, PolygonType.Triangles);
-            RenderObject convex = RenderObjectFactory.Instance.CreateRenderObject("ConvexHull :" + targetObject.Name, polygon);
+            PolygonNode convex = SceneNodeFactory.Instance.CreatePolygonNode("ConvexHull :" + targetObject.Name, polygon);
             convex.ModelMatrix = targetObject.ModelMatrix;
             scene.AddObject(convex);
 
@@ -103,7 +103,7 @@ namespace RenderApp.Tool.Command
         /// <summary>
         /// 対象オブジェクト
         /// </summary>
-        public RenderObject TargetObject { get; private set; }
+        public PolygonNode TargetObject { get; private set; }
 
         /// <summary>
         /// シーン
@@ -115,7 +115,7 @@ namespace RenderApp.Tool.Command
         /// </summary>
         /// <param name="targetNode">対象オブジェクト</param>
         /// <param name="loopNum">ループ回数</param>
-        public ConvexHullCommandArgs(RenderObject targetNode, Scene scene)
+        public ConvexHullCommandArgs(PolygonNode targetNode, Scene scene)
         {
             this.TargetObject = targetNode;
             this.Scene = scene;

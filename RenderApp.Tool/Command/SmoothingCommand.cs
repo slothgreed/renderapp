@@ -75,7 +75,7 @@ namespace RenderApp.Tool.Command
         /// <summary>
         /// 対象オブジェクト
         /// </summary>
-        public RenderObject TargetObject { get; private set; }
+        public PolygonNode TargetObject { get; private set; }
 
         /// <summary>
         /// ループ回数
@@ -87,7 +87,7 @@ namespace RenderApp.Tool.Command
         /// </summary>
         /// <param name="targetNode">対象オブジェクト</param>
         /// <param name="loopNum">ループ回数</param>
-        public SmoothingCommandArgs(RenderObject targetNode, int loopNum)
+        public SmoothingCommandArgs(PolygonNode targetNode, int loopNum)
         {
             this.TargetObject = targetNode;
             this.LoopNum = loopNum;

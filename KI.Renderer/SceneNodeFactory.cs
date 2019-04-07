@@ -10,27 +10,27 @@ namespace KI.Renderer
     /// <summary>
     /// 描画オブジェクト作成ファクトリ
     /// </summary>
-    public class RenderObjectFactory : KIFactoryBase<RenderObject>
+    public class SceneNodeFactory : KIFactoryBase<PolygonNode>
     {
         /// <summary>
         /// シングルトンインスタンス
         /// </summary>
-        public static RenderObjectFactory Instance { get; } = new RenderObjectFactory();
+        public static SceneNodeFactory Instance { get; } = new SceneNodeFactory();
 
         /// <summary>
         /// 空オブジェクトの作成
         /// </summary>
         /// <param name="name">名前</param>
         /// <returns>描画オブジェクト</returns>
-        public RenderObject CreateRenderObject(string name, Polygon polygon)
+        public PolygonNode CreatePolygonNode(string name, Polygon polygon)
         {
             string vert = ShaderCreater.Instance.GetVertexShader(polygon);
             string frag = ShaderCreater.Instance.GetFragShader(polygon);
             var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
 
-            var renderObject = new RenderObject(name, polygon, shader);
-            AddItem(renderObject);
-            return renderObject;
+            var polygonNode = new PolygonNode(name, polygon, shader);
+            AddItem(polygonNode);
+            return polygonNode;
         }
 
         /// <summary>
@@ -39,9 +39,9 @@ namespace KI.Renderer
         /// <param name="name">名前</param>
         /// <param name="primitive">ジオメトリ</param>
         /// <returns>描画オブジェクト</returns>
-        public RenderObject CreateRenderObject(string name, ICreateModel primitive)
+        public PolygonNode CreatePolygonNode(string name, ICreateModel primitive)
         {
-            return CreateRenderObject(name, primitive.Model);
+            return CreatePolygonNode(name, primitive.Model);
         }
 
         /// <summary>

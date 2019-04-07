@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="RenderApp.View.RenderObjectView"
+    x:Class="RenderApp.View.PolygonNodeView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:control="clr-namespace:KI.UI.Controls;assembly=KI.UI"

@@ -70,11 +70,11 @@ namespace KI.Renderer
         /// </summary>
         public Texture ShadowMap { get; private set; }
 
-        private RenderObject model;
+        private PolygonNode model;
         /// <summary>
         /// ライトのモデル
         /// </summary>
-        public RenderObject Model
+        public PolygonNode Model
         {
             get
             {

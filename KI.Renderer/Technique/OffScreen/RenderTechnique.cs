@@ -74,7 +74,7 @@ namespace KI.Renderer.Technique
         /// <summary>
         /// オフスクリーン用平面
         /// </summary>
-        protected RenderObject Rectanle { get; set; }
+        protected PolygonNode Rectanle { get; set; }
 
         /// <summary>
         /// バッファのクリア
@@ -160,7 +160,7 @@ namespace KI.Renderer.Technique
         /// <param name="fragShader">フラグシェーダ</param>
         private void Init(string vertexShader = null, string fragShader = null)
         {
-            Rectanle = RenderObjectFactory.Instance.CreateRenderObject(Name, AssetFactory.Instance.CreateRectangle(Name));
+            Rectanle = SceneNodeFactory.Instance.CreatePolygonNode(Name, AssetFactory.Instance.CreateRectangle(Name));
             // gbuffer用 以外はシェーダ作成
             if (vertexShader != null && fragShader != null)
             {

@@ -35,7 +35,7 @@ namespace RenderApp.Tool.Control
         /// <summary>
         /// 描画オブジェクト
         /// </summary>
-        private RenderObject renderObject;
+        private PolygonNode polygonNode;
         
         /// <summary>
         /// マウス押下処理
@@ -50,7 +50,7 @@ namespace RenderApp.Tool.Control
 
                 HalfEdgeMesh mesh = null;
 
-                if (HalfEdgeDSSelector.PickTriangle(mouse.Current, ref renderObject, ref mesh))
+                if (HalfEdgeDSSelector.PickTriangle(mouse.Current, ref polygonNode, ref mesh))
                 {
                     if (mesh == null)
                     {
@@ -63,7 +63,7 @@ namespace RenderApp.Tool.Control
                         vertex.Color = Vector3.UnitY;
                     }
 
-                    renderObject.UpdateVertexBufferObject();
+                    polygonNode.UpdateVertexBufferObject();
 
                     OnSelectMesh(selectMesh);
 
@@ -108,9 +108,9 @@ namespace RenderApp.Tool.Control
                 }
             }
 
-            if (renderObject != null)
+            if (polygonNode != null)
             {
-                renderObject.UpdateVertexBufferObject();
+                polygonNode.UpdateVertexBufferObject();
             }
 
             selectMesh = null;

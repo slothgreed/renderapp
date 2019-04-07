@@ -62,13 +62,13 @@ namespace RenderApp.Tool.Command
         /// <summary>
         /// ターゲットオブジェクト
         /// </summary>
-        public RenderObject TargetObject { get; private set; }
+        public PolygonNode TargetObject { get; private set; }
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="targetObject">ターゲットオブジェクト</param>
-        public AdaptiveMeshCommandArgs(RenderObject targetObject)
+        public AdaptiveMeshCommandArgs(PolygonNode targetObject)
         {
             TargetObject = targetObject;
         }

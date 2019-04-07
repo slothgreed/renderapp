@@ -56,7 +56,7 @@ namespace RenderApp.Tool.Command
             var marching = new MarchingCubesAlgorithm(voxel, 0.8f);
 
             var polygon = new Polygon("MarchingCube :" + targetObject.Name, marching.Meshs, PolygonType.Triangles);
-            RenderObject marghingObject = RenderObjectFactory.Instance.CreateRenderObject(polygon.Name, polygon);
+            PolygonNode marghingObject = SceneNodeFactory.Instance.CreatePolygonNode(polygon.Name, polygon);
             marghingObject.ModelMatrix = targetObject.ModelMatrix;
             marchingCommandArgs.Scene.AddObject(marghingObject);
 
@@ -81,7 +81,7 @@ namespace RenderApp.Tool.Command
         /// <summary>
         /// ターゲットオブジェクト
         /// </summary>
-        public RenderObject TargetObject { get; private set; }
+        public PolygonNode TargetObject { get; private set; }
 
         /// <summary>
         /// シーン
@@ -99,7 +99,7 @@ namespace RenderApp.Tool.Command
         /// <param name="targetObject">ターゲットオブジェクト</param>
         /// <param name="scene">シーン</param>
         /// <param name="part">分割数</param>
-        public MarchingCubeCommandArgs(RenderObject targetObject, Scene scene, int part)
+        public MarchingCubeCommandArgs(PolygonNode targetObject, Scene scene, int part)
         {
             Scene = scene;
             TargetObject = targetObject;

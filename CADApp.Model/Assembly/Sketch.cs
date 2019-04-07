@@ -6,11 +6,11 @@ namespace CADApp.Model.Assembly
 {
     public class Sketch : SceneNode
     {
-        RenderObject pointObject;
+        PolygonNode pointObject;
 
-        RenderObject lineObject;
+        PolygonNode lineObject;
 
-        RenderObject polygonObject;
+        PolygonNode polygonObject;
 
         public Sketch(string name)
            : base(name)

@@ -81,9 +81,9 @@ namespace STLBrowser.ViewModel
             Renderer.ActiveScene = MainScene;
 
             MainScene.MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
-            MainScene.SunLight = RenderObjectFactory.Instance.CreateDirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
+            MainScene.SunLight = SceneNodeFactory.Instance.CreateDirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
             var sphere = AssetFactory.Instance.CreateSphere("sphere", 0.1f, 32, 32, true);
-            MainScene.SunLight.Model = RenderObjectFactory.Instance.CreateRenderObject("SunLight", sphere);
+            MainScene.SunLight.Model = SceneNodeFactory.Instance.CreatePolygonNode("SunLight", sphere);
             MainScene.AddObject(MainScene.MainCamera);
             MainScene.AddObject(MainScene.SunLight);
 

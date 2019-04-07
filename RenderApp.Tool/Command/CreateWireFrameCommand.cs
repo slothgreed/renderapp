@@ -123,7 +123,7 @@ namespace RenderApp.Tool.Command
         /// <summary>
         /// 対象オブジェクト
         /// </summary>
-        public RenderObject TargetObject { get; private set; }
+        public PolygonNode TargetObject { get; private set; }
 
         /// <summary>
         /// シーン
@@ -141,7 +141,7 @@ namespace RenderApp.Tool.Command
         /// <param name="targetNode">対象オブジェクト</param>
         /// <param name="scene">シーン</param>
         /// <param name="color">カラー</param>
-        public WireFrameCommandArgs(RenderObject targetNode, Scene scene, Vector3 color)
+        public WireFrameCommandArgs(PolygonNode targetNode, Scene scene, Vector3 color)
         {
             this.TargetObject = targetNode;
             this.Scene = scene;

@@ -12,7 +12,7 @@ namespace CADApp.Tool.Control.Sketch
 {
     public class SketchRectangleController : IController
     {
-        RenderObject lineObject;
+        PolygonNode lineObject;
 
         public enum CreateRectangleMode
         {
@@ -50,7 +50,7 @@ namespace CADApp.Tool.Control.Sketch
                         line.Index.Add(3); line.Index.Add(0);
 
                         var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
-                        RenderObject lineObject = new RenderObject("RectangleLine", line, shader);
+                        PolygonNode lineObject = new PolygonNode("RectangleLine", line, shader);
                         Workspace.Instance.MainScene.AddObject(line);
                     }
                     else

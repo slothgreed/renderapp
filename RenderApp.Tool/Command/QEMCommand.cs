@@ -66,13 +66,13 @@ namespace RenderApp.Tool.Command
         /// <summary>
         /// ターゲットオブジェクト
         /// </summary>
-        public RenderObject TargetObject { get; private set; }
+        public PolygonNode TargetObject { get; private set; }
         
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="targetObject">ターゲットオブジェクト</param>
-        public QEMCommandArgs(RenderObject targetObject)
+        public QEMCommandArgs(PolygonNode targetObject)
         {
             TargetObject = targetObject;
         }

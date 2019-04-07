@@ -191,7 +191,7 @@
     </Compile>
     <Compile Include="ViewModel\DockTabVM\DockPaneSelector.cs" />
     <Compile Include="ViewModel\DockTabVM\DockWindowViewModel.cs" />
-    <Compile Include="ViewModel\SceneNodeVM\RenderObjectViewModel.cs" />
+    <Compile Include="ViewModel\SceneNodeVM\PolygonNodeViewModel.cs" />
     <Compile Include="ViewModel\RendererViewModel.cs" />
     <Compile Include="ViewModel\NodeVM\NodeItemViewModel.cs" />
     <Compile Include="ViewModel\SceneNodeVM\SceneNodeViewModel.cs" />
@@ -263,8 +263,8 @@
     <Compile Include="View\CommandView\VoxelCommandView.xaml.cs">
       <DependentUpon>VoxelCommandView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\SceneNodeView\RenderObjectView.xaml.cs">
-      <DependentUpon>RenderObjectView.xaml</DependentUpon>
+    <Compile Include="View\SceneNodeView\PolygonNodeView.xaml.cs">
+      <DependentUpon>PolygonNodeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\RendererView.xaml.cs">
       <DependentUpon>RendererView.xaml</DependentUpon>
@@ -361,7 +361,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\SceneNodeView\RenderObjectView.xaml">
+    <Page Include="View\SceneNodeView\PolygonNodeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

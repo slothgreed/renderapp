@@ -19,9 +19,9 @@ namespace CADApp.Tool.Control
         /// </summary>
         private float zPosition = 0;
 
-        RenderObject pointObject;
+        PolygonNode pointObject;
 
-        RenderObject lineObject;
+        PolygonNode lineObject;
 
         List<Vertex> pointList;
 
@@ -68,11 +68,11 @@ namespace CADApp.Tool.Control
             Polygon point = new Polygon("Point");
             Polygon line = new Polygon("Line", PolygonType.Lines);
             var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
-            pointObject = new RenderObject("Point", point, shader);
+            pointObject = new PolygonNode("Point", point, shader);
             pointObject.Visible = false;
             Workspace.Instance.MainScene.AddObject(pointObject);
 
-            lineObject = new RenderObject("Line", line, shader);
+            lineObject = new PolygonNode("Line", line, shader);
             lineObject.Visible = false;
             Workspace.Instance.MainScene.AddObject(lineObject);
             return base.Binding();

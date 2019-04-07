@@ -169,9 +169,9 @@ namespace RenderApp.ViewModel
                 foreach (var filename in dlg.FileNames)
                 {
                     var polygons = AssetFactory.Instance.CreateLoad3DModel(filename);
-                    var renderObject = RenderObjectFactory.Instance.CreateRenderObject(filename, polygons);
-                    renderObject.Scale = new OpenTK.Vector3(10);
-                    workspace.MainScene.AddObject(renderObject);
+                    var polygonNode = SceneNodeFactory.Instance.CreatePolygonNode(filename, polygons);
+                    polygonNode.Scale = new OpenTK.Vector3(10);
+                    workspace.MainScene.AddObject(polygonNode);
                 }
             }
         }
@@ -227,7 +227,7 @@ namespace RenderApp.ViewModel
         {
             AnalyzeCommand menuParam = (AnalyzeCommand)createObjectMenu;
             CommandBase command = null;
-            var targetObject = workspace.MainScene.SelectNode as RenderObject;
+            var targetObject = workspace.MainScene.SelectNode as PolygonNode;
             switch (menuParam)
             {
                 case AnalyzeCommand.WireFrame:
@@ -373,9 +373,9 @@ namespace RenderApp.ViewModel
         {
             //View.DebugWindow window = new View.DebugWindow();
             //View.DataVisualization dataVisualize = new View.DataVisualization();
-            //var renderObject = workspace.MainScene.SelectNode as RenderObject;
+            //var polygonNode = workspace.MainScene.SelectNode as PolygonNode;
             //dataVisualize.GraphName = "vertexParameter";
-            //dataVisualize.ParameterList = ((HalfEdgeDS)renderObject.Polygon).Parameter;
+            //dataVisualize.ParameterList = ((HalfEdgeDS)polygonNode.Polygon).Parameter;
             //window.Content = dataVisualize;
             //window.Show();
         }

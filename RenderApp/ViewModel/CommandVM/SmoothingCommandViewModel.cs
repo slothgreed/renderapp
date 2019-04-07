@@ -47,7 +47,7 @@ namespace RenderApp.ViewModel
 
         private void ExecuteCommand()
         {
-            CommandBase command = new SmoothingCommand(new SmoothingCommandArgs(Workspace.Instance.MainScene.SelectNode as RenderObject, loopNum));
+            CommandBase command = new SmoothingCommand(new SmoothingCommandArgs(Workspace.Instance.MainScene.SelectNode as PolygonNode, loopNum));
             CommandManager.Instance.Execute(command, true);
         }
     }

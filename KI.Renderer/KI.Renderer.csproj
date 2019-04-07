@@ -84,8 +84,8 @@
     <Compile Include="Technique\OffScreen\PostEffect\Sobel.cs" />
     <Compile Include="Technique\OffScreen\PostEffect\SSAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RenderObject.cs" />
-    <Compile Include="RenderObjectFactory.cs" />
+    <Compile Include="PolygonNode.cs" />
+    <Compile Include="SceneNodeFactory.cs" />
     <Compile Include="RenderQueue.cs" />
     <Compile Include="RenderSystem.cs" />
     <Compile Include="Technique\RenderTechniqueFactory.cs" />

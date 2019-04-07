@@ -13,21 +13,9 @@ using OpenTK.Graphics.OpenGL;
 namespace KI.Renderer
 {
     /// <summary>
-    /// レンダリング種類
-    /// </summary>
-    public enum RenderMode
-    {
-        None,
-        Point,
-        Line,
-        Polygon,
-        PolygonLine,
-    }
-
-    /// <summary>
     /// 任意形状(triangle,quad,line,patchのみ対応)
     /// </summary>
-    public class RenderObject : SceneNode
+    public class PolygonNode : SceneNode
     {
 
         /// <summary>
@@ -35,7 +23,7 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="polygon">形状</param>
-        public RenderObject(string name, Polygon polygon, Shader shader)
+        public PolygonNode(string name, Polygon polygon, Shader shader)
             : base(name)
         {
             SetPolygon(polygon, shader);
@@ -99,7 +87,7 @@ namespace KI.Renderer
         }
 
         /// <summary>
-        /// ポリゴンの種類(いずれPolygon.Typeを消してRenderObjectがTypeを持つようにする)
+        /// ポリゴンの種類(いずれPolygon.Typeを消して PolygonNode がTypeを持つようにする)
         /// </summary>
         public PolygonType Type
         {

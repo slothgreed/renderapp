@@ -17,11 +17,11 @@ namespace KI.Renderer
         /// 初期状態の設定
         /// </summary>
         /// <param name="scene">シーン</param>
-        /// <param name="renderObject">形状</param>
+        /// <param name="polygonNode">形状</param>
         /// <param name="vertexBuffer">頂点バッファ</param>
         /// <param name="shader">シェーダ</param>
         /// <param name="textures">テクスチャ</param>
-        public static void InitializeState(Shader shader, Scene scene, RenderObject renderObject, VertexBuffer vertexBuffer,  Dictionary<TextureKind, Texture> textures)
+        public static void InitializeState(Shader shader, Scene scene, PolygonNode polygonNode, VertexBuffer vertexBuffer,  Dictionary<TextureKind, Texture> textures)
         {
             foreach (ShaderProgramInfo info in shader.GetShaderVariable())
             {
@@ -46,7 +46,7 @@ namespace KI.Renderer
                         }
                         break;
                     case "uGeometryID":
-                        info.Variable = renderObject.ID;
+                        info.Variable = polygonNode.ID;
                         break;
                     case "uWidth":
                         info.Variable = DeviceContext.Instance.Width;
@@ -56,18 +56,18 @@ namespace KI.Renderer
                         break;
                     case "uMVP":
                         Matrix4 vp = scene.MainCamera.CameraProjMatrix;
-                        info.Variable = renderObject.ModelMatrix * vp;
+                        info.Variable = polygonNode.ModelMatrix * vp;
                         break;
                     case "uSMVP":
                         Matrix4 light = scene.SunLight.Matrix;
                         Matrix4 proj = scene.MainCamera.ProjMatrix;
-                        info.Variable = renderObject.ModelMatrix * light * proj;
+                        info.Variable = polygonNode.ModelMatrix * light * proj;
                         break;
                     case "uModelMatrix":
-                        info.Variable = renderObject.ModelMatrix;
+                        info.Variable = polygonNode.ModelMatrix;
                         break;
                     case "uNormalMatrix":
-                        info.Variable = renderObject.NormalMatrix;
+                        info.Variable = polygonNode.NormalMatrix;
                         break;
                     case "uProjectMatrix":
                         info.Variable = scene.MainCamera.ProjMatrix;

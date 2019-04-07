@@ -46,10 +46,10 @@ namespace KI.Renderer.Technique
         {
             if (RenderSystem.ActiveScene.SelectNode != null)
             {
-                if (RenderSystem.ActiveScene.SelectNode is RenderObject)
+                if (RenderSystem.ActiveScene.SelectNode is PolygonNode)
                 {
-                    var renderObject = RenderSystem.ActiveScene.SelectNode as RenderObject;
-                    uID = renderObject.ID;
+                    var polygonNode = RenderSystem.ActiveScene.SelectNode as PolygonNode;
+                    uID = polygonNode.ID;
                 }
                 else
                 {

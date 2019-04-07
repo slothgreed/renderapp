@@ -8,13 +8,13 @@ namespace RenderApp.Tool
     {
         public static CommandResult CanCreatePolygon(SceneNode asset)
         {
-            if (!(asset is RenderObject))
+            if (!(asset is PolygonNode))
             {
                 return CommandResult.Failed;
             }
 
-            RenderObject renderObject = asset as RenderObject;
-            if (renderObject.Type != PolygonType.Triangles)
+            PolygonNode polygonNode = asset as PolygonNode;
+            if (polygonNode.Type != PolygonType.Triangles)
             {
                 return CommandResult.Failed;
             }

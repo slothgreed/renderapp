@@ -95,7 +95,7 @@ namespace RenderApp.ViewModel
             ViewportViewModel.Invalidate();
         }
 
-        private void RenderObjectViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void PolygonNodeViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             ViewportViewModel.Invalidate();
         }
@@ -115,16 +115,16 @@ namespace RenderApp.ViewModel
             }
 
             DockWindowViewModel vm = null;
-            if (node is RenderObject)
+            if (node is PolygonNode)
             {
-                vm = new RenderObjectViewModel(this, node as RenderObject);
-                vm.PropertyChanged += RenderObjectViewModel_PropertyChanged;
+                vm = new PolygonNodeViewModel(this, node as PolygonNode);
+                vm.PropertyChanged += PolygonNodeViewModel_PropertyChanged;
                 workspace.MainScene.SelectNode = node;
             }
             else if (node is Light)
             {
                 vm = new LightViewModel(this, node as Light);
-                vm.PropertyChanged += RenderObjectViewModel_PropertyChanged;
+                vm.PropertyChanged += PolygonNodeViewModel_PropertyChanged;
                 workspace.MainScene.SelectNode = node;
             }
 
@@ -160,24 +160,24 @@ namespace RenderApp.ViewModel
             Scene mainScene = workspace.MainScene;
 
             mainScene.MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
-            mainScene.SunLight = RenderObjectFactory.Instance.CreateDirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
+            mainScene.SunLight = SceneNodeFactory.Instance.CreateDirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
             var sphere = AssetFactory.Instance.CreateSphere("sphere", 0.1f, 32, 32, true);
-            mainScene.SunLight.Model = RenderObjectFactory.Instance.CreateRenderObject("SunLight", sphere);
+            mainScene.SunLight.Model = SceneNodeFactory.Instance.CreatePolygonNode("SunLight", sphere);
             mainScene.AddObject(mainScene.MainCamera);
             mainScene.AddObject(mainScene.SunLight);
 
             var axis = AssetFactory.Instance.CreateAxis("axis", Vector3.Zero, mainScene.WorldMax);
-            var axisObject = RenderObjectFactory.Instance.CreateRenderObject(axis.ToString(), axis);
+            var axisObject = SceneNodeFactory.Instance.CreatePolygonNode(axis.ToString(), axis);
             mainScene.AddObject(axisObject);
 
             //var sponzas = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/crytek-sponza/sponza.obj");
-            //var sponzaObject = RenderObjectFactory.Instance.CreateRenderObjects("sponza",sponzas);
+            //var sponzaObject = SceneNodeFactory.Instance.CreatePolygonNodes("sponza",sponzas);
             //foreach (var sponza in sponzaObject)
             //{
             //    AddObject(sponza);
             //}
 
-            //List<RenderObject> ducks = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/duck/duck.obj");
+            //List<PolygonNode> ducks = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/duck/duck.obj");
             //foreach (var duck in ducks)
             //{
             //    duck.RotateX(-90);
@@ -190,7 +190,7 @@ namespace RenderApp.ViewModel
             // bunny
             {
                 var moai = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/moai.half");
-                var renderBunny = RenderObjectFactory.Instance.CreateRenderObject("moai", moai);
+                var renderBunny = SceneNodeFactory.Instance.CreatePolygonNode("moai", moai);
                 renderBunny.Shader = ShaderCreater.Instance.CreateShader(GBufferType.PointNormalColor);
                 //renderBunny.RotateX(-90);
                 mainScene.AddObject(renderBunny);
@@ -223,7 +223,7 @@ namespace RenderApp.ViewModel
                 renderBunny.Attributes.Add(vectorFiledAttribute);
 
                 //var icosahedron = AssetFactory.Instance.CreateIcosahedron("Icosahedron", 0.5f, 1);
-                //var renderIcosahedron = RenderObjectFactory.Instance.CreateRenderObject("Icosahedron", icosahedron);
+                //var renderIcosahedron = PolygonNodeFactory.Instance.CreatePolygonNode("Icosahedron", icosahedron);
                 //mainScene.AddObject(renderIcosahedron);
 
                 //CommandManager.Instance.Execute(new CreateWireFrameCommand(new WireFrameCommandArgs(renderIcosahedron, mainScene, Vector3.Zero)), false);
@@ -232,7 +232,7 @@ namespace RenderApp.ViewModel
             // plane
             {
                 //var plane = AssetFactory.Instance.CreatePlane("plane").Polygons.First();
-                //var renderPlane = RenderObjectFactory.Instance.CreateRenderObject("plane", plane);
+                //var renderPlane = PolygonNodeFactory.Instance.CreatePolygonNode("plane", plane);
                 //mainScene.AddObject(renderPlane);
 
                 //var normal = TextureFactory.Instance.CreateTexture(@"E:\MyProgram\KIProject\renderapp\Resource\Texture\Displacement\Normal.png");
@@ -296,12 +296,12 @@ namespace RenderApp.ViewModel
             Rectangle bottom = new Rectangle("Bottom", v0, v4, v5, v1);
             bottom.Model.AddTexture(KI.Gfx.KITexture.TextureKind.Albedo, nyTexture);
 
-            RenderObject renderFront = RenderObjectFactory.Instance.CreateRenderObject(front.Name, front);
-            RenderObject renderLeft = RenderObjectFactory.Instance.CreateRenderObject(left.Name, left);
-            RenderObject renderBack = RenderObjectFactory.Instance.CreateRenderObject(back.Name, back);
-            RenderObject renderRight = RenderObjectFactory.Instance.CreateRenderObject(right.Name, right);
-            RenderObject renderTop = RenderObjectFactory.Instance.CreateRenderObject(top.Name, top);
-            RenderObject renderBottom = RenderObjectFactory.Instance.CreateRenderObject(bottom.Name, bottom);
+            PolygonNode renderFront = SceneNodeFactory.Instance.CreatePolygonNode(front.Name, front);
+            PolygonNode renderLeft = SceneNodeFactory.Instance.CreatePolygonNode(left.Name, left);
+            PolygonNode renderBack = SceneNodeFactory.Instance.CreatePolygonNode(back.Name, back);
+            PolygonNode renderRight = SceneNodeFactory.Instance.CreatePolygonNode(right.Name, right);
+            PolygonNode renderTop = SceneNodeFactory.Instance.CreatePolygonNode(top.Name, top);
+            PolygonNode renderBottom = SceneNodeFactory.Instance.CreatePolygonNode(bottom.Name, bottom);
 
             KINode cubeMapNode = new KINode("CubeMap");
 

@@ -24,10 +24,10 @@ namespace RenderApp.Tool.Utility
         /// 頂点の選択
         /// </summary>
         /// <param name="mouse">マウス座標</param>
-        /// <param name="selectObject">選択形状</param>
+        /// <param name="selectNode">選択形状</param>
         /// <param name="vertex">選択頂点番号</param>
         /// <returns>成功か</returns>
-        public static bool PickPoint(Vector2 mouse, ref RenderObject selectObject, ref HalfEdgeVertex vertex)
+        public static bool PickPoint(Vector2 mouse, ref PolygonNode selectNode, ref HalfEdgeVertex vertex)
         {
             bool select = false;
             float maxInner = -1;
@@ -35,21 +35,21 @@ namespace RenderApp.Tool.Utility
             Vector3 far = Vector3.Zero;
             GetMouseClipPosition(mouse, out near, out far);
 
-            RenderObject renderObject = null;
-            foreach (KINode polygonNode in Workspace.Instance.RenderSystem.ActiveScene.RootNode.AllChildren())
+            PolygonNode polygonNode = null;
+            foreach (KINode sceneNode in Workspace.Instance.RenderSystem.ActiveScene.RootNode.AllChildren())
             {
-                if (polygonNode is RenderObject)
+                if (sceneNode is PolygonNode)
                 {
-                    renderObject = polygonNode as RenderObject;
+                    polygonNode = sceneNode as PolygonNode;
                 }
                 else
                 {
                     continue;
                 }
 
-                if (PickPointCore(near, far, renderObject, ref maxInner, ref vertex))
+                if (PickPointCore(near, far, polygonNode, ref maxInner, ref vertex))
                 {
-                    selectObject = renderObject;
+                    selectNode = polygonNode;
                     select = true;
                 }
             }
@@ -61,36 +61,36 @@ namespace RenderApp.Tool.Utility
         /// 線の選択
         /// </summary>
         /// <param name="mouse">マウス</param>
-        /// <param name="selectObject">選択形状</param>
+        /// <param name="selectNode">選択形状</param>
         /// <param name="halfEdge">線情報</param>
         /// <returns>成功したか</returns>
-        public static bool PickLine(Vector2 mouse, ref RenderObject selectObject, ref HalfEdge halfEdge)
+        public static bool PickLine(Vector2 mouse, ref PolygonNode selectNode, ref HalfEdge halfEdge)
         {
             float minLength = float.MaxValue;
             Vector3 near = Vector3.Zero;
             Vector3 far = Vector3.Zero;
             GetMouseClipPosition(mouse, out near, out far);
 
-            RenderObject renderObject;
-            foreach (SceneNode polygonNode in Workspace.Instance.RenderSystem.ActiveScene.RootNode.AllChildren())
+            PolygonNode polygonNode;
+            foreach (SceneNode sceneNode in Workspace.Instance.RenderSystem.ActiveScene.RootNode.AllChildren())
             {
-                renderObject = null;
-                if (polygonNode is RenderObject)
+                polygonNode = null;
+                if (sceneNode is PolygonNode)
                 {
-                    renderObject = polygonNode as RenderObject;
+                    polygonNode = sceneNode as PolygonNode;
                 }
                 else
                 {
                     continue;
                 }
 
-                if (PickLineCore(near, far, renderObject, ref minLength, ref halfEdge))
+                if (PickLineCore(near, far, polygonNode, ref minLength, ref halfEdge))
                 {
-                    selectObject = renderObject;
+                    selectNode = polygonNode;
                 }
             }
 
-            if (selectObject == null)
+            if (selectNode == null)
             {
                 return false;
             }
@@ -102,36 +102,36 @@ namespace RenderApp.Tool.Utility
         /// ポリゴンごとに行うので、CPUベースで頂点番号を取得
         /// </summary>
         /// <param name="mouse">マウス座標</param>
-        /// <param name="selectObject">選択形状</param>
+        /// <param name="selectNode">選択形状</param>
         /// <param name="mesh">選択した三角形</param>
         /// <returns>成功か</returns>
-        public static bool PickTriangle(Vector2 mouse, ref RenderObject selectObject, ref HalfEdgeMesh mesh)
+        public static bool PickTriangle(Vector2 mouse, ref PolygonNode selectNode, ref HalfEdgeMesh mesh)
         {
             float minLength = float.MaxValue;
             Vector3 near = Vector3.Zero;
             Vector3 far = Vector3.Zero;
             GetMouseClipPosition(mouse, out near, out far);
 
-            RenderObject renderObject;
-            foreach (KINode polygonNode in Workspace.Instance.RenderSystem.ActiveScene.RootNode.AllChildren())
+            PolygonNode polygonNode;
+            foreach (SceneNode sceneNode in Workspace.Instance.RenderSystem.ActiveScene.RootNode.AllChildren())
             {
-                renderObject = null;
-                if (polygonNode is RenderObject)
+                polygonNode = null;
+                if (sceneNode is PolygonNode)
                 {
-                    renderObject = polygonNode as RenderObject;
+                    polygonNode = sceneNode as PolygonNode;
                 }
                 else
                 {
                     continue;
                 }
 
-                if (PickTriangleCore(near, far, renderObject, ref minLength, ref mesh))
+                if (PickTriangleCore(near, far, selectNode, ref minLength, ref mesh))
                 {
-                    selectObject = renderObject;
+                    selectNode = polygonNode;
                 }
             }
 
-            if (selectObject == null)
+            if (selectNode == null)
             {
                 return false;
             }
@@ -144,7 +144,7 @@ namespace RenderApp.Tool.Utility
         /// </summary>
         /// <param name="selectObject">形状</param>
         /// <returns></returns>
-        private static bool CanSelect(RenderObject selectObject)
+        private static bool CanSelect(PolygonNode selectObject)
         {
             if (selectObject == null)
             {
@@ -184,13 +184,13 @@ namespace RenderApp.Tool.Utility
         /// </summary>
         /// <param name="near">近クリップ面</param>
         /// <param name="far">遠クリップ面</param>
-        /// <param name="renderObject">選択形状</param>
+        /// <param name="selectNode">選択形状</param>
         /// <param name="maxInner">この内積値以上の頂点を取得</param>
         /// <param name="vertex">選択Index</param>
         /// <returns>成功か</returns>
-        private static bool PickPointCore(Vector3 near, Vector3 far, RenderObject renderObject, ref float maxInner, ref HalfEdgeVertex vertex)
+        private static bool PickPointCore(Vector3 near, Vector3 far, PolygonNode selectNode, ref float maxInner, ref HalfEdgeVertex vertex)
         {
-            if (!CanSelect(renderObject))
+            if (!CanSelect(selectNode))
             {
                 return false;
             }
@@ -226,11 +226,11 @@ namespace RenderApp.Tool.Utility
 #else
             bool select = false;
             Vector3 crossPos = Vector3.Zero;
-            var halfEdgeDS = renderObject.Polygon as HalfEdgeDS;
+            var halfEdgeDS = selectNode.Polygon as HalfEdgeDS;
             foreach (var halfVertex in halfEdgeDS.HalfEdgeVertexs)
             {
                 Vector3 point = halfVertex.Position;
-                point = Calculator.Multiply(renderObject.ModelMatrix, point);
+                point = Calculator.Multiply(selectNode.ModelMatrix, point);
 
                 if (Interaction.PerpendicularPoint(point, near, far, out crossPos))
                 {
@@ -264,13 +264,13 @@ namespace RenderApp.Tool.Utility
         /// </summary>
         /// <param name="near">近クリップ面</param>
         /// <param name="far">遠クリップ面</param>
-        /// <param name="renderObject">選択形状</param>
+        /// <param name="selectNode">選択形状</param>
         /// <param name="minLength">この長さ以下の頂点を取得</param>
         /// <param name="halfEdge">選択Line</param>
         /// <returns></returns>
-        private static bool PickLineCore(Vector3 near, Vector3 far, RenderObject renderObject, ref float minLength, ref HalfEdge halfEdge)
+        private static bool PickLineCore(Vector3 near, Vector3 far, PolygonNode selectNode, ref float minLength, ref HalfEdge halfEdge)
         {
-            if (!CanSelect(renderObject))
+            if (!CanSelect(selectNode))
             {
                 return false;
             }
@@ -278,13 +278,13 @@ namespace RenderApp.Tool.Utility
             bool select = false;
             float distance = 0;
 
-            var halfEdgeDS = renderObject.Polygon as HalfEdgeDS;
-            if (renderObject.Polygon.Index.Count != 0)
+            var halfEdgeDS = selectNode.Polygon as HalfEdgeDS;
+            if (selectNode.Polygon.Index.Count != 0)
             {
                 foreach (var edge in halfEdgeDS.HalfEdges)
                 {
-                    Vector3 startPos = Calculator.Multiply(renderObject.ModelMatrix, edge.Start.Position);
-                    Vector3 endPos = Calculator.Multiply(renderObject.ModelMatrix, edge.End.Position);
+                    Vector3 startPos = Calculator.Multiply(selectNode.ModelMatrix, edge.Start.Position);
+                    Vector3 endPos = Calculator.Multiply(selectNode.ModelMatrix, edge.End.Position);
 
                     if (Distance.LineToLine(near, far, startPos, endPos, out distance))
                     {
@@ -311,29 +311,29 @@ namespace RenderApp.Tool.Utility
         /// </summary>
         /// <param name="near">近クリップ面</param>
         /// <param name="far">遠クリップ面</param>
-        /// <param name="renderObject">選択形状</param>
+        /// <param name="selectNode">選択形状</param>
         /// <param name="minLength">この長さ以下の頂点を取得</param>
         /// <param name="mesh">選択Triangle</param>
         /// <returns>成功か</returns>
-        private static bool PickTriangleCore(Vector3 near, Vector3 far, RenderObject renderObject, ref float minLength, ref HalfEdgeMesh mesh)
+        private static bool PickTriangleCore(Vector3 near, Vector3 far, PolygonNode selectNode, ref float minLength, ref HalfEdgeMesh mesh)
         {
-            if (!CanSelect(renderObject))
+            if (!CanSelect(selectNode))
             {
                 return false;
             }
 
             bool select = false;
 
-            var halfEdgeDS = renderObject.Polygon as HalfEdgeDS;
+            var halfEdgeDS = selectNode.Polygon as HalfEdgeDS;
             //頂点配列の時
-            if (renderObject.Polygon.Index.Count != 0)
+            if (selectNode.Polygon.Index.Count != 0)
             {
                 foreach (var halfMesh in halfEdgeDS.HalfEdgeMeshs)
                 {
                     var vertexs = halfMesh.AroundVertex.ToArray();
-                    Vector3 multiVertex1 = Calculator.Multiply(renderObject.ModelMatrix, vertexs[0].Position);
-                    Vector3 multiVertex2 = Calculator.Multiply(renderObject.ModelMatrix, vertexs[1].Position);
-                    Vector3 multiVertex3 = Calculator.Multiply(renderObject.ModelMatrix, vertexs[2].Position);
+                    Vector3 multiVertex1 = Calculator.Multiply(selectNode.ModelMatrix, vertexs[0].Position);
+                    Vector3 multiVertex2 = Calculator.Multiply(selectNode.ModelMatrix, vertexs[1].Position);
+                    Vector3 multiVertex3 = Calculator.Multiply(selectNode.ModelMatrix, vertexs[2].Position);
                     Vector3 result = Vector3.Zero;
                     if (Interaction.TriangleToLine(multiVertex1, multiVertex2, multiVertex3, near, far, ref minLength, out result))
                     {

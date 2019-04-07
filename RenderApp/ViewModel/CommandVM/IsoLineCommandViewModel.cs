@@ -52,7 +52,7 @@ namespace RenderApp.ViewModel
 
         private void ExecuteCommand()
         {
-            CommandBase command = new CreateIsoLineCommand(new IsoLineCommandArgs(Workspace.Instance.MainScene.SelectNode as RenderObject, Workspace.Instance.MainScene, Space));
+            CommandBase command = new CreateIsoLineCommand(new IsoLineCommandArgs(Workspace.Instance.MainScene.SelectNode as PolygonNode, Workspace.Instance.MainScene, Space));
             CommandManager.Instance.Execute(command, true);
         }
     }

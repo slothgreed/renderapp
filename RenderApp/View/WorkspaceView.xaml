@@ -36,11 +36,11 @@
                             <v:LightView />
                         </DataTemplate>
                     </vm:DockPaneTemplateSelector.LightTemplate>
-                    <vm:DockPaneTemplateSelector.RenderObjectTemplate>
+                    <vm:DockPaneTemplateSelector.PolygonNodeTemplate>
                         <DataTemplate>
-                            <v:RenderObjectView />
+                            <v:PolygonNodeView />
                         </DataTemplate>
-                    </vm:DockPaneTemplateSelector.RenderObjectTemplate>
+                    </vm:DockPaneTemplateSelector.PolygonNodeTemplate>
                     <vm:DockPaneTemplateSelector.ViewportTemplate>
                         <DataTemplate>
                             <v:ViewportView />

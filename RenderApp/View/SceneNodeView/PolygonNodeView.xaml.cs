@@ -3,14 +3,14 @@
 namespace RenderApp.View
 {
     /// <summary>
-    /// RenderObjectView.xaml の相互作用ロジック
+    /// PolygonNodeView.xaml の相互作用ロジック
     /// </summary>
-    public partial class RenderObjectView : UserControl
+    public partial class PolygonNodeView : UserControl
     {
         /// <summary>
         /// Constractor.
         /// </summary>
-        public RenderObjectView()
+        public PolygonNodeView()
         {
             InitializeComponent();
         }

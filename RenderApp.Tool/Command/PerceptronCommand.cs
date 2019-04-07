@@ -89,7 +89,7 @@ namespace RenderApp.Tool.Command
             }
 
             var polygon = new Polygon("perceptron", vertexs);
-            RenderObject render = RenderObjectFactory.Instance.CreateRenderObject("perceptron", polygon);
+            PolygonNode render = SceneNodeFactory.Instance.CreatePolygonNode("perceptron", polygon);
             perceptronCommandArgs.Scene.AddObject(render);
 
             return CommandResult.Success;

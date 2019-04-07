@@ -25,7 +25,7 @@ namespace RenderApp.Tool.Control
         /// <summary>
         /// 形状の選択
         /// </summary>
-        private RenderObject selectObject;
+        private PolygonNode selectObject;
 
         /// <summary>
         /// 選択した形状の頂点1
@@ -44,23 +44,23 @@ namespace RenderApp.Tool.Control
         /// <returns>成功</returns>
         public override bool Down(KIMouseEventArgs mouse)
         {
-            RenderObject renderObject = null;
+            PolygonNode polygonNode = null;
             if (mouse.Button == MOUSE_BUTTON.Left)
             {
                 HalfEdgeVertex vertex = null;
-                if (HalfEdgeDSSelector.PickPoint(mouse.Current, ref renderObject, ref vertex))
+                if (HalfEdgeDSSelector.PickPoint(mouse.Current, ref polygonNode, ref vertex))
                 {
                     // 初回
                     if (selectObject == null)
                     {
-                        selectObject = renderObject;
+                        selectObject = polygonNode;
                         selectStart = vertex;
                     }
-                    else if (selectObject != renderObject)
+                    else if (selectObject != polygonNode)
                     {
                         Workspace.Instance.RenderSystem.ActiveScene.DeleteObject("Picking");
                         // 前回と選択した形状が違う
-                        selectObject = renderObject;
+                        selectObject = polygonNode;
                         selectStart = vertex;
                     }
                     else
@@ -77,7 +77,7 @@ namespace RenderApp.Tool.Control
                     }
 
                     Polygon polygon = new Polygon("Picking", new List<Vertex>() { new Vertex(0, vertex.Position, Vector3.UnitY) });
-                    RenderObject pointObject = RenderObjectFactory.Instance.CreateRenderObject("Picking", polygon);
+                    PolygonNode pointObject = SceneNodeFactory.Instance.CreatePolygonNode("Picking", polygon);
                     pointObject.ModelMatrix = selectObject.ModelMatrix;
                     Workspace.Instance.RenderSystem.ActiveScene.AddObject(pointObject);
 
@@ -120,7 +120,7 @@ namespace RenderApp.Tool.Control
             dijkstra.CreateDijkstraLine(out vertexs, out indexs);
 
             Polygon polygon = new Polygon("DijkstraLine", vertexs, indexs, PolygonType.Lines);
-            RenderObject lineObject = RenderObjectFactory.Instance.CreateRenderObject("DijkstraLine", polygon);
+            PolygonNode lineObject = SceneNodeFactory.Instance.CreatePolygonNode("DijkstraLine", polygon);
             lineObject.ModelMatrix = selectObject.ModelMatrix;
             Workspace.Instance.RenderSystem.ActiveScene.AddObject(lineObject);
             return true;

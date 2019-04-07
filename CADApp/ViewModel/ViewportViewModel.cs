@@ -147,18 +147,18 @@ namespace CADApp.ViewModel
         private void InitializeScene()
         {
             MainScene.MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
-            MainScene.SunLight = RenderObjectFactory.Instance.CreateDirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
+            MainScene.SunLight = SceneNodeFactory.Instance.CreateDirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
             var sphere = AssetFactory.Instance.CreateSphere("sphere", 0.1f, 32, 32, true);
-            MainScene.SunLight.Model = RenderObjectFactory.Instance.CreateRenderObject("SunLight", sphere);
+            MainScene.SunLight.Model = SceneNodeFactory.Instance.CreatePolygonNode("SunLight", sphere);
             MainScene.AddObject(MainScene.MainCamera);
             MainScene.AddObject(MainScene.SunLight);
 
             var axis = AssetFactory.Instance.CreateAxis("axis", Vector3.Zero, MainScene.WorldMax);
-            var axisObject = RenderObjectFactory.Instance.CreateRenderObject(axis.ToString(), axis);
+            var axisObject = SceneNodeFactory.Instance.CreatePolygonNode(axis.ToString(), axis);
             MainScene.AddObject(axisObject);
 
             var grid = AssetFactory.Instance.CreateGridPlane("gridPlane", 1, 0.01f, Vector3.One);
-            var girdObject = RenderObjectFactory.Instance.CreateRenderObject(grid.ToString(), grid);
+            var girdObject = SceneNodeFactory.Instance.CreatePolygonNode(grid.ToString(), grid);
             MainScene.AddObject(girdObject);
         }
 

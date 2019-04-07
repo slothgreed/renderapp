@@ -68,15 +68,15 @@
 
 //        //    if (m_Line != null)
 //        //    {
-//        //        m_Line.SetUniformMVP(m_uniform.MVP, RenderObject.Camera.GetProjMatrix(), RenderObject.Camera.GetCameraMatrix());
+//        //        m_Line.SetUniformMVP(m_uniform.MVP, PolygonNode.Camera.GetProjMatrix(), PolygonNode.Camera.GetCameraMatrix());
 //        //        m_Line.Render(this);
 //        //    }
 //        //    if (m_Point != null)
 //        //    {
-//        //        m_Point.SetUniformMVP(m_uniform.MVP, RenderObject.Camera.GetProjMatrix(), RenderObject.Camera.GetCameraMatrix());
+//        //        m_Point.SetUniformMVP(m_uniform.MVP, PolygonNode.Camera.GetProjMatrix(), PolygonNode.Camera.GetCameraMatrix());
 //        //        m_Point.Render(this);
 //        //    }
-//        //    m_Axis.SetUniformMVP(m_uniform.MVP, RenderObject.Camera.GetProjMatrix(), RenderObject.Camera.GetCameraMatrix());
+//        //    m_Axis.SetUniformMVP(m_uniform.MVP, PolygonNode.Camera.GetProjMatrix(), PolygonNode.Camera.GetCameraMatrix());
 //        //    m_Axis.Render(this);
 //        //}
 //        public override void ShaderRender(CModel model)

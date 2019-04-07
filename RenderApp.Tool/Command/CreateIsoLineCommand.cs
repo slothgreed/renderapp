@@ -104,7 +104,7 @@ namespace RenderApp.Tool.Command
         /// <summary>
         /// 対象オブジェクト
         /// </summary>
-        public RenderObject TargetObject { get; private set; }
+        public PolygonNode TargetObject { get; private set; }
 
         /// <summary>
         /// シーン
@@ -122,7 +122,7 @@ namespace RenderApp.Tool.Command
         /// <param name="targetNode">対象オブジェクト</param>
         /// <param name="scene">シーン</param>
         /// <param name="space">スペース</param>
-        public IsoLineCommandArgs(RenderObject targetNode, Scene scene, float space)
+        public IsoLineCommandArgs(PolygonNode targetNode, Scene scene, float space)
         {
             this.TargetObject = targetNode;
             this.Scene = scene;

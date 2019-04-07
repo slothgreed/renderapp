@@ -82,10 +82,10 @@ namespace KI.Renderer.Technique
                         light.Model.Render(scene);
                     }
                 }
-                else if (asset is RenderObject)
+                else if (asset is PolygonNode)
                 {
-                    var renderObject = asset as RenderObject;
-                    renderObject.Render(scene);
+                    var polygonNode = asset as PolygonNode;
+                    polygonNode.Render(scene);
                 }
             }
 

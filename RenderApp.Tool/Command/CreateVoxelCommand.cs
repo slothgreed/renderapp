@@ -70,7 +70,7 @@ namespace RenderApp.Tool.Command
             var mesh = GetVoxelObject();
 
             Polygon info = new Polygon("Voxel :" + targetObject.Name, mesh, PolygonType.Quads);
-            RenderObject voxelObject = RenderObjectFactory.Instance.CreateRenderObject("Voxel :" + targetObject.Name, info);
+            PolygonNode voxelObject = SceneNodeFactory.Instance.CreatePolygonNode("Voxel :" + targetObject.Name, info);
             voxelObject.Transformation(targetObject.ModelMatrix);
             scene.AddObject(voxelObject);
 
@@ -168,7 +168,7 @@ namespace RenderApp.Tool.Command
         /// <summary>
         /// 対象オブジェクト
         /// </summary>
-        public RenderObject TargetObject { get; private set; }
+        public PolygonNode TargetObject { get; private set; }
 
         /// <summary>
         /// シーン
@@ -190,7 +190,7 @@ namespace RenderApp.Tool.Command
         /// </summary>
         /// <param name="targetNode">対象オブジェクト</param>
         /// <param name="scene">シーン</param>
-        public VoxelCommandArgs(RenderObject targetObject, Scene scene, int partition, Vector3 color)
+        public VoxelCommandArgs(PolygonNode targetObject, Scene scene, int partition, Vector3 color)
         {
             this.TargetObject = targetObject;
             this.Scene = scene;

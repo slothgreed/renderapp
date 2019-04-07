@@ -6,14 +6,14 @@ using KI.UI.ViewModel;
 
 namespace RenderApp.ViewModel
 {
-    public class RenderObjectViewModel : SceneNodeViewModel
+    public class PolygonNodeViewModel : SceneNodeViewModel
     {
-        public RenderObjectViewModel(ViewModelBase parent)
+        public PolygonNodeViewModel(ViewModelBase parent)
             : base(parent, null, "No Geometry", Place.RightUp)
         {
         }
 
-        public RenderObjectViewModel(ViewModelBase parent, RenderObject model)
+        public PolygonNodeViewModel(ViewModelBase parent, PolygonNode model)
             : base(parent, model, "No Geometry", Place.RightUp)
         {
             Attributes = new ObservableCollection<ViewModelBase>();

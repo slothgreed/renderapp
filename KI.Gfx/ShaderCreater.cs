@@ -54,7 +54,7 @@ namespace KI.Gfx
         /// <summary>
         /// 頂点シェーダの取得
         /// </summary>
-        /// <param name="renderObject">描画オブジェクト</param>
+        /// <param name="polygonNode">描画オブジェクト</param>
         /// <returns>ファイルパス</returns>
         public string GetVertexShader(Polygon polygon)
         {
@@ -121,7 +121,7 @@ namespace KI.Gfx
         /// <summary>
         /// フラグシェーダの取得
         /// </summary>
-        /// <param name="renderObject">描画オブジェクト</param>
+        /// <param name="polygonNode">描画オブジェクト</param>
         /// <returns>ファイルパス</returns>
         public string GetFragShader(Polygon polygon)
         {

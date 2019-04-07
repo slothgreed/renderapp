@@ -68,12 +68,12 @@ namespace RenderApp.Tool.Command
             }
 
             Polygon convexModel = new Polygon("Convex:" + targetObject.Name, convexLine);
-            RenderObject convexObject = RenderObjectFactory.Instance.CreateRenderObject("Convex :" + targetObject.Name, convexModel);
+            PolygonNode convexObject = SceneNodeFactory.Instance.CreatePolygonNode("Convex :" + targetObject.Name, convexModel);
             convexObject.ModelMatrix = targetObject.ModelMatrix;
             scene.AddObject(convexObject);
 
             Polygon concaveModel = new Polygon("Concave:" + targetObject.Name, concaveLine);
-            RenderObject concaveObject = RenderObjectFactory.Instance.CreateRenderObject("Concave :" + targetObject.Name, concaveModel);
+            PolygonNode concaveObject = SceneNodeFactory.Instance.CreatePolygonNode("Concave :" + targetObject.Name, concaveModel);
             concaveObject.ModelMatrix = targetObject.ModelMatrix;
             scene.AddObject(concaveObject);
 
@@ -98,7 +98,7 @@ namespace RenderApp.Tool.Command
         /// <summary>
         /// 対象オブジェクト
         /// </summary>
-        public RenderObject TargetObject { get; private set; }
+        public PolygonNode TargetObject { get; private set; }
 
         /// <summary>
         /// シーン
@@ -110,7 +110,7 @@ namespace RenderApp.Tool.Command
         /// </summary>
         /// <param name="targetNode">対象オブジェクト</param>
         /// <param name="loopNum">ループ回数</param>
-        public FeatureLineCommandArgs(RenderObject targetNode, Scene scene)
+        public FeatureLineCommandArgs(PolygonNode targetNode, Scene scene)
         {
             this.TargetObject = targetNode;
             this.Scene = scene;

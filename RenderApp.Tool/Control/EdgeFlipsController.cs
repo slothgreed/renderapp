@@ -28,7 +28,7 @@ namespace RenderApp.Tool.Control
         /// <summary>
         /// 選択形状
         /// </summary>
-        private RenderObject selectObject = null;
+        private PolygonNode selectObject = null;
 
         /// <summary>
         /// 選択エッジ
@@ -49,19 +49,19 @@ namespace RenderApp.Tool.Control
         {
             if (mouse.Button == MOUSE_BUTTON.Left)
             {
-                RenderObject renderObject = null;
+                PolygonNode polygonNode = null;
                 HalfEdgeVertex halfEdgeVertex = null;
 
-                if (HalfEdgeDSSelector.PickPoint(mouse.Current, ref renderObject, ref halfEdgeVertex))
+                if (HalfEdgeDSSelector.PickPoint(mouse.Current, ref polygonNode, ref halfEdgeVertex))
                 {
                     HalfEdge halfEdge = halfEdgeVertex.AroundEdge.First();
                     halfEdge.Start.Color = Vector3.UnitY;
                     halfEdge.End.Color = Vector3.UnitY;
 
-                    selectObject = renderObject;
+                    selectObject = polygonNode;
                     selectHalfEdge = halfEdge;
 
-                    renderObject.UpdateVertexBufferObject();
+                    polygonNode.UpdateVertexBufferObject();
 
                 }
             }
