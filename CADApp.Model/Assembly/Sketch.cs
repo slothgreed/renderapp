@@ -1,6 +1,4 @@
-﻿using System;
-using KI.Foundation.Core;
-using KI.Renderer;
+﻿using KI.Renderer;
 
 namespace CADApp.Model.Assembly
 {

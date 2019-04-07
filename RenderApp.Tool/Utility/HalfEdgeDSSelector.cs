@@ -36,7 +36,7 @@ namespace RenderApp.Tool.Utility
             GetMouseClipPosition(mouse, out near, out far);
 
             PolygonNode polygonNode = null;
-            foreach (KINode sceneNode in Workspace.Instance.RenderSystem.ActiveScene.RootNode.AllChildren())
+            foreach (SceneNode sceneNode in Workspace.Instance.RenderSystem.ActiveScene.RootNode.AllChildren())
             {
                 if (sceneNode is PolygonNode)
                 {
