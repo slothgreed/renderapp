@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using KI.Foundation.Core;
 using KI.Gfx.Geometry;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
@@ -47,17 +48,37 @@ namespace KI.Gfx.GLUtil.Buffer
         /// </summary>
         public int Num { get; set; }
 
+        public bool ShallowCopyObject = false;
+
         /// <summary>
         /// バッファの作成
         /// </summary>
         private void GenBuffer()
         {
-            Dispose();
-            PositionBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
-            NormalBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
-            ColorBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
-            TexCoordBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
-            IndexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
+            if(PositionBuffer == null)
+            {
+                PositionBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
+            }
+
+            if (NormalBuffer == null)
+            {
+                NormalBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
+            }
+
+            if (ColorBuffer == null)
+            {
+                ColorBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
+            }
+
+            if (TexCoordBuffer == null)
+            {
+                TexCoordBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
+            }
+
+            if (IndexBuffer == null)
+            {
+                IndexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
+            }
         }
 
         /// <summary>
@@ -73,10 +94,10 @@ namespace KI.Gfx.GLUtil.Buffer
         {
             GenBuffer();
 
-            PositionBuffer.SetData(position, EArrayType.Vec3Array);
-            NormalBuffer.SetData(normal, EArrayType.Vec3Array);
-            ColorBuffer.SetData(color, EArrayType.Vec3Array);
-            TexCoordBuffer.SetData(texCoord, EArrayType.Vec2Array);
+            SetPosition(position);
+            SetNormal(normal);
+            SetColor(color);
+            SetTextureCode(texCoord);
 
             if (indexBuffer == null)
             {
@@ -85,9 +106,109 @@ namespace KI.Gfx.GLUtil.Buffer
             }
             else
             {
-                IndexBuffer.SetData(indexBuffer, EArrayType.IntArray);
-                Num = indexBuffer.Length;
-                EnableIndexBuffer = true;
+                SetIndexArray(indexBuffer);
+            }
+        }
+        
+        /// <summary>
+        /// 位置情報の設定
+        /// </summary>
+        /// <param name="position">位置データ</param>
+        public void SetPosition(Vector3[] position)
+        {
+            if(PositionBuffer == null)
+            {
+                Logger.Log(Logger.LogLevel.Error, "No Gen Buffer");
+            }
+
+            PositionBuffer.SetData(position, EArrayType.Vec3Array);
+        }
+
+        /// <summary>
+        /// カラー情報の設定
+        /// </summary>
+        /// <param name="color">カラーデータ</param>
+        public void SetColor(Vector3[] color)
+        {
+            if (ColorBuffer == null)
+            {
+                Logger.Log(Logger.LogLevel.Error, "No Gen Buffer");
+            }
+
+            ColorBuffer.SetData(color, EArrayType.Vec3Array);
+        }
+
+        /// <summary>
+        /// 法線情報の設定
+        /// </summary>
+        /// <param name="normal">法線データ</param>
+        public void SetNormal(Vector3[] normal)
+        {
+            if (NormalBuffer == null)
+            {
+                Logger.Log(Logger.LogLevel.Error, "No Gen Buffer");
+            }
+
+            NormalBuffer.SetData(normal, EArrayType.Vec3Array);
+        }
+
+        /// <summary>
+        /// 法線情報の設定
+        /// </summary>
+        /// <param name="textureCode">テクスチャ座標データ</param>
+        public void SetTextureCode(Vector2[] texture)
+        {
+            if (TexCoordBuffer == null)
+            {
+                Logger.Log(Logger.LogLevel.Error, "No Gen Buffer");
+            }
+
+            TexCoordBuffer.SetData(texture, EArrayType.Vec2Array);
+        }
+
+        /// <summary>
+        /// 頂点配列の設定
+        /// </summary>
+        /// <param name="indexArray">頂点配列</param>
+        public void SetIndexArray(int[] indexArray)
+        {
+            if (IndexBuffer == null)
+            {
+                Logger.Log(Logger.LogLevel.Error, "No Gen Buffer");
+            }
+
+            IndexBuffer.SetData(indexArray, EArrayType.IntArray);
+            Num = indexArray.Length;
+            EnableIndexBuffer = true;
+        }
+
+
+        /// <summary>
+        /// バッファの設定
+        /// </summary>
+        /// <param name="position">頂点</param>
+        /// <param name="normal">法線</param>
+        /// <param name="color">色</param>
+        /// <param name="texCoord">テクスチャ</param>
+        /// <param name="index">頂点インデックス</param>
+        /// <param name="num">数</param>
+        public void SetBuffer(Vertex[] vertex, int[] indexBuffer)
+        {
+            GenBuffer();
+
+            SetPosition(vertex.Select(p => p.Position).ToArray());
+            SetNormal(vertex.Select(p => p.Normal).ToArray());
+            SetColor(vertex.Select(p => p.Color).ToArray());
+            SetTextureCode(vertex.Select(p => p.TexCoord).ToArray());
+
+            if (indexBuffer == null)
+            {
+                Num = vertex.Length;
+                EnableIndexBuffer = false;
+            }
+            else
+            {
+                SetIndexArray(indexBuffer);
             }
         }
 
@@ -106,6 +227,7 @@ namespace KI.Gfx.GLUtil.Buffer
             vertexBuffer.IndexBuffer = IndexBuffer.ShallowCopy();
             vertexBuffer.EnableIndexBuffer = EnableIndexBuffer;
             vertexBuffer.Num = Num;
+            vertexBuffer.ShallowCopyObject = true;
 
             return vertexBuffer;
         }

@@ -86,9 +86,6 @@ namespace RenderApp.Tool.Command
                     lineIndex.Add(mesh.Vertexs[0].Index);
                     wireFrameColors.Add(color);
                     wireFrameColors.Add(color);
-
-                    // 必要かわからない。
-                    //wireFrameColors.Add(color);
                 }
             }
 

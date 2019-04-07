@@ -28,6 +28,7 @@ namespace KI.Gfx.GLUtil
             this.target = target;
             usageHint = BufferUsageHint.StaticDraw;
             Enable = true;
+            GenBuffer();
         }
 
         public EArrayType ArrayType { get; private set; }

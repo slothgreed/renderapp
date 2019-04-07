@@ -21,7 +21,6 @@ namespace KI.Gfx.GLUtil.Buffer
         public ArrayBuffer CreateArrayBuffer(BufferTarget target)
         {
             ArrayBuffer obj = new ArrayBuffer(target);
-            obj.GenBuffer();
             AddItem(obj);
             return obj;
         }
