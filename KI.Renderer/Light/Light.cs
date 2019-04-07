@@ -71,6 +71,7 @@ namespace KI.Renderer
         public Texture ShadowMap { get; private set; }
 
         private PolygonNode model;
+
         /// <summary>
         /// ライトのモデル
         /// </summary>

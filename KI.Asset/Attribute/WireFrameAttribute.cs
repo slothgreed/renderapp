@@ -38,15 +38,11 @@ namespace KI.Asset.Attribute
             : base(name, vertexBuffer, PolygonType.Lines, shader)
         {
             colors = color;
-            vertexColorBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
-            vertexBuffer.ColorBuffer = vertexColorBuffer;
-            vertexColorBuffer.SetData(color, EArrayType.Vec3Array);
+            vertexBuffer.ColorBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
+            vertexBuffer.SetColor(color);
 
-            indexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
-            indexBuffer.SetData(index, EArrayType.IntArray);
-            vertexBuffer.IndexBuffer = indexBuffer;
-            vertexBuffer.Num = index.Length;
-            vertexBuffer.EnableIndexBuffer = true;
+            vertexBuffer.IndexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
+            vertexBuffer.SetIndexArray(index);
         }
 
         /// <summary>
@@ -60,7 +56,7 @@ namespace KI.Asset.Attribute
                 colors[i] = color;
             }
 
-            vertexColorBuffer.SetData(colors, EArrayType.Vec3Array);
+            VertexBuffer.SetColor(colors);
         }
 
         /// <summary>

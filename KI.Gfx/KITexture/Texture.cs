@@ -149,7 +149,7 @@ namespace KI.Gfx.KITexture
         /// キューブマップテクスチャの作成
         /// </summary>
         /// <param name="images">画像</param>
-        public void GenCubemapTexture(List<ImageInfo> images)
+        public void SetCubemapFromImage(List<ImageInfo> images)
         {
             if (images == null)
             {
@@ -183,10 +183,10 @@ namespace KI.Gfx.KITexture
         }
 
         /// <summary>
-        /// ファイルからのテクスチャ生成
+        /// ファイルからのテクスチャ設定
         /// </summary>
         /// <param name="image">画像ファイル情報</param>
-        public void GenTexture(ImageInfo image)
+        public void SetTextureFromImage(ImageInfo image)
         {
             TextureBuffer.BindBuffer();
             TextureBuffer.Width = image.Width;
@@ -201,7 +201,7 @@ namespace KI.Gfx.KITexture
         /// 配列からのテクスチャ生成
         /// </summary>
         /// <param name="rgba">色情報</param>
-        public void GenTexture(float[,,] rgba)
+        public void SetTextureFromArray(float[,,] rgba)
         {
             TextureBuffer.SetEmpty(rgba.GetLength(0), rgba.GetLength(1));
             TextureBuffer.BindBuffer();

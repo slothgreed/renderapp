@@ -70,7 +70,7 @@ namespace KI.Asset
 
             ImageInfo image = CreateImageInfo(path, kind);
             Texture texture = new Texture(Path.GetFileName(path), TextureType.Texture2D);
-            texture.GenTexture(image);
+            texture.SetTextureFromImage(image);
             image.Dispose();
 
             return texture;
@@ -109,7 +109,7 @@ namespace KI.Asset
                 }
             }
 
-            texture.GenTexture(rgba);
+            texture.SetTextureFromArray(rgba);
             return texture;
         }
 
@@ -152,7 +152,7 @@ namespace KI.Asset
             images.Add(CreateImageInfo(ny, GetImageKind(ny)));
             images.Add(CreateImageInfo(nz, GetImageKind(nz)));
             Texture texture = new Texture("Cubemap" + Path.GetFileName(px), TextureType.Cubemap);
-            texture.GenCubemapTexture(images);
+            texture.SetCubemapFromImage(images);
 
             return texture;
         }

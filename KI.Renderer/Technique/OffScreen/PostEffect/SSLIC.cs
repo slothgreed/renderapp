@@ -70,7 +70,7 @@ namespace KI.Renderer.Technique
         {
             var gBuffer = RenderSystem.RenderQueue.Items.OfType<GBuffer>().First();
             gBuffer.RenderTarget.GetPixelData(imageInfo, DeviceContext.Instance.Width, DeviceContext.Instance.Height, (int)GBuffer.OutputTextureType.Light);
-            ssLicTex.GenTexture(imageInfo);
+            ssLicTex.SetTextureFromImage(imageInfo);
 
             for (int i = 0; i < 10; i++)
             {
@@ -85,7 +85,7 @@ namespace KI.Renderer.Technique
                 RenderTarget.UnBindRenderTarget();
 
                 RenderTarget.GetPixelData(imageInfo, DeviceContext.Instance.Width, DeviceContext.Instance.Height, 0);
-                uNoize.GenTexture(imageInfo);
+                uNoize.SetTextureFromImage(imageInfo);
             }
         }
 
@@ -112,7 +112,7 @@ namespace KI.Renderer.Technique
                 }
             }
 
-            uNoize.GenTexture(rgba);
+            uNoize.SetTextureFromArray(rgba);
         }
 
         /// <summary>
