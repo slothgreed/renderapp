@@ -61,6 +61,10 @@
     <Compile Include="Attribute\VertexParameterAttribute.cs" />
     <Compile Include="Attribute\WireFrameAttribute.cs" />
     <Compile Include="Camera.cs" />
+    <Compile Include="Light\DirectionLight.cs" />
+    <Compile Include="Light\Light.cs" />
+    <Compile Include="Light\PointLight.cs" />
+    <Compile Include="Light\SpotLight.cs" />
     <Compile Include="Loader\Importer\HalfEdgeImporter.cs" />
     <Compile Include="Loader\Importer\ImporterUtility.cs" />
     <Compile Include="Loader\Importer\OBJImporter.cs" />

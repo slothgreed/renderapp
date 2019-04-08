@@ -51,12 +51,9 @@
   <ItemGroup>
     <Compile Include="EmptyNode.cs" />
     <Compile Include="EnvironmentProbe.cs" />
+    <Compile Include="LightNode.cs" />
     <Compile Include="RendererUtility.cs" />
     <Compile Include="Scene.cs" />
-    <Compile Include="Light\DirectionLight.cs" />
-    <Compile Include="Light\Light.cs" />
-    <Compile Include="Light\PointLight.cs" />
-    <Compile Include="Light\SpotLight.cs" />
     <Compile Include="SceneNode.cs" />
     <Compile Include="Scene\Shader\Bezier.cs" />
     <Compile Include="Scene\Shader\CColorShader.cs" />

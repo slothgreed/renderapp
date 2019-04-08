@@ -74,9 +74,9 @@ namespace KI.Renderer.Technique
             RenderTarget.BindRenderTarget();
             foreach (var asset in scene.RootNode.AllChildren())
             {
-                if (asset is Light)
+                if (asset is LightNode)
                 {
-                    var light = asset as Light;
+                    var light = asset as LightNode;
                     if (light.Model != null)
                     {
                         light.Model.Render(scene);

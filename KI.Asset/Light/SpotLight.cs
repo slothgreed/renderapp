@@ -20,10 +20,5 @@ namespace KI.Renderer
         public float SpotRange { get; private set; }
 
         public float Fallof { get; private set; }
-
-        public override void RenderCore(Scene scene)
-        {
-            // TODO:
-        }
     }
 }

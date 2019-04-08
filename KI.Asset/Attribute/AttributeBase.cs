@@ -37,6 +37,17 @@ namespace KI.Asset.Attribute
         }
 
         /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <param name="shader">シェーダ</param>
+        public AttributeBase(string name, PolygonType type)
+            : base(name)
+        {
+            Type = type;
+        }
+
+        /// <summary>
         /// シェーダ
         /// </summary>
         public Shader Shader { get; set; }
@@ -49,7 +60,7 @@ namespace KI.Asset.Attribute
         /// <summary>
         /// 頂点バッファ
         /// </summary>
-        public VertexBuffer VertexBuffer { get; protected set; }
+        public VertexBuffer VertexBuffer { get; set; }
 
         /// <summary>
         /// 可視不可視

@@ -147,9 +147,9 @@ namespace CADApp.ViewModel
         private void InitializeScene()
         {
             MainScene.MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
-            MainScene.SunLight = SceneNodeFactory.Instance.CreateDirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
+            var light = new DirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
             var sphere = AssetFactory.Instance.CreateSphere("sphere", 0.1f, 32, 32, true);
-            MainScene.SunLight.Model = SceneNodeFactory.Instance.CreatePolygonNode("SunLight", sphere);
+            MainScene.SunLight = new LightNode("SunLight", light, SceneNodeFactory.Instance.CreatePolygonNode("SunLight", sphere));
             MainScene.AddObject(MainScene.MainCamera);
             MainScene.AddObject(MainScene.SunLight);
 

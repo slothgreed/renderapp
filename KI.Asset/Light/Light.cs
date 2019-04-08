@@ -1,4 +1,5 @@
-﻿using KI.Gfx.KITexture;
+﻿using KI.Foundation.Core;
+using KI.Gfx.KITexture;
 using OpenTK;
 
 namespace KI.Renderer
@@ -6,7 +7,7 @@ namespace KI.Renderer
     /// <summary>
     /// 光源
     /// </summary>
-    public abstract class Light : SceneNode
+    public abstract class Light : KIObject
     {
         /// <summary>
         /// コンストラクタ
@@ -69,24 +70,5 @@ namespace KI.Renderer
         /// シャドウマップ
         /// </summary>
         public Texture ShadowMap { get; private set; }
-
-        private PolygonNode model;
-
-        /// <summary>
-        /// ライトのモデル
-        /// </summary>
-        public PolygonNode Model
-        {
-            get
-            {
-                return model;
-            }
-
-            set
-            {
-                model = value;
-                model.Translate = Position;
-            }
-        }
     }
 }

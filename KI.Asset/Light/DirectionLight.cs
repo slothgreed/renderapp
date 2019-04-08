@@ -1,6 +1,7 @@
-﻿using OpenTK;
+﻿using KI.Renderer;
+using OpenTK;
 
-namespace KI.Renderer
+namespace KI.Asset
 {
     /// <summary>
     /// 平行光源
@@ -16,11 +17,6 @@ namespace KI.Renderer
         public DirectionLight(string name, Vector3 lightPos, Vector3 lightDir)
             : base(name, lightPos, lightDir)
         {
-        }
-
-        public override void RenderCore(Scene scene)
-        {
-            // TODO:
         }
     }
 }

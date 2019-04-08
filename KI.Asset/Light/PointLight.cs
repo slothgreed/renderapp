@@ -17,10 +17,5 @@ namespace KI.Renderer
             : base(name, lightPos, Vector3.Zero)
         {
         }
-
-        public override void RenderCore(Scene scene)
-        {
-            // TODO:
-        }
     }
 }

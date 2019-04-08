@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using KI.Asset.Attribute;
 using KI.Foundation.Core;
+using KI.Gfx;
 using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
@@ -9,22 +11,22 @@ using OpenTK;
 
 namespace CADApp.Model.Assembly
 {
-    public class Sketch : SceneNode
+    public class SketchNode : SceneNode
     {
         /// <summary>
         /// GL_POINTS のノード
         /// </summary>
-        PolygonNode pointObject;
+        PolygonNode sketchNode;
 
         /// <summary>
-        /// GL_LINES のノード
+        /// GL_LINES の Attribute
         /// </summary>
-        PolygonNode lineObject;
+        PolygonAttribute lineAttribute;
 
         /// <summary>
-        /// GL_TRIANGLES のノード
+        /// GL_TRIANGLES の Attribute
         /// </summary>
-        PolygonNode polygonObject;
+        PolygonAttribute polygonAttribute;
 
         /// <summary>
         /// 頂点バッファ
@@ -38,13 +40,13 @@ namespace CADApp.Model.Assembly
 
         bool currentEdit = false;
              
-        public Sketch(string name)
+        public SketchNode(string name)
            : base(name)
         {
             vertexs = new List<Vertex>();
-            pointObject = new PolygonNode(name + " : Point");
-            lineObject = new PolygonNode(name + " : Line");
-            polygonObject = new PolygonNode(name + " : Mesh");
+            sketchNode = new PolygonNode(name + " : Point");
+            lineAttribute = new PolygonAttribute(name + " : Line", PolygonType.Lines);
+            polygonAttribute = new PolygonAttribute(name + " : Mesh", PolygonType.Triangles);
         }
 
         public void AddVertex(Vector3 position)
@@ -106,16 +108,12 @@ namespace CADApp.Model.Assembly
         /// <param name="scene">シーン</param>
         public override void RenderCore(Scene scene)
         {
-            if(currentEdit == true)
+            if (currentEdit == true)
             {
                 throw new Exception();
             }
 
-            pointObject.Render(scene);
-
-            lineObject.Render(scene);
-
-            polygonObject.Render(scene);
+            sketchNode.Render(scene);
         }
 
 

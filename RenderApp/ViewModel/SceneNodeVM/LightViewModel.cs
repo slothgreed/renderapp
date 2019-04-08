@@ -9,7 +9,7 @@ namespace RenderApp.ViewModel
     /// </summary>
     public class LightViewModel : SceneNodeViewModel
     {
-        public LightViewModel(ViewModelBase parent, Light light)
+        public LightViewModel(ViewModelBase parent, LightNode light)
             : base(parent, light, "LightProperty", Place.RightUp)
         {
         }

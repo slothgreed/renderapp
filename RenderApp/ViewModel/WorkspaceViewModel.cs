@@ -121,9 +121,9 @@ namespace RenderApp.ViewModel
                 vm.PropertyChanged += PolygonNodeViewModel_PropertyChanged;
                 workspace.MainScene.SelectNode = node;
             }
-            else if (node is Light)
+            else if (node is LightNode)
             {
-                vm = new LightViewModel(this, node as Light);
+                vm = new LightViewModel(this, node as LightNode);
                 vm.PropertyChanged += PolygonNodeViewModel_PropertyChanged;
                 workspace.MainScene.SelectNode = node;
             }
@@ -160,9 +160,9 @@ namespace RenderApp.ViewModel
             Scene mainScene = workspace.MainScene;
 
             mainScene.MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
-            mainScene.SunLight = SceneNodeFactory.Instance.CreateDirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
+            var light = new DirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
             var sphere = AssetFactory.Instance.CreateSphere("sphere", 0.1f, 32, 32, true);
-            mainScene.SunLight.Model = SceneNodeFactory.Instance.CreatePolygonNode("SunLight", sphere);
+            MainScene.SunLight = new LightNode("SunLight", light, SceneNodeFactory.Instance.CreatePolygonNode("SunLight", sphere));
             mainScene.AddObject(mainScene.MainCamera);
             mainScene.AddObject(mainScene.SunLight);
 

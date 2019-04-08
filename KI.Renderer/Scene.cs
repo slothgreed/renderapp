@@ -49,7 +49,7 @@ namespace KI.Renderer
         /// <summary>
         /// 主な光源
         /// </summary>
-        public Light SunLight { get; set; }
+        public LightNode SunLight { get; set; }
 
 
         #region [public scene method]
