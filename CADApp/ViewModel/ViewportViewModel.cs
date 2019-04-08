@@ -89,17 +89,17 @@ namespace CADApp.ViewModel
         /// <summary>
         /// レンダラー
         /// </summary>
-        public RenderSystem Renderer { get; set; }
+        public RenderSystem RenderSystem { get; set; }
 
         public void OnLoadedEvent(object sender, EventArgs e)
         {
             DeviceContext.Instance.SetClearColor(1, 1, 1, 1);
             MainScene = new Scene("MainScene");
-            Renderer = new RenderSystem();
-            Renderer.ActiveScene = MainScene;
+            RenderSystem = new RenderSystem();
+            RenderSystem.ActiveScene = MainScene;
 
             Workspace.Instance.MainScene = MainScene;
-            Workspace.Instance.RenderSystem = Renderer;
+            Workspace.Instance.RenderSystem = RenderSystem;
 
             Controller.Add(CONTROLLER_TYPE.SketchLine, new SketchLineController());
             CurrentController = CONTROLLER_TYPE.SketchLine;
@@ -116,12 +116,12 @@ namespace CADApp.ViewModel
                 MainScene.MainCamera.SetProjMatrix((float)DeviceContext.Instance.Width / DeviceContext.Instance.Height);
             }
             
-            Renderer.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
+            RenderSystem.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
         }
 
         private void OnRenderEvent(object sender, PaintEventArgs e)
         {
-            Renderer.Render();
+            RenderSystem.Render();
         }
 
         private void OnMouseWheelEvent(object sender, KIMouseEventArgs e)
@@ -164,12 +164,12 @@ namespace CADApp.ViewModel
 
         private void InitializeRenderer()
         {
-            RenderTechniqueFactory.Instance.Renderer = Renderer;
-            Renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer));
-            var gBufferTexture = Renderer.RenderQueue.OutputTexture<GBuffer>();
-            Renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Deferred));
-            Renderer.OutputBuffer  = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output) as OutputBuffer;
-            Renderer.OutputTexture = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
+            RenderTechniqueFactory.Instance.RendererSystem = RenderSystem;
+            RenderSystem.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer));
+            var gBufferTexture = RenderSystem.RenderQueue.OutputTexture<GBuffer>();
+            RenderSystem.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Deferred));
+            RenderSystem.OutputBuffer  = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output) as OutputBuffer;
+            RenderSystem.OutputTexture = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
         }
 
         /// <summary>

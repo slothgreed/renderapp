@@ -323,7 +323,7 @@ namespace RenderApp.ViewModel
         public void InitializeRenderer(int width, int height)
         {
             var renderer = workspace.RenderSystem;
-            RenderTechniqueFactory.Instance.Renderer = renderer;
+            RenderTechniqueFactory.Instance.RendererSystem = renderer;
             //renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Shadow));
             renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer));
 

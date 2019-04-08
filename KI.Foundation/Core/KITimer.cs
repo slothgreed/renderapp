@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Threading;
-using OpenTK;
 
 namespace KI.Foundation.Core
 {
@@ -37,28 +36,6 @@ namespace KI.Foundation.Core
         /// カウンター
         /// </summary>
         public int TimerCount { get; private set; }
-
-        /// <summary>
-        /// 角度カウンター
-        /// </summary>
-        public int AngleCount
-        {
-            get
-            {
-                return TimerCount % 360;
-            }
-        }
-
-        /// <summary>
-        /// ラジアンカウンタ
-        /// </summary>
-        public float RadianCount
-        {
-            get
-            {
-                return (float)MathHelper.DegreesToRadians(TimerCount % 360);
-            }
-        }
 
         /// <summary>
         /// タイマースタート

@@ -23,10 +23,21 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="polygon">形状</param>
+        /// <param name="shader">シェーダ</param>
         public PolygonNode(string name, Polygon polygon, Shader shader)
             : base(name)
         {
             SetPolygon(polygon, shader);
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="name">名前</param>
+        public PolygonNode(string name)
+            : base(name)
+        {
+
         }
 
         /// <summary>
@@ -41,6 +52,7 @@ namespace KI.Renderer
 
         /// <summary>
         /// アトリビュート
+        /// アトリビュートのみSRTが違うことはないためAttributeNodeを作成して子ノードにすることはしない。
         /// </summary>
         public List<AttributeBase> Attributes { get; private set; } = new List<AttributeBase>();
 

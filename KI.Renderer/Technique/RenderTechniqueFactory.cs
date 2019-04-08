@@ -69,7 +69,7 @@ namespace KI.Renderer
             DefaultShader.Add(RenderTechniqueType.Output,    new ShaderFile() { Vertex = postEffect + @"\output.vert",      Frag = postEffect + @"\output.frag" });
         }
 
-        public RenderSystem Renderer
+        public RenderSystem RendererSystem
         {
             get;
             set;
@@ -82,7 +82,7 @@ namespace KI.Renderer
         /// <returns>レンダーテクニック</returns>
         public RenderTechnique CreateRenderTechnique(RenderTechniqueType type)
         {
-            if (Renderer == null)
+            if (RendererSystem == null)
             {
                 Logger.Log(Logger.LogLevel.Error, "Set Renderer");
             }
@@ -91,34 +91,34 @@ namespace KI.Renderer
             switch (type)
             {
                 case RenderTechniqueType.Shadow:
-                    technique = new ShadowMap(Renderer, DefaultShader[RenderTechniqueType.Shadow].Vertex, DefaultShader[RenderTechniqueType.Shadow].Frag);
+                    technique = new ShadowMap(RendererSystem, DefaultShader[RenderTechniqueType.Shadow].Vertex, DefaultShader[RenderTechniqueType.Shadow].Frag);
                     break;
                 case RenderTechniqueType.GBuffer:
-                    technique = new GBuffer(Renderer);
+                    technique = new GBuffer(RendererSystem);
                     break;
                 case RenderTechniqueType.Deferred:
-                    technique = new DeferredRendering(Renderer, DefaultShader[RenderTechniqueType.Deferred].Vertex, DefaultShader[RenderTechniqueType.Deferred].Frag);
+                    technique = new DeferredRendering(RendererSystem, DefaultShader[RenderTechniqueType.Deferred].Vertex, DefaultShader[RenderTechniqueType.Deferred].Frag);
                     break;
                 case RenderTechniqueType.IBL:
-                    technique = new ImageBasedLighting(Renderer, DefaultShader[RenderTechniqueType.IBL].Vertex, DefaultShader[RenderTechniqueType.IBL].Frag);
+                    technique = new ImageBasedLighting(RendererSystem, DefaultShader[RenderTechniqueType.IBL].Vertex, DefaultShader[RenderTechniqueType.IBL].Frag);
                     break;
                 case RenderTechniqueType.Selection:
-                    technique = new Selection(Renderer, DefaultShader[RenderTechniqueType.Selection].Vertex, DefaultShader[RenderTechniqueType.Selection].Frag);
+                    technique = new Selection(RendererSystem, DefaultShader[RenderTechniqueType.Selection].Vertex, DefaultShader[RenderTechniqueType.Selection].Frag);
                     break;
                 case RenderTechniqueType.Sobel:
-                    technique = new Sobel(Renderer, DefaultShader[RenderTechniqueType.Sobel].Vertex, DefaultShader[RenderTechniqueType.Sobel].Frag);
+                    technique = new Sobel(RendererSystem, DefaultShader[RenderTechniqueType.Sobel].Vertex, DefaultShader[RenderTechniqueType.Sobel].Frag);
                     break;
                 case RenderTechniqueType.Bloom:
-                    technique = new Bloom(Renderer, DefaultShader[RenderTechniqueType.Bloom].Vertex, DefaultShader[RenderTechniqueType.Bloom].Frag);
+                    technique = new Bloom(RendererSystem, DefaultShader[RenderTechniqueType.Bloom].Vertex, DefaultShader[RenderTechniqueType.Bloom].Frag);
                     break;
                 case RenderTechniqueType.Output:
-                    technique = new OutputBuffer(Renderer, DefaultShader[RenderTechniqueType.Output].Vertex, DefaultShader[RenderTechniqueType.Output].Frag);
+                    technique = new OutputBuffer(RendererSystem, DefaultShader[RenderTechniqueType.Output].Vertex, DefaultShader[RenderTechniqueType.Output].Frag);
                     break;
                 case RenderTechniqueType.SSAO:
-                    technique = new SSAO(Renderer, DefaultShader[RenderTechniqueType.SSAO].Vertex, DefaultShader[RenderTechniqueType.SSAO].Frag);
+                    technique = new SSAO(RendererSystem, DefaultShader[RenderTechniqueType.SSAO].Vertex, DefaultShader[RenderTechniqueType.SSAO].Frag);
                     break;
                 case RenderTechniqueType.SSLIC:
-                    technique = new SSLIC(Renderer, DefaultShader[RenderTechniqueType.SSLIC].Vertex, DefaultShader[RenderTechniqueType.SSLIC].Frag);
+                    technique = new SSLIC(RendererSystem, DefaultShader[RenderTechniqueType.SSLIC].Vertex, DefaultShader[RenderTechniqueType.SSLIC].Frag);
                     break;
                 default:
                     break;

@@ -11,14 +11,29 @@ namespace CADApp.Model.Assembly
 {
     public class Sketch : SceneNode
     {
+        /// <summary>
+        /// GL_POINTS のノード
+        /// </summary>
         PolygonNode pointObject;
 
+        /// <summary>
+        /// GL_LINES のノード
+        /// </summary>
         PolygonNode lineObject;
 
+        /// <summary>
+        /// GL_TRIANGLES のノード
+        /// </summary>
         PolygonNode polygonObject;
 
+        /// <summary>
+        /// 頂点バッファ
+        /// </summary>
         VertexBuffer vertexBuffer;
 
+        /// <summary>
+        /// スケッチの頂点情報
+        /// </summary>
         List<Vertex> vertexs;
 
         bool currentEdit = false;
@@ -27,6 +42,9 @@ namespace CADApp.Model.Assembly
            : base(name)
         {
             vertexs = new List<Vertex>();
+            pointObject = new PolygonNode(name + " : Point");
+            lineObject = new PolygonNode(name + " : Line");
+            polygonObject = new PolygonNode(name + " : Mesh");
         }
 
         public void AddVertex(Vector3 position)
@@ -79,6 +97,7 @@ namespace CADApp.Model.Assembly
         public void EndEdit()
         {
             currentEdit = false;
+            UpdatePolygonData();
         }
 
         /// <summary>
@@ -97,6 +116,12 @@ namespace CADApp.Model.Assembly
             lineObject.Render(scene);
 
             polygonObject.Render(scene);
+        }
+
+
+        private void UpdatePolygonData()
+        {
+
         }
     }
 }

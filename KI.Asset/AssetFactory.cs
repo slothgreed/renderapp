@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using KI.Analyzer;
-using KI.Asset.Loader.Importer;
+﻿using KI.Asset.Loader.Importer;
 using KI.Foundation.Core;
 using KI.Gfx.Geometry;
 using OpenTK;
@@ -110,18 +108,6 @@ namespace KI.Asset
             }
 
             return null;
-        }
-
-        /// <summary>
-        /// ハーフエッジの作成
-        /// </summary>
-        /// <param name="name">名前</param>
-        /// <param name="position">頂点座標</param>
-        /// <param name="index">頂点番号</param>
-        /// <returns>ハーフエッジ</returns>
-        public ICreateModel CreateHalfEdge(string name, List<Vector3> position, List<int> index)
-        {
-            return new HalfEdgeImporter(new HalfEdgeDS(name, position, index));
         }
     }
 }
