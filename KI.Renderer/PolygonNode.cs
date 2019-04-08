@@ -78,24 +78,12 @@ namespace KI.Renderer
         }
 
         /// <summary>
-        /// 形状データ
-        /// </summary>
-        private Polygon polygon;
-
-        /// <summary>
         /// 形状
         /// </summary>
         public Polygon Polygon
         {
-            get
-            {
-                return polygon;
-            }
-
-            private set
-            {
-                polygon = value;
-            }
+            get;
+            private set;
         }
 
         /// <summary>
@@ -194,15 +182,15 @@ namespace KI.Renderer
         {
             if (Type == PolygonType.Points)
             {
-                VertexBuffer.SetupPointBuffer(polygon.Vertexs, polygon.Index);
+                VertexBuffer.SetupPointBuffer(Polygon.Vertexs, Polygon.Index);
             }
             else if (Type == PolygonType.Lines)
             {
-                VertexBuffer.SetupLineBuffer(polygon.Vertexs, polygon.Index, polygon.Lines);
+                VertexBuffer.SetupLineBuffer(Polygon.Vertexs, Polygon.Index, Polygon.Lines);
             }
             else
             {
-                VertexBuffer.SetupMeshBuffer(polygon.Vertexs, polygon.Index, polygon.Meshs, Type);
+                VertexBuffer.SetupMeshBuffer(Polygon.Vertexs, Polygon.Index, Polygon.Meshs, Type);
             }
 
             PolygonAttribute.UpdateVertexBuffer(VertexBuffer);

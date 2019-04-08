@@ -33,7 +33,7 @@ namespace CADApp.Tool.Control
             switch (mouse.Button)
             {
                 case MOUSE_BUTTON.Middle:
-                    Translate(Workspace.Instance.RenderSystem.ActiveScene.MainCamera, new Vector3(-mouse.Delta.X, -mouse.Delta.Y, 0));
+                    Translate(Workspace.Instance.RenderSystem.ActiveScene.MainCamera, new Vector3(mouse.Delta.X, -mouse.Delta.Y, 0));
                     break;
                 case MOUSE_BUTTON.Right:
                     Rotate(Workspace.Instance.RenderSystem.ActiveScene.MainCamera, new Vector3(-mouse.Delta.X, -mouse.Delta.Y, 0));

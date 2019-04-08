@@ -1,4 +1,5 @@
-﻿using KI.Asset;
+﻿using System.Linq;
+using KI.Asset;
 using KI.Gfx.KITexture;
 using KI.Gfx.Render;
 
@@ -72,21 +73,9 @@ namespace KI.Renderer.Technique
         {
             ClearBuffer();
             RenderTarget.BindRenderTarget();
-            foreach (var asset in scene.RootNode.AllChildren())
+            foreach (SceneNode asset in scene.RootNode.AllChildren().OfType<SceneNode>())
             {
-                if (asset is LightNode)
-                {
-                    var light = asset as LightNode;
-                    if (light.Model != null)
-                    {
-                        light.Model.Render(scene);
-                    }
-                }
-                else if (asset is PolygonNode)
-                {
-                    var polygonNode = asset as PolygonNode;
-                    polygonNode.Render(scene);
-                }
+                asset.Render(scene);
             }
 
             RenderTarget.UnBindRenderTarget();

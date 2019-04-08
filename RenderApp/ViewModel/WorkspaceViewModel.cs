@@ -162,9 +162,9 @@ namespace RenderApp.ViewModel
             mainScene.MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
             var light = new DirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
             var sphere = AssetFactory.Instance.CreateSphere("sphere", 0.1f, 32, 32, true);
-            MainScene.SunLight = new LightNode("SunLight", light, SceneNodeFactory.Instance.CreatePolygonNode("SunLight", sphere));
+            mainScene.MainLight = new LightNode("SunLight", light, SceneNodeFactory.Instance.CreatePolygonNode("SunLight", sphere));
             mainScene.AddObject(mainScene.MainCamera);
-            mainScene.AddObject(mainScene.SunLight);
+            mainScene.AddObject(mainScene.MainLight);
 
             var axis = AssetFactory.Instance.CreateAxis("axis", Vector3.Zero, mainScene.WorldMax);
             var axisObject = SceneNodeFactory.Instance.CreatePolygonNode(axis.ToString(), axis);
@@ -303,7 +303,7 @@ namespace RenderApp.ViewModel
             PolygonNode renderTop = SceneNodeFactory.Instance.CreatePolygonNode(top.Name, top);
             PolygonNode renderBottom = SceneNodeFactory.Instance.CreatePolygonNode(bottom.Name, bottom);
 
-            KINode cubeMapNode = new KINode("CubeMap");
+            EmptyNode cubeMapNode = new EmptyNode("CubeMap");
 
             Scene mainScene = workspace.MainScene;
 

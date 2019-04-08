@@ -49,7 +49,7 @@ namespace KI.Renderer
         /// <summary>
         /// 主な光源
         /// </summary>
-        public LightNode SunLight { get; set; }
+        public LightNode MainLight { get; set; }
 
 
         #region [public scene method]
@@ -65,9 +65,9 @@ namespace KI.Renderer
             AddObject(polygonNode);
         }
 
-        public KINode FindNode(SceneNode obj)
+        public SceneNode FindNode(SceneNode obj)
         {
-            return RootNode.FindRecursiveChild(obj.Name);
+            return RootNode.FindRecursiveChild(obj.Name) as SceneNode;
         }
 
         /// <summary>
@@ -75,9 +75,9 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="key">キー</param>
         /// <returns>オブジェクト</returns>
-        public KINode FindNode(string key)
+        public SceneNode FindNode(string key)
         {
-            KINode obj = RootNode.FindRecursiveChild(key);
+            SceneNode obj = RootNode.FindRecursiveChild(key) as SceneNode;
             if (obj == null)
             {
                 return null;
@@ -93,7 +93,7 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="value">追加するオブジェクト</param>
         /// <param name="parent">親</param>
-        public void AddObject(KIObject value, KINode parent = null)
+        public void AddObject(KIObject value, SceneNode parent = null)
         {
             AddObject(new List<KIObject>() { value }, parent);
         }
@@ -103,7 +103,7 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="value">追加するオブジェクトリスト</param>
         /// <param name="parent">親</param>
-        public void AddObject(List<KIObject> value, KINode parent = null)
+        public void AddObject(List<KIObject> value, SceneNode parent = null)
         {
             if (parent == null)
             {
@@ -121,7 +121,7 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="value">追加するオブジェクトリスト</param>
         /// <param name="parent">親</param>
-        public void AddObject(KINode value, KINode parent = null)
+        public void AddObject(SceneNode value, SceneNode parent = null)
         {
             if (parent == null)
             {

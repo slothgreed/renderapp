@@ -59,7 +59,7 @@ namespace KI.Renderer
                         info.Variable = polygonNode.ModelMatrix * vp;
                         break;
                     case "uSMVP":
-                        Matrix4 light = scene.SunLight.Data.Matrix;
+                        Matrix4 light = scene.MainLight.Data.Matrix;
                         Matrix4 proj = scene.MainCamera.ProjMatrix;
                         info.Variable = polygonNode.ModelMatrix * light * proj;
                         break;
@@ -82,13 +82,13 @@ namespace KI.Renderer
                         info.Variable = scene.MainCamera.Matrix;
                         break;
                     case "uLightPosition":
-                        info.Variable = scene.SunLight.Data.Position;
+                        info.Variable = scene.MainLight.Data.Position;
                         break;
                     case "uLightDirection":
-                        info.Variable = scene.SunLight.Data.Direction;
+                        info.Variable = scene.MainLight.Data.Direction;
                         break;
                     case "uLightMatrix":
-                        info.Variable = scene.SunLight.Data.Matrix;
+                        info.Variable = scene.MainLight.Data.Matrix;
                         break;
                     case "uAlbedoMap":
                         if (textures.ContainsKey(TextureKind.Albedo))
