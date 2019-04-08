@@ -55,30 +55,13 @@ namespace KI.Gfx.GLUtil.Buffer
         /// </summary>
         private void GenBuffer()
         {
-            if(PositionBuffer == null)
-            {
-                PositionBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
-            }
-
-            if (NormalBuffer == null)
-            {
-                NormalBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
-            }
-
-            if (ColorBuffer == null)
-            {
-                ColorBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
-            }
-
-            if (TexCoordBuffer == null)
-            {
-                TexCoordBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
-            }
-
-            if (IndexBuffer == null)
-            {
-                IndexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
-            }
+            // サイズが変わった時の挙動が分からない。ので作り直している。
+            Dispose();
+            PositionBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
+            NormalBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
+            ColorBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
+            TexCoordBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
+            IndexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
         }
 
         /// <summary>
