@@ -52,8 +52,11 @@ namespace RenderApp.ViewModel
 
         private void ExecuteCommand()
         {
-            CommandBase command = new CreateIsoLineCommand(new IsoLineCommandArgs(Workspace.Instance.MainScene.SelectNode as PolygonNode, Workspace.Instance.MainScene, Space));
-            CommandManager.Instance.Execute(command, true);
+            if (Workspace.Instance.MainScene.SelectNode is AnalyzePolygonNode)
+            {
+                CommandBase command = new CreateIsoLineCommand(new IsoLineCommandArgs(Workspace.Instance.MainScene.SelectNode as AnalyzePolygonNode, Workspace.Instance.MainScene, Space));
+                CommandManager.Instance.Execute(command, true);
+            }
         }
     }
 }

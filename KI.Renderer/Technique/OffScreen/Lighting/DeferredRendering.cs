@@ -23,14 +23,7 @@ namespace KI.Renderer.Technique
         {
             RenderTarget.ClearBuffer();
             RenderTarget.BindRenderTarget();
-            foreach (var light in scene.RootNode.AllChildren())
-            {
-                if (light.KIObject is Light)
-                {
-                    Rectanle.Render(scene);
-                }
-            }
-
+            Rectanle.Render(scene);
             RenderTarget.UnBindRenderTarget();
         }
 

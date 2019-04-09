@@ -126,6 +126,9 @@ namespace KI.Asset
             return texture;
         }
 
+        /// <summary>
+        /// レンダリング用のテクスチャバッファ
+        /// </summary>
         public RenderTexture CreateRenderTexture(string name, int width, int height)
         {
             var renderTexture = new RenderTexture(name, width, height);

@@ -4,6 +4,7 @@ using KI.Analyzer.Algorithm;
 using KI.Asset;
 using KI.Renderer;
 using KI.Tool.Command;
+using RenderApp.Model;
 
 namespace RenderApp.Tool.Command
 {
@@ -75,7 +76,7 @@ namespace RenderApp.Tool.Command
         /// <summary>
         /// 対象オブジェクト
         /// </summary>
-        public PolygonNode TargetObject { get; private set; }
+        public AnalyzePolygonNode TargetObject { get; private set; }
 
         /// <summary>
         /// ループ回数
@@ -87,7 +88,7 @@ namespace RenderApp.Tool.Command
         /// </summary>
         /// <param name="targetNode">対象オブジェクト</param>
         /// <param name="loopNum">ループ回数</param>
-        public SmoothingCommandArgs(PolygonNode targetNode, int loopNum)
+        public SmoothingCommandArgs(AnalyzePolygonNode targetNode, int loopNum)
         {
             this.TargetObject = targetNode;
             this.LoopNum = loopNum;

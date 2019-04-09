@@ -6,6 +6,7 @@ using KI.Mathmatics;
 using KI.Renderer;
 using KI.Tool.Command;
 using OpenTK;
+using RenderApp.Model;
 
 namespace RenderApp.Tool.Command
 {
@@ -77,7 +78,7 @@ namespace RenderApp.Tool.Command
         /// <summary>
         /// 対象形状
         /// </summary>
-        public PolygonNode TargetObject;
+        public AnalyzePolygonNode TargetObject;
 
         /// <summary>
         /// シーン
@@ -101,7 +102,7 @@ namespace RenderApp.Tool.Command
         /// <param name="scene">シーン</param>
         /// <param name="clusterNum">クラスタ数</param>
         /// <param name="iterateNum">繰り返し回数</param>
-        public KMeansCommandArgs(PolygonNode targetObject, Scene scene, int clusterNum, int iterateNum)
+        public KMeansCommandArgs(AnalyzePolygonNode targetObject, Scene scene, int clusterNum, int iterateNum)
         {
             TargetObject = targetObject;
             Scene = scene;

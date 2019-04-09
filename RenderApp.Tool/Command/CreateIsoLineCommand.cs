@@ -11,6 +11,7 @@ using KI.Mathmatics;
 using KI.Renderer;
 using KI.Tool.Command;
 using OpenTK;
+using RenderApp.Model;
 
 namespace RenderApp.Tool.Command
 {
@@ -104,7 +105,7 @@ namespace RenderApp.Tool.Command
         /// <summary>
         /// 対象オブジェクト
         /// </summary>
-        public PolygonNode TargetObject { get; private set; }
+        public AnalyzePolygonNode TargetObject { get; private set; }
 
         /// <summary>
         /// シーン
@@ -122,7 +123,7 @@ namespace RenderApp.Tool.Command
         /// <param name="targetNode">対象オブジェクト</param>
         /// <param name="scene">シーン</param>
         /// <param name="space">スペース</param>
-        public IsoLineCommandArgs(PolygonNode targetNode, Scene scene, float space)
+        public IsoLineCommandArgs(AnalyzePolygonNode targetNode, Scene scene, float space)
         {
             this.TargetObject = targetNode;
             this.Scene = scene;

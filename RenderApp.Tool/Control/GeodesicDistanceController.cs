@@ -40,12 +40,18 @@ namespace RenderApp.Tool.Control
                 HalfEdgeVertex selectVertex = null;
                 if (HalfEdgeDSSelector.PickPoint(mouse.Current, ref polygonNode, ref selectVertex))
                 {
-                    if (polygonNode.Polygon is HalfEdgeDS)
+                    AnalyzePolygonNode analyzePolygonNode = null;
+                    if (polygonNode is AnalyzePolygonNode)
                     {
-                        geodesic = new GeodesicDistanceAlgorithm(polygonNode.Polygon as HalfEdgeDS);
+                        analyzePolygonNode = polygonNode as AnalyzePolygonNode;
+                    }
+
+                    if (analyzePolygonNode.Polygon is HalfEdgeDS)
+                    {
+                        geodesic = new GeodesicDistanceAlgorithm(analyzePolygonNode.Polygon as HalfEdgeDS);
                         Polygon polygon = new Polygon("Picking", new List<Vertex>() { new Vertex(0, selectVertex.Position, Vector3.UnitY) });
                         PolygonNode pointObject = SceneNodeFactory.Instance.CreatePolygonNode("Picking", polygon);
-                        pointObject.ModelMatrix = polygonNode.ModelMatrix;
+                        pointObject.ModelMatrix = analyzePolygonNode.ModelMatrix;
                         Workspace.Instance.RenderSystem.ActiveScene.AddObject(pointObject);
 
                         geodesic.SelectPoint(selectVertex.Index);
@@ -55,7 +61,7 @@ namespace RenderApp.Tool.Control
 
                         var distBetweenLines = max / 20;
                         List<Line> lines = new List<Line>();
-                        foreach (var mesh in ((HalfEdgeDS)polygonNode.Polygon).HalfEdgeMeshs)
+                        foreach (var mesh in ((HalfEdgeDS)analyzePolygonNode.Polygon).HalfEdgeMeshs)
                         {
                             var segment = new List<Vector3>();
                             foreach (var edge in mesh.AroundEdge)
@@ -91,19 +97,19 @@ namespace RenderApp.Tool.Control
                             }
                         }
 
-                        var parentNode = Workspace.Instance.RenderSystem.ActiveScene.FindNode(polygonNode);
+                        var parentNode = Workspace.Instance.RenderSystem.ActiveScene.FindNode(analyzePolygonNode);
                         
                         var colorAttribute = new VertexParameterAttribute("distanceColor", 
-                            polygonNode.VertexBuffer.ShallowCopy(), 
-                            polygonNode.Type, 
-                            polygonNode.Shader, 
+                            analyzePolygonNode.VertexBuffer.ShallowCopy(), 
+                            analyzePolygonNode.Type, 
+                            analyzePolygonNode.Shader, 
                             geodesicDistance);
 
                         Polygon lineGeometry = new Polygon("geodesicDistance", lines);
                         var vertexBuffer = new VertexBuffer();
                         vertexBuffer.SetupLineBuffer(lineGeometry.Vertexs, lineGeometry.Index, lineGeometry.Lines);
-                        var lineAttribute = new PolygonAttribute("geodesicDistance", vertexBuffer, PolygonType.Lines, polygonNode.Shader);
-                        polygonNode.Attributes.Add(lineAttribute);
+                        var lineAttribute = new PolygonAttribute("geodesicDistance", vertexBuffer, PolygonType.Lines, analyzePolygonNode.Shader);
+                        analyzePolygonNode.Attributes.Add(lineAttribute);
                         Workspace.Instance.RenderSystem.ActiveScene.AddObject(lineAttribute, parentNode);
                     }
                 }

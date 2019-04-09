@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnalyzePolygonNode.cs" />
     <Compile Include="AppSystem.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="ProjectInfo.cs" />

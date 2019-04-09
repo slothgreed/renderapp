@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using KI.Asset;
 using KI.Foundation.Core;
-using KI.Foundation.Tree;
 using OpenTK;
 
 namespace KI.Renderer

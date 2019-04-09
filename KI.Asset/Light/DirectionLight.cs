@@ -1,5 +1,4 @@
-﻿using KI.Renderer;
-using OpenTK;
+﻿using OpenTK;
 
 namespace KI.Asset
 {

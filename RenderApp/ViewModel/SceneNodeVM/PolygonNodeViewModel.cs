@@ -1,19 +1,19 @@
 ﻿using System.Collections.ObjectModel;
 using KI.Asset;
 using KI.Asset.Attribute;
-using KI.Renderer;
 using KI.UI.ViewModel;
+using RenderApp.Model;
 
 namespace RenderApp.ViewModel
 {
-    public class PolygonNodeViewModel : SceneNodeViewModel
+    public class AnalyzePolygonNodeViewModel : SceneNodeViewModel
     {
-        public PolygonNodeViewModel(ViewModelBase parent)
+        public AnalyzePolygonNodeViewModel(ViewModelBase parent)
             : base(parent, null, "No Geometry", Place.RightUp)
         {
         }
 
-        public PolygonNodeViewModel(ViewModelBase parent, PolygonNode model)
+        public AnalyzePolygonNodeViewModel(ViewModelBase parent, AnalyzePolygonNode model)
             : base(parent, model, "No Geometry", Place.RightUp)
         {
             Attributes = new ObservableCollection<ViewModelBase>();

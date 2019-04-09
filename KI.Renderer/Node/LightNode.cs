@@ -1,4 +1,6 @@
-﻿namespace KI.Renderer
+﻿using KI.Asset;
+
+namespace KI.Renderer
 {
     /// <summary>
     /// ライトノード

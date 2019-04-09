@@ -125,7 +125,7 @@ namespace RenderApp.Tool.Utility
                     continue;
                 }
 
-                if (PickTriangleCore(near, far, selectNode, ref minLength, ref mesh))
+                if (PickTriangleCore(near, far, polygonNode, ref minLength, ref mesh))
                 {
                     selectNode = polygonNode;
                 }

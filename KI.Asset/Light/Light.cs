@@ -2,7 +2,7 @@
 using KI.Gfx.KITexture;
 using OpenTK;
 
-namespace KI.Renderer
+namespace KI.Asset
 {
     /// <summary>
     /// 光源

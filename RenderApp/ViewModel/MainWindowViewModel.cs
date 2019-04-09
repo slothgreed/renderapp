@@ -227,7 +227,7 @@ namespace RenderApp.ViewModel
         {
             AnalyzeCommand menuParam = (AnalyzeCommand)createObjectMenu;
             CommandBase command = null;
-            var targetObject = workspace.MainScene.SelectNode as PolygonNode;
+            var targetObject = workspace.MainScene.SelectNode as AnalyzePolygonNode;
             switch (menuParam)
             {
                 case AnalyzeCommand.WireFrame:

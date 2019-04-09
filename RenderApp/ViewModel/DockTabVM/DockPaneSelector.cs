@@ -98,7 +98,7 @@ namespace RenderApp.ViewModel
             {
                 return ViewportTemplate;
             }
-            else if (item is PolygonNodeViewModel)
+            else if (item is AnalyzePolygonNodeViewModel)
             {
                 return PolygonNodeTemplate;
             }

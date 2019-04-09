@@ -5,6 +5,7 @@ using KI.Asset.Attribute;
 using KI.Foundation.Tree;
 using KI.Gfx;
 using KI.Gfx.GLUtil;
+using KI.Gfx.KIShader;
 using KI.Renderer;
 using KI.Renderer.Technique;
 using KI.Tool.Command;
@@ -115,9 +116,9 @@ namespace RenderApp.ViewModel
             }
 
             DockWindowViewModel vm = null;
-            if (node is PolygonNode)
+            if (node is AnalyzePolygonNode)
             {
-                vm = new PolygonNodeViewModel(this, node as PolygonNode);
+                vm = new AnalyzePolygonNodeViewModel(this, node as AnalyzePolygonNode);
                 vm.PropertyChanged += PolygonNodeViewModel_PropertyChanged;
                 workspace.MainScene.SelectNode = node;
             }
@@ -163,7 +164,7 @@ namespace RenderApp.ViewModel
             var light = new DirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
             var sphere = AssetFactory.Instance.CreateSphere("sphere", 0.1f, 32, 32, true);
             mainScene.MainLight = new LightNode("SunLight", light, SceneNodeFactory.Instance.CreatePolygonNode("SunLight", sphere));
-            mainScene.AddObject(mainScene.MainCamera);
+            //mainScene.AddObject(mainScene.MainCamera);
             mainScene.AddObject(mainScene.MainLight);
 
             var axis = AssetFactory.Instance.CreateAxis("axis", Vector3.Zero, mainScene.WorldMax);
@@ -190,7 +191,7 @@ namespace RenderApp.ViewModel
             // bunny
             {
                 var moai = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/moai.half");
-                var renderBunny = SceneNodeFactory.Instance.CreatePolygonNode("moai", moai);
+                var renderBunny = CreateAnalyzePolygonNode("moai", moai);
                 renderBunny.Shader = ShaderCreater.Instance.CreateShader(GBufferType.PointNormalColor);
                 //renderBunny.RotateX(-90);
                 mainScene.AddObject(renderBunny);
@@ -250,6 +251,16 @@ namespace RenderApp.ViewModel
 
             }
             //CommandManager.Instance.Execute(new CalculateVertexCurvatureCommand(mainScene, renderBunny), null, false);
+        }
+
+        private AnalyzePolygonNode CreateAnalyzePolygonNode(string name, ICreateModel model)
+        {
+            string vert = ShaderCreater.Instance.GetVertexShader(model.Model);
+            string frag = ShaderCreater.Instance.GetFragShader(model.Model);
+            var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
+
+            AnalyzePolygonNode node = new AnalyzePolygonNode(name,model.Model,shader);
+            return node;
         }
 
         private void CreateEnvironmentCube(Vector3 min, Vector3 max)

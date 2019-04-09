@@ -143,7 +143,7 @@ namespace RenderApp.Tool.Command
         /// <summary>
         /// 対象オブジェクト
         /// </summary>
-        public PolygonNode TargetObject { get; private set; }
+        public AnalyzePolygonNode TargetObject { get; private set; }
 
         /// <summary>
         /// シーン
@@ -155,7 +155,7 @@ namespace RenderApp.Tool.Command
         /// </summary>
         /// <param name="targetNode">対象オブジェクト</param>
         /// <param name="scene">シーン</param>
-        public VertexCurvatureCommandArgs(PolygonNode targetNode, Scene scene)
+        public VertexCurvatureCommandArgs(AnalyzePolygonNode targetNode, Scene scene)
         {
             this.TargetObject = targetNode;
             this.Scene = scene;

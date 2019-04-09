@@ -53,7 +53,7 @@
     <Compile Include="Attribute\AttributeBase.cs" />
     <Compile Include="Attribute\VertexDirectionAttribute.cs" />
     <Compile Include="Attribute\PolygonAttribute.cs" />
-    <Compile Include="Attribute\NurbsAttribute.cs" />
+    <Compile Include="Attribute\NURBSAttribute.cs" />
     <Compile Include="Attribute\OutlineAttribute.cs" />
     <Compile Include="Attribute\SplitAttribute.cs" />
     <Compile Include="Attribute\VectorFieldAttribute.cs" />
