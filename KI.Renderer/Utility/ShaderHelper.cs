@@ -17,11 +17,11 @@ namespace KI.Renderer
         /// 初期状態の設定
         /// </summary>
         /// <param name="scene">シーン</param>
-        /// <param name="polygonNode">形状</param>
+        /// <param name="sceneNode">形状</param>
         /// <param name="vertexBuffer">頂点バッファ</param>
         /// <param name="shader">シェーダ</param>
         /// <param name="textures">テクスチャ</param>
-        public static void InitializeState(Shader shader, Scene scene, PolygonNode polygonNode, VertexBuffer vertexBuffer,  Dictionary<TextureKind, Texture> textures)
+        public static void InitializeState(Shader shader, Scene scene, SceneNode sceneNode, VertexBuffer vertexBuffer,  Dictionary<TextureKind, Texture> textures)
         {
             foreach (ShaderProgramInfo info in shader.GetShaderVariable())
             {
@@ -46,7 +46,7 @@ namespace KI.Renderer
                         }
                         break;
                     case "uGeometryID":
-                        info.Variable = polygonNode.ID;
+                        info.Variable = sceneNode.ID;
                         break;
                     case "uWidth":
                         info.Variable = DeviceContext.Instance.Width;
@@ -56,18 +56,18 @@ namespace KI.Renderer
                         break;
                     case "uMVP":
                         Matrix4 vp = scene.MainCamera.CameraProjMatrix;
-                        info.Variable = polygonNode.ModelMatrix * vp;
+                        info.Variable = sceneNode.ModelMatrix * vp;
                         break;
                     case "uSMVP":
                         Matrix4 light = scene.MainLight.Data.Matrix;
                         Matrix4 proj = scene.MainCamera.ProjMatrix;
-                        info.Variable = polygonNode.ModelMatrix * light * proj;
+                        info.Variable = sceneNode.ModelMatrix * light * proj;
                         break;
                     case "uModelMatrix":
-                        info.Variable = polygonNode.ModelMatrix;
+                        info.Variable = sceneNode.ModelMatrix;
                         break;
                     case "uNormalMatrix":
-                        info.Variable = polygonNode.NormalMatrix;
+                        info.Variable = sceneNode.NormalMatrix;
                         break;
                     case "uProjectMatrix":
                         info.Variable = scene.MainCamera.ProjMatrix;
@@ -91,56 +91,64 @@ namespace KI.Renderer
                         info.Variable = scene.MainLight.Data.Matrix;
                         break;
                     case "uAlbedoMap":
-                        if (textures.ContainsKey(TextureKind.Albedo))
+                        if (textures != null &&
+                            textures.ContainsKey(TextureKind.Albedo))
                         {
                             info.Variable = textures[TextureKind.Albedo].DeviceID;
                         }
 
                         break;
                     case "uCubeMap":
-                        if (textures.ContainsKey(TextureKind.Cubemap))
+                        if (textures != null && 
+                            textures.ContainsKey(TextureKind.Cubemap))
                         {
                             info.Variable = textures[TextureKind.Cubemap].DeviceID;
                         }
 
                         break;
                     case "uSpecularMap":
-                        if (textures.ContainsKey(TextureKind.Specular))
+                        if (textures != null && 
+                            textures.ContainsKey(TextureKind.Specular))
                         {
                             info.Variable = textures[TextureKind.Specular].DeviceID;
                         }
 
                         break;
                     case "uWorldMap":
-                        if (textures.ContainsKey(TextureKind.World))
+                        if (textures != null && 
+                            textures.ContainsKey(TextureKind.World))
                         {
                             info.Variable = textures[TextureKind.World].DeviceID;
                         }
 
                         break;
                     case "uLightingMap":
-                        if (textures.ContainsKey(TextureKind.Lighting))
+                        if (textures != null && 
+                            textures.ContainsKey(TextureKind.Lighting))
                         {
                             info.Variable = textures[TextureKind.Lighting].DeviceID;
                         }
 
                         break;
                     case "uNormalMap":
-                        if (textures.ContainsKey(TextureKind.Normal))
+                        if (textures != null && 
+                            textures.ContainsKey(TextureKind.Normal))
                         {
                             info.Variable = textures[TextureKind.Normal].DeviceID;
                         }
 
                         break;
                     case "uHeightMap":
-                        if (textures.ContainsKey(TextureKind.Height))
+                        if (textures != null && 
+                            textures.ContainsKey(TextureKind.Height))
                         {
                             info.Variable = textures[TextureKind.Height].DeviceID;
                         }
 
                         break;
                     case "uEmissiveMap":
-                        if (textures.ContainsKey(TextureKind.Emissive))
+                        if (textures != null && 
+                            textures.ContainsKey(TextureKind.Emissive))
                         {
                             info.Variable = textures[TextureKind.Emissive].DeviceID;
                         }

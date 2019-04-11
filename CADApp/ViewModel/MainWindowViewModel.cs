@@ -1,8 +1,9 @@
-﻿using KI.UI.ViewModel;
+﻿using CADApp.Tool.Control;
+using KI.UI.ViewModel;
 
 namespace CADApp.ViewModel
 {
-    public class MainWindowViewModel : ViewModelBase
+    public partial class MainWindowViewModel : ViewModelBase
     {
         private ViewportViewModel _ViewportViewModel;
         public ViewportViewModel ViewportViewModel
@@ -22,6 +23,25 @@ namespace CADApp.ViewModel
             : base(null)
         {
             ViewportViewModel = new ViewportViewModel(this);
+        }
+
+        private void UndoCommand()
+        {
+            
+        }
+
+        private void RedoCommand()
+        {
+
+        }
+
+        private void ControllerCommand(object parameter)
+        {
+            if (parameter is ControllerType)
+            {
+                var type = (ControllerType)parameter;
+                ViewportViewModel.CurrentController = type;
+            }
         }
     }
 }

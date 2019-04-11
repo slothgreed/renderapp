@@ -443,10 +443,7 @@ namespace KI.Gfx.GLUtil
                 OnMouseMove(sender, new KIMouseEventArgs(e, MOUSE_STATE.MOVE));
             }
 
-            if (e.Button != MouseButtons.None)
-            {
-                GLControl_Paint(null, null);
-            }
+            GLControl_Paint(null, null);
         }
         #endregion
 

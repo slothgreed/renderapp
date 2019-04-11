@@ -1,9 +1,11 @@
-﻿namespace KI.Foundation.Core
+﻿using System;
+
+namespace KI.Foundation.Core
 {
     /// <summary>
     /// オブジェクト
     /// </summary>
-    public abstract class KIObject
+    public abstract class KIObject : IDisposable
     {
         /// <summary>
         /// コンストラクタ

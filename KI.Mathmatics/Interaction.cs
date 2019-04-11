@@ -186,5 +186,32 @@ namespace KI.Mathmatics
             var val = Vector3.Multiply(position0, n) + Vector3.Multiply(position1, m);
             return Vector3.Divide(val, m + n);
         }
+
+        /// <summary>
+        /// 線と線の交差判定
+        /// </summary>
+        /// <param name="start0">始点0</param>
+        /// <param name="end0">終点0</param>
+        /// <param name="start1">始点1</param>
+        /// <param name="end1">終点1</param>
+        /// <returns>交差</returns>
+        public static bool LineToLine(Vector3 start0, Vector3 end0, Vector3 start2, Vector3 end2)
+        {
+            float distance;
+            bool result = Distance.LineToLine(start0, end0, start2, end2, out  distance);
+            if (result == false)
+            {
+                return false;
+            }
+
+            if (distance < Calculator.THRESHOLD05)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace KI.Mathmatics
         /// <summary>
         /// 誤差範囲 0.00001
         /// </summary>
-        public const float THRESHOLD05 = 0.00001f;
+        public static float THRESHOLD05 { get; set; } = 0.00001f;
         
         /// <summary>
         /// 頂点リストから、最小値最大値を算出

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using OpenTK;
 
 namespace KI.Mathmatics
@@ -81,6 +82,111 @@ namespace KI.Mathmatics
             tangent1.Normalize();
             tangent2 = Vector3.Cross(normal, tangent1);
             tangent2.Normalize();
+        }
+
+        /// <summary>
+        /// GL_LINESのIndexリストからGL_LINE_LOOPに変換する。
+        /// </summary>
+        /// <param name="linesIndex">GL_LINES の番号</param>
+        /// <param name="lineLoopIndex">GL_LLINE_STRIP の番号</param>
+        /// <returns></returns>
+        public static bool ConvertLinesToLineLoop(int[] linesIndex, out int[] lineLoopIndex)
+        {
+            if(linesIndex[0] != linesIndex[linesIndex.Length - 1])
+            {
+                lineLoopIndex = null;
+                return false;
+            }
+            
+            for(int i = 1; i < linesIndex.Length - 1; i+=2)
+            {
+                if(linesIndex[i] != linesIndex[i + 1])
+                {
+                    lineLoopIndex = null;
+                    return false;   
+                }
+            }
+
+
+            lineLoopIndex = new int[linesIndex.Length / 2];
+            lineLoopIndex[0] = linesIndex[0];
+            for (int i = 1; i < lineLoopIndex.Length; i++)
+            {
+                lineLoopIndex[i] = linesIndex[(2 * i) - 1];
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// LineStripの頂点列から、三角形を作成
+        /// </summary>
+        /// <param name="lineLoop">位置情報</param>
+        /// <param name="indexList">三角形の構成要素番号</param>
+        /// <returns>成功</returns>
+        public static bool GenPolygonFromLineLoop(Vector3[] lineLoop, out int[] indexList)
+        {
+            if (lineLoop.Length < 2)
+            {
+                indexList = null;
+                return false;
+            }
+
+            List<int> candidateList = new List<int>();
+            for (int i = 0; i < lineLoop.Length; i++)
+            {
+                candidateList.Add(i);
+            }
+
+            int triangle0 = -1;
+            int triangle1 = -1;
+            int triangle2 = -1;
+            int counter = 0;
+            List<int> triangleIndex = new List<int>();
+
+            while (true)
+            {
+                triangle0 = candidateList[counter];
+                int triangle1Index = GetNextLoopIndex(counter, 1, candidateList.Count);
+                triangle1 = candidateList[triangle1Index];
+
+                int triangle2Index = GetNextLoopIndex(counter, 2, candidateList.Count);
+                triangle2 = candidateList[triangle2Index];
+
+                Vector3 center = (lineLoop[triangle0] + lineLoop[triangle2]) * 0.5f;
+                if (Inside.Polygon(lineLoop, center) == true)
+                {
+                    triangleIndex.Add(triangle0);
+                    triangleIndex.Add(triangle1);
+                    triangleIndex.Add(triangle2);
+                    candidateList.Remove(triangle1Index);
+                }
+
+                if (candidateList.Count == 2)
+                {
+                    break;
+                }
+
+                counter = GetNextLoopIndex(counter, 1, candidateList.Count);
+            }
+
+            indexList = triangleIndex.ToArray();
+
+            return true;
+        }
+
+
+        private static int GetNextLoopIndex(int counter,int increment, int listNum)
+        {
+            counter += increment;
+            if (counter < listNum)
+            {
+                return counter;
+            }
+            else
+            {
+                return counter - listNum;
+            }
         }
     }
 }

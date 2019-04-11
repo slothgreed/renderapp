@@ -46,7 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assembly\SketchNode.cs" />
+    <Compile Include="Assembly\Sketch.cs" />
+    <Compile Include="Node\SketchNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Workspace.cs" />
   </ItemGroup>

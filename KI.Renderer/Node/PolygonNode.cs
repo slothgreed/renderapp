@@ -37,11 +37,6 @@ namespace KI.Renderer
         }
 
         /// <summary>
-        /// 形状ID
-        /// </summary>
-        public int ID { get; set; }
-
-        /// <summary>
         /// 頂点バッファ
         /// </summary>
         public VertexBuffer VertexBuffer { get; set; }

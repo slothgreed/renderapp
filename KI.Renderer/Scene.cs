@@ -25,9 +25,9 @@ namespace KI.Renderer
         /// コンストラクタ
         /// </summary>
         /// <param name="name">シーン名</param>
-        public Scene(string name)
+        public Scene(string name, SceneNode rootNode)
         {
-            RootNode = new EmptyNode("ROOT");
+            RootNode = rootNode;
         }
 
         /// <summary>

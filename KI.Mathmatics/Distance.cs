@@ -46,7 +46,7 @@ namespace KI.Mathmatics
         /// <param name="start1">始点1</param>
         /// <param name="end1">終点1</param>
         /// <param name="distance">距離</param>
-        /// <returns>成功</returns>
+        /// <returns>計算できるかどうか</returns>
         public static bool LineToLine(Vector3 start0, Vector3 end0, Vector3 start1, Vector3 end1, out float distance)
         {
             distance = float.MaxValue;

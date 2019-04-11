@@ -25,6 +25,11 @@ namespace KI.Renderer
         private Vector3 rotate = Vector3.Zero;
 
         /// <summary>
+        /// 形状ID
+        /// </summary>
+        public int ID { get; set; }
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="name">ノード名</param>

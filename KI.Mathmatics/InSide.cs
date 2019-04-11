@@ -59,6 +59,17 @@ namespace KI.Mathmatics
         }
 
         /// <summary>
+        /// 凹多角形の内部かどうか
+        /// </summary>
+        /// <param name="lineStrip">ラインストリップの情報</param>
+        /// <param name="position">位置情報</param>
+        /// <returns>内側</returns>
+        public static bool Polygon(Vector3[] lineStrip, Vector3 position)
+        {
+            return true;
+        }
+
+        /// <summary>
         /// 4角形の内外判定
         /// </summary>
         /// <returns></returns>

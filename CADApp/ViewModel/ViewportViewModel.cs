@@ -66,11 +66,11 @@ namespace CADApp.ViewModel
         /// </summary>
         private IController cameraController = new CameraController();
 
-        private Dictionary<CONTROLLER_TYPE, IController> Controller = new Dictionary<CONTROLLER_TYPE, IController>();
+        private Dictionary<ControllerType, IController> Controller = new Dictionary<ControllerType, IController>();
 
-        CONTROLLER_TYPE currentController;
+        ControllerType currentController;
 
-        public CONTROLLER_TYPE CurrentController
+        public ControllerType CurrentController
         {
             get { return currentController; }
             set
@@ -94,15 +94,17 @@ namespace CADApp.ViewModel
         public void OnLoadedEvent(object sender, EventArgs e)
         {
             DeviceContext.Instance.SetClearColor(1, 1, 1, 1);
-            MainScene = new Scene("MainScene");
+            MainScene = new Scene("MainScene", new EmptyNode("Root"));
             RenderSystem = new RenderSystem();
             RenderSystem.ActiveScene = MainScene;
 
             Workspace.Instance.MainScene = MainScene;
             Workspace.Instance.RenderSystem = RenderSystem;
 
-            Controller.Add(CONTROLLER_TYPE.SketchLine, new SketchLineController());
-            CurrentController = CONTROLLER_TYPE.SketchLine;
+            Controller.Add(ControllerType.SketchLine, new SketchLineController());
+            Controller.Add(ControllerType.SketchRectangle, new SketchRectangleController());
+
+            CurrentController = ControllerType.SketchRectangle;
 
             InitializeScene();
             InitializeRenderer();

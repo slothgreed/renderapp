@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:CADApp"
         xmlns:ribbon="urn:fluent-ribbon"
         xmlns:view="clr-namespace:CADApp.View"
+        xmlns:tool="clr-namespace:CADApp.Tool.Control;assembly=CADApp.Tool"
         xmlns:vm="clr-namespace:CADApp.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
@@ -31,6 +32,12 @@
                 <ribbon:RibbonGroupBox Header="コマンド">
                     <ribbon:Button Header="Undo"/>
                     <ribbon:Button Header="Redo"/>
+                </ribbon:RibbonGroupBox>
+                <ribbon:RibbonGroupBox Header="Sketch">
+                    <ribbon:DropDownButton>
+                        <ribbon:Button Header="Line" Size="Middle" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.SketchLine}"/>
+                        <ribbon:Button Header="Rectangle" Size="Middle" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.SketchRectangle}"/>
+                    </ribbon:DropDownButton>
                 </ribbon:RibbonGroupBox>
             </ribbon:RibbonTabItem>
         </ribbon:Ribbon>

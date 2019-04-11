@@ -11,7 +11,7 @@ namespace KI.Gfx.GLUtil.Buffer
     /// <summary>
     /// 頂点バッファ
     /// </summary>
-    public class VertexBuffer
+    public class VertexBuffer : KIObject
     {
         /// <summary>
         /// 頂点バッファ
@@ -48,20 +48,49 @@ namespace KI.Gfx.GLUtil.Buffer
         /// </summary>
         public int Num { get; set; }
 
-        public bool ShallowCopyObject = false;
+        /// <summary>
+        /// 浅いコピーのオブジェクトかどうか
+        /// </summary>
+        public bool ShallowCopyObject { get; set; } = false;
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public VertexBuffer()
+        {
+            GenBuffer();
+        }
 
         /// <summary>
         /// バッファの作成
         /// </summary>
         private void GenBuffer()
         {
-            // サイズが変わった時の挙動が分からない。ので作り直している。
-            Dispose();
-            PositionBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
-            NormalBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
-            ColorBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
-            TexCoordBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
-            IndexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
+            // TODO : サイズが変わった時の挙動が分からない。
+            if(PositionBuffer == null)
+            {
+                PositionBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
+            }
+
+            if (NormalBuffer == null)
+            {
+                NormalBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
+            }
+
+            if (ColorBuffer == null)
+            {
+                ColorBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
+            }
+
+            if (TexCoordBuffer == null)
+            {
+                TexCoordBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
+            }
+
+            if (IndexBuffer == null)
+            {
+                IndexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
+            }
         }
 
         /// <summary>
@@ -75,8 +104,6 @@ namespace KI.Gfx.GLUtil.Buffer
         /// <param name="num">数</param>
         public void SetBuffer(Vector3[] position, Vector3[] normal, Vector3[] color, Vector2[] texCoord, int[] indexBuffer)
         {
-            GenBuffer();
-
             SetPosition(position);
             SetNormal(normal);
             SetColor(color);
@@ -177,8 +204,6 @@ namespace KI.Gfx.GLUtil.Buffer
         /// <param name="num">数</param>
         public void SetBuffer(Vertex[] vertex, int[] indexBuffer)
         {
-            GenBuffer();
-
             SetPosition(vertex.Select(p => p.Position).ToArray());
             SetNormal(vertex.Select(p => p.Normal).ToArray());
             SetColor(vertex.Select(p => p.Color).ToArray());
@@ -218,7 +243,7 @@ namespace KI.Gfx.GLUtil.Buffer
         /// <summary>
         /// 解放処理
         /// </summary>
-        public void Dispose()
+        public override void Dispose()
         {
             BufferFactory.Instance.RemoveByValue(PositionBuffer);
             BufferFactory.Instance.RemoveByValue(NormalBuffer);
