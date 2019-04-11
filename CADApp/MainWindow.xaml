@@ -33,6 +33,9 @@
                     <ribbon:Button Header="Undo"/>
                     <ribbon:Button Header="Redo"/>
                 </ribbon:RibbonGroupBox>
+                <ribbon:RibbonGroupBox Header="">
+                    <ribbon:Button Header="Select" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.Select}"/>
+                </ribbon:RibbonGroupBox>
                 <ribbon:RibbonGroupBox Header="Sketch">
                     <ribbon:DropDownButton>
                         <ribbon:Button Header="Line" Size="Middle" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.SketchLine}"/>

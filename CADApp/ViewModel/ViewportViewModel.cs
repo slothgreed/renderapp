@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 using CADApp.Model;
+using CADApp.Model.Node;
 using CADApp.Tool.Control;
 using KI.Asset;
 using KI.Gfx.GLUtil;
@@ -94,17 +95,18 @@ namespace CADApp.ViewModel
         public void OnLoadedEvent(object sender, EventArgs e)
         {
             DeviceContext.Instance.SetClearColor(1, 1, 1, 1);
-            MainScene = new Scene("MainScene", new EmptyNode("Root"));
+            MainScene = new Scene("MainScene", new AppRootNode("Root"));
             RenderSystem = new RenderSystem();
             RenderSystem.ActiveScene = MainScene;
 
             Workspace.Instance.MainScene = MainScene;
             Workspace.Instance.RenderSystem = RenderSystem;
 
+            Controller.Add(ControllerType.Select, new SelectController());
             Controller.Add(ControllerType.SketchLine, new SketchLineController());
             Controller.Add(ControllerType.SketchRectangle, new SketchRectangleController());
 
-            CurrentController = ControllerType.SketchRectangle;
+            CurrentController = ControllerType.Select;
 
             InitializeScene();
             InitializeRenderer();

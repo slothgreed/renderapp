@@ -8,6 +8,7 @@ namespace CADApp.Tool.Control
 {
     public enum ControllerType
     {
+        Select,
         SketchLine,
         SketchRectangle
     }

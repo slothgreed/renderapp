@@ -48,6 +48,8 @@
   <ItemGroup>
     <Compile Include="Control\CameraController.cs" />
     <Compile Include="Control\ControllerType.cs" />
+    <Compile Include="Control\ControllerUtility.cs" />
+    <Compile Include="Control\SelectController.cs" />
     <Compile Include="Control\Sketch\SketchRectangleController.cs" />
     <Compile Include="Control\Sketch\SketchLineController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

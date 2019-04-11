@@ -29,14 +29,9 @@ namespace CADApp.Tool.Control
             if (mouse.Button == MOUSE_BUTTON.Left)
             {
                 Camera camera = Workspace.Instance.MainScene.MainCamera;
+                Vector3 worldPoint;
 
-                Vector3 near;
-                Vector3 far;
-                GLUtility.GetClickPos(camera.Matrix, camera.ProjMatrix, Viewport.Instance.ViewportRect, mouse.Current, out near, out far);
-
-                Vector3 direction = (camera.Position - far).Normalized();
-                Vector3 interPoint;
-                if (Interaction.PlaneToLine(camera.Position, far, Workspace.Instance.WorkPlane.Formula, out interPoint))
+                if (ControllerUtility.GetClickWorldPosition(camera, Workspace.Instance.WorkPlane.Formula, mouse, out worldPoint))
                 {
                     if (mode == CreateRectangleMode.SelectStart)
                     {
@@ -45,10 +40,10 @@ namespace CADApp.Tool.Control
                         sketchNode = new SketchNode("RectangleLine", sketch, shader);
 
                         sketch.BeginEdit();
-                        sketch.AddVertex(interPoint);
-                        sketch.AddVertex(interPoint);
-                        sketch.AddVertex(interPoint);
-                        sketch.AddVertex(interPoint);
+                        sketch.AddVertex(worldPoint);
+                        sketch.AddVertex(worldPoint);
+                        sketch.AddVertex(worldPoint);
+                        sketch.AddVertex(worldPoint);
                         sketch.SetLineIndex(
                             new List<int>()
                             {
