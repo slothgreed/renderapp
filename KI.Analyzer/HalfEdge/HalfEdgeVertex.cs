@@ -314,8 +314,8 @@ namespace KI.Analyzer
                             midPoint2 = (area2Edge.End.Position + area2Edge.Next.End.Position) / 2;
                         }
 
-                        var area1 = Geometry.Area(midPoint1, edge.Start.Position, (edge.Start.Position + edge.End.Position) / 2);
-                        var area2 = Geometry.Area(midPoint2, edge.Start.Position, (edge.Start.Position + edge.End.Position) / 2);
+                        var area1 = Geometry.TriangleArea(midPoint1, edge.Start.Position, (edge.Start.Position + edge.End.Position) / 2);
+                        var area2 = Geometry.TriangleArea(midPoint2, edge.Start.Position, (edge.Start.Position + edge.End.Position) / 2);
 
                         voronoi += area1 + area2;
                     }

@@ -41,12 +41,13 @@ namespace KI.Mathmatics
 
         /// <summary>
         /// 三角形の面積の算出
+        /// ヘロンの公式
         /// </summary>
         /// <param name="tri1">頂点1</param>
         /// <param name="tri2">頂点2</param>
         /// <param name="tri3">頂点3</param>
         /// <returns>面積</returns>
-        public static float Area(Vector3 tri1, Vector3 tri2, Vector3 tri3)
+        public static float TriangleArea(Vector3 tri1, Vector3 tri2, Vector3 tri3)
         {
             float edge1 = (tri1 - tri2).Length;
             float edge2 = (tri2 - tri3).Length;
@@ -122,9 +123,10 @@ namespace KI.Mathmatics
         /// LineStripの頂点列から、三角形を作成
         /// </summary>
         /// <param name="lineLoop">位置情報</param>
+        /// <param name="orientDir"></param>
         /// <param name="indexList">三角形の構成要素番号</param>
         /// <returns>成功</returns>
-        public static bool GenPolygonFromLineLoop(Vector3[] lineLoop, out int[] indexList)
+        public static bool GenPolygonFromLineLoop(Vector3[] lineLoop, Vector3 orientDir, out int[] indexList)
         {
             if (lineLoop.Length < 2)
             {
@@ -143,7 +145,7 @@ namespace KI.Mathmatics
             int triangle2 = -1;
             int counter = 0;
             List<int> triangleIndex = new List<int>();
-
+            float area = 0;
             while (true)
             {
                 triangle0 = candidateList[counter];
@@ -168,6 +170,12 @@ namespace KI.Mathmatics
                 }
 
                 counter = GetNextLoopIndex(counter, 1, candidateList.Count);
+            }
+
+            Vector3 normal = Normal(lineLoop[triangleIndex[0]], lineLoop[triangleIndex[1]], lineLoop[triangleIndex[2]]);
+            if (Vector3.Dot(normal, orientDir) > 0)
+            {
+                triangleIndex.Reverse();
             }
 
             indexList = triangleIndex.ToArray();

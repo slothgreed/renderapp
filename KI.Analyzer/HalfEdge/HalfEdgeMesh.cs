@@ -137,7 +137,7 @@ namespace KI.Analyzer
             {
                 if (area == 0)
                 {
-                    area = Mathmatics.Geometry.Area(Lines[0].Start.Position, Lines[1].Start.Position, Lines[2].Start.Position);
+                    area = Mathmatics.Geometry.TriangleArea(Lines[0].Start.Position, Lines[1].Start.Position, Lines[2].Start.Position);
                 }
 
                 return area;

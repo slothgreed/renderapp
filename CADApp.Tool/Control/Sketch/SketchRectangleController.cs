@@ -63,7 +63,7 @@ namespace CADApp.Tool.Control
                             linesArray[i] = sketch.GetVertex(linesIndex[i]).Position;
                         }
 
-                        Geometry.GenPolygonFromLineLoop(linesArray, out triangleIndex);
+                        Geometry.GenPolygonFromLineLoop(linesArray, camera.LookAtDirection, out triangleIndex);
                         List<int> triangleIndexList = new List<int>();
                         triangleIndexList.AddRange(triangleIndex);
 
@@ -105,6 +105,21 @@ namespace CADApp.Tool.Control
                     sketch.SetVertex(1, new Vector3(interPoint.X, 0, startPosition.Z));
                     sketch.SetVertex(2, new Vector3(interPoint.X, 0, interPoint.Z));
                     sketch.SetVertex(3, new Vector3(startPosition.X, 0, interPoint.Z));
+
+                    int[] linesIndex;
+                    int[] triangleIndex;
+                    Geometry.ConvertLinesToLineLoop(sketch.LineIndex.ToArray(), out linesIndex);
+                    Vector3[] linesArray = new Vector3[linesIndex.Length];
+                    for (int i = 0; i < linesArray.Length; i++)
+                    {
+                        linesArray[i] = sketch.GetVertex(linesIndex[i]).Position;
+                    }
+
+                    Geometry.GenPolygonFromLineLoop(linesArray, camera.LookAtDirection, out triangleIndex);
+                    List<int> triangleIndexList = new List<int>();
+                    triangleIndexList.AddRange(triangleIndex);
+
+                    sketch.SetTriangleIndex(triangleIndexList);
                     sketch.EndEdit();
                 }
             }
