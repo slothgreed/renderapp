@@ -12,6 +12,7 @@ namespace KI.Gfx.GLUtil
         MOVE,
         UP,
         CLICK,
+        DOUBLECLICK,
         WHEEL,
     }
 

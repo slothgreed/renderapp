@@ -60,6 +60,7 @@ namespace CADApp.ViewModel
             Viewport.Instance.OnMouseUp += OnMouseMoveUpEvent;
             Viewport.Instance.OnMouseMove += OnMouseMoveEvent;
             Viewport.Instance.OnMouseDown += OnMouseDownEvent;
+            Viewport.Instance.OnMouseDoubleClick += OnMouseDoubleClickEvent;
         }
 
         /// <summary>
@@ -148,6 +149,13 @@ namespace CADApp.ViewModel
             ProcessMouseInput(e, MOUSE_STATE.DOWN);
         }
 
+        private void OnMouseDoubleClickEvent(object sender, KIMouseEventArgs e)
+        {
+            ProcessMouseInput(e, MOUSE_STATE.DOUBLECLICK);
+        }
+
+
+
         private void InitializeScene()
         {
             MainScene.MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
@@ -192,6 +200,10 @@ namespace CADApp.ViewModel
                 case MOUSE_STATE.CLICK:
                     Controller[CurrentController].Click(mouse);
                     cameraController.Click(mouse);
+                    break;
+                case MOUSE_STATE.DOUBLECLICK:
+                    Controller[CurrentController].DoubleClick(mouse);
+                    cameraController.DoubleClick(mouse);
                     break;
                 case MOUSE_STATE.MOVE:
                     Controller[CurrentController].Move(mouse);

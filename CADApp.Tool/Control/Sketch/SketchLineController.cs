@@ -1,20 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Windows.Forms;
-using CADApp.Model;
+﻿using CADApp.Model;
+using CADApp.Model.Assembly;
+using CADApp.Model.Node;
 using KI.Asset;
 using KI.Gfx;
-using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil;
-using KI.Mathmatics;
-using KI.Renderer;
 using KI.Tool.Control;
 using OpenTK;
 
 namespace CADApp.Tool.Control
 {
-    /// <summary>
-    /// TODO: スケッチレクタングルの作り方に修正する。
-    /// </summary>
     public class SketchLineController : IController
     {
         /// <summary>
@@ -22,11 +16,7 @@ namespace CADApp.Tool.Control
         /// </summary>
         private float zPosition = 0;
 
-        PolygonNode pointObject;
-
-        PolygonNode lineObject;
-
-        List<Vertex> pointList;
+        SketchNode sketchNode;
 
         public override bool Down(KIMouseEventArgs mouse)
         {
@@ -37,42 +27,40 @@ namespace CADApp.Tool.Control
 
                 if (ControllerUtility.GetClickWorldPosition(camera, Workspace.Instance.WorkPlane.Formula, mouse, out worldPoint))
                 {
-                    int pointIndex = pointList.Count;
-                    pointList.Add(new Vertex(pointIndex, worldPoint, Vector3.UnitX));
-
-                    pointObject.Visible = true;
-
-                    pointObject.Polygon.Vertexs.Add(pointList[pointIndex]);
-                    pointObject.UpdateVertexBufferObject();
-
-                    lineObject.Polygon.Vertexs.Add(pointList[pointIndex]);
-
-                    if (pointList.Count >= 2)
+                    var sketch = sketchNode.Sketch;
+                    int pointIndex = sketch.Vertex.Count;
+                    sketch.BeginEdit();
+                    sketch.AddVertex(worldPoint);
+                    sketchNode.Visible = true;
+                    
+                    if (sketch.Vertex.Count >= 2)
                     {
-                        lineObject.Visible = true;
-                        lineObject.Polygon.Index.Add(lineObject.Polygon.Vertexs.Count - 2);
-                        lineObject.Polygon.Index.Add(lineObject.Polygon.Vertexs.Count - 1);
-                        lineObject.UpdateVertexBufferObject();
+                        sketch.AddLineIndex(sketch.Vertex.Count - 2);
+                        sketch.AddLineIndex(sketch.Vertex.Count - 1);
                     }
+
+                    sketch.EndEdit();
                 }
             }
 
             return true;
         }
 
+        public override bool DoubleClick(KIMouseEventArgs mouse)
+        {
+            UnBinding();
+            Binding();
+
+            return base.DoubleClick(mouse);
+        }
+
         public override bool Binding()
         {
-            pointList = new List<Vertex>();
-            Polygon point = new Polygon("Point");
-            Polygon line = new Polygon("Line", PolygonType.Lines);
+            Sketch sketch = new Sketch("Sketch");
             var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
-            pointObject = new PolygonNode("Point", point, shader);
-            pointObject.Visible = false;
-            Workspace.Instance.MainScene.AddObject(pointObject);
-
-            lineObject = new PolygonNode("Line", line, shader);
-            lineObject.Visible = false;
-            Workspace.Instance.MainScene.AddObject(lineObject);
+            sketchNode = new SketchNode("SketchNode", sketch, shader);
+            sketchNode.Visible = false;
+            Workspace.Instance.MainScene.AddObject(sketchNode);
             return base.Binding();
         }
 

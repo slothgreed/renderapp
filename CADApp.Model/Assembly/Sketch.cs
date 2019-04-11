@@ -52,6 +52,8 @@ namespace CADApp.Model.Assembly
             : base(name)
         {
             vertexs = new List<Vertex>();
+            lineIndex = new List<int>();
+            triangleIndex = new List<int>();
         }
 
         public void AddVertex(Vector3 position)
@@ -63,6 +65,7 @@ namespace CADApp.Model.Assembly
 
             vertexs.Add(new Vertex(vertexs.Count, position, Vector3.UnitX));
         }
+
 
         public void SetVertex(int index, Vector3 position)
         {
@@ -108,6 +111,17 @@ namespace CADApp.Model.Assembly
             }
 
             lineIndex = index;
+        }
+
+
+        public void AddLineIndex(int vertexIndex)
+        {
+            if (CurrentEdit == false)
+            {
+                Logger.Log(Logger.LogLevel.Error, "Call Begin Edit.");
+            }
+
+            lineIndex.Add(vertexIndex);
         }
 
         public void ClearLineIndex()

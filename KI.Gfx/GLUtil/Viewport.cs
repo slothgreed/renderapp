@@ -43,6 +43,13 @@ namespace KI.Gfx.GLUtil
     public delegate void OnMouseWheelHandler(object sender, KIMouseEventArgs e);
 
     /// <summary>
+    /// マウスダブルクリックイベント
+    /// </summary>
+    /// <param name="sender">発生元</param>
+    /// <param name="e">イベント</param>
+    public delegate void OnMouseDoubleClickHandler(object sender, KIMouseEventArgs e);
+
+    /// <summary>
     /// レンダリングイベント
     /// </summary>
     /// <param name="sender">発生元</param>
@@ -135,6 +142,11 @@ namespace KI.Gfx.GLUtil
         /// マウス押上げイベント
         /// </summary>
         public event OnMouseUpHandler OnMouseUp;
+
+        /// <summary>
+        /// マウスダブルクリックイベント
+        /// </summary>
+        public event OnMouseDoubleClickHandler OnMouseDoubleClick;
 
         /// <summary>
         /// マウスホイールイベント
@@ -282,6 +294,7 @@ namespace KI.Gfx.GLUtil
             GLControl.MouseMove -= GLControl_MouseMove;
             GLControl.MouseUp -= GLControl_MouseUp;
             GLControl.MouseWheel -= GLControl_MouseWheel;
+            GLControl.MouseDoubleClick -= GLControl_MouseDoubleClick;
             GLControl.KeyDown -= GLControl_KeyDown;
             GLControl.Paint -= GLControl_Paint;
             GLControl.Resize -= GLControl_Resize;
@@ -314,6 +327,7 @@ namespace KI.Gfx.GLUtil
             GLControl.MouseMove += GLControl_MouseMove;
             GLControl.MouseUp += GLControl_MouseUp;
             GLControl.MouseWheel += GLControl_MouseWheel;
+            GLControl.MouseDoubleClick += GLControl_MouseDoubleClick;
             GLControl.KeyDown += GLControl_KeyDown;
             GLControl.Paint += GLControl_Paint;
             GLControl.Resize += GLControl_Resize;
@@ -322,6 +336,7 @@ namespace KI.Gfx.GLUtil
             GLControl.DragOver += GLControl_DragOver;
             GLControl.AllowDrop = true;
         }
+
 
         /// <summary>
         /// コントロールにフォーカスがあるときにキーが押されると発生します
@@ -405,6 +420,21 @@ namespace KI.Gfx.GLUtil
             if (OnMouseDown != null)
             {
                 OnMouseDown(sender, new KIMouseEventArgs(e, MOUSE_STATE.DOWN));
+            }
+
+            GLControl_Paint(null, null);
+        }
+
+        /// <summary>
+        /// マウスダブルクリック
+        /// </summary>
+        /// <param name="sender">発生元</param>
+        /// <param name="e">イベント</param>
+        private void GLControl_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (OnMouseDoubleClick != null)
+            {
+                OnMouseDoubleClick(sender, new KIMouseEventArgs(e, MOUSE_STATE.DOWN));
             }
 
             GLControl_Paint(null, null);

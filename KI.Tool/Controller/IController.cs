@@ -28,6 +28,17 @@ namespace KI.Tool.Control
             return true;
         }
 
+
+        /// <summary>
+        /// マウスダブルクリック
+        /// </summary>
+        /// <param name="mouse">マウスイベント</param>
+        /// <returns>成功</returns>
+        public virtual bool DoubleClick(KIMouseEventArgs mouse)
+        {
+            return true;
+        }
+
         /// <summary>
         /// マウス移動
         /// </summary>

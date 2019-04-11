@@ -102,7 +102,8 @@ namespace CADApp.Model.Node
                 vertexBuffer.SetBuffer(Sketch.Vertex.ToArray(), Enumerable.Range(0, Sketch.Vertex.Count).ToArray());
             }
 
-            if (Sketch.LineIndex != null)
+            if (Sketch.LineIndex != null &&
+                Sketch.LineIndex.Count > 1)
             {
                 lineBufer.SetIndexArray(Sketch.LineIndex.ToArray());
             }
