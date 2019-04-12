@@ -18,8 +18,12 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         
-        <ribbon:Ribbon Grid.Row="0">
+        <ribbon:Ribbon Grid.Row="0" Grid.ColumnSpan="2">
             <ribbon:RibbonTabItem Header="ファイル">
                 <ribbon:RibbonGroupBox Header="ファイル">
                     <ribbon:Button Header="新規作成"/>
@@ -44,6 +48,14 @@
                 </ribbon:RibbonGroupBox>
             </ribbon:RibbonTabItem>
         </ribbon:Ribbon>
-        <view:ViewportView Grid.Row="1" DataContext="{Binding ViewportViewModel}"/>
+        <TreeView Grid.Column="0" Grid.Row="1">
+            <TreeViewItem Header="テスト0"/>
+            <TreeViewItem Header="テスト1"/>
+            <TreeViewItem Header="テスト2"/>
+            <TreeViewItem Header="テスト3"/>
+            <TreeViewItem Header="テスト4"/>
+            <TreeViewItem Header="テスト5"/>
+        </TreeView>
+        <view:ViewportView Grid.Column="1" Grid.Row="1" DataContext="{Binding ViewportViewModel}"/>
     </Grid>
 </Window>
