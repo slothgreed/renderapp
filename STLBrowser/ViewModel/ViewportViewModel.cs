@@ -76,7 +76,7 @@ namespace STLBrowser.ViewModel
 
         public void OnLoadedEvent(object sender, EventArgs e)
         {
-            MainScene = new Scene("MainScene");
+            MainScene = new Scene("MainScene", new EmptyNode("ROOT"));
             RenderSystem = new RenderSystem();
             RenderSystem.ActiveScene = MainScene;
 

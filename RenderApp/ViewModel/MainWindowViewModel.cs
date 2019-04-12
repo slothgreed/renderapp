@@ -62,6 +62,8 @@ namespace RenderApp.ViewModel
                 SetValue(ref taskBarText, value);
             }
         }
+
+        public CommandManager CommandManager { get; private set; }
         #endregion
 
         #region [constructor]
@@ -71,6 +73,7 @@ namespace RenderApp.ViewModel
         {
             workspace = Workspace.Instance;
             WorkspaceViewModel = new WorkspaceViewModel(this, workspace);
+            CommandManager = new CommandManager();
             instance = this;
         }
 
@@ -232,15 +235,15 @@ namespace RenderApp.ViewModel
             {
                 case AnalyzeCommand.WireFrame:
                     command = new CreateWireFrameCommand(new WireFrameCommandArgs(targetObject, workspace.MainScene, OpenTK.Vector3.Zero));
-                    CommandManager.Instance.Execute(command, true);
+                    CommandManager.Execute(command, true);
                     break;
                 case AnalyzeCommand.ConvexHull:
                     command = new CreateConvexHullCommand(new ConvexHullCommandArgs(targetObject, workspace.MainScene));
-                    CommandManager.Instance.Execute(command, true);
+                    CommandManager.Execute(command, true);
                     break;
                 case AnalyzeCommand.MarchingCube:
                     command = new CreateMarchingCubeCommand(new MarchingCubeCommandArgs(targetObject, workspace.MainScene, 128));
-                    CommandManager.Instance.Execute(command, true);
+                    CommandManager.Execute(command, true);
                     break;
                 case AnalyzeCommand.IsoLine:
                     var icommandWindow = new View.DebugWindow();
@@ -252,27 +255,27 @@ namespace RenderApp.ViewModel
                     break;
                 case AnalyzeCommand.HalfEdgeWireFrame:
                     command = new CreateHalfEdgeWireFrameCommand(new HalfEdgeWireFrameCommandArgs(targetObject, workspace.MainScene));
-                    CommandManager.Instance.Execute(command, true);
+                    CommandManager.Execute(command, true);
                     break;
                 case AnalyzeCommand.AdaptiveMesh:
                     command = new AdaptiveMeshCommand(new AdaptiveMeshCommandArgs(targetObject));
-                    CommandManager.Instance.Execute(command, true);
+                    CommandManager.Execute(command, true);
                         break;
                 case AnalyzeCommand.QEM:
                     command = new QEMCommand(new QEMCommandArgs(targetObject));
-                    CommandManager.Instance.Execute(command, true);
+                    CommandManager.Execute(command, true);
                     break;
                 case AnalyzeCommand.Perceptron:
                     command = new PerceptronCommand(new PerceptronCommandArgs(workspace.MainScene));
-                    CommandManager.Instance.Execute(command, true);
+                    CommandManager.Execute(command, true);
                     break;
                 case AnalyzeCommand.Curvature:
                     command = new VertexCurvatureCommand(new VertexCurvatureCommandArgs(targetObject, workspace.MainScene));
-                    CommandManager.Instance.Execute(command, true);
+                    CommandManager.Execute(command, true);
                     break;
                 case AnalyzeCommand.Kmeans:
                     command = new KMeansCommand(new KMeansCommandArgs(targetObject, workspace.MainScene, 40, 10));
-                    CommandManager.Instance.Execute(command, true);
+                    CommandManager.Execute(command, true);
                     break;
                 case AnalyzeCommand.Smoothing:
                     var commandWindow = new View.DebugWindow();
@@ -284,7 +287,7 @@ namespace RenderApp.ViewModel
                     break;
                 case AnalyzeCommand.FeatureLine:
                     command = new CreateFeatureLineCommand(new FeatureLineCommandArgs(targetObject, workspace.MainScene));
-                    CommandManager.Instance.Execute(command, true);
+                    CommandManager.Execute(command, true);
                     break;
                 case AnalyzeCommand.Voxelize:
                     var window = new View.DebugWindow();
@@ -382,12 +385,12 @@ namespace RenderApp.ViewModel
 
         private void UndoCommand()
         {
-            CommandManager.Instance.Undo();
+            CommandManager.Undo();
         }
 
         private void RedoCommand()
         {
-            CommandManager.Instance.Redo();
+            CommandManager.Redo();
         }
 
         private void OpenWindowCommand(object parameter)

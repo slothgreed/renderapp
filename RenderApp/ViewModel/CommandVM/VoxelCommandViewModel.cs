@@ -62,7 +62,7 @@ namespace RenderApp.ViewModel
             var color = new OpenTK.Vector3(SelectColor.R / 255.0f, SelectColor.G / 255.0f, SelectColor.B / 255.0f);
             var commandArgs = new VoxelCommandArgs(Workspace.Instance.MainScene.SelectNode as PolygonNode, Workspace.Instance.MainScene, PartitionNum, color);
             var command = new CreateVoxelCommand(commandArgs);
-            CommandManager.Instance.Execute(command, true);
+            MainWindowViewModel.Instance.CommandManager.Execute(command, true);
         }
     }
 }

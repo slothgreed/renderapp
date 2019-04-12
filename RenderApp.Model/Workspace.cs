@@ -41,7 +41,7 @@ namespace RenderApp.Model
 
         public void Initialize()
         {
-            MainScene = new Scene("MainScene");
+            MainScene = new Scene("MainScene", new EmptyNode("Root"));
             RenderSystem = new RenderSystem();
             RenderSystem.ActiveScene = MainScene;
         }

@@ -50,7 +50,7 @@ namespace RenderApp.ViewModel
             if (Workspace.Instance.MainScene.SelectNode is AnalyzePolygonNode)
             {
                 CommandBase command = new SmoothingCommand(new SmoothingCommandArgs(Workspace.Instance.MainScene.SelectNode as AnalyzePolygonNode, loopNum));
-                CommandManager.Instance.Execute(command, true);
+                MainWindowViewModel.Instance.CommandManager.Execute(command, true);
             }
         }
     }

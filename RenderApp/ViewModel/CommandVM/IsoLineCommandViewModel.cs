@@ -55,7 +55,7 @@ namespace RenderApp.ViewModel
             if (Workspace.Instance.MainScene.SelectNode is AnalyzePolygonNode)
             {
                 CommandBase command = new CreateIsoLineCommand(new IsoLineCommandArgs(Workspace.Instance.MainScene.SelectNode as AnalyzePolygonNode, Workspace.Instance.MainScene, Space));
-                CommandManager.Instance.Execute(command, true);
+                MainWindowViewModel.Instance.CommandManager.Execute(command, true);
             }
         }
     }

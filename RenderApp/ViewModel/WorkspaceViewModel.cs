@@ -212,8 +212,8 @@ namespace RenderApp.ViewModel
                 //renderBunny.Attributes.Add(splitAttribute);
                 //mainScene.AddObject(splitAttribute, parentNode);
 
-                CommandManager.Instance.Execute(new CreateWireFrameCommand(new WireFrameCommandArgs(renderBunny, mainScene, Vector3.Zero)), false);
-                CommandManager.Instance.Execute(new VertexCurvatureCommand(new VertexCurvatureCommandArgs(renderBunny, mainScene)));
+                MainWindowViewModel.Instance.CommandManager.Execute(new CreateWireFrameCommand(new WireFrameCommandArgs(renderBunny, mainScene, Vector3.Zero)), false);
+                MainWindowViewModel.Instance.CommandManager.Execute(new VertexCurvatureCommand(new VertexCurvatureCommandArgs(renderBunny, mainScene)));
 
                 var vectorFiledAttribute = new VectorFieldAttribute(
                     renderBunny.Name + ": VectorField",

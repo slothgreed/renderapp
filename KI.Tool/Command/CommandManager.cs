@@ -30,11 +30,6 @@ namespace KI.Tool.Command
         }
 
         /// <summary>
-        /// シングルトン
-        /// </summary>
-        public static CommandManager Instance { get; } = new CommandManager();
-
-        /// <summary>
         /// コマンドスタックの追加
         /// </summary>
         public void AddCommandStack()
