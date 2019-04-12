@@ -43,9 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Command\CommandGroup.cs" />
     <Compile Include="Command\CommandManager.cs" />
     <Compile Include="Command\CommandStack.cs" />
-    <Compile Include="Command\ICommand.cs" />
+    <Compile Include="Command\CommandBase.cs" />
     <Compile Include="Controller\IController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

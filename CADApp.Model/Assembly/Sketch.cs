@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using KI.Foundation.Core;
 using KI.Gfx.Geometry;
+using KI.Mathmatics;
 using OpenTK;
 
 namespace CADApp.Model.Assembly
@@ -132,6 +133,24 @@ namespace CADApp.Model.Assembly
             }
 
             lineIndex.Clear();
+        }
+
+        public void SetTriangleIndexFromLineIndex(Vector3 triangleOrient)
+        {
+
+            int[] linesIndex;
+            int[] triangleIndexArray;
+            Geometry.ConvertLinesToLineLoop(LineIndex.ToArray(), out linesIndex);
+            Vector3[] linesArray = new Vector3[linesIndex.Length];
+            for (int i = 0; i < linesArray.Length; i++)
+            {
+                linesArray[i] = GetVertex(linesIndex[i]).Position;
+            }
+
+            Geometry.GenPolygonFromLineLoop(linesArray, triangleOrient, out triangleIndexArray);
+            triangleIndex.Clear();
+
+            triangleIndex.AddRange(triangleIndexArray);
         }
 
         public void SetTriangleIndex(List<int> index)
