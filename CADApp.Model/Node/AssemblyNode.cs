@@ -17,11 +17,6 @@ namespace CADApp.Model.Node
         VertexBuffer vertexBuffer;
 
         /// <summary>
-        /// 頂点バッファ
-        /// </summary>
-        VertexBuffer controlPointBuffer;
-
-        /// <summary>
         /// 稜線のインデックスバッファ
         /// </summary>
         VertexBuffer lineBuffer;
@@ -30,6 +25,11 @@ namespace CADApp.Model.Node
         /// Triangle のインデックスバッファ
         /// </summary>
         VertexBuffer triangleBuffer;
+
+        /// <summary>
+        /// コントロールポイントのバッファ
+        /// </summary>
+        VertexBuffer controlPointBuffer;
 
         Shader shader;
 
@@ -54,8 +54,8 @@ namespace CADApp.Model.Node
 
         private void GenerateBuffer()
         {
-            vertexBuffer = new VertexBuffer();
             controlPointBuffer = new VertexBuffer();
+            vertexBuffer = new VertexBuffer();
             lineBuffer = vertexBuffer.ShallowCopy();
             lineBuffer.IndexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
             triangleBuffer = vertexBuffer.ShallowCopy();

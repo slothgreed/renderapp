@@ -19,26 +19,53 @@ namespace CADApp.Tool.Controller
 
         public override bool Down(KIMouseEventArgs mouse)
         {
-            SceneNode rootNode = Workspace.Instance.MainScene.RootNode;
+            AppRootNode rootNode = Workspace.Instance.MainScene.RootNode as AppRootNode;
             Camera camera = Workspace.Instance.MainScene.MainCamera;
             Vector3 worldPoint;
 
             if (ControllerUtility.GetClickWorldPosition(camera, Workspace.Instance.WorkPlane.Formula, mouse, out worldPoint))
             {
+                bool isSelected = false;
                 foreach (SceneNode node in rootNode.AllChildren().OfType<SceneNode>())
                 {
                     if (node is AssemblyNode)
                     {
                         var sketchNode = node as AssemblyNode;
-                        foreach (var vertex in sketchNode.Assembly.Vertex)
+                        int index = 0;
+                        if (sketchNode.Assembly.ControlPoint.Count > 0)
                         {
-                            var distance = (vertex.Position - worldPoint).Length;
-                            if (distance < VERTEX_DISTANCE_THRESHOLD)
+                            foreach (var vertex in sketchNode.Assembly.ControlPoint)
                             {
-                                int a = 0;
+                                var distance = (vertex.Position - worldPoint).Length;
+                                if (distance < VERTEX_DISTANCE_THRESHOLD)
+                                {
+                                    sketchNode.Assembly.AddSelectControlPoint(index);
+                                    isSelected = true;
+                                }
+
+                                index++;
+                            }
+                        }
+                        else
+                        {
+                            foreach (var vertex in sketchNode.Assembly.Vertex)
+                            {
+                                var distance = (vertex.Position - worldPoint).Length;
+                                if (distance < VERTEX_DISTANCE_THRESHOLD)
+                                {
+                                    sketchNode.Assembly.AddSelectVertex(index);
+                                    isSelected = true;
+                                }
+
+                                index++;
                             }
                         }
                     }
+                }
+
+                if(isSelected)
+                {
+                    rootNode.UpdateSelectObject();
                 }
             }
 

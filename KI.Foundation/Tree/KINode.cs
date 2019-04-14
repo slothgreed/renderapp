@@ -195,6 +195,8 @@ namespace KI.Foundation.Tree
         /// <returns>全てのノード</returns>
         public IEnumerable<KINode> AllChildren()
         {
+            yield return this;
+
             foreach (var child in Children)
             {
                 yield return child;

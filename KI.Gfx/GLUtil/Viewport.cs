@@ -434,7 +434,7 @@ namespace KI.Gfx.GLUtil
                 OnMouseDown(sender, new KIMouseEventArgs(e, MOUSE_STATE.DOWN));
             }
 
-            Console.WriteLine("Down");
+            Logger.Log(Logger.LogLevel.Debug, "Down");
             GLControl_Paint(null, null);
         }
 
@@ -450,7 +450,7 @@ namespace KI.Gfx.GLUtil
                 OnMouseClick(sender, new KIMouseEventArgs(e, MOUSE_STATE.DOWN));
             }
 
-            Console.WriteLine("Click");
+            Logger.Log(Logger.LogLevel.Debug, "Click");
             GLControl_Paint(null, null);
         }
 
@@ -466,7 +466,7 @@ namespace KI.Gfx.GLUtil
                 OnMouseDoubleClick(sender, new KIMouseEventArgs(e, MOUSE_STATE.DOWN));
             }
 
-            Console.WriteLine("DoubleClick");
+            Logger.Log(Logger.LogLevel.Debug, "DoubleClick");
             GLControl_Paint(null, null);
         }
 

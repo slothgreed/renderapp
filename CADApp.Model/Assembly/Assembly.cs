@@ -13,14 +13,19 @@ namespace CADApp.Model
     public class Assembly : KIObject
     {
         private List<Vertex> vertexs;
+        private List<int> selectVertexs;
 
         private List<int> lineIndex;
+        private List<int> selectLines;
 
         private List<int> triangleIndex;
+        private List<int> selectTriangles;
+
+        List<Vertex> controlPoint;
+        private List<int> selectControlPoints;
 
         public bool CurrentEdit { get; private set; }
 
-        List<Vertex> controlPoint;
 
         /// <summary>
         /// 形状情報更新イベント
@@ -35,11 +40,27 @@ namespace CADApp.Model
             }
         }
 
+        public List<int> SelectVertexs
+        {
+            get
+            {
+                return selectVertexs;
+            }
+        }
+
         public List<int> LineIndex
         {
             get
             {
                 return lineIndex;
+            }
+        }
+
+        public List<int> SelectLines
+        {
+            get
+            {
+                return selectLines;
             }
         }
 
@@ -51,6 +72,14 @@ namespace CADApp.Model
             }
         }
 
+        public List<int> SelectTriangles
+        {
+            get
+            {
+                return selectTriangles;
+            }
+        }
+
         public List<Vertex> ControlPoint
         {
             get
@@ -59,6 +88,15 @@ namespace CADApp.Model
             }
         }
 
+        public List<int> SelectControlPoints
+        {
+            get
+            {
+                return selectControlPoints;
+            }
+        }
+
+
         public Assembly(string name)
             : base(name)
         {
@@ -66,6 +104,11 @@ namespace CADApp.Model
             lineIndex = new List<int>();
             triangleIndex = new List<int>();
             controlPoint = new List<Vertex>();
+
+            selectVertexs = new List<int>();
+            selectLines = new List<int>();
+            selectTriangles = new List<int>();
+            selectControlPoints = new List<int>();
         }
 
         /// <summary>
@@ -90,7 +133,6 @@ namespace CADApp.Model
 
             vertexs.Add(new Vertex(vertexs.Count, position, Vector3.UnitX));
         }
-
 
         public void SetVertex(int index, Vector3 position)
         {
@@ -195,6 +237,37 @@ namespace CADApp.Model
             }
 
             triangleIndex.Clear();
+        }
+
+        public void AddSelectVertex(int index)
+        {
+            SelectVertexs.Add(index);
+        }
+
+        public void AddSelectLine(int startIndex, int endIndex)
+        {
+            SelectLines.Add(startIndex);
+            SelectLines.Add(endIndex);
+        }
+
+        public void AddSelectTriangle(int vertex0, int vertex1, int vertex2)
+        {
+            selectTriangles.Add(vertex0);
+            selectTriangles.Add(vertex1);
+            selectTriangles.Add(vertex2);
+        }
+
+        public void AddSelectControlPoint(int index)
+        {
+            selectControlPoints.Add(index);
+        }
+
+        public void ClearSelect()
+        {
+            SelectVertexs.Clear();
+            SelectLines.Clear();
+            SelectTriangles.Clear();
+            SelectControlPoints.Clear();
         }
 
         public virtual void BeginEdit()

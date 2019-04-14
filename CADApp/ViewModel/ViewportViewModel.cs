@@ -177,7 +177,7 @@ namespace CADApp.ViewModel
             var axisObject = SceneNodeFactory.Instance.CreatePolygonNode(axis.ToString(), axis);
             MainScene.AddObject(axisObject);
 
-            var grid = AssetFactory.Instance.CreateGridPlane("gridPlane", 1, 0.01f, Vector3.One);
+            var grid = AssetFactory.Instance.CreateGridPlane("gridPlane", 1, 0.1f, Vector3.One);
             var girdObject = SceneNodeFactory.Instance.CreatePolygonNode(grid.ToString(), grid);
             MainScene.AddObject(girdObject);
         }
