@@ -46,7 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assembly\Sketch.cs" />
+    <Compile Include="Assembly\Assembly.cs" />
+    <Compile Include="Assembly\SplineCurvature.cs" />
     <Compile Include="Node\AppRootNode.cs" />
     <Compile Include="Node\SketchNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

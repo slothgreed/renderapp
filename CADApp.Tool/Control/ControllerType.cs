@@ -10,6 +10,7 @@ namespace CADApp.Tool.Control
     {
         Select,
         SketchLine,
-        SketchRectangle
+        SketchRectangle,
+        SketchSplineCurvature
     }
 }

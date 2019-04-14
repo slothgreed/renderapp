@@ -60,6 +60,7 @@ namespace CADApp.ViewModel
             Viewport.Instance.OnMouseUp += OnMouseMoveUpEvent;
             Viewport.Instance.OnMouseMove += OnMouseMoveEvent;
             Viewport.Instance.OnMouseDown += OnMouseDownEvent;
+            Viewport.Instance.OnMouseClick += OnMouseClickEvent;
             Viewport.Instance.OnMouseDoubleClick += OnMouseDoubleClickEvent;
         }
 
@@ -106,6 +107,7 @@ namespace CADApp.ViewModel
             Controller.Add(ControllerType.Select, new SelectController());
             Controller.Add(ControllerType.SketchLine, new SketchLineController());
             Controller.Add(ControllerType.SketchRectangle, new SketchRectangleController());
+            Controller.Add(ControllerType.SketchSplineCurvature, new SketchSplineCurvature());
 
             CurrentController = ControllerType.Select;
 
@@ -147,6 +149,11 @@ namespace CADApp.ViewModel
         private void OnMouseDownEvent(object sender, KIMouseEventArgs e)
         {
             ProcessMouseInput(e, MOUSE_STATE.DOWN);
+        }
+
+        private void OnMouseClickEvent(object sender, KIMouseEventArgs e)
+        {
+            ProcessMouseInput(e, MOUSE_STATE.CLICK);
         }
 
         private void OnMouseDoubleClickEvent(object sender, KIMouseEventArgs e)

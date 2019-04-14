@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using CADApp.Model;
-using CADApp.Model.Assembly;
 using CADApp.Model.Node;
 using KI.Asset;
 using KI.Gfx;
 using KI.Gfx.GLUtil;
 using KI.Mathmatics;
-using KI.Renderer;
 using KI.Tool.Control;
 using OpenTK;
 
@@ -22,7 +20,7 @@ namespace CADApp.Tool.Control
 
         private CreateRectangleMode mode;
 
-        private SketchNode sketchNode;
+        private AssemblyNode sketchNode;
 
         public override bool Down(KIMouseEventArgs mouse)
         {
@@ -35,9 +33,9 @@ namespace CADApp.Tool.Control
                 {
                     if (mode == CreateRectangleMode.SelectStart)
                     {
-                        Sketch sketch = new Sketch("Line");
+                        Assembly sketch = new Assembly("Line");
                         var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
-                        sketchNode = new SketchNode("RectangleLine", sketch, shader);
+                        sketchNode = new AssemblyNode("RectangleLine", sketch, shader);
 
                         sketch.BeginEdit();
                         sketch.AddVertex(worldPoint);
@@ -86,7 +84,7 @@ namespace CADApp.Tool.Control
                 Vector3 interPoint;
                 if (Interaction.PlaneToLine(camera.Position, far, Workspace.Instance.WorkPlane.Formula, out interPoint))
                 {
-                    Sketch sketch = sketchNode.Sketch;
+                    Assembly sketch = sketchNode.Assembly;
                     Vector3 startPosition = sketch.GetVertex(0).Position;
                     sketch.BeginEdit();
                     sketch.SetVertex(1, new Vector3(interPoint.X, 0, startPosition.Z));

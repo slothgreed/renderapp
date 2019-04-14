@@ -20,7 +20,7 @@ namespace KI.Asset.Attribute
         public VectorFieldAttribute(string name, VertexBuffer vertexBuffer, Shader shader, Vector3[] directions, PolygonType polygonType)
             : base(name, vertexBuffer, polygonType, shader)
         {
-            directionBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
+            directionBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer, EArrayType.Vec3Array);
             directionBuffer.SetData(directions, EArrayType.Vec3Array);
         }
 

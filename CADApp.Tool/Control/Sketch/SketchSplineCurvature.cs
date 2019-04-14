@@ -8,16 +8,11 @@ using OpenTK;
 
 namespace CADApp.Tool.Control
 {
-    public class SketchLineController : IController
+    public class SketchSplineCurvature : IController
     {
-        /// <summary>
-        /// 配置するZ位置
-        /// </summary>
-        private float zPosition = 0;
+        private AssemblyNode sketchNode;
 
-        AssemblyNode sketchNode;
-
-        public override bool Down(KIMouseEventArgs mouse)
+        public override bool Click(KIMouseEventArgs mouse)
         {
             if (mouse.Button == MOUSE_BUTTON.Left)
             {
@@ -26,23 +21,14 @@ namespace CADApp.Tool.Control
 
                 if (ControllerUtility.GetClickWorldPosition(camera, Workspace.Instance.WorkPlane.Formula, mouse, out worldPoint))
                 {
-                    var sketch = sketchNode.Assembly;
-                    int pointIndex = sketch.Vertex.Count;
+                    var sketch = sketchNode.Assembly as SplineCurvature;
                     sketch.BeginEdit();
-                    sketch.AddVertex(worldPoint);
-                    sketchNode.Visible = true;
-                    
-                    if (sketch.Vertex.Count >= 2)
-                    {
-                        sketch.AddLineIndex(sketch.Vertex.Count - 2);
-                        sketch.AddLineIndex(sketch.Vertex.Count - 1);
-                    }
-
+                    sketch.AddControlPoint(worldPoint);
                     sketch.EndEdit();
                 }
             }
 
-            return true;
+            return base.Click(mouse);
         }
 
         public override bool DoubleClick(KIMouseEventArgs mouse)
@@ -55,17 +41,12 @@ namespace CADApp.Tool.Control
 
         public override bool Binding()
         {
-            Assembly sketch = new Assembly("Sketch");
+            SplineCurvature sketch = new SplineCurvature("Spline");
             var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
-            sketchNode = new AssemblyNode("SketchNode", sketch, shader);
-            sketchNode.Visible = false;
+            sketchNode = new AssemblyNode("Spline", sketch, shader);
+            sketchNode.VisibleVertex = false;
             Workspace.Instance.MainScene.AddObject(sketchNode);
             return base.Binding();
-        }
-
-        public override bool UnBinding()
-        {
-            return base.UnBinding();
         }
     }
 }

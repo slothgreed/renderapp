@@ -27,10 +27,10 @@ namespace CADApp.Tool.Control
             {
                 foreach (SceneNode node in rootNode.AllChildren().OfType<SceneNode>())
                 {
-                    if (node is SketchNode)
+                    if (node is AssemblyNode)
                     {
-                        var sketchNode = node as SketchNode;
-                        foreach (var vertex in sketchNode.Sketch.Vertex)
+                        var sketchNode = node as AssemblyNode;
+                        foreach (var vertex in sketchNode.Assembly.Vertex)
                         {
                             var distance = (vertex.Position - worldPoint).Length;
                             if (distance < VERTEX_DISTANCE_THRESHOLD)

@@ -31,6 +31,19 @@ namespace KI.Gfx.GLUtil
             GenBuffer();
         }
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="target">バッファターゲット</param>
+        internal ArrayBuffer(BufferTarget target, EArrayType arrayType)
+        {
+            this.target = target;
+            usageHint = BufferUsageHint.StaticDraw;
+            ArrayType = arrayType;
+            Enable = true;
+            GenBuffer();
+        }
+
         public EArrayType ArrayType { get; private set; }
 
         /// <summary>
@@ -116,6 +129,7 @@ namespace KI.Gfx.GLUtil
         public ArrayBuffer ShallowCopy()
         {
             var buffer = new ArrayBuffer(target);
+            // setdataを行っていない状態orコンストラクタで定義していないとArrayTypeはNoneになる。
             buffer.ArrayType = ArrayType;
             buffer.DeviceID = DeviceID;
             return buffer;

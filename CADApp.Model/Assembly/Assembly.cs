@@ -5,12 +5,12 @@ using KI.Gfx.Geometry;
 using KI.Mathmatics;
 using OpenTK;
 
-namespace CADApp.Model.Assembly
+namespace CADApp.Model
 {
     /// <summary>
-    /// スケッチ
+    /// アセンブリ
     /// </summary>
-    public class Sketch : KIObject
+    public class Assembly : KIObject
     {
         private List<Vertex> vertexs;
 
@@ -20,10 +20,12 @@ namespace CADApp.Model.Assembly
 
         public bool CurrentEdit { get; private set; }
 
+        List<Vertex> controlPoint;
+
         /// <summary>
         /// 形状情報更新イベント
         /// </summary>
-        public EventHandler SketchUpdated { get; set; }
+        public EventHandler AssemblyUpdated { get; set; }
 
         public List<Vertex> Vertex
         {
@@ -49,12 +51,34 @@ namespace CADApp.Model.Assembly
             }
         }
 
-        public Sketch(string name)
+        public List<Vertex> ControlPoint
+        {
+            get
+            {
+                return controlPoint;
+            }
+        }
+
+        public Assembly(string name)
             : base(name)
         {
             vertexs = new List<Vertex>();
             lineIndex = new List<int>();
             triangleIndex = new List<int>();
+            controlPoint = new List<Vertex>();
+        }
+
+        /// <summary>
+        /// コントロールポイントの追加
+        /// </summary>
+        public void AddControlPoint(Vector3 position)
+        {
+            if (CurrentEdit == false)
+            {
+                Logger.Log(Logger.LogLevel.Error, "Call Begin Edit.");
+            }
+
+            controlPoint.Add(new Vertex(controlPoint.Count, position, Vector3.UnitY));
         }
 
         public void AddVertex(Vector3 position)
@@ -173,12 +197,12 @@ namespace CADApp.Model.Assembly
             triangleIndex.Clear();
         }
 
-        public void BeginEdit()
+        public virtual void BeginEdit()
         {
             CurrentEdit = true;
         }
 
-        public void EndEdit()
+        public virtual void EndEdit()
         {
             CurrentEdit = false;
             OnUpdate();
@@ -189,7 +213,7 @@ namespace CADApp.Model.Assembly
         /// </summary>
         private void OnUpdate()
         {
-            SketchUpdated?.Invoke(this, EventArgs.Empty);
+            AssemblyUpdated?.Invoke(this, EventArgs.Empty);
         }
     }
 }

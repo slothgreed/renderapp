@@ -44,6 +44,7 @@
                     <ribbon:DropDownButton>
                         <ribbon:Button Header="Line" Size="Middle" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.SketchLine}"/>
                         <ribbon:Button Header="Rectangle" Size="Middle" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.SketchRectangle}"/>
+                        <ribbon:Button Header="Spline" Size="Middle" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.SketchSplineCurvature}"/>
                     </ribbon:DropDownButton>
                 </ribbon:RibbonGroupBox>
             </ribbon:RibbonTabItem>

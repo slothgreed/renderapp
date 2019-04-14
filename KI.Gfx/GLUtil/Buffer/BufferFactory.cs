@@ -20,7 +20,19 @@ namespace KI.Gfx.GLUtil.Buffer
         /// <returns>配列バッファ</returns>
         public ArrayBuffer CreateArrayBuffer(BufferTarget target)
         {
-            ArrayBuffer obj = new ArrayBuffer(target);
+            return CreateArrayBuffer(target, EArrayType.None);
+        }
+
+
+        /// <summary>
+        /// 配列バッファの作成
+        /// </summary>
+        /// <param name="target">バッファターゲット</param>
+        /// <param name="arrayType">格納型</param>
+        /// <returns>配列バッファ</returns>
+        public ArrayBuffer CreateArrayBuffer(BufferTarget target, EArrayType arrayType)
+        {
+            ArrayBuffer obj = new ArrayBuffer(target, arrayType);
             AddItem(obj);
             return obj;
         }
