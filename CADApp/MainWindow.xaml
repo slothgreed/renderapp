@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CADApp"
         xmlns:ribbon="urn:fluent-ribbon"
         xmlns:view="clr-namespace:CADApp.View"
-        xmlns:tool="clr-namespace:CADApp.Tool.Control;assembly=CADApp.Tool"
+        xmlns:tool="clr-namespace:CADApp.Tool.Controller;assembly=CADApp.Tool"
         xmlns:vm="clr-namespace:CADApp.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
@@ -40,12 +40,13 @@
                 <ribbon:RibbonGroupBox Header="">
                     <ribbon:Button Header="Select" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.Select}"/>
                 </ribbon:RibbonGroupBox>
-                <ribbon:RibbonGroupBox Header="Sketch">
-                    <ribbon:DropDownButton>
-                        <ribbon:Button Header="Line" Size="Middle" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.SketchLine}"/>
-                        <ribbon:Button Header="Rectangle" Size="Middle" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.SketchRectangle}"/>
-                        <ribbon:Button Header="Spline" Size="Middle" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.SketchSplineCurvature}"/>
-                    </ribbon:DropDownButton>
+                <ribbon:RibbonGroupBox Header="2D">
+                    <ribbon:Button Header="Line" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.SketchLine}"/>
+                    <ribbon:Button Header="Rectangle" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.SketchRectangle}"/>
+                    <ribbon:Button Header="Spline" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.SketchSplineCurvature}"/>
+                </ribbon:RibbonGroupBox>
+                <ribbon:RibbonGroupBox Header="3D">
+                    <ribbon:Button Header="Cube" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.BuildCube}"/>
                 </ribbon:RibbonGroupBox>
             </ribbon:RibbonTabItem>
         </ribbon:Ribbon>

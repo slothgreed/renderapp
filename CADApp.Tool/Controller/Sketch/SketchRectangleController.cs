@@ -5,12 +5,12 @@ using KI.Asset;
 using KI.Gfx;
 using KI.Gfx.GLUtil;
 using KI.Mathmatics;
-using KI.Tool.Control;
+using KI.Tool.Controller;
 using OpenTK;
 
-namespace CADApp.Tool.Control
+namespace CADApp.Tool.Controller
 {
-    public class SketchRectangleController : IController
+    public class SketchRectangleController : ControllerBase
     {
         public enum CreateRectangleMode
         {

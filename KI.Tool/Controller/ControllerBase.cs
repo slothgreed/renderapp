@@ -1,12 +1,12 @@
 ﻿using System.Windows.Forms;
 using KI.Gfx.GLUtil;
 
-namespace KI.Tool.Control
+namespace KI.Tool.Controller
 {
     /// <summary>
     /// コントロールのインタフェース
     /// </summary>
-    public abstract class IController
+    public abstract class ControllerBase
     {
         /// <summary>
         /// マウス押下

@@ -2,15 +2,15 @@
 using CADApp.Model;
 using KI.Asset;
 using KI.Gfx.GLUtil;
-using KI.Tool.Control;
+using KI.Tool.Controller;
 using OpenTK;
 
-namespace CADApp.Tool.Control
+namespace CADApp.Tool.Controller
 {
     /// <summary>
     /// カメラコントローラ
     /// </summary>
-    public class CameraController : IController
+    public class CameraController : ControllerBase
     {
 
         /// <summary>

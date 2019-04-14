@@ -46,13 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Control\CameraController.cs" />
-    <Compile Include="Control\ControllerType.cs" />
-    <Compile Include="Control\ControllerUtility.cs" />
-    <Compile Include="Control\SelectController.cs" />
-    <Compile Include="Control\Sketch\SketchRectangleController.cs" />
-    <Compile Include="Control\Sketch\SketchLineController.cs" />
-    <Compile Include="Control\Sketch\SketchSplineCurvature.cs" />
+    <Compile Include="Controller\Build\BuildCubeController.cs" />
+    <Compile Include="Controller\CameraController.cs" />
+    <Compile Include="Controller\ControllerType.cs" />
+    <Compile Include="Controller\ControllerUtility.cs" />
+    <Compile Include="Controller\SelectController.cs" />
+    <Compile Include="Controller\Sketch\SketchRectangleController.cs" />
+    <Compile Include="Controller\Sketch\SketchLineController.cs" />
+    <Compile Include="Controller\Sketch\SketchSplineController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

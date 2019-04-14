@@ -5,10 +5,10 @@ using KI.Asset;
 using KI.Gfx.GLUtil;
 using KI.Renderer;
 using KI.Renderer.Technique;
-using KI.Tool.Control;
+using KI.Tool.Controller;
 using KI.UI.ViewModel;
 using OpenTK;
-using RenderApp.Tool.Control;
+using RenderApp.Tool.Controller;
 
 namespace STLBrowser.ViewModel
 {
@@ -62,7 +62,7 @@ namespace STLBrowser.ViewModel
         /// <summary>
         /// カメラコントローラ
         /// </summary>
-        private IController cameraController = new CameraController();
+        private ControllerBase cameraController = new CameraController();
 
         /// <summary>
         /// シーン

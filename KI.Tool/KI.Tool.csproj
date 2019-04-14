@@ -47,7 +47,7 @@
     <Compile Include="Command\CommandManager.cs" />
     <Compile Include="Command\CommandStack.cs" />
     <Compile Include="Command\CommandBase.cs" />
-    <Compile Include="Controller\IController.cs" />
+    <Compile Include="Controller\ControllerBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -4,12 +4,12 @@ using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 using CADApp.Model;
 using CADApp.Model.Node;
-using CADApp.Tool.Control;
+using CADApp.Tool.Controller;
 using KI.Asset;
 using KI.Gfx.GLUtil;
 using KI.Renderer;
 using KI.Renderer.Technique;
-using KI.Tool.Control;
+using KI.Tool.Controller;
 using KI.UI.ViewModel;
 using OpenTK;
 
@@ -67,9 +67,9 @@ namespace CADApp.ViewModel
         /// <summary>
         /// カメラコントローラ
         /// </summary>
-        private IController cameraController = new CameraController();
+        private ControllerBase cameraController = new CameraController();
 
-        private Dictionary<ControllerType, IController> Controller = new Dictionary<ControllerType, IController>();
+        private Dictionary<ControllerType, ControllerBase> Controller = new Dictionary<ControllerType, ControllerBase>();
 
         ControllerType currentController;
 
@@ -107,7 +107,8 @@ namespace CADApp.ViewModel
             Controller.Add(ControllerType.Select, new SelectController());
             Controller.Add(ControllerType.SketchLine, new SketchLineController());
             Controller.Add(ControllerType.SketchRectangle, new SketchRectangleController());
-            Controller.Add(ControllerType.SketchSplineCurvature, new SketchSplineCurvature());
+            Controller.Add(ControllerType.SketchSplineCurvature, new SketchSplineController());
+            Controller.Add(ControllerType.BuildCube, new BuildCubeController());
 
             CurrentController = ControllerType.Select;
 

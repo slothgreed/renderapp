@@ -3,11 +3,11 @@ using KI.Asset;
 using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil;
 using KI.Renderer;
-using KI.Tool.Control;
+using KI.Tool.Controller;
 using OpenTK;
 using RenderApp.Tool.Utility;
 
-namespace RenderApp.Tool.Control
+namespace RenderApp.Tool.Controller
 {
 
     /// <summary>
@@ -20,7 +20,7 @@ namespace RenderApp.Tool.Control
     /// <summary>
     /// 頂点選択コントローラ
     /// </summary>
-    public class SelectPointController : IController
+    public class SelectPointController : ControllerBase
     {
 
         /// <summary>

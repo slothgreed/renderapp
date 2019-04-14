@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CADApp.Tool.Control
+namespace CADApp.Tool.Controller
 {
     public enum ControllerType
     {
         Select,
         SketchLine,
         SketchRectangle,
-        SketchSplineCurvature
+        SketchSplineCurvature,
+        BuildCube
     }
 }

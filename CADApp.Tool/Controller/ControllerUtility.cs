@@ -9,7 +9,7 @@ using KI.Gfx.GLUtil;
 using KI.Mathmatics;
 using OpenTK;
 
-namespace CADApp.Tool.Control
+namespace CADApp.Tool.Controller
 {
     public static class ControllerUtility
     {

@@ -8,12 +8,12 @@ using CADApp.Model.Node;
 using KI.Asset;
 using KI.Gfx.GLUtil;
 using KI.Renderer;
-using KI.Tool.Control;
+using KI.Tool.Controller;
 using OpenTK;
 
-namespace CADApp.Tool.Control
+namespace CADApp.Tool.Controller
 {
-    public class SelectController : IController
+    public class SelectController : ControllerBase
     {
         private float VERTEX_DISTANCE_THRESHOLD = 0.1f;
 

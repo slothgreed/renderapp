@@ -5,17 +5,17 @@ using KI.Gfx;
 using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil;
 using KI.Renderer;
-using KI.Tool.Control;
+using KI.Tool.Controller;
 using OpenTK;
 using RenderApp.Model;
 using RenderApp.Tool.Utility;
 
-namespace RenderApp.Tool.Control
+namespace RenderApp.Tool.Controller
 {
     /// <summary>
     /// ダイクストラ用のコントローラ
     /// </summary>
-    public class DijkstraController : IController
+    public class DijkstraController : ControllerBase
     {
         /// <summary>
         /// ダイクストラアルゴリズム

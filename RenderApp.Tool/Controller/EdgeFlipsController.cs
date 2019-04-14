@@ -4,11 +4,11 @@ using KI.Analyzer;
 using KI.Asset;
 using KI.Gfx.GLUtil;
 using KI.Renderer;
-using KI.Tool.Control;
+using KI.Tool.Controller;
 using OpenTK;
 using RenderApp.Tool.Utility;
 
-namespace RenderApp.Tool.Control
+namespace RenderApp.Tool.Controller
 {
     /// <summary>
     /// エッジ編集モード
@@ -23,7 +23,7 @@ namespace RenderApp.Tool.Control
     /// <summary>
     /// エッジフリップ確認用
     /// </summary>
-    public class EdgeFlipsController : IController
+    public class EdgeFlipsController : ControllerBase
     {
         /// <summary>
         /// 選択形状

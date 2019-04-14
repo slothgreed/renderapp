@@ -3,12 +3,12 @@ using CADApp.Model.Node;
 using KI.Asset;
 using KI.Gfx;
 using KI.Gfx.GLUtil;
-using KI.Tool.Control;
+using KI.Tool.Controller;
 using OpenTK;
 
-namespace CADApp.Tool.Control
+namespace CADApp.Tool.Controller
 {
-    public class SketchLineController : IController
+    public class SketchLineController : ControllerBase
     {
         /// <summary>
         /// 配置するZ位置

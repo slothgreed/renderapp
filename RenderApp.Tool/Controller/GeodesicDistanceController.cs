@@ -10,17 +10,17 @@ using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Mathmatics;
 using KI.Renderer;
-using KI.Tool.Control;
+using KI.Tool.Controller;
 using OpenTK;
 using RenderApp.Model;
 using RenderApp.Tool.Utility;
 
-namespace RenderApp.Tool.Control
+namespace RenderApp.Tool.Controller
 {
     /// <summary>
     /// 距離場算出用のコントローラ
     /// </summary>
-    public class GeodesicDistanceController : IController
+    public class GeodesicDistanceController : ControllerBase
     {
         /// <summary>
         /// 測地距離アルゴリズム

@@ -1,16 +1,16 @@
 ﻿using System.Windows.Forms;
 using KI.Asset;
 using KI.Gfx.GLUtil;
-using KI.Tool.Control;
+using KI.Tool.Controller;
 using OpenTK;
 using RenderApp.Model;
 
-namespace RenderApp.Tool.Control
+namespace RenderApp.Tool.Controller
 {
     /// <summary>
     /// カメラコントローラ
     /// </summary>
-    public class CameraController : IController
+    public class CameraController : ControllerBase
     {
 
         /// <summary>
