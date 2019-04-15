@@ -55,6 +55,9 @@ namespace CADApp.Model.Node
         public void UpdateSelectObject()
         {
             List<Vertex> vertexs = new List<Vertex>();
+            List<Vertex> triangleVertex = new List<Vertex>();
+            List<Vertex> lineVertex = new List<Vertex>();
+
             foreach (var node in AllChildren().OfType<AssemblyNode>())
             {
                 foreach (var index in node.Assembly.SelectVertexs)
@@ -62,17 +65,29 @@ namespace CADApp.Model.Node
                     vertexs.Add(new Vertex(vertexs.Count, node.Assembly.Vertex[index].Position, Vector3.UnitZ));
                 }
 
+                foreach (var index in node.Assembly.SelectControlPoints)
+                {
+                    vertexs.Add(new Vertex(vertexs.Count, node.Assembly.ControlPoint[index].Position, Vector3.UnitZ));
+                }
+
                 foreach (var index in node.Assembly.SelectLines)
                 {
+                    int start;
+                    int end;
+                    node.Assembly.GetLine(index, out start, out end);
+                    lineVertex.Add((new Vertex(lineVertex.Count, node.Assembly.Vertex[start].Position, Vector3.UnitZ)));
+                    lineVertex.Add((new Vertex(lineVertex.Count, node.Assembly.Vertex[end].Position, Vector3.UnitZ)));
                 }
 
                 foreach (var index in node.Assembly.SelectTriangles)
                 {
-                }
-
-                foreach (var index in node.Assembly.SelectControlPoints)
-                {
-                    vertexs.Add(new Vertex(vertexs.Count, node.Assembly.ControlPoint[index].Position, Vector3.UnitZ));
+                    int triangle0;
+                    int triangle1;
+                    int triangle2;
+                    node.Assembly.GetTriangle(index, out triangle0, out triangle1, out triangle2);
+                    triangleVertex.Add(new Vertex(triangleVertex.Count, node.Assembly.Vertex[triangle0].Position, Vector3.UnitZ));
+                    triangleVertex.Add(new Vertex(triangleVertex.Count, node.Assembly.Vertex[triangle1].Position, Vector3.UnitZ));
+                    triangleVertex.Add(new Vertex(triangleVertex.Count, node.Assembly.Vertex[triangle2].Position, Vector3.UnitZ));
                 }
             }
 
@@ -80,11 +95,23 @@ namespace CADApp.Model.Node
             {
                 selectVertexBuffer.SetBuffer(vertexs.ToArray(), Enumerable.Range(0, vertexs.Count).ToArray());
             }
+
+            if(lineVertex.Count >0)
+            {
+                selectLineBuffer.SetBuffer(lineVertex.ToArray(), Enumerable.Range(0, lineVertex.Count).ToArray());
+            }
+
+            if (triangleVertex.Count > 0)
+            {
+                selectTriangleBuffer.SetBuffer(triangleVertex.ToArray(), Enumerable.Range(0, triangleVertex.Count).ToArray());
+            }
         }
 
         public override void RenderCore(Scene scene)
         {
             Draw(scene, PolygonType.Points, selectVertexBuffer);
+            Draw(scene, PolygonType.Lines, selectLineBuffer);
+            Draw(scene, PolygonType.Triangles, selectTriangleBuffer);
         }
 
         private void Draw(Scene scene, PolygonType type, VertexBuffer buffer)

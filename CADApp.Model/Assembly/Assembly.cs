@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using KI.Foundation.Core;
 using KI.Gfx.Geometry;
 using KI.Mathmatics;
@@ -64,6 +65,11 @@ namespace CADApp.Model
             }
         }
 
+        public int LineNum
+        {
+            get { return lineIndex.Count / 2; }
+        }
+
         public List<int> TriangleIndex
         {
             get
@@ -71,6 +77,12 @@ namespace CADApp.Model
                 return triangleIndex;
             }
         }
+
+        public int TriangleNum
+        {
+            get { return triangleIndex.Count / 3; }
+        }
+
 
         public List<int> SelectTriangles
         {
@@ -132,6 +144,19 @@ namespace CADApp.Model
             }
 
             vertexs.Add(new Vertex(vertexs.Count, position, Vector3.UnitX));
+        }
+
+        public void SetVertex(IEnumerable<Vector3> vertexList)
+        {
+            if (CurrentEdit == false)
+            {
+                Logger.Log(Logger.LogLevel.Error, "Call Begin Edit.");
+            }
+
+            foreach (var vertex in vertexList)
+            {
+                AddVertex(vertex);
+            }
         }
 
         public void SetVertex(int index, Vector3 position)
@@ -219,14 +244,29 @@ namespace CADApp.Model
             triangleIndex.AddRange(triangleIndexArray);
         }
 
-        public void SetTriangleIndex(List<int> index)
+        public void SetTriangleIndex(IEnumerable<int> index)
         {
             if (CurrentEdit == false)
             {
                 Logger.Log(Logger.LogLevel.Error, "Call Begin Edit.");
             }
 
-            triangleIndex = index;
+            triangleIndex = index.ToList();
+        }
+
+        public void GetLine(int index, out int start, out int end)
+        {
+            index *= 2;
+            start = LineIndex[index];
+            end = LineIndex[index + 1];
+        }
+
+        public void GetTriangle(int index, out int triangle0, out int triangle1, out int triangle2)
+        {
+            index *= 3;
+            triangle0 = triangleIndex[index];
+            triangle1 = triangleIndex[index + 1];
+            triangle2 = triangleIndex[index + 2];
         }
 
         public void ClearTriangleIndex()
@@ -244,17 +284,14 @@ namespace CADApp.Model
             SelectVertexs.Add(index);
         }
 
-        public void AddSelectLine(int startIndex, int endIndex)
+        public void AddSelectLine(int index)
         {
-            SelectLines.Add(startIndex);
-            SelectLines.Add(endIndex);
+            SelectLines.Add(index);
         }
 
-        public void AddSelectTriangle(int vertex0, int vertex1, int vertex2)
+        public void AddSelectTriangle(int index)
         {
-            selectTriangles.Add(vertex0);
-            selectTriangles.Add(vertex1);
-            selectTriangles.Add(vertex2);
+            selectTriangles.Add(index);
         }
 
         public void AddSelectControlPoint(int index)

@@ -8,7 +8,7 @@ namespace KI.Asset
     /// <summary>
     /// 立方体
     /// </summary>
-    public class Cube : ICreateModel
+    public class Cube
     {
         /// <summary>
         /// 最小値
@@ -36,26 +36,28 @@ namespace KI.Asset
             this.min = min;
             this.max = max;
             this.reverse = reverse;
+            Vertex = new Vector3[8];
+            Index = new int[12 * 3]; // 面数 * 三角形の頂点数
+            CreateModel();
         }
 
-        /// <summary>
-        /// 形状
-        /// </summary>
-        public Polygon Model { get; private set; }
+        public Vector3[] Vertex { get; private set; }
+
+        public int[] Index { get; private set; }
 
         /// <summary>
         /// 形状の作成
         /// </summary>
         public void CreateModel()
         {
-            Vector3 v0 = new Vector3(min.X, min.Y, min.Z);
-            Vector3 v1 = new Vector3(max.X, min.Y, min.Z);
-            Vector3 v2 = new Vector3(max.X, max.Y, min.Z);
-            Vector3 v3 = new Vector3(min.X, max.Y, min.Z);
-            Vector3 v4 = new Vector3(min.X, min.Y, max.Z);
-            Vector3 v5 = new Vector3(max.X, min.Y, max.Z);
-            Vector3 v6 = new Vector3(max.X, max.Y, max.Z);
-            Vector3 v7 = new Vector3(min.X, max.Y, max.Z);
+            Vertex[0] = new Vector3(min.X, min.Y, min.Z);
+            Vertex[1] = new Vector3(max.X, min.Y, min.Z);
+            Vertex[2] = new Vector3(max.X, max.Y, min.Z);
+            Vertex[3] = new Vector3(min.X, max.Y, min.Z);
+            Vertex[4] = new Vector3(min.X, min.Y, max.Z);
+            Vertex[5] = new Vector3(max.X, min.Y, max.Z);
+            Vertex[6] = new Vector3(max.X, max.Y, max.Z);
+            Vertex[7] = new Vector3(min.X, max.Y, max.Z);
 
             List<Vector2> texCoord = new List<Vector2>()
             {
@@ -68,42 +70,37 @@ namespace KI.Asset
             var mesh = new List<Mesh>();
             if (reverse == false)
             {
-                mesh.Add(CreateMesh("Front" , v0, v3, v2, v1));
-                mesh.Add(CreateMesh("Left"  , v0, v4, v7, v3));
-                mesh.Add(CreateMesh("Back"  , v4, v5, v6, v7));
-                mesh.Add(CreateMesh("Right" , v1, v2, v6, v5));
-                mesh.Add(CreateMesh("Top"   , v2, v3, v7, v6));
-                mesh.Add(CreateMesh("Bottom", v1, v5, v4, v0));
+                AddTrianlgeIndexFromRectangle(0, 0, 3, 2, 1);
+                AddTrianlgeIndexFromRectangle(1, 0, 4, 7, 3);
+                AddTrianlgeIndexFromRectangle(2, 4, 5, 6, 7);
+                AddTrianlgeIndexFromRectangle(3, 1, 2, 6, 5);
+                AddTrianlgeIndexFromRectangle(4, 2, 3, 7, 6);
+                AddTrianlgeIndexFromRectangle(5, 1, 5, 4, 0);
             }
             else
             {
-                mesh.Add(CreateMesh("Front" , v3, v0, v1, v2));
-                mesh.Add(CreateMesh("Left"  , v7, v4, v0, v3));
-                mesh.Add(CreateMesh("Back"  , v6, v5, v4, v7));
-                mesh.Add(CreateMesh("Right" , v2, v1, v5, v6));
-                mesh.Add(CreateMesh("Top"   , v2, v6, v7, v3));
-                mesh.Add(CreateMesh("Bottom", v1, v0, v4, v5));
+                AddTrianlgeIndexFromRectangle(0, 3, 0, 1, 2);
+                AddTrianlgeIndexFromRectangle(1, 7, 4, 0, 3);
+                AddTrianlgeIndexFromRectangle(2, 6, 5, 4, 7);
+                AddTrianlgeIndexFromRectangle(3, 2, 1, 5, 6);
+                AddTrianlgeIndexFromRectangle(4, 2, 6, 7, 3);
+                AddTrianlgeIndexFromRectangle(5, 1, 0, 4, 5);
             }
-
-            Model = new Polygon("Cube", mesh, PolygonType.Quads);
         }
 
         /// <summary>
-        /// 形状生成
+        /// 三角形の頂点配列に値を入れる。(4角形ループで入れて3角形に分解してIndexに格納する)
         /// </summary>
-        /// <param name="name">名前</param>
-        /// <param name="vertex0">頂点0</param>
-        /// <param name="vertex1">頂点1</param>
-        /// <param name="vertex2">頂点2</param>
-        /// <param name="vertex3">頂点3</param>
-        /// <returns>形状</returns>
-        private Mesh CreateMesh(string name, Vector3 vertex0, Vector3 vertex1, Vector3 vertex2, Vector3 vertex3)
+        /// <param name="index">面番号</param>
+        /// <param name="vertex0">四角形頂点0</param>
+        /// <param name="vertex1">四角形頂点1</param>
+        /// <param name="vertex2">四角形頂点2</param>
+        /// <param name="vertex3">四角形頂点3</param>
+        private void AddTrianlgeIndexFromRectangle(int index, int vertex0, int vertex1, int vertex2, int vertex3)
         {
-            var front0 = new Vertex(0, vertex0, Vector2.Zero);
-            var front1 = new Vertex(1, vertex1, Vector2.UnitY);
-            var front2 = new Vertex(2, vertex2, Vector2.UnitX + Vector2.UnitY);
-            var front3 = new Vertex(3, vertex3, Vector2.UnitX);
-            return new Mesh(front0, front1, front2, front3);
+            index *= 6;
+            Index[index]     = vertex0; Index[index + 1] = vertex1; Index[index + 2] = vertex2;
+            Index[index + 3] = vertex0; Index[index + 4] = vertex2; Index[index + 5] = vertex3;
         }
     }
 }

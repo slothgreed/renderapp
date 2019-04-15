@@ -134,6 +134,38 @@ namespace KI.Mathmatics
             return false;
         }
 
+        /// <summary>
+        /// 線と平面(3角形)の交差位置
+        /// </summary>
+        /// <param name="v1">平面の頂点1</param>
+        /// <param name="v2">平面の頂点2</param>
+        /// <param name="v3">平面の頂点3</param>
+        /// <param name="near">始点</param>
+        /// <param name="far">終点</param>
+        /// <param name="result">交点</param>
+        /// <returns>あるtrue,ないfalse</returns>
+        public static bool TriangleToLine(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 near, Vector3 far, out Vector3 result)
+        {
+            Vector4 surface = Plane.Formula(v1, v2, v3);
+            if (PlaneToLine(near, far, surface, out result) == false)
+            {
+                return false;
+            }
+
+            float length;
+            //交点あり
+            if (result.Length != 0)
+            {
+                length = (result - near).Length;
+                //3角形ない
+                if (Inside.Triangle(result, v1, v2, v3))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         /// <summary>
         /// 垂線の足を算出する
@@ -194,17 +226,23 @@ namespace KI.Mathmatics
         /// <param name="end0">終点0</param>
         /// <param name="start1">始点1</param>
         /// <param name="end1">終点1</param>
+        /// <param name="threshold">閾値0の場合はTHRESHOLD05の値</param>
         /// <returns>交差</returns>
-        public static bool LineToLine(Vector3 start0, Vector3 end0, Vector3 start2, Vector3 end2)
+        public static bool LineToLine(Vector3 start0, Vector3 end0, Vector3 start1, Vector3 end1, float threshold = 0)
         {
             float distance;
-            bool result = Distance.LineToLine(start0, end0, start2, end2, out  distance);
+            if (threshold == 0)
+            {
+                threshold = Calculator.THRESHOLD05;
+            }
+
+            bool result = Distance.LineToLine(start0, end0, start1, end1, out  distance);
             if (result == false)
             {
                 return false;
             }
 
-            if (distance < Calculator.THRESHOLD05)
+            if (distance < threshold)
             {
                 return true;
             }
