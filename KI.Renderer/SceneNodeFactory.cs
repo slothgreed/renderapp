@@ -35,35 +35,6 @@ namespace KI.Renderer
             return polygonNode;
         }
 
-
-        /// <summary>
-        /// 空オブジェクトの作成
-        /// </summary>
-        /// <param name="name">名前</param>
-        /// <returns>描画オブジェクト</returns>
-        public PolygonNode CreatePolygonNode(string name, Vector3[] position, Vector3[] color, int[] index, KeyValuePair<TextureKind,Texture>[] textureDict, PolygonType type)
-        {
-            Vertex[] vertex = new Vertex[position.Length];
-            for (int i = 0; i < position.Length; i++)
-            {
-                vertex[i] = new Vertex(i, position[i], color[i]);
-            }
-
-            Polygon polygon = new Polygon(name, vertex, index, type);
-            foreach(var texture in textureDict)
-            {
-                polygon.AddTexture(texture.Key, texture.Value);
-            }
-
-            string vert = ShaderCreater.Instance.GetVertexShader(polygon);
-            string frag = ShaderCreater.Instance.GetFragShader(polygon);
-            var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
-
-            var polygonNode = new PolygonNode(name, polygon, shader);
-            AddItem(polygonNode);
-            return polygonNode;
-        }
-
         /// <summary>
         /// 空オブジェクトの作成
         /// </summary>
