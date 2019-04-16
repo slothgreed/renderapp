@@ -9,7 +9,7 @@ using OpenTK;
 
 namespace KI.Asset
 {
-    class Icosahedron : KIObject, ICreateModel
+    class Icosahedron
     {
 
         /// <summary>
@@ -18,7 +18,7 @@ namespace KI.Asset
         private float radial;
 
         /// <summary>
-        /// スムージング回数
+        /// 細分割回数
         /// </summary>
         private int smoothNum;
 
@@ -27,20 +27,29 @@ namespace KI.Asset
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="radial">半径</param>
-        /// <param name="smoothNum">スムージング回数</param>
-        public Icosahedron(string name, float radial, int smoothNum)
-            : base(name)
+        /// <param name="subdivNum">細分割回数</param>
+        public Icosahedron(float radial, int subdivNum)
         {
             this.radial = radial;
-            this.smoothNum = smoothNum;
+            this.smoothNum = subdivNum;
             CreateModel();
         }
 
-        public Polygon Model
-        {
-            get;
-            private set;
-        }
+        /// <summary>
+        /// 位置情報
+        /// </summary>
+        public Vector3[] Position { get; private set; }
+
+        /// <summary>
+        /// 法線
+        /// </summary>
+        public Vector3[] Normal { get; private set; }
+
+        /// <summary>
+        /// インデックス
+        /// </summary>
+        public int[] Index { get; private set; }
+
 
         public void CreateModel()
         {
@@ -64,7 +73,14 @@ namespace KI.Asset
             position.Add(new Vector3(1, 0, -length));
             position.Add(new Vector3(-1, 0, -length));
 
-            var indexArray = new int[60]
+            foreach (var pos in position)
+            {
+                normal.Add(pos.Normalized());
+            }
+
+            Position = position.ToArray();
+            Normal = normal.ToArray();
+            Index = new int[60]
                 {
                     1,0,4,0,1,6,2,3,5,3,2,7,
                     4,5,10,5,4,8,6,7,9,7,6,11,
@@ -72,22 +88,6 @@ namespace KI.Asset
                     0,8,4,0,6,9,1,4,10,1,11,6,
                     2,5,8,2,9,7,3,10,5,3,7,11
                 };
-
-            index.AddRange(indexArray);
-            var vertexs = new List<Vertex>();
-
-            HalfEdgeDS halfEdgeDS = new HalfEdgeDS(this.Name, position, index);
-            foreach (var vertex in halfEdgeDS.Vertexs)
-            {
-                vertexs.Add(vertex.Clone());
-            }
-
-            //for (int i = 0; i < position.Count; i++)
-            //{
-            //    vertexs.Add(new Vertex(i, position[i]));
-            //}
-
-            Model = new Polygon(this.Name, vertexs, index, PolygonType.Triangles);
         }
     }
 }

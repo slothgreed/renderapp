@@ -26,31 +26,6 @@ namespace KI.Asset
         }
 
         /// <summary>
-        /// 軸の作成
-        /// </summary>
-        /// <param name="name">名前</param>
-        /// <param name="min">最小値</param>
-        /// <param name="max">最大値</param>
-        /// <returns>軸</returns>
-        public ICreateModel CreateAxis(string name, Vector3 min, Vector3 max)
-        {
-            return new Axis(name, min, max);
-        }
-
-        /// <summary>
-        /// グリッド平面の作成
-        /// </summary>
-        /// <param name="name">名前</param>
-        /// <param name="area">大きさ</param>
-        /// <param name="space">間隔</param>
-        /// <param name="color">色</param>
-        /// <returns>グリッド平面</returns>
-        public ICreateModel CreateGridPlane(string name, float area, float space, Vector3 color)
-        {
-            return new GridPlane(name, area, space, color);
-        }
-
-        /// <summary>
         /// 球の作成
         /// </summary>
         /// <param name="name">名前</param>
@@ -62,27 +37,6 @@ namespace KI.Asset
         public ICreateModel CreateSphere(string name, float radial, int hpartition, int wpartition, bool orient)
         {
             return new Sphere(name, radial, hpartition, wpartition, orient);
-        }
-
-        /// <summary>
-        /// 平面の作成
-        /// </summary>
-        /// <param name="name">名前</param>
-        /// <returns>平面</returns>
-        public ICreateModel CreateRectangle(string name)
-        {
-            return new Rectangle(name);
-        }
-
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        /// <param name="name">名前</param>
-        /// <param name="radial">半径</param>
-        /// <param name="smoothNum">スムージング回数</param>
-        public ICreateModel CreateIcosahedron(string name, float radial, int smoothNum)
-        {
-            return new Icosahedron(name, radial, smoothNum);
         }
 
         /// <summary>

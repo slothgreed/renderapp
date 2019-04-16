@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using KI.Foundation.Core;
 using KI.Gfx;
 using KI.Gfx.Geometry;
@@ -9,7 +10,7 @@ namespace KI.Asset
     /// <summary>
     /// グリッド付き平面
     /// </summary>
-    public class GridPlane : KIObject, ICreateModel
+    public class GridPlane 
     {
         /// <summary>
         /// グリッドの範囲
@@ -32,62 +33,57 @@ namespace KI.Asset
         /// <param name="name">名前</param>
         /// <param name="area">大きさ</param>
         /// <param name="space">間隔</param>
-        public GridPlane(string name, float area, float space, Vector3 color)
-            : base(name)
+        public GridPlane(float area, float delta, Vector3 color)
         {
             this.area = area;
-            this.delta = space;
+            this.delta = delta;
             this.color = color;
             CreateModel();
         }
 
         /// <summary>
-        /// 形状
+        /// 位置情報
         /// </summary>
-        public Polygon Model { get; private set; }
+        public Vector3[] Position { get; private set; }
+
+        /// <summary>
+        /// 要素番号
+        /// </summary>
+        public Vector3[] Color { get; private set; }
+
+        /// <summary>
+        /// 要素番号
+        /// </summary>
+        public int[] Index { get; private set; }
 
         /// <summary>
         /// 形状の作成
         /// </summary>
         public void CreateModel()
         {
-            List<Vertex> vertexs = new List<Vertex>();
-            List<int> lineIndex = new List<int>();
+            List<Vector3> vertexs = new List<Vector3>();
 
-            Vector3 line_start1 = new Vector3();
-            Vector3 line_fin1 = new Vector3();
-            Vector3 line_start2 = new Vector3();
-            Vector3 line_fin2 = new Vector3();
             float world = area;
 
             for (float i = -world; i < world; i += delta)
             {
                 if (i != 0)
                 {
-                    line_start1 = new Vector3(-world, 0, i);
-                    line_fin1 = new Vector3(world, 0, i);
-
-                    line_start2 = new Vector3(i, 0, -world);
-                    line_fin2 = new Vector3(i, 0, world);
-
-                    var start1 = new Vertex(vertexs.Count, line_start1, Vector3.Zero);
-                    vertexs.Add(start1);
-                    var fin1 = new Vertex(vertexs.Count, line_fin1, Vector3.Zero);
-                    vertexs.Add(fin1);
-
-                    var start2 = new Vertex(vertexs.Count, line_start2, Vector3.Zero);
-                    vertexs.Add(start2);
-                    var fin2 = new Vertex(vertexs.Count, line_fin2, Vector3.Zero);
-                    vertexs.Add(fin2);
+                    vertexs.Add(new Vector3(-world, 0, i));
+                    vertexs.Add(new Vector3(world, 0, i));
+                    vertexs.Add(new Vector3(i, 0, -world));
+                    vertexs.Add(new Vector3(i, 0, world));
                 }
             }
 
-            for (int i = 0; i < vertexs.Count; i++)
+            Position = vertexs.ToArray();
+            Color = new Vector3[Position.Length];
+            for(int i = 0; i < Color.Length; i++)
             {
-                lineIndex.Add(i);
+                Color[i] = new Vector3(color);
             }
 
-            Model = new Polygon("GridPlane", vertexs, lineIndex, PolygonType.Lines);
+            Index = Enumerable.Range(0, vertexs.Count).ToArray();
         }
     }
 }

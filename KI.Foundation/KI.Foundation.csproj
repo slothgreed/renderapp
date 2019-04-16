@@ -57,6 +57,7 @@
     <Compile Include="Core\KIObject.cs" />
     <Compile Include="Core\KIFile.cs" />
     <Compile Include="Core\KITimer.cs" />
+    <Compile Include="ListEx.cs" />
     <Compile Include="Tree\BinaryTree.cs" />
     <Compile Include="Tree\KINode.cs" />
     <Compile Include="Core\Logger.cs" />

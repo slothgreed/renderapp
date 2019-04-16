@@ -1,8 +1,11 @@
-﻿using KI.Asset;
+﻿using System.Collections.Generic;
+using KI.Asset;
 using KI.Foundation.Core;
 using KI.Gfx;
 using KI.Gfx.Geometry;
 using KI.Gfx.KIShader;
+using KI.Gfx.KITexture;
+using OpenTK;
 
 namespace KI.Renderer
 {
@@ -23,6 +26,81 @@ namespace KI.Renderer
         /// <returns>描画オブジェクト</returns>
         public PolygonNode CreatePolygonNode(string name, Polygon polygon)
         {
+            string vert = ShaderCreater.Instance.GetVertexShader(polygon);
+            string frag = ShaderCreater.Instance.GetFragShader(polygon);
+            var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
+
+            var polygonNode = new PolygonNode(name, polygon, shader);
+            AddItem(polygonNode);
+            return polygonNode;
+        }
+
+
+        /// <summary>
+        /// 空オブジェクトの作成
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <returns>描画オブジェクト</returns>
+        public PolygonNode CreatePolygonNode(string name, Vector3[] position, Vector3[] color, int[] index, KeyValuePair<TextureKind,Texture>[] textureDict, PolygonType type)
+        {
+            Vertex[] vertex = new Vertex[position.Length];
+            for (int i = 0; i < position.Length; i++)
+            {
+                vertex[i] = new Vertex(i, position[i], color[i]);
+            }
+
+            Polygon polygon = new Polygon(name, vertex, index, type);
+            foreach(var texture in textureDict)
+            {
+                polygon.AddTexture(texture.Key, texture.Value);
+            }
+
+            string vert = ShaderCreater.Instance.GetVertexShader(polygon);
+            string frag = ShaderCreater.Instance.GetFragShader(polygon);
+            var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
+
+            var polygonNode = new PolygonNode(name, polygon, shader);
+            AddItem(polygonNode);
+            return polygonNode;
+        }
+
+        /// <summary>
+        /// 空オブジェクトの作成
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <returns>描画オブジェクト</returns>
+        public PolygonNode CreatePolygonNode(string name, Vector3[] position, Vector3[] normal, Vector2[] texcoord, int[] index, PolygonType type)
+        {
+            Vertex[] vertex = new Vertex[position.Length];
+            for (int i = 0; i < position.Length; i++)
+            {
+                vertex[i] = new Vertex(i, position[i], normal[i], texcoord[i]);
+            }
+
+            Polygon polygon = new Polygon(name, vertex, index, type);
+            string vert = ShaderCreater.Instance.GetVertexShader(polygon);
+            string frag = ShaderCreater.Instance.GetFragShader(polygon);
+            var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
+
+            var polygonNode = new PolygonNode(name, polygon, shader);
+            AddItem(polygonNode);
+            return polygonNode;
+        }
+
+        /// <summary>
+        /// 空オブジェクトの作成
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <returns>描画オブジェクト</returns>
+        public PolygonNode CreatePolygonNode(string name, Vector3[] position, Vector3[] color, int[] index, PolygonType type)
+        {
+            Vertex[] vertex = new Vertex[position.Length];
+            for (int i = 0; i < position.Length; i++)
+            {
+                vertex[i] = new Vertex(i, position[i], color[i]);
+            }
+
+            Polygon polygon = new Polygon(name, vertex, index, type);
             string vert = ShaderCreater.Instance.GetVertexShader(polygon);
             string frag = ShaderCreater.Instance.GetFragShader(polygon);
             var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);

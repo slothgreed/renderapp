@@ -160,7 +160,7 @@ namespace KI.Renderer.Technique
         /// <param name="fragShader">フラグシェーダ</param>
         private void Init(string vertexShader = null, string fragShader = null)
         {
-            Rectanle = SceneNodeFactory.Instance.CreatePolygonNode(Name, AssetFactory.Instance.CreateRectangle(Name));
+            Rectanle = SceneNodeFactory.Instance.CreatePolygonNode(Name, new Rectangle(Name));
             // gbuffer用 以外はシェーダ作成
             if (vertexShader != null && fragShader != null)
             {

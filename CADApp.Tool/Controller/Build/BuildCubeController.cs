@@ -23,6 +23,8 @@ namespace CADApp.Tool.Controller
 
         private AssemblyNode sketchNode;
 
+        private Vector3 startPosition;
+
         public override bool Down(KIMouseEventArgs mouse)
         {
             if (mouse.Button == MOUSE_BUTTON.Left)
@@ -38,26 +40,25 @@ namespace CADApp.Tool.Controller
                         var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
                         sketchNode = new AssemblyNode("RectangleLine", sketch, shader);
 
-                        Cube cube = new Cube(worldPoint, worldPoint + Vector3.One);
-                        sketch.BeginEdit();
-                        sketch.SetVertex(cube.Vertex);
-                        sketch.SetTriangleIndex(cube.Index);
-                        sketch.EndEdit();
-
                         Workspace.Instance.MainScene.AddObject(sketchNode);
+                        startPosition = worldPoint;
                         mode = BuildCubeMode.SelectSize;
                     }
                     else if (mode == BuildCubeMode.SelectSize)
                     {
                         mode = BuildCubeMode.SelectHeight;
-                    }
-                    else if (mode == BuildCubeMode.SelectHeight)
-                    {
-                        sketchNode = null;
-                        mode = BuildCubeMode.SelectStart;
+                        return base.Down(mouse);
                     }
                 }
+
+                // 平面に当たる必要はない。
+                if (mode == BuildCubeMode.SelectHeight)
+                {
+                    sketchNode = null;
+                    mode = BuildCubeMode.SelectStart;
+                }
             }
+
 
             return base.Down(mouse);
         }
@@ -76,22 +77,17 @@ namespace CADApp.Tool.Controller
                 if (Interaction.PlaneToLine(camera.Position, far, Workspace.Instance.WorkPlane.Formula, out interPoint))
                 {
                     Assembly sketch = sketchNode.Assembly;
-                    Vector3 startPosition = sketch.GetVertex(0).Position;
                     if ((startPosition - interPoint).Length <= 0)
                     {
                         return true;
                     }
 
+                    interPoint.Y = 0.01f;
+                    Cube cube = new Cube(startPosition, interPoint);
                     sketch.BeginEdit();
-                    for (int i = 1; i < sketch.Vertex.Count; i++)
-                    {
-                        Vector3 objectDirection = (sketch.Vertex[i].Position - startPosition).Normalized();
-                        Vector3 mouseDirection = (interPoint - startPosition).Normalized();
-                        float scale = Vector3.Dot(objectDirection, mouseDirection);
-                        var xz = Vector3.UnitX + Vector3.UnitZ;
-                        sketch.SetVertex(i, startPosition + objectDirection * xz * scale);
-                    }
-
+                    sketch.ClearVertex();
+                    sketch.SetVertex(cube.Vertex);
+                    sketch.SetTriangleIndex(cube.Index);
                     sketch.EndEdit();
                 }
             }
@@ -119,15 +115,16 @@ namespace CADApp.Tool.Controller
                 var formula = Plane.Formula(sum, normal);
                 if (Interaction.PlaneToLine(camera.Position, far, formula, out interPoint))
                 {
-                    Vector3 startPosition = sketch.GetVertex(0).Position;
-
+                    float distance = startPosition.Y + interPoint.Y;
                     sketch.BeginEdit();
-                    for (int i = 1; i < sketch.Vertex.Count; i++)
+                    for (int i = 0; i < sketch.Vertex.Count; i++)
                     {
-                        Vector3 objectDirection = (sketch.Vertex[i].Position - startPosition).Normalized();
-                        Vector3 mouseDirection = (interPoint - startPosition).Normalized();
-                        float scale = Vector3.Dot(objectDirection, mouseDirection);
-                        sketch.SetVertex(i, startPosition + objectDirection * scale);
+                        if (startPosition.Y != sketch.Vertex[i].Position.Y)
+                        {
+                            Vector3 newPosition = sketch.Vertex[i].Position;
+                            newPosition.Y = distance;
+                            sketch.SetVertex(i, newPosition);
+                        }
                     }
 
                     sketch.EndEdit();

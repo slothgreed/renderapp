@@ -130,7 +130,7 @@ namespace KI.Renderer.Technique
                 ssLicTex = TextureFactory.Instance.CreateTexture("SSLIC Texture", width, height);
                 uNoize = TextureFactory.Instance.CreateTexture("SSLIC Texture", width, height);
 
-                postRectangle = SceneNodeFactory.Instance.CreatePolygonNode("SSLIC PostRectangle", AssetFactory.Instance.CreateRectangle("SSLIC PostRectangle"));
+                postRectangle = SceneNodeFactory.Instance.CreatePolygonNode("SSLIC PostRectangle", new Rectangle("SSLIC PostRectangle"));
                 postRectangle.Shader = ShaderCreater.Instance.CreateShader(SHADER_TYPE.SSLIC);
                 postRectangle.Shader.SetValue("uVector", ssLicTex);
                 postRectangle.Shader.SetValue("uNoize", uNoize);

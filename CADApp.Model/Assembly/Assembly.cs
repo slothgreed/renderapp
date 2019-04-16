@@ -153,6 +153,8 @@ namespace CADApp.Model
                 Logger.Log(Logger.LogLevel.Error, "Call Begin Edit.");
             }
 
+            ClearVertex();
+
             foreach (var vertex in vertexList)
             {
                 AddVertex(vertex);

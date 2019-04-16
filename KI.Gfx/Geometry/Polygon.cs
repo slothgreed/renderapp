@@ -69,6 +69,21 @@ namespace KI.Gfx.Geometry
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
+        /// <param name="vertex">頂点</param>
+        public Polygon(string name, Vertex[] vertexArray, int[] indexArray, PolygonType type = PolygonType.Points)
+            : base(name)
+        {
+            vertexs = new List<Vertex>();
+            vertexs.AddRange(vertexArray);
+            index = new List<int>();
+            index.AddRange(indexArray);
+            Type = type;
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="name">名前</param>
         /// <param name="line">線分リスト</param>
         public Polygon(string name, List<Line> line, PolygonType type = PolygonType.Lines)
             : base(name)

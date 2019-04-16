@@ -59,15 +59,6 @@ namespace KI.Asset
             Vertex[6] = new Vector3(max.X, max.Y, max.Z);
             Vertex[7] = new Vector3(min.X, max.Y, max.Z);
 
-            List<Vector2> texCoord = new List<Vector2>()
-            {
-                Vector2.Zero,
-                Vector2.UnitY,
-                Vector2.UnitX + Vector2.UnitY,
-                Vector2.UnitX
-            };
-
-            var mesh = new List<Mesh>();
             if (reverse == false)
             {
                 AddTrianlgeIndexFromRectangle(0, 0, 3, 2, 1);

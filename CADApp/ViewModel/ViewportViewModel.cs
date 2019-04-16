@@ -6,6 +6,8 @@ using CADApp.Model;
 using CADApp.Model.Node;
 using CADApp.Tool.Controller;
 using KI.Asset;
+using KI.Gfx;
+using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil;
 using KI.Renderer;
 using KI.Renderer.Technique;
@@ -173,12 +175,12 @@ namespace CADApp.ViewModel
             //MainScene.AddObject(MainScene.MainCamera);
             MainScene.AddObject(MainScene.MainLight);
 
-            var axis = AssetFactory.Instance.CreateAxis("axis", Vector3.Zero, MainScene.WorldMax);
-            var axisObject = SceneNodeFactory.Instance.CreatePolygonNode(axis.ToString(), axis);
+            var axis = new Axis(Vector3.Zero, MainScene.WorldMax);
+            var axisObject = SceneNodeFactory.Instance.CreatePolygonNode("Axis", axis.Vertex, axis.Color, axis.Index, PolygonType.Lines);
             MainScene.AddObject(axisObject);
 
-            var grid = AssetFactory.Instance.CreateGridPlane("gridPlane", 1, 0.1f, Vector3.One);
-            var girdObject = SceneNodeFactory.Instance.CreatePolygonNode(grid.ToString(), grid);
+            var grid = new GridPlane(1, 0.1f, Vector3.Zero);
+            var girdObject = SceneNodeFactory.Instance.CreatePolygonNode("GridPlane", grid.Position, grid.Color, grid.Index, PolygonType.Lines);
             MainScene.AddObject(girdObject);
         }
 
