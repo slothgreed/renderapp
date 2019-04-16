@@ -52,6 +52,22 @@ namespace KI.Gfx
             Shader = shader;
         }
 
+        /// <summary>
+        /// GPUにバインドする
+        /// </summary>
+        public void BindToGPU()
+        {
+            Shader.BindBuffer();
+        }
+
+        /// <summary>
+        /// GPUのバインドを解除する
+        /// </summary>
+        public void UnBindToGPU()
+        {
+            Shader.UnBindBuffer();
+        }
+
 
         /// <summary>
         /// テクスチャの追加

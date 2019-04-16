@@ -11,44 +11,29 @@ namespace KI.Tool.Command
         /// <summary>
         /// Listで管理、各ツールでenumで設定できる
         /// </summary>
-        private List<CommandStack> commandList;
+        private Stack<CommandBase> commandStack;
 
         /// <summary>
         /// UndoList
         /// </summary>
-        private List<CommandStack> undoList;
+        private Stack<CommandBase> undoStack;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public CommandManager()
         {
-            commandList = new List<CommandStack>();
-            commandList.Add(new CommandStack());
-            undoList = new List<CommandStack>();
-            undoList.Add(new CommandStack());
-        }
-
-        /// <summary>
-        /// コマンドスタックの追加
-        /// </summary>
-        public void AddCommandStack()
-        {
-            commandList.Add(new CommandStack());
-            undoList.Add(new CommandStack());
+            commandStack = new Stack<CommandBase>();
+            undoStack = new Stack<CommandBase>();
         }
 
         /// <summary>
         /// コマンドのクリア
         /// </summary>
-        /// <param name="stack">コマンドリスト番号</param>
-        public void Clear(int stack = 0)
+        public void Clear()
         {
-            if (commandList.Count < stack)
-            {
-                commandList[stack].Clear();
-                undoList[stack].Clear();
-            }
+            commandStack.Clear();
+            undoStack.Clear();
         }
 
         /// <summary>
@@ -57,15 +42,9 @@ namespace KI.Tool.Command
         /// <param name="command">コマンド</param>
         /// <param name="commandArg">コマンド引数</param>
         /// <param name="undo">undoできるか</param>
-        /// <param name="stack">コマンドリスト番号</param>
         /// <returns>成功したか</returns>
-        public CommandResult Execute(CommandBase command, bool undo = true, int stack = 0)
+        public CommandResult Execute(CommandBase command, bool undo = true)
         {
-            if (commandList.Count < stack)
-            {
-                Logger.Log(Logger.LogLevel.Error, "command Stack Error");
-            }
-
             CommandResult error = CommandResult.None;
             error = command.CanExecute();
             if (error != CommandResult.Success)
@@ -83,7 +62,7 @@ namespace KI.Tool.Command
 
             if (undo == true)
             {
-                commandList[stack].Push(command);
+                commandStack.Push(command);
             }
 
             return CommandResult.Success;
@@ -92,34 +71,26 @@ namespace KI.Tool.Command
         /// <summary>
         /// Undo
         /// </summary>
-        /// <param name="stack">コマンドリスト番号</param>
-        public void Undo(int stack = 0)
+        public void Undo()
         {
-            if (commandList.Count < stack)
+            CommandBase command = commandStack.Pop();
+            if (command.Undo() == CommandResult.Failed)
             {
-                CommandBase command = commandList[stack].Pop();
-                if (command.Undo() == CommandResult.Failed)
-                {
-                    Logger.Log(Logger.LogLevel.Warning, "Undo Error");
-                }
-                else
-                {
-                    undoList[stack].Push(command);
-                }
+                Logger.Log(Logger.LogLevel.Warning, "Undo Error");
+            }
+            else
+            {
+                undoStack.Push(command);
             }
         }
 
         /// <summary>
         /// Redo
         /// </summary>
-        /// <param name="stack">コマンドリスト番号</param>
-        public void Redo(int stack = 0)
+        public void Redo()
         {
-            if (undoList.Count < stack)
-            {
-                var command = undoList[stack].Pop();
-                Execute(command, true, stack);
-            }
+            var command = undoStack.Pop();
+            Execute(command, true);
         }
     }
 }

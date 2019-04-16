@@ -80,7 +80,7 @@ namespace KI.Renderer
             }
 
             ShaderHelper.InitializeState(scene, this, VertexBuffer, Polygon.Material);
-            Polygon.Material.Shader.BindBuffer();
+            Polygon.Material.BindToGPU();
             if (VertexBuffer.EnableIndexBuffer)
             {
                 DeviceContext.Instance.DrawElements(Type, VertexBuffer.Num, DrawElementsType.UnsignedInt, 0);
@@ -90,7 +90,7 @@ namespace KI.Renderer
                 DeviceContext.Instance.DrawArrays(Type, 0, VertexBuffer.Num);
             }
 
-            Polygon.Material.Shader.UnBindBuffer();
+            Polygon.Material.UnBindToGPU();
 
             Logger.GLLog(Logger.LogLevel.Error);
         }
