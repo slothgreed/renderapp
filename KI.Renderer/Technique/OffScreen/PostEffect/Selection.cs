@@ -28,7 +28,7 @@ namespace KI.Renderer.Technique
             : base("SelectionBuffer", renderer, vertexShader, fragShader, RenderType.OffScreen)
         {
             var textures = RenderSystem.RenderQueue.OutputTexture<GBuffer>();
-            Rectanle.Polygon.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Color]);
+            Rectanle.Polygon.Material.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Color]);
         }
 
         /// <summary>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
 
-namespace KI.Renderer
+namespace KI.Gfx
 {
     /// <summary>
     /// マテリアル
@@ -23,6 +23,14 @@ namespace KI.Renderer
         /// シェーダ
         /// </summary>
         public Shader Shader;
+
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public Material()
+        {
+        }
 
         /// <summary>
         /// コンストラクタ

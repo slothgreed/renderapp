@@ -62,6 +62,7 @@
     <Compile Include="GLUtil\Buffer\TextureBuffer.cs" />
     <Compile Include="GLUtil\DeviceContext.cs" />
     <Compile Include="GLUtil\KIMouseEventArgs.cs" />
+    <Compile Include="Material.cs" />
     <Compile Include="Render\RenderTexture.cs" />
     <Compile Include="ShaderCreater.cs" />
     <Compile Include="Type.cs" />

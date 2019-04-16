@@ -44,6 +44,11 @@ namespace KI.Gfx.Geometry
         private List<int> index = new List<int>();
 
         /// <summary>
+        /// マテリアル
+        /// </summary>
+        public Material Material { get; private set; } = new Material();
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
@@ -193,11 +198,6 @@ namespace KI.Gfx.Geometry
                 meshs = value;
             }
         }
-
-        /// <summary>
-        /// テクスチャ
-        /// </summary>
-        public Dictionary<TextureKind, Texture> Textures { get; private set; } = new Dictionary<TextureKind, Texture>();
 
         /// <summary>
         /// 頂点バッファの更新
@@ -384,33 +384,6 @@ namespace KI.Gfx.Geometry
         #endregion
 
         #endregion
-
-        /// <summary>
-        /// テクスチャの追加
-        /// </summary>
-        /// <param name="kind">種類</param>
-        /// <param name="texture">テクスチャ</param>
-        public void AddTexture(TextureKind kind, Texture texture)
-        {
-            Textures[kind] = texture;
-        }
-
-        /// <summary>
-        /// テクスチャのゲッタ
-        /// </summary>
-        /// <param name="kind">種類</param>
-        /// <returns>テクスチャ</returns>
-        public Texture GetTexture(TextureKind kind)
-        {
-            if (Textures.ContainsKey(kind))
-            {
-                return Textures[kind];
-            }
-            else
-            {
-                return null;
-            }
-        }
 
         /// <summary>
         /// 形状情報更新イベント

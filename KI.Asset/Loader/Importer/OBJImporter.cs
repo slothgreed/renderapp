@@ -45,19 +45,19 @@ namespace KI.Asset.Loader.Importer
             if (material.map_Kd != null)
             {
                 Texture albedo = TextureFactory.Instance.CreateTexture(material.map_Kd);
-                polygon.AddTexture(TextureKind.Albedo, albedo);
+                polygon.Material.AddTexture(TextureKind.Albedo, albedo);
             }
 
             if (material.map_bump != null)
             {
                 Texture bump = TextureFactory.Instance.CreateTexture(material.map_bump);
-                polygon.AddTexture(TextureKind.Normal, bump);
+                polygon.Material.AddTexture(TextureKind.Normal, bump);
             }
 
             if (material.map_Ns != null)
             {
                 Texture spec = TextureFactory.Instance.CreateTexture(material.map_Ns);
-                polygon.AddTexture(TextureKind.Specular, spec);
+                polygon.Material.AddTexture(TextureKind.Specular, spec);
             }
         }
 

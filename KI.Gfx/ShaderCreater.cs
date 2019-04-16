@@ -64,7 +64,7 @@ namespace KI.Gfx
                 return Directory + @"GBuffer\GeneralPC.vert";
             }
 
-            if (polygon.Textures.Count != 0)
+            if (polygon.Material.Textures.Count != 0)
             {
                 return Directory + @"GBuffer\GeneralPNCT.vert";
             }
@@ -137,7 +137,7 @@ namespace KI.Gfx
                 return Directory + @"GBuffer\GeneralPC.frag";
             }
 
-            if (polygon.Textures.Count != 0)
+            if (polygon.Material.Textures.Count != 0)
             {
                 return Directory + @"GBuffer\GeneralPNT.frag";
             }
@@ -154,26 +154,26 @@ namespace KI.Gfx
         /// <returns>ファイルパス</returns>
         private string GetTextureFragShader(Polygon polygon)
         {
-            if (polygon.GetTexture(TextureKind.Albedo) != null &&
-                polygon.GetTexture(TextureKind.Normal) != null &&
-                polygon.GetTexture(TextureKind.Specular) != null)
+            if (polygon.Material.GetTexture(TextureKind.Albedo) != null &&
+                polygon.Material.GetTexture(TextureKind.Normal) != null &&
+                polygon.Material.GetTexture(TextureKind.Specular) != null)
             {
                 return Directory + @"GBuffer\GeneralANS.frag";
             }
 
-            if (polygon.GetTexture(TextureKind.Albedo) != null &&
-                polygon.GetTexture(TextureKind.Normal) != null)
+            if (polygon.Material.GetTexture(TextureKind.Albedo) != null &&
+                polygon.Material.GetTexture(TextureKind.Normal) != null)
             {
                 return Directory + @"GBuffer\GeneralAN.frag";
             }
 
-            if (polygon.GetTexture(TextureKind.Albedo) != null &&
-                polygon.GetTexture(TextureKind.Specular) != null)
+            if (polygon.Material.GetTexture(TextureKind.Albedo) != null &&
+                polygon.Material.GetTexture(TextureKind.Specular) != null)
             {
                 return Directory + @"GBuffer\GeneralAS.frag";
             }
 
-            if (polygon.GetTexture(TextureKind.Albedo) != null)
+            if (polygon.Material.GetTexture(TextureKind.Albedo) != null)
             {
                 return Directory + @"GBuffer\GeneralA.frag";
             }

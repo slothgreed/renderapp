@@ -52,7 +52,7 @@ namespace RenderApp.Model
                 }
 
                 attribute.Binding();
-                ShaderHelper.InitializeState(attribute.Shader, scene, this, attribute.VertexBuffer, Polygon.Textures);
+                ShaderHelper.InitializeState(attribute.Shader, scene, this, attribute.VertexBuffer, Polygon.Material.Textures);
                 attribute.Shader.BindBuffer();
                 if (attribute.VertexBuffer.EnableIndexBuffer)
                 {

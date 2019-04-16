@@ -49,7 +49,7 @@ namespace KI.Renderer.Technique
         {
             uSelectMap = null;
             var textures = RenderSystem.RenderQueue.OutputTexture<GBuffer>();
-            Rectanle.Polygon.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Color]);
+            Rectanle.Polygon.Material.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Color]);
         }
 
         protected override void CreateRenderTarget(int width, int height)

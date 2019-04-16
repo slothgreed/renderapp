@@ -49,7 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Material.cs" />
     <Compile Include="Node\EmptyNode.cs" />
     <Compile Include="EnvironmentProbe.cs" />
     <Compile Include="Node\LightNode.cs" />

@@ -290,22 +290,22 @@ namespace RenderApp.ViewModel
             Vector3 v7 = new Vector3(min.X, max.Y, max.Z);
 
             Rectangle front = new Rectangle("Front", v2, v3, v0, v1);
-            front.Model.AddTexture(KI.Gfx.KITexture.TextureKind.Albedo, nzTexture);
+            front.Model.Material.AddTexture(KI.Gfx.KITexture.TextureKind.Albedo, nzTexture);
 
             Rectangle left = new Rectangle("Left", v3, v7, v4, v0);
-            left.Model.AddTexture(KI.Gfx.KITexture.TextureKind.Albedo, pxTexture);
+            left.Model.Material.AddTexture(KI.Gfx.KITexture.TextureKind.Albedo, pxTexture);
 
             Rectangle back = new Rectangle("Back", v7, v6, v5, v4);
-            back.Model.AddTexture(KI.Gfx.KITexture.TextureKind.Albedo, pzTexture);
+            back.Model.Material.AddTexture(KI.Gfx.KITexture.TextureKind.Albedo, pzTexture);
 
             Rectangle right = new Rectangle("Right", v6, v2, v1, v5);
-            right.Model.AddTexture(KI.Gfx.KITexture.TextureKind.Albedo, nxTexture);
+            right.Model.Material.AddTexture(KI.Gfx.KITexture.TextureKind.Albedo, nxTexture);
 
             Rectangle top = new Rectangle("Top", v3, v2, v6, v7);
-            top.Model.AddTexture(KI.Gfx.KITexture.TextureKind.Albedo, pyTexture);
+            top.Model.Material.AddTexture(KI.Gfx.KITexture.TextureKind.Albedo, pyTexture);
 
             Rectangle bottom = new Rectangle("Bottom", v0, v4, v5, v1);
-            bottom.Model.AddTexture(KI.Gfx.KITexture.TextureKind.Albedo, nyTexture);
+            bottom.Model.Material.AddTexture(KI.Gfx.KITexture.TextureKind.Albedo, nyTexture);
 
             PolygonNode renderFront = SceneNodeFactory.Instance.CreatePolygonNode(front.Name, front);
             PolygonNode renderLeft = SceneNodeFactory.Instance.CreatePolygonNode(left.Name, left);

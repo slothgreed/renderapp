@@ -88,7 +88,7 @@ namespace KI.Renderer
                 return;
             }
 
-            ShaderHelper.InitializeState(Shader, scene, this, VertexBuffer, Polygon.Textures);
+            ShaderHelper.InitializeState(Shader, scene, this, VertexBuffer, Polygon.Material.Textures);
             Shader.BindBuffer();
             if (VertexBuffer.EnableIndexBuffer)
             {

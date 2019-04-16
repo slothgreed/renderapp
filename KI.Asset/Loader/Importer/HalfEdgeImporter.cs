@@ -60,7 +60,7 @@ namespace KI.Asset.Loader.Importer
             }
 
             var uvTexture = TextureFactory.Instance.CreateUVTexture(128);
-            halfEdge.Textures.Add(Gfx.KITexture.TextureKind.Albedo, uvTexture);
+            halfEdge.Material.Textures.Add(Gfx.KITexture.TextureKind.Albedo, uvTexture);
             Model = halfEdge;
         }
     }
