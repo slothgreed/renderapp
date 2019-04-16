@@ -31,7 +31,7 @@ namespace CADApp.Model.Node
         /// </summary>
         VertexBuffer controlPointBuffer;
 
-        Shader shader;
+        Material material;
 
         /// <summary>
         /// スケッチの頂点情報
@@ -46,7 +46,7 @@ namespace CADApp.Model.Node
         public AssemblyNode(string name, Assembly assmebly, Shader _shader)
            : base(name)
         {
-            shader = _shader;
+            material = new Material(_shader);
             Assembly = assmebly;
             assmebly.AssemblyUpdated += OnAssemblyUpdated;
             GenerateBuffer();
@@ -97,8 +97,8 @@ namespace CADApp.Model.Node
 
         private void Draw(Scene scene, PolygonType type, VertexBuffer buffer)
         {
-            ShaderHelper.InitializeState(shader, scene, this, buffer, null);
-            shader.BindBuffer();
+            ShaderHelper.InitializeState(scene, this, buffer, material);
+            material.Shader.BindBuffer();
             if (buffer.EnableIndexBuffer)
             {
                 DeviceContext.Instance.DrawElements(type, buffer.Num, DrawElementsType.UnsignedInt, 0);
@@ -108,7 +108,7 @@ namespace CADApp.Model.Node
                 DeviceContext.Instance.DrawArrays(type, 0, buffer.Num);
             }
 
-            shader.UnBindBuffer();
+            material.Shader.UnBindBuffer();
         }
 
         public override void Dispose()

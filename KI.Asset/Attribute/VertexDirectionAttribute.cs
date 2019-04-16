@@ -48,7 +48,7 @@ namespace KI.Asset.Attribute
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="polygon">線分</param>
-        /// <param name="shader">シェーダ</param>
+        /// <param name="material">マテリアル</param>
         public VertexDirectionAttribute(string name, Material material, Vector3[] position, Vector3[] direction, Vector4 color, Vector3[] normal = null, bool displayVector = false)
             : base(name, PolygonType.Lines, material)
         {

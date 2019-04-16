@@ -36,11 +36,13 @@ namespace CADApp.Model.Node
         /// </summary>
         VertexBuffer selectControlPointBuffer;
 
-        Shader shader;
+        Material material;
+
         public AppRootNode(string name)
             : base(name)
         {
-            shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
+            var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
+            material = new Material(shader);
             GenerateBuffer();
         }
 
@@ -116,8 +118,8 @@ namespace CADApp.Model.Node
 
         private void Draw(Scene scene, PolygonType type, VertexBuffer buffer)
         {
-            ShaderHelper.InitializeState(shader, scene, this, buffer, null);
-            shader.BindBuffer();
+            ShaderHelper.InitializeState(scene, this, buffer, material);
+            material.Shader.BindBuffer();
             if (buffer.EnableIndexBuffer)
             {
                 DeviceContext.Instance.DrawElements(type, buffer.Num, DrawElementsType.UnsignedInt, 0);
@@ -127,7 +129,7 @@ namespace CADApp.Model.Node
                 DeviceContext.Instance.DrawArrays(type, 0, buffer.Num);
             }
 
-            shader.UnBindBuffer();
+            material.Shader.UnBindBuffer();
         }
     }
 }

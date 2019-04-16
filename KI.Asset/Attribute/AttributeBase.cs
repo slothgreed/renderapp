@@ -15,7 +15,7 @@ namespace KI.Asset.Attribute
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="type">レンダリングタイプ</param>
-        /// <param name="shader">シェーダ</param>
+        /// <param name="material">マテリアル</param>
         public AttributeBase(string name, PolygonType type, Material material)
             : base(name)
         {
@@ -27,7 +27,7 @@ namespace KI.Asset.Attribute
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
-        /// <param name="shader">シェーダ</param>
+        /// <param name="material">マテリアル</param>
         public AttributeBase(string name, VertexBuffer vertexBuffer, PolygonType type, Material material)
             : base(name)
         {
@@ -40,7 +40,7 @@ namespace KI.Asset.Attribute
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
-        /// <param name="shader">シェーダ</param>
+        /// <param name="material">マテリアル</param>
         public AttributeBase(string name, PolygonType type)
             : base(name)
         {

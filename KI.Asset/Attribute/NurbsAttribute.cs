@@ -40,7 +40,7 @@ namespace KI.Asset.Attribute
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="vertexBuffer">線分</param>
-        /// <param name="shader">シェーダ</param>
+        /// <param name="material">マテリアル</param>
         public NURBSAttribute(string name, VertexBuffer vertexBuffer, Material material)
             : base(name, vertexBuffer, PolygonType.Patches, material)
         {
