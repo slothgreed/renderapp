@@ -6,6 +6,7 @@ using KI.Foundation.Tree;
 using KI.Gfx;
 using KI.Gfx.GLUtil;
 using KI.Gfx.KIShader;
+using KI.Gfx.KITexture;
 using KI.Renderer;
 using KI.Renderer.Technique;
 using KI.Tool.Command;
@@ -163,7 +164,7 @@ namespace RenderApp.ViewModel
             mainScene.MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
             var light = new DirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
             var sphere = AssetFactory.Instance.CreateSphere("sphere", 0.1f, 32, 32, true);
-            mainScene.MainLight = new LightNode("SunLight", light, SceneNodeFactory.Instance.CreatePolygonNode("SunLight", sphere));
+            mainScene.MainLight = new LightNode("SunLight", light, SceneNodeFactory.Instance.CreatePolygonNode("SunLight", sphere, null));
             //mainScene.AddObject(mainScene.MainCamera);
             mainScene.AddObject(mainScene.MainLight);
 
@@ -192,7 +193,7 @@ namespace RenderApp.ViewModel
             {
                 var moai = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/moai.half");
                 var renderBunny = CreateAnalyzePolygonNode("moai", moai);
-                renderBunny.Shader = ShaderCreater.Instance.CreateShader(GBufferType.PointNormalColor);
+                renderBunny.Polygon.Material.Shader = ShaderCreater.Instance.CreateShader(GBufferType.PointNormalColor);
                 //renderBunny.RotateX(-90);
                 mainScene.AddObject(renderBunny);
                 var parentNode = mainScene.FindNode(renderBunny);
@@ -218,7 +219,7 @@ namespace RenderApp.ViewModel
                 var vectorFiledAttribute = new VectorFieldAttribute(
                     renderBunny.Name + ": VectorField",
                     renderBunny.VertexBuffer.ShallowCopy(),
-                    ShaderCreater.Instance.CreateShader(SHADER_TYPE.VectorField),
+                    new Material(ShaderCreater.Instance.CreateShader(SHADER_TYPE.VectorField)),
                     renderBunny.Attributes.OfType<VertexDirectionAttribute>().First().Direction,
                     renderBunny.Type);
                 renderBunny.Attributes.Add(vectorFiledAttribute);
@@ -258,8 +259,9 @@ namespace RenderApp.ViewModel
             string vert = ShaderCreater.Instance.GetVertexShader(model.Model);
             string frag = ShaderCreater.Instance.GetFragShader(model.Model);
             var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
-
-            AnalyzePolygonNode node = new AnalyzePolygonNode(name,model.Model,shader);
+            Material material = new Material(shader);
+            model.Model.Material = material;
+            AnalyzePolygonNode node = new AnalyzePolygonNode(name, model.Model);
             return node;
         }
 
@@ -290,29 +292,24 @@ namespace RenderApp.ViewModel
             Vector3 v7 = new Vector3(min.X, max.Y, max.Z);
 
             Rectangle front = new Rectangle("Front", v2, v3, v0, v1);
-            front.Model.Material.AddTexture(KI.Gfx.KITexture.TextureKind.Albedo, nzTexture);
-
             Rectangle left = new Rectangle("Left", v3, v7, v4, v0);
-            left.Model.Material.AddTexture(KI.Gfx.KITexture.TextureKind.Albedo, pxTexture);
-
             Rectangle back = new Rectangle("Back", v7, v6, v5, v4);
-            back.Model.Material.AddTexture(KI.Gfx.KITexture.TextureKind.Albedo, pzTexture);
-
             Rectangle right = new Rectangle("Right", v6, v2, v1, v5);
-            right.Model.Material.AddTexture(KI.Gfx.KITexture.TextureKind.Albedo, nxTexture);
-
             Rectangle top = new Rectangle("Top", v3, v2, v6, v7);
-            top.Model.Material.AddTexture(KI.Gfx.KITexture.TextureKind.Albedo, pyTexture);
-
             Rectangle bottom = new Rectangle("Bottom", v0, v4, v5, v1);
-            bottom.Model.Material.AddTexture(KI.Gfx.KITexture.TextureKind.Albedo, nyTexture);
+            front.Model.Material.AddTexture(TextureKind.Albedo, nzTexture);
+            left.Model.Material.AddTexture(TextureKind.Albedo, pxTexture);
+            back.Model.Material.AddTexture(TextureKind.Albedo, pzTexture);
+            right.Model.Material.AddTexture(TextureKind.Albedo, nxTexture);
+            top.Model.Material.AddTexture(TextureKind.Albedo, pyTexture);
+            bottom.Model.Material.AddTexture(TextureKind.Albedo, nyTexture);
 
-            PolygonNode renderFront = SceneNodeFactory.Instance.CreatePolygonNode(front.Name, front);
-            PolygonNode renderLeft = SceneNodeFactory.Instance.CreatePolygonNode(left.Name, left);
-            PolygonNode renderBack = SceneNodeFactory.Instance.CreatePolygonNode(back.Name, back);
-            PolygonNode renderRight = SceneNodeFactory.Instance.CreatePolygonNode(right.Name, right);
-            PolygonNode renderTop = SceneNodeFactory.Instance.CreatePolygonNode(top.Name, top);
-            PolygonNode renderBottom = SceneNodeFactory.Instance.CreatePolygonNode(bottom.Name, bottom);
+            PolygonNode renderFront = SceneNodeFactory.Instance.CreatePolygonNode(front.Name, front, front.Model.Material);
+            PolygonNode renderLeft = SceneNodeFactory.Instance.CreatePolygonNode(left.Name, left, left.Model.Material);
+            PolygonNode renderBack = SceneNodeFactory.Instance.CreatePolygonNode(back.Name, back, back.Model.Material);
+            PolygonNode renderRight = SceneNodeFactory.Instance.CreatePolygonNode(right.Name, right, right.Model.Material);
+            PolygonNode renderTop = SceneNodeFactory.Instance.CreatePolygonNode(top.Name, top, top.Model.Material);
+            PolygonNode renderBottom = SceneNodeFactory.Instance.CreatePolygonNode(bottom.Name, bottom, bottom.Model.Material);
 
             EmptyNode cubeMapNode = new EmptyNode("CubeMap");
 

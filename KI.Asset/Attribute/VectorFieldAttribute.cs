@@ -17,8 +17,8 @@ namespace KI.Asset.Attribute
         /// </summary>
         private ArrayBuffer directionBuffer;
 
-        public VectorFieldAttribute(string name, VertexBuffer vertexBuffer, Shader shader, Vector3[] directions, PolygonType polygonType)
-            : base(name, vertexBuffer, polygonType, shader)
+        public VectorFieldAttribute(string name, VertexBuffer vertexBuffer, Material material, Vector3[] directions, PolygonType polygonType)
+            : base(name, vertexBuffer, polygonType, material)
         {
             directionBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer, EArrayType.Vec3Array);
             directionBuffer.SetData(directions, EArrayType.Vec3Array);
@@ -26,7 +26,7 @@ namespace KI.Asset.Attribute
 
         public override void Binding()
         {
-            foreach (var info in Shader.GetShaderVariable())
+            foreach (var info in Material.Shader.GetShaderVariable())
             {
                 switch (info.Name)
                 {

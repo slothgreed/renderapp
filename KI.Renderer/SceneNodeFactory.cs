@@ -24,13 +24,24 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="name">名前</param>
         /// <returns>描画オブジェクト</returns>
-        public PolygonNode CreatePolygonNode(string name, Polygon polygon)
+        public PolygonNode CreatePolygonNode(string name, Polygon polygon, Material material = null)
         {
             string vert = ShaderCreater.Instance.GetVertexShader(polygon);
             string frag = ShaderCreater.Instance.GetFragShader(polygon);
             var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
 
-            var polygonNode = new PolygonNode(name, polygon, shader);
+            if (material == null)
+            {
+                material = new Material(shader);
+            }
+            else
+            {
+                material.Shader = shader;
+            }
+
+            polygon.Material = material;
+
+            var polygonNode = new PolygonNode(name, polygon);
             AddItem(polygonNode);
             return polygonNode;
         }
@@ -52,8 +63,10 @@ namespace KI.Renderer
             string vert = ShaderCreater.Instance.GetVertexShader(polygon);
             string frag = ShaderCreater.Instance.GetFragShader(polygon);
             var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
+            Material material = new Material(shader);
+            polygon.Material = material;
 
-            var polygonNode = new PolygonNode(name, polygon, shader);
+            var polygonNode = new PolygonNode(name, polygon);
             AddItem(polygonNode);
             return polygonNode;
         }
@@ -75,8 +88,10 @@ namespace KI.Renderer
             string vert = ShaderCreater.Instance.GetVertexShader(polygon);
             string frag = ShaderCreater.Instance.GetFragShader(polygon);
             var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
+            Material material = new Material(shader);
+            polygon.Material = material;
 
-            var polygonNode = new PolygonNode(name, polygon, shader);
+            var polygonNode = new PolygonNode(name, polygon);
             AddItem(polygonNode);
             return polygonNode;
         }
@@ -87,9 +102,9 @@ namespace KI.Renderer
         /// <param name="name">名前</param>
         /// <param name="primitive">ジオメトリ</param>
         /// <returns>描画オブジェクト</returns>
-        public PolygonNode CreatePolygonNode(string name, ICreateModel primitive)
+        public PolygonNode CreatePolygonNode(string name, ICreateModel primitive, Material material)
         {
-            return CreatePolygonNode(name, primitive.Model);
+            return CreatePolygonNode(name, primitive.Model, material);
         }
     }
 }

@@ -46,7 +46,7 @@ namespace KI.Gfx.Geometry
         /// <summary>
         /// マテリアル
         /// </summary>
-        public Material Material { get; private set; } = new Material();
+        public Material Material { get; set; } = new Material();
 
         /// <summary>
         /// コンストラクタ

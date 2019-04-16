@@ -61,7 +61,7 @@ namespace KI.Renderer
         public void AddObject(string filePath)
         {
             var model = AssetFactory.Instance.CreateLoad3DModel(filePath);
-            var polygonNode = SceneNodeFactory.Instance.CreatePolygonNode(filePath, model);
+            var polygonNode = SceneNodeFactory.Instance.CreatePolygonNode(filePath, model, null);
             AddObject(polygonNode);
         }
 

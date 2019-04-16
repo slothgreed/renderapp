@@ -37,10 +37,10 @@ namespace KI.Renderer.Technique
                 if (node is PolygonNode)
                 {
                     var polygon = node as PolygonNode;
-                    var old = polygon.Shader;
-                    polygon.Shader = Rectanle.Shader;
+                    var old = polygon.Polygon.Material.Shader;
+                    polygon.Polygon.Material.Shader = Rectanle.Polygon.Material.Shader;
                     polygon.Render(scene);
-                    polygon.Shader = old;
+                    polygon.Polygon.Material.Shader = old;
                 }
             }
 

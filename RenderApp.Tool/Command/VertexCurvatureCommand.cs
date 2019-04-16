@@ -64,42 +64,42 @@ namespace RenderApp.Tool.Command
 
             var parentNode = Workspace.Instance.RenderSystem.ActiveScene.FindNode(targetObject);
 
-            var vertexShader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
+            var vertexMaterial = new Material(ShaderCreater.Instance.CreateShader(GBufferType.PointColor));
 
             VertexParameterAttribute voronoiAttribute = new VertexParameterAttribute(targetObject.Name + " : Voronoi",
                 targetObject.VertexBuffer.ShallowCopy(),
                 targetObject.Type,
-                vertexShader,
+                vertexMaterial,
                 voronoiParam.Values);
 
             VertexParameterAttribute laplaceAttribute = new VertexParameterAttribute(targetObject.Name + " : Laplace",
                 targetObject.VertexBuffer.ShallowCopy(),
                 targetObject.Type,
-                vertexShader,
+                vertexMaterial,
                 laplaceParam.Values);
 
             VertexParameterAttribute meanAttribute = new VertexParameterAttribute(targetObject.Name + " : MeanCurvature",
                 targetObject.VertexBuffer.ShallowCopy(),
                 targetObject.Type,
-                vertexShader,
+                vertexMaterial,
                 meanParam.Values);
 
             VertexParameterAttribute gaussAttribute = new VertexParameterAttribute(targetObject.Name + " : GaussCurvature",
                 targetObject.VertexBuffer.ShallowCopy(),
                 targetObject.Type,
-                vertexShader,
+                vertexMaterial,
                 gaussParam.Values);
 
             VertexParameterAttribute minAttribute = new VertexParameterAttribute(targetObject.Name + " : MinCurvature",
                 targetObject.VertexBuffer.ShallowCopy(),
                 targetObject.Type,
-                vertexShader,
+                vertexMaterial,
                 minParam.Values);
 
             VertexParameterAttribute maxAttribute = new VertexParameterAttribute(targetObject.Name + " : MaxCurvature",
                 targetObject.VertexBuffer.ShallowCopy(),
                 targetObject.Type,
-                vertexShader,
+                vertexMaterial,
                 maxParam.Values);
 
             //targetObject.Attributes.Add(voronoiAttribute);
@@ -114,16 +114,16 @@ namespace RenderApp.Tool.Command
             //scene.AddObject(meanAttribute, parentNode);
             //scene.AddObject(gaussAttribute, parentNode);
 
-            var wireFrameShader = ShaderCreater.Instance.CreateShader(SHADER_TYPE.WireFrame);
+            var wireFrameMaterial = new Material(ShaderCreater.Instance.CreateShader(SHADER_TYPE.WireFrame));
 
             var vertexs = targetObject.Polygon.Vertexs.Select(p => p.Position).ToArray();
             var normals = targetObject.Polygon.Vertexs.Select(p => p.Normal).ToArray();
-            var dirMinAttribute = new VertexDirectionAttribute(targetObject.Name + " : MinDirection", wireFrameShader, vertexs, dirMinLine, new Vector4(1, 0, 0, 1), normals);
-            var dirMaxAttribute = new VertexDirectionAttribute(targetObject.Name + " : MaxDirection", wireFrameShader, vertexs, dirMaxLine, new Vector4(0, 1, 0, 1), normals);
+            var dirMinAttribute = new VertexDirectionAttribute(targetObject.Name + " : MinDirection", wireFrameMaterial, vertexs, dirMinLine, new Vector4(1, 0, 0, 1), normals);
+            var dirMaxAttribute = new VertexDirectionAttribute(targetObject.Name + " : MaxDirection", wireFrameMaterial, vertexs, dirMaxLine, new Vector4(0, 1, 0, 1), normals);
             targetObject.Attributes.Add(dirMinAttribute);
             targetObject.Attributes.Add(dirMaxAttribute);
 
-            var laplaceVecAttribute = new VertexDirectionAttribute(targetObject.Name + " : LaplaceVec", wireFrameShader, vertexs, laplaceLine, new Vector4(1, 0, 0, 1), normals);
+            var laplaceVecAttribute = new VertexDirectionAttribute(targetObject.Name + " : LaplaceVec", wireFrameMaterial, vertexs, laplaceLine, new Vector4(1, 0, 0, 1), normals);
             targetObject.Attributes.Add(laplaceVecAttribute);
 
             return CommandResult.Success;

@@ -27,10 +27,10 @@ namespace KI.Asset.Attribute
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="type">種類</param>
-        /// <param name="shader">シェーダ</param>
+        /// <param name="material">マテリアル</param>
         /// <param name="Color">色情報</param>
-        public VertexColorAttribute(string name, VertexBuffer vertexBuffer, PolygonType type, Shader shader, Vector3[] colors)
-            : base(name, vertexBuffer, type, shader)
+        public VertexColorAttribute(string name, VertexBuffer vertexBuffer, PolygonType type, Material material, Vector3[] colors)
+            : base(name, vertexBuffer, type, material)
         {
             vertexColors = colors;
             vertexColorBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);

@@ -32,10 +32,10 @@ namespace KI.Asset.Attribute
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="type">種類</param>
-        /// <param name="shader">シェーダ</param>
+        /// <param name="material">マテリアル</param>
         /// <param name="Color">色情報</param>
-        public WireFrameAttribute(string name, VertexBuffer vertexBuffer, Shader shader, Vector3[] color, int[] index)
-            : base(name, vertexBuffer, PolygonType.Lines, shader)
+        public WireFrameAttribute(string name, VertexBuffer vertexBuffer, Material material, Vector3[] color, int[] index)
+            : base(name, vertexBuffer, PolygonType.Lines, material)
         {
             colors = color;
             vertexBuffer.ColorBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);

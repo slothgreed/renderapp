@@ -49,8 +49,8 @@ namespace KI.Asset.Attribute
         /// <param name="name">名前</param>
         /// <param name="polygon">線分</param>
         /// <param name="shader">シェーダ</param>
-        public VertexDirectionAttribute(string name, Shader shader, Vector3[] position, Vector3[] direction, Vector4 color, Vector3[] normal = null, bool displayVector = false)
-            : base(name, PolygonType.Lines, shader)
+        public VertexDirectionAttribute(string name, Material material, Vector3[] position, Vector3[] direction, Vector4 color, Vector3[] normal = null, bool displayVector = false)
+            : base(name, PolygonType.Lines, material)
         {
             wireFrameColor = color;
             Direction = direction;
@@ -152,7 +152,7 @@ namespace KI.Asset.Attribute
 
         public override void Binding()
         {
-            foreach (var info in Shader.GetShaderVariable())
+            foreach (var info in Material.Shader.GetShaderVariable())
             {
                 switch (info.Name)
                 {

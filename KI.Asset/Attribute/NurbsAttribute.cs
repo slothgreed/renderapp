@@ -13,12 +13,12 @@ namespace KI.Asset.Attribute
         {
             get
             {
-                return (int)Shader.GetValue(nameof(uOuter));
+                return (int)Material.Shader.GetValue(nameof(uOuter));
             }
 
             set
             {
-                Shader.SetValue(nameof(uOuter), value);
+                Material.Shader.SetValue(nameof(uOuter), value);
             }
         }
 
@@ -26,12 +26,12 @@ namespace KI.Asset.Attribute
         {
             get
             {
-                return (int)Shader.GetValue(nameof(uInner));
+                return (int)Material.Shader.GetValue(nameof(uInner));
             }
 
             set
             {
-                Shader.SetValue(nameof(uInner), value);
+                Material.Shader.SetValue(nameof(uInner), value);
             }
         }
 
@@ -41,8 +41,8 @@ namespace KI.Asset.Attribute
         /// <param name="name">名前</param>
         /// <param name="vertexBuffer">線分</param>
         /// <param name="shader">シェーダ</param>
-        public NURBSAttribute(string name, VertexBuffer vertexBuffer, Shader shader)
-            : base(name, vertexBuffer, PolygonType.Patches, shader)
+        public NURBSAttribute(string name, VertexBuffer vertexBuffer, Material material)
+            : base(name, vertexBuffer, PolygonType.Patches, material)
         {
             uOuter = 2;
             uInner = 2;

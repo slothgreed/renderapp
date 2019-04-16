@@ -13,12 +13,12 @@ namespace KI.Asset.Attribute
         {
             get
             {
-                return (float)Shader.GetValue(nameof(uOffset));
+                return (float)Material.Shader.GetValue(nameof(uOffset));
             }
 
             set
             {
-                Shader.SetValue(nameof(uOffset), value);
+                Material.Shader.SetValue(nameof(uOffset), value);
             }
         }
 
@@ -28,8 +28,8 @@ namespace KI.Asset.Attribute
         /// <param name="name">名前</param>
         /// <param name="type">レンダリングタイプ</param>
         /// <param name="shader">シェーダ</param>
-        public OutlineAttribute(string name, VertexBuffer vertexBuffer, PolygonType type, Shader shader)
-            : base(name, vertexBuffer, type, shader)
+        public OutlineAttribute(string name, VertexBuffer vertexBuffer, PolygonType type, Material material)
+            : base(name, vertexBuffer, type, material)
         {
             uOffset = 0.5f;
         }

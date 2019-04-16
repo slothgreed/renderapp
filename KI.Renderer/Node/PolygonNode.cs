@@ -20,10 +20,10 @@ namespace KI.Renderer
         /// <param name="name">名前</param>
         /// <param name="polygon">形状</param>
         /// <param name="shader">シェーダ</param>
-        public PolygonNode(string name, Polygon polygon, Shader shader)
+        public PolygonNode(string name, Polygon polygon)
             : base(name)
         {
-            SetPolygon(polygon, shader);
+            SetPolygon(polygon);
         }
 
         /// <summary>
@@ -40,15 +40,6 @@ namespace KI.Renderer
         /// 頂点バッファ
         /// </summary>
         public VertexBuffer VertexBuffer { get; set; }
-
-        /// <summary>
-        /// シェーダ
-        /// </summary>
-        public Shader Shader
-        {
-            get;
-            set;
-        }
 
         /// <summary>
         /// 形状
@@ -76,7 +67,7 @@ namespace KI.Renderer
         /// <param name="scene">シーン</param>
         public override void RenderCore(Scene scene)
         {
-            if (Shader == null)
+            if (Polygon.Material.Shader == null)
             {
                 Logger.Log(Logger.LogLevel.Error, "not set shader");
                 return;
@@ -88,8 +79,8 @@ namespace KI.Renderer
                 return;
             }
 
-            ShaderHelper.InitializeState(Shader, scene, this, VertexBuffer, Polygon.Material.Textures);
-            Shader.BindBuffer();
+            ShaderHelper.InitializeState(Polygon.Material.Shader, scene, this, VertexBuffer, Polygon.Material.Textures);
+            Polygon.Material.Shader.BindBuffer();
             if (VertexBuffer.EnableIndexBuffer)
             {
                 DeviceContext.Instance.DrawElements(Type, VertexBuffer.Num, DrawElementsType.UnsignedInt, 0);
@@ -99,7 +90,7 @@ namespace KI.Renderer
                 DeviceContext.Instance.DrawArrays(Type, 0, VertexBuffer.Num);
             }
 
-            Shader.UnBindBuffer();
+            Polygon.Material.Shader.UnBindBuffer();
 
             Logger.GLLog(Logger.LogLevel.Error);
         }
@@ -108,10 +99,9 @@ namespace KI.Renderer
         /// 形状をセット
         /// </summary>
         /// <param name="polygon">形状情報</param>
-        public void SetPolygon(Polygon polygon, Shader shader)
+        public void SetPolygon(Polygon polygon)
         {
             Polygon = polygon;
-            Shader = shader;
 
             if(VertexBuffer != null)
             {

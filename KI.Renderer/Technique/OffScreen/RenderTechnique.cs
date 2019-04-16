@@ -143,7 +143,7 @@ namespace KI.Renderer.Technique
         /// <param name="memberName">シェーダ変数名</param>
         protected void SetValue<T>(ref T member, T value, [CallerMemberName]string memberName = "")
         {
-            if (Rectanle.Shader.SetValue(memberName, value))
+            if (Rectanle.Polygon.Material.Shader.SetValue(memberName, value))
             {
                 member = value;
             }
@@ -160,11 +160,11 @@ namespace KI.Renderer.Technique
         /// <param name="fragShader">フラグシェーダ</param>
         private void Init(string vertexShader = null, string fragShader = null)
         {
-            Rectanle = SceneNodeFactory.Instance.CreatePolygonNode(Name, new Rectangle(Name));
+            Rectanle = SceneNodeFactory.Instance.CreatePolygonNode(Name, new Rectangle(Name), null);
             // gbuffer用 以外はシェーダ作成
             if (vertexShader != null && fragShader != null)
             {
-                Rectanle.Shader = ShaderFactory.Instance.CreateShaderVF(vertexShader, fragShader);
+                Rectanle.Polygon.Material.Shader = ShaderFactory.Instance.CreateShaderVF(vertexShader, fragShader);
             }
 
             CreateRenderTarget(KI.Gfx.GLUtil.DeviceContext.Instance.Width, KI.Gfx.GLUtil.DeviceContext.Instance.Height);

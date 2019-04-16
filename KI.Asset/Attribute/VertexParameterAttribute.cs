@@ -40,8 +40,8 @@ namespace KI.Asset.Attribute
         /// <param name="type">種類</param>
         /// <param name="shader">シェーダ</param>
         /// <param name="Color">色情報</param>
-        public VertexParameterAttribute(string name, VertexBuffer vertexBuffer, PolygonType type, Shader shader, float[] parameter)
-            : base(name, vertexBuffer, type, shader)
+        public VertexParameterAttribute(string name, VertexBuffer vertexBuffer, PolygonType type, Material material, float[] parameter)
+            : base(name, vertexBuffer, type, material)
         {
             Max = parameter.Max();
             Min = parameter.Min();

@@ -15,9 +15,9 @@ namespace KI.Asset.Attribute
         /// <param name="name">名前</param>
         /// <param name="vertexBuffer">頂点バッファ</param>
         /// <param name="type">ポリゴン種類</param>
-        /// <param name="shader">シェーダ</param>
-        public PolygonAttribute(string name, VertexBuffer vertexBuffer, PolygonType type, Shader shader)
-            : base(name, vertexBuffer, type, shader)
+        /// <param name="material">マテリアル</param>
+        public PolygonAttribute(string name, VertexBuffer vertexBuffer, PolygonType type, Material material)
+            : base(name, vertexBuffer, type, material)
         {
         }
 

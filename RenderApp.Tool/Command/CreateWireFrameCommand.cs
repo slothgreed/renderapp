@@ -93,7 +93,7 @@ namespace RenderApp.Tool.Command
             WireFrameAttribute material = new WireFrameAttribute(
                 targetObject.Name + ": WireFrame",
                 targetObject.VertexBuffer.ShallowCopy(),
-                targetObject.Shader,
+                targetObject.Polygon.Material,
                 wireFrameColors.ToArray(),
                 lineIndex.ToArray());
 

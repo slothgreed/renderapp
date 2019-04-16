@@ -16,10 +16,10 @@ namespace KI.Asset.Attribute
         /// <param name="name">名前</param>
         /// <param name="type">レンダリングタイプ</param>
         /// <param name="shader">シェーダ</param>
-        public AttributeBase(string name, PolygonType type, Shader shader)
+        public AttributeBase(string name, PolygonType type, Material material)
             : base(name)
         {
-            Shader = shader;
+            Material = material;
             Type = type;
         }
 
@@ -28,11 +28,11 @@ namespace KI.Asset.Attribute
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="shader">シェーダ</param>
-        public AttributeBase(string name, VertexBuffer vertexBuffer, PolygonType type, Shader shader)
+        public AttributeBase(string name, VertexBuffer vertexBuffer, PolygonType type, Material material)
             : base(name)
         {
             VertexBuffer = vertexBuffer;
-            Shader = shader;
+            Material = material;
             Type = type;
         }
 
@@ -48,9 +48,9 @@ namespace KI.Asset.Attribute
         }
 
         /// <summary>
-        /// シェーダ
+        /// マテリアル
         /// </summary>
-        public Shader Shader { get; set; }
+        public Material Material { get; set; }
 
         /// <summary>
         /// レンダリングするときの種類

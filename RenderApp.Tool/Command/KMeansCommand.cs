@@ -56,7 +56,7 @@ namespace RenderApp.Tool.Command
                 "KMeansClustering", 
                 targteObject.VertexBuffer.ShallowCopy(),
                 targteObject.Type,
-                targteObject.Shader,
+                targteObject.Polygon.Material,
                 colors);
 
             targteObject.Attributes.Add(material);

@@ -102,13 +102,13 @@ namespace RenderApp.Tool.Controller
                         var colorAttribute = new VertexParameterAttribute("distanceColor", 
                             analyzePolygonNode.VertexBuffer.ShallowCopy(), 
                             analyzePolygonNode.Type, 
-                            analyzePolygonNode.Shader, 
+                            analyzePolygonNode.Polygon.Material, 
                             geodesicDistance);
 
                         Polygon lineGeometry = new Polygon("geodesicDistance", lines);
                         var vertexBuffer = new VertexBuffer();
                         vertexBuffer.SetupLineBuffer(lineGeometry.Vertexs, lineGeometry.Index, lineGeometry.Lines);
-                        var lineAttribute = new PolygonAttribute("geodesicDistance", vertexBuffer, PolygonType.Lines, analyzePolygonNode.Shader);
+                        var lineAttribute = new PolygonAttribute("geodesicDistance", vertexBuffer, PolygonType.Lines, analyzePolygonNode.Polygon.Material);
                         analyzePolygonNode.Attributes.Add(lineAttribute);
                         Workspace.Instance.RenderSystem.ActiveScene.AddObject(lineAttribute, parentNode);
                     }

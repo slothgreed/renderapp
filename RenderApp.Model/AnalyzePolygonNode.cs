@@ -17,8 +17,8 @@ namespace RenderApp.Model
     /// </summary>
     public class AnalyzePolygonNode : PolygonNode
     {
-        public AnalyzePolygonNode(string name, Polygon polygon, Shader shader)
-            : base(name, polygon, shader)
+        public AnalyzePolygonNode(string name, Polygon polygon)
+            : base(name, polygon)
         {
 
         }
@@ -39,7 +39,7 @@ namespace RenderApp.Model
 
             foreach (var attribute in Attributes.Where(p => p.Visible))
             {
-                if (attribute.Shader == null)
+                if (attribute.Material.Shader == null)
                 {
                     Logger.Log(Logger.LogLevel.Error, "not set shader");
                     return;
@@ -52,8 +52,8 @@ namespace RenderApp.Model
                 }
 
                 attribute.Binding();
-                ShaderHelper.InitializeState(attribute.Shader, scene, this, attribute.VertexBuffer, Polygon.Material.Textures);
-                attribute.Shader.BindBuffer();
+                ShaderHelper.InitializeState(attribute.Material.Shader, scene, this, attribute.VertexBuffer, Polygon.Material.Textures);
+                attribute.Material.Shader.BindBuffer();
                 if (attribute.VertexBuffer.EnableIndexBuffer)
                 {
                     DeviceContext.Instance.DrawElements(attribute.Type, attribute.VertexBuffer.Num, DrawElementsType.UnsignedInt, 0);
@@ -63,7 +63,7 @@ namespace RenderApp.Model
                     DeviceContext.Instance.DrawArrays(attribute.Type, 0, attribute.VertexBuffer.Num);
                 }
 
-                attribute.Shader.UnBindBuffer();
+                attribute.Material.Shader.UnBindBuffer();
                 attribute.UnBinding();
 
                 Logger.GLLog(Logger.LogLevel.Error);
