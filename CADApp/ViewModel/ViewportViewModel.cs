@@ -111,6 +111,7 @@ namespace CADApp.ViewModel
             Controller.Add(ControllerType.SketchRectangle, new SketchRectangleController());
             Controller.Add(ControllerType.SketchSplineCurvature, new SketchSplineController());
             Controller.Add(ControllerType.BuildCube, new BuildCubeController());
+            Controller.Add(ControllerType.BuildIcosahedron, new BuildIcosahedronController());
 
             CurrentController = ControllerType.Select;
 

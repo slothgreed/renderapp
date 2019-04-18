@@ -28,6 +28,7 @@ namespace KI.Tool.Command
         public CommandGroup(string name)
         {
             Name = name;
+            commandStack = new Stack<CommandBase>();
         }
 
         /// <summary>

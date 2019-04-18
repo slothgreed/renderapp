@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\Build\BuildCubeController.cs" />
+    <Compile Include="Controller\Build\BuildIcosahedronController.cs" />
     <Compile Include="Controller\CameraController.cs" />
     <Compile Include="Controller\ControllerType.cs" />
     <Compile Include="Controller\ControllerUtility.cs" />

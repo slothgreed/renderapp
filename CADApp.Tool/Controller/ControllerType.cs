@@ -12,6 +12,7 @@ namespace CADApp.Tool.Controller
         SketchLine,
         SketchRectangle,
         SketchSplineCurvature,
-        BuildCube
+        BuildCube,
+        BuildIcosahedron
     }
 }

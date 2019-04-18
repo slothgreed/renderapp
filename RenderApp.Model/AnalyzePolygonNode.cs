@@ -20,7 +20,8 @@ namespace RenderApp.Model
         public AnalyzePolygonNode(string name, Polygon polygon)
             : base(name, polygon)
         {
-
+            var polygonAttribute = new PolygonAttribute("Polygon", VertexBuffer, polygon.Type, Polygon.Material);
+            Attributes.Add(polygonAttribute);
         }
 
         /// <summary>
@@ -35,8 +36,6 @@ namespace RenderApp.Model
         /// <param name="scene">シーン</param>
         public override void RenderCore(Scene scene)
         {
-            base.RenderCore(scene);
-
             foreach (var attribute in Attributes.Where(p => p.Visible))
             {
                 if (attribute.Material.Shader == null)

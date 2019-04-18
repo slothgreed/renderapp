@@ -9,7 +9,7 @@ using OpenTK;
 
 namespace KI.Asset
 {
-    class Icosahedron
+    public class Icosahedron
     {
 
         /// <summary>
@@ -56,22 +56,23 @@ namespace KI.Asset
             var position = new List<Vector3>();
             var normal = new List<Vector3>();
             var index = new List<int>();
-            var length = (float)(1 + Math.Sqrt(5)) / 2.0f; // 黄金比
+            var ratio = (float)(1 + Math.Sqrt(5)) / 2.0f; // 黄金比
+            ratio *= radial;
 
-            position.Add(new Vector3(0, length, 1));
-            position.Add(new Vector3(0, length, -1));
-            position.Add(new Vector3(0, -length, 1));
-            position.Add(new Vector3(0, -length, -1));
+            position.Add(new Vector3(0, ratio, radial));
+            position.Add(new Vector3(0, ratio, -radial));
+            position.Add(new Vector3(0, -ratio, radial));
+            position.Add(new Vector3(0, -ratio, -radial));
 
-            position.Add(new Vector3(length, 1, 0));
-            position.Add(new Vector3(length, -1, 0));
-            position.Add(new Vector3(-length, 1, 0));
-            position.Add(new Vector3(-length, -1, 0));
+            position.Add(new Vector3(ratio, radial, 0));
+            position.Add(new Vector3(ratio, -radial, 0));
+            position.Add(new Vector3(-ratio, radial, 0));
+            position.Add(new Vector3(-ratio, -radial, 0));
 
-            position.Add(new Vector3(1, 0, length));
-            position.Add(new Vector3(-1, 0, length));
-            position.Add(new Vector3(1, 0, -length));
-            position.Add(new Vector3(-1, 0, -length));
+            position.Add(new Vector3(radial, 0, ratio));
+            position.Add(new Vector3(-radial, 0, ratio));
+            position.Add(new Vector3(radial, 0, -ratio));
+            position.Add(new Vector3(-radial, 0, -ratio));
 
             foreach (var pos in position)
             {

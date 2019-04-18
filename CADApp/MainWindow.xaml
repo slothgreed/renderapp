@@ -47,6 +47,7 @@
                 </ribbon:RibbonGroupBox>
                 <ribbon:RibbonGroupBox Header="3D">
                     <ribbon:Button Header="Cube" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.BuildCube}"/>
+                    <ribbon:Button Header="Spehre" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.BuildIcosahedron}"/>
                 </ribbon:RibbonGroupBox>
             </ribbon:RibbonTabItem>
         </ribbon:Ribbon>
