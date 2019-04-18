@@ -14,6 +14,7 @@ using KI.Renderer.Technique;
 using KI.Tool.Controller;
 using KI.UI.ViewModel;
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
 namespace CADApp.ViewModel
 {
@@ -64,6 +65,16 @@ namespace CADApp.ViewModel
             Viewport.Instance.OnMouseDown += OnMouseDownEvent;
             Viewport.Instance.OnMouseClick += OnMouseClickEvent;
             Viewport.Instance.OnMouseDoubleClick += OnMouseDoubleClickEvent;
+
+            Controller.Add(ControllerType.Select, new SelectController());
+            Controller.Add(ControllerType.SketchLine, new SketchLineController());
+            Controller.Add(ControllerType.SketchRectangle, new SketchRectangleController());
+            Controller.Add(ControllerType.SketchSplineCurvature, new SketchSplineController());
+            Controller.Add(ControllerType.BuildCube, new BuildCubeController());
+            Controller.Add(ControllerType.BuildIcosahedron, new BuildIcosahedronController());
+
+            CurrentController = ControllerType.Select;
+
         }
 
         /// <summary>
@@ -105,15 +116,6 @@ namespace CADApp.ViewModel
 
             Workspace.Instance.MainScene = MainScene;
             Workspace.Instance.RenderSystem = RenderSystem;
-
-            Controller.Add(ControllerType.Select, new SelectController());
-            Controller.Add(ControllerType.SketchLine, new SketchLineController());
-            Controller.Add(ControllerType.SketchRectangle, new SketchRectangleController());
-            Controller.Add(ControllerType.SketchSplineCurvature, new SketchSplineController());
-            Controller.Add(ControllerType.BuildCube, new BuildCubeController());
-            Controller.Add(ControllerType.BuildIcosahedron, new BuildIcosahedronController());
-
-            CurrentController = ControllerType.Select;
 
             InitializeScene();
             InitializeRenderer();
@@ -180,7 +182,7 @@ namespace CADApp.ViewModel
             var axisObject = SceneNodeFactory.Instance.CreatePolygonNode("Axis", axis.Vertex, axis.Color, axis.Index, PolygonType.Lines);
             MainScene.AddObject(axisObject);
 
-            var grid = new GridPlane(1, 0.1f, Vector3.Zero);
+            var grid = new GridPlane(1, 0.1f, new Vector3(0.8f));
             var girdObject = SceneNodeFactory.Instance.CreatePolygonNode("GridPlane", grid.Position, grid.Color, grid.Index, PolygonType.Lines);
             MainScene.AddObject(girdObject);
         }
@@ -194,6 +196,8 @@ namespace CADApp.ViewModel
             RenderSystem.OutputBuffer  = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output) as OutputBuffer;
             //RenderSystem.OutputTexture = RenderSystem.RenderQueue.OutputTexture<DeferredRendering>()[0];
             RenderSystem.OutputTexture = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
+
+            GL.LineWidth(2);
         }
 
         /// <summary>

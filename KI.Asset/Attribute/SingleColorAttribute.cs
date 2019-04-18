@@ -7,19 +7,14 @@ using OpenTK.Graphics.OpenGL;
 namespace KI.Asset.Attribute
 {
     /// <summary>
-    /// ワイヤフレームのアトリビュート
+    /// 単一色のアトリビュート
     /// </summary>
-    public class WireFrameAttribute : AttributeBase
+    public class SingleColorAttribute : AttributeBase
     {
-        /// <summary>
-        /// カラーバッファ
-        /// </summary>
-        private ArrayBuffer vertexColorBuffer { get; set; }
-
         /// <summary>
         /// 色
         /// </summary>
-        public Vector4 Color { get;  set; }
+        public Vector4 Color { get; set; }
 
         /// <summary>
         /// コンストラクタ
@@ -28,8 +23,8 @@ namespace KI.Asset.Attribute
         /// <param name="type">種類</param>
         /// <param name="material">マテリアル</param>
         /// <param name="Color">色情報</param>
-        public WireFrameAttribute(string name, VertexBuffer vertexBuffer, Vector4 color)
-            : base(name, vertexBuffer, PolygonType.Triangles, new Material())
+        public SingleColorAttribute(string name, VertexBuffer vertexBuffer, Vector4 color)
+            : base(name, vertexBuffer, PolygonType.Lines, new Material())
         {
             Color = color;
 
@@ -38,7 +33,6 @@ namespace KI.Asset.Attribute
 
         public override void Binding()
         {
-            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
             foreach (var info in Material.Shader.GetShaderVariable())
             {
                 if (info.Name == "u_Color")
@@ -46,21 +40,6 @@ namespace KI.Asset.Attribute
                     info.Variable = Color;
                 }
             }
-        }
-
-        public override void UnBinding()
-        {
-            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
-            base.UnBinding();
-        }
-
-        /// <summary>
-        /// 解放処理
-        /// </summary>
-        public override void Dispose()
-        {
-            vertexColorBuffer.Dispose();
-            base.Dispose();
         }
     }
 }

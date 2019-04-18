@@ -156,7 +156,7 @@ namespace KI.Asset.Attribute
             {
                 switch (info.Name)
                 {
-                    case "u_LineColor":
+                    case "u_Color":
                         info.Variable = lineColor;
                         break;
                 }

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq;
+using KI.Asset.Attribute;
 using KI.Gfx;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
 using KI.Renderer;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace CADApp.Model.Node
@@ -12,24 +14,25 @@ namespace CADApp.Model.Node
     public class AssemblyNode : SceneNode
     {
         /// <summary>
-        /// 頂点バッファ
+        /// 頂点
         /// </summary>
-        VertexBuffer vertexBuffer;
+        AttributeBase pointAttribute;
 
         /// <summary>
-        /// 稜線のインデックスバッファ
+        /// 稜線
         /// </summary>
-        VertexBuffer lineBuffer;
+        AttributeBase lineAttribute;
 
         /// <summary>
-        /// Triangle のインデックスバッファ
+        /// コントロールポイント
         /// </summary>
-        VertexBuffer triangleBuffer;
+        AttributeBase controlPointAttribute;
 
         /// <summary>
-        /// コントロールポイントのバッファ
+        /// Triangle
         /// </summary>
-        VertexBuffer controlPointBuffer;
+        AttributeBase triangleAttribute;
+
 
         Material material;
 
@@ -79,67 +82,77 @@ namespace CADApp.Model.Node
 
             if (VisibleVertex)
             {
-                Draw(scene, PolygonType.Points, vertexBuffer);
+                Draw(scene, PolygonType.Points, pointAttribute);
             }
 
             if (VisibleControlPoint)
             {
-                Draw(scene, PolygonType.Points, controlPointBuffer);
+                Draw(scene, PolygonType.Points, controlPointAttribute);
             }
 
             if (VisibleLine)
             {
-                Draw(scene, PolygonType.Lines, lineBuffer);
+                Draw(scene, PolygonType.Lines, lineAttribute);
             }
 
             if (VisibleTriangle)
             {
-                Draw(scene, PolygonType.Triangles, triangleBuffer);
+                Draw(scene, PolygonType.Triangles, triangleAttribute);
             }
         }
 
-        private void Draw(Scene scene, PolygonType type, VertexBuffer buffer)
+        private void Draw(Scene scene, PolygonType type, AttributeBase attribute)
         {
-            ShaderHelper.InitializeState(scene, this, buffer, material);
-            material.Shader.BindBuffer();
-            if (buffer.EnableIndexBuffer)
+            attribute.Binding();
+            ShaderHelper.InitializeState(scene, this, attribute.VertexBuffer, attribute.Material);
+            attribute.Material.Shader.BindBuffer();
+            if (attribute.VertexBuffer.EnableIndexBuffer)
             {
-                DeviceContext.Instance.DrawElements(type, buffer.Num, DrawElementsType.UnsignedInt, 0);
+                DeviceContext.Instance.DrawElements(type, attribute.VertexBuffer.Num, DrawElementsType.UnsignedInt, 0);
             }
             else
             {
-                DeviceContext.Instance.DrawArrays(type, 0, buffer.Num);
+                DeviceContext.Instance.DrawArrays(type, 0, attribute.VertexBuffer.Num);
             }
 
-            material.Shader.UnBindBuffer();
+            attribute.Material.Shader.UnBindBuffer();
         }
 
         public override void Dispose()
         {
-            vertexBuffer.Dispose();
-            controlPointBuffer.Dispose();
-            BufferFactory.Instance.RemoveByValue(lineBuffer.IndexBuffer);
-            BufferFactory.Instance.RemoveByValue(triangleBuffer.IndexBuffer);
+            pointAttribute.VertexBuffer.Dispose();
+            controlPointAttribute.VertexBuffer.Dispose();
+            BufferFactory.Instance.RemoveByValue(lineAttribute.VertexBuffer.IndexBuffer);
+            BufferFactory.Instance.RemoveByValue(triangleAttribute.VertexBuffer.IndexBuffer);
+
             Assembly.AssemblyUpdated -= OnAssemblyUpdated;
-            vertexBuffer = null;
-            lineBuffer = null;
-            triangleBuffer = null;
+
+            pointAttribute = null;
+            controlPointAttribute = null;
+            lineAttribute = null;
+            triangleAttribute = null;
             base.Dispose();
         }
 
         private void GenerateBuffer()
         {
-            controlPointBuffer = new VertexBuffer();
-            vertexBuffer = new VertexBuffer();
-            lineBuffer = vertexBuffer.ShallowCopy();
+            var controlPointBuffer = new VertexBuffer();
+            var vertexBuffer = new VertexBuffer();
+            var lineBuffer = vertexBuffer.ShallowCopy();
+            var triangleBuffer = vertexBuffer.ShallowCopy();
+
             lineBuffer.IndexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
-            triangleBuffer = vertexBuffer.ShallowCopy();
             triangleBuffer.IndexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
+
+            lineAttribute = new SingleColorAttribute("Line", lineBuffer, Vector4.Zero);
+            pointAttribute = new SingleColorAttribute("Point", vertexBuffer, Vector4.UnitY + Vector4.UnitZ + Vector4.UnitW);
+            triangleAttribute = new PolygonAttribute("Triangle", triangleBuffer, PolygonType.Triangles, material);
+            controlPointAttribute = new SingleColorAttribute("Point", controlPointBuffer, Vector4.UnitY + Vector4.UnitW);
         }
 
         private void OnAssemblyUpdated(object sender, EventArgs e)
         {
-            if (vertexBuffer == null)
+            if (pointAttribute == null)
             {
                 GenerateBuffer();
             }
@@ -147,24 +160,24 @@ namespace CADApp.Model.Node
             if (Assembly.Vertex != null &&
                 Assembly.Vertex.Count > 0)
             {
-                vertexBuffer.SetBuffer(Assembly.Vertex.ToArray(), Enumerable.Range(0, Assembly.Vertex.Count).ToArray());
+                pointAttribute.VertexBuffer.SetBuffer(Assembly.Vertex.ToArray(), Enumerable.Range(0, Assembly.Vertex.Count).ToArray());
             }
 
             if (Assembly.ControlPoint != null &&
                 Assembly.ControlPoint.Count > 0)
             {
-                controlPointBuffer.SetBuffer(Assembly.ControlPoint.ToArray(), Enumerable.Range(0, Assembly.ControlPoint.Count).ToArray());
+                controlPointAttribute.VertexBuffer.SetBuffer(Assembly.ControlPoint.ToArray(), Enumerable.Range(0, Assembly.ControlPoint.Count).ToArray());
             }
 
             if (Assembly.LineIndex != null &&
                 Assembly.LineIndex.Count > 1)
             {
-                lineBuffer.SetIndexArray(Assembly.LineIndex.ToArray());
+                lineAttribute.VertexBuffer.SetIndexArray(Assembly.LineIndex.ToArray());
             }
             if (Assembly.TriangleIndex != null &&
                 Assembly.TriangleIndex.Count > 2)
             {
-                triangleBuffer.SetIndexArray(Assembly.TriangleIndex.ToArray());
+                triangleAttribute.VertexBuffer.SetIndexArray(Assembly.TriangleIndex.ToArray());
             }
         }
     }

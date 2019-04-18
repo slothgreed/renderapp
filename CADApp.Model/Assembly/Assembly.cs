@@ -256,6 +256,27 @@ namespace CADApp.Model
             triangleIndex.AddRange(triangleIndexArray);
         }
 
+        public void SetLineIndexFromTriangleIndex()
+        {
+            if (triangleIndex.Count == 0)
+            {
+                return;
+            }
+
+            lineIndex.Clear();
+            for (int i = 0; i < triangleIndex.Count; i += 3)
+            {
+                lineIndex.Add(triangleIndex[i + 0]);
+                lineIndex.Add(triangleIndex[i + 1]);
+                lineIndex.Add(triangleIndex[i + 1]);
+                lineIndex.Add(triangleIndex[i + 2]);
+                lineIndex.Add(triangleIndex[i + 2]);
+                lineIndex.Add(triangleIndex[i + 0]);
+            }
+
+            lineIndex.Add(triangleIndex[triangleIndex.Count - 1]);
+        }
+
         public void SetTriangleIndex(IEnumerable<int> index)
         {
             if (CurrentEdit == false)
@@ -264,6 +285,7 @@ namespace CADApp.Model
             }
 
             triangleIndex = index.ToList();
+            SetLineIndexFromTriangleIndex();
         }
 
         public void GetLine(int index, out int start, out int end)
