@@ -21,7 +21,7 @@ namespace KI.Asset.Attribute
         /// <summary>
         /// ワイヤフレームの色
         /// </summary>
-        private Vector4 wireFrameColor;
+        private Vector4 lineColor;
 
         /// <summary>
         /// ベクトルのアングル
@@ -52,7 +52,7 @@ namespace KI.Asset.Attribute
         public VertexDirectionAttribute(string name, Material material, Vector3[] position, Vector3[] direction, Vector4 color, Vector3[] normal = null, bool displayVector = false)
             : base(name, PolygonType.Lines, material)
         {
-            wireFrameColor = color;
+            lineColor = color;
             Direction = direction;
 
             Vector3[] vectors;
@@ -156,8 +156,8 @@ namespace KI.Asset.Attribute
             {
                 switch (info.Name)
                 {
-                    case "u_wireColor":
-                        info.Variable = wireFrameColor;
+                    case "u_LineColor":
+                        info.Variable = lineColor;
                         break;
                 }
             }

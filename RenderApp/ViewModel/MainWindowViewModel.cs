@@ -234,7 +234,7 @@ namespace RenderApp.ViewModel
             switch (menuParam)
             {
                 case AnalyzeCommand.WireFrame:
-                    command = new CreateWireFrameCommand(new WireFrameCommandArgs(targetObject, workspace.MainScene, OpenTK.Vector3.Zero));
+                    command = new CreateWireFrameCommand(new WireFrameCommandArgs(targetObject, workspace.MainScene, OpenTK.Vector4.Zero));
                     CommandManager.Execute(command, true);
                     break;
                 case AnalyzeCommand.ConvexHull:

@@ -42,60 +42,12 @@ namespace RenderApp.Tool.Command
         public override CommandResult Execute()
         {
             var targetObject = wireCommandArgs.TargetObject;
-            var scene = wireCommandArgs.Scene;
-            var color = wireCommandArgs.Color;
-
-            List<int> lineIndex = new List<int>();
-            List<Vector3> wireFrameColors = new List<Vector3>();
-
-            //if (targetObject.Polygon.Index.Count != 0)
-            //{
-            //    foreach (var index in targetObject.Polygon.Index)
-            //    {
-            //        lineIndex.Add(index);
-            //        wireFrameColors.Add(color);
-            //    }
-
-            //    for (int i = 0; i < targetObject.Polygon.Index.Count / 3; i++)
-            //    {
-            //        lineIndex.Add(targetObject.Polygon.Index[3 * i]);
-            //        lineIndex.Add(targetObject.Polygon.Index[3 * i + 1]);
-
-            //        lineIndex.Add(targetObject.Polygon.Index[3 * i + 1]);
-            //        lineIndex.Add(targetObject.Polygon.Index[3 * i + 2]);
-
-            //        lineIndex.Add(targetObject.Polygon.Index[3 * i + 2]);
-            //        lineIndex.Add(targetObject.Polygon.Index[3 * i]);
-
-            //        wireFrameColors.Add(color);
-            //        wireFrameColors.Add(color);
-            //        wireFrameColors.Add(color);
-            //    }
-            //}
-            //else
-            {
-                foreach (var mesh in targetObject.Polygon.Meshs)
-                {
-                    for (int j = 0; j < mesh.Vertexs.Count - 1; j++)
-                    {
-                        lineIndex.Add(mesh.Vertexs[j].Index);
-                        lineIndex.Add(mesh.Vertexs[j + 1].Index);
-                    }
-
-                    lineIndex.Add(mesh.Vertexs[mesh.Vertexs.Count - 1].Index);
-                    lineIndex.Add(mesh.Vertexs[0].Index);
-                    wireFrameColors.Add(color);
-                    wireFrameColors.Add(color);
-                }
-            }
 
             var parentNode = Workspace.Instance.RenderSystem.ActiveScene.FindNode(targetObject);
             WireFrameAttribute material = new WireFrameAttribute(
                 targetObject.Name + ": WireFrame",
                 targetObject.VertexBuffer.ShallowCopy(),
-                targetObject.Polygon.Material,
-                wireFrameColors.ToArray(),
-                lineIndex.ToArray());
+                wireCommandArgs.Color);
 
             targetObject.Attributes.Add(material);
 
@@ -130,7 +82,7 @@ namespace RenderApp.Tool.Command
         /// <summary>
         /// カラー
         /// </summary>
-        public Vector3 Color { get; private set; }
+        public Vector4 Color { get; private set; }
 
         /// <summary>
         /// コンストラクタ
@@ -138,7 +90,7 @@ namespace RenderApp.Tool.Command
         /// <param name="targetNode">対象オブジェクト</param>
         /// <param name="scene">シーン</param>
         /// <param name="color">カラー</param>
-        public WireFrameCommandArgs(AnalyzePolygonNode targetNode, Scene scene, Vector3 color)
+        public WireFrameCommandArgs(AnalyzePolygonNode targetNode, Scene scene, Vector4 color)
         {
             this.TargetObject = targetNode;
             this.Scene = scene;

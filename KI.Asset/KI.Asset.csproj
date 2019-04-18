@@ -52,6 +52,7 @@
     <Compile Include="AssetConstants.cs" />
     <Compile Include="AssetFactory.cs" />
     <Compile Include="Attribute\AttributeBase.cs" />
+    <Compile Include="Attribute\LineAttribute.cs" />
     <Compile Include="Attribute\VertexDirectionAttribute.cs" />
     <Compile Include="Attribute\PolygonAttribute.cs" />
     <Compile Include="Attribute\NURBSAttribute.cs" />

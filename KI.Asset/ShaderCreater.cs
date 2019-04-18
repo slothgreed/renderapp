@@ -16,7 +16,7 @@ namespace KI.Asset
         NURBS,
         Fur,
         Outline,
-        WireFrame,
+        Line,
         Split,
         VectorField,
         SSLIC,
@@ -250,10 +250,10 @@ namespace KI.Asset
                         Directory + @"Special\outline.vert",
                         Directory + @"Special\outline.frag",
                         Directory + @"Special\outline.geom");
-                case SHADER_TYPE.WireFrame:
+                case SHADER_TYPE.Line:
                     return ShaderFactory.Instance.CreateShaderVF(
-                        Directory + @"GBuffer\WireFrame.vert",
-                        Directory + @"GBuffer\WireFrame.frag");
+                        Directory + @"GBuffer\Line.vert",
+                        Directory + @"GBuffer\Line.frag");
                 case SHADER_TYPE.VectorField:
                     return ShaderFactory.Instance.CreateShaderVF(
                         Directory + @"GBuffer\DirectionShader.vert",

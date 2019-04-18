@@ -50,6 +50,7 @@
         /// </summary>
         public int ShaderID { get; set; }
 
+        object variable;
         /// <summary>
         /// 値
         /// </summary>

@@ -114,16 +114,16 @@ namespace RenderApp.Tool.Command
             //scene.AddObject(meanAttribute, parentNode);
             //scene.AddObject(gaussAttribute, parentNode);
 
-            var wireFrameMaterial = new Material(ShaderCreater.Instance.CreateShader(SHADER_TYPE.WireFrame));
+            var lineMaterial = new Material(ShaderCreater.Instance.CreateShader(SHADER_TYPE.Line));
 
             var vertexs = targetObject.Polygon.Vertexs.Select(p => p.Position).ToArray();
             var normals = targetObject.Polygon.Vertexs.Select(p => p.Normal).ToArray();
-            var dirMinAttribute = new VertexDirectionAttribute(targetObject.Name + " : MinDirection", wireFrameMaterial, vertexs, dirMinLine, new Vector4(1, 0, 0, 1), normals);
-            var dirMaxAttribute = new VertexDirectionAttribute(targetObject.Name + " : MaxDirection", wireFrameMaterial, vertexs, dirMaxLine, new Vector4(0, 1, 0, 1), normals);
+            var dirMinAttribute = new VertexDirectionAttribute(targetObject.Name + " : MinDirection", lineMaterial, vertexs, dirMinLine, new Vector4(1, 0, 0, 1), normals);
+            var dirMaxAttribute = new VertexDirectionAttribute(targetObject.Name + " : MaxDirection", lineMaterial, vertexs, dirMaxLine, new Vector4(0, 1, 0, 1), normals);
             targetObject.Attributes.Add(dirMinAttribute);
             targetObject.Attributes.Add(dirMaxAttribute);
 
-            var laplaceVecAttribute = new VertexDirectionAttribute(targetObject.Name + " : LaplaceVec", wireFrameMaterial, vertexs, laplaceLine, new Vector4(1, 0, 0, 1), normals);
+            var laplaceVecAttribute = new VertexDirectionAttribute(targetObject.Name + " : LaplaceVec", lineMaterial, vertexs, laplaceLine, new Vector4(1, 0, 0, 1), normals);
             targetObject.Attributes.Add(laplaceVecAttribute);
 
             return CommandResult.Success;
