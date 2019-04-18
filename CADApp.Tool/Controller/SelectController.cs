@@ -15,6 +15,11 @@ namespace CADApp.Tool.Controller
 
         public override bool Down(KIMouseEventArgs mouse)
         {
+            if (mouse.Button != MOUSE_BUTTON.Left)
+            {
+                return true;
+            }
+
             Scene scene = Workspace.Instance.MainScene;
             Camera camera = Workspace.Instance.MainScene.MainCamera;
             Vector3 worldPoint;
@@ -33,27 +38,26 @@ namespace CADApp.Tool.Controller
                         var sketchNode = node as AssemblyNode;
                         sketchNode.Assembly.ClearSelect();
 
-                        int index = 0;
                         if (sketchNode.Assembly.ControlPoint.Count > 0)
                         {
-                            foreach (var vertex in sketchNode.Assembly.ControlPoint)
+                            for (int i = 0; i < sketchNode.Assembly.ControlPoint.Count; i++)
                             {
-                                var distance = (vertex.Position - worldPoint).Length;
+                                var distance = (sketchNode.Assembly.ControlPoint[i].Position - worldPoint).Length;
                                 if (distance < VERTEX_DISTANCE_THRESHOLD)
                                 {
-                                    sketchNode.Assembly.AddSelectControlPoint(index);
+                                    sketchNode.Assembly.AddSelectControlPoint(i);
                                     isSelected = true;
                                 }
                             }
                         }
                         else
                         {
-                            foreach (var vertex in sketchNode.Assembly.Vertex)
+                            for (int i = 0; i < sketchNode.Assembly.Vertex.Count; i++)
                             {
-                                var distance = (vertex.Position - worldPoint).Length;
+                                var distance = (sketchNode.Assembly.Vertex[i].Position - worldPoint).Length;
                                 if (distance < VERTEX_DISTANCE_THRESHOLD)
                                 {
-                                    sketchNode.Assembly.AddSelectVertex(index);
+                                    sketchNode.Assembly.AddSelectVertex(i);
                                     isSelected = true;
                                 }
                             }
