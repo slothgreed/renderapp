@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using KI.Gfx;
-using KI.Gfx.Geometry;
-using OpenTK;
+﻿using OpenTK;
 
 namespace KI.Asset
 {

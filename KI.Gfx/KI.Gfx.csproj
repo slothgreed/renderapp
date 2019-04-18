@@ -53,7 +53,6 @@
     <Compile Include="Geometry\Polygon.cs" />
     <Compile Include="Geometry\Triangle.cs" />
     <Compile Include="Geometry\Vertex.cs" />
-    <Compile Include="GfxConstants.cs" />
     <Compile Include="GLUtil\Buffer\ArrayBuffer.cs" />
     <Compile Include="GLUtil\Buffer\BufferFactory.cs" />
     <Compile Include="GLUtil\Buffer\BufferObject.cs" />
@@ -64,7 +63,6 @@
     <Compile Include="GLUtil\KIMouseEventArgs.cs" />
     <Compile Include="Material.cs" />
     <Compile Include="Render\RenderTexture.cs" />
-    <Compile Include="ShaderCreater.cs" />
     <Compile Include="Type.cs" />
     <Compile Include="GLUtil\Viewport.cs" />
     <Compile Include="GLUtil\Buffer\FrameBuffer.cs" />

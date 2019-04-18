@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssetConstants.cs" />
     <Compile Include="AssetFactory.cs" />
     <Compile Include="Attribute\AttributeBase.cs" />
     <Compile Include="Attribute\VertexDirectionAttribute.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Primitive\Rectangle.cs" />
     <Compile Include="Primitive\Sphere.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShaderCreater.cs" />
     <Compile Include="TextureFactory.cs" />
   </ItemGroup>
   <ItemGroup>

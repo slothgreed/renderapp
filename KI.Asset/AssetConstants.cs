@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace KI.Gfx
+namespace KI.Asset
 {
     /// <summary>
     /// AssetDirectoryクラス
     /// </summary>
-    public static class GfxConstants
+    public static class AssetConstants
     {
         /// <summary>
         /// KIProjectDirecoty

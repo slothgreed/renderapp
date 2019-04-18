@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using KI.Asset;
 using KI.Gfx;
 using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
-using KI.Gfx.KIShader;
 using KI.Renderer;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;

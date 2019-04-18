@@ -1,8 +1,9 @@
-﻿using KI.Gfx.Geometry;
+﻿using KI.Gfx;
+using KI.Gfx.Geometry;
 using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
 
-namespace KI.Gfx
+namespace KI.Asset
 {
     /// <summary>
     /// シェーダ種類
@@ -47,7 +48,7 @@ namespace KI.Gfx
         {
             get
             {
-                return GfxConstants.ShaderDirectory + @"\";
+                return AssetConstants.ShaderDirectory + @"\";
             }
         }
 

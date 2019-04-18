@@ -1,7 +1,6 @@
 ﻿using CADApp.Model;
 using CADApp.Model.Node;
 using KI.Asset;
-using KI.Gfx;
 using KI.Gfx.GLUtil;
 using KI.Tool.Controller;
 using OpenTK;
