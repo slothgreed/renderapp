@@ -2,20 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using KI.Foundation.Core;
-using KI.Gfx.KITexture;
 
 namespace KI.Gfx.Geometry
 {
-    /// <summary>
-    /// 頂点格納種類
-    /// </summary>
-    public enum VertexStoreType
-    {
-        None,       //入っていない
-        Normal,     //普通に順番に入っている
-        VertexArray //VertexArray状態で入っている
-    }
-
     /// <summary>
     /// 形状
     /// </summary>

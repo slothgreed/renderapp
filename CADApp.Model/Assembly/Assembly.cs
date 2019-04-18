@@ -146,7 +146,17 @@ namespace CADApp.Model
             vertexs.Add(new Vertex(vertexs.Count, position, Vector3.UnitX));
         }
 
-        public void SetVertex(IEnumerable<Vector3> vertexList)
+        public void AddVertex(Vector3 position, Vector3 normal)
+        {
+            if (CurrentEdit == false)
+            {
+                Logger.Log(Logger.LogLevel.Error, "Call Begin Edit.");
+            }
+
+            vertexs.Add(new Vertex(vertexs.Count, position, normal, Vector3.UnitX));
+        }
+
+        public void SetVertex(Vector3[] positionList, Vector3[] normalList)
         {
             if (CurrentEdit == false)
             {
@@ -155,9 +165,9 @@ namespace CADApp.Model
 
             ClearVertex();
 
-            foreach (var vertex in vertexList)
+            for(int i = 0; i < positionList.Length; i++)
             {
-                AddVertex(vertex);
+                AddVertex(positionList[i], normalList[i]);
             }
         }
 

@@ -62,7 +62,7 @@ namespace CADApp.Tool.Controller
                         var icosahedron = new Icosahedron(distance, 0);
                         sketchNode.Translate = startPoint;
                         sketch.BeginEdit();
-                        sketch.SetVertex(icosahedron.Position);
+                        sketch.SetVertex(icosahedron.Position, icosahedron.Normal);
                         sketch.SetTriangleIndex(icosahedron.Index);
                         sketchNode.Visible = true;
                         sketch.EndEdit();
@@ -86,7 +86,7 @@ namespace CADApp.Tool.Controller
             mode = BuildIcosahedronMode.SelectStart;
 
             Assembly sketch = new Assembly("Icosahedron");
-            var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
+            var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointNormalColor);
             sketchNode = new AssemblyNode("Icosahedron", sketch, shader);
             sketchNode.Visible = false;
             Workspace.Instance.MainScene.AddObject(sketchNode);

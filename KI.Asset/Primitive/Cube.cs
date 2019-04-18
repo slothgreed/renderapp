@@ -23,38 +23,71 @@ namespace KI.Asset
         private bool reverse;
 
         /// <summary>
+        /// 頂点格納方法
+        /// </summary>
+        private VertexStoreType storeType;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="min">最小値</param>
         /// <param name="max">最大値</param>
+        /// <param name="storeType">頂点格納方法</param>
         /// <param name="reverse">向き</param>
-        public Cube(Vector3 min, Vector3 max, bool reverse = false)
+        public Cube(Vector3 min, Vector3 max, VertexStoreType storeType, bool reverse = false)
         {
             this.min = min;
             this.max = max;
             this.reverse = reverse;
-            Vertex = new Vector3[8];
-            Index = new int[12 * 3]; // 面数 * 三角形の頂点数
-            CreateModel();
+
+            if (storeType == VertexStoreType.VertexArray)
+            {
+                CreateVertexArrayCube();
+            }
+            else
+            {
+                throw new System.Exception();
+            }
         }
 
-        public Vector3[] Vertex { get; private set; }
+        /// <summary>
+        /// 位置情報
+        /// </summary>
+        public Vector3[] Position { get; private set; }
 
+        /// <summary>
+        /// 法線情報
+        /// </summary>
+        public Vector3[] Normal { get; private set; }
+
+        /// <summary>
+        /// インデックス情報
+        /// </summary>
         public int[] Index { get; private set; }
 
         /// <summary>
         /// 形状の作成
         /// </summary>
-        public void CreateModel()
+        public void CreateVertexArrayCube()
         {
-            Vertex[0] = new Vector3(min.X, min.Y, min.Z);
-            Vertex[1] = new Vector3(max.X, min.Y, min.Z);
-            Vertex[2] = new Vector3(max.X, max.Y, min.Z);
-            Vertex[3] = new Vector3(min.X, max.Y, min.Z);
-            Vertex[4] = new Vector3(min.X, min.Y, max.Z);
-            Vertex[5] = new Vector3(max.X, min.Y, max.Z);
-            Vertex[6] = new Vector3(max.X, max.Y, max.Z);
-            Vertex[7] = new Vector3(min.X, max.Y, max.Z);
+            Position = new Vector3[8];
+            Normal = new Vector3[8];
+            Index = new int[12 * 3]; // 面数 * 三角形の頂点数
+
+            Position[0] = new Vector3(min.X, min.Y, min.Z);
+            Position[1] = new Vector3(max.X, min.Y, min.Z);
+            Position[2] = new Vector3(max.X, max.Y, min.Z);
+            Position[3] = new Vector3(min.X, max.Y, min.Z);
+            Position[4] = new Vector3(min.X, min.Y, max.Z);
+            Position[5] = new Vector3(max.X, min.Y, max.Z);
+            Position[6] = new Vector3(max.X, max.Y, max.Z);
+            Position[7] = new Vector3(min.X, max.Y, max.Z);
+
+            var center = (max + min) * 0.5f;
+            for (int i = 0; i < Position.Length; i++)
+            {
+                Normal[i] = (Position[i] - center).Normalized();
+            }
 
             if (reverse == false)
             {

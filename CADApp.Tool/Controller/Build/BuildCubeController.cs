@@ -37,7 +37,7 @@ namespace CADApp.Tool.Controller
                     if (mode == BuildCubeMode.SelectStart)
                     {
                         Assembly sketch = new Assembly("Line");
-                        var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
+                        var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointNormalColor);
                         sketchNode = new AssemblyNode("RectangleLine", sketch, shader);
 
                         Workspace.Instance.MainScene.AddObject(sketchNode);
@@ -83,10 +83,10 @@ namespace CADApp.Tool.Controller
                     }
 
                     interPoint.Y = 0.01f;
-                    Cube cube = new Cube(startPosition, interPoint);
+                    Cube cube = new Cube(startPosition, interPoint, VertexStoreType.VertexArray);
                     sketch.BeginEdit();
                     sketch.ClearVertex();
-                    sketch.SetVertex(cube.Vertex);
+                    sketch.SetVertex(cube.Position, cube.Normal);
                     sketch.SetTriangleIndex(cube.Index);
                     sketch.EndEdit();
                 }

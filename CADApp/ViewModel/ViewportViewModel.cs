@@ -193,6 +193,7 @@ namespace CADApp.ViewModel
             RenderSystem.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Deferred));
             RenderSystem.OutputBuffer  = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output) as OutputBuffer;
             RenderSystem.OutputTexture = RenderSystem.RenderQueue.OutputTexture<DeferredRendering>()[0];
+            //RenderSystem.OutputTexture = gBufferTexture[(int)GBuffer.OutputTextureType.Normal];
         }
 
         /// <summary>
