@@ -99,7 +99,6 @@ namespace KI.Foundation.Tree
         {
             if (Children.Contains(child))
             {
-                child.Dispose();
                 Children.Remove(child);
                 OnNodeRemoved(child);
             }
@@ -171,23 +170,6 @@ namespace KI.Foundation.Tree
 
         #endregion
 
-        /// <summary>
-        /// 解放処理
-        /// </summary>
-        public override void Dispose()
-        {
-            if (KIObject != null)
-            {
-                KIObject.Dispose();
-            }
-
-            foreach (var child in Children)
-            {
-                child.Dispose();
-            }
-
-            base.Dispose();
-        }
         #region [getter]
         /// <summary>
         /// 全てのノードを取得

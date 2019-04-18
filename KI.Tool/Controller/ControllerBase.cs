@@ -87,6 +87,14 @@ namespace KI.Tool.Controller
             return true;
         }
 
+        public virtual bool Reset()
+        {
+            UnBinding();
+            Binding();
+
+            return true;
+        }
+
         /// <summary>
         /// キー押下イベント
         /// </summary>

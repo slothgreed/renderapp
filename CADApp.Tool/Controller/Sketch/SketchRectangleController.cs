@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CADApp.Model;
 using CADApp.Model.Node;
+using CADApp.Tool.Command;
 using KI.Asset;
 using KI.Gfx;
 using KI.Gfx.GLUtil;
@@ -33,10 +34,10 @@ namespace CADApp.Tool.Controller
                 {
                     if (mode == CreateRectangleMode.SelectStart)
                     {
-                        Assembly sketch = new Assembly("Line");
                         var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
-                        sketchNode = new AssemblyNode("RectangleLine", sketch, shader);
+                        sketchNode = new AssemblyNode("RectangleLine", shader);
 
+                        Assembly sketch = new Assembly("Line");
                         sketch.BeginEdit();
                         sketch.AddVertex(worldPoint);
                         sketch.AddVertex(worldPoint);
@@ -55,8 +56,9 @@ namespace CADApp.Tool.Controller
                         sketch.SetTriangleIndexFromLineIndex(camera.LookAtDirection);
                         sketch.EndEdit();
 
+                        AddAssemblyNodeCommand command = new AddAssemblyNodeCommand(sketchNode, sketch, Workspace.Instance.MainScene.RootNode);
+                        Workspace.Instance.CommandManager.Execute(command);
 
-                        Workspace.Instance.MainScene.AddObject(sketchNode);
                         mode = CreateRectangleMode.SelectEnd;
                     }
                     else
@@ -100,6 +102,7 @@ namespace CADApp.Tool.Controller
 
         public override bool Binding()
         {
+            mode = CreateRectangleMode.SelectStart;
 
             return base.Binding();
         }

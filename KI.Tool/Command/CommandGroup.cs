@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KI.Foundation.Core;
 
 namespace KI.Tool.Command
 {
@@ -20,6 +21,11 @@ namespace KI.Tool.Command
         /// コマンドスタック
         /// </summary>
         Stack<CommandBase> commandStack;
+
+        /// <summary>
+        /// UndoList
+        /// </summary>
+        private Stack<CommandBase> undoStack;
 
         /// <summary>
         /// コンストラクタ
@@ -95,6 +101,34 @@ namespace KI.Tool.Command
             }
 
             return CommandResult.Success;
+        }
+
+        /// <summary>
+        /// Undo 1回のみ
+        /// </summary>
+        public CommandResult UndoOnce()
+        {
+            CommandBase command = commandStack.Pop();
+            if (command.Undo() == CommandResult.Failed)
+            {
+                Logger.Log(Logger.LogLevel.Warning, "Undo Error");
+                return CommandResult.Failed;
+            }
+            else
+            {
+                undoStack.Push(command);
+                return CommandResult.Success;
+            }
+        }
+
+        /// <summary>
+        /// Redo 1回のみ
+        /// </summary>
+        /// <returns></returns>
+        public CommandResult RedoOnce()
+        {
+            var command = undoStack.Pop();
+            return command.Execute();
         }
     }
 }

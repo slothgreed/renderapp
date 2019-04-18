@@ -13,6 +13,10 @@
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding Undo}" Gesture="Ctrl+Z"/>
+        <KeyBinding Command="{Binding Redo}" Gesture="Ctrl+Y"/>
+    </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -34,8 +38,8 @@
             </ribbon:RibbonTabItem>
             <ribbon:RibbonTabItem Header="編集">
                 <ribbon:RibbonGroupBox Header="コマンド">
-                    <ribbon:Button Header="Undo"/>
-                    <ribbon:Button Header="Redo"/>
+                    <ribbon:Button Header="Undo" Command="{Binding Undo}"/>
+                    <ribbon:Button Header="Redo" Command="{Binding Redo}"/>
                 </ribbon:RibbonGroupBox>
                 <ribbon:RibbonGroupBox Header="">
                     <ribbon:Button Header="Select" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.Select}"/>

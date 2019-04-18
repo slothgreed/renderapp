@@ -33,10 +33,20 @@ namespace CADApp.Model.Node
 
         Material material;
 
+        private Assembly assembly;
         /// <summary>
         /// スケッチの頂点情報
         /// </summary>
-        public Assembly Assembly { get; private set; }
+        public Assembly Assembly
+        {
+            get { return assembly; }
+            set
+            {
+                assembly = value;
+                OnAssemblyUpdated(null, null);
+                assembly.AssemblyUpdated += OnAssemblyUpdated;
+            }
+        }
 
         public bool VisibleVertex { get; set; } = true;
         public bool VisibleLine { get; set; } = true;
@@ -48,20 +58,13 @@ namespace CADApp.Model.Node
         {
             material = new Material(_shader);
             Assembly = assmebly;
-            assmebly.AssemblyUpdated += OnAssemblyUpdated;
-            GenerateBuffer();
         }
 
-        private void GenerateBuffer()
+        public AssemblyNode(string name, Shader _shader)
+            : base(name)
         {
-            controlPointBuffer = new VertexBuffer();
-            vertexBuffer = new VertexBuffer();
-            lineBuffer = vertexBuffer.ShallowCopy();
-            lineBuffer.IndexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
-            triangleBuffer = vertexBuffer.ShallowCopy();
-            triangleBuffer.IndexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
+            material = new Material(_shader);
         }
-
 
         /// <summary>
         /// 点・線・ポリゴンのレンダリング
@@ -118,11 +121,29 @@ namespace CADApp.Model.Node
             BufferFactory.Instance.RemoveByValue(lineBuffer.IndexBuffer);
             BufferFactory.Instance.RemoveByValue(triangleBuffer.IndexBuffer);
             Assembly.AssemblyUpdated -= OnAssemblyUpdated;
+            vertexBuffer = null;
+            lineBuffer = null;
+            triangleBuffer = null;
             base.Dispose();
+        }
+
+        private void GenerateBuffer()
+        {
+            controlPointBuffer = new VertexBuffer();
+            vertexBuffer = new VertexBuffer();
+            lineBuffer = vertexBuffer.ShallowCopy();
+            lineBuffer.IndexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
+            triangleBuffer = vertexBuffer.ShallowCopy();
+            triangleBuffer.IndexBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ElementArrayBuffer);
         }
 
         private void OnAssemblyUpdated(object sender, EventArgs e)
         {
+            if (vertexBuffer == null)
+            {
+                GenerateBuffer();
+            }
+
             if (Assembly.Vertex != null &&
                 Assembly.Vertex.Count > 0)
             {

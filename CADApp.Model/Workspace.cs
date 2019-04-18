@@ -1,5 +1,6 @@
 ﻿using KI.Asset;
 using KI.Renderer;
+using KI.Tool.Command;
 using OpenTK;
 
 namespace CADApp.Model
@@ -46,12 +47,15 @@ namespace CADApp.Model
         /// </summary>
         public RenderSystem RenderSystem { get; set; }
 
+        public CommandManager CommandManager { get; private set; }
+
         public void Initialize()
         {
             MainScene = new Scene("MainScene", new EmptyNode("ROOT"));
             RenderSystem = new RenderSystem();
             RenderSystem.ActiveScene = MainScene;
             WorkPlane = new Rectangle("WorkPlane", Vector3.Zero, Vector3.UnitX, Vector3.UnitX + Vector3.UnitZ, Vector3.UnitZ);
+            CommandManager = new CommandManager();
         }
     }
 }

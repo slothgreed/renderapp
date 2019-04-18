@@ -71,7 +71,7 @@ namespace CADApp.ViewModel
         /// </summary>
         private ControllerBase cameraController = new CameraController();
 
-        private Dictionary<ControllerType, ControllerBase> Controller = new Dictionary<ControllerType, ControllerBase>();
+        public Dictionary<ControllerType, ControllerBase> Controller = new Dictionary<ControllerType, ControllerBase>();
 
         ControllerType currentController;
 
@@ -192,8 +192,8 @@ namespace CADApp.ViewModel
             var gBufferTexture = RenderSystem.RenderQueue.OutputTexture<GBuffer>();
             RenderSystem.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Deferred));
             RenderSystem.OutputBuffer  = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output) as OutputBuffer;
-            RenderSystem.OutputTexture = RenderSystem.RenderQueue.OutputTexture<DeferredRendering>()[0];
-            //RenderSystem.OutputTexture = gBufferTexture[(int)GBuffer.OutputTextureType.Normal];
+            //RenderSystem.OutputTexture = RenderSystem.RenderQueue.OutputTexture<DeferredRendering>()[0];
+            RenderSystem.OutputTexture = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
         }
 
         /// <summary>

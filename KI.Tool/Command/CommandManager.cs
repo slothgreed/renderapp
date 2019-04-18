@@ -11,20 +11,20 @@ namespace KI.Tool.Command
         /// <summary>
         /// Listで管理、各ツールでenumで設定できる
         /// </summary>
-        private Stack<CommandBase> commandStack;
+        private List<CommandBase> commandStack;
 
         /// <summary>
         /// UndoList
         /// </summary>
-        private Stack<CommandBase> undoStack;
+        private List<CommandBase> undoStack;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public CommandManager()
         {
-            commandStack = new Stack<CommandBase>();
-            undoStack = new Stack<CommandBase>();
+            commandStack = new List<CommandBase>();
+            undoStack = new List<CommandBase>();
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace KI.Tool.Command
 
             if (undo == true)
             {
-                commandStack.Push(command);
+                commandStack.Add(command);
             }
 
             return CommandResult.Success;
@@ -73,14 +73,18 @@ namespace KI.Tool.Command
         /// </summary>
         public void Undo()
         {
-            CommandBase command = commandStack.Pop();
-            if (command.Undo() == CommandResult.Failed)
+            if (commandStack.Count > 0)
             {
-                Logger.Log(Logger.LogLevel.Warning, "Undo Error");
-            }
-            else
-            {
-                undoStack.Push(command);
+                CommandBase command = commandStack[commandStack.Count - 1];
+                commandStack.RemoveAt(commandStack.Count - 1);
+                if (command.Undo() == CommandResult.Failed)
+                {
+                    Logger.Log(Logger.LogLevel.Warning, "Undo Error");
+                }
+                else
+                {
+                    undoStack.Add(command);
+                }
             }
         }
 
@@ -89,8 +93,21 @@ namespace KI.Tool.Command
         /// </summary>
         public void Redo()
         {
-            var command = undoStack.Pop();
-            Execute(command, true);
+            if (undoStack.Count > 0)
+            {
+                var command = undoStack[undoStack.Count - 1];
+                undoStack.RemoveAt(undoStack.Count - 1);
+                Execute(command, true);
+            }
+        }
+
+        /// <summary>
+        /// コマンドの削除
+        /// </summary>
+        public void RemoveCommand(CommandBase command)
+        {
+            commandStack.Remove(command);
+            undoStack.Remove(command);
         }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using CADApp.Model;
 using CADApp.Model.Node;
+using CADApp.Tool.Command;
 using KI.Asset;
 using KI.Gfx;
 using KI.Gfx.GLUtil;
 using KI.Mathmatics;
+using KI.Tool.Command;
 using KI.Tool.Controller;
 using OpenTK;
 
@@ -25,6 +27,8 @@ namespace CADApp.Tool.Controller
 
         private Vector3 startPosition;
 
+        CommandBase addNodeCommand = null;
+
         public override bool Down(KIMouseEventArgs mouse)
         {
             if (mouse.Button == MOUSE_BUTTON.Left)
@@ -40,7 +44,8 @@ namespace CADApp.Tool.Controller
                         var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointNormalColor);
                         sketchNode = new AssemblyNode("RectangleLine", sketch, shader);
 
-                        Workspace.Instance.MainScene.AddObject(sketchNode);
+                        addNodeCommand = new AddAssemblyNodeCommand(sketchNode, sketch, Workspace.Instance.MainScene.RootNode);
+                        Workspace.Instance.CommandManager.Execute(addNodeCommand);
                         startPosition = worldPoint;
                         mode = BuildCubeMode.SelectSize;
                     }
@@ -138,6 +143,17 @@ namespace CADApp.Tool.Controller
         {
             mode = BuildCubeMode.SelectStart;
             return base.Binding();  
+        }
+
+        public override bool UnBinding()
+        {
+            if (mode == BuildCubeMode.SelectHeight)
+            {
+                Workspace.Instance.CommandManager.RemoveCommand(addNodeCommand);
+                addNodeCommand = null;
+            }
+
+            return base.UnBinding();
         }
     }
 }
