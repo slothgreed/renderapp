@@ -1,5 +1,6 @@
 ﻿using CADApp.Model;
 using CADApp.Model.Node;
+using CADApp.Tool.Command;
 using KI.Asset;
 using KI.Gfx.GLUtil;
 using KI.Tool.Controller;
@@ -34,6 +35,14 @@ namespace CADApp.Tool.Controller
                     if (mode == BuildIcosahedronMode.SelectStart)
                     {
                         startPoint = worldPoint;
+                        Assembly sketch = new Assembly("Icosahedron");
+                        var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointNormalColor);
+                        sketchNode = new AssemblyNode("Icosahedron", sketch, shader);
+                        sketchNode.Visible = false;
+
+                        var addNodeCommand = new AddAssemblyNodeCommand(sketchNode, sketch, Workspace.Instance.MainScene.RootNode);
+                        Workspace.Instance.CommandManager.Execute(addNodeCommand);
+
                         mode = BuildIcosahedronMode.SelectSize;
                     }
                     else
@@ -85,11 +94,6 @@ namespace CADApp.Tool.Controller
         {
             mode = BuildIcosahedronMode.SelectStart;
 
-            Assembly sketch = new Assembly("Icosahedron");
-            var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointNormalColor);
-            sketchNode = new AssemblyNode("Icosahedron", sketch, shader);
-            sketchNode.Visible = false;
-            Workspace.Instance.MainScene.AddObject(sketchNode);
             return base.Binding();
         }
 
