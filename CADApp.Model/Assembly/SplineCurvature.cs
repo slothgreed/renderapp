@@ -4,6 +4,9 @@ using OpenTK;
 
 namespace CADApp.Model
 {
+    /// <summary>
+    /// スプライン曲線
+    /// </summary>
     public class SplineCurvature : Assembly
     {
         public SplineCurvature(string name)
@@ -11,6 +14,10 @@ namespace CADApp.Model
         {
         }
 
+        /// <summary>
+        /// 参考サイト
+        /// http://www5d.biglobe.ne.jp/stssk/maze/spline.html
+        /// </summary>
         private void UpdateVertexList()
         {
             var a = new Vector3[ControlPoint.Count];

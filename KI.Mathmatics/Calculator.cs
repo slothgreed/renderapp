@@ -14,7 +14,7 @@ namespace KI.Mathmatics
         /// 誤差範囲 0.00001
         /// </summary>
         public static float THRESHOLD05 { get; set; } = 0.00001f;
-        
+
         /// <summary>
         /// 頂点リストから、最小値最大値を算出
         /// </summary>
@@ -48,7 +48,7 @@ namespace KI.Mathmatics
         public static float Radian(Vector3 vector1, Vector3 vector2)
         {
             float cos = 0;
-            
+
             Vector3 v1 = vector1.Normalized();
             Vector3 v2 = vector2.Normalized();
             cos = Vector3.Dot(v1, v2);
@@ -237,5 +237,45 @@ namespace KI.Mathmatics
         }
 
         #endregion
+
+        /// <summary>
+        /// 二項係数の計算
+        /// </summary>
+        /// <param name="n"></param>
+        /// <param name="k"></param>
+        public static int BinomalCoefficients(int n, int k)
+        {
+            int a = Factorial(n);
+            int b = Factorial(k) * Factorial(n - k);
+            return a / b;
+        }
+
+        /// <summary>
+        /// 階乗の計算
+        /// </summary>
+        /// <param name="num">値</param>
+        /// <returns>戻り値</returns>
+        public static int Factorial(int num)
+        {
+            int value = 1;
+            for (int i = 1; i <= num; i++)
+            {
+                value = value * i;
+            }
+
+            return value;
+        }
+
+
+        /// <summary>
+        /// バーンスタイン基底関数
+        /// </summary>
+        /// <param name="n">次数</param>
+        /// <param name="v">v</param>
+        /// <param name="x">x</param>
+        public static float Bernstein(int n, int v, float x)
+        {
+            return (float)(BinomalCoefficients(n, v) * Math.Pow(x, v) * Math.Pow(1 - x, n - v));
+        }
     }
 }

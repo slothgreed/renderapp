@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assembly\Assembly.cs" />
+    <Compile Include="Assembly\BezierCurvature.cs" />
     <Compile Include="Assembly\SplineCurvature.cs" />
     <Compile Include="Node\AppRootNode.cs" />
     <Compile Include="Node\AssemblyNode.cs" />
