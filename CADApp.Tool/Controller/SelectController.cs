@@ -33,6 +33,7 @@ namespace CADApp.Tool.Controller
                 bool isSelected = false;
                 foreach (SceneNode node in scene.RootNode.AllChildren())
                 {
+
                     if (node is AssemblyNode)
                     {
                         var sketchNode = node as AssemblyNode;
@@ -47,62 +48,49 @@ namespace CADApp.Tool.Controller
                                 {
                                     sketchNode.Assembly.AddSelectControlPoint(i);
                                     isSelected = true;
+                                    break;
                                 }
                             }
                         }
                         else
                         {
-                            for (int i = 0; i < sketchNode.Assembly.Vertex.Count; i++)
-                            {
-                                var distance = (sketchNode.Assembly.Vertex[i].Position - worldPoint).Length;
-                                if (distance < VERTEX_DISTANCE_THRESHOLD)
-                                {
-                                    sketchNode.Assembly.AddSelectVertex(i);
-                                    isSelected = true;
-                                }
-                            }
+                            isSelected = SelectPoint(sketchNode.Assembly, camera.Position, worldPoint);
                         }
 
-                        for(int i = 0; i < sketchNode.Assembly.LineNum; i++)
-                        {
-                            int start;
-                            int end;
-                            sketchNode.Assembly.GetLine(i, out start, out end);
+                        //if (sketchNode.Assembly.ControlPoint.Count == 0 && isSelected == false)
+                        //{
+                        //    for (int i = 0; i < sketchNode.Assembly.LineNum; i++)
+                        //    {
+                        //        int start;
+                        //        int end;
+                        //        sketchNode.Assembly.GetLine(i, out start, out end);
 
-                            if (Interaction.LineToLine(near, far,
-                                sketchNode.Assembly.Vertex[start].Position,
-                                sketchNode.Assembly.Vertex[end].Position,
-                                VERTEX_DISTANCE_THRESHOLD))
-                            {
-                                sketchNode.Assembly.AddSelectLine(i);
-                                isSelected = true;
-                            }
-                        }
-                        
-                        for (int i = 0; i < sketchNode.Assembly.TriangleNum; i++)
-                        {
-                            int triangle0;
-                            int triangle1;
-                            int triangle2;
-                            Vector3 interPoint;
-                            var sketch = sketchNode.Assembly;
-                            sketchNode.Assembly.GetTriangle(i, out triangle0, out triangle1, out triangle2);
+                        //        if (Interaction.LineToLine(near, far,
+                        //            sketchNode.Assembly.Vertex[start].Position,
+                        //            sketchNode.Assembly.Vertex[end].Position,
+                        //            VERTEX_DISTANCE_THRESHOLD))
+                        //        {
+                        //            sketchNode.Assembly.AddSelectLine(i);
+                        //            isSelected = true;
+                        //            break;
+                        //        }
+                        //    }
+                        //}
 
-                            if (Interaction.TriangleToLine(
-                                sketch.Vertex[triangle0].Position,
-                                sketch.Vertex[triangle1].Position,
-                                sketch.Vertex[triangle2].Position,
-                                near, far, out interPoint
-                                ))
-                            {
-                                sketchNode.Assembly.AddSelectTriangle(i);
-                                isSelected = true;
-                            }
+                        if (isSelected == false)
+                        {
+                            isSelected = SelectTriangle(sketchNode.Assembly, near, far);
                         }
                     }
+
+                    if (isSelected == true)
+                    {
+                        break;
+                    }
+
                 }
 
-                if(isSelected)
+                if (isSelected)
                 {
                     var rootNode = scene.RootNode as AppRootNode;
                     rootNode.UpdateSelectObject();
@@ -110,6 +98,113 @@ namespace CADApp.Tool.Controller
             }
 
             return base.Down(mouse);
+        }
+
+        public bool SelectTriangle(Assembly assembly, Vector3 near, Vector3 far)
+        {
+            bool isSelected = false;
+            int selectIndex = -1;
+            float minDistance = float.MaxValue;
+            Vector3 lookAtDir = (near - far).Normalized();
+            for (int i = 0; i < assembly.TriangleNum; i++)
+            {
+                int triangle0;
+                int triangle1;
+                int triangle2;
+                Vector3 interPoint;
+                assembly.GetTriangle(i, out triangle0, out triangle1, out triangle2);
+                var normal = Calculator.Normal(
+                        assembly.Vertex[triangle0].Position,
+                        assembly.Vertex[triangle1].Position,
+                        assembly.Vertex[triangle2].Position);
+
+                if (Vector3.Dot(lookAtDir, normal) > 0)
+                {
+                    if (Interaction.TriangleToLine(
+                        assembly.Vertex[triangle0].Position,
+                        assembly.Vertex[triangle1].Position,
+                        assembly.Vertex[triangle2].Position,
+                        near, far, out interPoint))
+                    {
+                        var distance = (interPoint - near).Length;
+                        if (distance < minDistance)
+                        {
+                            minDistance = distance;
+                            selectIndex = i;
+                            isSelected = true;
+                        }
+                    }
+                }
+            }
+
+            if(selectIndex != -1)
+            {
+                assembly.AddSelectTriangle(selectIndex);
+            }
+
+            return isSelected;
+        }
+
+        public bool SelectControlPoint(Assembly assembly, Vector3 cameraPosition, Vector3 clickPosition)
+        {
+            Vector3 clickDirection = clickPosition - cameraPosition;
+            clickDirection.Normalize();
+            bool isSelect = false;
+            float maxInner = 0.999f;
+            int selectIndex = -1;
+
+            for (int i = 0; i < assembly.ControlPoint.Count; i++)
+            {
+                Vector3 pointDirection = assembly.Vertex[i].Position - cameraPosition;
+                pointDirection.Normalize();
+
+                float dot = Vector3.Dot(clickDirection, pointDirection);
+
+                if (maxInner < dot)
+                {
+                    maxInner = dot;
+                    selectIndex = i;
+                    isSelect = true;
+                }
+            }
+
+            if (selectIndex != -1)
+            {
+                assembly.AddSelectControlPoint(selectIndex);
+            }
+
+            return isSelect;
+        }
+
+        public bool SelectPoint(Assembly assembly, Vector3 cameraPosition, Vector3 clickPosition)
+        {
+            Vector3 clickDirection = clickPosition - cameraPosition;
+            clickDirection.Normalize();
+            bool isSelect = false;
+            float maxInner = 0.999f;
+            int selectIndex = -1;
+
+            for (int i = 0; i < assembly.Vertex.Count; i++)
+            {
+                Vector3 pointDirection = assembly.Vertex[i].Position - cameraPosition;
+                pointDirection.Normalize();
+
+                float dot = Vector3.Dot(clickDirection, pointDirection);
+
+                if (maxInner < dot)
+                {
+                    maxInner = dot;
+                    selectIndex = i;
+                    isSelect = true;
+                }
+            }
+
+            if (selectIndex != -1)
+            {
+                assembly.AddSelectVertex(selectIndex);
+            }
+
+            return isSelect;
         }
     }
 }

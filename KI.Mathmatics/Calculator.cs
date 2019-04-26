@@ -187,6 +187,36 @@ namespace KI.Mathmatics
 
             return result;
         }
+
+        /// <summary>
+        /// 法線の算出
+        /// </summary>
+        /// <param name="vertex1">ベクトル1</param>
+        /// <param name="vertex2">ベクトル2</param>
+        /// <param name="vertex3">ベクトル3</param>
+        /// <returns>法線</returns>
+        public static Vector3 Normal(Vector3 vertex1, Vector3 vertex2, Vector3 vertex3)
+        {
+            Vector3 point = vertex2 - vertex1;
+            Vector3 point2 = vertex3 - vertex1;
+            Vector3 normal = new Vector3();
+            normal = Vector3.Cross(point, point2);
+
+            return normal.Normalized();
+        }
+
+        /// <summary>
+        /// 法線の算出
+        /// </summary>
+        /// <param name="vector1">ベクトル1</param>
+        /// <param name="vector2">ベクトル2</param>
+        /// <returns>法線</returns>
+        public static Vector3 Normal(Vector3 vector1, Vector3 vector2)
+        {
+            Vector3 normal;
+            normal = Vector3.Cross(vector1, vector2);
+            return normal.Normalized();
+        }
         #endregion
         #region [誤差判定]
         /// <summary>

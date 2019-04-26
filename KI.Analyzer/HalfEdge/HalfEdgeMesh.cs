@@ -153,7 +153,7 @@ namespace KI.Analyzer
             {
                 if (normal == Vector3.Zero)
                 {
-                    normal = Mathmatics.Geometry.Normal(
+                    normal = Mathmatics.Calculator.Normal(
                         Lines[1].Start.Position - Lines[0].Start.Position,
                         Lines[2].Start.Position - Lines[0].Start.Position);
                 }

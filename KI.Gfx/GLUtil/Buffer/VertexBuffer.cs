@@ -358,7 +358,7 @@ namespace KI.Gfx.GLUtil.Buffer
                         vertexs.AddRange(mesh.Vertexs);
 
                         var meshNormal =
-                            Mathmatics.Geometry.Normal(
+                            Mathmatics.Calculator.Normal(
                                     mesh.Lines[1].Start.Position - mesh.Lines[0].Start.Position,
                                     mesh.Lines[2].Start.Position - mesh.Lines[0].Start.Position);
 
@@ -373,7 +373,7 @@ namespace KI.Gfx.GLUtil.Buffer
                     {
                         vertexs.AddRange(mesh.Vertexs);
                         var meshNormal =
-                            Mathmatics.Geometry.Normal(
+                            Mathmatics.Calculator.Normal(
                                     mesh.Lines[1].Start.Position - mesh.Lines[0].Start.Position,
                                     mesh.Lines[2].Start.Position - mesh.Lines[0].Start.Position);
 

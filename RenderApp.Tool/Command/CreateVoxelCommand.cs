@@ -140,7 +140,7 @@ namespace RenderApp.Tool.Command
         /// <param name="q3">頂点4</param>
         private void SetCube(List<Mesh> meshs, Vector3 q0, Vector3 q1, Vector3 q2, Vector3 q3)
         {
-            Vector3 normal = Geometry.Normal(q1 - q0, q2 - q0);
+            Vector3 normal = Calculator.Normal(q1 - q0, q2 - q0);
 
             meshs.Add(
                 new Mesh(

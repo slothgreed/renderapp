@@ -223,7 +223,7 @@ namespace KI.Analyzer
         /// </summary>
         private static Vector3 GetTriNormal(Vector3 v0, Vector3 v1, Vector3 v2)
         {
-            return Geometry.Normal(v1 - v0, v2 - v0);
+            return Calculator.Normal(v1 - v0, v2 - v0);
         }
 
         /// <summary>

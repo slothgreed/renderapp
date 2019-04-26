@@ -49,7 +49,7 @@ namespace KI.Gfx.Geometry
             {
                 if (normal == Vector3.Zero)
                 {
-                    return KI.Mathmatics.Geometry.Normal(Vertex1 - Vertex0, Vertex2 - Vertex0);
+                    return KI.Mathmatics.Calculator.Normal(Vertex1 - Vertex0, Vertex2 - Vertex0);
                 }
                 else
                 {
