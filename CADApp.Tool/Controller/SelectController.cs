@@ -27,75 +27,46 @@ namespace CADApp.Tool.Controller
             Vector3 near;
             Vector3 far;
             GLUtility.GetClickPos(camera.Matrix, camera.ProjMatrix, Viewport.Instance.ViewportRect, mouse.Current, out near, out far);
-
-            if (ControllerUtility.GetClickWorldPosition(camera, Workspace.Instance.WorkPlane.Formula, mouse, out worldPoint))
+            ControllerUtility.GetClickWorldPosition(camera, Workspace.Instance.WorkPlane.Formula, mouse, out worldPoint);
+            bool isSelected = false;
+            foreach (SceneNode node in scene.RootNode.AllChildren())
             {
-                bool isSelected = false;
-                foreach (SceneNode node in scene.RootNode.AllChildren())
+                if (node is AssemblyNode)
                 {
-
-                    if (node is AssemblyNode)
-                    {
-                        var sketchNode = node as AssemblyNode;
-                        sketchNode.Assembly.ClearSelect();
-
-                        if (sketchNode.Assembly.ControlPoint.Count > 0)
-                        {
-                            for (int i = 0; i < sketchNode.Assembly.ControlPoint.Count; i++)
-                            {
-                                var distance = (sketchNode.Assembly.ControlPoint[i].Position - worldPoint).Length;
-                                if (distance < VERTEX_DISTANCE_THRESHOLD)
-                                {
-                                    sketchNode.Assembly.AddSelectControlPoint(i);
-                                    isSelected = true;
-                                    break;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            isSelected = SelectPoint(sketchNode.Assembly, camera.Position, worldPoint);
-                        }
-
-                        //if (sketchNode.Assembly.ControlPoint.Count == 0 && isSelected == false)
-                        //{
-                        //    for (int i = 0; i < sketchNode.Assembly.LineNum; i++)
-                        //    {
-                        //        int start;
-                        //        int end;
-                        //        sketchNode.Assembly.GetLine(i, out start, out end);
-
-                        //        if (Interaction.LineToLine(near, far,
-                        //            sketchNode.Assembly.Vertex[start].Position,
-                        //            sketchNode.Assembly.Vertex[end].Position,
-                        //            VERTEX_DISTANCE_THRESHOLD))
-                        //        {
-                        //            sketchNode.Assembly.AddSelectLine(i);
-                        //            isSelected = true;
-                        //            break;
-                        //        }
-                        //    }
-                        //}
-
-                        if (isSelected == false)
-                        {
-                            isSelected = SelectTriangle(sketchNode.Assembly, near, far);
-                        }
-                    }
-
-                    if (isSelected == true)
-                    {
-                        break;
-                    }
-
-                }
-
-                if (isSelected)
-                {
-                    var rootNode = scene.RootNode as AppRootNode;
-                    rootNode.UpdateSelectObject();
+                    var sketchNode = node as AssemblyNode;
+                    sketchNode.Assembly.ClearSelect();
                 }
             }
+
+            foreach (SceneNode node in scene.RootNode.AllChildren())
+            {
+                if (node is AssemblyNode)
+                {
+                    var sketchNode = node as AssemblyNode;
+                    if (sketchNode.Assembly.ControlPoint.Count > 0)
+                    {
+                        isSelected = SelectControlPoint(sketchNode.Assembly, camera.Position, worldPoint);
+                    }
+                    else
+                    {
+                        isSelected = SelectPoint(sketchNode.Assembly, camera.Position, worldPoint);
+                    }
+
+                    if (isSelected == false)
+                    {
+                        isSelected = SelectTriangle(sketchNode.Assembly, near, far);
+                    }
+                }
+
+                if (isSelected == true)
+                {
+                    break;
+                }
+
+            }
+
+            var rootNode = scene.RootNode as AppRootNode;
+            rootNode.UpdateSelectObject();
 
             return base.Down(mouse);
         }
