@@ -1,5 +1,9 @@
-﻿using CADApp.Model;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using CADApp.Model;
 using CADApp.Tool.Controller;
+using KI.Renderer;
 using KI.UI.ViewModel;
 
 namespace CADApp.ViewModel
@@ -20,10 +24,32 @@ namespace CADApp.ViewModel
             }
         }
 
+        private ObservableCollection<SceneNode> _RootNode = new ObservableCollection<SceneNode>();
+        public ObservableCollection<SceneNode> RootNode
+        {
+            get
+            {
+                return _RootNode;
+            }
+
+            set
+            {
+                SetValue(ref _RootNode, value);
+            }
+
+        }
+
+
         public MainWindowViewModel()
             : base(null)
         {
             ViewportViewModel = new ViewportViewModel(this);
+            ViewportViewModel.OnInitialized += ViewportViewModel_Initialized;
+        }
+
+        private void ViewportViewModel_Initialized(object sender, EventArgs e)
+        {
+            RootNode.Add(Workspace.Instance.MainScene.RootNode);
         }
 
         private void UndoCommand()

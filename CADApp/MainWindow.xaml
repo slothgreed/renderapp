@@ -8,6 +8,7 @@
         xmlns:view="clr-namespace:CADApp.View"
         xmlns:tool="clr-namespace:CADApp.Tool.Controller;assembly=CADApp.Tool"
         xmlns:vm="clr-namespace:CADApp.ViewModel"
+        xmlns:renderer="clr-namespace:KI.Renderer;assembly=KI.Renderer"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Window.DataContext>
@@ -55,13 +56,12 @@
                 </ribbon:RibbonGroupBox>
             </ribbon:RibbonTabItem>
         </ribbon:Ribbon>
-        <TreeView Grid.Column="0" Grid.Row="1">
-            <TreeViewItem Header="テスト0"/>
-            <TreeViewItem Header="テスト1"/>
-            <TreeViewItem Header="テスト2"/>
-            <TreeViewItem Header="テスト3"/>
-            <TreeViewItem Header="テスト4"/>
-            <TreeViewItem Header="テスト5"/>
+        <TreeView Grid.Column="0" Grid.Row="1" ItemsSource="{Binding RootNode}">
+            <TreeView.Resources>
+                <HierarchicalDataTemplate DataType="{x:Type renderer:SceneNode}" ItemsSource="{Binding Children}">
+                    <TextBlock Text="{Binding Name}"/>
+                </HierarchicalDataTemplate>
+            </TreeView.Resources>
         </TreeView>
         <view:ViewportView Grid.Column="1" Grid.Row="1" DataContext="{Binding ViewportViewModel}"/>
     </Grid>

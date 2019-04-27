@@ -20,6 +20,7 @@ namespace CADApp.ViewModel
 {
     public class ViewportViewModel : ViewModelBase
     {
+
         private WindowsFormsHost _glContext;
         public WindowsFormsHost GLContext
         {
@@ -36,6 +37,13 @@ namespace CADApp.ViewModel
                 return _glContext;
             }
         }
+
+
+        /// <summary>
+        /// ノード挿入イベント
+        /// </summary>
+        public EventHandler OnInitialized;
+
 
         public Viewport Viewport
         {
@@ -120,6 +128,7 @@ namespace CADApp.ViewModel
             InitializeScene();
             InitializeRenderer();
 
+            OnInitialized?.Invoke(this, null);
         }
 
         private void OnResizeEvent(object sender, EventArgs e)
