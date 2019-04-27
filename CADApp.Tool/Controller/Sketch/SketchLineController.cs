@@ -1,5 +1,6 @@
 ﻿using CADApp.Model;
 using CADApp.Model.Node;
+using CADApp.Tool.Command;
 using KI.Asset;
 using KI.Gfx;
 using KI.Gfx.GLUtil;
@@ -17,6 +18,14 @@ namespace CADApp.Tool.Controller
 
         AssemblyNode sketchNode;
 
+        enum SketchLineMode
+        {
+            Start,
+            Write
+        }
+
+        SketchLineMode mode;
+
         public override bool Down(KIMouseEventArgs mouse)
         {
             if (mouse.Button == MOUSE_BUTTON.Left)
@@ -26,19 +35,33 @@ namespace CADApp.Tool.Controller
 
                 if (ControllerUtility.GetClickWorldPosition(camera, Workspace.Instance.WorkPlane.Formula, mouse, out worldPoint))
                 {
-                    var sketch = sketchNode.Assembly;
-                    int pointIndex = sketch.Vertex.Count;
-                    sketch.BeginEdit();
-                    sketch.AddVertex(worldPoint);
-                    sketchNode.Visible = true;
-                    
-                    if (sketch.Vertex.Count >= 2)
+                    if (mode == SketchLineMode.Start)
                     {
-                        sketch.AddLineIndex(sketch.Vertex.Count - 2);
-                        sketch.AddLineIndex(sketch.Vertex.Count - 1);
+                        Assembly newSketch = new Assembly("Sketch");
+                        var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
+                        sketchNode = new AssemblyNode("SketchLine", newSketch, shader);
+                        sketchNode.Visible = false;
+                        var command = new AddAssemblyNodeCommand(sketchNode, newSketch, Workspace.Instance.MainScene.RootNode);
+                        Workspace.Instance.CommandManager.Execute(command);
+                        mode = SketchLineMode.Write;
                     }
+                    
+                    if(mode == SketchLineMode.Write)
+                    {
+                        var sketch = sketchNode.Assembly;
+                        int pointIndex = sketch.Vertex.Count;
+                        sketch.BeginEdit();
+                        sketch.AddVertex(worldPoint);
+                        sketchNode.Visible = true;
 
-                    sketch.EndEdit();
+                        if (sketch.Vertex.Count >= 2)
+                        {
+                            sketch.AddLineIndex(sketch.Vertex.Count - 2);
+                            sketch.AddLineIndex(sketch.Vertex.Count - 1);
+                        }
+
+                        sketch.EndEdit();
+                    }
                 }
             }
 
@@ -55,11 +78,8 @@ namespace CADApp.Tool.Controller
 
         public override bool Binding()
         {
-            Assembly sketch = new Assembly("Sketch");
-            var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
-            sketchNode = new AssemblyNode("SketchNode", sketch, shader);
-            sketchNode.Visible = false;
-            Workspace.Instance.MainScene.AddObject(sketchNode);
+            mode = SketchLineMode.Start;
+
             return base.Binding();
         }
 

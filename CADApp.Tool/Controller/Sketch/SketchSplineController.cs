@@ -1,5 +1,6 @@
 ﻿using CADApp.Model;
 using CADApp.Model.Node;
+using CADApp.Tool.Command;
 using KI.Asset;
 using KI.Gfx;
 using KI.Gfx.GLUtil;
@@ -11,7 +12,15 @@ namespace CADApp.Tool.Controller
     public class SketchSplineController : ControllerBase
     {
         private AssemblyNode sketchNode;
-        
+
+        enum SketchSplineMode
+        {
+            Start,
+            Write
+        }
+
+        SketchSplineMode mode;
+
         public override bool Click(KIMouseEventArgs mouse)
         {
             if (mouse.Button == MOUSE_BUTTON.Left)
@@ -21,10 +30,25 @@ namespace CADApp.Tool.Controller
 
                 if (ControllerUtility.GetClickWorldPosition(camera, Workspace.Instance.WorkPlane.Formula, mouse, out worldPoint))
                 {
-                    var sketch = sketchNode.Assembly as SplineCurvature;
-                    sketch.BeginEdit();
-                    sketch.AddControlPoint(worldPoint);
-                    sketch.EndEdit();
+                    if (mode == SketchSplineMode.Start)
+                    {
+                        SplineCurvature newSketch = new SplineCurvature("Spline");
+                        var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
+                        sketchNode = new AssemblyNode("SketchSpline", newSketch, shader);
+                        sketchNode.VisibleVertex = false;
+
+                        var command = new AddAssemblyNodeCommand(sketchNode, newSketch, Workspace.Instance.MainScene.RootNode);
+                        Workspace.Instance.CommandManager.Execute(command);
+                        mode = SketchSplineMode.Write;
+                    }
+
+                    if (mode == SketchSplineMode.Write)
+                    {
+                        var sketch = sketchNode.Assembly as SplineCurvature;
+                        sketch.BeginEdit();
+                        sketch.AddControlPoint(worldPoint);
+                        sketch.EndEdit();
+                    }
                 }
             }
 
@@ -41,11 +65,8 @@ namespace CADApp.Tool.Controller
 
         public override bool Binding()
         {
-            SplineCurvature sketch = new SplineCurvature("Spline");
-            var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
-            sketchNode = new AssemblyNode("Spline", sketch, shader);
-            sketchNode.VisibleVertex = false;
-            Workspace.Instance.MainScene.AddObject(sketchNode);
+            mode = SketchSplineMode.Start;
+
             return base.Binding();
         }
     }

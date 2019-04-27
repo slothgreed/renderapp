@@ -40,9 +40,9 @@ namespace CADApp.Tool.Controller
                 {
                     if (mode == BuildCubeMode.SelectStart)
                     {
-                        Assembly sketch = new Assembly("Line");
+                        Assembly sketch = new Assembly("BuildCube");
                         var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointNormalColor);
-                        sketchNode = new AssemblyNode("RectangleLine", sketch, shader);
+                        sketchNode = new AssemblyNode("BuildCube", sketch, shader);
 
                         addNodeCommand = new AddAssemblyNodeCommand(sketchNode, sketch, Workspace.Instance.MainScene.RootNode);
                         Workspace.Instance.CommandManager.Execute(addNodeCommand);

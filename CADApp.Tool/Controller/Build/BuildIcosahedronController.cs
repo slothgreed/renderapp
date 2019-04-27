@@ -35,9 +35,9 @@ namespace CADApp.Tool.Controller
                     if (mode == BuildIcosahedronMode.SelectStart)
                     {
                         startPoint = worldPoint;
-                        Assembly sketch = new Assembly("Icosahedron");
+                        Assembly sketch = new Assembly("BuildIcosahedron");
                         var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointNormalColor);
-                        sketchNode = new AssemblyNode("Icosahedron", sketch, shader);
+                        sketchNode = new AssemblyNode("BuildIcosahedron", sketch, shader);
                         sketchNode.Visible = false;
 
                         var addNodeCommand = new AddAssemblyNodeCommand(sketchNode, sketch, Workspace.Instance.MainScene.RootNode);

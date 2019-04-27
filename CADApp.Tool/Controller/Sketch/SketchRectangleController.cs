@@ -35,7 +35,7 @@ namespace CADApp.Tool.Controller
                     if (mode == CreateRectangleMode.SelectStart)
                     {
                         var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
-                        sketchNode = new AssemblyNode("RectangleLine", shader);
+                        sketchNode = new AssemblyNode("SketchRectangle", shader);
 
                         Assembly sketch = new Assembly("Line");
                         sketch.BeginEdit();
