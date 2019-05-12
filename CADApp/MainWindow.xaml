@@ -14,6 +14,9 @@
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
+    <Window.Resources>
+        <vm:ControllerCommandParameterMultiValueConverter x:Key="ControllerCommandParameter"/>
+    </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Command="{Binding Undo}" Gesture="Ctrl+Z"/>
         <KeyBinding Command="{Binding Redo}" Gesture="Ctrl+Y"/>
@@ -48,7 +51,24 @@
                 <ribbon:RibbonGroupBox Header="2D">
                     <ribbon:Button Header="Line" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.SketchLine}"/>
                     <ribbon:Button Header="Rectangle" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.SketchRectangle}"/>
-                    <ribbon:Button Header="Spline" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.SketchSplineCurvature}"/>
+                    <ribbon:DropDownButton Header="Curvature">
+                        <ribbon:Button Header="Spline" Command="{Binding Controller}">
+                            <ribbon:Button.CommandParameter>
+                                <MultiBinding Converter="{StaticResource ControllerCommandParameter}">
+                                    <Binding Source="{x:Static tool:ControllerType.SketchCurvature}"/>
+                                    <Binding Source="{x:Static tool:GeometryType.Spline}"/>
+                                </MultiBinding>
+                            </ribbon:Button.CommandParameter>
+                        </ribbon:Button>
+                        <ribbon:Button Header="Bezier" Command="{Binding Controller}">
+                            <ribbon:Button.CommandParameter>
+                                <MultiBinding Converter="{StaticResource ControllerCommandParameter}">
+                                    <Binding Source="{x:Static tool:ControllerType.SketchCurvature}"/>
+                                    <Binding Source="{x:Static tool:GeometryType.Bezier}"/>
+                                </MultiBinding>
+                            </ribbon:Button.CommandParameter>
+                        </ribbon:Button>
+                    </ribbon:DropDownButton>
                 </ribbon:RibbonGroupBox>
                 <ribbon:RibbonGroupBox Header="3D">
                     <ribbon:Button Header="Cube" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.BuildCube}"/>

@@ -5,9 +5,11 @@ using CADApp.Model;
 using CADApp.Tool.Controller;
 using KI.Renderer;
 using KI.UI.ViewModel;
+using System.Windows.Controls;
 
 namespace CADApp.ViewModel
 {
+
     public partial class MainWindowViewModel : ViewModelBase
     {
         private ViewportViewModel _ViewportViewModel;
@@ -55,7 +57,7 @@ namespace CADApp.ViewModel
         private void UndoCommand()
         {
             Workspace.Instance.CommandManager.Undo();
-            ViewportViewModel.Controller[ViewportViewModel.CurrentController].Reset();
+            ViewportViewModel.Controller[ViewportViewModel.CurrentControllerType].Reset();
             ViewportViewModel.Viewport.GLControl_Paint(null, null);
         }
 
@@ -70,7 +72,13 @@ namespace CADApp.ViewModel
             if (parameter is ControllerType)
             {
                 var type = (ControllerType)parameter;
-                ViewportViewModel.CurrentController = type;
+                ViewportViewModel.ChangeController(type, null);
+            }
+
+            if (parameter is ControllerCommandParameter)
+            {
+                var param = (ControllerCommandParameter)parameter;
+                ViewportViewModel.ChangeController(param.ControllerType, param.ControllerArgs);
             }
         }
     }

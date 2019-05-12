@@ -7,9 +7,9 @@ namespace CADApp.Model
     /// <summary>
     /// スプライン曲線
     /// </summary>
-    public class SplineCurvature : Assembly
+    public class SplineCurvatureLine : CurvatureLine
     {
-        public SplineCurvature(string name)
+        public SplineCurvatureLine(string name)
             : base(name)
         {
         }
@@ -18,7 +18,7 @@ namespace CADApp.Model
         /// 参考サイト
         /// http://www5d.biglobe.ne.jp/stssk/maze/spline.html
         /// </summary>
-        private void UpdateVertexList()
+        protected override void UpdateControlPoint()
         {
             var a = new Vector3[ControlPoint.Count];
             var b = new Vector3[ControlPoint.Count];
@@ -89,12 +89,6 @@ namespace CADApp.Model
                 line.Add(Vertex.Count - 1);
                 SetLineIndex(line);
             }
-        }
-
-        public override void EndEdit()
-        {
-            UpdateVertexList();
-            base.EndEdit();
         }
     }
 }

@@ -11,8 +11,15 @@ namespace CADApp.Tool.Controller
         Select,
         SketchLine,
         SketchRectangle,
-        SketchSplineCurvature,
+        SketchCurvature,
         BuildCube,
         BuildIcosahedron
     }
+
+    public enum GeometryType
+    {
+        Bezier,
+        Spline
+    }
+
 }

@@ -48,7 +48,7 @@ namespace CADApp.Tool.Controller
                     else
                     {
                         UnBinding();
-                        Binding();
+                        Binding(ControllerArgs);
                     }
                 }
             }
@@ -85,16 +85,16 @@ namespace CADApp.Tool.Controller
         public override bool DoubleClick(KIMouseEventArgs mouse)
         {
             UnBinding();
-            Binding();
+            Binding(ControllerArgs);
 
             return base.DoubleClick(mouse);
         }
 
-        public override bool Binding()
+        public override bool Binding(IControllerArgs args)
         {
             mode = BuildIcosahedronMode.SelectStart;
 
-            return base.Binding();
+            return base.Binding(args);
         }
 
         public override bool UnBinding()

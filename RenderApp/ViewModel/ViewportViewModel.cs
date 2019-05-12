@@ -81,7 +81,7 @@ namespace RenderApp.ViewModel
             {
                 Controllers[mode].UnBinding();
                 mode = value;
-                Controllers[mode].Binding();
+                Controllers[mode].Binding(null);
             }
         }
 

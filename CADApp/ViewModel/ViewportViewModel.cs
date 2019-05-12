@@ -77,11 +77,11 @@ namespace CADApp.ViewModel
             Controller.Add(ControllerType.Select, new SelectController());
             Controller.Add(ControllerType.SketchLine, new SketchLineController());
             Controller.Add(ControllerType.SketchRectangle, new SketchRectangleController());
-            Controller.Add(ControllerType.SketchSplineCurvature, new SketchSplineController());
+            Controller.Add(ControllerType.SketchCurvature, new SketchSplineController());
             Controller.Add(ControllerType.BuildCube, new BuildCubeController());
             Controller.Add(ControllerType.BuildIcosahedron, new BuildIcosahedronController());
 
-            CurrentController = ControllerType.Select;
+            ChangeController(ControllerType.Select, null);
 
         }
 
@@ -92,18 +92,25 @@ namespace CADApp.ViewModel
 
         public Dictionary<ControllerType, ControllerBase> Controller = new Dictionary<ControllerType, ControllerBase>();
 
-        ControllerType currentController;
+        ControllerType currentControllerType;
 
-        public ControllerType CurrentController
+        public ControllerType CurrentControllerType
         {
-            get { return currentController; }
-            set
-            {
-                Controller[currentController].UnBinding();
-                currentController = value;
-                Controller[currentController].Binding();
-            }
+            get { return currentControllerType; }
         }
+
+        public ControllerBase CurrentController
+        {
+            get { return Controller[currentControllerType]; }
+        }
+
+        public void ChangeController(ControllerType type, IControllerArgs args)
+        {
+            Controller[currentControllerType].UnBinding();
+            currentControllerType = type;
+            Controller[currentControllerType].Binding(args);
+        }
+
 
         /// <summary>
         /// シーン
@@ -219,27 +226,27 @@ namespace CADApp.ViewModel
             switch (state)
             {
                 case MOUSE_STATE.DOWN:
-                    Controller[CurrentController].Down(mouse);
+                    Controller[CurrentControllerType].Down(mouse);
                     cameraController.Down(mouse);
                     break;
                 case MOUSE_STATE.CLICK:
-                    Controller[CurrentController].Click(mouse);
+                    Controller[CurrentControllerType].Click(mouse);
                     cameraController.Click(mouse);
                     break;
                 case MOUSE_STATE.DOUBLECLICK:
-                    Controller[CurrentController].DoubleClick(mouse);
+                    Controller[CurrentControllerType].DoubleClick(mouse);
                     cameraController.DoubleClick(mouse);
                     break;
                 case MOUSE_STATE.MOVE:
-                    Controller[CurrentController].Move(mouse);
+                    Controller[CurrentControllerType].Move(mouse);
                     cameraController.Move(mouse);
                     break;
                 case MOUSE_STATE.UP:
-                    Controller[CurrentController].Up(mouse);
+                    Controller[CurrentControllerType].Up(mouse);
                     cameraController.Up(mouse);
                     break;
                 case MOUSE_STATE.WHEEL:
-                    Controller[CurrentController].Wheel(mouse);
+                    Controller[CurrentControllerType].Wheel(mouse);
                     cameraController.Wheel(mouse);
                     break;
             }

@@ -3,11 +3,15 @@ using KI.Gfx.GLUtil;
 
 namespace KI.Tool.Controller
 {
+    public class IControllerArgs { }
+
     /// <summary>
     /// コントロールのインタフェース
     /// </summary>
     public abstract class ControllerBase
     {
+        public IControllerArgs ControllerArgs { get; set; }
+
         /// <summary>
         /// マウス押下
         /// </summary>
@@ -73,7 +77,7 @@ namespace KI.Tool.Controller
         /// コントローラ開始処理
         /// </summary>
         /// <returns>成功</returns>
-        public virtual bool Binding()
+        public virtual bool Binding(IControllerArgs args)
         {
             return true;
         }
@@ -90,7 +94,7 @@ namespace KI.Tool.Controller
         public virtual bool Reset()
         {
             UnBinding();
-            Binding();
+            Binding(ControllerArgs);
 
             return true;
         }

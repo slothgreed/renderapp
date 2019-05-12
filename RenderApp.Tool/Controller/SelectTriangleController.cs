@@ -77,11 +77,11 @@ namespace RenderApp.Tool.Controller
         /// コントローラの開始
         /// </summary>
         /// <returns>成功</returns>
-        public override bool Binding()
+        public override bool Binding(IControllerArgs args)
         {
             selectMesh = null;
 
-            return base.Binding();
+            return base.Binding(args);
         }
 
         /// <summary>

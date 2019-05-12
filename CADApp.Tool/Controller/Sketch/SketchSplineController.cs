@@ -21,6 +21,8 @@ namespace CADApp.Tool.Controller
 
         SketchSplineMode mode;
 
+        GeometryType curvatureType;
+
         public override bool Click(KIMouseEventArgs mouse)
         {
             if (mouse.Button == MOUSE_BUTTON.Left)
@@ -32,9 +34,18 @@ namespace CADApp.Tool.Controller
                 {
                     if (mode == SketchSplineMode.Start)
                     {
-                        SplineCurvature newSketch = new SplineCurvature("Spline");
+                        CurvatureLine newSketch = null;
+                        if (curvatureType == GeometryType.Bezier)
+                        {
+                            newSketch = new SplineCurvatureLine("SketchSpline");
+                        }
+                        else
+                        {
+                            newSketch = new BezierCurvatureLine("SketchBezier");
+                        }
+
                         var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
-                        sketchNode = new AssemblyNode("SketchSpline", newSketch, shader);
+                        sketchNode = new AssemblyNode(newSketch.Name, newSketch, shader);
                         sketchNode.VisibleVertex = false;
 
                         var command = new AddAssemblyNodeCommand(sketchNode, newSketch, Workspace.Instance.MainScene.RootNode);
@@ -44,7 +55,7 @@ namespace CADApp.Tool.Controller
 
                     if (mode == SketchSplineMode.Write)
                     {
-                        var sketch = sketchNode.Assembly as SplineCurvature;
+                        var sketch = sketchNode.Assembly;
                         sketch.BeginEdit();
                         sketch.AddControlPoint(worldPoint);
                         sketch.EndEdit();
@@ -58,16 +69,25 @@ namespace CADApp.Tool.Controller
         public override bool DoubleClick(KIMouseEventArgs mouse)
         {
             UnBinding();
-            Binding();
+            Binding(ControllerArgs);
 
             return base.DoubleClick(mouse);
         }
 
-        public override bool Binding()
+        public override bool Binding(IControllerArgs args)
         {
             mode = SketchSplineMode.Start;
 
-            return base.Binding();
+            if(args is ControllerArgs)
+            {
+                var controllerArgs = (ControllerArgs)args;
+                if (controllerArgs.Parameter[0] is GeometryType)
+                {
+                    curvatureType = (GeometryType)controllerArgs.Parameter[0];
+                }
+            }
+
+            return base.Binding(args);
         }
     }
 }

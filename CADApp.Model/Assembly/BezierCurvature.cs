@@ -4,9 +4,9 @@ using OpenTK;
 
 namespace CADApp.Model
 {
-    public class BezierCurvature : Assembly
+    public class BezierCurvatureLine : CurvatureLine
     {
-        public BezierCurvature(string name)
+        public BezierCurvatureLine(string name)
             : base(name)
         {
 
@@ -30,7 +30,7 @@ namespace CADApp.Model
             return point;
         }
 
-        private void UpdateVertexList()
+        protected override void UpdateControlPoint()
         {
             ClearVertex();
 
@@ -52,12 +52,6 @@ namespace CADApp.Model
                 line.Add(Vertex.Count - 1);
                 SetLineIndex(line);
             }
-        }
-
-        public override void EndEdit()
-        {
-            UpdateVertexList();
-            base.EndEdit();
         }
     }
 }

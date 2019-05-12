@@ -123,7 +123,7 @@ namespace RenderApp.Tool.Controller
         /// コントローラ開始処理
         /// </summary>
         /// <returns>成功</returns>
-        public override bool Binding()
+        public override bool Binding(IControllerArgs args)
         {
             return true;
         }

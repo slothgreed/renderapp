@@ -100,11 +100,11 @@ namespace CADApp.Tool.Controller
             return base.Move(mouse);
         }
 
-        public override bool Binding()
+        public override bool Binding(IControllerArgs args)
         {
             mode = CreateRectangleMode.SelectStart;
 
-            return base.Binding();
+            return base.Binding(args);
         }
     }
 }

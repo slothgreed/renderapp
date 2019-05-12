@@ -139,10 +139,10 @@ namespace CADApp.Tool.Controller
             return base.Move(mouse);
         }
 
-        public override bool Binding()
+        public override bool Binding(IControllerArgs args)
         {
             mode = BuildCubeMode.SelectStart;
-            return base.Binding();  
+            return base.Binding(args);  
         }
 
         public override bool UnBinding()

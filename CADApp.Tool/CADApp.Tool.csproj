@@ -50,6 +50,7 @@
     <Compile Include="Controller\Build\BuildCubeController.cs" />
     <Compile Include="Controller\Build\BuildIcosahedronController.cs" />
     <Compile Include="Controller\CameraController.cs" />
+    <Compile Include="Controller\ControllerArgs.cs" />
     <Compile Include="Controller\ControllerType.cs" />
     <Compile Include="Controller\ControllerUtility.cs" />
     <Compile Include="Controller\SelectController.cs" />
