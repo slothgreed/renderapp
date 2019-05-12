@@ -79,7 +79,13 @@
         <TreeView Grid.Column="0" Grid.Row="1" ItemsSource="{Binding RootNode}">
             <TreeView.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type renderer:SceneNode}" ItemsSource="{Binding Children}">
-                    <TextBlock Text="{Binding Name}"/>
+                    <TextBlock Text="{Binding Name}">
+                        <TextBlock.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Delete" Command="{Binding DeleteNode}"/>
+                            </ContextMenu>
+                        </TextBlock.ContextMenu>
+                    </TextBlock>
                 </HierarchicalDataTemplate>
             </TreeView.Resources>
         </TreeView>

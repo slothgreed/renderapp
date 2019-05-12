@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command\AddAssemblyNodeCommand.cs" />
+    <Compile Include="Command\DeleteAssemblyNodeCommand.cs" />
     <Compile Include="Controller\Build\BuildCubeController.cs" />
     <Compile Include="Controller\Build\BuildIcosahedronController.cs" />
     <Compile Include="Controller\CameraController.cs" />

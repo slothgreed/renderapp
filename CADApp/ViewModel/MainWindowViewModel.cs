@@ -6,6 +6,7 @@ using CADApp.Tool.Controller;
 using KI.Renderer;
 using KI.UI.ViewModel;
 using System.Windows.Controls;
+using CADApp.Tool.Command;
 
 namespace CADApp.ViewModel
 {
@@ -80,6 +81,12 @@ namespace CADApp.ViewModel
                 var param = (ControllerCommandParameter)parameter;
                 ViewportViewModel.ChangeController(param.ControllerType, param.ControllerArgs);
             }
+        }
+
+        private void DeleteNodeCommand()
+        {
+            var commandArgs = new DeleteAssemblyNodeCommandArgs(null);
+            Workspace.Instance.CommandManager.Execute(new DeleteAssemblyNodeCommand(commandArgs));
         }
     }
 }

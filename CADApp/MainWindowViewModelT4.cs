@@ -23,10 +23,7 @@ namespace CADApp.ViewModel
 					return _Undo;
 				}
 			}
-
-
-
-        private ICommand _Redo;
+			private ICommand _Redo;
 			public ICommand Redo
 			{
 				get
@@ -39,10 +36,7 @@ namespace CADApp.ViewModel
 					return _Redo;
 				}
 			}
-
-
-
-        private ICommand _Controller;
+			private ICommand _Controller;
 			public ICommand Controller
 			{
 				get
@@ -55,6 +49,18 @@ namespace CADApp.ViewModel
 					return _Controller;
 				}
 			}
+			private ICommand _DeleteNode;
+			public ICommand DeleteNode
+			{
+				get
+				{
+					if (_DeleteNode == null)
+					{
+						return _DeleteNode = CreateCommand(DeleteNodeCommand);						
+					}
 
-    }
+					return _DeleteNode;
+				}
+			}
+	}
 }

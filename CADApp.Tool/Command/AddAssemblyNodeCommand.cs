@@ -6,7 +6,7 @@ using KI.Tool.Command;
 namespace CADApp.Tool.Command
 {
     /// <summary>
-    /// Rectangle の追加コマンド
+    /// アセンブリの追加コマンド
     /// </summary>
     public class AddAssemblyNodeCommand : CommandBase
     {
@@ -46,7 +46,7 @@ namespace CADApp.Tool.Command
         }
 
         /// <summary>
-        /// 曲率コマンド
+        /// アセンブリ追加コマンド
         /// </summary>
         public class AddAssemblyNodeCommandArgs
         {
