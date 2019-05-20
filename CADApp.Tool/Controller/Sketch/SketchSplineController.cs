@@ -34,19 +34,22 @@ namespace CADApp.Tool.Controller
                 {
                     if (mode == SketchSplineMode.Start)
                     {
-                        CurvatureLine newSketch = null;
-                        if (curvatureType == GeometryType.Bezier)
+                        CurveAssembly newSketch = null;
+                        if (curvatureType == GeometryType.Spline)
                         {
-                            newSketch = new SplineCurvatureLine("SketchSpline");
+                            newSketch = new SplineCurve("SketchSpline");
                         }
                         else
                         {
-                            newSketch = new BezierCurvatureLine("SketchBezier");
+                            var bezier = new Model.BezierCurve("SketchBezier");
+                            bezier.Surface = true;
+                            newSketch = bezier;
                         }
 
                         var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
                         sketchNode = new AssemblyNode(newSketch.Name, newSketch, shader);
                         sketchNode.VisibleVertex = false;
+                        sketchNode.VisibleLine = false;
 
                         var command = new AddAssemblyNodeCommand(sketchNode, newSketch, Workspace.Instance.MainScene.RootNode);
                         Workspace.Instance.CommandManager.Execute(command);

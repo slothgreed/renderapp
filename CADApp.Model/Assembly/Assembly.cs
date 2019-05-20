@@ -146,6 +146,17 @@ namespace CADApp.Model
             vertexs.Add(new Vertex(vertexs.Count, position, Vector3.UnitX));
         }
 
+
+        public void AddVertex(Vector3 position, Vector3 normal, Vector3 color)
+        {
+            if (CurrentEdit == false)
+            {
+                Logger.Log(Logger.LogLevel.Error, "Call Begin Edit.");
+            }
+
+            vertexs.Add(new Vertex(vertexs.Count, position, normal, color));
+        }
+
         public void AddVertex(Vector3 position, Vector3 normal)
         {
             if (CurrentEdit == false)
