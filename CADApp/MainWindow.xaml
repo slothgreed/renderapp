@@ -46,7 +46,34 @@
                     <ribbon:Button Header="Redo" Command="{Binding Redo}"/>
                 </ribbon:RibbonGroupBox>
                 <ribbon:RibbonGroupBox Header="">
-                    <ribbon:Button Header="Select" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.Select}"/>
+                    <ribbon:DropDownButton>
+                        <ribbon:Button Header="Select" Command="{Binding Controller}">
+                            <ribbon:Button.CommandParameter>
+                                <MultiBinding Converter="{StaticResource ControllerCommandParameter}">
+                                    <Binding Source="{x:Static tool:ControllerType.Select}"/>
+                                    <Binding Source="{x:Static tool:SelectMode.Geometry}"/>
+                                </MultiBinding>
+                            </ribbon:Button.CommandParameter>
+                        </ribbon:Button>
+
+                        <ribbon:Button Header="SelectPoint" Command="{Binding Controller}">
+                            <ribbon:Button.CommandParameter>
+                                <MultiBinding Converter="{StaticResource ControllerCommandParameter}">
+                                    <Binding Source="{x:Static tool:ControllerType.Select}"/>
+                                    <Binding Source="{x:Static tool:SelectMode.Point}"/>
+                                </MultiBinding>
+                            </ribbon:Button.CommandParameter>
+                        </ribbon:Button>
+                        
+                        <ribbon:Button Header="SelectTriangle" Command="{Binding Controller}">
+                            <ribbon:Button.CommandParameter>
+                                <MultiBinding Converter="{StaticResource ControllerCommandParameter}">
+                                    <Binding Source="{x:Static tool:ControllerType.Select}"/>
+                                    <Binding Source="{x:Static tool:SelectMode.Triangle}"/>
+                                </MultiBinding>
+                            </ribbon:Button.CommandParameter>
+                        </ribbon:Button>
+                    </ribbon:DropDownButton>
                 </ribbon:RibbonGroupBox>
                 <ribbon:RibbonGroupBox Header="2D">
                     <ribbon:Button Header="Line" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.SketchLine}"/>

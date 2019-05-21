@@ -22,4 +22,12 @@ namespace CADApp.Tool.Controller
         Spline
     }
 
+    public enum SelectMode
+    {
+        Geometry,
+        Point,
+        Line,
+        Triangle,
+    }
+
 }

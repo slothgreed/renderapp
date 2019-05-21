@@ -11,7 +11,7 @@ namespace CADApp.Tool.Controller
 {
     public class SelectController : ControllerBase
     {
-        private float VERTEX_DISTANCE_THRESHOLD = 0.01f;
+        public SelectMode mode = SelectMode.Geometry;
 
         public override bool Down(KIMouseEventArgs mouse)
         {
@@ -43,18 +43,27 @@ namespace CADApp.Tool.Controller
                 if (node is AssemblyNode)
                 {
                     var sketchNode = node as AssemblyNode;
-                    if (sketchNode.Assembly.ControlPoint.Count > 0)
+
+                    if (mode == SelectMode.Point)
                     {
-                        isSelected = SelectControlPoint(sketchNode.Assembly, camera.Position, worldPoint);
-                    }
-                    else
-                    {
-                        isSelected = SelectPoint(sketchNode.Assembly, camera.Position, worldPoint);
+                        if (sketchNode.Assembly.ControlPoint.Count > 0)
+                        {
+                            isSelected = SelectControlPoint(sketchNode.Assembly, camera.Position, worldPoint);
+                        }
+                        else
+                        {
+                            isSelected = SelectPoint(sketchNode.Assembly, camera.Position, worldPoint);
+                        }
                     }
 
-                    if (isSelected == false)
+                    if (mode == SelectMode.Triangle)
                     {
                         isSelected = SelectTriangle(sketchNode.Assembly, near, far);
+                    }
+
+                    if (mode == SelectMode.Geometry)
+                    {
+                        isSelected = SelectGeometry(sketchNode.Assembly, camera.Position, worldPoint, near, far);
                     }
                 }
 
@@ -69,6 +78,35 @@ namespace CADApp.Tool.Controller
             rootNode.UpdateSelectObject();
 
             return base.Down(mouse);
+        }
+
+        public bool SelectGeometry(Assembly assembly, Vector3 cameraPosition, Vector3 clickPosition, Vector3 near, Vector3 far)
+        {
+            bool isSelected = false;
+            if(assembly.ControlPoint.Count > 0)
+            {
+                isSelected = SelectControlPoint(assembly, cameraPosition, clickPosition);
+            }
+            else
+            {
+                isSelected = SelectPoint(assembly, cameraPosition, clickPosition);
+            }
+
+            if(isSelected == false)
+            {
+                isSelected = SelectTriangle(assembly, near, far);
+            }
+
+            if (isSelected == true)
+            {
+                assembly.ClearSelect();
+                for (int i = 0; i < assembly.TriangleNum; i++)
+                {
+                    assembly.AddSelectTriangle(i);
+                }
+            }
+
+            return isSelected;
         }
 
         public bool SelectTriangle(Assembly assembly, Vector3 near, Vector3 far)
@@ -126,7 +164,7 @@ namespace CADApp.Tool.Controller
 
             for (int i = 0; i < assembly.ControlPoint.Count; i++)
             {
-                Vector3 pointDirection = assembly.Vertex[i].Position - cameraPosition;
+                Vector3 pointDirection = assembly.ControlPoint[i].Position - cameraPosition;
                 pointDirection.Normalize();
 
                 float dot = Vector3.Dot(clickDirection, pointDirection);
@@ -176,6 +214,20 @@ namespace CADApp.Tool.Controller
             }
 
             return isSelect;
+        }
+
+        public override bool Binding(IControllerArgs args)
+        {
+            if (args is ControllerArgs)
+            {
+                var controllerArgs = (ControllerArgs)args;
+                if (controllerArgs.Parameter[0] is SelectMode)
+                {
+                    mode = (SelectMode)controllerArgs.Parameter[0];
+                }
+            }
+
+            return base.Binding(args);
         }
     }
 }
