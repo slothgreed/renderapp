@@ -4,6 +4,7 @@
     {
         Points,
         Lines,
+        LineLoop,
         Triangles,
         Quads,
         Patches

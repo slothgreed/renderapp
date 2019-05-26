@@ -9,7 +9,7 @@ using OpenTK;
 
 namespace CADApp.Tool.Controller
 {
-    public class SketchSplineController : ControllerBase
+    public class SketchCurveController : ControllerBase
     {
         private AssemblyNode sketchNode;
 
@@ -37,19 +37,17 @@ namespace CADApp.Tool.Controller
                         CurveAssembly newSketch = null;
                         if (curvatureType == GeometryType.Spline)
                         {
-                            newSketch = new SplineCurve("SketchSpline");
+                            newSketch = new SplineAssembly("SketchSpline");
                         }
                         else
                         {
                             var bezier = new Model.BezierCurve("SketchBezier");
-                            bezier.Surface = true;
                             newSketch = bezier;
                         }
 
                         var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
                         sketchNode = new AssemblyNode(newSketch.Name, newSketch, shader);
                         sketchNode.VisibleVertex = false;
-                        sketchNode.VisibleLine = false;
 
                         var command = new AddAssemblyNodeCommand(sketchNode, newSketch, Workspace.Instance.MainScene.RootNode);
                         Workspace.Instance.CommandManager.Execute(command);

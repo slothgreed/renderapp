@@ -307,5 +307,22 @@ namespace KI.Mathmatics
         {
             return (float)(BinomalCoefficients(n, v) * Math.Pow(x, v) * Math.Pow(1 - x, n - v));
         }
+
+
+        /// <summary>
+        /// 球面座標の取得
+        /// </summary>
+        /// <param name="radial">半径</param>
+        /// <param name="theta">横角度</param>
+        /// <param name="phi">縦角度</param>
+        /// <returns>球面座標値</returns>
+        public static Vector3 GetSphericalPolarCoordinates(float radial, float theta, float phi)
+        {
+            Vector3 pos = new Vector3();
+            pos.X = (float)(radial * Math.Sin(theta) * Math.Cos(phi));
+            pos.Y = (float)(radial * Math.Sin(theta) * Math.Sin(phi));
+            pos.Z = (float)(radial * Math.Cos(theta));
+            return pos;
+        }
     }
 }

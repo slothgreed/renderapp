@@ -4,6 +4,7 @@ using KI.Foundation.Core;
 using KI.Gfx;
 using KI.Gfx.Geometry;
 using OpenTK;
+using KI.Mathmatics;
 
 namespace KI.Asset
 {
@@ -72,9 +73,9 @@ namespace KI.Asset
             //一番上
             for (int i = 0; i < wpartition; i++)
             {
-                position.Add(GetSphericalPolarCoordinates(radial, 0, 0));
-                position.Add(GetSphericalPolarCoordinates(radial, theta, phi * i));
-                position.Add(GetSphericalPolarCoordinates(radial, theta, phi * (i + 1)));
+                position.Add(Calculator.GetSphericalPolarCoordinates(radial, 0, 0));
+                position.Add(Calculator.GetSphericalPolarCoordinates(radial, theta, phi * i));
+                position.Add(Calculator.GetSphericalPolarCoordinates(radial, theta, phi * (i + 1)));
 
                 texcoord.Add(GetSphericalTexCoord(position[position.Count - 3]));
                 texcoord.Add(GetSphericalTexCoord(position[position.Count - 2]));
@@ -89,13 +90,13 @@ namespace KI.Asset
             {
                 for (int j = 0; j < wpartition; j++)
                 {
-                    position.Add(GetSphericalPolarCoordinates(radial, theta * i, phi * j));
-                    position.Add(GetSphericalPolarCoordinates(radial, theta * i, phi * (j + 1)));
-                    position.Add(GetSphericalPolarCoordinates(radial, theta * (i - 1), phi * j));
+                    position.Add(Calculator.GetSphericalPolarCoordinates(radial, theta * i, phi * j));
+                    position.Add(Calculator.GetSphericalPolarCoordinates(radial, theta * i, phi * (j + 1)));
+                    position.Add(Calculator.GetSphericalPolarCoordinates(radial, theta * (i - 1), phi * j));
 
-                    position.Add(GetSphericalPolarCoordinates(radial, theta * i, phi * (j + 1)));
-                    position.Add(GetSphericalPolarCoordinates(radial, theta * (i - 1), phi * (j + 1)));
-                    position.Add(GetSphericalPolarCoordinates(radial, theta * (i - 1), phi * j));
+                    position.Add(Calculator.GetSphericalPolarCoordinates(radial, theta * i, phi * (j + 1)));
+                    position.Add(Calculator.GetSphericalPolarCoordinates(radial, theta * (i - 1), phi * (j + 1)));
+                    position.Add(Calculator.GetSphericalPolarCoordinates(radial, theta * (i - 1), phi * j));
 
                     texcoord.Add(GetSphericalTexCoord(position[position.Count - 6]));
                     texcoord.Add(GetSphericalTexCoord(position[position.Count - 5]));
@@ -116,9 +117,9 @@ namespace KI.Asset
 
             for (int i = 0; i < wpartition; i++)
             {
-                position.Add(GetSphericalPolarCoordinates(radial, theta * (hpartition - 1), phi * (i + 1)));
-                position.Add(GetSphericalPolarCoordinates(radial, theta * (hpartition - 1), phi * i));
-                position.Add(GetSphericalPolarCoordinates(radial, theta * hpartition, 0));
+                position.Add(Calculator.GetSphericalPolarCoordinates(radial, theta * (hpartition - 1), phi * (i + 1)));
+                position.Add(Calculator.GetSphericalPolarCoordinates(radial, theta * (hpartition - 1), phi * i));
+                position.Add(Calculator.GetSphericalPolarCoordinates(radial, theta * hpartition, 0));
 
                 texcoord.Add(GetSphericalTexCoord(position[position.Count - 3]));
                 texcoord.Add(GetSphericalTexCoord(position[position.Count - 2]));
@@ -177,22 +178,6 @@ namespace KI.Asset
             Model = new Polygon(this.Name, vertexs,indexs, PolygonType.Triangles);
 
             //info.ConvertVertexArray();
-        }
-
-        /// <summary>
-        /// 球面座標の取得
-        /// </summary>
-        /// <param name="radial">半径</param>
-        /// <param name="theta">横角度</param>
-        /// <param name="phi">縦角度</param>
-        /// <returns>球面座標値</returns>
-        private Vector3 GetSphericalPolarCoordinates(float radial, float theta, float phi)
-        {
-            Vector3 pos = new Vector3();
-            pos.X = (float)(radial * Math.Sin(theta) * Math.Cos(phi));
-            pos.Y = (float)(radial * Math.Sin(theta) * Math.Sin(phi));
-            pos.Z = (float)(radial * Math.Cos(theta));
-            return pos;
         }
 
         /// <summary>

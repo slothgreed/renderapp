@@ -167,6 +167,21 @@ namespace CADApp.Model
             vertexs.Add(new Vertex(vertexs.Count, position, normal, Vector3.UnitX));
         }
 
+        public void SetVertex(Vector3[] positionList)
+        {
+            if (CurrentEdit == false)
+            {
+                Logger.Log(Logger.LogLevel.Error, "Call Begin Edit.");
+            }
+
+            ClearVertex();
+
+            for (int i = 0; i < positionList.Length; i++)
+            {
+                AddVertex(positionList[i]);
+            }
+        }
+
         public void SetVertex(Vector3[] positionList, Vector3[] normalList)
         {
             if (CurrentEdit == false)
@@ -218,16 +233,15 @@ namespace CADApp.Model
             vertexs.Clear();
         }
 
-        public void SetLineIndex(List<int> index)
+        public void SetLineIndex(IEnumerable<int> index)
         {
             if (CurrentEdit == false)
             {
                 Logger.Log(Logger.LogLevel.Error, "Call Begin Edit.");
             }
 
-            lineIndex = index;
+            lineIndex = index.ToList();
         }
-
 
         public void AddLineIndex(int vertexIndex)
         {

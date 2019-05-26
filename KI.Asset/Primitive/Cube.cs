@@ -34,7 +34,7 @@ namespace KI.Asset
         /// <param name="max">最大値</param>
         /// <param name="storeType">頂点格納方法</param>
         /// <param name="reverse">向き</param>
-        public Cube(Vector3 min, Vector3 max, VertexStoreType storeType, bool reverse = false)
+        public Cube(Vector3 min, Vector3 max, VertexStoreType storeType = VertexStoreType.VertexArray, bool reverse = false)
         {
             this.min = min;
             this.max = max;

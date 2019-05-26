@@ -57,7 +57,7 @@
     <Compile Include="Controller\SelectController.cs" />
     <Compile Include="Controller\Sketch\SketchRectangleController.cs" />
     <Compile Include="Controller\Sketch\SketchLineController.cs" />
-    <Compile Include="Controller\Sketch\SketchSplineController.cs" />
+    <Compile Include="Controller\Sketch\SketchCurveController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
