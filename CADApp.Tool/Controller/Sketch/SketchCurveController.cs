@@ -41,7 +41,7 @@ namespace CADApp.Tool.Controller
                         }
                         else
                         {
-                            var bezier = new Model.BezierCurve("SketchBezier");
+                            var bezier = new Model.BezierAssembly("SketchBezier");
                             newSketch = bezier;
                         }
 

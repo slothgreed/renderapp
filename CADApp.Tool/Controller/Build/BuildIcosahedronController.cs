@@ -2,6 +2,7 @@
 using CADApp.Model.Node;
 using CADApp.Tool.Command;
 using KI.Asset;
+using KI.Asset.Primitive;
 using KI.Gfx.GLUtil;
 using KI.Tool.Controller;
 using OpenTK;
@@ -68,7 +69,7 @@ namespace CADApp.Tool.Controller
                     if (distance > 0)
                     {
                         var sketch = sketchNode.Assembly;
-                        var icosahedron = new Icosahedron(distance, 0);
+                        var icosahedron = new Icosahedron(distance, 20);
                         sketchNode.Translate = startPoint;
                         sketch.BeginEdit();
                         sketch.SetVertex(icosahedron.Position, icosahedron.Normal);

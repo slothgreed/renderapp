@@ -7,9 +7,9 @@ using System.Linq;
 
 namespace CADApp.Model
 {
-    public class BezierCurve : CurveAssembly
+    public class BezierAssembly : CurveAssembly
     {
-        public BezierCurve(string name)
+        public BezierAssembly(string name)
             : base(name)
         {
 

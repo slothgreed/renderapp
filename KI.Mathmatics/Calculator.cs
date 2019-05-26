@@ -312,16 +312,16 @@ namespace KI.Mathmatics
         /// <summary>
         /// 球面座標の取得
         /// </summary>
-        /// <param name="radial">半径</param>
-        /// <param name="theta">横角度</param>
-        /// <param name="phi">縦角度</param>
+        /// <param name="radius">半径</param>
+        /// <param name="theta">縦角度</param>
+        /// <param name="phi">横角度</param>
         /// <returns>球面座標値</returns>
-        public static Vector3 GetSphericalPolarCoordinates(float radial, float theta, float phi)
+        public static Vector3 GetSphericalPolarCoordinates(float radius, float theta, float phi)
         {
             Vector3 pos = new Vector3();
-            pos.X = (float)(radial * Math.Sin(theta) * Math.Cos(phi));
-            pos.Y = (float)(radial * Math.Sin(theta) * Math.Sin(phi));
-            pos.Z = (float)(radial * Math.Cos(theta));
+            pos.X = (float)(radius * Math.Sin(theta) * Math.Cos(phi));
+            pos.Y = (float)(radius * Math.Sin(theta) * Math.Sin(phi));
+            pos.Z = (float)(radius * Math.Cos(theta));
             return pos;
         }
     }
