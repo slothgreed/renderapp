@@ -55,6 +55,7 @@
     <Compile Include="Controller\ControllerType.cs" />
     <Compile Include="Controller\ControllerUtility.cs" />
     <Compile Include="Controller\SelectController.cs" />
+    <Compile Include="Controller\Sketch\SketchPrimitiveController.cs" />
     <Compile Include="Controller\Sketch\SketchRectangleController.cs" />
     <Compile Include="Controller\Sketch\SketchLineController.cs" />
     <Compile Include="Controller\Sketch\SketchCurveController.cs" />

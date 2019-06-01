@@ -1,4 +1,5 @@
-﻿using KI.Gfx;
+﻿using KI.Foundation.Core;
+using KI.Gfx;
 using KI.Mathmatics;
 using OpenTK;
 using System;
@@ -67,14 +68,26 @@ namespace KI.Asset.Primitive
             List<Vector3> position = new List<Vector3>();
             List<int> index = new List<int>();
 
-            float phi = (float)Math.PI / Partition;
+            float theta = (float)Math.PI * 2 / Partition;
+            var ex = Vector3.Cross(Normal, Vector3.UnitZ);
+            Quaternion quart = Quaternion.FromAxisAngle(ex, Vector3.CalculateAngle(Normal, Vector3.UnitZ));
+            var quartMat = Matrix4.CreateFromQuaternion(quart);
             for (int i = 0; i < Partition; i++)
             {
-                position.Add(Calculator.GetSphericalPolarCoordinates(Radius, 0, phi * i));
-                index.Add(i);
+                var pos = Calculator.GetSphericalPolarCoordinates(Radius, (float)Math.PI / 2, theta * i);
+                pos = Calculator.Multiply(quartMat, pos);
+                position.Add(pos + Center);
             }
 
-            Quaternion quart = new Quaternion(Normal, Vector3.Dot(Normal, Vector3.UnitZ));
+            for (int i = 0; i < position.Count - 1; i++)
+            {
+                index.Add(i);
+                index.Add(i + 1);
+            }
+
+            index.Add(position.Count - 1);
+            index.Add(0);
+
             Position = position.ToArray();
             Index = index.ToArray();
 

@@ -76,6 +76,7 @@ namespace CADApp.ViewModel
 
             Controller.Add(ControllerType.Select, new SelectController());
             Controller.Add(ControllerType.SketchLine, new SketchLineController());
+            Controller.Add(ControllerType.SketchPrimitive, new SketchPrimitiveController());
             Controller.Add(ControllerType.SketchRectangle, new SketchRectangleController());
             Controller.Add(ControllerType.SketchCurvature, new SketchCurveController());
             Controller.Add(ControllerType.BuildCube, new BuildCubeController());

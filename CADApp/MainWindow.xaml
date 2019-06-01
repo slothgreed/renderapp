@@ -77,6 +77,16 @@
                 </ribbon:RibbonGroupBox>
                 <ribbon:RibbonGroupBox Header="2D">
                     <ribbon:Button Header="Line" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.SketchLine}"/>
+                    <ribbon:DropDownButton Header="Primitive">
+                        <ribbon:Button Header="Circle"  Command="{Binding Controller}">
+                            <ribbon:Button.CommandParameter>
+                                <MultiBinding Converter="{StaticResource ControllerCommandParameter}">
+                                    <Binding Source="{x:Static tool:ControllerType.SketchPrimitive}"/>
+                                    <Binding Source="{x:Static tool:GeometryType.Circle}"/>
+                                </MultiBinding>
+                            </ribbon:Button.CommandParameter>
+                        </ribbon:Button>
+                    </ribbon:DropDownButton>
                     <ribbon:Button Header="Rectangle" Command="{Binding Controller}" CommandParameter="{x:Static tool:ControllerType.SketchRectangle}"/>
                     <ribbon:DropDownButton Header="Curvature">
                         <ribbon:Button Header="Spline" Command="{Binding Controller}">

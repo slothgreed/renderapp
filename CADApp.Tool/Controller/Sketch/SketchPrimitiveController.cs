@@ -8,18 +8,21 @@ using KI.Gfx.GLUtil;
 using KI.Mathmatics;
 using KI.Tool.Controller;
 using OpenTK;
+using KI.Asset.Primitive;
 
 namespace CADApp.Tool.Controller
 {
-    public class SketchRectangleController : ControllerBase
+    public class SketchPrimitiveController : ControllerBase
     {
-        public enum CreateRectangleMode
+        public enum CreatePrimitiveMode
         {
             SelectStart,
             SelectEnd
         }
 
-        private CreateRectangleMode mode;
+        private Vector3 selectStartPoint;
+        private CreatePrimitiveMode mode;
+        private GeometryType primitiveType;
 
         private AssemblyNode sketchNode;
 
@@ -32,39 +35,27 @@ namespace CADApp.Tool.Controller
 
                 if (ControllerUtility.GetClickWorldPosition(camera, Workspace.Instance.WorkPlane.Formula, mouse, out worldPoint))
                 {
-                    if (mode == CreateRectangleMode.SelectStart)
+                    if (mode == CreatePrimitiveMode.SelectStart)
                     {
                         var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
-                        sketchNode = new AssemblyNode("SketchRectangle", shader);
+                        sketchNode = new AssemblyNode("SketchCircle", shader);
 
-                        Assembly sketch = new Assembly("Rectangle");
+                        Assembly sketch = new Assembly("Circle");
+                        var circle = new Circle(0.001f, worldPoint, Vector3.UnitY, 10);
                         sketch.BeginEdit();
-                        sketch.AddVertex(worldPoint);
-                        sketch.AddVertex(worldPoint);
-                        sketch.AddVertex(worldPoint);
-                        sketch.AddVertex(worldPoint);
-                        sketch.SetLineIndex(
-                            new List<int>()
-                            {
-                                0,1,
-                                1,2,
-                                2,3,
-                                3,0
-                            }
-                            );
-
-                        sketch.SetTriangleIndexFromLineIndex(camera.LookAtDirection);
+                        sketch.SetVertex(circle.Position);
+                        sketch.SetLineIndex(circle.Index);
                         sketch.EndEdit();
-
+                        selectStartPoint = worldPoint;
                         AddAssemblyNodeCommand command = new AddAssemblyNodeCommand(sketchNode, sketch, Workspace.Instance.MainScene.RootNode);
                         Workspace.Instance.CommandManager.Execute(command);
 
-                        mode = CreateRectangleMode.SelectEnd;
+                        mode = CreatePrimitiveMode.SelectEnd;
                     }
                     else
                     {
                         sketchNode = null;
-                        mode = CreateRectangleMode.SelectStart;
+                        mode = CreatePrimitiveMode.SelectStart;
                     }
                 }
             }
@@ -74,7 +65,7 @@ namespace CADApp.Tool.Controller
 
         public override bool Move(KIMouseEventArgs mouse)
         {
-            if (mode == CreateRectangleMode.SelectEnd)
+            if (mode == CreatePrimitiveMode.SelectEnd)
             {
                 Camera camera = Workspace.Instance.MainScene.MainCamera;
 
@@ -87,12 +78,11 @@ namespace CADApp.Tool.Controller
                 if (Interaction.PlaneToLine(camera.Position, far, Workspace.Instance.WorkPlane.Formula, out interPoint))
                 {
                     Assembly sketch = sketchNode.Assembly;
-                    Vector3 startPosition = sketch.GetVertex(0).Position;
+                    var radius = (interPoint - selectStartPoint).Length;
+                    var circle = new Circle(radius, selectStartPoint, Vector3.UnitY, 10);
                     sketch.BeginEdit();
-                    sketch.SetVertex(1, new Vector3(interPoint.X, 0, startPosition.Z));
-                    sketch.SetVertex(2, new Vector3(interPoint.X, 0, interPoint.Z));
-                    sketch.SetVertex(3, new Vector3(startPosition.X, 0, interPoint.Z));
-                    sketch.SetTriangleIndexFromLineIndex(camera.LookAtDirection);
+                    sketch.SetVertex(circle.Position);
+                    sketch.SetLineIndex(circle.Index);
                     sketch.EndEdit();
                 }
             }
@@ -102,7 +92,16 @@ namespace CADApp.Tool.Controller
 
         public override bool Binding(IControllerArgs args)
         {
-            mode = CreateRectangleMode.SelectStart;
+            mode = CreatePrimitiveMode.SelectStart;
+
+            if (args is ControllerArgs)
+            {
+                var controllerArgs = (ControllerArgs)args;
+                if (controllerArgs.Parameter[0] is GeometryType)
+                {
+                    primitiveType = (GeometryType)controllerArgs.Parameter[0];
+                }
+            }
 
             return base.Binding(args);
         }

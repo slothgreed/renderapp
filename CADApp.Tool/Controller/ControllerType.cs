@@ -10,6 +10,7 @@ namespace CADApp.Tool.Controller
     {
         Select,
         SketchLine,
+        SketchPrimitive,
         SketchRectangle,
         SketchCurvature,
         BuildCube,
@@ -19,7 +20,8 @@ namespace CADApp.Tool.Controller
     public enum GeometryType
     {
         Bezier,
-        Spline
+        Spline,
+        Circle
     }
 
     public enum SelectMode
