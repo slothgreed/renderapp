@@ -52,7 +52,7 @@
     <Compile Include="Node\AppRootNode.cs" />
     <Compile Include="Node\AssemblyNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Assembly\SplineCurve.cs" />
+    <Compile Include="Assembly\SplineAssembly.cs" />
     <Compile Include="Workspace.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -21,6 +21,7 @@ namespace CADApp.Tool.Controller
     {
         Bezier,
         Spline,
+        BSpline,
         Circle
     }
 

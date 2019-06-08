@@ -44,7 +44,7 @@ namespace CADApp.Tool.Controller
                         var circle = new Circle(0.001f, worldPoint, Vector3.UnitY, 10);
                         sketch.BeginEdit();
                         sketch.SetVertex(circle.Position);
-                        sketch.SetLineIndex(circle.Index);
+                        sketch.SetTriangleIndex(circle.Index);
                         sketch.EndEdit();
                         selectStartPoint = worldPoint;
                         AddAssemblyNodeCommand command = new AddAssemblyNodeCommand(sketchNode, sketch, Workspace.Instance.MainScene.RootNode);
@@ -82,7 +82,7 @@ namespace CADApp.Tool.Controller
                     var circle = new Circle(radius, selectStartPoint, Vector3.UnitY, 10);
                     sketch.BeginEdit();
                     sketch.SetVertex(circle.Position);
-                    sketch.SetLineIndex(circle.Index);
+                    sketch.SetTriangleIndex(circle.Index);
                     sketch.EndEdit();
                 }
             }

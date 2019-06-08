@@ -83,6 +83,7 @@
     <Compile Include="Loader\Image\TGAImage.cs" />
     <Compile Include="Primitive\Axis.cs" />
     <Compile Include="Primitive\Bezier.cs" />
+    <Compile Include="Primitive\BSpline.cs" />
     <Compile Include="Primitive\Circle.cs" />
     <Compile Include="Primitive\Cone.cs" />
     <Compile Include="Primitive\Cube.cs" />

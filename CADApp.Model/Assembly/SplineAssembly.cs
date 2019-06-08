@@ -16,19 +16,17 @@ namespace CADApp.Model
         {
         }
 
-        /// <summary>
-        /// 参考サイト
-        /// http://www5d.biglobe.ne.jp/stssk/maze/spline.html
-        /// </summary>
+
         protected override void UpdateControlPoint()
         {
             ClearVertex();
 
-            if (ControlPoint.Count > 1)
+            if (ControlPoint.Count == 4)
             {
-                var spline = new SplineCurve(ControlPoint.Select(v => v.Position).ToArray(), 100);
+                var spline = new BSpline(ControlPoint.Select(v => v.Position).ToArray(), 3);
                 SetVertex(spline.Position);
                 SetLineIndex(spline.Index);
+
             }
         }
     }

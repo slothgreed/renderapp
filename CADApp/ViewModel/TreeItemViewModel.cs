@@ -1,4 +1,5 @@
-﻿using KI.UI.ViewModel;
+﻿using KI.Renderer;
+using KI.UI.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,23 @@ namespace CADApp.ViewModel
 {
     public class TreeItemViewModel : ViewModelBase
     {
-        public TreeItemViewModel(ViewModelBase parent)
+        private SceneNode _model;
+        public SceneNode Model
+        {
+            get
+            {
+                return _model;
+            }
+            set
+            {
+                SetValue(ref _model, value);
+            }
+        }
+
+        public TreeItemViewModel(ViewModelBase parent, SceneNode node)
             : base(parent)
         {
-
+            Model = node;
         }
     }
 }

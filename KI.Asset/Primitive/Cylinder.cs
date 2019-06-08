@@ -52,7 +52,7 @@ namespace KI.Asset.Primitive
         }
 
         /// <summary>
-        /// 形状の作成
+        /// 形状の作成 XZ基準になっている。
         /// </summary>
         /// <param name="partition">分割数</param>
         private void CreateModel(int partition)

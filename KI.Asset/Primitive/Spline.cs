@@ -43,7 +43,8 @@ namespace KI.Asset.Primitive
         }
 
         /// <summary>
-        /// 形状の作成
+        /// 形状の作成 参考サイト
+        /// http://www5d.biglobe.ne.jp/stssk/maze/spline.html
         /// </summary>
         private void CreateModel()
         {

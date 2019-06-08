@@ -63,6 +63,9 @@ namespace KI.Asset.Primitive
             Create();
         }
 
+        /// <summary>
+        /// XY基準で円の作成
+        /// </summary>
         private void Create()
         {
             List<Vector3> position = new List<Vector3>();
@@ -72,6 +75,8 @@ namespace KI.Asset.Primitive
             var ex = Vector3.Cross(Normal, Vector3.UnitZ);
             Quaternion quart = Quaternion.FromAxisAngle(ex, Vector3.CalculateAngle(Normal, Vector3.UnitZ));
             var quartMat = Matrix4.CreateFromQuaternion(quart);
+
+            position.Add(Center);
             for (int i = 0; i < Partition; i++)
             {
                 var pos = Calculator.GetSphericalPolarCoordinates(Radius, (float)Math.PI / 2, theta * i);
@@ -79,14 +84,16 @@ namespace KI.Asset.Primitive
                 position.Add(pos + Center);
             }
 
-            for (int i = 0; i < position.Count - 1; i++)
+            for (int i = 1; i < position.Count - 1; i++)
             {
-                index.Add(i);
+                index.Add(0);
                 index.Add(i + 1);
+                index.Add(i);
             }
 
-            index.Add(position.Count - 1);
             index.Add(0);
+            index.Add(1);
+            index.Add(position.Count - 1);
 
             Position = position.ToArray();
             Index = index.ToArray();
