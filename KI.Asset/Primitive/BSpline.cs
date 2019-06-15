@@ -60,10 +60,6 @@ namespace KI.Asset.Primitive
             ControlPoint = controlPoint;
             Dimension = dimension;
             SetUniformKnotVector();
-            for (int i = 0; i < knot.Length; i++)
-            {
-                knot[i] = i;
-            }
 
             Create();
         }
@@ -109,23 +105,24 @@ namespace KI.Asset.Primitive
 
         /// <summary>
         /// Bスプライン基底関数
+        /// 正常な結果にならないのでDeboorを利用
         /// </summary>
-        /// <param name="j">ループインデックス</param>
-        /// <param name="k">次元</param>
-        /// <param name="parameter">媒介変数</param>
-        /// <returns></returns>
+        /// <param name = "j" > ループインデックス </ param >
+        /// < param name="k">次元</param>
+        /// <param name = "parameter" > 媒介変数 </ param >
+        /// < returns ></ returns >
         private float BasisFunction(int j, int k, float parameter)
         {
             if (k == 0)
             {
                 if (knot[j] <= parameter && parameter < knot[j + 1])
                 {
-                    Logger.Log(Logger.LogLevel.Allway, j.ToString() + ":" + k.ToString() + "(1)");
+                    //Logger.Log(Logger.LogLevel.Allway, j.ToString() + ":" + k.ToString() + "(1)");
                     return 1;
                 }
                 else
                 {
-                    Logger.Log(Logger.LogLevel.Allway, j.ToString() + ":" + k.ToString() + "(0)");
+                    //Logger.Log(Logger.LogLevel.Allway, j.ToString() + ":" + k.ToString() + "(0)");
                     return 0;
                 }
             }
@@ -144,50 +141,9 @@ namespace KI.Asset.Primitive
             valueL *= BasisFunction(j, k - 1, parameter);
             valueR *= BasisFunction(j + 1, k - 1, parameter);
 
-            Logger.Log(Logger.LogLevel.Allway, j.ToString() + ":" + k.ToString() + ":(" + valueL.ToString() + "," + valueR.ToString() + ")");
+            //Logger.Log(Logger.LogLevel.Allway, j.ToString() + ":" + k.ToString() + ":(" + valueL.ToString() + "," + valueR.ToString() + ")");
             return valueL + valueR;
         }
-
-        double BasisFunction2(int i, int k, double t)
-        {
-            double w1 = 0.0, w2 = 0.0;
-            if (k == 1)
-            {
-                if (t >= knot[i] && t < knot[i + 1]) return 1.0;
-                else return 0.0;
-            }
-            else
-            {
-                if ((knot[i + k] - knot[i + 1]) != 0)
-                {
-                    w1 = ((knot[i + k] - t) / (knot[i + k] - knot[i + 1])) * BasisFunction2(i + 1, k - 1, t);
-                }
-                if ((knot[i + k - 1] - knot[i]) != 0)
-                {
-                    w2 = ((t - knot[i]) / (knot[i + k - 1] - knot[i])) * BasisFunction2(i, k - 1, t);
-                }
-                return (w1 + w2);
-            }
-        }
-
-        //private Vector3 ThreeDimension(float t)
-        //{
-        //    float a = (1 - t) * (1 - t) * (1 - t);
-        //    float b = (0.5f * t * t * t) + (t * t) + (2.0f / 3.0f);
-        //    float c = ((-0.5f) * t * t * t) + (0.5f * t * t) + (0.5f * t) + (1.0f / 6.0f);
-        //    float d = (1.0f / 6.0f) * t * t * t;
-
-        //    return ControlPoint[0] * a + ControlPoint[1] * b + ControlPoint[2] * c + ControlPoint[3] * d;
-        //}
-
-        //private Vector3 TwoDimension(float t)
-        //{
-        //    float a = (1 - t) * (1 - t);
-        //    float b = 2 * (1 - t);
-        //    float c = t * t;
-
-        //    return ControlPoint[0] * a + ControlPoint[1] * b + ControlPoint[2] * c;
-        //}
 
         private Vector3 Deboor(int j, int k, float parameter)
         {
@@ -205,21 +161,21 @@ namespace KI.Asset.Primitive
 
         private void Create()
         {
-            List<Vector3> points = new List<Vector3>();
-            List<int> lines = new List<int>();
-            for (float p = 0.01f; p < 1; p += 0.1f)
-            {
-                Vector3 point = new Vector3();
-                for (int i = 0; i < ControlPoint.Length; i++)
-                {
-                    //float val = BasisFunction(i, Dimension, p);
-                    //point += ControlPoint[i] * val;
-                    point = Deboor(i, Dimension, p);
-                    Logger.Log(Logger.LogLevel.Allway, "");
-                }
+            //List<Vector3> points = new List<Vector3>();
+            //List<int> lines = new List<int>();
+            //for (float p = 0.01f; p < 3; p += 0.01f)
+            //{
+            //    Vector3 point = new Vector3();
+            //    for (int i = 0; i < controlPoint.Length; i++)
+            //    {
+            //        float val = BasisFunction(i, Dimension, p);
+            //        point += controlPoint[i] * val;
+            //        //point = Deboor(i, Dimension, p);
+            //        //Logger.Log(Logger.LogLevel.Allway, "");
+            //    }
 
-                points.Add(point);
-            }
+            //    points.Add(point);
+            //}
 
             //points.Clear();
             //for (float j = 0; j <= 7 * 10; j++)
@@ -239,16 +195,16 @@ namespace KI.Asset.Primitive
             //    points.Add(point);
             //}
 
-            lines.Add(0);
-            for(int i = 1; i < points.Count; i++)
-            {
-                lines.Add(i);
-                lines.Add(i);
-            }
-            lines.Add(points.Count - 1);
+            //lines.Add(0);
+            //for(int i = 1; i < points.Count; i++)
+            //{
+            //    lines.Add(i);
+            //    lines.Add(i);
+            //}
+            //lines.Add(points.Count - 1);
 
-            Position = points.ToArray();
-            Index = lines.ToArray();
+            //Position = points.ToArray();
+            //Index = lines.ToArray();
         }
     }
 }
