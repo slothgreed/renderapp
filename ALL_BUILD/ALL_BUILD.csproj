@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ALL_BUILD</RootNamespace>
     <AssemblyName>ALL_BUILD</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -58,9 +59,9 @@
       <Project>{63784908-38d4-4ef6-82f9-ea50eec662e2}</Project>
       <Name>CADApp.Tool</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CADApp\CADApp.csproj">
-      <Project>{9c5eda2e-270e-4cf0-8d59-479285c074f3}</Project>
-      <Name>CADApp</Name>
+    <ProjectReference Include="..\Graph2D\Graph2D.csproj">
+      <Project>{4b56baf2-a90d-41c8-a87a-b426c3053205}</Project>
+      <Name>Graph2D</Name>
     </ProjectReference>
     <ProjectReference Include="..\KI.Analyzer\KI.Analyzer.csproj">
       <Project>{e8959545-0813-4d45-8c9f-1ade07f3a21f}</Project>
@@ -109,10 +110,6 @@
     <ProjectReference Include="..\STLBrowser\STLBrowser.csproj">
       <Project>{634a67dc-4ca1-4a0d-8e8f-178dfc1a7cad}</Project>
       <Name>STLBrowser</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ViewerTest\ViewerTest.csproj">
-      <Project>{81ff9e87-f6cd-4095-b284-cfa6e3830753}</Project>
-      <Name>ViewerTest</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
