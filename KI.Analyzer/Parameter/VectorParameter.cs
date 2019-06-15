@@ -10,7 +10,7 @@ namespace KI.Analyzer.Parameter
         /// <summary>
         /// 値
         /// </summary>
-        private Vector3[] values;
+        public Vector3[] Values { get; private set; }
 
         /// <summary>
         /// コンストラクタ
@@ -19,7 +19,7 @@ namespace KI.Analyzer.Parameter
         public VectorParameter(string name, Vector3[] val)
         {
             Name = name;
-            values = val;
+            Values = val;
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace KI.Analyzer.Parameter
         /// <returns>値</returns>
         public Vector3 GetValue(int index)
         {
-            return values[index];
+            return Values[index];
         }
     }
 }

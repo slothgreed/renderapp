@@ -378,6 +378,11 @@ namespace RenderApp.ViewModel
             //View.DataVisualization dataVisualize = new View.DataVisualization();
             //var polygonNode = workspace.MainScene.SelectNode as PolygonNode;
             //dataVisualize.GraphName = "vertexParameter";
+            //var points = new int[1000];
+            //for (int i = 0; i < 1000; i++)
+            //{
+            //    points[i] = i;
+            //}
             //dataVisualize.ParameterList = ((HalfEdgeDS)polygonNode.Polygon).Parameter;
             //window.Content = dataVisualize;
             //window.Show();
