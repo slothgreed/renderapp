@@ -69,8 +69,7 @@ namespace CADApp.Tool.Controller
                     if (distance > 0)
                     {
                         var sketch = sketchNode.Assembly;
-                        var icosahedron = new Icosahedron(distance, 20);
-                        sketchNode.Translate = startPoint;
+                        var icosahedron = new Icosahedron(distance, 20, startPoint);
                         sketch.BeginEdit();
                         sketch.SetVertex(icosahedron.Position, icosahedron.Normal);
                         sketch.SetTriangleIndex(icosahedron.Index);

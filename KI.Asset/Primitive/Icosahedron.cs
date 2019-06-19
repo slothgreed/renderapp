@@ -11,7 +11,6 @@ namespace KI.Asset
 {
     public class Icosahedron
     {
-
         /// <summary>
         /// 半径
         /// </summary>
@@ -23,15 +22,22 @@ namespace KI.Asset
         private int smoothNum;
 
         /// <summary>
+        /// 中心位置
+        /// </summary>
+        private Vector3 centerPos;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="radial">半径</param>
         /// <param name="subdivNum">細分割回数</param>
-        public Icosahedron(float radial, int subdivNum)
+        /// <param name="centerPos">中心位置</param>
+        public Icosahedron(float radial, int subdivNum, Vector3 centerPos)
         {
             this.radial = radial;
             this.smoothNum = subdivNum;
+            this.centerPos = centerPos;
             CreateModel();
         }
 
@@ -73,6 +79,11 @@ namespace KI.Asset
             position.Add(new Vector3(-radial, 0, ratio));
             position.Add(new Vector3(radial, 0, -ratio));
             position.Add(new Vector3(-radial, 0, -ratio));
+
+            for (int i = 0; i < position.Count; i++)
+            {
+                position[i] += centerPos;
+            }
 
             foreach (var pos in position)
             {

@@ -122,6 +122,7 @@ namespace KI.Asset.Primitive
                     line.Add(i);
                     line.Add(i);
                 }
+
                 line.Add(vertex.Count - 1);
                 Index = line.ToArray();
             }
