@@ -106,7 +106,7 @@ namespace KI.Tool.Controller
         /// <returns>成功</returns>
         public virtual bool KeyDown(KeyEventArgs e)
         {
-            return true;
+            return false;
         }
     }
 }

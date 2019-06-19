@@ -5,6 +5,7 @@ using KI.Foundation.Core;
 using KI.Gfx.Geometry;
 using KI.Mathmatics;
 using OpenTK;
+using KI.Analyzer;
 
 namespace CADApp.Model
 {
@@ -24,6 +25,8 @@ namespace CADApp.Model
 
         List<Vertex> controlPoint;
         private List<int> selectControlPoints;
+
+        private BDB boundingBox;
 
         public bool CurrentEdit { get; private set; }
 
@@ -116,6 +119,8 @@ namespace CADApp.Model
             lineIndex = new List<int>();
             triangleIndex = new List<int>();
             controlPoint = new List<Vertex>();
+
+            boundingBox = new BDB();
 
             selectVertexs = new List<int>();
             selectLines = new List<int>();
@@ -374,6 +379,7 @@ namespace CADApp.Model
         public virtual void EndEdit()
         {
             CurrentEdit = false;
+            boundingBox.Update(vertexs.Select(p => p.Position).ToList());
             OnUpdate();
         }
 

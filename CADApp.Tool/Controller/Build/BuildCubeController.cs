@@ -88,7 +88,7 @@ namespace CADApp.Tool.Controller
                     }
 
                     interPoint.Y = 0.01f;
-                    var cube = new Cube(startPosition, interPoint, VertexStoreType.VertexArray);
+                    var cube = new Cube(startPosition, interPoint);
                     sketch.BeginEdit();
                     sketch.ClearVertex();
                     sketch.SetVertex(cube.Position, cube.Normal);

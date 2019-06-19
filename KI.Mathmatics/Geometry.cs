@@ -117,7 +117,6 @@ namespace KI.Mathmatics
             int triangle2 = -1;
             int counter = 0;
             List<int> triangleIndex = new List<int>();
-            float area = 0;
             while (true)
             {
                 triangle0 = candidateList[counter];

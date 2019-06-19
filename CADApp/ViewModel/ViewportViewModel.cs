@@ -73,6 +73,7 @@ namespace CADApp.ViewModel
             Viewport.Instance.OnMouseDown += OnMouseDownEvent;
             Viewport.Instance.OnMouseClick += OnMouseClickEvent;
             Viewport.Instance.OnMouseDoubleClick += OnMouseDoubleClickEvent;
+            Viewport.Instance.OnKeyDown += OnKeyDownEvent;
 
             Controller.Add(ControllerType.Select, new SelectController());
             Controller.Add(ControllerType.SketchLine, new SketchLineController());
@@ -184,7 +185,10 @@ namespace CADApp.ViewModel
             ProcessMouseInput(e, MOUSE_STATE.DOUBLECLICK);
         }
 
-
+        private void OnKeyDownEvent(object sender, KeyEventArgs e)
+        {
+            ProcessKeyInput(e);
+        }
 
         private void InitializeScene()
         {
@@ -217,12 +221,18 @@ namespace CADApp.ViewModel
             GL.LineWidth(2);
         }
 
+        private void ProcessKeyInput(KeyEventArgs keyEvent)
+        {
+            Controller[currentControllerType].KeyDown(keyEvent);
+            cameraController.KeyDown(keyEvent);
+        }
+
         /// <summary>
         /// マウス入力
         /// </summary>
         /// <param name="mouse">マウス情報</param>
         /// <param name="state">状態</param>
-        public void ProcessMouseInput(KIMouseEventArgs mouse, MOUSE_STATE state)
+        private void ProcessMouseInput(KIMouseEventArgs mouse, MOUSE_STATE state)
         {
             switch (state)
             {

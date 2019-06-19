@@ -12,10 +12,18 @@ namespace KI.Analyzer
         /// <summary>
         /// コンストラクタ
         /// </summary>
+        public BDB()
+        {
+
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         /// <param name="position">位置</param>
         public BDB(List<Vector3> position)
         {
-            SetBoundBox(position);
+            Update(position);
         }
 
         /// <summary>
@@ -227,9 +235,9 @@ namespace KI.Analyzer
         }
 
         /// <summary>
-        /// BDBの算出
+        /// BDBの更新
         /// </summary>
-        private void SetBoundBox(List<Vector3> position)
+        public void Update(List<Vector3> position)
         {
             Vector3 min = new Vector3(float.MaxValue);
             Vector3 max = new Vector3(float.MinValue);

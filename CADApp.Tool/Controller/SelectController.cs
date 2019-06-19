@@ -56,6 +56,11 @@ namespace CADApp.Tool.Controller
                         }
                     }
 
+                    if (mode == SelectMode.Line)
+                    {
+                        isSelected = SelectLine(sketchNode.Assembly, camera.Position, worldPoint);
+                    }
+
                     if (mode == SelectMode.Triangle)
                     {
                         isSelected = SelectTriangle(sketchNode.Assembly, near, far);
@@ -80,7 +85,7 @@ namespace CADApp.Tool.Controller
             return base.Down(mouse);
         }
 
-        public bool SelectGeometry(Assembly assembly, Vector3 cameraPosition, Vector3 clickPosition, Vector3 near, Vector3 far)
+        private bool SelectGeometry(Assembly assembly, Vector3 cameraPosition, Vector3 clickPosition, Vector3 near, Vector3 far)
         {
             bool isSelected = false;
             if(assembly.ControlPoint.Count > 0)
@@ -90,6 +95,11 @@ namespace CADApp.Tool.Controller
             else
             {
                 isSelected = SelectPoint(assembly, cameraPosition, clickPosition);
+            }
+
+            if (isSelected == false)
+            {
+                isSelected = SelectLine(assembly, cameraPosition, clickPosition);
             }
 
             if(isSelected == false)
@@ -109,7 +119,47 @@ namespace CADApp.Tool.Controller
             return isSelected;
         }
 
-        public bool SelectTriangle(Assembly assembly, Vector3 near, Vector3 far)
+        private bool SelectLine(Assembly assembly, Vector3 near, Vector3 far)
+        {
+            bool isSelect = false;
+            int selectIndex = -1;
+            int start = 0;
+            int end = 0;
+            float THRESHOLD = 0.01f;
+            float distance = float.MaxValue;
+            float minLength = float.MaxValue;
+            for (int i = 0; i < assembly.LineNum; i++)
+            {
+                assembly.GetLine(i, out start, out end);
+                Vector3 startPos =  assembly.Vertex[start].Position;
+                Vector3 endPos = assembly.Vertex[end].Position;
+
+                if (Distance.LineToLine(near, far, startPos, endPos, out distance))
+                {
+                    //線分から点までの距離が範囲内の頂点のうち
+                    if (distance < THRESHOLD)
+                    {
+                        //最も視点に近い点を取得
+                        if (distance < minLength)
+                        {
+                            minLength = distance;
+                            selectIndex = i;
+                            isSelect = true;
+                        }
+                    }
+                }
+            }
+
+            if (selectIndex != -1)
+            {
+                assembly.AddSelectLine(selectIndex);
+            }
+
+
+            return true;
+        }
+
+        private bool SelectTriangle(Assembly assembly, Vector3 near, Vector3 far)
         {
             bool isSelected = false;
             int selectIndex = -1;
@@ -154,7 +204,7 @@ namespace CADApp.Tool.Controller
             return isSelected;
         }
 
-        public bool SelectControlPoint(Assembly assembly, Vector3 cameraPosition, Vector3 clickPosition)
+        private bool SelectControlPoint(Assembly assembly, Vector3 cameraPosition, Vector3 clickPosition)
         {
             Vector3 clickDirection = clickPosition - cameraPosition;
             clickDirection.Normalize();
@@ -185,7 +235,7 @@ namespace CADApp.Tool.Controller
             return isSelect;
         }
 
-        public bool SelectPoint(Assembly assembly, Vector3 cameraPosition, Vector3 clickPosition)
+        private bool SelectPoint(Assembly assembly, Vector3 cameraPosition, Vector3 clickPosition)
         {
             Vector3 clickDirection = clickPosition - cameraPosition;
             clickDirection.Normalize();

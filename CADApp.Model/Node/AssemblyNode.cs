@@ -33,7 +33,6 @@ namespace CADApp.Model.Node
         /// </summary>
         AttributeBase triangleAttribute;
 
-
         Material material;
 
         private Assembly assembly;

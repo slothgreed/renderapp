@@ -4,6 +4,7 @@ using KI.Asset;
 using KI.Gfx.GLUtil;
 using KI.Tool.Controller;
 using OpenTK;
+using CADApp.Model.Node;
 
 namespace CADApp.Tool.Controller
 {
@@ -78,7 +79,15 @@ namespace CADApp.Tool.Controller
         {
             if (e.KeyCode == Keys.F)
             {
-                Workspace.Instance.RenderSystem.ActiveScene.FitToScene(Workspace.Instance.RenderSystem.ActiveScene.MainCamera);
+                AppRootNode node = (AppRootNode)Workspace.Instance.MainScene.RootNode;
+                if (node.HasSelectObject)
+                {
+                    Workspace.Instance.MainScene.FitToBox(Workspace.Instance.MainScene.MainCamera, node.SelectBDB.Min, node.SelectBDB.Max);
+                }
+                else
+                {
+                    Workspace.Instance.MainScene.FitToScene(Workspace.Instance.MainScene.MainCamera);
+                }
             }
 
             return true;

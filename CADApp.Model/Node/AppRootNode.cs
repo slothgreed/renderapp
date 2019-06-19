@@ -8,6 +8,7 @@ using KI.Gfx.GLUtil.Buffer;
 using KI.Renderer;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using KI.Analyzer;
 
 namespace CADApp.Model.Node
 {
@@ -21,9 +22,23 @@ namespace CADApp.Model.Node
         /// </summary>
         VertexBuffer selectVertexBuffer;
 
-        bool VisibleSelectVertex;
-        bool VisibleSelectLine;
-        bool VisibleSelectTriangle;
+        private bool VisibleSelectVertex;
+        private bool VisibleSelectLine;
+        private bool VisibleSelectTriangle;
+
+        /// <summary>
+        /// 選択しているかどうか
+        /// </summary>
+        public bool HasSelectObject
+        {
+            get
+            {
+                return
+                    VisibleSelectVertex ||
+                    VisibleSelectLine ||
+                    VisibleSelectTriangle;
+            }
+        }
 
         /// <summary>
         /// 選択中の稜線のVBO
@@ -40,6 +55,23 @@ namespace CADApp.Model.Node
         /// </summary>
         VertexBuffer selectControlPointBuffer;
 
+        /// <summary>
+        /// 選択中の形状全体のバウンディングボックス
+        /// </summary>
+        private BDB selectBDB;
+
+        /// <summary>
+        /// 選択中の形状全体のバウンディングボックスのゲッタ
+        /// </summary>
+        public BDB SelectBDB
+        {
+            get
+            {
+                return selectBDB;
+            }
+        }
+
+
         Material material;
 
         public AppRootNode(string name)
@@ -47,6 +79,7 @@ namespace CADApp.Model.Node
         {
             var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
             material = new Material(shader);
+            selectBDB = new BDB();
             GenerateBuffer();
         }
 
@@ -104,18 +137,21 @@ namespace CADApp.Model.Node
             if (vertexs.Count > 0)
             {
                 selectVertexBuffer.SetBuffer(vertexs.ToArray(), Enumerable.Range(0, vertexs.Count).ToArray());
+                selectBDB.Update(vertexs.Select(p => p.Position).ToList());
                 VisibleSelectVertex = true;
             }
 
             if(lineVertex.Count >0)
             {
                 selectLineBuffer.SetBuffer(lineVertex.ToArray(), Enumerable.Range(0, lineVertex.Count).ToArray());
+                selectBDB.Update(lineVertex.Select(p => p.Position).ToList());
                 VisibleSelectLine = true;
             }
 
             if (triangleVertex.Count > 0)
             {
                 selectTriangleBuffer.SetBuffer(triangleVertex.ToArray(), Enumerable.Range(0, triangleVertex.Count).ToArray());
+                selectBDB.Update(triangleVertex.Select(p => p.Position).ToList());
                 VisibleSelectTriangle = true;
             }
         }

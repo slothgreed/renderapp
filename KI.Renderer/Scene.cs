@@ -145,15 +145,26 @@ namespace KI.Renderer
         /// </summary>
         public void FitToScene(Camera camera)
         {
-            Vector3 center = (WorldMax + WorldMin) / 2;
+            FitToBox(camera, WorldMin, WorldMax);
+        }
+
+        /// <summary>
+        /// 指定矩形にカメラをフィットさせる
+        /// </summary>
+        /// <param name="camera">カメラ</param>
+        /// <param name="min">矩形最小値</param>
+        /// <param name="max">矩形最大値</param>
+        public void FitToBox(Camera camera, Vector3 min, Vector3 max)
+        {
+            Vector3 center = (max + min) / 2;
             Vector3 position = camera.Position;
 
-            float bdbDist = (WorldMax - center).Length;
+            float bdbDist = (max - center).Length;
 
             float distance = bdbDist / (float)Math.Sin(camera.FOV / 2.0f);
 
             camera.LookAt = center;
-            camera.LookAtDistance = distance / camera.FOVAspect;
+            camera.LookAtDistance = distance * 1.2f / camera.FOVAspect;
         }
 
         #endregion

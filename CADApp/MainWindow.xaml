@@ -64,6 +64,15 @@
                                 </MultiBinding>
                             </ribbon:Button.CommandParameter>
                         </ribbon:Button>
+
+                        <ribbon:Button Header="SelectLine" Command="{Binding Controller}">
+                            <ribbon:Button.CommandParameter>
+                                <MultiBinding Converter="{StaticResource ControllerCommandParameter}">
+                                    <Binding Source="{x:Static tool:ControllerType.Select}"/>
+                                    <Binding Source="{x:Static tool:SelectMode.Line}"/>
+                                </MultiBinding>
+                            </ribbon:Button.CommandParameter>
+                        </ribbon:Button>
                         
                         <ribbon:Button Header="SelectTriangle" Command="{Binding Controller}">
                             <ribbon:Button.CommandParameter>

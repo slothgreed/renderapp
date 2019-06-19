@@ -23,31 +23,18 @@ namespace KI.Asset
         private bool reverse;
 
         /// <summary>
-        /// 頂点格納方法
-        /// </summary>
-        private VertexStoreType storeType;
-
-        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="min">最小値</param>
         /// <param name="max">最大値</param>
         /// <param name="storeType">頂点格納方法</param>
         /// <param name="reverse">向き</param>
-        public Cube(Vector3 min, Vector3 max, VertexStoreType storeType = VertexStoreType.VertexArray, bool reverse = false)
+        public Cube(Vector3 min, Vector3 max, bool reverse = false)
         {
             this.min = min;
             this.max = max;
             this.reverse = reverse;
-
-            if (storeType == VertexStoreType.VertexArray)
-            {
-                CreateVertexArrayCube();
-            }
-            else
-            {
-                throw new System.Exception();
-            }
+            CreateVertexArrayCube();
         }
 
         /// <summary>
