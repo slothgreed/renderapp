@@ -1,4 +1,6 @@
-﻿using System;
+﻿using KI.Asset.Primitive;
+using OpenTK;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +20,10 @@ namespace KI.Asset.Gizmo
 
         private void Create()
         {
+            Circle circleXY = new Circle(1, Vector3.Zero, Vector3.UnitZ, 10);
+            Circle circleYZ = new Circle(1, Vector3.Zero, Vector3.UnitX, 10);
+            Circle circleXZ = new Circle(1, Vector3.Zero, Vector3.UnitY, 10);
+
 
         }
     }

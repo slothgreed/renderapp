@@ -9,6 +9,7 @@ using KI.Renderer;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using KI.Analyzer;
+using KI.Asset.Gizmo;
 
 namespace CADApp.Model.Node
 {
@@ -25,6 +26,11 @@ namespace CADApp.Model.Node
         private bool VisibleSelectVertex;
         private bool VisibleSelectLine;
         private bool VisibleSelectTriangle;
+
+        private MoveGizmo moveGizmo;
+        private ScaleGizmo scaleGizmo;
+        private RotateGizmo rotateGizmo;
+
 
         /// <summary>
         /// 選択しているかどうか
@@ -56,6 +62,12 @@ namespace CADApp.Model.Node
         VertexBuffer selectControlPointBuffer;
 
         /// <summary>
+        /// 移動GizmoのVBO
+        /// </summary>
+        VertexBuffer moveGizmoBuffer;
+
+
+        /// <summary>
         /// 選択中の形状全体のバウンディングボックス
         /// </summary>
         private BDB selectBDB;
@@ -71,7 +83,6 @@ namespace CADApp.Model.Node
             }
         }
 
-
         Material material;
 
         public AppRootNode(string name)
@@ -80,10 +91,18 @@ namespace CADApp.Model.Node
             var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
             material = new Material(shader);
             selectBDB = new BDB();
-            GenerateBuffer();
+            //GenerateGizmo();
+            GenerateSelectVertexBuffer();
         }
 
-        private void GenerateBuffer()
+        private void GenerateGizmo()
+        {
+            moveGizmo = new MoveGizmo();
+            moveGizmoBuffer = new VertexBuffer();
+            moveGizmoBuffer.SetBuffer(moveGizmo.Vertex, null, moveGizmo.Color, null, moveGizmo.Index);
+        }
+
+        private void GenerateSelectVertexBuffer()
         {
             selectVertexBuffer = new VertexBuffer();
             selectLineBuffer = new VertexBuffer();

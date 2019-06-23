@@ -21,12 +21,11 @@ namespace CADApp.Model
         {
             ClearVertex();
 
-            if (ControlPoint.Count == 4)
+            if (ControlPoint.Count > 3)
             {
                 var spline = new BSpline(ControlPoint.Select(v => v.Position).ToArray(), 3);
                 SetVertex(spline.Position);
                 SetLineIndex(spline.Index);
-
             }
         }
     }

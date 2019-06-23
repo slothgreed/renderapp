@@ -60,33 +60,29 @@ namespace KI.Asset.Primitive
             ControlPoint = controlPoint;
             Dimension = dimension;
             SetUniformKnotVector();
+            SetOpenUniformKnotVector();
 
             Create();
         }
 
-        /// <summary>
-        /// 開一様ノットベクトル
-        /// </summary>
         private void SetOpenUniformKnotVector()
         {
             knot = new float[ControlPoint.Length + Dimension + 1];
             for (int i = 0; i < Dimension + 1; i++)
             {
                 knot[i] = 0;
+                knot[knot.Length - 1 - i] = 1;
             }
 
-            // 0と1以外の要素数
-            int durNum = knot.Length - 2 * (Dimension + 1);
-            float value = 1.0f / (durNum + 1); // 0 < value < 1; 
+            int remain = knot.Length - 2 * (Dimension + 1);
+            float interval = 1.0f / (remain + 1);
+            int index = 1;
             for (int i = Dimension + 1; i < knot.Length - Dimension - 1; i++)
             {
-                knot[i] = value;
+                knot[i] = interval * index;
+                index++;
             }
 
-            for (int i = knot.Length - Dimension - 1; i < knot.Length; i++)
-            {
-                knot[i] = 1;
-            }
         }
 
         /// <summary>
@@ -105,7 +101,6 @@ namespace KI.Asset.Primitive
 
         /// <summary>
         /// Bスプライン基底関数
-        /// 正常な結果にならないのでDeboorを利用
         /// </summary>
         /// <param name = "j" > ループインデックス </ param >
         /// < param name="k">次元</param>
@@ -117,12 +112,10 @@ namespace KI.Asset.Primitive
             {
                 if (knot[j] <= parameter && parameter < knot[j + 1])
                 {
-                    //Logger.Log(Logger.LogLevel.Allway, j.ToString() + ":" + k.ToString() + "(1)");
                     return 1;
                 }
                 else
                 {
-                    //Logger.Log(Logger.LogLevel.Allway, j.ToString() + ":" + k.ToString() + "(0)");
                     return 0;
                 }
             }
@@ -141,10 +134,16 @@ namespace KI.Asset.Primitive
             valueL *= BasisFunction(j, k - 1, parameter);
             valueR *= BasisFunction(j + 1, k - 1, parameter);
 
-            //Logger.Log(Logger.LogLevel.Allway, j.ToString() + ":" + k.ToString() + ":(" + valueL.ToString() + "," + valueR.ToString() + ")");
             return valueL + valueR;
         }
 
+        /// <summary>
+        /// Deboor BSplineの簡易実装
+        /// </summary>
+        /// <param name="j"></param>
+        /// <param name="k"></param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         private Vector3 Deboor(int j, int k, float parameter)
         {
             if(k == 0)
@@ -155,56 +154,49 @@ namespace KI.Asset.Primitive
             Vector3 valueL = Deboor(j - 1, k - 1, parameter);
             Vector3 valueR = Deboor(j, k - 1, parameter);
 
-            float blend = ((parameter - knot[j]) / knot[j + Dimension - k] - knot[j]);
+            float blend = (parameter - knot[j]) / (knot[j + Dimension + 1 - k] - knot[j]);
             return ((valueL) * (1 - blend) + (valueR * blend));
         }
 
         private void Create()
         {
-            //List<Vector3> points = new List<Vector3>();
-            //List<int> lines = new List<int>();
-            //for (float p = 0.01f; p < 3; p += 0.01f)
-            //{
-            //    Vector3 point = new Vector3();
-            //    for (int i = 0; i < controlPoint.Length; i++)
-            //    {
-            //        float val = BasisFunction(i, Dimension, p);
-            //        point += controlPoint[i] * val;
-            //        //point = Deboor(i, Dimension, p);
-            //        //Logger.Log(Logger.LogLevel.Allway, "");
-            //    }
+            int tessNum = 100 - 1;
+            List<Vector3> points = new List<Vector3>();
+            List<int> lines = new List<int>();
+            float interval = (knot[ControlPoint.Length] - knot[Dimension]) / tessNum;
+            for (int i = 0; i <= tessNum; i++)
+            {
+                float parameter = knot[Dimension] + (i * interval);
 
-            //    points.Add(point);
-            //}
+                int curveSeg = -1;
+                for (int j = Dimension; j < ControlPoint.Length + 2; j++)
+                {
+                    if (knot[j] <= parameter && parameter <= knot[j + 1])
+                    {
+                        curveSeg = j;
+                        break;
+                    }
+                }
 
-            //points.Clear();
-            //for (float j = 0; j <= 7 * 10; j++)
-            //{
-            //    float t = j / 10.0f;
-            //    if (j == 70)
-            //    {
-            //        t -= 0.001f;
-            //    }
+                if (curveSeg == -1)
+                {
+                    continue;
+                }
 
-            //    Vector3 point = new Vector3();
-            //    for (int i = 0; i <= 4; i++)
-            //    {
-            //        point += ControlPoint[i] * (float)BasisFunction2(i, Dimension, t);
-            //    }
+                Vector3 point = Deboor(curveSeg, Dimension, parameter);
+                points.Add(point);
+            }
 
-            //    points.Add(point);
-            //}
+            lines.Add(0);
+            for (int i = 1; i < points.Count; i++)
+            {
+                lines.Add(i);
+                lines.Add(i);
+            }
+            lines.Add(points.Count - 1);
 
-            //lines.Add(0);
-            //for(int i = 1; i < points.Count; i++)
-            //{
-            //    lines.Add(i);
-            //    lines.Add(i);
-            //}
-            //lines.Add(points.Count - 1);
-
-            //Position = points.ToArray();
-            //Index = lines.ToArray();
+            Position = points.ToArray();
+            Index = lines.ToArray();
         }
     }
 }

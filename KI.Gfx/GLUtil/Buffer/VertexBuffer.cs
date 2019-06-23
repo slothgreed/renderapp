@@ -105,9 +105,19 @@ namespace KI.Gfx.GLUtil.Buffer
         public void SetBuffer(Vector3[] position, Vector3[] normal, Vector3[] color, Vector2[] texCoord, int[] indexBuffer)
         {
             SetPosition(position);
-            SetNormal(normal);
-            SetColor(color);
-            SetTextureCode(texCoord);
+            if (normal != null)
+            {
+                SetNormal(normal);
+            }
+            if (color != null)
+            {
+                SetColor(color);
+            }
+
+            if(texCoord != null)
+            {
+                SetTextureCode(texCoord);
+            }
 
             if (indexBuffer == null)
             {
