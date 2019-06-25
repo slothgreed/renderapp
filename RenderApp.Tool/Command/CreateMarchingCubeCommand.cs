@@ -55,7 +55,7 @@ namespace RenderApp.Tool.Command
             var voxel = new VoxelSpace(targetObject.Polygon.Vertexs.Select(p => p.Position).ToList(), targetObject.Polygon.Index, marchingCommandArgs.Partition, min, max);
             var marching = new MarchingCubesAlgorithm(voxel, 0.8f);
 
-            var polygon = new Polygon("MarchingCube :" + targetObject.Name, marching.Meshs, PolygonType.Triangles);
+            var polygon = new Polygon("MarchingCube :" + targetObject.Name, marching.Meshs, KIPrimitiveType.Triangles);
             PolygonNode marghingObject = SceneNodeFactory.Instance.CreatePolygonNode(polygon.Name, polygon);
             marghingObject.ModelMatrix = targetObject.ModelMatrix;
             marchingCommandArgs.Scene.AddObject(marghingObject);

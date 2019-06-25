@@ -69,7 +69,7 @@ namespace RenderApp.Tool.Command
             voxel = new VoxelSpace(targetObject.Polygon.Vertexs.Select(p => p.Position).ToList(), targetObject.Polygon.Index, partition, min, max);
             var mesh = GetVoxelObject();
 
-            Polygon info = new Polygon("Voxel :" + targetObject.Name, mesh, PolygonType.Quads);
+            Polygon info = new Polygon("Voxel :" + targetObject.Name, mesh, KIPrimitiveType.Quads);
             PolygonNode voxelObject = SceneNodeFactory.Instance.CreatePolygonNode("Voxel :" + targetObject.Name, info);
             voxelObject.Transformation(targetObject.ModelMatrix);
             scene.AddObject(voxelObject);

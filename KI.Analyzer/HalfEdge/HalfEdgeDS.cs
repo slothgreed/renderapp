@@ -19,7 +19,7 @@ namespace KI.Analyzer
             : base(name)
         {
             Editor = new HalfEdgeDSEditor(this);
-            Type = PolygonType.Triangles;
+            Type = KIPrimitiveType.Triangles;
         }
 
         /// <summary>

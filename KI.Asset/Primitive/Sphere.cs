@@ -175,7 +175,7 @@ namespace KI.Asset
                 indexs.Add(3 * i + 2);
             }
 
-            Model = new Polygon(this.Name, vertexs,indexs, PolygonType.Triangles);
+            Model = new Polygon(this.Name, vertexs,indexs, KIPrimitiveType.Triangles);
 
             //info.ConvertVertexArray();
         }

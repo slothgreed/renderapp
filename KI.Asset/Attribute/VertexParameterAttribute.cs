@@ -40,7 +40,7 @@ namespace KI.Asset.Attribute
         /// <param name="type">種類</param>
         /// <param name="material">マテリアル</param>
         /// <param name="Color">色情報</param>
-        public VertexParameterAttribute(string name, VertexBuffer vertexBuffer, PolygonType type, Material material, float[] parameter)
+        public VertexParameterAttribute(string name, VertexBuffer vertexBuffer, KIPrimitiveType type, Material material, float[] parameter)
             : base(name, vertexBuffer, type, material)
         {
             Max = parameter.Max();

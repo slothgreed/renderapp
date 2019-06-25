@@ -45,7 +45,7 @@ namespace KI.Asset.Primitive
         /// <summary>
         /// タイプ
         /// </summary>
-        public PolygonType Type { get; private set; } = PolygonType.LineLoop;
+        public KIPrimitiveType Type { get; private set; }
         
         /// <summary>
         /// コンストラクタ
@@ -54,12 +54,13 @@ namespace KI.Asset.Primitive
         /// <param name="center">位置</param>
         /// <param name="normal">円の向き</param>
         /// <param name="partition">分割数</param>
-        public Circle(float radius, Vector3 center, Vector3 normal, int partition)
+        public Circle(float radius, Vector3 center, Vector3 normal, int partition, KIPrimitiveType type = KIPrimitiveType.Triangles)
         {
             Radius = radius;
             Center = center;
             Normal = normal;
             Partition = partition;
+            Type = type;
             Create();
         }
 
@@ -76,28 +77,51 @@ namespace KI.Asset.Primitive
             Quaternion quart = Quaternion.FromAxisAngle(ex, Vector3.CalculateAngle(Normal, Vector3.UnitZ));
             var quartMat = Matrix4.CreateFromQuaternion(quart);
 
-            position.Add(Center);
-            for (int i = 0; i < Partition; i++)
+            if (Type == KIPrimitiveType.Triangles)
             {
-                var pos = Calculator.GetSphericalPolarCoordinates(Radius, (float)Math.PI / 2, theta * i);
-                pos = Calculator.Multiply(quartMat, pos);
-                position.Add(pos + Center);
-            }
+                position.Add(Center);
+                for (int i = 0; i < Partition; i++)
+                {
+                    var pos = Calculator.GetSphericalPolarCoordinates(Radius, (float)Math.PI / 2, theta * i);
+                    pos = Calculator.Multiply(quartMat, pos);
+                    position.Add(pos + Center);
+                }
 
-            for (int i = 1; i < position.Count - 1; i++)
-            {
+                for (int i = 1; i < position.Count - 1; i++)
+                {
+                    index.Add(0);
+                    index.Add(i + 1);
+                    index.Add(i);
+                }
+
                 index.Add(0);
-                index.Add(i + 1);
-                index.Add(i);
+                index.Add(1);
+                index.Add(position.Count - 1);
+
+                Position = position.ToArray();
+                Index = index.ToArray();
             }
+            else if(Type == KIPrimitiveType.Lines)
+            {
+                for (int i = 0; i < Partition; i++)
+                {
+                    var pos = Calculator.GetSphericalPolarCoordinates(Radius, (float)Math.PI / 2, theta * i);
+                    pos = Calculator.Multiply(quartMat, pos);
+                    position.Add(pos + Center);
+                    index.Add(i);
+                    if (i == Partition - 1)
+                    {
+                        index.Add(0);
+                    }
+                    else
+                    {
+                        index.Add(i + 1);
+                    }
+                }
 
-            index.Add(0);
-            index.Add(1);
-            index.Add(position.Count - 1);
-
-            Position = position.ToArray();
-            Index = index.ToArray();
-
+                Position = position.ToArray();
+                Index = index.ToArray();
+            }
         }
     }
 }

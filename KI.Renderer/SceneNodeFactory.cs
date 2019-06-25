@@ -49,7 +49,7 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="name">名前</param>
         /// <returns>描画オブジェクト</returns>
-        public PolygonNode CreatePolygonNode(string name, Vector3[] position, Vector3[] normal, Vector2[] texcoord, int[] index, PolygonType type)
+        public PolygonNode CreatePolygonNode(string name, Vector3[] position, Vector3[] normal, Vector2[] texcoord, int[] index, KIPrimitiveType type)
         {
             Vertex[] vertex = new Vertex[position.Length];
             for (int i = 0; i < position.Length; i++)
@@ -74,7 +74,7 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="name">名前</param>
         /// <returns>描画オブジェクト</returns>
-        public PolygonNode CreatePolygonNode(string name, Vector3[] position, Vector3[] color, int[] index, PolygonType type)
+        public PolygonNode CreatePolygonNode(string name, Vector3[] position, Vector3[] color, int[] index, KIPrimitiveType type)
         {
             Vertex[] vertex = new Vertex[position.Length];
             for (int i = 0; i < position.Length; i++)

@@ -42,7 +42,7 @@ namespace KI.Asset.Attribute
         /// <param name="vertexBuffer">線分</param>
         /// <param name="material">マテリアル</param>
         public SplitAttribute(string name, VertexBuffer vertexBuffer, Material material)
-            : base(name, vertexBuffer, PolygonType.Patches, material)
+            : base(name, vertexBuffer, KIPrimitiveType.Patches, material)
         {
             uOuter = 2;
             uInner = 2;

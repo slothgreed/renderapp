@@ -29,7 +29,7 @@ namespace KI.Asset.Attribute
         /// <param name="type">種類</param>
         /// <param name="material">マテリアル</param>
         /// <param name="Color">色情報</param>
-        public VertexColorAttribute(string name, VertexBuffer vertexBuffer, PolygonType type, Material material, Vector3[] colors)
+        public VertexColorAttribute(string name, VertexBuffer vertexBuffer, KIPrimitiveType type, Material material, Vector3[] colors)
             : base(name, vertexBuffer, type, material)
         {
             vertexColors = colors;

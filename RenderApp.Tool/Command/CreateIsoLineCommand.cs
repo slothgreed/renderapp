@@ -82,10 +82,10 @@ namespace RenderApp.Tool.Command
                 }
             }
 
-            Polygon isoLines = new Polygon("IsoLines", vertexs, createLine, PolygonType.Lines);
+            Polygon isoLines = new Polygon("IsoLines", vertexs, createLine, KIPrimitiveType.Lines);
             VertexBuffer vertexBuffer = new VertexBuffer();
             vertexBuffer.SetupLineBuffer(isoLines.Vertexs, isoLines.Index, isoLines.Lines);
-            var polyAttriute = new PolygonAttribute("IsoLines", vertexBuffer, PolygonType.Lines, targetObject.Polygon.Material);
+            var polyAttriute = new PolygonAttribute("IsoLines", vertexBuffer, KIPrimitiveType.Lines, targetObject.Polygon.Material);
             targetObject.Attributes.Add(polyAttriute);
 
             return CommandResult.Success;

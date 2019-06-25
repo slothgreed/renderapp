@@ -119,7 +119,7 @@ namespace RenderApp.Tool.Controller
             List<int> indexs;
             dijkstra.CreateDijkstraLine(out vertexs, out indexs);
 
-            Polygon polygon = new Polygon("DijkstraLine", vertexs, indexs, PolygonType.Lines);
+            Polygon polygon = new Polygon("DijkstraLine", vertexs, indexs, KIPrimitiveType.Lines);
             PolygonNode lineObject = SceneNodeFactory.Instance.CreatePolygonNode("DijkstraLine", polygon);
             lineObject.ModelMatrix = selectObject.ModelMatrix;
             Workspace.Instance.RenderSystem.ActiveScene.AddObject(lineObject);

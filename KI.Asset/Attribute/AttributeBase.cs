@@ -16,7 +16,7 @@ namespace KI.Asset.Attribute
         /// <param name="name">名前</param>
         /// <param name="type">レンダリングタイプ</param>
         /// <param name="material">マテリアル</param>
-        public AttributeBase(string name, PolygonType type, Material material)
+        public AttributeBase(string name, KIPrimitiveType type, Material material)
             : base(name)
         {
             Material = material;
@@ -28,7 +28,7 @@ namespace KI.Asset.Attribute
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="material">マテリアル</param>
-        public AttributeBase(string name, VertexBuffer vertexBuffer, PolygonType type, Material material)
+        public AttributeBase(string name, VertexBuffer vertexBuffer, KIPrimitiveType type, Material material)
             : base(name)
         {
             VertexBuffer = vertexBuffer;
@@ -41,7 +41,7 @@ namespace KI.Asset.Attribute
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="material">マテリアル</param>
-        public AttributeBase(string name, PolygonType type)
+        public AttributeBase(string name, KIPrimitiveType type)
             : base(name)
         {
             Type = type;
@@ -55,7 +55,7 @@ namespace KI.Asset.Attribute
         /// <summary>
         /// レンダリングするときの種類
         /// </summary>
-        public PolygonType Type { get; private set; }
+        public KIPrimitiveType Type { get; private set; }
 
         /// <summary>
         /// 頂点バッファ

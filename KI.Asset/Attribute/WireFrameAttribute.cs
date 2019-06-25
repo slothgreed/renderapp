@@ -29,7 +29,7 @@ namespace KI.Asset.Attribute
         /// <param name="material">マテリアル</param>
         /// <param name="Color">色情報</param>
         public WireFrameAttribute(string name, VertexBuffer vertexBuffer, Vector4 color)
-            : base(name, vertexBuffer, PolygonType.Triangles, new Material())
+            : base(name, vertexBuffer, KIPrimitiveType.Triangles, new Material())
         {
             Color = color;
 

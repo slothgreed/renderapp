@@ -49,7 +49,7 @@ namespace KI.Asset.Loader.Importer
                 vertex.Add(new Vertex(i + 2, stlData.Position[i + 2], stlData.Normal[i + 2], Vector3.One));
             }
 
-            Model = new Polygon(stlData.FileName, vertex, index, PolygonType.Triangles);
+            Model = new Polygon(stlData.FileName, vertex, index, KIPrimitiveType.Triangles);
         }
     }
 }

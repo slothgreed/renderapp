@@ -59,8 +59,8 @@ namespace KI.Asset
         /// <returns>ファイルパス</returns>
         public string GetVertexShader(Polygon polygon)
         {
-            if (polygon.Type == PolygonType.Lines ||
-                polygon.Type == PolygonType.Points)
+            if (polygon.Type == KIPrimitiveType.Lines ||
+                polygon.Type == KIPrimitiveType.Points)
             {
                 return Directory + @"GBuffer\GeneralPC.vert";
             }
@@ -132,8 +132,8 @@ namespace KI.Asset
                 return shaderPath;
             }
 
-            if (polygon.Type == PolygonType.Lines ||
-                polygon.Type == PolygonType.Points)
+            if (polygon.Type == KIPrimitiveType.Lines ||
+                polygon.Type == KIPrimitiveType.Points)
             {
                 return Directory + @"GBuffer\GeneralPC.frag";
             }

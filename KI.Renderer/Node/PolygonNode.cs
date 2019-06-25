@@ -53,7 +53,7 @@ namespace KI.Renderer
         /// <summary>
         /// ポリゴンの種類(いずれPolygon.Typeを消して PolygonNode がTypeを持つようにする)
         /// </summary>
-        public PolygonType Type
+        public KIPrimitiveType Type
         {
             get
             {
@@ -110,11 +110,11 @@ namespace KI.Renderer
 
             VertexBuffer = new VertexBuffer();
 
-            if (Type == PolygonType.Points)
+            if (Type == KIPrimitiveType.Points)
             {
                 VertexBuffer.SetupPointBuffer(polygon.Vertexs, polygon.Index);
             }
-            else if (Type == PolygonType.Lines)
+            else if (Type == KIPrimitiveType.Lines)
             {
                 VertexBuffer.SetupLineBuffer(polygon.Vertexs, polygon.Index, polygon.Lines);
             }
@@ -129,11 +129,11 @@ namespace KI.Renderer
         /// </summary>
         public void UpdateVertexBufferObject()
         {
-            if (Type == PolygonType.Points)
+            if (Type == KIPrimitiveType.Points)
             {
                 VertexBuffer.SetupPointBuffer(Polygon.Vertexs, Polygon.Index);
             }
-            else if (Type == PolygonType.Lines)
+            else if (Type == KIPrimitiveType.Lines)
             {
                 VertexBuffer.SetupLineBuffer(Polygon.Vertexs, Polygon.Index, Polygon.Lines);
             }

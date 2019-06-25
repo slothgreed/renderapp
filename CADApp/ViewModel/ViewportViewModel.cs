@@ -200,11 +200,11 @@ namespace CADApp.ViewModel
             MainScene.AddObject(MainScene.MainLight);
 
             var axis = new Axis(Vector3.Zero, MainScene.WorldMax);
-            var axisObject = SceneNodeFactory.Instance.CreatePolygonNode("Axis", axis.Vertex, axis.Color, axis.Index, PolygonType.Lines);
+            var axisObject = SceneNodeFactory.Instance.CreatePolygonNode("Axis", axis.Vertex, axis.Color, axis.Index, KIPrimitiveType.Lines);
             MainScene.AddObject(axisObject);
 
             var grid = new GridPlane(1, 0.1f, new Vector3(0.8f));
-            var girdObject = SceneNodeFactory.Instance.CreatePolygonNode("GridPlane", grid.Position, grid.Color, grid.Index, PolygonType.Lines);
+            var girdObject = SceneNodeFactory.Instance.CreatePolygonNode("GridPlane", grid.Position, grid.Color, grid.Index, KIPrimitiveType.Lines);
             MainScene.AddObject(girdObject);
         }
 

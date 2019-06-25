@@ -81,26 +81,26 @@ namespace CADApp.Model.Node
 
             if (VisibleVertex)
             {
-                Draw(scene, PolygonType.Points, pointAttribute);
+                Draw(scene, KIPrimitiveType.Points, pointAttribute);
             }
 
             if (VisibleControlPoint)
             {
-                Draw(scene, PolygonType.Points, controlPointAttribute);
+                Draw(scene, KIPrimitiveType.Points, controlPointAttribute);
             }
 
             if (VisibleLine)
             {
-                Draw(scene, PolygonType.Lines, lineAttribute);
+                Draw(scene, KIPrimitiveType.Lines, lineAttribute);
             }
 
             if (VisibleTriangle)
             {
-                Draw(scene, PolygonType.Triangles, triangleAttribute);
+                Draw(scene, KIPrimitiveType.Triangles, triangleAttribute);
             }
         }
 
-        private void Draw(Scene scene, PolygonType type, AttributeBase attribute)
+        private void Draw(Scene scene, KIPrimitiveType type, AttributeBase attribute)
         {
             attribute.Binding();
             ShaderHelper.InitializeState(scene, this, attribute.VertexBuffer, attribute.Material);
@@ -145,7 +145,7 @@ namespace CADApp.Model.Node
 
             lineAttribute = new SingleColorAttribute("Line", lineBuffer, Vector4.Zero);
             pointAttribute = new SingleColorAttribute("Point", vertexBuffer, Vector4.UnitY + Vector4.UnitZ + Vector4.UnitW);
-            triangleAttribute = new PolygonAttribute("Triangle", triangleBuffer, PolygonType.Triangles, material);
+            triangleAttribute = new PolygonAttribute("Triangle", triangleBuffer, KIPrimitiveType.Triangles, material);
             controlPointAttribute = new SingleColorAttribute("Point", controlPointBuffer, Vector4.UnitY + Vector4.UnitW);
         }
 

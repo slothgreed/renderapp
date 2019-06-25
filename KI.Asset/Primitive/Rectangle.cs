@@ -94,7 +94,7 @@ namespace KI.Asset
                 new Vertex(2, quad2, Formula.Xyz, Vector3.UnitZ, Vector2.One),
                 new Vertex(3, quad3, Formula.Xyz, Vector3.One, Vector2.UnitY));
 
-            Model = new Polygon(this.Name, new List<Mesh>() { mesh }, PolygonType.Quads);
+            Model = new Polygon(this.Name, new List<Mesh>() { mesh }, KIPrimitiveType.Quads);
         }
         #endregion
     }

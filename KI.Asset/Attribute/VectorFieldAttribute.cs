@@ -17,7 +17,7 @@ namespace KI.Asset.Attribute
         /// </summary>
         private ArrayBuffer directionBuffer;
 
-        public VectorFieldAttribute(string name, VertexBuffer vertexBuffer, Material material, Vector3[] directions, PolygonType polygonType)
+        public VectorFieldAttribute(string name, VertexBuffer vertexBuffer, Material material, Vector3[] directions, KIPrimitiveType polygonType)
             : base(name, vertexBuffer, polygonType, material)
         {
             directionBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer, EArrayType.Vec3Array);

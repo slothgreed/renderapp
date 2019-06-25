@@ -103,7 +103,7 @@ namespace KI.Asset.Loader.Importer
 
                 if (mesh.Count != 0)
                 {
-                    polygon = new Polygon(objData.FileName, mesh, PolygonType.Triangles);
+                    polygon = new Polygon(objData.FileName, mesh, KIPrimitiveType.Triangles);
                     SetMaterial(polygon, material);
                     if (polygon != null)
                     {

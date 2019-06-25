@@ -68,7 +68,7 @@ namespace RenderApp.Tool.Command
                 }
             }
 
-            var polygon = new Polygon("HalfEdgeWireFrame :" + targetObject.Name, position, lines, PolygonType.Lines);
+            var polygon = new Polygon("HalfEdgeWireFrame :" + targetObject.Name, position, lines, KIPrimitiveType.Lines);
             PolygonNode wireframe = SceneNodeFactory.Instance.CreatePolygonNode("HalfEdgeWireFrame :" + targetObject.Name, polygon);
             wireframe.ModelMatrix = targetObject.ModelMatrix;
             scene.AddObject(wireframe);

@@ -41,7 +41,7 @@ namespace KI.Gfx.Geometry
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
-        public Polygon(string name, PolygonType type = PolygonType.Points)
+        public Polygon(string name, KIPrimitiveType type = KIPrimitiveType.Points)
            : base(name)
         {
             Type = type;
@@ -52,7 +52,7 @@ namespace KI.Gfx.Geometry
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="vertex">頂点</param>
-        public Polygon(string name, List<Vertex> vertex, PolygonType type = PolygonType.Points)
+        public Polygon(string name, List<Vertex> vertex, KIPrimitiveType type = KIPrimitiveType.Points)
             : base(name)
         {
             vertexs = vertex;
@@ -64,7 +64,7 @@ namespace KI.Gfx.Geometry
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="vertex">頂点</param>
-        public Polygon(string name, Vertex[] vertexArray, int[] indexArray, PolygonType type = PolygonType.Points)
+        public Polygon(string name, Vertex[] vertexArray, int[] indexArray, KIPrimitiveType type = KIPrimitiveType.Points)
             : base(name)
         {
             vertexs = new List<Vertex>();
@@ -79,7 +79,7 @@ namespace KI.Gfx.Geometry
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="line">線分リスト</param>
-        public Polygon(string name, List<Line> line, PolygonType type = PolygonType.Lines)
+        public Polygon(string name, List<Line> line, KIPrimitiveType type = KIPrimitiveType.Lines)
             : base(name)
         {
             lines = line;
@@ -92,7 +92,7 @@ namespace KI.Gfx.Geometry
         /// <param name="name">名前</param>
         /// <param name="mesh">メッシュ</param>
         /// <param name="type">種類</param>
-        public Polygon(string name, List<Mesh> mesh, PolygonType type)
+        public Polygon(string name, List<Mesh> mesh, KIPrimitiveType type)
             : base(name)
         {
             meshs = mesh;
@@ -106,7 +106,7 @@ namespace KI.Gfx.Geometry
         /// <param name="vertex">頂点リスト</param>
         /// <param name="indexList">頂点バッファリスト</param>
         /// <param name="type">種類</param>
-        public Polygon(string name, List<Vertex> vertex, List<int> indexList, PolygonType type)
+        public Polygon(string name, List<Vertex> vertex, List<int> indexList, KIPrimitiveType type)
             : base(name)
         {
             vertexs = vertex;
@@ -122,7 +122,7 @@ namespace KI.Gfx.Geometry
         /// <summary>
         /// 形状種類
         /// </summary>
-        public PolygonType Type { get; set; }
+        public KIPrimitiveType Type { get; set; }
 
         /// <summary>
         /// 頂点インデックスリスト
@@ -194,7 +194,7 @@ namespace KI.Gfx.Geometry
         /// <param name="type">形状タイプ</param>
         public virtual void UpdateVertexArray()
         {
-            if (Type == PolygonType.Points &&
+            if (Type == KIPrimitiveType.Points &&
                 Index.Count != 0)
             {
                 Index.Clear();
@@ -208,7 +208,7 @@ namespace KI.Gfx.Geometry
                 }
             }
 
-            if (Type == PolygonType.Lines &&
+            if (Type == KIPrimitiveType.Lines &&
                 Index.Count != 0)
             {
                 Index.Clear();
@@ -225,7 +225,7 @@ namespace KI.Gfx.Geometry
                 OnUpdate();
             }
 
-            if (Type == PolygonType.Triangles &&
+            if (Type == KIPrimitiveType.Triangles &&
                 Index.Count != 0)
             {
                 Index.Clear();

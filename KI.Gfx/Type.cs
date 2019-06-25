@@ -1,6 +1,6 @@
 ﻿namespace KI.Gfx
 {
-    public enum PolygonType
+    public enum KIPrimitiveType
     {
         Points,
         Lines,

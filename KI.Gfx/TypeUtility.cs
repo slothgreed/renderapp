@@ -10,19 +10,19 @@ namespace KI.Gfx
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static PrimitiveType ConvertPolygonType(PolygonType type)
+        public static PrimitiveType ConvertPolygonType(KIPrimitiveType type)
         {
             switch (type)
             {
-                case PolygonType.Points:
+                case KIPrimitiveType.Points:
                     return PrimitiveType.Points;
-                case PolygonType.Lines:
+                case KIPrimitiveType.Lines:
                     return PrimitiveType.Lines;
-                case PolygonType.Triangles:
+                case KIPrimitiveType.Triangles:
                     return PrimitiveType.Triangles;
-                case PolygonType.Quads:
+                case KIPrimitiveType.Quads:
                     return PrimitiveType.Quads;
-                case PolygonType.Patches:
+                case KIPrimitiveType.Patches:
                     return PrimitiveType.Patches;
                 default:
                     throw new NotSupportedException();

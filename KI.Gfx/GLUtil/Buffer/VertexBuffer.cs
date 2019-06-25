@@ -341,7 +341,7 @@ namespace KI.Gfx.GLUtil.Buffer
         /// <param name="vertexSrc">頂点バッファ</param>
         /// <param name="indexSrc">インデックスバッファ</param>
         /// <param name="meshSrc">メッシュリスト</param>
-        public void SetupMeshBuffer(IEnumerable<Vertex> vertexSrc, List<int> indexSrc, List<Mesh> meshSrc, PolygonType type)
+        public void SetupMeshBuffer(IEnumerable<Vertex> vertexSrc, List<int> indexSrc, List<Mesh> meshSrc, KIPrimitiveType type)
         {
             int[] indexBuffer = null;
             Vector3[] position = null;
@@ -361,7 +361,7 @@ namespace KI.Gfx.GLUtil.Buffer
                 var vertexs = new List<Vertex>();
                 var normals = new List<Vector3>();
 
-                if (type == PolygonType.Triangles)
+                if (type == KIPrimitiveType.Triangles)
                 {
                     foreach (var mesh in meshSrc)
                     {

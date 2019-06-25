@@ -169,7 +169,7 @@ namespace RenderApp.ViewModel
             mainScene.AddObject(mainScene.MainLight);
 
             var axis = new Axis(Vector3.Zero, mainScene.WorldMax);
-            var axisObject = SceneNodeFactory.Instance.CreatePolygonNode(axis.ToString(), axis.Vertex, axis.Color, axis.Index, PolygonType.Lines);
+            var axisObject = SceneNodeFactory.Instance.CreatePolygonNode(axis.ToString(), axis.Vertex, axis.Color, axis.Index, KIPrimitiveType.Lines);
             mainScene.AddObject(axisObject);
 
             //var sponzas = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/crytek-sponza/sponza.obj");

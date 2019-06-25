@@ -14,7 +14,7 @@ namespace RenderApp.Tool
             }
 
             PolygonNode polygonNode = asset as PolygonNode;
-            if (polygonNode.Type != PolygonType.Triangles)
+            if (polygonNode.Type != KIPrimitiveType.Triangles)
             {
                 return CommandResult.Failed;
             }

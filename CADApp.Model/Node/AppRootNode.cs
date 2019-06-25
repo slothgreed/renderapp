@@ -179,23 +179,23 @@ namespace CADApp.Model.Node
         {
             if (VisibleSelectVertex == true)
             {
-                Draw(scene, PolygonType.Points, selectVertexBuffer);
+                Draw(scene, KIPrimitiveType.Points, selectVertexBuffer);
             }
 
             if (VisibleSelectLine)
             {
                 GL.LineWidth(5);
-                Draw(scene, PolygonType.Lines, selectLineBuffer);
+                Draw(scene, KIPrimitiveType.Lines, selectLineBuffer);
                 GL.LineWidth(1);
             }
 
             if (VisibleSelectTriangle)
             {
-                Draw(scene, PolygonType.Triangles, selectTriangleBuffer);
+                Draw(scene, KIPrimitiveType.Triangles, selectTriangleBuffer);
             }
         }
 
-        private void Draw(Scene scene, PolygonType type, VertexBuffer buffer)
+        private void Draw(Scene scene, KIPrimitiveType type, VertexBuffer buffer)
         {
             ShaderHelper.InitializeState(scene, this, buffer, material);
             material.Shader.BindBuffer();

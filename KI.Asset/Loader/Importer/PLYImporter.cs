@@ -55,7 +55,7 @@ namespace KI.Asset.Loader.Importer
             }
 
             List<int> index = plyData.FaceIndex.ToList();
-            Model = new Polygon(plyData.FileName, vertexs, index, PolygonType.Triangles);
+            Model = new Polygon(plyData.FileName, vertexs, index, KIPrimitiveType.Triangles);
         }
     }
 }
