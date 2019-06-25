@@ -2,22 +2,14 @@
 using OpenTK;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KI.Asset.Primitive
 {
     /// <summary>
     /// 円錐
     /// </summary>
-    public class Cone
+    public class Cone : PrimitiveBase
     {
-        /// <summary>
-        /// 頂点インデクス
-        /// </summary>
-        public int[] Index { get; private set; }
-
         /// <summary>
         /// 半径
         /// </summary>

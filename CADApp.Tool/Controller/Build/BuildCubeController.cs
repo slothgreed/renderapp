@@ -9,6 +9,7 @@ using KI.Mathmatics;
 using KI.Tool.Command;
 using KI.Tool.Controller;
 using OpenTK;
+using KI.Asset.Primitive;
 
 namespace CADApp.Tool.Controller
 {
@@ -63,7 +64,6 @@ namespace CADApp.Tool.Controller
                     mode = BuildCubeMode.SelectStart;
                 }
             }
-
 
             return base.Down(mouse);
         }

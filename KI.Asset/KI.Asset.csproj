@@ -91,6 +91,7 @@
     <Compile Include="Primitive\GridPlane.cs" />
     <Compile Include="Primitive\Icosahedron.cs" />
     <Compile Include="Primitive\ICreateModel.cs" />
+    <Compile Include="Primitive\PrimitiveBase.cs" />
     <Compile Include="Primitive\Rectangle.cs" />
     <Compile Include="Primitive\Sphere.cs" />
     <Compile Include="Primitive\Spline.cs" />

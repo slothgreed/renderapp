@@ -7,22 +7,12 @@ using System.Threading.Tasks;
 
 namespace KI.Asset.Primitive
 {
-    public class SplineCurve
+    public class SplineCurve : PrimitiveBase
     {
-        /// <summary>
-        /// 位置情報(GL_LINES)
-        /// </summary>
-        public Vector3[] Position;
-
         /// <summary>
         /// コントロールポイント
         /// </summary>
         public Vector3[] ControlPoint;
-
-        /// <summary>
-        /// インデックス情報
-        /// </summary>
-        public int[] Index;
 
         /// <summary>
         /// Line全体の点の数
