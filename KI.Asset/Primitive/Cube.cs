@@ -1,11 +1,11 @@
 ﻿using OpenTK;
 
-namespace KI.Asset
+namespace KI.Asset.Primitive
 {
     /// <summary>
     /// 立方体
     /// </summary>
-    public class Cube
+    public class Cube : PrimitiveBase
     {
         /// <summary>
         /// 最小値
@@ -36,21 +36,6 @@ namespace KI.Asset
             this.reverse = reverse;
             CreateVertexArrayCube();
         }
-
-        /// <summary>
-        /// 位置情報
-        /// </summary>
-        public Vector3[] Position { get; private set; }
-
-        /// <summary>
-        /// 法線情報
-        /// </summary>
-        public Vector3[] Normal { get; private set; }
-
-        /// <summary>
-        /// インデックス情報
-        /// </summary>
-        public int[] Index { get; private set; }
 
         /// <summary>
         /// 形状の作成

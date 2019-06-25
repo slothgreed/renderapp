@@ -10,7 +10,7 @@ namespace KI.Asset.Primitive
     /// <summary>
     /// 円
     /// </summary>
-    public class Circle
+    public class Circle : PrimitiveBase
     {
         /// <summary>
         /// 半径
@@ -31,21 +31,6 @@ namespace KI.Asset.Primitive
         /// 分割方向
         /// </summary>
         public int Partition { get; private set; }
-        
-        /// <summary>
-        /// 頂点情報
-        /// </summary>
-        public Vector3[] Position { get; private set; }
-
-        /// <summary>
-        /// 頂点インデクス
-        /// </summary>
-        public int[] Index { get; private set; }
-
-        /// <summary>
-        /// タイプ
-        /// </summary>
-        public KIPrimitiveType Type { get; private set; }
         
         /// <summary>
         /// コンストラクタ

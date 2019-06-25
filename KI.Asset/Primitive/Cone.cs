@@ -13,17 +13,6 @@ namespace KI.Asset.Primitive
     /// </summary>
     public class Cone
     {
-
-        /// <summary>
-        /// 頂点情報
-        /// </summary>
-        public Vector3[] Position { get; private set; }
-
-        /// <summary>
-        /// 法線
-        /// </summary>
-        public Vector3[] Normal { get; private set; }
-
         /// <summary>
         /// 頂点インデクス
         /// </summary>

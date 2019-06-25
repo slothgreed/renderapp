@@ -2,32 +2,14 @@
 using OpenTK;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KI.Asset.Primitive
 {
     /// <summary>
     /// 円柱
     /// </summary>
-    public class Cylinder
+    public class Cylinder : PrimitiveBase
     {
-        /// <summary>
-        /// 頂点情報
-        /// </summary>
-        public Vector3[] Position { get; private set; }
-
-        /// <summary>
-        /// 法線
-        /// </summary>
-        public Vector3[] Normal { get; private set; }
-
-        /// <summary>
-        /// 頂点インデクス
-        /// </summary>
-        public int[] Index { get; private set; }
-
         /// <summary>
         /// 半径
         /// </summary>

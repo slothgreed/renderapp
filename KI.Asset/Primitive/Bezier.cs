@@ -8,22 +8,12 @@ namespace KI.Asset.Primitive
     /// <summary>
     /// ベジエ曲線
     /// </summary>
-    public class Bezier
+    public class Bezier : PrimitiveBase
     {
-        /// <summary>
-        /// 位置情報(GL_LINES)
-        /// </summary>
-        public Vector3[] Position;
-
         /// <summary>
         /// コントロールポイント
         /// </summary>
         public Vector3[] ControlPoint;
-
-        /// <summary>
-        /// インデックス情報
-        /// </summary>
-        public int[] Index;
 
         /// <summary>
         /// Line全体の点の数

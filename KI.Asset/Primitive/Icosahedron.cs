@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using KI.Analyzer;
-using KI.Foundation.Core;
-using KI.Gfx;
-using KI.Gfx.Geometry;
 using OpenTK;
 
 
-namespace KI.Asset
+namespace KI.Asset.Primitive
 {
-    public class Icosahedron
+    public class Icosahedron : PrimitiveBase
     {
         /// <summary>
         /// 半径
@@ -40,22 +36,6 @@ namespace KI.Asset
             this.centerPos = centerPos;
             CreateModel();
         }
-
-        /// <summary>
-        /// 位置情報
-        /// </summary>
-        public Vector3[] Position { get; private set; }
-
-        /// <summary>
-        /// 法線
-        /// </summary>
-        public Vector3[] Normal { get; private set; }
-
-        /// <summary>
-        /// インデックス
-        /// </summary>
-        public int[] Index { get; private set; }
-
 
         public void CreateModel()
         {
