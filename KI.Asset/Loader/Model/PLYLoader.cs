@@ -9,7 +9,7 @@ namespace KI.Asset.Loader.Loader
     /// <summary>
     /// plyファイルのローダ
     /// </summary>
-    public class PLYLoader : KIFile
+    public class PLYLoader
     {
         /// <summary>
         /// プロパティ名
@@ -31,7 +31,6 @@ namespace KI.Asset.Loader.Loader
         /// </summary>
         /// <param name="filePath">ファイルパス</param>
         public PLYLoader(string filePath)
-            : base(filePath)
         {
             try
             {

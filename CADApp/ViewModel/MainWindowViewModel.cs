@@ -7,6 +7,7 @@ using KI.Renderer;
 using KI.UI.ViewModel;
 using System.Windows.Controls;
 using CADApp.Tool.Command;
+using KI.Asset.Loader.Model;
 
 namespace CADApp.ViewModel
 {
@@ -53,6 +54,7 @@ namespace CADApp.ViewModel
         private void ViewportViewModel_Initialized(object sender, EventArgs e)
         {
             RootNode.Add(Workspace.Instance.MainScene.RootNode);
+            var loader = new IGESLoader(@"E:\cgModel\model\Chair\Chair_igs\Chair.igs");
         }
 
         private void UndoCommand()

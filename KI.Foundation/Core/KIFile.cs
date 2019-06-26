@@ -37,7 +37,7 @@ namespace KI.Foundation.Core
                 }
                 else if (directoryPath == null)
                 {
-                    directoryPath = System.IO.Path.GetDirectoryName(FilePath);
+                    directoryPath = Path.GetDirectoryName(FilePath);
                 }
 
                 return directoryPath;

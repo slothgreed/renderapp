@@ -17,12 +17,18 @@ namespace KI.Asset.Loader.Importer
         private OBJLoader objData;
 
         /// <summary>
+        /// ファイルパス
+        /// </summary>
+        private string filePath;
+
+        /// <summary>
         /// objファイルのローダ
         /// </summary>
         /// <param name="filePath">ファイルパス</param>
         public OBJImporter(string filePath)
         {
             objData = new OBJLoader(filePath);
+            this.filePath = filePath;
             CreateModel();
         }
 
@@ -103,7 +109,7 @@ namespace KI.Asset.Loader.Importer
 
                 if (mesh.Count != 0)
                 {
-                    polygon = new Polygon(objData.FileName, mesh, KIPrimitiveType.Triangles);
+                    polygon = new Polygon(filePath, mesh, KIPrimitiveType.Triangles);
                     SetMaterial(polygon, material);
                     if (polygon != null)
                     {

@@ -19,12 +19,18 @@ namespace KI.Asset.Loader.Importer
         private PLYLoader plyData;
 
         /// <summary>
+        /// ファイルパス
+        /// </summary>
+        private string filePath;
+
+        /// <summary>
         /// plyファイルのローダ
         /// </summary>
         /// <param name="filePath">ファイルパス</param>
         public PLYImporter(string filePath)
         {
             plyData = new PLYLoader(filePath);
+            this.filePath = filePath;
             CreateModel();
         }
 
@@ -55,7 +61,7 @@ namespace KI.Asset.Loader.Importer
             }
 
             List<int> index = plyData.FaceIndex.ToList();
-            Model = new Polygon(plyData.FileName, vertexs, index, KIPrimitiveType.Triangles);
+            Model = new Polygon(filePath, vertexs, index, KIPrimitiveType.Triangles);
         }
     }
 }

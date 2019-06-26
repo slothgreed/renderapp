@@ -10,7 +10,7 @@ namespace KI.Asset.Loader
     /// <summary>
     /// objファイルのローダ
     /// </summary>
-    public class OBJLoader : KIFile
+    public class OBJLoader
     {
         /// <summary>
         /// 頂点・色・テクスチャ座標を保持。
@@ -33,11 +33,15 @@ namespace KI.Asset.Loader
         private List<Vector2> texcoord = new List<Vector2>();
 
         /// <summary>
+        /// ファイルパス
+        /// </summary>
+        private string filePath;
+
+        /// <summary>
         /// objファイルのローダ
         /// </summary>
         /// <param name="filePath">ファイルパス</param>
         public OBJLoader(string filePath)
-            : base(filePath)
         {
             try
             {
@@ -290,7 +294,7 @@ namespace KI.Asset.Loader
         /// <returns>成功</returns>
         private bool OpenMTL(string file_name)
         {
-            string directory = DirectoryPath + @"\";
+            string directory = Path.GetDirectoryName(filePath) + @"\";
             string mtlFile = directory + @"\" + file_name;
 
             if (!File.Exists(mtlFile))

@@ -62,6 +62,7 @@
     <Compile Include="Algorithm\IsoLineAlgorithm.cs" />
     <Compile Include="Algorithm\GeodesicDistanceAlgorithm.cs" />
     <Compile Include="Algorithm\KMeansAlgorithm.cs" />
+    <Compile Include="Algorithm\LoopSubdivisionAlgorithm.cs" />
     <Compile Include="Algorithm\PerceptronAlgorithm.cs" />
     <Compile Include="Algorithm\AdaptiveMeshAlgorithm.cs" />
     <Compile Include="Algorithm\ConvexHullAlgorithm.cs" />
