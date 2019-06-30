@@ -20,6 +20,7 @@ namespace KI.Asset.Loader.Model
             {
                 string[] fileStream = File.ReadAllLines(filePath, System.Text.Encoding.GetEncoding("Shift_JIS"));
                 ReadData(fileStream);
+                ParameterAnalyzer.ParameterDataLog();
             }
             catch (Exception e)
             {
@@ -28,9 +29,24 @@ namespace KI.Asset.Loader.Model
         }
 
         /// <summary>
+        /// パラメータセクションの解析用クラス
+        /// </summary>
+        private IGESParameterAnalyzer ParameterAnalyzer = new IGESParameterAnalyzer(); 
+        
+        /// <summary>
         /// ディレクトリセクションのデータ
         /// </summary>
         private List<DirectorySectionData> directorySectionDatas;
+
+        /// <summary>
+        /// デリミタ
+        /// </summary>
+        private char Delimiter = ',';
+
+        /// <summary>
+        /// 終端デリミタ
+        /// </summary>
+        private char EndDelimiter = ';';
         /// <summary>
         /// ファイルの読み込み
         /// </summary>
@@ -39,6 +55,7 @@ namespace KI.Asset.Loader.Model
         {
             try
             {
+                List<string> parameterData = new List<string>();
                 directorySectionDatas = new List<DirectorySectionData>();
                 int lineNumber = 0;
                 while (lineNumber < fileStream.Length)
@@ -57,7 +74,18 @@ namespace KI.Asset.Loader.Model
                             lineNumber++; // 2行一気に読み取る分
                             break;
                         case 'P':
-                            ParameteDataSection(fileStream[lineNumber]);
+                            if (fileStream[lineNumber].Contains(EndDelimiter))
+                            {
+                                // エンドデリミタが出るまで、行情報をスタックし、
+                                // エンドデリミタが出たら形状情報を読み取る。
+                                parameterData.Add(fileStream[lineNumber]);
+                                ParameteDataSection(parameterData);
+                                parameterData.Clear();
+                            }
+                            else
+                            {
+                                parameterData.Add(fileStream[lineNumber]);
+                            }
                             break;
                         case 'T':
                             TerminateSection(fileStream[lineNumber]);
@@ -110,9 +138,22 @@ namespace KI.Asset.Loader.Model
         /// パラメータデータセクション
         /// </summary>
         /// <param name="data">パラメータデータセクションデータ</param>
-        private void ParameteDataSection(string data)
+        private void ParameteDataSection(List<string> data)
         {
+            string primitiveData = string.Empty;
+            int directorySection;
 
+            directorySection = int.Parse(data[0].Substring(8 * 8, 8));
+            foreach (var dataLine in data)
+            {
+                primitiveData += dataLine.Substring(0, 8 * 8).Trim();
+            }
+
+            var load = ParameterAnalyzer.Analyze(primitiveData, Delimiter);
+            if (load == false)
+            {
+                throw new FileLoadException();
+            }
         }
 
         /// <summary>
@@ -131,6 +172,9 @@ namespace KI.Asset.Loader.Model
         /// </summary>
         public class DirectorySectionData
         {
+            // ディレクトリセクションの番号
+            public int Index;
+
             // 1行目
             public int PrimitiveIndex { get; private set; }
             public int SequeneIndex { get; private set; }
@@ -179,6 +223,7 @@ namespace KI.Asset.Loader.Model
                 MatrixType      = int.Parse(data1.Substring(8 * 6, 8));
                 Composit        = int.Parse(data1.Substring(8 * 7, 8));
                 Status          = int.Parse(data1.Substring(8 * 8, 8));
+                Index           = int.Parse(data1.Substring(8 * 9 + 1, 7)); // 8*9番目はセクション名、その分1つマイナスした値でSubstring
 
                 LineWidth       = int.Parse(data2.Substring(8 * 1, 8));
                 PenNumber       = int.Parse(data2.Substring(8 * 2, 8));

@@ -77,6 +77,7 @@
     <Compile Include="Loader\Importer\PLYImporter.cs" />
     <Compile Include="Loader\Importer\STLImporter.cs" />
     <Compile Include="Loader\Model\IGESLoader.cs" />
+    <Compile Include="Loader\Model\IGESParameterAnalyzer.cs" />
     <Compile Include="Loader\Model\OBJLoader.cs" />
     <Compile Include="Loader\Model\PLYLoader.cs" />
     <Compile Include="Loader\Model\STLLoader.cs" />

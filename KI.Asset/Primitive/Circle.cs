@@ -25,7 +25,7 @@ namespace KI.Asset.Primitive
         /// <summary>
         /// 円の向き
         /// </summary>
-        public Vector3 Normal { get; private set; }
+        public Vector3 Direction { get; private set; }
 
         /// <summary>
         /// 分割方向
@@ -37,13 +37,13 @@ namespace KI.Asset.Primitive
         /// </summary>
         /// <param name="radius">半径</param>
         /// <param name="center">位置</param>
-        /// <param name="normal">円の向き</param>
+        /// <param name="direction">円の向き</param>
         /// <param name="partition">分割数</param>
-        public Circle(float radius, Vector3 center, Vector3 normal, int partition, KIPrimitiveType type = KIPrimitiveType.Triangles)
+        public Circle(float radius, Vector3 center, Vector3 direction, int partition, KIPrimitiveType type = KIPrimitiveType.Triangles)
         {
             Radius = radius;
             Center = center;
-            Normal = normal;
+            Direction = direction;
             Partition = partition;
             Type = type;
             Create();
@@ -58,8 +58,8 @@ namespace KI.Asset.Primitive
             List<int> index = new List<int>();
 
             float theta = (float)Math.PI * 2 / Partition;
-            var ex = Vector3.Cross(Normal, Vector3.UnitZ);
-            Quaternion quart = Quaternion.FromAxisAngle(ex, Vector3.CalculateAngle(Normal, Vector3.UnitZ));
+            var ex = Vector3.Cross(Direction, Vector3.UnitZ);
+            Quaternion quart = Quaternion.FromAxisAngle(ex, Vector3.CalculateAngle(Direction, Vector3.UnitZ));
             var quartMat = Matrix4.CreateFromQuaternion(quart);
 
             if (Type == KIPrimitiveType.Triangles)
