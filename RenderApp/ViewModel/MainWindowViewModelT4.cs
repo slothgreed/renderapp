@@ -231,5 +231,18 @@ namespace RenderApp.ViewModel
 					return _OpenAbout;
 				}
 			}
+			private ICommand _Animation;
+			public ICommand Animation
+			{
+				get
+				{
+					if (_Animation == null)
+					{
+						return _Animation = CreateCommand(AnimationCommand);						
+					}
+
+					return _Animation;
+				}
+			}
 	}
 }

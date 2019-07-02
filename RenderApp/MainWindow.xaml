@@ -180,6 +180,17 @@
                     Header="Viewport" />
             </MenuItem>
 
+            <MenuItem Header="Animation">
+                <MenuItem
+                    Command="{Binding Animation}"
+                    CommandParameter="{x:Static model:AnimationAction.Start}"
+                    Header="Start"/>
+                <MenuItem
+                    Command="{Binding Animation}"
+                    CommandParameter="{x:Static model:AnimationAction.Stop}"
+                    Header="Stop"/>
+            </MenuItem>
+
             <MenuItem Header="Help">
                 <MenuItem
                     Command="{Binding OpenExplorer}"

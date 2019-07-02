@@ -13,6 +13,7 @@ using KI.UI.ViewModel;
 using RenderApp.Model;
 using RenderApp.Tool;
 using RenderApp.Tool.Command;
+using KI.Foundation.Core;
 
 namespace RenderApp.ViewModel
 {
@@ -419,6 +420,33 @@ namespace RenderApp.ViewModel
             var exeFilePath = Assembly.GetEntryAssembly().Location;
 
             System.Diagnostics.Process.Start("explorer.exe", @"/select," + exeFilePath);  
+        }
+
+        KITimer timer;
+        private void AnimationCommand(object parameter)
+        {
+            if (parameter is AnimationAction)
+            {
+                var action = (AnimationAction)parameter;
+                if (action == AnimationAction.Start)
+                {
+                    if (timer == null)
+                    {
+                        timer = new KITimer(10, TimerEvent);
+                    }
+
+                    timer.Start();
+                }
+                else
+                {
+                    timer.Stop();
+                }
+            }
+        }
+
+        private void TimerEvent(object source, EventArgs e)
+        {
+            WorkspaceViewModel.ViewportViewModel.Invalidate();
         }
     }
 }

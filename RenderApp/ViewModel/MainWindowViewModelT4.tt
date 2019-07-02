@@ -27,7 +27,8 @@ using System.Windows.Input;
 		"Redo",
 		"OpenWindow",
 		"OpenExecuteFolder",
-		"OpenAbout"
+		"OpenAbout",
+		"Animation"
 	};
 
 #>

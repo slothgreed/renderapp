@@ -58,4 +58,11 @@
         RenderSystem,
         Viewport
     }
+
+    public enum AnimationAction
+    {
+        Start,
+        Stop
+    }
+
 }
