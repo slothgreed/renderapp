@@ -6,8 +6,8 @@ using KI.Asset;
 using KI.Gfx;
 using KI.Gfx.GLUtil;
 using KI.Mathmatics;
-using KI.Tool.Command;
-using KI.Tool.Controller;
+using KI.Foundation.Command;
+using KI.Foundation.Controller;
 using OpenTK;
 using KI.Asset.Primitive;
 

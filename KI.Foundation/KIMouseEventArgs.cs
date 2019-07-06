@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
 using OpenTK;
 
-namespace KI.Gfx.GLUtil
+namespace KI.Foundation.Controller
 {
     /// <summary>
     /// マウスの状態

@@ -9,7 +9,7 @@ using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
 using KI.Renderer;
 using KI.Renderer.Technique;
-using KI.Tool.Command;
+using KI.Foundation.Command;
 using KI.UI.ViewModel;
 using OpenTK;
 using RenderApp.Model;

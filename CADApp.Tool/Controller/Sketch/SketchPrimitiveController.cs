@@ -6,7 +6,7 @@ using KI.Asset;
 using KI.Gfx;
 using KI.Gfx.GLUtil;
 using KI.Mathmatics;
-using KI.Tool.Controller;
+using KI.Foundation.Controller;
 using OpenTK;
 using KI.Asset.Primitive;
 

@@ -4,7 +4,7 @@ using KI.Analyzer.Algorithm;
 using KI.Asset.Attribute;
 using KI.Mathmatics;
 using KI.Renderer;
-using KI.Tool.Command;
+using KI.Foundation.Command;
 using OpenTK;
 using RenderApp.Model;
 

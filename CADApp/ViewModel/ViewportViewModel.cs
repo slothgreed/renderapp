@@ -11,7 +11,7 @@ using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil;
 using KI.Renderer;
 using KI.Renderer.Technique;
-using KI.Tool.Controller;
+using KI.Foundation.Controller;
 using KI.UI.ViewModel;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;

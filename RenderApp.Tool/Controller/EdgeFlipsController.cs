@@ -4,7 +4,7 @@ using KI.Analyzer;
 using KI.Asset;
 using KI.Gfx.GLUtil;
 using KI.Renderer;
-using KI.Tool.Controller;
+using KI.Foundation.Controller;
 using OpenTK;
 using RenderApp.Tool.Utility;
 

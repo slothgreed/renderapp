@@ -8,7 +8,7 @@ using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
 using KI.Gfx.Render;
 using KI.Renderer;
-using KI.Tool.Command;
+using KI.Foundation.Command;
 using KI.UI.ViewModel;
 using RenderApp.Model;
 using RenderApp.Tool;

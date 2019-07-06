@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CADApp.Model;
-using KI.Asset;
+﻿using KI.Asset;
 using KI.Gfx.GLUtil;
 using KI.Mathmatics;
 using OpenTK;
+using KI.Foundation.Controller;
 
 namespace CADApp.Tool.Controller
 {

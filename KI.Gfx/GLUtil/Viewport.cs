@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using KI.Foundation.Core;
 using OpenTK;
 using OpenTK.Graphics;
+using KI.Foundation.Controller;
 
 namespace KI.Gfx.GLUtil
 {

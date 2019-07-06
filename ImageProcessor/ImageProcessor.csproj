@@ -141,10 +141,6 @@
       <Project>{8BDA5035-5778-4460-8166-E6B2BD477E29}</Project>
       <Name>KI.Renderer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KI.Tool\KI.Tool.csproj">
-      <Project>{D28F9CC5-69EE-4073-AE0D-C90ABF486EF2}</Project>
-      <Name>KI.Tool</Name>
-    </ProjectReference>
     <ProjectReference Include="..\KI.UI\KI.UI.csproj">
       <Project>{35F238B1-820C-4487-9081-A4AF3952219C}</Project>
       <Name>KI.UI</Name>

@@ -5,7 +5,7 @@ using KI.Gfx;
 using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil;
 using KI.Renderer;
-using KI.Tool.Controller;
+using KI.Foundation.Controller;
 using OpenTK;
 using RenderApp.Model;
 using RenderApp.Tool.Utility;

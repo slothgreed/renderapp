@@ -9,7 +9,7 @@ using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Mathmatics;
 using KI.Renderer;
-using KI.Tool.Command;
+using KI.Foundation.Command;
 using OpenTK;
 using RenderApp.Model;
 

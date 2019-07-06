@@ -4,7 +4,7 @@ using KI.Asset;
 using KI.Gfx.GLUtil;
 using KI.Mathmatics;
 using KI.Renderer;
-using KI.Tool.Controller;
+using KI.Foundation.Controller;
 using OpenTK;
 
 namespace CADApp.Tool.Controller

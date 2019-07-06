@@ -100,10 +100,6 @@
       <Project>{8bda5035-5778-4460-8166-e6b2bd477e29}</Project>
       <Name>KI.Renderer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KI.Tool\KI.Tool.csproj">
-      <Project>{d28f9cc5-69ee-4073-ae0d-c90abf486ef2}</Project>
-      <Name>KI.Tool</Name>
-    </ProjectReference>
     <ProjectReference Include="..\RenderApp.Model\RenderApp.Model.csproj">
       <Project>{5e5560a2-6673-49f1-8089-c557c6172738}</Project>
       <Name>RenderApp.Model</Name>

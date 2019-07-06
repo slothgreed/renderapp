@@ -4,7 +4,7 @@ using CADApp.Tool.Command;
 using KI.Asset;
 using KI.Asset.Primitive;
 using KI.Gfx.GLUtil;
-using KI.Tool.Controller;
+using KI.Foundation.Controller;
 using OpenTK;
 
 
