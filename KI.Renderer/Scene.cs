@@ -47,7 +47,7 @@ namespace KI.Renderer
         public Camera MainCamera { get; set; }
 
         /// <summary>
-        /// 主な光源
+        /// 主な光源, TODO : LightNode => Lightに修正
         /// </summary>
         public LightNode MainLight { get; set; }
 

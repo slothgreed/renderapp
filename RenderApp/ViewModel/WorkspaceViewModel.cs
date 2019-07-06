@@ -257,7 +257,7 @@ namespace RenderApp.ViewModel
         private AnalyzePolygonNode CreateAnalyzePolygonNode(string name, ICreateModel model)
         {
             string vert = ShaderCreater.Instance.GetVertexShader(model.Model);
-            string frag = ShaderCreater.Instance.GetFragShader(model.Model);
+            string frag = ShaderCreater.Instance.GetFragShaderFilePath(model.Model);
             var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
             Material material = new Material(shader);
             model.Model.Material = material;
@@ -291,12 +291,12 @@ namespace RenderApp.ViewModel
             Vector3 v6 = new Vector3(max.X, max.Y, max.Z);
             Vector3 v7 = new Vector3(min.X, max.Y, max.Z);
 
-            Rectangle front = new Rectangle("Front", v2, v3, v0, v1);
-            Rectangle left = new Rectangle("Left", v3, v7, v4, v0);
-            Rectangle back = new Rectangle("Back", v7, v6, v5, v4);
-            Rectangle right = new Rectangle("Right", v6, v2, v1, v5);
-            Rectangle top = new Rectangle("Top", v3, v2, v6, v7);
-            Rectangle bottom = new Rectangle("Bottom", v0, v4, v5, v1);
+            Rectangle front = new Rectangle(v2, v3, v0, v1);
+            Rectangle left = new Rectangle(v3, v7, v4, v0);
+            Rectangle back = new Rectangle(v7, v6, v5, v4);
+            Rectangle right = new Rectangle(v6, v2, v1, v5);
+            Rectangle top = new Rectangle(v3, v2, v6, v7);
+            Rectangle bottom = new Rectangle( v0, v4, v5, v1);
             front.Model.Material.AddTexture(TextureKind.Albedo, nzTexture);
             left.Model.Material.AddTexture(TextureKind.Albedo, pxTexture);
             back.Model.Material.AddTexture(TextureKind.Albedo, pzTexture);
@@ -304,12 +304,12 @@ namespace RenderApp.ViewModel
             top.Model.Material.AddTexture(TextureKind.Albedo, pyTexture);
             bottom.Model.Material.AddTexture(TextureKind.Albedo, nyTexture);
 
-            PolygonNode renderFront = SceneNodeFactory.Instance.CreatePolygonNode(front.Name, front, front.Model.Material);
-            PolygonNode renderLeft = SceneNodeFactory.Instance.CreatePolygonNode(left.Name, left, left.Model.Material);
-            PolygonNode renderBack = SceneNodeFactory.Instance.CreatePolygonNode(back.Name, back, back.Model.Material);
-            PolygonNode renderRight = SceneNodeFactory.Instance.CreatePolygonNode(right.Name, right, right.Model.Material);
-            PolygonNode renderTop = SceneNodeFactory.Instance.CreatePolygonNode(top.Name, top, top.Model.Material);
-            PolygonNode renderBottom = SceneNodeFactory.Instance.CreatePolygonNode(bottom.Name, bottom, bottom.Model.Material);
+            PolygonNode renderFront = SceneNodeFactory.Instance.CreatePolygonNode("front", front, front.Model.Material);
+            PolygonNode renderLeft = SceneNodeFactory.Instance.CreatePolygonNode("left", left, left.Model.Material);
+            PolygonNode renderBack = SceneNodeFactory.Instance.CreatePolygonNode("back", back, back.Model.Material);
+            PolygonNode renderRight = SceneNodeFactory.Instance.CreatePolygonNode("right", right, right.Model.Material);
+            PolygonNode renderTop = SceneNodeFactory.Instance.CreatePolygonNode("top", top, top.Model.Material);
+            PolygonNode renderBottom = SceneNodeFactory.Instance.CreatePolygonNode("bottom", bottom, bottom.Model.Material);
 
             EmptyNode cubeMapNode = new EmptyNode("CubeMap");
 

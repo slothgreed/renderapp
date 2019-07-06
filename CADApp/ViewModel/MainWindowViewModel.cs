@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using CADApp.Model;
 using CADApp.Tool.Controller;
 using KI.Renderer;
 using KI.UI.ViewModel;
-using System.Windows.Controls;
 using CADApp.Tool.Command;
 using KI.Asset.Loader.Model;
 
@@ -55,6 +53,19 @@ namespace CADApp.ViewModel
         {
             RootNode.Add(Workspace.Instance.MainScene.RootNode);
             var loader = new IGESLoader(@"E:\cgModel\model\Chair\Chair_igs\Chair.igs");
+            loader = new IGESLoader(@"E:\cgModel\model\VoronoiRing\VoronoiRing_igs\VoronoiRing.igs");
+            loader = new IGESLoader(@"E:\cgModel\model\ToyLoco\ToyLoco_igs\ToyLoco.igs");
+            loader = new IGESLoader(@"E:\cgModel\model\Table\Table_igs\Table.igs");
+            loader = new IGESLoader(@"E:\cgModel\model\SmartPhone\SmartPhone_igs\SmartPhone.igs");
+            loader = new IGESLoader(@"E:\cgModel\model\Plate\Plate_igs\Plate.igs");
+            loader = new IGESLoader(@"E:\cgModel\model\PencilCase\PencilCase_igs\PencilCase.igs");
+            loader = new IGESLoader(@"E:\cgModel\model\monument\monument_igs\monument.igs");
+            loader = new IGESLoader(@"E:\cgModel\model\Maureen\Maureen_igs\Maureen.igs");
+            loader = new IGESLoader(@"E:\cgModel\model\iPhoneCase\iPhoneCase_igs\iPhoneCase.igs");
+            loader = new IGESLoader(@"E:\cgModel\model\Highheal\Highheal_igs\Highheal.igs");
+            loader = new IGESLoader(@"E:\cgModel\model\Dollhouse\Dollhouse_igs\Dollhouse.igs");
+            loader = new IGESLoader(@"E:\cgModel\model\Chair\Chair_igs\Chair.igs");
+
         }
 
         private void UndoCommand()

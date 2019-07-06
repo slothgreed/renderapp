@@ -44,7 +44,7 @@
             Grid.Row="0"
             Height="25"
             VerticalAlignment="Top">
-            <MenuItem Header="Project">
+            <MenuItem Header="File">
                 <MenuItem Command="{Binding NewProject}" Header="New" />
                 <MenuItem Command="{Binding OpenProject}" Header="Open" />
                 <MenuItem Command="{Binding SaveProject}" Header="Save" />

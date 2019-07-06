@@ -54,7 +54,7 @@ namespace CADApp.Model
             MainScene = new Scene("MainScene", new EmptyNode("ROOT"));
             RenderSystem = new RenderSystem();
             RenderSystem.ActiveScene = MainScene;
-            WorkPlane = new Rectangle("WorkPlane", Vector3.Zero, Vector3.UnitX, Vector3.UnitX + Vector3.UnitZ, Vector3.UnitZ);
+            WorkPlane = new Rectangle(Vector3.Zero, Vector3.UnitX, Vector3.UnitX + Vector3.UnitZ, Vector3.UnitZ);
             CommandManager = new CommandManager();
         }
     }

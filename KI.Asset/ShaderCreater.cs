@@ -75,7 +75,7 @@ namespace KI.Asset
             }
         }
 
-        public string GetVertexShader(GBufferType type)
+        public string GetVertexShaderFilePath(GBufferType type)
         {
             switch (type)
             {
@@ -94,7 +94,7 @@ namespace KI.Asset
             return null;
         }
 
-        public string GetFragShader(GBufferType type)
+        public string GetFragShaderFilePath(GBufferType type)
         {
             switch (type)
             {
@@ -124,9 +124,9 @@ namespace KI.Asset
         /// </summary>
         /// <param name="polygonNode">描画オブジェクト</param>
         /// <returns>ファイルパス</returns>
-        public string GetFragShader(Polygon polygon)
+        public string GetFragShaderFilePath(Polygon polygon)
         {
-            string shaderPath = GetTextureFragShader(polygon);
+            string shaderPath = GetTextureFragShaderFilePath(polygon);
             if (shaderPath != null)
             {
                 return shaderPath;
@@ -153,7 +153,7 @@ namespace KI.Asset
         /// </summary>
         /// <param name="polygon">形状</param>
         /// <returns>ファイルパス</returns>
-        private string GetTextureFragShader(Polygon polygon)
+        private string GetTextureFragShaderFilePath(Polygon polygon)
         {
             if (polygon.Material.GetTexture(TextureKind.Albedo) != null &&
                 polygon.Material.GetTexture(TextureKind.Normal) != null &&
@@ -189,8 +189,8 @@ namespace KI.Asset
         /// <returns>シェーダ</returns>
         public Shader CreateShader(GBufferType type)
         {
-            var vertexShader = GetVertexShader(type);
-            var fragShader = GetFragShader(type);
+            var vertexShader = GetVertexShaderFilePath(type);
+            var fragShader = GetFragShaderFilePath(type);
 
             if (vertexShader != null &&
                 fragShader != null)

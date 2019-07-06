@@ -4,13 +4,14 @@ using KI.Gfx;
 using KI.Gfx.Geometry;
 using KI.Mathmatics;
 using OpenTK;
+using KI.Asset.Primitive;
 
 namespace KI.Asset
 {
     /// <summary>
     /// 平面
     /// </summary>
-    public class Rectangle : KIObject, ICreateModel
+    public class Rectangle : PrimitiveBase, ICreateModel
     {
         #region [メンバ変数]
         /// <summary>
@@ -22,25 +23,6 @@ namespace KI.Asset
             private set;
         }
 
-        /// <summary>
-        /// 頂点0
-        /// </summary>
-        private Vector3 quad0;
-
-        /// <summary>
-        /// 頂点1
-        /// </summary>
-        private Vector3 quad1;
-
-        /// <summary>
-        /// 頂点2
-        /// </summary>
-        private Vector3 quad2;
-
-        /// <summary>
-        /// 頂点3
-        /// </summary>
-        private Vector3 quad3;
         #endregion
         
         /// <summary>
@@ -51,13 +33,19 @@ namespace KI.Asset
         /// <param name="q1">頂点1</param>
         /// <param name="q2">頂点2</param>
         /// <param name="q3">頂点3</param>
-        public Rectangle(string name, Vector3 q0, Vector3 q1, Vector3 q2, Vector3 q3)
-            : base(name)
+        public Rectangle(Vector3 q0, Vector3 q1, Vector3 q2, Vector3 q3)
         {
-            quad0 = q0;
-            quad1 = q1;
-            quad2 = q2;
-            quad3 = q3;
+            Position = new Vector3[4];
+            Position[0] = q0;
+            Position[1] = q1;
+            Position[2] = q2;
+            Position[3] = q3;
+            Index = new int[4];
+            Index[0] = 0;
+            Index[1] = 1;
+            Index[2] = 2;
+            Index[3] = 3;
+
             CreateModel();
         }
 
@@ -65,13 +53,19 @@ namespace KI.Asset
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
-        public Rectangle(string name)
-            : base(name)
+        public Rectangle()
         {
-            quad0 = new Vector3(-1, -1, 0);
-            quad1 = new Vector3(1, -1, 0);
-            quad2 = new Vector3(1, 1, 0);
-            quad3 = new Vector3(-1, 1, 0);
+            Position = new Vector3[4];
+            Position[0] = new Vector3(-1, -1, 0);
+            Position[1] = new Vector3(1, -1, 0);
+            Position[2] = new Vector3(1, 1, 0);
+            Position[3] = new Vector3(-1, 1, 0);
+            Index = new int[4];
+            Index[0] = 0;
+            Index[1] = 1;
+            Index[2] = 2;
+            Index[3] = 3;
+
             CreateModel();
         }
 
@@ -86,15 +80,15 @@ namespace KI.Asset
         /// </summary>
         public void CreateModel()
         {
-            Formula = Plane.Formula(quad0, quad1, quad2);
+            Formula = Plane.Formula(Position[0], Position[1], Position[2]);
 
             Mesh mesh = new Mesh(
-                new Vertex(0, quad0, Formula.Xyz, Vector3.UnitX, Vector2.Zero),
-                new Vertex(1, quad1, Formula.Xyz, Vector3.UnitY, Vector2.UnitX),
-                new Vertex(2, quad2, Formula.Xyz, Vector3.UnitZ, Vector2.One),
-                new Vertex(3, quad3, Formula.Xyz, Vector3.One, Vector2.UnitY));
+                new Vertex(0, Position[0], Formula.Xyz, Vector3.UnitX, Vector2.Zero),
+                new Vertex(1, Position[1], Formula.Xyz, Vector3.UnitY, Vector2.UnitX),
+                new Vertex(2, Position[2], Formula.Xyz, Vector3.UnitZ, Vector2.One),
+                new Vertex(3, Position[3], Formula.Xyz, Vector3.One, Vector2.UnitY));
 
-            Model = new Polygon(this.Name, new List<Mesh>() { mesh }, KIPrimitiveType.Quads);
+            Model = new Polygon("Rectangle", new List<Mesh>() { mesh }, KIPrimitiveType.Quads);
         }
         #endregion
     }
