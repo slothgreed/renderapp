@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using CADApp.Model;
 using CADApp.Tool.Controller;
 using KI.Renderer;
-using KI.UI.ViewModel;
+using KI.Presentation.ViewModel;
 using CADApp.Tool.Command;
 using KI.Asset.Loader.Model;
 

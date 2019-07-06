@@ -1,5 +1,5 @@
 ﻿using KI.Asset.Attribute;
-using KI.UI.ViewModel;
+using KI.Presentation.ViewModel;
 
 namespace RenderApp.ViewModel
 {

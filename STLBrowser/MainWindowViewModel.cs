@@ -1,4 +1,4 @@
-﻿using KI.UI.ViewModel;
+﻿using KI.Presentation.ViewModel;
 
 namespace STLBrowser.ViewModel
 {

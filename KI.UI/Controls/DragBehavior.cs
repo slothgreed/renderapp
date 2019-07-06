@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 
-namespace KI.UI.Controls
+namespace KI.Presentation.Controls
 {
     public class DragBehavior : Behavior<FrameworkElement>
     {

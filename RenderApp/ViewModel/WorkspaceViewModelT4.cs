@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using  KI.UI.ViewModel;
+using  KI.Presentation.ViewModel;
 namespace RenderApp.ViewModel
 {
 	public partial class WorkspaceViewModel

@@ -1,5 +1,5 @@
 ﻿using System.Windows.Input;
-using KI.UI.ViewModel;
+using KI.Presentation.ViewModel;
 
 namespace RenderApp.ViewModel
 {

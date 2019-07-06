@@ -6,7 +6,7 @@ using System.IO;
 using System.Windows.Controls;
 using KI.Foundation.Core;
 using KI.Foundation.Tree;
-using KI.UI.ViewModel;
+using KI.Presentation.ViewModel;
 
 namespace RenderApp.ViewModel
 {

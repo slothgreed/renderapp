@@ -7,8 +7,8 @@
     <ProjectGuid>{35F238B1-820C-4487-9081-A4AF3952219C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KI.UI</RootNamespace>
-    <AssemblyName>KI.UI</AssemblyName>
+    <RootNamespace>KI.Presentation</RootNamespace>
+    <AssemblyName>KI.Presentation</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

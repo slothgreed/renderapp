@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using KI.Asset;
 using KI.Asset.Attribute;
-using KI.UI.ViewModel;
+using KI.Presentation.ViewModel;
 using RenderApp.Model;
 
 namespace RenderApp.ViewModel

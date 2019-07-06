@@ -141,9 +141,9 @@
       <Project>{8BDA5035-5778-4460-8166-E6B2BD477E29}</Project>
       <Name>KI.Renderer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KI.UI\KI.UI.csproj">
+    <ProjectReference Include="..\KI.UI\KI.Presentation.csproj">
       <Project>{35F238B1-820C-4487-9081-A4AF3952219C}</Project>
-      <Name>KI.UI</Name>
+      <Name>KI.Presentation</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

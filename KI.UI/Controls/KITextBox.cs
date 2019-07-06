@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace KI.UI.Controls
+namespace KI.Presentation.Controls
 {
     public class KITextBox : TextBox
     {

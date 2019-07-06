@@ -6,7 +6,7 @@ using KI.Foundation.Core;
 using KI.Gfx.GLUtil;
 using KI.Foundation;
 using KI.Foundation.Controller;
-using KI.UI.ViewModel;
+using KI.Presentation.ViewModel;
 using RenderApp.Tool;
 using RenderApp.Tool.Controller;
 

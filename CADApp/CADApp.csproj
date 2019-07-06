@@ -179,9 +179,9 @@
       <Project>{8bda5035-5778-4460-8166-e6b2bd477e29}</Project>
       <Name>KI.Renderer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KI.UI\KI.UI.csproj">
+    <ProjectReference Include="..\KI.UI\KI.Presentation.csproj">
       <Project>{35f238b1-820c-4487-9081-a4af3952219c}</Project>
-      <Name>KI.UI</Name>
+      <Name>KI.Presentation</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

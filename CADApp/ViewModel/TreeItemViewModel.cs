@@ -1,5 +1,5 @@
 ﻿using KI.Renderer;
-using KI.UI.ViewModel;
+using KI.Presentation.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;

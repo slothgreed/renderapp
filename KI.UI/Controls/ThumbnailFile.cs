@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace KI.UI.Controls
+namespace KI.Presentation.Controls
 {
     public class ThumbnailFile : System.Windows.Controls.Control
     {
