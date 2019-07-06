@@ -21,6 +21,11 @@ namespace KI.Asset.Primitive
         public int[] Index { get; protected set; }
 
         /// <summary>
+        /// テクスチャ座標
+        /// </summary>
+        public Vector2[] Texcoord { get; protected set; }
+
+        /// <summary>
         /// タイプ
         /// </summary>
         public KIPrimitiveType Type { get; protected set; }

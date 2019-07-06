@@ -84,7 +84,7 @@ namespace ImageProcessor.ViewModel
             RenderSystem.ActiveScene = MainScene;
 
             var rectangle = new Rectangle();
-            var rectangleObject = SceneNodeFactory.Instance.CreatePolygonNode("Axis", rectangle.Position, rectangle.Position, rectangle.Index, KIPrimitiveType.Quads);
+            var rectangleObject = SceneNodeFactory.Instance.CreatePolygonNode("Axis", rectangle.Position, rectangle.Position, rectangle.Texcoord, rectangle.Index, KIPrimitiveType.Quads);
             var mainTexture = TextureFactory.Instance.CreateTexture("E:\\cgModel\\Image\\Contact_Cover.jpg");
             var shader = ShaderCreater.Instance.CreateShader(GBufferType.Albedo);
             var textures = new Dictionary<TextureKind, Texture>();

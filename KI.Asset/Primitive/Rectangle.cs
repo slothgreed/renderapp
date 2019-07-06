@@ -46,6 +46,13 @@ namespace KI.Asset
             Index[2] = 2;
             Index[3] = 3;
 
+            Texcoord = new Vector2[4];
+            Texcoord[0] = Vector2.Zero;
+            Texcoord[1] = Vector2.UnitX;
+            Texcoord[2] = Vector2.One;
+            Texcoord[3] = Vector2.UnitY;
+
+
             CreateModel();
         }
 
@@ -65,6 +72,13 @@ namespace KI.Asset
             Index[1] = 1;
             Index[2] = 2;
             Index[3] = 3;
+
+
+            Texcoord = new Vector2[4];
+            Texcoord[0] = Vector2.Zero;
+            Texcoord[1] = Vector2.UnitX;
+            Texcoord[2] = Vector2.One;
+            Texcoord[3] = Vector2.UnitY;
 
             CreateModel();
         }

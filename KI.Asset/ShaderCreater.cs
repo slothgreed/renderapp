@@ -75,6 +75,11 @@ namespace KI.Asset
             }
         }
 
+        /// <summary>
+        /// 頂点ファイルパスの取得
+        /// </summary>
+        /// <param name="type">GBufferに転送する頂点タイプ</param>
+        /// <returns>ファイルパス</returns>
         public string GetVertexShaderFilePath(GBufferType type)
         {
             switch (type)
@@ -94,6 +99,11 @@ namespace KI.Asset
             return null;
         }
 
+        /// <summary>
+        /// フラグメントファイルパスの取得
+        /// </summary>
+        /// <param name="type">GBufferに転送する頂点タイプ</param>
+        /// <returns>ファイルパス</returns>
         public string GetFragShaderFilePath(GBufferType type)
         {
             switch (type)
