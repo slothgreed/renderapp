@@ -16,16 +16,6 @@ namespace KI.Asset
         public static AssetFactory Instance { get; } = new AssetFactory();
 
         /// <summary>
-        /// カメラの作成
-        /// </summary>
-        /// <param name="name">名前</param>
-        /// <returns>カメラ</returns>
-        public Camera CreateCamera(string name)
-        {
-            return new Camera(name);
-        }
-
-        /// <summary>
         /// 球の作成
         /// </summary>
         /// <param name="name">名前</param>

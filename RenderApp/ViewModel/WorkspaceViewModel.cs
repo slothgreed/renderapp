@@ -161,7 +161,7 @@ namespace RenderApp.ViewModel
         {
             Scene mainScene = workspace.MainScene;
 
-            mainScene.MainCamera = AssetFactory.Instance.CreateCamera("MainCamera");
+            mainScene.MainCamera = new Camera("MainCamera");
             mainScene.MainLight = new DirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
             //mainScene.AddObject(mainScene.MainCamera);
             mainScene.AddObject(mainScene.MainLight);
