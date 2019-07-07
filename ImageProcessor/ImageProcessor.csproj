@@ -137,13 +137,13 @@
       <Project>{F5E989A2-028F-4E60-869C-EC57413376C6}</Project>
       <Name>KI.Gfx</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KI.Presenter\KI.Presenter.csproj">
+      <Project>{35F238B1-820C-4487-9081-A4AF3952219C}</Project>
+      <Name>KI.Presenter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KI.Renderer\KI.Renderer.csproj">
       <Project>{8BDA5035-5778-4460-8166-E6B2BD477E29}</Project>
       <Name>KI.Renderer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\KI.UI\KI.Presenter.csproj">
-      <Project>{35F238B1-820C-4487-9081-A4AF3952219C}</Project>
-      <Name>KI.Presenter</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

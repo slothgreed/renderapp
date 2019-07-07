@@ -213,8 +213,6 @@
     <Compile Include="ViewModel\PropertyGridViewModel.cs" />
     <Compile Include="ViewModel\SceneNodeVM\LightViewModel.cs" />
     <Compile Include="ViewModel\AttributeVM\OutlineAttributeViewModel.cs" />
-    <Compile Include="ViewModel\PostEffectVM\BloomViewModel.cs" />
-    <Compile Include="ViewModel\PostEffectVM\SobelViewModel.cs" />
     <Compile Include="ViewModel\NodeVM\RootNodeViewModelT4.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -266,15 +264,6 @@
     </Compile>
     <Compile Include="View\SceneNodeView\LightView.xaml.cs">
       <DependentUpon>LightView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\PostEffectView\PostEffectViewBase.xaml.cs">
-      <DependentUpon>PostEffectViewBase.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\PostEffectView\BloomView.xaml.cs">
-      <DependentUpon>BloomView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\PostEffectView\SobelView.xaml.cs">
-      <DependentUpon>SobelView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\NodeView\RootNodeView.xaml.cs">
       <DependentUpon>RootNodeView.xaml</DependentUpon>
@@ -358,18 +347,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\SceneNodeView\LightView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\PostEffectView\PostEffectViewBase.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\PostEffectView\BloomView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\PostEffectView\SobelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -487,13 +464,13 @@
       <Project>{f5e989a2-028f-4e60-869c-ec57413376c6}</Project>
       <Name>KI.Gfx</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KI.Presenter\KI.Presenter.csproj">
+      <Project>{35f238b1-820c-4487-9081-a4af3952219c}</Project>
+      <Name>KI.Presenter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KI.Renderer\KI.Renderer.csproj">
       <Project>{8bda5035-5778-4460-8166-e6b2bd477e29}</Project>
       <Name>KI.Renderer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\KI.UI\KI.Presenter.csproj">
-      <Project>{35f238b1-820c-4487-9081-a4af3952219c}</Project>
-      <Name>KI.Presenter</Name>
     </ProjectReference>
     <ProjectReference Include="..\RenderApp.Model\RenderApp.Model.csproj">
       <Project>{5e5560a2-6673-49f1-8089-c557c6172738}</Project>

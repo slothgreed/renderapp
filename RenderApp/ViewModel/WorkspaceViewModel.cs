@@ -344,13 +344,13 @@ namespace RenderApp.ViewModel
             renderer.OutputBuffer = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output) as OutputBuffer;
             renderer.OutputTexture = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
 
-            //Bloom bloom = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Bloom) as Bloom;
-            //bloom.uTarget = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
-            //renderer.PostEffect.AddTechnique(bloom);
+            Bloom bloom = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Bloom) as Bloom;
+            bloom.uTarget = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
+            renderer.PostEffect.AddTechnique(bloom);
 
-            //Sobel sobel = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Sobel) as Sobel;
-            //sobel.uTarget = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
-            //renderer.PostEffect.AddTechnique(sobel);
+            Sobel sobel = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Sobel) as Sobel;
+            sobel.uTarget = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
+            renderer.PostEffect.AddTechnique(sobel);
 
             //SSAO ssao = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.SSAO) as SSAO;
             //ssao.uPosition = gBufferTexture[(int)GBuffer.OutputTextureType.Posit];

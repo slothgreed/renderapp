@@ -175,13 +175,13 @@
       <Project>{5610ebdc-05d3-47ce-b954-bcc8e962d35a}</Project>
       <Name>KI.Mathmatics</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KI.Presenter\KI.Presenter.csproj">
+      <Project>{35f238b1-820c-4487-9081-a4af3952219c}</Project>
+      <Name>KI.Presenter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KI.Renderer\KI.Renderer.csproj">
       <Project>{8bda5035-5778-4460-8166-e6b2bd477e29}</Project>
       <Name>KI.Renderer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\KI.UI\KI.Presenter.csproj">
-      <Project>{35f238b1-820c-4487-9081-a4af3952219c}</Project>
-      <Name>KI.Presenter</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
