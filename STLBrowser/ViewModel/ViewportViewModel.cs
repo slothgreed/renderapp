@@ -6,7 +6,7 @@ using KI.Gfx.GLUtil;
 using KI.Renderer;
 using KI.Renderer.Technique;
 using KI.Foundation.Controller;
-using KI.Presentation.ViewModel;
+using KI.Presenter.ViewModel;
 using OpenTK;
 using RenderApp.Tool.Controller;
 

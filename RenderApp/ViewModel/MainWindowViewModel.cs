@@ -9,7 +9,7 @@ using KI.Gfx.KIShader;
 using KI.Gfx.Render;
 using KI.Renderer;
 using KI.Foundation.Command;
-using KI.Presentation.ViewModel;
+using KI.Presenter.ViewModel;
 using RenderApp.Model;
 using RenderApp.Tool;
 using RenderApp.Tool.Command;

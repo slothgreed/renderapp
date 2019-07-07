@@ -1,4 +1,4 @@
-﻿using KI.Presentation.ViewModel;
+﻿using KI.Presenter.ViewModel;
 
 namespace ImageProcessor.ViewModel
 {

@@ -22,7 +22,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KI.Asset", "KI.Asset\KI.Ass
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KI.Renderer", "KI.Renderer\KI.Renderer.csproj", "{8BDA5035-5778-4460-8166-E6B2BD477E29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KI.Presentation", "KI.UI\KI.Presentation.csproj", "{35F238B1-820C-4487-9081-A4AF3952219C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KI.Presenter", "KI.UI\KI.Presenter.csproj", "{35F238B1-820C-4487-9081-A4AF3952219C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KI.Mathmatics", "KI.Mathmatics\KI.Mathmatics.csproj", "{5610EBDC-05D3-47CE-B954-BCC8E962D35A}"
 EndProject

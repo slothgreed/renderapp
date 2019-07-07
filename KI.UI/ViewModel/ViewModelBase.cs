@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
-namespace KI.Presentation.ViewModel
+namespace KI.Presenter.ViewModel
 {
     public abstract class ViewModelBase : INotifyPropertyChanged, INotifyPropertyChanging
     {

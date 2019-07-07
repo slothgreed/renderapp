@@ -1,6 +1,6 @@
 ﻿using KI.Asset;
 using KI.Renderer;
-using KI.Presentation.ViewModel;
+using KI.Presenter.ViewModel;
 using OpenTK;
 
 namespace RenderApp.ViewModel

@@ -1,4 +1,4 @@
-﻿namespace KI.Presentation.ViewModel
+﻿namespace KI.Presenter.ViewModel
 {
     public class ThumbnailFileViewModel : ViewModelBase
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using KI.Presentation.ViewModel;
+using KI.Presenter.ViewModel;
 
 namespace STLBrowser.ViewModel
 {

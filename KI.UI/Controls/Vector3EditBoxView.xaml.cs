@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using OpenTK;
 
-namespace KI.Presentation.Controls
+namespace KI.Presenter.Controls
 {
     /// <summary>
     /// Vector3EditBoxView.xaml の相互作用ロジック

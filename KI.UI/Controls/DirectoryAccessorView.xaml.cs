@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace KI.Presentation.Controls
+namespace KI.Presenter.Controls
 {
     /// <summary>
     /// DirectoryAccessorView.xaml の相互作用ロジック

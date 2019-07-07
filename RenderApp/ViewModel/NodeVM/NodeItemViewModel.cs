@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using KI.Foundation.Core;
 using KI.Foundation.Tree;
-using KI.Presentation.ViewModel;
+using KI.Presenter.ViewModel;
 using RenderApp.Model;
 
 namespace RenderApp.ViewModel

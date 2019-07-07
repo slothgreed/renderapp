@@ -4,7 +4,7 @@ using KI.Gfx.GLUtil;
 using KI.Gfx.KITexture;
 using KI.Renderer;
 using KI.Renderer.Technique;
-using KI.Presentation.ViewModel;
+using KI.Presenter.ViewModel;
 using OpenTK;
 using System;
 using System.Collections.Generic;

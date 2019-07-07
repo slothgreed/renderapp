@@ -2,7 +2,7 @@
     x:Class="STLBrowser.View.STLBrowserView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:KI.Presentation.Controls;assembly=KI.Presentation"
+    xmlns:controls="clr-namespace:KI.Presenter.Controls;assembly=KI.Presenter"
     xmlns:v="clr-namespace:STLBrowser.View"
     xmlns:vm="clr-namespace:STLBrowser.ViewModel">
     <ScrollViewer>

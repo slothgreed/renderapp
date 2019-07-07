@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace KI.Presentation.ViewModel
+namespace KI.Presenter.ViewModel
 {
     public class DelegateCommand : ICommand
     {
