@@ -74,8 +74,19 @@
       <DependentUpon>Vector3EditBoxView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\DelegateCommand.cs" />
+    <Compile Include="ViewModel\PostEffectVM\BloomViewModel.cs" />
+    <Compile Include="ViewModel\PostEffectVM\SobelViewModel.cs" />
     <Compile Include="ViewModel\ThumbnailFileViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="View\PostEffectView\BloomView.xaml.cs">
+      <DependentUpon>BloomView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PostEffectView\PostEffectViewBase.xaml.cs">
+      <DependentUpon>PostEffectViewBase.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PostEffectView\SobelView.xaml.cs">
+      <DependentUpon>SobelView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\DirectoryAccessorView.xaml">
@@ -98,12 +109,32 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\PostEffectView\BloomView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PostEffectView\PostEffectViewBase.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PostEffectView\SobelView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="View\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KI.Foundation\KI.Foundation.csproj">
+      <Project>{cfc71ace-112a-467f-96ec-6566d4a6dfc6}</Project>
+      <Name>KI.Foundation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KI.Renderer\KI.Renderer.csproj">
+      <Project>{8BDA5035-5778-4460-8166-E6B2BD477E29}</Project>
+      <Name>KI.Renderer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
