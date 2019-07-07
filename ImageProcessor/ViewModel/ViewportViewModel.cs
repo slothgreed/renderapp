@@ -77,9 +77,7 @@ namespace ImageProcessor.ViewModel
             DeviceContext.Instance.SetClearColor(1, 1, 1, 1);
             MainScene = new Scene("MainScene", new EmptyNode("Root"));
             MainScene.MainCamera = new Camera("Camera");
-            var light = new DirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
-            var sphere = AssetFactory.Instance.CreateSphere("sphere", 0.1f, 32, 32, true);
-            MainScene.MainLight = new LightNode("SunLight", light, SceneNodeFactory.Instance.CreatePolygonNode("SunLight", sphere, null));
+            MainScene.MainLight = new DirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
             RenderSystem = new RenderSystem();
             RenderSystem.ActiveScene = MainScene;
 

@@ -58,7 +58,7 @@ namespace KI.Renderer
                         info.Variable = sceneNode.ModelMatrix * vp;
                         break;
                     case "uSMVP":
-                        Matrix4 light = scene.MainLight.Data.Matrix;
+                        Matrix4 light = scene.MainLight.Matrix;
                         Matrix4 proj = scene.MainCamera.ProjMatrix;
                         info.Variable = sceneNode.ModelMatrix * light * proj;
                         break;
@@ -81,13 +81,13 @@ namespace KI.Renderer
                         info.Variable = scene.MainCamera.Matrix;
                         break;
                     case "uLightPosition":
-                        info.Variable = scene.MainLight.Data.Position;
+                        info.Variable = scene.MainLight.Position;
                         break;
                     case "uLightDirection":
-                        info.Variable = scene.MainLight.Data.Direction;
+                        info.Variable = scene.MainLight.Direction;
                         break;
                     case "uLightMatrix":
-                        info.Variable = scene.MainLight.Data.Matrix;
+                        info.Variable = scene.MainLight.Matrix;
                         break;
                     case "uAlbedoMap":
                         if (material.Textures != null &&
