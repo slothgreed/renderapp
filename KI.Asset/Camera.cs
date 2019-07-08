@@ -226,6 +226,12 @@ namespace KI.Asset
             ProjMatrix = Matrix4.CreatePerspectiveFieldOfView(FOV, aspect, Near, Far);
         }
 
+        public void SetOrtho()
+        {
+            ProjMatrix = Matrix4.CreateOrthographicOffCenter(-1, 1, -1, 1, -1, 1);
+            Matrix = Matrix4.Identity;
+        }
+
         #region [カメラの回転]
 
         /// <summary>

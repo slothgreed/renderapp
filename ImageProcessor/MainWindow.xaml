@@ -29,6 +29,6 @@
             </MenuItem>
         </Menu>
         <view:ViewportView Grid.Column="0" Grid.Row="1" DataContext="{Binding ViewportViewModel}"/>
-        <view:PropertyView Grid.Column="1" Grid.Row="1" Margin="10"/>
+        <view:PropertyView Grid.Column="1" Grid.Row="1" Margin="10" DataContext="{Binding PropertyViewModel}"/>
     </Grid>
 </Window>

@@ -13,6 +13,12 @@ using System.Windows.Forms.Integration;
 
 namespace ImageProcessor.ViewModel
 {
+
+    /// <summary>
+    /// 初期化イベント
+    /// </summary>
+    public delegate void OnInitializedHandler(object sender, EventArgs e);
+
     public class ViewportViewModel
     {
 
@@ -33,11 +39,7 @@ namespace ImageProcessor.ViewModel
             }
         }
 
-
-        /// <summary>
-        /// ノード挿入イベント
-        /// </summary>
-        public EventHandler OnInitialized;
+        public event OnInitializedHandler OnInitialized;
 
         public Viewport Viewport
         {
@@ -106,6 +108,14 @@ namespace ImageProcessor.ViewModel
             RenderSystem.OutputBuffer = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output) as OutputBuffer;
             //RenderSystem.OutputTexture = RenderSystem.RenderQueue.OutputTexture<DeferredRendering>()[0];
             RenderSystem.OutputTexture = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
+
+            Bloom bloom = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Bloom) as Bloom;
+            bloom.uTarget = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
+            RenderSystem.PostEffect.AddTechnique(bloom);
+
+            Sobel sobel = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Sobel) as Sobel;
+            sobel.uTarget = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
+            RenderSystem.PostEffect.AddTechnique(sobel);
         }
 
         private void OnResizeEvent(object sender, EventArgs e)
@@ -113,6 +123,7 @@ namespace ImageProcessor.ViewModel
             if (MainScene != null)
             {
                 MainScene.MainCamera.SetProjMatrix((float)DeviceContext.Instance.Width / DeviceContext.Instance.Height);
+                MainScene.MainCamera.SetOrtho();
             }
 
             RenderSystem.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
@@ -121,6 +132,11 @@ namespace ImageProcessor.ViewModel
         private void OnRenderEvent(object sender, PaintEventArgs e)
         {
             RenderSystem.Render();
+        }
+
+        public void Invalidate()
+        {
+            Viewport.Instance.GLControl_Paint(this, null);
         }
     }
 }
