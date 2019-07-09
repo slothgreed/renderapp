@@ -70,6 +70,7 @@
     <Compile Include="Technique\OffScreen\Lighting\DeferredRendering.cs" />
     <Compile Include="Technique\OffScreen\Geometry\GBuffer.cs" />
     <Compile Include="Technique\OffScreen\Lighting\ImageBasedLighting.cs" />
+    <Compile Include="Technique\OffScreen\PostEffect\GrayScale.cs" />
     <Compile Include="Technique\OutputBuffer.cs" />
     <Compile Include="Technique\OffScreen\PostEffect\Bloom.cs" />
     <Compile Include="Technique\OffScreen\PostEffect\DOF.cs" />

@@ -60,9 +60,10 @@ namespace ImageProcessor.ViewModel
             : base(parent)
         {
             Model = model;
-            ViewModelBase viewModel = null;
+
             foreach (var pfx in Model.PostEffect.Items)
             {
+                ViewModelBase viewModel = null;
                 if (pfx is Bloom)
                 {
                     viewModel = new BloomViewModel(this, (Bloom)pfx);

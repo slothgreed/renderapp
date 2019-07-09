@@ -18,6 +18,7 @@ namespace KI.Renderer
         Bloom,
         Dof,
         Sobel,
+        GrayScale,
         SSAO,
         SSLIC,
         Selection,
@@ -61,6 +62,7 @@ namespace KI.Renderer
             DefaultShader.Add(RenderTechniqueType.IBL,       new ShaderFile() { Vertex = lighthing  + @"\ibl.vert",         Frag = lighthing  + @"\ibl.frag" });
             DefaultShader.Add(RenderTechniqueType.Deferred,  new ShaderFile() { Vertex = lighthing  + @"\defferd.vert",     Frag = lighthing  + @"\defferd.frag" });
             DefaultShader.Add(RenderTechniqueType.Dof,       new ShaderFile() { Vertex = postEffect + @"\dof.vert",         Frag = postEffect + @"\dof.frag" });
+            DefaultShader.Add(RenderTechniqueType.GrayScale, new ShaderFile() { Vertex = postEffect + @"\plane.vert",       Frag = postEffect + @"\grayscale.frag"});
             DefaultShader.Add(RenderTechniqueType.Sobel,     new ShaderFile() { Vertex = postEffect + @"\sobel.vert",       Frag = postEffect + @"\sobel.frag" });
             DefaultShader.Add(RenderTechniqueType.SSAO,      new ShaderFile() { Vertex = postEffect + @"\ssao.vert",        Frag = postEffect + @"\ssao.frag" });
             DefaultShader.Add(RenderTechniqueType.Bloom,     new ShaderFile() { Vertex = postEffect + @"\bloom.vert",       Frag = postEffect + @"\bloom.frag" });
@@ -107,6 +109,9 @@ namespace KI.Renderer
                     break;
                 case RenderTechniqueType.Sobel:
                     technique = new Sobel(RendererSystem, DefaultShader[RenderTechniqueType.Sobel].Vertex, DefaultShader[RenderTechniqueType.Sobel].Frag);
+                    break;
+                case RenderTechniqueType.GrayScale:
+                    technique = new GrayScale(RendererSystem, DefaultShader[RenderTechniqueType.GrayScale].Vertex, DefaultShader[RenderTechniqueType.GrayScale].Frag);
                     break;
                 case RenderTechniqueType.Bloom:
                     technique = new Bloom(RendererSystem, DefaultShader[RenderTechniqueType.Bloom].Vertex, DefaultShader[RenderTechniqueType.Bloom].Frag);

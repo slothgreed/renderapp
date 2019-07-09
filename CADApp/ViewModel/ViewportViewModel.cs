@@ -194,8 +194,6 @@ namespace CADApp.ViewModel
         {
             MainScene.MainCamera = new Camera("MainCamera");
             MainScene.MainLight = new DirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
-            //MainScene.AddObject(MainScene.MainCamera);
-            MainScene.AddObject(MainScene.MainLight);
 
             var axis = new Axis(Vector3.Zero, MainScene.WorldMax);
             var axisObject = SceneNodeFactory.Instance.CreatePolygonNode("Axis", axis.Vertex, axis.Color, axis.Index, KIPrimitiveType.Lines);

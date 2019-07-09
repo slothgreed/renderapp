@@ -254,8 +254,8 @@ namespace RenderApp.ViewModel
 
         private AnalyzePolygonNode CreateAnalyzePolygonNode(string name, ICreateModel model)
         {
-            string vert = ShaderCreater.Instance.GetVertexShader(model.Model);
-            string frag = ShaderCreater.Instance.GetFragShaderFilePath(model.Model);
+            string vert = ShaderCreater.Instance.GetVertexShader(model.Model.Type, null);
+            string frag = ShaderCreater.Instance.GetFragShaderFilePath(model.Model.Type, null);
             var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
             Material material = new Material(shader);
             model.Model.Material = material;

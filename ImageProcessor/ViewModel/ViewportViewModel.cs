@@ -116,6 +116,10 @@ namespace ImageProcessor.ViewModel
             Sobel sobel = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Sobel) as Sobel;
             sobel.uTarget = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
             RenderSystem.PostEffect.AddTechnique(sobel);
+
+            GrayScale grayScale = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GrayScale) as GrayScale;
+            grayScale.uTarget = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
+            RenderSystem.PostEffect.AddTechnique(grayScale);
         }
 
         private void OnResizeEvent(object sender, EventArgs e)
