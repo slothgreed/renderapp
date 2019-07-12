@@ -6,6 +6,7 @@ using KI.Gfx.GLUtil;
 using KI.Gfx.KITexture;
 using KI.Gfx.Render;
 using OpenTK.Graphics.OpenGL;
+using KI.Asset.Primitive;
 
 namespace KI.Renderer.Technique
 {

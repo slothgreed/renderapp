@@ -113,7 +113,6 @@ namespace CADApp.ViewModel
             Controller[currentControllerType].Binding(args);
         }
 
-
         /// <summary>
         /// シーン
         /// </summary>

@@ -4,11 +4,19 @@ using OpenTK;
 
 namespace KI.Asset
 {
+
+    public enum CameraMode
+    {
+        Ortho,
+        Perspective
+    }
+
     /// <summary>
     /// カメラ
     /// </summary>
     public class Camera : KINode
     {
+
         #region [property method]
 
         /// <summary>
@@ -18,7 +26,7 @@ namespace KI.Asset
         public Camera(string name)
             : base(name)
         {
-            InitCamera();
+            InitCamera(CameraMode.Perspective);
             SetProjMatrix(1.0f);
         }
 
@@ -127,6 +135,8 @@ namespace KI.Asset
         /// </summary>
         public float Far { get; set; } = 1000;
 
+        public CameraMode CameraMode { get; private set; }
+
         #region [回転関連]
 
         /// <summary>
@@ -197,15 +207,17 @@ namespace KI.Asset
         /// <summary>
         /// 初期のカメラ位置
         /// </summary>
-        public void InitCamera()
+        public void InitCamera(CameraMode mode)
         {
-            LookAt = Vector3.Zero;
-            Up = Vector3.UnitY;
-            Position = Vector3.UnitZ;
-            LookAtDistance = (Position - LookAt).Length;
-            Theta = 90.0f;
-            Phi = 0.0f;
-            UpdateCamera();
+            CameraMode = mode;
+            if (CameraMode == CameraMode.Perspective)
+            {
+                InitPerspective();
+            }
+            else
+            {
+                InitOrtho();
+            }
         }
 
         /// <summary>
@@ -226,7 +238,18 @@ namespace KI.Asset
             ProjMatrix = Matrix4.CreatePerspectiveFieldOfView(FOV, aspect, Near, Far);
         }
 
-        public void SetOrtho()
+        private void InitPerspective()
+        {
+            LookAt = Vector3.Zero;
+            Up = Vector3.UnitY;
+            Position = Vector3.UnitZ;
+            LookAtDistance = (Position - LookAt).Length;
+            Theta = 90.0f;
+            Phi = 0.0f;
+            UpdateCamera();
+        }
+
+        private void InitOrtho()
         {
             ProjMatrix = Matrix4.CreateOrthographicOffCenter(-1, 1, -1, 1, -1, 1);
             Matrix = Matrix4.Identity;

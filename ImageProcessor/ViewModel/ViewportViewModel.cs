@@ -1,4 +1,5 @@
 ﻿using KI.Asset;
+using KI.Asset.Primitive;
 using KI.Gfx;
 using KI.Gfx.GLUtil;
 using KI.Gfx.KITexture;
@@ -10,9 +11,16 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
+using System.Linq;
 
-namespace ImageProcessor.ViewModel
+namespace ShaderTraining.ViewModel
 {
+
+    public enum VisibleItem
+    {
+        Plane,
+        Sphere
+    }
 
     /// <summary>
     /// 初期化イベント
@@ -74,6 +82,20 @@ namespace ImageProcessor.ViewModel
         /// </summary>
         public RenderSystem RenderSystem { get; set; }
 
+        private CameraMode cameraMode;
+        public CameraMode CameraMode
+        {
+            get
+            {
+                return cameraMode;
+            }
+            private set
+            {
+                cameraMode = value;
+                MainScene.MainCamera.InitCamera(value);
+            }
+        }
+
         public void OnLoadedEvent(object sender, EventArgs e)
         {
             DeviceContext.Instance.SetClearColor(1, 1, 1, 1);
@@ -83,15 +105,26 @@ namespace ImageProcessor.ViewModel
             RenderSystem = new RenderSystem();
             RenderSystem.ActiveScene = MainScene;
 
-            var rectangle = new Rectangle();
-            var rectangleObject = SceneNodeFactory.Instance.CreatePolygonNode("Axis", rectangle.Position, rectangle.Position, rectangle.Texcoord, rectangle.Index, KIPrimitiveType.Quads);
             var mainTexture = TextureFactory.Instance.CreateTexture("E:\\cgModel\\Image\\Contact_Cover.jpg");
+
+            var rectangle = new Rectangle();
+            var rectangleObject = SceneNodeFactory.Instance.CreatePolygonNode("Rectangle", rectangle.Position, rectangle.Position, rectangle.Texcoord, rectangle.Index, KIPrimitiveType.Quads);
             var shader = ShaderCreater.Instance.CreateShader(GBufferType.Albedo);
             var textures = new Dictionary<TextureKind, Texture>();
             textures.Add(TextureKind.Albedo, mainTexture);
 
             rectangleObject.Polygon.Material = new Material(shader, textures);
             MainScene.AddObject(rectangleObject);
+            CameraMode = CameraMode.Ortho;
+
+
+            var icosahedron = new Icosahedron(0.5f, 1, Vector3.Zero);
+            var sphereObject = SceneNodeFactory.Instance.CreatePolygonNode("Sphere", icosahedron.Position, icosahedron.Normal, icosahedron.Index, KIPrimitiveType.Triangles);
+            sphereObject.Visible = false;
+            var sphereShader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
+            sphereObject.Polygon.Material = new Material(sphereShader);
+            MainScene.AddObject(sphereObject);
+
 
             InitializeRenderer();
 
@@ -126,8 +159,10 @@ namespace ImageProcessor.ViewModel
         {
             if (MainScene != null)
             {
-                MainScene.MainCamera.SetProjMatrix((float)DeviceContext.Instance.Width / DeviceContext.Instance.Height);
-                MainScene.MainCamera.SetOrtho();
+                if (CameraMode == CameraMode.Perspective)
+                {
+                    MainScene.MainCamera.SetProjMatrix((float)DeviceContext.Instance.Width / DeviceContext.Instance.Height);
+                }
             }
 
             RenderSystem.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
@@ -141,6 +176,33 @@ namespace ImageProcessor.ViewModel
         public void Invalidate()
         {
             Viewport.Instance.GLControl_Paint(this, null);
+        }
+
+        public void ChangeVisible(VisibleItem item)
+        {
+            foreach (var node in MainScene.RootNode.AllChildren())
+            {
+                if(node is SceneNode)
+                {
+                    var sceneNode = (SceneNode)node;
+                    sceneNode.Visible = false;
+                }
+            }
+
+            if (item == VisibleItem.Plane)
+            {
+                var sceneNode = MainScene.FindNode("Rectangle");
+                sceneNode.Visible = true;
+                CameraMode = CameraMode.Ortho;
+            }
+            else if (item == VisibleItem.Sphere)
+            {
+                var sceneNode = MainScene.FindNode("Sphere");
+                sceneNode.Visible = true;
+                CameraMode = CameraMode.Perspective;
+            }
+
+            Invalidate();
         }
     }
 }

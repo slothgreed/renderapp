@@ -1,4 +1,5 @@
 ﻿using KI.Asset.Loader.Importer;
+using KI.Asset.Primitive;
 using KI.Foundation.Core;
 using KI.Gfx.Geometry;
 using OpenTK;
@@ -14,20 +15,6 @@ namespace KI.Asset
         /// シングルトン
         /// </summary>
         public static AssetFactory Instance { get; } = new AssetFactory();
-
-        /// <summary>
-        /// 球の作成
-        /// </summary>
-        /// <param name="name">名前</param>
-        /// <param name="radial">半径</param>
-        /// <param name="hpartition">縦分割数</param>
-        /// <param name="wpartition">横分割数</param>
-        /// <param name="orient">内外</param>
-        /// <returns>球</returns>
-        public ICreateModel CreateSphere(string name, float radial, int hpartition, int wpartition, bool orient)
-        {
-            return new Sphere(name, radial, hpartition, wpartition, orient);
-        }
 
         /// <summary>
         /// 3dモデルのロード

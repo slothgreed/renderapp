@@ -1,8 +1,10 @@
 ﻿using KI.Presenter.ViewModel;
+using System;
+using System.ComponentModel;
 
-namespace ImageProcessor.ViewModel
+namespace ShaderTraining.ViewModel
 {
-    public class MainWindowViewModel : ViewModelBase
+    public partial class MainWindowViewModel : ViewModelBase
     {
         private ViewportViewModel _ViewportViewModel;
         public ViewportViewModel ViewportViewModel
@@ -36,15 +38,25 @@ namespace ImageProcessor.ViewModel
             ViewportViewModel.OnInitialized += ViewportViewModel_OnInitialized;
         }
 
-        private void ViewportViewModel_OnInitialized(object sender, System.EventArgs e)
+        private void ViewportViewModel_OnInitialized(object sender, EventArgs e)
         {
             PropertyViewModel = new PropertyViewModel(this, ViewportViewModel.RenderSystem);
             PropertyViewModel.PropertyChanged += PropertyViewModel_PropertyChanged;
         }
 
-        private void PropertyViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void PropertyViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             ViewportViewModel.Invalidate();
+        }
+
+        private void PlaneObjectCommand()
+        {
+            ViewportViewModel.ChangeVisible(VisibleItem.Plane);
+        }
+
+        private void SphereObjectCommand()
+        {
+            ViewportViewModel.ChangeVisible(VisibleItem.Sphere);
         }
     }
 }

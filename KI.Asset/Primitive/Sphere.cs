@@ -6,7 +6,7 @@ using KI.Gfx.Geometry;
 using OpenTK;
 using KI.Mathmatics;
 
-namespace KI.Asset
+namespace KI.Asset.Primitive
 {
     /// <summary>
     /// 球

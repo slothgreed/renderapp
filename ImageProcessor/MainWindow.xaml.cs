@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ImageProcessor
+namespace ShaderTraining
 {
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック

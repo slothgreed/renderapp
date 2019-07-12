@@ -4,6 +4,7 @@ using KI.Asset;
 using KI.Foundation.Core;
 using KI.Gfx.KIShader;
 using KI.Gfx.Render;
+using KI.Asset.Primitive;
 
 namespace KI.Renderer.Technique
 {

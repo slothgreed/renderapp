@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ImageProcessor.View
+namespace ShaderTraining.View
 {
     /// <summary>
     /// PropertyView.xaml の相互作用ロジック

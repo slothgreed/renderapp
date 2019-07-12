@@ -6,7 +6,7 @@ using KI.Mathmatics;
 using OpenTK;
 using KI.Asset.Primitive;
 
-namespace KI.Asset
+namespace KI.Asset.Primitive
 {
     /// <summary>
     /// 平面

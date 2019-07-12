@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImageProcessor.ViewModel
+namespace ShaderTraining.ViewModel
 {
     public class PropertyViewModel : ViewModelBase
     {
