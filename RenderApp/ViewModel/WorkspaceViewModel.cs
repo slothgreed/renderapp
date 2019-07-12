@@ -15,6 +15,7 @@ using OpenTK;
 using RenderApp.Model;
 using RenderApp.Tool;
 using RenderApp.Tool.Command;
+using KI.Asset.Primitive;
 
 namespace RenderApp.ViewModel
 {

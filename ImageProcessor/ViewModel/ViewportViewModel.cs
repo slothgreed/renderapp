@@ -12,43 +12,18 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 using System.Linq;
+using KI.Foundation.Controller;
 
 namespace ShaderTraining.ViewModel
 {
-
     public enum VisibleItem
     {
         Plane,
         Sphere
     }
 
-    /// <summary>
-    /// 初期化イベント
-    /// </summary>
-    public delegate void OnInitializedHandler(object sender, EventArgs e);
-
-    public class ViewportViewModel
+    public class ViewportViewModel : ViewportViewModelBase
     {
-
-        private WindowsFormsHost _glContext;
-        public WindowsFormsHost GLContext
-        {
-            get
-            {
-                if (_glContext == null)
-                {
-                    _glContext = new WindowsFormsHost()
-                    {
-                        Child = Viewport.Instance.GLControl
-                    };
-                }
-
-                return _glContext;
-            }
-        }
-
-        public event OnInitializedHandler OnInitialized;
-
         public Viewport Viewport
         {
             get
@@ -57,21 +32,12 @@ namespace ShaderTraining.ViewModel
             }
         }
 
-        public string FolderPath
-        {
-            get
-            {
-                return "AAA";
-            }
-        }
-
         public ViewportViewModel(ViewModelBase parent)
+            : base(parent)
         {
-            Viewport.Instance.OnLoaded += OnLoadedEvent;
-            Viewport.Instance.OnResize += OnResizeEvent;
-            Viewport.Instance.OnRender += OnRenderEvent;
-        }
 
+        }
+  
         /// <summary>
         /// シーン
         /// </summary>
@@ -96,9 +62,13 @@ namespace ShaderTraining.ViewModel
             }
         }
 
-        public void OnLoadedEvent(object sender, EventArgs e)
+        protected override void InitializeDeviceContext()
         {
             DeviceContext.Instance.SetClearColor(1, 1, 1, 1);
+        }
+
+        protected override void InitializeScene()
+        {
             MainScene = new Scene("MainScene", new EmptyNode("Root"));
             MainScene.MainCamera = new Camera("Camera");
             MainScene.MainLight = new DirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
@@ -124,15 +94,9 @@ namespace ShaderTraining.ViewModel
             var sphereShader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
             sphereObject.Polygon.Material = new Material(sphereShader);
             MainScene.AddObject(sphereObject);
-
-
-            InitializeRenderer();
-
-            OnInitialized?.Invoke(this, null);
         }
 
-
-        private void InitializeRenderer()
+        protected override void InitializeRenderer()
         {
             RenderTechniqueFactory.Instance.RendererSystem = RenderSystem;
             RenderSystem.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer));
@@ -155,7 +119,15 @@ namespace ShaderTraining.ViewModel
             RenderSystem.PostEffect.AddTechnique(grayScale);
         }
 
-        private void OnResizeEvent(object sender, EventArgs e)
+        protected override void ProcessMouseInput(KIMouseEventArgs mouse)
+        {
+        }
+
+        protected override void ProcessKeyInput(KeyEventArgs e)
+        {
+        }
+
+        protected override void OnResizeEvent(object sender, EventArgs e)
         {
             if (MainScene != null)
             {
@@ -168,7 +140,7 @@ namespace ShaderTraining.ViewModel
             RenderSystem.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
         }
 
-        private void OnRenderEvent(object sender, PaintEventArgs e)
+        protected override void OnRenderEvent(object sender, PaintEventArgs e)
         {
             RenderSystem.Render();
         }

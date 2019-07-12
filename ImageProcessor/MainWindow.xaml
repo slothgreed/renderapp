@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShaderTraining"
         xmlns:view="clr-namespace:ShaderTraining.View"
+        xmlns:presenter="clr-namespace:KI.Presenter.View;assembly=KI.Presenter"
         xmlns:vm="clr-namespace:ShaderTraining.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
@@ -26,7 +27,7 @@
                 <MenuItem Command="{Binding SphereObject}" Header="Sphere" />
             </MenuItem>
         </Menu>
-        <view:ViewportView Grid.Column="0" Grid.Row="1" DataContext="{Binding ViewportViewModel}"/>
+        <presenter:ViewportView Grid.Column="0" Grid.Row="1" DataContext="{Binding ViewportViewModel}"/>
         <view:PropertyView Grid.Column="1" Grid.Row="1" Margin="10" DataContext="{Binding PropertyViewModel}"/>
     </Grid>
 </Window>
