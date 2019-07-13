@@ -12,25 +12,8 @@ using RenderApp.Tool.Controller;
 
 namespace STLBrowser.ViewModel
 {
-    public class ViewportViewModel : ViewModelBase
+    public class ViewportViewModel : ViewportViewModelBase
     {
-        private WindowsFormsHost _glContext;
-        public WindowsFormsHost GLContext
-        {
-            get
-            {
-                if (_glContext == null)
-                {
-                    _glContext = new WindowsFormsHost()
-                    {
-                        Child = Viewport.Instance.GLControl
-                    };
-                }
-
-                return _glContext;
-            }
-        }
-
         public Viewport Viewport
         {
             get
@@ -50,13 +33,6 @@ namespace STLBrowser.ViewModel
         public ViewportViewModel(ViewModelBase parent)
             : base(parent)
         {
-            Viewport.Instance.OnLoaded += OnLoadedEvent;
-            Viewport.Instance.OnResize += OnResizeEvent;
-            Viewport.Instance.OnRender += OnRenderEvent;
-            Viewport.Instance.OnMouseWheel += OnMouseWheelEvent;
-            Viewport.Instance.OnMouseUp += OnMouseMoveUpEvent;
-            Viewport.Instance.OnMouseMove += OnMouseMoveEvent;
-            Viewport.Instance.OnMouseDown += OnMouseDownEvent;
         }
 
         /// <summary>
@@ -74,17 +50,26 @@ namespace STLBrowser.ViewModel
         /// </summary>
         public RenderSystem RenderSystem { get; set; }
 
-        public void OnLoadedEvent(object sender, EventArgs e)
+        protected override void InitializeDeviceContext()
+        {
+            DeviceContext.Instance.SetClearColor(1, 1, 1, 1);
+        }
+
+        protected override void InitializeScene()
         {
             MainScene = new Scene("MainScene", new EmptyNode("ROOT"));
             RenderSystem = new RenderSystem();
             RenderSystem.ActiveScene = MainScene;
 
-            MainScene.MainCamera =new Camera("MainCamera");
+            MainScene.MainCamera = new Camera("MainCamera");
             MainScene.MainLight = new DirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
 
-            RenderTechniqueFactory.Instance.RendererSystem = RenderSystem;
+        }
 
+        protected override void InitializeRenderer()
+        {
+
+            RenderTechniqueFactory.Instance.RendererSystem = RenderSystem;
             RenderSystem.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer));
             var gBufferTexture = RenderSystem.RenderQueue.OutputTexture<GBuffer>();
             RenderSystem.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Deferred));
@@ -92,7 +77,7 @@ namespace STLBrowser.ViewModel
             RenderSystem.OutputTexture = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
         }
 
-        private void OnResizeEvent(object sender, EventArgs e)
+        protected override void OnResizeEvent(object sender, EventArgs e)
         {
             if (MainScene != null)
             {
@@ -102,39 +87,17 @@ namespace STLBrowser.ViewModel
             RenderSystem.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
         }
 
-        private void OnRenderEvent(object sender, PaintEventArgs e)
+        protected override void OnRenderEvent(object sender, PaintEventArgs e)
         {
             RenderSystem.Render();
         }
-
-        private void OnMouseWheelEvent(object sender, KIMouseEventArgs e)
-        {
-            ProcessMouseInput(e);
-        }
-
-        private void OnMouseMoveUpEvent(object sender, KIMouseEventArgs e)
-        {
-            ProcessMouseInput(e);
-        }
-
-        private void OnMouseMoveEvent(object sender, KIMouseEventArgs e)
-        {
-            ProcessMouseInput(e);
-        }
-
-        private void OnMouseDownEvent(object sender, KIMouseEventArgs e)
-        {
-            ProcessMouseInput(e);
-        }
-
-
 
         /// <summary>
         /// マウス入力
         /// </summary>
         /// <param name="mouse">マウス情報</param>
         /// <param name="state">状態</param>
-        public void ProcessMouseInput(KIMouseEventArgs mouse)
+        protected override void ProcessMouseInput(KIMouseEventArgs mouse)
         {
             switch (mouse.MouseState)
             {

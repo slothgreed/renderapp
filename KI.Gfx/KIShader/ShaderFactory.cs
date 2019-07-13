@@ -48,15 +48,16 @@ namespace KI.Gfx.KIShader
         /// <returns>シェーダ</returns>
         public Shader CreateShaderVF(string vPath, string fPath)
         {
-            Shader shader = FindShader(vPath, fPath, null, null, null);
+            //Shader shader = FindShader(vPath, fPath, null, null, null);
             //if (shader == null)
+            string vname = Path.GetFileName(vPath);
+            string fname = Path.GetFileName(fPath);
+            ShaderProgram vert = ShaderProgramFactory.Instance.CreateShaderProgram(vPath, vPath);
+            ShaderProgram frag = ShaderProgramFactory.Instance.CreateShaderProgram(fPath, fPath);
+            Shader shader = new Shader(vert, frag);
+            if (Shaders.ContainsKey(vname + fname) == false)
             {
-                string vname = Path.GetFileName(vPath);
-                string fname = Path.GetFileName(fPath);
-                ShaderProgram vert = ShaderProgramFactory.Instance.CreateShaderProgram(vPath, vPath);
-                ShaderProgram frag = ShaderProgramFactory.Instance.CreateShaderProgram(fPath, fPath);
-                shader = new Shader(vert, frag);
-                //Shaders.Add(vname + fname, shader);
+                Shaders.Add(vname + fname, shader);
             }
 
             return shader;
@@ -72,19 +73,19 @@ namespace KI.Gfx.KIShader
         /// <returns>シェーダ</returns>
         public Shader CreateGeometryShader(string vPath, string fPath, string gPath)
         {
-            Shader shader = FindShader(vPath, fPath, gPath, null, null);
+            //Shader shader = FindShader(vPath, fPath, gPath, null, null);
             //if (shader == null)
+            string vname = Path.GetFileName(vPath);
+            string fname = Path.GetFileName(fPath);
+            string gname = Path.GetFileName(gPath);
+            ShaderProgram vert = ShaderProgramFactory.Instance.CreateShaderProgram(vPath, vPath);
+            ShaderProgram frag = ShaderProgramFactory.Instance.CreateShaderProgram(fPath, fPath);
+            ShaderProgram geom = ShaderProgramFactory.Instance.CreateShaderProgram(gPath, gPath);
+            Shader shader = new Shader(vert, frag, geom);
+            if (Shaders.ContainsKey(vname + fname + geom) == false)
             {
-                string vname = Path.GetFileName(vPath);
-                string fname = Path.GetFileName(fPath);
-                string gname = Path.GetFileName(gPath);
-                ShaderProgram vert = ShaderProgramFactory.Instance.CreateShaderProgram(vPath, vPath);
-                ShaderProgram frag = ShaderProgramFactory.Instance.CreateShaderProgram(fPath, fPath);
-                ShaderProgram geom = ShaderProgramFactory.Instance.CreateShaderProgram(gPath, gPath);
-                shader = new Shader(vert, frag, geom);
-                //Shaders.Add(vname + fname + geom, shader);
+                Shaders.Add(vname + fname + geom, shader);
             }
-
             return shader;
         }
 
@@ -99,22 +100,24 @@ namespace KI.Gfx.KIShader
         /// <returns>シェーダ</returns>
         public Shader CreateTesselation(string vPath, string fPath, string gPath, string tcPath, string tePath)
         {
-            Shader shader = FindShader(vPath, fPath, gPath, tcPath, tePath);
+            //Shader shader = FindShader(vPath, fPath, gPath, tcPath, tePath);
             //if (shader == null)
-            {
-                string vname = Path.GetFileName(vPath);
-                string fname = Path.GetFileName(fPath);
-                string gname = Path.GetFileName(gPath);
-                string tcname = Path.GetFileName(tcPath);
-                string tename = Path.GetFileName(tePath);
+            string vname = Path.GetFileName(vPath);
+            string fname = Path.GetFileName(fPath);
+            string gname = Path.GetFileName(gPath);
+            string tcname = Path.GetFileName(tcPath);
+            string tename = Path.GetFileName(tePath);
 
-                ShaderProgram vert = ShaderProgramFactory.Instance.CreateShaderProgram(vPath, vPath);
-                ShaderProgram frag = ShaderProgramFactory.Instance.CreateShaderProgram(fPath, fPath);
-                ShaderProgram geom = ShaderProgramFactory.Instance.CreateShaderProgram(gPath, gPath);
-                ShaderProgram tcs = ShaderProgramFactory.Instance.CreateShaderProgram(tcPath, tcPath);
-                ShaderProgram tes = ShaderProgramFactory.Instance.CreateShaderProgram(tePath, tePath);
-                shader = new Shader(vert, frag, geom, tcs, tes);
-                //Shaders.Add(vname + fname + tcs + tes, shader);
+            ShaderProgram vert = ShaderProgramFactory.Instance.CreateShaderProgram(vPath, vPath);
+            ShaderProgram frag = ShaderProgramFactory.Instance.CreateShaderProgram(fPath, fPath);
+            ShaderProgram geom = ShaderProgramFactory.Instance.CreateShaderProgram(gPath, gPath);
+            ShaderProgram tcs = ShaderProgramFactory.Instance.CreateShaderProgram(tcPath, tcPath);
+            ShaderProgram tes = ShaderProgramFactory.Instance.CreateShaderProgram(tePath, tePath);
+            Shader shader = new Shader(vert, frag, geom, tcs, tes);
+
+            if (Shaders.ContainsKey(vname + fname + tcs + tes) == false)
+            {
+                Shaders.Add(vname + fname + tcs + tes, shader);
             }
 
             return shader;

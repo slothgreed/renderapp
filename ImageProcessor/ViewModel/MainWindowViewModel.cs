@@ -1,4 +1,5 @@
-﻿using KI.Presenter.ViewModel;
+﻿using KI.Gfx.KIShader;
+using KI.Presenter.ViewModel;
 using System;
 using System.ComponentModel;
 
@@ -30,6 +31,15 @@ namespace ShaderTraining.ViewModel
             }
         }
 
+        private ShaderViewModel _ShaderViewModel;
+        public ShaderViewModel ShaderViewModel
+        {
+            get { return _ShaderViewModel; }
+            set
+            {
+                SetValue(ref _ShaderViewModel, value);
+            }
+        }
 
         public MainWindowViewModel()
             : base(null)
@@ -42,6 +52,9 @@ namespace ShaderTraining.ViewModel
         {
             PropertyViewModel = new PropertyViewModel(this, ViewportViewModel.RenderSystem);
             PropertyViewModel.PropertyChanged += PropertyViewModel_PropertyChanged;
+
+            ShaderViewModel = new ShaderViewModel(this, ShaderFactory.Instance.Shaders);
+
         }
 
         private void PropertyViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)

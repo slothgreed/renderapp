@@ -74,9 +74,16 @@
     </Compile>
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\PropertyViewModel.cs" />
+    <Compile Include="ViewModel\ShaderViewModel.cs" />
     <Compile Include="ViewModel\ViewportViewModel.cs" />
     <Compile Include="View\PropertyView.xaml.cs">
       <DependentUpon>PropertyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ShaderProgramView.xaml.cs">
+      <DependentUpon>ShaderProgramView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ShaderView.xaml.cs">
+      <DependentUpon>ShaderView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -91,6 +98,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\PropertyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ShaderProgramView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ShaderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

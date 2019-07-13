@@ -66,7 +66,6 @@ namespace STLBrowser.ViewModel
 
         private void OnSelectedFolderChanged(object sender)
         {
-
         }
 
         public FileTreeViewModel(ViewModelBase parent, string path)

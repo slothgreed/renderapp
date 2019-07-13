@@ -18,32 +18,8 @@ using OpenTK.Graphics.OpenGL;
 
 namespace CADApp.ViewModel
 {
-    public class ViewportViewModel : ViewModelBase
+    public class ViewportViewModel : ViewportViewModelBase
     {
-
-        private WindowsFormsHost _glContext;
-        public WindowsFormsHost GLContext
-        {
-            get
-            {
-                if (_glContext == null)
-                {
-                    _glContext = new WindowsFormsHost()
-                    {
-                        Child = Viewport.Instance.GLControl
-                    };
-                }
-
-                return _glContext;
-            }
-        }
-
-
-        /// <summary>
-        /// ノード挿入イベント
-        /// </summary>
-        public EventHandler OnInitialized;
-
 
         public Viewport Viewport
         {
@@ -53,28 +29,9 @@ namespace CADApp.ViewModel
             }
         }
 
-        public string FolderPath
-        {
-            get
-            {
-                return "AAA";
-            }
-        }
-
         public ViewportViewModel(ViewModelBase parent)
             : base(parent)
         {
-            Viewport.Instance.OnLoaded += OnLoadedEvent;
-            Viewport.Instance.OnResize += OnResizeEvent;
-            Viewport.Instance.OnRender += OnRenderEvent;
-            Viewport.Instance.OnMouseWheel += OnMouseWheelEvent;
-            Viewport.Instance.OnMouseUp += OnMouseMoveUpEvent;
-            Viewport.Instance.OnMouseMove += OnMouseMoveEvent;
-            Viewport.Instance.OnMouseDown += OnMouseDownEvent;
-            Viewport.Instance.OnMouseClick += OnMouseClickEvent;
-            Viewport.Instance.OnMouseDoubleClick += OnMouseDoubleClickEvent;
-            Viewport.Instance.OnKeyDown += OnKeyDownEvent;
-
             Controller.Add(ControllerType.Select, new SelectController());
             Controller.Add(ControllerType.SketchLine, new SketchLineController());
             Controller.Add(ControllerType.SketchPrimitive, new SketchPrimitiveController());
@@ -123,7 +80,7 @@ namespace CADApp.ViewModel
         /// </summary>
         public RenderSystem RenderSystem { get; set; }
 
-        public void OnLoadedEvent(object sender, EventArgs e)
+        protected override void InitializeDeviceContext()
         {
             DeviceContext.Instance.SetClearColor(1, 1, 1, 1);
             MainScene = new Scene("MainScene", new AppRootNode("Root"));
@@ -132,14 +89,10 @@ namespace CADApp.ViewModel
 
             Workspace.Instance.MainScene = MainScene;
             Workspace.Instance.RenderSystem = RenderSystem;
-
-            InitializeScene();
-            InitializeRenderer();
-
-            OnInitialized?.Invoke(this, null);
         }
 
-        private void OnResizeEvent(object sender, EventArgs e)
+
+        protected override void OnResizeEvent(object sender, EventArgs e)
         {
             if (MainScene != null)
             {
@@ -149,47 +102,12 @@ namespace CADApp.ViewModel
             RenderSystem.SizeChanged(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
         }
 
-        private void OnRenderEvent(object sender, PaintEventArgs e)
+        protected override void OnRenderEvent(object sender, PaintEventArgs e)
         {
             RenderSystem.Render();
         }
 
-        private void OnMouseWheelEvent(object sender, KIMouseEventArgs e)
-        {
-            ProcessMouseInput(e, MOUSE_STATE.WHEEL);
-        }
-
-        private void OnMouseMoveUpEvent(object sender, KIMouseEventArgs e)
-        {
-            ProcessMouseInput(e, MOUSE_STATE.UP);
-        }
-
-        private void OnMouseMoveEvent(object sender, KIMouseEventArgs e)
-        {
-            ProcessMouseInput(e, MOUSE_STATE.MOVE);
-        }
-
-        private void OnMouseDownEvent(object sender, KIMouseEventArgs e)
-        {
-            ProcessMouseInput(e, MOUSE_STATE.DOWN);
-        }
-
-        private void OnMouseClickEvent(object sender, KIMouseEventArgs e)
-        {
-            ProcessMouseInput(e, MOUSE_STATE.CLICK);
-        }
-
-        private void OnMouseDoubleClickEvent(object sender, KIMouseEventArgs e)
-        {
-            ProcessMouseInput(e, MOUSE_STATE.DOUBLECLICK);
-        }
-
-        private void OnKeyDownEvent(object sender, KeyEventArgs e)
-        {
-            ProcessKeyInput(e);
-        }
-
-        private void InitializeScene()
+        protected override void InitializeScene()
         {
             MainScene.MainCamera = new Camera("MainCamera");
             MainScene.MainLight = new DirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
@@ -203,7 +121,7 @@ namespace CADApp.ViewModel
             MainScene.AddObject(girdObject);
         }
 
-        private void InitializeRenderer()
+        protected override void InitializeRenderer()
         {
             RenderTechniqueFactory.Instance.RendererSystem = RenderSystem;
             RenderSystem.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer));
@@ -216,7 +134,7 @@ namespace CADApp.ViewModel
             GL.LineWidth(2);
         }
 
-        private void ProcessKeyInput(KeyEventArgs keyEvent)
+        protected override void ProcessKeyInput(KeyEventArgs keyEvent)
         {
             Controller[currentControllerType].KeyDown(keyEvent);
             cameraController.KeyDown(keyEvent);
@@ -227,9 +145,9 @@ namespace CADApp.ViewModel
         /// </summary>
         /// <param name="mouse">マウス情報</param>
         /// <param name="state">状態</param>
-        private void ProcessMouseInput(KIMouseEventArgs mouse, MOUSE_STATE state)
+        protected override void ProcessMouseInput(KIMouseEventArgs mouse)
         {
-            switch (state)
+            switch (mouse.MouseState)
             {
                 case MOUSE_STATE.DOWN:
                     Controller[CurrentControllerType].Down(mouse);

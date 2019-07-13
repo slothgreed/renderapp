@@ -19,6 +19,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Menu Grid.Row="0">
@@ -28,6 +29,11 @@
             </MenuItem>
         </Menu>
         <presenter:ViewportView Grid.Column="0" Grid.Row="1" DataContext="{Binding ViewportViewModel}"/>
-        <view:PropertyView Grid.Column="1" Grid.Row="1" Margin="10" DataContext="{Binding PropertyViewModel}"/>
+        <GridSplitter Grid.Column="1" Grid.Row="1" Width="5" HorizontalAlignment="Stretch"/>
+        <StackPanel Grid.Column="2" Grid.Row="1" Margin="10" >
+            <view:PropertyView DataContext="{Binding PropertyViewModel}"/>
+            <view:ShaderView DataContext="{Binding ShaderViewModel}"/>
+        </StackPanel>
+        
     </Grid>
 </Window>

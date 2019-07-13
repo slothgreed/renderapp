@@ -41,13 +41,15 @@ namespace KI.Presenter.ViewModel
             : base(parent)
         {
             Viewport.Instance.OnLoaded += OnLoadedEvent;
-            Viewport.Instance.OnMouseDown += OnMouseDownEvent;
-            Viewport.Instance.OnMouseMove += OnMouseMoveEvent;
-            Viewport.Instance.OnMouseUp += OnMouseMoveUpEvent;
-            Viewport.Instance.OnMouseWheel += OnMouseWheelEvent;
-            Viewport.Instance.OnKeyDown += OnKeyDownEvent;
-            Viewport.Instance.OnRender += OnRenderEvent;
             Viewport.Instance.OnResize += OnResizeEvent;
+            Viewport.Instance.OnRender += OnRenderEvent;
+            Viewport.Instance.OnMouseWheel += OnMouseWheelEvent;
+            Viewport.Instance.OnMouseUp += OnMouseMoveUpEvent;
+            Viewport.Instance.OnMouseMove += OnMouseMoveEvent;
+            Viewport.Instance.OnMouseDown += OnMouseDownEvent;
+            Viewport.Instance.OnMouseClick += OnMouseClickEvent;
+            Viewport.Instance.OnMouseDoubleClick += OnMouseDoubleClickEvent;
+            Viewport.Instance.OnKeyDown += OnKeyDownEvent;
         }
 
         /// <summary>
@@ -172,6 +174,26 @@ namespace KI.Presenter.ViewModel
         /// <param name="sender">送信元</param>
         /// <param name="e">イベント</param>
         private void OnMouseDownEvent(object sender, KIMouseEventArgs e)
+        {
+            ProcessMouseInput(e);
+        }
+
+        /// <summary>
+        /// マウスクリック
+        /// </summary>
+        /// <param name="sender">送信元</param>
+        /// <param name="e">イベント</param>
+        private void OnMouseClickEvent(object sender, KIMouseEventArgs e)
+        {
+            ProcessMouseInput(e);
+        }
+
+        /// <summary>
+        /// マウスダブルクリック
+        /// </summary>
+        /// <param name="sender">送信元</param>
+        /// <param name="e">イベント</param>
+        private void OnMouseDoubleClickEvent(object sender, KIMouseEventArgs e)
         {
             ProcessMouseInput(e);
         }

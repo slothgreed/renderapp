@@ -2,6 +2,7 @@
 using KI.Renderer;
 using KI.Foundation.Command;
 using OpenTK;
+using KI.Asset.Primitive;
 
 namespace CADApp.Model
 {

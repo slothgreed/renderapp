@@ -21,7 +21,9 @@ namespace KI.Presenter.Controls
                 "FolderPath",
                 typeof(string),
                 typeof(DirectoryAccessorView),
-                new FrameworkPropertyMetadata(string.Empty, new PropertyChangedCallback(OnFolderPathChanged)));
+                new FrameworkPropertyMetadata(string.Empty,
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                    new PropertyChangedCallback(OnFolderPathChanged)));
 
         /// <summary>
         /// フォルダパスのプロパティ

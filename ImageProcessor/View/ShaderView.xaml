@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="ShaderTraining.View.ShaderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ShaderTraining.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <StackPanel>
+        <ComboBox ItemsSource="{Binding ShaderNames}" SelectedItem="{Binding SelectShaderName}"/>
+        <WrapPanel>
+            <RadioButton Content="Vertex" Command="{Binding ChangeShaderCode}" CommandParameter="Vertex" IsEnabled="{Binding EnableVertex}"/>
+            <RadioButton Content="Frag" Command="{Binding ChangeShaderCode}" CommandParameter="Frag" IsEnabled="{Binding EnableFrag}"/>
+            <RadioButton Content="Goemetry" Command="{Binding ChangeShaderCode}" CommandParameter="Geom" IsEnabled="{Binding EnableGeom}"/>
+            <RadioButton Content="TCS" Command="{Binding ChangeShaderCode}" CommandParameter="TCS" IsEnabled="{Binding EnableTCS}"/>
+            <RadioButton Content="TES" Command="{Binding ChangeShaderCode}" CommandParameter="TES" IsEnabled="{Binding EnableTES}"/>
+        </WrapPanel>
+        <local:ShaderProgramView DataContext="{Binding SelectShaderProgram}"/>
+    </StackPanel>
+</UserControl>
