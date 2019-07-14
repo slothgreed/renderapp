@@ -262,7 +262,7 @@ namespace KI.Analyzer.Algorithm
                 }
             }
 
-            halfEdgeDS.Editor.FinEdit();
+            halfEdgeDS.Editor.EndEdit();
         }
 
         /// <summary>

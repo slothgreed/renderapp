@@ -93,6 +93,7 @@ namespace KI.Analyzer
 
         /// <summary>
         /// ハーフエッジの取得
+        /// 反対のエッジも入っている。
         /// </summary>
         public IEnumerable<HalfEdge> HalfEdges
         {

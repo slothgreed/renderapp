@@ -70,6 +70,15 @@ namespace KI.Renderer
             return RootNode.FindRecursiveChild(obj.Name) as SceneNode;
         }
 
+        public void SetAllVisible(bool visible)
+        {
+            foreach (var node in RootNode.AllChildren())
+            {
+                var sceneNode = (SceneNode)node;
+                sceneNode.Visible = false;
+            }
+        }
+
         /// <summary>
         /// シーンのオブジェクトの取得
         /// </summary>

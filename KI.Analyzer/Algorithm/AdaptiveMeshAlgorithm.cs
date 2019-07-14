@@ -122,7 +122,7 @@ namespace KI.Analyzer.Algorithm
                 vertex.Position = result;// result + Vector3.Dot(vertex.Normal, vertex.Normal) * (vertex.Position - result);
             }
 
-            halfEdgeDS.Editor.FinEdit();
+            halfEdgeDS.Editor.EndEdit();
         }
 
         /// <summary>

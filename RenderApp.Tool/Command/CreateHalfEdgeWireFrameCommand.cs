@@ -57,7 +57,7 @@ namespace RenderApp.Tool.Command
                     var start = (edge.Start.Position - mesh.Gravity) * 0.8f;
                     var end = (edge.End.Position - mesh.Gravity) * 0.8f;
 
-                    Vertex vertex1 = new Vertex(position.Count, start + mesh.Gravity, Vector3.UnitZ);
+                    Vertex vertex1 = new Vertex(position.Count, start + mesh.Gravity, Vector3.UnitX);
                     Vertex vertex2 = new Vertex(position.Count + 1, end + mesh.Gravity, Vector3.UnitZ);
 
                     position.Add(vertex1);

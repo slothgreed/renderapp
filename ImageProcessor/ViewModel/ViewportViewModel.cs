@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 using System.Linq;
 using KI.Foundation.Controller;
+using ShaderTraining.Tool.Controller;
 
 namespace ShaderTraining.ViewModel
 {
@@ -32,10 +33,12 @@ namespace ShaderTraining.ViewModel
             }
         }
 
+        CameraController cameraController;
+
         public ViewportViewModel(ViewModelBase parent)
             : base(parent)
         {
-
+            cameraController = new CameraController();
         }
   
         /// <summary>
@@ -94,6 +97,8 @@ namespace ShaderTraining.ViewModel
             var sphereShader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
             sphereObject.Polygon.Material = new Material(sphereShader);
             MainScene.AddObject(sphereObject);
+
+            cameraController.TargetCamera = MainScene.MainCamera;
         }
 
         protected override void InitializeRenderer()
@@ -117,10 +122,6 @@ namespace ShaderTraining.ViewModel
             GrayScale grayScale = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GrayScale) as GrayScale;
             grayScale.uTarget = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
             RenderSystem.PostEffect.AddTechnique(grayScale);
-        }
-
-        protected override void ProcessMouseInput(KIMouseEventArgs mouse)
-        {
         }
 
         protected override void ProcessKeyInput(KeyEventArgs e)
@@ -152,14 +153,7 @@ namespace ShaderTraining.ViewModel
 
         public void ChangeVisible(VisibleItem item)
         {
-            foreach (var node in MainScene.RootNode.AllChildren())
-            {
-                if(node is SceneNode)
-                {
-                    var sceneNode = (SceneNode)node;
-                    sceneNode.Visible = false;
-                }
-            }
+            MainScene.SetAllVisible(false);
 
             if (item == VisibleItem.Plane)
             {
@@ -175,6 +169,34 @@ namespace ShaderTraining.ViewModel
             }
 
             Invalidate();
+        }
+
+        /// <summary>
+        /// マウス入力
+        /// </summary>
+        /// <param name="mouse">マウス情報</param>
+        /// <param name="state">状態</param>
+        protected override void ProcessMouseInput(KIMouseEventArgs mouse)
+        {
+            if(CameraMode == CameraMode.Ortho)
+            {
+                return; 
+            }
+
+            switch (mouse.MouseState)
+            {
+                case MOUSE_STATE.DOWN:
+                    cameraController.Down(mouse);
+                    break;
+                case MOUSE_STATE.MOVE:
+                    cameraController.Move(mouse);
+                    break;
+                case MOUSE_STATE.UP:
+                    break;
+                case MOUSE_STATE.WHEEL:
+                    cameraController.Wheel(mouse);
+                    break;
+            }
         }
     }
 }

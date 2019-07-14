@@ -67,6 +67,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controller\CameraController.cs" />
     <Compile Include="MainWIndowViewModelT4.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

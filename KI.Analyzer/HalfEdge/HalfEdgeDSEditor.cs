@@ -74,12 +74,12 @@ namespace KI.Analyzer
         /// <summary>
         /// 編集終了
         /// </summary>
-        public void FinEdit()
+        public void EndEdit()
         {
             nowEdit = false;
-            //DeleteMesh(deleteMeshs);
-            //DeleteEdge(deleteEdges);
-            //DeleteVertex(deleteVertexs);
+            DeleteMesh(deleteMeshs);
+            DeleteEdge(deleteEdges);
+            DeleteVertex(deleteVertexs);
 
             var vertexs = HalfEdge.HalfEdgeVertexs.Where(p => !p.DeleteFlag);
             var edges = HalfEdge.HalfEdges.Where(p => !p.DeleteFlag);
@@ -199,6 +199,8 @@ namespace KI.Analyzer
 
         /// <summary>
         /// エッジの中点に頂点の追加
+        /// 既存のエッジは削除フラグを立てておく。
+        /// 削除はEndEditで行う。
         /// </summary>
         /// <param name="edge">エッジ</param>
         public void EdgeSplit(HalfEdge edge)

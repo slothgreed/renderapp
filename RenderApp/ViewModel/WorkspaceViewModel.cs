@@ -190,8 +190,9 @@ namespace RenderApp.ViewModel
 
             // bunny
             {
-                var moai = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/moai.half");
+                var moai = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/cube.half");
                 var renderBunny = CreateAnalyzePolygonNode("moai", moai);
+
                 renderBunny.Polygon.Material.Shader = ShaderCreater.Instance.CreateShader(GBufferType.PointNormalColor);
                 //renderBunny.RotateX(-90);
                 mainScene.AddObject(renderBunny);
@@ -212,16 +213,16 @@ namespace RenderApp.ViewModel
                 //renderBunny.Attributes.Add(splitAttribute);
                 //mainScene.AddObject(splitAttribute, parentNode);
 
-                MainWindowViewModel.Instance.CommandManager.Execute(new CreateWireFrameCommand(new WireFrameCommandArgs(renderBunny, mainScene, Vector4.Zero)), false);
-                MainWindowViewModel.Instance.CommandManager.Execute(new VertexCurvatureCommand(new VertexCurvatureCommandArgs(renderBunny, mainScene)));
+                //MainWindowViewModel.Instance.CommandManager.Execute(new CreateWireFrameCommand(new WireFrameCommandArgs(renderBunny, mainScene, Vector4.Zero)), false);
+                //MainWindowViewModel.Instance.CommandManager.Execute(new VertexCurvatureCommand(new VertexCurvatureCommandArgs(renderBunny, mainScene)));
 
-                var vectorFiledAttribute = new VectorFieldAttribute(
-                    renderBunny.Name + ": VectorField",
-                    renderBunny.VertexBuffer.ShallowCopy(),
-                    new Material(ShaderCreater.Instance.CreateShader(SHADER_TYPE.VectorField)),
-                    renderBunny.Attributes.OfType<VertexDirectionAttribute>().First().Direction,
-                    renderBunny.Type);
-                renderBunny.Attributes.Add(vectorFiledAttribute);
+                //var vectorFiledAttribute = new VectorFieldAttribute(
+                //    renderBunny.Name + ": VectorField",
+                //    renderBunny.VertexBuffer.ShallowCopy(),
+                //    new Material(ShaderCreater.Instance.CreateShader(SHADER_TYPE.VectorField)),
+                //    renderBunny.Attributes.OfType<VertexDirectionAttribute>().First().Direction,
+                //    renderBunny.Type);
+                //renderBunny.Attributes.Add(vectorFiledAttribute);
 
                 //var icosahedron = AssetFactory.Instance.CreateIcosahedron("Icosahedron", 0.5f, 1);
                 //var renderIcosahedron = PolygonNodeFactory.Instance.CreatePolygonNode("Icosahedron", icosahedron);
