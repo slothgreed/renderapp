@@ -57,6 +57,8 @@ namespace KI.Analyzer.Algorithm
             }
 
             var edgeArray = halfEdgeDS.HalfEdges.ToArray();
+            HalfEdge[] split;
+            HalfEdge[] create;
             for (int i = 0; i < edgeArray.Length; i++)
             {
                 var edge = edgeArray[i];
@@ -68,7 +70,7 @@ namespace KI.Analyzer.Algorithm
                 var sizingField = SizingField(edge);
                 if (edge.Length > 4 + sizingField / 5)
                 {
-                    halfEdgeDS.Editor.EdgeSplit(edge);
+                    halfEdgeDS.Editor.EdgeSplit(edge, out split, out create);
                 }
             }
             //foreach (var edge in halfEdgeDS.HalfEdges)

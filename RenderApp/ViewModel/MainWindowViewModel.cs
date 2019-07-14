@@ -286,6 +286,14 @@ namespace RenderApp.ViewModel
                     commandWindow.Content = smoothingCommandView;
                     commandWindow.Show();
                     break;
+                case AnalyzeCommand.Subdivision:
+                    var subdivWindow = new View.DebugWindow();
+                    var subdivCommandView = new View.CommandView.SubdivCommandView();
+                    subdivCommandView.DataContext = new SubdivisionCommandViewModel(this);
+                    subdivWindow.Owner = Application.Current.MainWindow;
+                    subdivWindow.Content = subdivCommandView;
+                    subdivWindow.Show();
+                    break;
                 case AnalyzeCommand.FeatureLine:
                     command = new CreateFeatureLineCommand(new FeatureLineCommandArgs(targetObject, workspace.MainScene));
                     CommandManager.Execute(command, true);

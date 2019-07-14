@@ -127,6 +127,10 @@
                     Header="Smoothing" />
                 <MenuItem
                     Command="{Binding CreateObject}"
+                    CommandParameter="{x:Static tool:AnalyzeCommand.Subdivision}"
+                    Header="Subdivision"/>
+                <MenuItem
+                    Command="{Binding CreateObject}"
                     CommandParameter="{x:Static tool:AnalyzeCommand.Kmeans}"
                     Header="Kmeans" />
                 <MenuItem

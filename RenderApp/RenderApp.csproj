@@ -209,6 +209,7 @@
       <DependentUpon>CommandViewModelT4.tt</DependentUpon>
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="ViewModel\CommandVM\SubdivisionCommandViewModel.cs" />
     <Compile Include="ViewModel\CommandVM\VoxelCommandViewModel.cs" />
     <Compile Include="ViewModel\PropertyGridViewModel.cs" />
     <Compile Include="ViewModel\SceneNodeVM\LightViewModel.cs" />
@@ -249,6 +250,9 @@
     </Compile>
     <Compile Include="View\CommandView\SmoothingCommandView.xaml.cs">
       <DependentUpon>SmoothingCommandView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CommandView\SubdivCommandView.xaml.cs">
+      <DependentUpon>SubdivCommandView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\DataVisualization.xaml.cs">
       <DependentUpon>DataVisualization.xaml</DependentUpon>
@@ -327,6 +331,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\CommandView\SmoothingCommandView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CommandView\SubdivCommandView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

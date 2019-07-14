@@ -21,6 +21,7 @@
         HalfEdgeWireFrame,
         ConvexHull,
         MarchingCube,
+        Subdivision,
         IsoLine,
         AdaptiveMesh,
         QEM,

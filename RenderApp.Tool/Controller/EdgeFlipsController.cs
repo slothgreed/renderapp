@@ -81,7 +81,9 @@ namespace RenderApp.Tool.Controller
                             halfEdgeDS.Editor.EdgeFlips(selectHalfEdge);
                             break;
                         case EdgeEditMode.EdgeSplit:
-                            halfEdgeDS.Editor.EdgeSplit(selectHalfEdge);
+                            HalfEdge[] split;
+                            HalfEdge[] create;
+                            halfEdgeDS.Editor.EdgeSplit(selectHalfEdge, out split, out create);
                             break;
                     }
 

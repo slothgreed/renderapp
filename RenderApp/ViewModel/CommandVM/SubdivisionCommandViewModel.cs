@@ -1,21 +1,20 @@
-﻿using KI.Asset;
-using KI.Renderer;
-using KI.Foundation.Command;
+﻿using KI.Foundation.Command;
 using KI.Presenter.ViewModel;
+using KI.Renderer;
 using RenderApp.Model;
 using RenderApp.Tool.Command;
 
 namespace RenderApp.ViewModel
 {
-    public partial class SmoothingCommandViewModel : ViewModelBase
+    public partial class SubdivisionCommandViewModel : ViewModelBase
     {
-        private int loopNum = 20;
+        private int loopNum = 4;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="parent">親ビューモデル</param>
-        public SmoothingCommandViewModel(ViewModelBase parent)
+        public SubdivisionCommandViewModel(ViewModelBase parent)
             : base(parent)
         {
         }
@@ -45,7 +44,7 @@ namespace RenderApp.ViewModel
         {
             if (Workspace.Instance.MainScene.SelectNode is AnalyzePolygonNode)
             {
-                CommandBase command = new SmoothingCommand(new SmoothingCommandArgs(TargetObject as AnalyzePolygonNode, loopNum));
+                CommandBase command = new SubdivisionCommand(new SudivisionCommandArgs(TargetObject as AnalyzePolygonNode, loopNum));
                 MainWindowViewModel.Instance.CommandManager.Execute(command, true);
             }
         }

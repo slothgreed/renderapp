@@ -5,13 +5,14 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ output extension=".cs" #>
 using System.Windows.Input;
-using KI.UI.ViewModel;
+using KI.Presenter.ViewModel;
 
 <#
 	string[] _class =
 	{
 		"VoxelCommand",
 		"SmoothingCommand",
+		"SubdivisionCommand",
 		"IsoLineCommand"
 	};
 	string[] _command = 

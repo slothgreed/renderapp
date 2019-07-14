@@ -77,9 +77,9 @@ namespace KI.Analyzer
         public void EndEdit()
         {
             nowEdit = false;
-            DeleteMesh(deleteMeshs);
-            DeleteEdge(deleteEdges);
-            DeleteVertex(deleteVertexs);
+            //DeleteMesh(deleteMeshs);
+            //DeleteEdge(deleteEdges);
+            //DeleteVertex(deleteVertexs);
 
             var vertexs = HalfEdge.HalfEdgeVertexs.Where(p => !p.DeleteFlag);
             var edges = HalfEdge.HalfEdges.Where(p => !p.DeleteFlag);
@@ -202,12 +202,16 @@ namespace KI.Analyzer
         /// 既存のエッジは削除フラグを立てておく。
         /// 削除はEndEditで行う。
         /// </summary>
+        /// <param name="newSplitedEdge">分割したエッジ</param>
+        /// <param name="newCreateEdge">作成したエッジ</param>
         /// <param name="edge">エッジ</param>
-        public void EdgeSplit(HalfEdge edge)
+        public void EdgeSplit(HalfEdge edge,out HalfEdge[] newSplitedEdge, out HalfEdge[] newCreateEdge)
         {
             if (!NowEdit)
             {
                 Logger.Log(Logger.LogLevel.Warning, "Call StartEdit");
+                newSplitedEdge = null;
+                newCreateEdge = null;
                 return;
             }
 
@@ -217,6 +221,7 @@ namespace KI.Analyzer
 
             var vertex = new HalfEdgeVertex((edge.Start.Position + edge.End.Position) / 2, HalfEdge.Vertexs.Count);
 
+            // 分割するエッジ
             var right = new HalfEdge(vertex, edge.End, HalfEdge.Lines.Count);
             var oppoRight = new HalfEdge(edge.End, vertex, HalfEdge.Lines.Count + 1);
             Analyzer.HalfEdge.SetupOpposite(right, oppoRight);
@@ -225,6 +230,7 @@ namespace KI.Analyzer
             var oppoLeft = new HalfEdge(vertex, edge.Start, HalfEdge.Lines.Count + 3);
             Analyzer.HalfEdge.SetupOpposite(left, oppoLeft);
 
+            // 新規に作成するエッジ
             var up = new HalfEdge(vertex, edge.Next.End, HalfEdge.Lines.Count + 4);
             var oppoup = new HalfEdge(edge.Next.End, vertex, HalfEdge.Lines.Count + 5);
             Analyzer.HalfEdge.SetupOpposite(up, oppoup);
@@ -255,6 +261,9 @@ namespace KI.Analyzer
 
             delMesh1.Dispose(); delMesh2.Dispose();
             deleteMeshs.Add(delMesh1); deleteMeshs.Add(delMesh2);
+
+            newSplitedEdge = new HalfEdge[] { right, oppoRight, left, oppoLeft };
+            newCreateEdge = new HalfEdge[] { up, oppoup, down, oppodown };
 
             //HasError();
         }

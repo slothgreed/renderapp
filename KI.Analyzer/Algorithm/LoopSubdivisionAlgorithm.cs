@@ -19,19 +19,44 @@ namespace KI.Analyzer.Algorithm
         }
 
         /// <summary>
+        /// TmpParameter用
+        /// </summary>
+        public enum SubdivInfo
+        {
+            /// <summary>
+            /// 元形状
+            /// </summary>
+            Original,
+
+            /// <summary>
+            /// 作成されたもの
+            /// </summary>
+            Create
+        }
+
+
+        /// <summary>
         /// 計算処理
         /// </summary>
         /// <param name="halfEdgeDS">ハーフエッジデータ構造</param>
         /// <param name="loopNum">繰り返し回数</param>
         public void Calculate(HalfEdgeDS halfEdgeDS, int loopNum)
         {
-            // 最初にエッジ全部の中点に点を追加する。
-            // その後、あるエッジの次のエッジのネクスト、反対のエッジのネクストが追加点の場合フリップすると
-            // トライフォース型に割れる。
-
-            foreach(var vertex in halfEdgeDS.HalfEdgeVertexs)
+            for(int i = 0; i < loopNum; i++)
             {
-                vertex.TmpParameter = new LoopSubdivParameter(true);
+                CalculateInternal(halfEdgeDS);
+            }
+        }
+
+        private void CalculateInternal(HalfEdgeDS halfEdgeDS)
+        {
+            // 最初にエッジ全部の中点に点を追加する。
+            // その後、追加した線のうち、始点がオリジナルのもの、終点が新しいものの場合、フリップすると
+            // トライフォース型に割れる。
+            // TmpParameter はオリジナルかどうか
+            foreach (var vertex in halfEdgeDS.HalfEdgeVertexs)
+            {
+                vertex.TmpParameter = SubdivInfo.Original;
             }
 
             List<HalfEdge> halfEdges = halfEdgeDS.HalfEdges.ToList();
@@ -39,58 +64,53 @@ namespace KI.Analyzer.Algorithm
 
             halfEdgeDS.Editor.StartEdit();
             // 中点を加えていくので、エッジ数が増えていく
-            for(int i = 0; i < edgeNum; i ++)
+            for (int i = 0; i < edgeNum; i++)
             {
                 // はじめのエッジが削除された時
                 // 反対のエッジは削除されている。
-                if(halfEdges[i].DeleteFlag == false)
+                if (halfEdges[i].DeleteFlag == false)
                 {
-                    halfEdgeDS.Editor.EdgeSplit(halfEdges[i]);
+                    HalfEdge[] split;
+                    HalfEdge[] create;
+                    halfEdgeDS.Editor.EdgeSplit(halfEdges[i], out split, out create);
+
+                    for (int j = 0; j < create.Length; j++)
+                    {
+                        create[j].TmpParameter = SubdivInfo.Create;
+                    }
                 }
             }
 
             // 追加されているため、リストの作り直し
             halfEdges = halfEdgeDS.HalfEdges.ToList();
-
+            int edgeCount = halfEdges.Count;
             // 追加したエッジのみ捜査
-            //for (int i = 0; i < halfEdges.Count; i++)
-            //{
-            //    HalfEdge edge = halfEdges[i];
-            //    if (edge.DeleteFlag == true)
-            //    {
-            //        continue;
-            //    }
+            for (int i = 0; i < edgeCount; i++)
+            {
+                HalfEdge edge = halfEdges[i];
+                if (edge.DeleteFlag == true)
+                {
+                    continue;
+                }
 
-            //    HalfEdge opposite = edge.Opposite;
-            //    if(opposite.DeleteFlag == true)
-            //    {
-            //        continue;
-            //    }
+                if (edge.TmpParameter is SubdivInfo)
+                {
+                    if (edge.Start.TmpParameter == null &&
+                        edge.End.TmpParameter is SubdivInfo)
+                    {
+                        halfEdgeDS.Editor.EdgeFlips(edge);
+                    }
 
-            //    // null は追加された頂点
-            //    if(edge.Next.End.TmpParameter == null && opposite.Next.End.TmpParameter == null)
-            //    {
-            //        halfEdgeDS.Editor.EdgeFlips(edge);
-            //    }
-            //}
+                    edge.TmpParameter = null;
+                }
+
+            }
 
             halfEdgeDS.Editor.EndEdit();
 
-            foreach(var vertex in halfEdgeDS.HalfEdgeVertexs)
+            foreach (var vertex in halfEdgeDS.HalfEdgeVertexs)
             {
                 vertex.TmpParameter = null;
-            }
-        }
-
-        /// <summary>
-        /// 細分割曲面用のパラメータ作成
-        /// </summary>
-        private class LoopSubdivParameter
-        {
-            public bool original;
-            public LoopSubdivParameter(bool orig)
-            {
-                original = orig;
             }
         }
     }
