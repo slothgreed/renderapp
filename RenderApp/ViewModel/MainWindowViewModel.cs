@@ -14,6 +14,7 @@ using RenderApp.Model;
 using RenderApp.Tool;
 using RenderApp.Tool.Command;
 using KI.Foundation.Core;
+using System.Windows.Controls;
 
 namespace RenderApp.ViewModel
 {
@@ -247,12 +248,7 @@ namespace RenderApp.ViewModel
                     CommandManager.Execute(command, true);
                     break;
                 case AnalyzeCommand.IsoLine:
-                    var icommandWindow = new View.DebugWindow();
-                    var islolineCommandView = new View.CommandView.IsoLineCommandView();
-                    islolineCommandView.DataContext = new IsoLineCommandViewModel(this);
-                    icommandWindow.Owner = Application.Current.MainWindow;
-                    icommandWindow.Content = islolineCommandView;
-                    icommandWindow.Show();
+                    ShowCommandDialog(new View.CommandView.IsoLineCommandView(), new IsoLineCommandViewModel(this));
                     break;
                 case AnalyzeCommand.HalfEdgeWireFrame:
                     command = new CreateHalfEdgeWireFrameCommand(new HalfEdgeWireFrameCommandArgs(targetObject, workspace.MainScene));
@@ -279,37 +275,37 @@ namespace RenderApp.ViewModel
                     CommandManager.Execute(command, true);
                     break;
                 case AnalyzeCommand.Smoothing:
-                    var commandWindow = new View.DebugWindow();
-                    var smoothingCommandView = new View.CommandView.SmoothingCommandView();
-                    smoothingCommandView.DataContext = new SmoothingCommandViewModel(this);
-                    commandWindow.Owner = Application.Current.MainWindow;
-                    commandWindow.Content = smoothingCommandView;
-                    commandWindow.Show();
+                    ShowCommandDialog(new View.CommandView.SmoothingCommandView(), new SmoothingCommandViewModel(this));
                     break;
                 case AnalyzeCommand.Subdivision:
-                    var subdivWindow = new View.DebugWindow();
-                    var subdivCommandView = new View.CommandView.SubdivCommandView();
-                    subdivCommandView.DataContext = new SubdivisionCommandViewModel(this);
-                    subdivWindow.Owner = Application.Current.MainWindow;
-                    subdivWindow.Content = subdivCommandView;
-                    subdivWindow.Show();
+                    ShowCommandDialog(new View.CommandView.SubdivCommandView(), new SubdivisionCommandViewModel(this));
                     break;
                 case AnalyzeCommand.FeatureLine:
                     command = new CreateFeatureLineCommand(new FeatureLineCommandArgs(targetObject, workspace.MainScene));
                     CommandManager.Execute(command, true);
                     break;
                 case AnalyzeCommand.Voxelize:
-                    var window = new View.DebugWindow();
-                    var voxelView = new View.Command.VoxelCommandView();
-                    voxelView.DataContext = new VoxelCommandViewModel(this);
-                    window.Owner = Application.Current.MainWindow;
-                    window.Content = voxelView;
-                    window.Show();
+                    ShowCommandDialog(new View.Command.VoxelCommandView(), new VoxelCommandViewModel(this));
                     break;
                 default:
                     break;
             }
 
+            WorkspaceViewModel.ViewportViewModel.Invalidate();
+        }
+
+        private void ShowCommandDialog(UserControl userControl, ViewModelBase viewModel)
+        {
+            var window = new View.DebugWindow();
+            userControl.DataContext = viewModel;
+            viewModel.PropertyChanged += CommandDialog_PropertyChanged;
+            window.Owner = Application.Current.MainWindow;
+            window.Content = userControl;
+            window.Show();
+        }
+
+        private void CommandDialog_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
             WorkspaceViewModel.ViewportViewModel.Invalidate();
         }
 

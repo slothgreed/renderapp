@@ -61,8 +61,7 @@ namespace KI.Renderer
             string vert = ShaderCreater.Instance.GetVertexShader(polygon.Type, null);
             string frag = ShaderCreater.Instance.GetFragShaderFilePath(polygon.Type, null);
             var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
-            Material material = new Material(shader);
-            polygon.Material = material;
+            polygon.Material = new Material(shader);
 
             var polygonNode = new PolygonNode(name, polygon);
             AddItem(polygonNode);
@@ -87,7 +86,7 @@ namespace KI.Renderer
             string frag = ShaderCreater.Instance.GetFragShaderFilePath(polygon.Type, null);
             var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
             Material material = new Material(shader);
-            polygon.Material = material;
+            polygon.Material = new Material(shader);
 
             var polygonNode = new PolygonNode(name, polygon);
             AddItem(polygonNode);

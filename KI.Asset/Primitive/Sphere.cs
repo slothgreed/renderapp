@@ -11,7 +11,7 @@ namespace KI.Asset.Primitive
     /// <summary>
     /// 球
     /// </summary>
-    public class Sphere : KIObject, ICreateModel
+    public class Sphere : ICreateModel
     {
         /// <summary>
         /// 半径
@@ -41,8 +41,7 @@ namespace KI.Asset.Primitive
         /// <param name="hpartition">高さ分割数</param>
         /// <param name="wpartition">横分割数</param>
         /// <param name="orient">面の方向true=外向きfalse=内向き</param>
-        public Sphere(string name, float radial, int hpartition, int wpartition, bool orient)
-            : base(name)
+        public Sphere(float radial, int hpartition, int wpartition, bool orient)
         {
             this.radial = radial;
             this.hpartition = hpartition;
@@ -175,7 +174,7 @@ namespace KI.Asset.Primitive
                 indexs.Add(3 * i + 2);
             }
 
-            Model = new Polygon(this.Name, vertexs,indexs, KIPrimitiveType.Triangles);
+            Model = new Polygon("Sphere", vertexs,indexs, KIPrimitiveType.Triangles);
 
             //info.ConvertVertexArray();
         }
