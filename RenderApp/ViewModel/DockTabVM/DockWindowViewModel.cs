@@ -64,6 +64,5 @@ namespace RenderApp.ViewModel
                 ItemSelected(this, eventArgs);
             }
         }
-
     }
 }
