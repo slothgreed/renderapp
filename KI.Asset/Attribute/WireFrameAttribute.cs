@@ -12,11 +12,6 @@ namespace KI.Asset.Attribute
     public class WireFrameAttribute : AttributeBase
     {
         /// <summary>
-        /// カラーバッファ
-        /// </summary>
-        private ArrayBuffer vertexColorBuffer { get; set; }
-
-        /// <summary>
         /// 色
         /// </summary>
         public Vector4 Color { get;  set; }
@@ -52,15 +47,6 @@ namespace KI.Asset.Attribute
         {
             GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
             base.UnBinding();
-        }
-
-        /// <summary>
-        /// 解放処理
-        /// </summary>
-        public override void Dispose()
-        {
-            vertexColorBuffer.Dispose();
-            base.Dispose();
         }
     }
 }

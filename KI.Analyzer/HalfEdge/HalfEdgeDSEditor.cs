@@ -76,11 +76,6 @@ namespace KI.Analyzer
         /// </summary>
         public void EndEdit()
         {
-            nowEdit = false;
-            //DeleteMesh(deleteMeshs);
-            //DeleteEdge(deleteEdges);
-            //DeleteVertex(deleteVertexs);
-
             var vertexs = HalfEdge.HalfEdgeVertexs.Where(p => !p.DeleteFlag);
             var edges = HalfEdge.HalfEdges.Where(p => !p.DeleteFlag);
             var meshs = HalfEdge.HalfEdgeMeshs.Where(p => !p.DeleteFlag);
@@ -107,6 +102,16 @@ namespace KI.Analyzer
                 vertex.Index = counter;
                 counter++;
             }
+
+            HalfEdge.Index = new List<int>();
+            foreach(var mesh in HalfEdge.HalfEdgeMeshs)
+            {
+                HalfEdge.Index.AddRange(mesh.AroundVertex.Select(p => p.Index));
+            }
+            
+
+            nowEdit = false;
+
         }
         #region [vertex decimation]
 
@@ -198,14 +203,15 @@ namespace KI.Analyzer
         #endregion
 
         /// <summary>
-        /// エッジの中点に頂点の追加
+        /// エッジの間に頂点の追加
         /// 既存のエッジは削除フラグを立てておく。
         /// 削除はEndEditで行う。
         /// </summary>
+        /// <param name="edge">エッジ</param>
+        /// <param name="position">追加する点の位置</param>
         /// <param name="newSplitedEdge">分割したエッジ</param>
         /// <param name="newCreateEdge">作成したエッジ</param>
-        /// <param name="edge">エッジ</param>
-        public void EdgeSplit(HalfEdge edge,out HalfEdge[] newSplitedEdge, out HalfEdge[] newCreateEdge)
+        public void EdgeSplit(HalfEdge edge, Vector3 position, out HalfEdge[] newSplitedEdge, out HalfEdge[] newCreateEdge)
         {
             if (!NowEdit)
             {
@@ -219,7 +225,7 @@ namespace KI.Analyzer
             var delMesh1 = edge.Mesh;
             var delMesh2 = opposite.Mesh;
 
-            var vertex = new HalfEdgeVertex((edge.Start.Position + edge.End.Position) / 2, HalfEdge.Vertexs.Count);
+            var vertex = new HalfEdgeVertex(position, HalfEdge.Vertexs.Count);
 
             // 分割するエッジ
             var right = new HalfEdge(vertex, edge.End, HalfEdge.Lines.Count);

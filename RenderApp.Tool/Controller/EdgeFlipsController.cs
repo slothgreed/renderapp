@@ -83,7 +83,8 @@ namespace RenderApp.Tool.Controller
                         case EdgeEditMode.EdgeSplit:
                             HalfEdge[] split;
                             HalfEdge[] create;
-                            halfEdgeDS.Editor.EdgeSplit(selectHalfEdge, out split, out create);
+                            var position = (selectHalfEdge.Start.Position + selectHalfEdge.End.Position) * 0.5f;
+                            halfEdgeDS.Editor.EdgeSplit(selectHalfEdge, position, out split, out create);
                             break;
                     }
 

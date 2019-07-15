@@ -70,7 +70,8 @@ namespace KI.Analyzer.Algorithm
                 var sizingField = SizingField(edge);
                 if (edge.Length > 4 + sizingField / 5)
                 {
-                    halfEdgeDS.Editor.EdgeSplit(edge, out split, out create);
+                    var position = (edge.Start.Position + edge.End.Position) * 0.5f;
+                    halfEdgeDS.Editor.EdgeSplit(edge, position, out split, out create);
                 }
             }
             //foreach (var edge in halfEdgeDS.HalfEdges)

@@ -127,7 +127,7 @@ namespace KI.Renderer
         /// <summary>
         /// ジオメトリ更新処理
         /// </summary>
-        public void UpdateVertexBufferObject()
+        public virtual void UpdateVertexBufferObject()
         {
             if (Type == KIPrimitiveType.Points)
             {

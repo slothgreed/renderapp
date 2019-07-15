@@ -56,7 +56,7 @@ namespace RenderApp.Tool.Command
 
             var subdivision = new LoopSubdivisionAlgorithm();
             subdivision.Calculate(halfDS, subdivisionCommandArgs.LoopNum);
-
+            
             subdivisionCommandArgs.TargetObject.UpdateVertexBufferObject();
 
             return CommandResult.Success;

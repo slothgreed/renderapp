@@ -191,7 +191,7 @@ namespace RenderApp.ViewModel
             // bunny
             {
                 var moai = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/cube.half");
-                var renderBunny = CreateAnalyzePolygonNode("moai", moai);
+                var renderBunny = CreateAnalyzePolygonNode("cube", moai);
 
                 renderBunny.Polygon.Material.Shader = ShaderCreater.Instance.CreateShader(GBufferType.PointNormalColor);
                 //renderBunny.RotateX(-90);
