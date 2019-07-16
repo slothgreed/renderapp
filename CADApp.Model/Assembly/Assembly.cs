@@ -151,6 +151,15 @@ namespace CADApp.Model
             vertexs.Add(new Vertex(vertexs.Count, position, Vector3.UnitX));
         }
 
+        public void AddVertex(Vertex vertex)
+        {
+            if (CurrentEdit == false)
+            {
+                Logger.Log(Logger.LogLevel.Error, "Call Begin Edit.");
+            }
+
+            vertexs.Add(vertex);
+        }
 
         public void AddVertex(Vector3 position, Vector3 normal, Vector3 color)
         {
@@ -184,6 +193,21 @@ namespace CADApp.Model
             for (int i = 0; i < positionList.Length; i++)
             {
                 AddVertex(positionList[i]);
+            }
+        }
+
+        public void SetVertex(Vertex[] vertexList)
+        {
+            if (CurrentEdit == false)
+            {
+                Logger.Log(Logger.LogLevel.Error, "Call Begin Edit.");
+            }
+
+            ClearVertex();
+
+            for (int i = 0; i < vertexList.Length; i++)
+            {
+                AddVertex(vertexList[i]);
             }
         }
 

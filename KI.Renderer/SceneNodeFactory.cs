@@ -1,4 +1,5 @@
 ﻿using KI.Asset;
+using KI.Asset.Primitive;
 using KI.Foundation.Core;
 using KI.Gfx;
 using KI.Gfx.Geometry;
@@ -73,6 +74,33 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="name">名前</param>
         /// <returns>描画オブジェクト</returns>
+        public PolygonNode CreatePolygonNode(string name, PrimitiveBase primitive, Material material = null)
+        {
+            Polygon polygon = new Polygon(name, primitive.Vertexs, primitive.Index, primitive.Type);
+            string vert = ShaderCreater.Instance.GetVertexShader(polygon.Type, material);
+            string frag = ShaderCreater.Instance.GetFragShaderFilePath(polygon.Type, material);
+            var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
+            if (material == null)
+            {
+                material = new Material(shader);
+            }
+            else
+            {
+                material.Shader = shader;
+            }
+
+            polygon.Material = material;
+
+            var polygonNode = new PolygonNode(name, polygon);
+            AddItem(polygonNode);
+            return polygonNode;
+        }
+
+        /// <summary>
+        /// 空オブジェクトの作成
+        /// </summary>
+        /// <param name="name">名前</param>
+        /// <returns>描画オブジェクト</returns>
         public PolygonNode CreatePolygonNode(string name, Vector3[] position, Vector3[] color, int[] index, KIPrimitiveType type)
         {
             Vertex[] vertex = new Vertex[position.Length];
@@ -85,7 +113,6 @@ namespace KI.Renderer
             string vert = ShaderCreater.Instance.GetVertexShader(polygon.Type, null);
             string frag = ShaderCreater.Instance.GetFragShaderFilePath(polygon.Type, null);
             var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
-            Material material = new Material(shader);
             polygon.Material = new Material(shader);
 
             var polygonNode = new PolygonNode(name, polygon);

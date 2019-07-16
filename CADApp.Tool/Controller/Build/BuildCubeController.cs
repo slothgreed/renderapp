@@ -91,7 +91,7 @@ namespace CADApp.Tool.Controller
                     var cube = new Cube(startPosition, interPoint);
                     sketch.BeginEdit();
                     sketch.ClearVertex();
-                    sketch.SetVertex(cube.Position, cube.Normal);
+                    sketch.SetVertex(cube.Vertexs);
                     sketch.SetTriangleIndex(cube.Index);
                     sketch.EndEdit();
                 }

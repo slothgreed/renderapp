@@ -1,5 +1,6 @@
 ﻿using KI.Foundation.Core;
 using KI.Gfx;
+using KI.Gfx.Geometry;
 using KI.Mathmatics;
 using OpenTK;
 using System;
@@ -54,7 +55,7 @@ namespace KI.Asset.Primitive
         /// </summary>
         private void Create()
         {
-            List<Vector3> position = new List<Vector3>();
+            List<Vertex> vertex = new List<Vertex>();
             List<int> index = new List<int>();
 
             float theta = (float)Math.PI * 2 / Partition;
@@ -64,15 +65,15 @@ namespace KI.Asset.Primitive
 
             if (Type == KIPrimitiveType.Triangles)
             {
-                position.Add(Center);
+                vertex.Add(new Vertex(0, Center));
                 for (int i = 0; i < Partition; i++)
                 {
                     var pos = Calculator.GetSphericalPolarCoordinates(Radius, (float)Math.PI / 2, theta * i);
                     pos = Calculator.Multiply(quartMat, pos);
-                    position.Add(pos + Center);
+                    vertex.Add(new Vertex(i + 1, pos + Center));
                 }
 
-                for (int i = 1; i < position.Count - 1; i++)
+                for (int i = 1; i < vertex.Count - 1; i++)
                 {
                     index.Add(0);
                     index.Add(i + 1);
@@ -81,9 +82,9 @@ namespace KI.Asset.Primitive
 
                 index.Add(0);
                 index.Add(1);
-                index.Add(position.Count - 1);
+                index.Add(vertex.Count - 1);
 
-                Position = position.ToArray();
+                Vertexs = vertex.ToArray();
                 Index = index.ToArray();
             }
             else if(Type == KIPrimitiveType.Lines)
@@ -92,7 +93,7 @@ namespace KI.Asset.Primitive
                 {
                     var pos = Calculator.GetSphericalPolarCoordinates(Radius, (float)Math.PI / 2, theta * i);
                     pos = Calculator.Multiply(quartMat, pos);
-                    position.Add(pos + Center);
+                    vertex.Add(new Vertex(i + 1, pos + Center));
                     index.Add(i);
                     if (i == Partition - 1)
                     {
@@ -104,7 +105,7 @@ namespace KI.Asset.Primitive
                     }
                 }
 
-                Position = position.ToArray();
+                Vertexs = vertex.ToArray();
                 Index = index.ToArray();
             }
         }

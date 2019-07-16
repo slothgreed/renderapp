@@ -39,13 +39,13 @@ namespace CADApp.Model
                 }
 
                 Bezier surface = new Bezier(ControlPoint.Select(v => v.Position).ToArray(), UNum, VNum, 100);
-                SetVertex(surface.Position);
+                SetVertex(surface.Vertexs);
                 SetTriangleIndex(surface.Index);
             }
             else
             {
                 Bezier bezierLine = new Bezier(ControlPoint.Select(v => v.Position).ToArray(), ControlPoint.Count, 1, 100);
-                SetVertex(bezierLine.Position);
+                SetVertex(bezierLine.Vertexs);
                 SetLineIndex(bezierLine.Index.ToList());
             }
         }

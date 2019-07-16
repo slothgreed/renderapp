@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using OpenTK;
-
+using KI.Gfx.Geometry;
+using KI.Gfx;
 
 namespace KI.Asset.Primitive
 {
@@ -34,6 +35,7 @@ namespace KI.Asset.Primitive
             this.radial = radial;
             this.smoothNum = subdivNum;
             this.centerPos = centerPos;
+            Type = KIPrimitiveType.Triangles;
             CreateModel();
         }
 
@@ -70,8 +72,12 @@ namespace KI.Asset.Primitive
                 normal.Add(pos.Normalized());
             }
 
-            Position = position.ToArray();
-            Normal = normal.ToArray();
+            Vertexs = new Vertex[position.Count];
+            for (int i = 0; i < position.Count; i++)
+            {
+                Vertexs[i] = new Vertex(i, position[i], normal[i]);
+            }
+
             Index = new int[60]
                 {
                     1,0,4,0,1,6,2,3,5,3,2,7,

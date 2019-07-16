@@ -1,4 +1,5 @@
 ﻿using KI.Asset.Primitive;
+using KI.Gfx.Geometry;
 using OpenTK;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,13 +25,9 @@ namespace KI.Asset.Gizmo
             Cube yPoint = new Cube(new Vector3(-0.1f, 0.9f, -0.1f), new Vector3(0.1f, 1, 0.1f));
             Cube zPoint = new Cube(new Vector3(-0.1f, -0.1f, 0.9f), new Vector3(0.1f, 0.1f, 1));
 
-            List<Vector3> vertex = new List<Vector3>();
-            vertex.AddRange(xAxis.Position); vertex.AddRange(yAxis.Position); vertex.AddRange(zAxis.Position);
-            vertex.AddRange(xPoint.Position); vertex.AddRange(yPoint.Position); vertex.AddRange(zPoint.Position);
-
-            List<Vector3> normal = new List<Vector3>();
-            normal.AddRange(xAxis.Normal); normal.AddRange(yAxis.Normal); normal.AddRange(zAxis.Normal);
-            normal.AddRange(xPoint.Normal); normal.AddRange(yPoint.Normal); normal.AddRange(zPoint.Normal);
+            List<Vertex> vertex = new List<Vertex>();
+            vertex.AddRange(xAxis.Vertexs); vertex.AddRange(yAxis.Vertexs); vertex.AddRange(zAxis.Vertexs);
+            vertex.AddRange(xPoint.Vertexs); vertex.AddRange(yPoint.Vertexs); vertex.AddRange(zPoint.Vertexs);
 
             List<int> index = new List<int>();
             int perCount = xAxis.Index.Length;
@@ -41,8 +38,8 @@ namespace KI.Asset.Gizmo
             index.AddRange(yPoint.Index.Select(x => x + perCount * 4));
             index.AddRange(zPoint.Index.Select(x => x + perCount * 5));
 
-            Vertex = vertex.ToArray();
-            Color = normal.ToArray();
+            Vertex = vertex.Select(p => p.Position).ToArray();
+            Color = vertex.Select(p => p.Normal).ToArray();
             Index = index.ToArray();
 
         }

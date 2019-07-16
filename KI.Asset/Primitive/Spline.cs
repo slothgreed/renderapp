@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using KI.Gfx.Geometry;
+using OpenTK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -92,28 +93,28 @@ namespace KI.Asset.Primitive
 
             }
 
-            List<Vector3> vertex = new List<Vector3>();
+            List<Vector3> position = new List<Vector3>();
             float num = 1.0f / Partition;
             for (float i = 0; i < ControlPoint.Length - 1; i += num)
             {
                 int index = (int)Math.Floor(i);
                 float dt = i - index;
-                vertex.Add(new Vector3(a[index] + (b[index] + (c[index] + d[index] * dt) * dt) * dt));
+                position.Add(new Vector3(a[index] + (b[index] + (c[index] + d[index] * dt) * dt) * dt));
             }
 
-            Position = vertex.ToArray();
+            Vertexs = position.Select(p => new Vertex(0, p)).ToArray();
 
-            if (vertex.Count > 0)
+            if (position.Count > 0)
             {
                 List<int> line = new List<int>();
                 line.Add(0);
-                for (int i = 1; i < vertex.Count - 1; i++)
+                for (int i = 1; i < position.Count - 1; i++)
                 {
                     line.Add(i);
                     line.Add(i);
                 }
 
-                line.Add(vertex.Count - 1);
+                line.Add(position.Count - 1);
                 Index = line.ToArray();
             }
         }

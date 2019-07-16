@@ -1,4 +1,5 @@
-﻿using KI.Mathmatics;
+﻿using KI.Gfx.Geometry;
+using KI.Mathmatics;
 using OpenTK;
 using System;
 using System.Collections.Generic;
@@ -39,38 +40,41 @@ namespace KI.Asset.Primitive
         /// <param name="partition">分割数</param>
         private void CreateModel(int partition)
         {
-            List<Vector3> position = new List<Vector3>();
-            List<Vector3> normal = new List<Vector3>();
+            List<Vertex> vertex = new List<Vertex>();
             List<int> index = new List<int>();
             float theta = (float)Math.PI * 2 / partition;
 
             // 円柱の上側中心
-            position.Add(new Vector3(0, Height, 0));
-            normal.Add(position[0].Normalized());
+            var position = new Vector3(0, Height, 0);
+            var normal = vertex[0].Position.Normalized();
+            vertex.Add(new Vertex(0, position, normal));
 
             var center = new Vector3(0, Height / 2, 0);
             for (int i = 0; i < partition; i++)
             {
-                var pos = Calculator.GetSphericalPolarCoordinates(Radius, theta * (i + 1), 0);
-                pos.Y = Height;
-                position.Add(pos);
+                position = Calculator.GetSphericalPolarCoordinates(Radius, theta * (i + 1), 0);
+                position.Y = Height;
 
-                normal.Add((pos - center).Normalized());
+                normal = (position - center).Normalized();
+                vertex.Add(new Vertex(i + 1, position, normal));
             }
 
             //円柱の上側下側の境界
-            int border = position.Count;
+            int border = vertex.Count;
 
             // 円柱の下側中心
-            position.Add(new Vector3(0));
-            normal.Add(-Vector3.UnitY);
+            position = Vector3.Zero;
+            normal = -Vector3.UnitY;
+            vertex.Add(new Vertex(vertex.Count, position, normal));
+
+
             for (int i = 0; i < partition; i++)
             {
-                var pos = Calculator.GetSphericalPolarCoordinates(Radius, theta * (i + 1), 0);
-                position.Add(pos);
-                normal.Add((pos - center).Normalized());
+                position = Calculator.GetSphericalPolarCoordinates(Radius, theta * (i + 1), 0);
+                normal = (position - center).Normalized();
+                vertex.Add(new Vertex(vertex.Count, position, normal));
             }
-            
+
             for (int i = 1; i < border - 1; i++)
             {
                 index.Add(0);
@@ -83,7 +87,7 @@ namespace KI.Asset.Primitive
             index.Add(border - 1);
             index.Add(1);
 
-            for (int i = border + 1; i < position.Count - 1; i++)
+            for (int i = border + 1; i < vertex.Count - 1; i++)
             {
                 // 底面部分
                 index.Add(border);
@@ -94,7 +98,7 @@ namespace KI.Asset.Primitive
             // 底面部分
             index.Add(border);
             index.Add(border + 1);
-            index.Add(position.Count - 1);
+            index.Add(vertex.Count - 1);
 
             for (int i = 0; i < partition - 1; i++)
             {
@@ -118,11 +122,10 @@ namespace KI.Asset.Primitive
             index.Add(border + 1);
 
             index.Add(border - 1);
-            index.Add(position.Count - 1);
+            index.Add(vertex.Count - 1);
             index.Add(border + 1);
 
-            Position = position.ToArray();
-            Normal = normal.ToArray();
+            Vertexs = vertex.ToArray();
             Index = index.ToArray();
         }
     }

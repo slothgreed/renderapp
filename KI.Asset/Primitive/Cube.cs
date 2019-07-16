@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using KI.Gfx.Geometry;
+using OpenTK;
 
 namespace KI.Asset.Primitive
 {
@@ -42,23 +43,22 @@ namespace KI.Asset.Primitive
         /// </summary>
         public void CreateVertexArrayCube()
         {
-            Position = new Vector3[8];
-            Normal = new Vector3[8];
+            Vertexs = new Vertex[8];
             Index = new int[12 * 3]; // 面数 * 三角形の頂点数
 
-            Position[0] = new Vector3(min.X, min.Y, min.Z);
-            Position[1] = new Vector3(max.X, min.Y, min.Z);
-            Position[2] = new Vector3(max.X, max.Y, min.Z);
-            Position[3] = new Vector3(min.X, max.Y, min.Z);
-            Position[4] = new Vector3(min.X, min.Y, max.Z);
-            Position[5] = new Vector3(max.X, min.Y, max.Z);
-            Position[6] = new Vector3(max.X, max.Y, max.Z);
-            Position[7] = new Vector3(min.X, max.Y, max.Z);
+            Vertexs[0] = new Vertex(0, new Vector3(min.X, min.Y, min.Z));
+            Vertexs[1] = new Vertex(1, new Vector3(max.X, min.Y, min.Z));
+            Vertexs[2] = new Vertex(2, new Vector3(max.X, max.Y, min.Z));
+            Vertexs[3] = new Vertex(3, new Vector3(min.X, max.Y, min.Z));
+            Vertexs[4] = new Vertex(4, new Vector3(min.X, min.Y, max.Z));
+            Vertexs[5] = new Vertex(5, new Vector3(max.X, min.Y, max.Z));
+            Vertexs[6] = new Vertex(6, new Vector3(max.X, max.Y, max.Z));
+            Vertexs[7] = new Vertex(7, new Vector3(min.X, max.Y, max.Z));
 
             var center = (max + min) * 0.5f;
-            for (int i = 0; i < Position.Length; i++)
+            for (int i = 0; i < Vertexs.Length; i++)
             {
-                Normal[i] = (Position[i] - center).Normalized();
+                Vertexs[i].Normal = (Vertexs[i].Position - center).Normalized();
             }
 
             if (reverse == false)

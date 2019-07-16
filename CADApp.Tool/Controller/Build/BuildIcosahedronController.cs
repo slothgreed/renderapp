@@ -71,7 +71,7 @@ namespace CADApp.Tool.Controller
                         var sketch = sketchNode.Assembly;
                         var icosahedron = new Icosahedron(distance, 20, startPoint);
                         sketch.BeginEdit();
-                        sketch.SetVertex(icosahedron.Position, icosahedron.Normal);
+                        sketch.SetVertex(icosahedron.Vertexs);
                         sketch.SetTriangleIndex(icosahedron.Index);
                         sketchNode.Visible = true;
                         sketch.EndEdit();

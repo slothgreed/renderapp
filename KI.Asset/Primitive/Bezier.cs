@@ -2,6 +2,7 @@
 using OpenTK;
 using System.Collections.Generic;
 using System;
+using KI.Gfx.Geometry;
 
 namespace KI.Asset.Primitive
 {
@@ -78,25 +79,25 @@ namespace KI.Asset.Primitive
         /// </summary>
         private void CreateBezierLine()
         {
-            List<Vector3> position = new List<Vector3>();
+            List<Vertex> vertex = new List<Vertex>();
             float d = 1.0f / Partition;
             for (float i = 0; i < 1; i += d)
             {
-                position.Add(BezierLinePoint(i));
+                vertex.Add(new Vertex(0, BezierLinePoint(i)));
             }
 
-            Position = position.ToArray();
+            Vertexs = vertex.ToArray();
 
-            if (position.Count > 0)
+            if (Vertexs.Length > 0)
             {
                 List<int> line = new List<int>();
                 line.Add(0);
-                for (int i = 1; i < position.Count - 1; i++)
+                for (int i = 1; i < Vertexs.Length - 1; i++)
                 {
                     line.Add(i);
                     line.Add(i);
                 }
-                line.Add(position.Count - 1);
+                line.Add(Vertexs.Length - 1);
 
                 Index = line.ToArray();
             }
@@ -134,7 +135,7 @@ namespace KI.Asset.Primitive
 
             int pointNum = 100;
             float diff = 1.0f / pointNum;
-            List<Vector3> position = new List<Vector3>();
+            List<Vertex> vertex = new List<Vertex>();
             for (int vIndex = 0; vIndex <= pointNum; vIndex++)
             {
                 float vParameter = vIndex * diff;
@@ -142,11 +143,11 @@ namespace KI.Asset.Primitive
                 {
                     float uParameter = uIndex * diff;
                     Vector3 point = BezierSurfacePoint(uParameter, vParameter);
-                    position.Add(point);
+                    vertex.Add(new Vertex(0, point));
                 }
             }
 
-            Position = position.ToArray();
+            Vertexs = vertex.ToArray();
 
             // 描画に利用するU,V方向の頂点数
             List<int> triangleIndex = new List<int>();

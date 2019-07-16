@@ -11,7 +11,7 @@ namespace KI.Asset.Primitive
     /// <summary>
     /// 平面
     /// </summary>
-    public class Rectangle : PrimitiveBase, ICreateModel
+    public class Rectangle : PrimitiveBase
     {
         #region [メンバ変数]
         /// <summary>
@@ -35,25 +35,25 @@ namespace KI.Asset.Primitive
         /// <param name="q3">頂点3</param>
         public Rectangle(Vector3 q0, Vector3 q1, Vector3 q2, Vector3 q3)
         {
-            Position = new Vector3[4];
-            Position[0] = q0;
-            Position[1] = q1;
-            Position[2] = q2;
-            Position[3] = q3;
+            Vertexs = new Vertex[4];
+            Vertexs[0] = new Vertex(0, q0);
+            Vertexs[1] = new Vertex(1, q1);
+            Vertexs[2] = new Vertex(2, q2);
+            Vertexs[3] = new Vertex(3, q3);
+
             Index = new int[4];
             Index[0] = 0;
             Index[1] = 1;
             Index[2] = 2;
             Index[3] = 3;
 
-            Texcoord = new Vector2[4];
-            Texcoord[0] = Vector2.Zero;
-            Texcoord[1] = Vector2.UnitX;
-            Texcoord[2] = Vector2.One;
-            Texcoord[3] = Vector2.UnitY;
+            Vertexs[0].TexCoord = Vector2.Zero;
+            Vertexs[1].TexCoord = Vector2.UnitX;
+            Vertexs[2].TexCoord = Vector2.One;
+            Vertexs[3].TexCoord = Vector2.UnitY;
 
-
-            CreateModel();
+            Formula = Plane.Formula(Vertexs[0].Position, Vertexs[1].Position, Vertexs[2].Position);
+            Type = KIPrimitiveType.Quads;
         }
 
         /// <summary>
@@ -62,11 +62,11 @@ namespace KI.Asset.Primitive
         /// <param name="name">名前</param>
         public Rectangle()
         {
-            Position = new Vector3[4];
-            Position[0] = new Vector3(-1, -1, 0);
-            Position[1] = new Vector3(1, -1, 0);
-            Position[2] = new Vector3(1, 1, 0);
-            Position[3] = new Vector3(-1, 1, 0);
+            Vertexs = new Vertex[4];
+            Vertexs[0] = new Vertex(0,new Vector3(-1, -1, 0));
+            Vertexs[1] = new Vertex(1,new Vector3(1, -1, 0));
+            Vertexs[2] = new Vertex(2,new Vector3(1, 1, 0));
+            Vertexs[3] = new Vertex(3, new Vector3(-1, 1, 0));
             Index = new int[4];
             Index[0] = 0;
             Index[1] = 1;
@@ -74,36 +74,13 @@ namespace KI.Asset.Primitive
             Index[3] = 3;
 
 
-            Texcoord = new Vector2[4];
-            Texcoord[0] = Vector2.Zero;
-            Texcoord[1] = Vector2.UnitX;
-            Texcoord[2] = Vector2.One;
-            Texcoord[3] = Vector2.UnitY;
+            Vertexs[0].TexCoord = Vector2.Zero;
+            Vertexs[1].TexCoord = Vector2.UnitX;
+            Vertexs[2].TexCoord = Vector2.One;
+            Vertexs[3].TexCoord = Vector2.UnitY;
 
-            CreateModel();
+            Formula = Plane.Formula(Vertexs[0].Position, Vertexs[1].Position, Vertexs[2].Position);
+            Type = KIPrimitiveType.Quads;
         }
-
-        /// <summary>
-        /// 形状情報
-        /// </summary>
-        public Polygon Model { get; private set; }
-
-        #region [形状の作成]
-        /// <summary>
-        /// 形状の作成
-        /// </summary>
-        public void CreateModel()
-        {
-            Formula = Plane.Formula(Position[0], Position[1], Position[2]);
-
-            Mesh mesh = new Mesh(
-                new Vertex(0, Position[0], Formula.Xyz, Vector3.UnitX, Vector2.Zero),
-                new Vertex(1, Position[1], Formula.Xyz, Vector3.UnitY, Vector2.UnitX),
-                new Vertex(2, Position[2], Formula.Xyz, Vector3.UnitZ, Vector2.One),
-                new Vertex(3, Position[3], Formula.Xyz, Vector3.One, Vector2.UnitY));
-
-            Model = new Polygon("Rectangle", new List<Mesh>() { mesh }, KIPrimitiveType.Quads);
-        }
-        #endregion
     }
 }

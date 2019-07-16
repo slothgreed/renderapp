@@ -43,7 +43,7 @@ namespace CADApp.Tool.Controller
                         Assembly sketch = new Assembly("Circle");
                         var circle = new Circle(0.001f, worldPoint, Vector3.UnitY, 10);
                         sketch.BeginEdit();
-                        sketch.SetVertex(circle.Position);
+                        sketch.SetVertex(circle.Vertexs);
                         sketch.SetTriangleIndex(circle.Index);
                         sketch.EndEdit();
                         selectStartPoint = worldPoint;
@@ -81,7 +81,7 @@ namespace CADApp.Tool.Controller
                     var radius = (interPoint - selectStartPoint).Length;
                     var circle = new Circle(radius, selectStartPoint, Vector3.UnitY, 10);
                     sketch.BeginEdit();
-                    sketch.SetVertex(circle.Position);
+                    sketch.SetVertex(circle.Vertexs);
                     sketch.SetTriangleIndex(circle.Index);
                     sketch.EndEdit();
                 }

@@ -1,4 +1,5 @@
 ﻿using KI.Gfx;
+using KI.Gfx.Geometry;
 using OpenTK;
 
 namespace KI.Asset.Primitive
@@ -6,25 +7,15 @@ namespace KI.Asset.Primitive
     public abstract class PrimitiveBase
     {
         /// <summary>
-        /// 頂点情報
-        /// </summary>
-        public Vector3[] Position { get; protected set; }
-
-        /// <summary>
-        /// 法線
-        /// </summary>
-        public Vector3[] Normal { get; protected set; }
-
-        /// <summary>
         /// 頂点インデクス
         /// </summary>
         public int[] Index { get; protected set; }
 
         /// <summary>
-        /// テクスチャ座標
+        /// 頂点情報
         /// </summary>
-        public Vector2[] Texcoord { get; protected set; }
-
+        public Vertex[] Vertexs { get; protected set; }
+        
         /// <summary>
         /// タイプ
         /// </summary>
