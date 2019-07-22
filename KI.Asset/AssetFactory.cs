@@ -36,6 +36,8 @@ namespace KI.Asset
                     return new HalfEdgeImporter(filePath);
                 case ".ply":
                     return new PLYImporter(filePath);
+                case ".off":
+                    return new OFFImporter(filePath);
             }
 
             return null;

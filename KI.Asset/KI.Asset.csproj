@@ -71,11 +71,13 @@
     <Compile Include="Loader\Importer\HalfEdgeImporter.cs" />
     <Compile Include="Loader\Importer\ImporterUtility.cs" />
     <Compile Include="Loader\Importer\OBJImporter.cs" />
+    <Compile Include="Loader\Importer\OFFImporter.cs" />
     <Compile Include="Loader\Importer\PLYImporter.cs" />
     <Compile Include="Loader\Importer\STLImporter.cs" />
     <Compile Include="Loader\Model\IGESLoader.cs" />
     <Compile Include="Loader\Model\IGESParameterAnalyzer.cs" />
     <Compile Include="Loader\Model\OBJLoader.cs" />
+    <Compile Include="Loader\Model\OFFLoader.cs" />
     <Compile Include="Loader\Model\PLYLoader.cs" />
     <Compile Include="Loader\Model\STLLoader.cs" />
     <Compile Include="Loader\Image\HDRImage.cs" />

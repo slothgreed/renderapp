@@ -164,8 +164,6 @@ namespace RenderApp.ViewModel
 
             mainScene.MainCamera = new Camera("MainCamera");
             mainScene.MainLight = new DirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
-            //mainScene.AddObject(mainScene.MainCamera);
-            mainScene.AddObject(mainScene.MainLight);
 
             var axis = new Axis(Vector3.Zero, mainScene.WorldMax);
             var axisObject = SceneNodeFactory.Instance.CreatePolygonNode(axis.ToString(), axis.Vertex, axis.Color, axis.Index, KIPrimitiveType.Lines);
@@ -190,7 +188,8 @@ namespace RenderApp.ViewModel
 
             // bunny
             {
-                var moai = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/cube.half");
+                //var moai = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/cube.half");
+                var moai = AssetFactory.Instance.CreateLoad3DModel(@"E:\develop\cgal\build\test\Surface_mesh_segmentation\Debug\data\cactus.off");
                 var renderBunny = CreateAnalyzePolygonNode("cube", moai);
 
                 renderBunny.Polygon.Material.Shader = ShaderCreater.Instance.CreateShader(GBufferType.PointNormalColor);
