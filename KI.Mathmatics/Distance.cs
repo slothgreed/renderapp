@@ -45,9 +45,11 @@ namespace KI.Mathmatics
         /// <param name="end0">終点0</param>
         /// <param name="start1">始点1</param>
         /// <param name="end1">終点1</param>
+        /// <param name="in0">線か線分か true = 線分</param>
+        /// <param name="in1">線か線分か true = 線分</param>
         /// <param name="distance">距離</param>
-        /// <returns>計算できるかどうか</returns>
-        public static bool LineToLine(Vector3 start0, Vector3 end0, Vector3 start1, Vector3 end1, out float distance)
+        /// <returns>距離が出たかどうか。線分指定の際、線分外が交点の時false</returns>
+        public static bool LineToLine(Vector3 start0, Vector3 end0, Vector3 start1, Vector3 end1, out float distance, bool in0 = true, bool in1 = true)
         {
             distance = float.MaxValue;
 
@@ -91,8 +93,24 @@ namespace KI.Mathmatics
 
             result0 = p1 + mua * p21;
             result1 = p3 + mub * p43;
-
             distance = (result0 - result1).Length;
+
+            if (in0 == true)
+            {
+                if (Inside.LineInPoint(start0, end0, result0) == false)
+                {
+                    return false;  
+                }
+            }
+
+            if (in1 == true)
+            {
+                if (Inside.LineInPoint(start1, end1, result1) == false)
+                {
+                    return false;
+                }
+            }
+
             return true;
         }
 

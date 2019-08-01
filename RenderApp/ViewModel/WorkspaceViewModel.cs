@@ -253,7 +253,7 @@ namespace RenderApp.ViewModel
             //CommandManager.Instance.Execute(new CalculateVertexCurvatureCommand(mainScene, renderBunny), null, false);
         }
 
-        private AnalyzePolygonNode CreateAnalyzePolygonNode(string name, ICreateModel model)
+        public AnalyzePolygonNode CreateAnalyzePolygonNode(string name, ICreateModel model)
         {
             string vert = ShaderCreater.Instance.GetVertexShader(model.Model.Type, null);
             string frag = ShaderCreater.Instance.GetFragShaderFilePath(model.Model.Type, null);

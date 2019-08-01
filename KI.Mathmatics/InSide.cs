@@ -66,6 +66,7 @@ namespace KI.Mathmatics
         /// <returns>内側</returns>
         public static bool Polygon(Vector3[] lineStrip, Vector3 position)
         {
+            //throw new System.Exception();
             return true;
         }
 
@@ -76,6 +77,27 @@ namespace KI.Mathmatics
         public static bool Rectangle(Vector3 point, Vector3 a, Vector3 b, Vector3 c, Vector3 d)
         {
             if (Triangle(point, a, b, c) || Triangle(point, a, c, d))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 線分の内部にpointがあるかどうか
+        /// </summary>
+        /// <param name="start">始点</param>
+        /// <param name="end">終点</param>
+        /// <param name="point">点</param>
+        /// <returns></returns>
+        public static bool LineInPoint(Vector3 start, Vector3 end, Vector3 point)
+        {
+            var lineLength = (start - end).Length;
+            var len0 = (start - point).Length;
+            var len1 = (end - point).Length;
+            if (lineLength > len0 &&
+                lineLength > len1)
             {
                 return true;
             }
