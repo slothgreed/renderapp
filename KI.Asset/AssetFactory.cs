@@ -40,6 +40,8 @@ namespace KI.Asset
                     return new OFFImporter(filePath);
             }
 
+            Logger.Log(Logger.LogLevel.Error, "Not Support Extension");
+
             return null;
         }
     }

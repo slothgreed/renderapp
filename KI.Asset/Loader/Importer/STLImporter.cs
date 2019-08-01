@@ -47,7 +47,12 @@ namespace KI.Asset.Loader.Importer
                 vertex.Add(new Vertex(i + 0, stlData.Position[i + 0], stlData.Normal[i + 0], Vector3.One));
                 vertex.Add(new Vertex(i + 1, stlData.Position[i + 1], stlData.Normal[i + 1], Vector3.One));
                 vertex.Add(new Vertex(i + 2, stlData.Position[i + 2], stlData.Normal[i + 2], Vector3.One));
+                index.Add(i);
+                index.Add(i + 1);
+                index.Add(i + 2);
             }
+
+            ImporterUtility.NormalizeObject(vertex);
 
             Model = new Polygon(stlData.FileName, vertex, index, KIPrimitiveType.Triangles);
         }

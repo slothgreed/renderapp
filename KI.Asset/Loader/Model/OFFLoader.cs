@@ -38,7 +38,7 @@ namespace KI.Asset.Loader.Model
         {
             try
             {
-                string[] parser = File.ReadAllLines(filePath, System.Text.Encoding.GetEncoding("Shift_JIS"));
+                string[] parser = File.ReadAllLines(filePath, Encoding.GetEncoding("Shift_JIS"));
                 ReadData(parser);
             }
             catch (Exception)

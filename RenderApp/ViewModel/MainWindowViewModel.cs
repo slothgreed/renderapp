@@ -174,8 +174,12 @@ namespace RenderApp.ViewModel
                 foreach (var filename in dlg.FileNames)
                 {
                     var polygons = AssetFactory.Instance.CreateLoad3DModel(filename);
+                    if(polygons == null)
+                    {
+                        Logger.Log(Logger.LogLevel.Error, "ファイルの読み込みに失敗しました。" + filename);
+                        continue;
+                    }
                     var polygonNode = SceneNodeFactory.Instance.CreatePolygonNode(filename, polygons, null);
-                    polygonNode.Scale = new OpenTK.Vector3(10);
                     workspace.MainScene.AddObject(polygonNode);
                 }
             }

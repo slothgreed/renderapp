@@ -39,7 +39,7 @@ namespace KI.Renderer
         /// <summary>
         /// 頂点バッファ
         /// </summary>
-        public VertexBuffer VertexBuffer { get; set; }
+        public VertexBuffer VertexBuffer { get; private set; }
 
         /// <summary>
         /// 形状

@@ -188,8 +188,8 @@ namespace RenderApp.ViewModel
 
             // bunny
             {
-                //var moai = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/cube.half");
-                var moai = AssetFactory.Instance.CreateLoad3DModel(@"E:\develop\cgal\build\test\Surface_mesh_segmentation\Debug\data\cactus.off");
+                var moai = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/cube.half");
+                //var moai = AssetFactory.Instance.CreateLoad3DModel(@"E:\develop\cgal\build\test\Surface_mesh_segmentation\Debug\data\cactus.off");
                 var renderBunny = CreateAnalyzePolygonNode("cube", moai);
 
                 renderBunny.Polygon.Material.Shader = ShaderCreater.Instance.CreateShader(GBufferType.PointNormalColor);
