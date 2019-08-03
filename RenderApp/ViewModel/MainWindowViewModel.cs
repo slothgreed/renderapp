@@ -166,7 +166,7 @@ namespace RenderApp.ViewModel
         {
             var dlg = new System.Windows.Forms.OpenFileDialog();
             dlg.InitialDirectory = ProjectInfo.ResourceDirectory;
-            dlg.Filter = "objファイル(*.obj)|*.obj;|stlファイル(*.stl)|*.stl;|halfファイル(*.half)|*.half;|plyファイル(*.ply)|*.ply;|すべてのファイル(*.*)|*.*";
+            dlg.Filter = "stlファイル(*.stl)|*.stl;|objファイル(*.obj)|*.obj;|halfファイル(*.half)|*.half;|plyファイル(*.ply)|*.ply;|offファイル(*.ply)|*.off;|すべてのファイル(*.*)|*.*";
             dlg.Multiselect = true;
             dlg.Title = "開くファイルを選択してください。";
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -179,8 +179,10 @@ namespace RenderApp.ViewModel
                         Logger.Log(Logger.LogLevel.Error, "ファイルの読み込みに失敗しました。" + filename);
                         continue;
                     }
+
                     PolygonUtility.Setup(polygons.Model);
-                    var polygonNode = new PolygonNode(filename, polygons.Model);
+                    var name = Path.GetFileName(filename);
+                    var polygonNode = new PolygonNode(name, polygons.Model);
                     workspace.MainScene.AddObject(polygonNode);
                 }
             }
