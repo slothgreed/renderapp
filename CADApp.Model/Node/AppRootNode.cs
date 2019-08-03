@@ -10,6 +10,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using KI.Analyzer;
 using KI.Asset.Gizmo;
+using KI.Gfx.KIMaterial;
 
 namespace CADApp.Model.Node
 {
@@ -83,13 +84,16 @@ namespace CADApp.Model.Node
             }
         }
 
-        Material material;
+        private Material material;
+
+        private Material lineMaterial;
 
         public AppRootNode(string name)
             : base(name)
         {
             var shader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
             material = new Material(shader);
+            lineMaterial = new LineMaterial(shader, 5);
             selectBDB = new BDB();
             //GenerateGizmo();
             GenerateSelectVertexBuffer();
@@ -179,26 +183,24 @@ namespace CADApp.Model.Node
         {
             if (VisibleSelectVertex == true)
             {
-                Draw(scene, KIPrimitiveType.Points, selectVertexBuffer);
+                Draw(scene, KIPrimitiveType.Points, selectVertexBuffer, material);
             }
 
             if (VisibleSelectLine)
             {
-                GL.LineWidth(5);
-                Draw(scene, KIPrimitiveType.Lines, selectLineBuffer);
-                GL.LineWidth(1);
+                Draw(scene, KIPrimitiveType.Lines, selectLineBuffer, lineMaterial);
             }
 
             if (VisibleSelectTriangle)
             {
-                Draw(scene, KIPrimitiveType.Triangles, selectTriangleBuffer);
+                Draw(scene, KIPrimitiveType.Triangles, selectTriangleBuffer, material);
             }
         }
 
-        private void Draw(Scene scene, KIPrimitiveType type, VertexBuffer buffer)
+        private void Draw(Scene scene, KIPrimitiveType type, VertexBuffer buffer, Material material)
         {
             ShaderHelper.InitializeState(scene, this, buffer, material);
-            material.Shader.BindBuffer();
+            material.BindToGPU();
             if (buffer.EnableIndexBuffer)
             {
                 DeviceContext.Instance.DrawElements(type, buffer.Num, DrawElementsType.UnsignedInt, 0);
@@ -208,7 +210,7 @@ namespace CADApp.Model.Node
                 DeviceContext.Instance.DrawArrays(type, 0, buffer.Num);
             }
 
-            material.Shader.UnBindBuffer();
+            material.UnBindToGPU();
         }
     }
 }

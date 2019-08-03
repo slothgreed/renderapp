@@ -10,8 +10,6 @@ using OpenTK;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Windows.Forms.Integration;
-using System.Linq;
 using KI.Foundation.Controller;
 using ShaderTraining.Tool.Controller;
 
@@ -81,7 +79,7 @@ namespace ShaderTraining.ViewModel
             var mainTexture = TextureFactory.Instance.CreateTexture("E:\\cgModel\\Image\\Contact_Cover.jpg");
 
             var rectangle = new Rectangle();
-            var rectangleObject = PolygonUtility.Instance.CreatePolygon("Rectangle", rectangle);
+            var rectangleObject = PolygonUtility.CreatePolygon("Rectangle", rectangle);
             var shader = ShaderCreater.Instance.CreateShader(GBufferType.Albedo);
             var textures = new Dictionary<TextureKind, Texture>();
             textures.Add(TextureKind.Albedo, mainTexture);
@@ -93,7 +91,7 @@ namespace ShaderTraining.ViewModel
 
             var icosahedron = new Icosahedron(0.5f, 1, Vector3.Zero);
 
-            var sphereObject = PolygonUtility.Instance.CreatePolygon("Sphere", icosahedron);
+            var sphereObject = PolygonUtility.CreatePolygon("Sphere", icosahedron);
             PolygonNode sphereNode = new PolygonNode(sphereObject);
             sphereNode.Visible = false;
             var sphereShader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);

@@ -53,7 +53,7 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="name">名前</param>
         /// <returns>描画オブジェクト</returns>
-        public static Polygon CreatePolygon(string name, Vector3[] position, Vector3[] color, int[] index, KIPrimitiveType type)
+        public static Polygon CreatePolygon(string name, Vector3[] position, Vector3[] color, int[] index, KIPrimitiveType type, Material material = null)
         {
             Vertex[] vertex = new Vertex[position.Length];
             for (int i = 0; i < position.Length; i++)
@@ -62,7 +62,7 @@ namespace KI.Renderer
             }
 
             Polygon polygon = new Polygon(name, vertex.ToList(), index.ToList(), type);
-            Setup(polygon, null);
+            Setup(polygon, material);
             return polygon;
         }
     }

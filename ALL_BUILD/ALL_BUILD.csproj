@@ -59,6 +59,10 @@
       <Project>{63784908-38d4-4ef6-82f9-ea50eec662e2}</Project>
       <Name>CADApp.Tool</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CADApp\CADApp.csproj">
+      <Project>{9c5eda2e-270e-4cf0-8d59-479285c074f3}</Project>
+      <Name>CADApp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Graph2D\Graph2D.csproj">
       <Project>{4b56baf2-a90d-41c8-a87a-b426c3053205}</Project>
       <Name>Graph2D</Name>

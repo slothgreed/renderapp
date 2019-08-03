@@ -15,6 +15,7 @@ using KI.Foundation.Controller;
 using KI.Presenter.ViewModel;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using KI.Gfx.KIMaterial;
 
 namespace CADApp.ViewModel
 {
@@ -113,11 +114,12 @@ namespace CADApp.ViewModel
             MainScene.MainLight = new DirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
 
             var axis = new Axis(Vector3.Zero, MainScene.WorldMax);
-            var axisObject = PolygonUtility.Instance.CreatePolygon("Axis", axis.Vertex, axis.Color, axis.Index, KIPrimitiveType.Lines);
+            var axisObject = PolygonUtility.CreatePolygon("Axis", axis.Vertex, axis.Color, axis.Index, KIPrimitiveType.Lines);
             MainScene.AddObject(new PolygonNode(axisObject));
 
             var grid = new GridPlane(1, 0.1f, new Vector3(0.8f));
-            var girdObject = PolygonUtility.Instance.CreatePolygon("GridPlane", grid.Position, grid.Color, grid.Index, KIPrimitiveType.Lines);
+            Material lineMaterial = new LineMaterial(null, 1);
+            var girdObject = PolygonUtility.CreatePolygon("GridPlane", grid.Position, grid.Color, grid.Index, KIPrimitiveType.Lines, lineMaterial);
             MainScene.AddObject(new PolygonNode(girdObject));
         }
 
