@@ -179,7 +179,8 @@ namespace RenderApp.ViewModel
                         Logger.Log(Logger.LogLevel.Error, "ファイルの読み込みに失敗しました。" + filename);
                         continue;
                     }
-                    var polygonNode = SceneNodeFactory.Instance.CreatePolygonNode(filename, polygons.Model);
+                    PolygonUtility.Instance.Setup(polygons.Model);
+                    var polygonNode = new PolygonNode(filename, polygons.Model);
                     workspace.MainScene.AddObject(polygonNode);
                 }
             }

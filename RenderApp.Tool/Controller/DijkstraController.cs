@@ -77,7 +77,8 @@ namespace RenderApp.Tool.Controller
                     }
 
                     Polygon polygon = new Polygon("Picking", new List<Vertex>() { new Vertex(0, vertex.Position, Vector3.UnitY) });
-                    PolygonNode pointObject = SceneNodeFactory.Instance.CreatePolygonNode("Picking", polygon);
+                    PolygonUtility.Instance.Setup(polygon);
+                    PolygonNode pointObject = new PolygonNode(polygon);
                     pointObject.ModelMatrix = selectObject.ModelMatrix;
                     Workspace.Instance.RenderSystem.ActiveScene.AddObject(pointObject);
 
@@ -120,7 +121,8 @@ namespace RenderApp.Tool.Controller
             dijkstra.CreateDijkstraLine(out vertexs, out indexs);
 
             Polygon polygon = new Polygon("DijkstraLine", vertexs, indexs, KIPrimitiveType.Lines);
-            PolygonNode lineObject = SceneNodeFactory.Instance.CreatePolygonNode("DijkstraLine", polygon);
+            PolygonUtility.Instance.Setup(polygon);
+            PolygonNode lineObject = new PolygonNode(polygon);
             lineObject.ModelMatrix = selectObject.ModelMatrix;
             Workspace.Instance.RenderSystem.ActiveScene.AddObject(lineObject);
             return true;

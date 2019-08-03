@@ -172,8 +172,8 @@ namespace RenderApp.ViewModel
             mainScene.MainLight = new DirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
 
             var axis = new Axis(Vector3.Zero, mainScene.WorldMax);
-            var axisObject = SceneNodeFactory.Instance.CreatePolygonNode(axis.ToString(), axis.Vertex, axis.Color, axis.Index, KIPrimitiveType.Lines);
-            mainScene.AddObject(axisObject);
+            var axisObject = PolygonUtility.Instance.CreatePolygon(axis.ToString(), axis.Vertex, axis.Color, axis.Index, KIPrimitiveType.Lines);
+            mainScene.AddObject(new PolygonNode(axisObject));
 
             //var sponzas = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/crytek-sponza/sponza.obj");
             //var sponzaObject = SceneNodeFactory.Instance.CreatePolygonNodes("sponza",sponzas);
@@ -314,12 +314,12 @@ namespace RenderApp.ViewModel
             var bottomMaterial = new Material();
             bottomMaterial.AddTexture(TextureKind.Albedo, nyTexture);
 
-            PolygonNode renderFront = SceneNodeFactory.Instance.CreatePolygonNode("front", front, frontMaterial);
-            PolygonNode renderLeft = SceneNodeFactory.Instance.CreatePolygonNode("left", left, leftMaterial);
-            PolygonNode renderBack = SceneNodeFactory.Instance.CreatePolygonNode("back", back, backMaterial);
-            PolygonNode renderRight = SceneNodeFactory.Instance.CreatePolygonNode("right", right, rightMaterial);
-            PolygonNode renderTop = SceneNodeFactory.Instance.CreatePolygonNode("top", top, topMaterial);
-            PolygonNode renderBottom = SceneNodeFactory.Instance.CreatePolygonNode("bottom", bottom, bottomMaterial);
+            PolygonNode renderFront  = new PolygonNode(PolygonUtility.Instance.CreatePolygon("front", front, frontMaterial));
+            PolygonNode renderLeft   = new PolygonNode(PolygonUtility.Instance.CreatePolygon("left", left, leftMaterial));
+            PolygonNode renderBack   = new PolygonNode(PolygonUtility.Instance.CreatePolygon("back", back, backMaterial));
+            PolygonNode renderRight  = new PolygonNode(PolygonUtility.Instance.CreatePolygon("right", right, rightMaterial));
+            PolygonNode renderTop    = new PolygonNode(PolygonUtility.Instance.CreatePolygon("top", top, topMaterial));
+            PolygonNode renderBottom = new PolygonNode(PolygonUtility.Instance.CreatePolygon("bottom", bottom, bottomMaterial));
 
             EmptyNode cubeMapNode = new EmptyNode("CubeMap");
 

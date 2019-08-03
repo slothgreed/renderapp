@@ -98,34 +98,6 @@ namespace KI.Renderer
         /// <summary>
         /// オブジェクトの追加
         /// </summary>
-        /// <param name="value">追加するオブジェクト</param>
-        /// <param name="parent">親</param>
-        public void AddObject(KIObject value, SceneNode parent = null)
-        {
-            AddObject(new List<KIObject>() { value }, parent);
-        }
-
-        /// <summary>
-        /// オブジェクトの追加
-        /// </summary>
-        /// <param name="value">追加するオブジェクトリスト</param>
-        /// <param name="parent">親</param>
-        public void AddObject(List<KIObject> value, SceneNode parent = null)
-        {
-            if (parent == null)
-            {
-                parent = RootNode;
-            }
-
-            foreach (var obj in value)
-            {
-                parent.AddChild(obj);
-            }
-        }
-
-        /// <summary>
-        /// オブジェクトの追加
-        /// </summary>
         /// <param name="value">追加するオブジェクトリスト</param>
         /// <param name="parent">親</param>
         public void AddObject(SceneNode value, SceneNode parent = null)

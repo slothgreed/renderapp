@@ -10,21 +10,20 @@ using System.Linq;
 namespace KI.Renderer
 {
     /// <summary>
-    /// 描画オブジェクト作成ファクトリ
+    /// ポリオゴン作成のユーティリティ
     /// </summary>
-    public class SceneNodeFactory : KIFactoryBase<PolygonNode>
+    public class PolygonUtility
     {
         /// <summary>
         /// シングルトンインスタンス
         /// </summary>
-        public static SceneNodeFactory Instance { get; } = new SceneNodeFactory();
+        public static PolygonUtility Instance { get; } = new PolygonUtility();
 
         /// <summary>
-        /// 空オブジェクトの作成
+        /// ポリゴンのセットアップ
         /// </summary>
-        /// <param name="name">名前</param>
         /// <returns>描画オブジェクト</returns>
-        public PolygonNode CreatePolygonNode(string name, Polygon polygon, Material material = null)
+        public void Setup(Polygon polygon, Material material = null)
         {
             string vert = ShaderCreater.Instance.GetVertexShader(polygon.Type, material);
             string frag = ShaderCreater.Instance.GetFragShaderFilePath(polygon.Type, material);
@@ -40,29 +39,26 @@ namespace KI.Renderer
             }
 
             polygon.Material = material;
-
-            var polygonNode = new PolygonNode(name, polygon);
-            AddItem(polygonNode);
-            return polygonNode;
         }
 
         /// <summary>
-        /// 空オブジェクトの作成
+        /// ポリゴンの作成
         /// </summary>
         /// <param name="name">名前</param>
         /// <returns>描画オブジェクト</returns>
-        public PolygonNode CreatePolygonNode(string name, PrimitiveBase primitive, Material material = null)
+        public Polygon CreatePolygon(string name, PrimitiveBase primitive, Material material = null)
         {
             Polygon polygon = new Polygon(name, primitive.Vertexs.ToList(), primitive.Index.ToList(), primitive.Type);
-            return CreatePolygonNode(name, polygon, material);
+            Setup(polygon, material);
+            return polygon;
         }
 
         /// <summary>
-        /// 空オブジェクトの作成
+        /// ポリゴンの作成
         /// </summary>
         /// <param name="name">名前</param>
         /// <returns>描画オブジェクト</returns>
-        public PolygonNode CreatePolygonNode(string name, Vector3[] position, Vector3[] color, int[] index, KIPrimitiveType type)
+        public Polygon CreatePolygon(string name, Vector3[] position, Vector3[] color, int[] index, KIPrimitiveType type)
         {
             Vertex[] vertex = new Vertex[position.Length];
             for (int i = 0; i < position.Length; i++)
@@ -71,7 +67,8 @@ namespace KI.Renderer
             }
 
             Polygon polygon = new Polygon(name, vertex.ToList(), index.ToList(), type);
-            return CreatePolygonNode(name, polygon, null);
+            Setup(polygon, null);
+            return polygon;
         }
     }
 }

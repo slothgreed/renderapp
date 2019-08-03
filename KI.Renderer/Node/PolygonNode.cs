@@ -30,6 +30,16 @@ namespace KI.Renderer
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
+        public PolygonNode(Polygon polygon)
+            : base(polygon.Name)
+        {
+            SetPolygon(polygon);
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="name">名前</param>
         public PolygonNode(string name)
             : base(name)
         {

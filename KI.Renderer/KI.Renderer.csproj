@@ -80,7 +80,7 @@
     <Compile Include="Technique\OffScreen\PostEffect\SSAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Node\PolygonNode.cs" />
-    <Compile Include="SceneNodeFactory.cs" />
+    <Compile Include="PolygonUtility.cs" />
     <Compile Include="RenderQueue.cs" />
     <Compile Include="RenderSystem.cs" />
     <Compile Include="Technique\RenderTechniqueFactory.cs" />

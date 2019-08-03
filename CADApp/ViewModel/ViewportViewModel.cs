@@ -113,12 +113,12 @@ namespace CADApp.ViewModel
             MainScene.MainLight = new DirectionLight("SunLight", Vector3.UnitY + Vector3.UnitX, Vector3.Zero);
 
             var axis = new Axis(Vector3.Zero, MainScene.WorldMax);
-            var axisObject = SceneNodeFactory.Instance.CreatePolygonNode("Axis", axis.Vertex, axis.Color, axis.Index, KIPrimitiveType.Lines);
-            MainScene.AddObject(axisObject);
+            var axisObject = PolygonUtility.Instance.CreatePolygon("Axis", axis.Vertex, axis.Color, axis.Index, KIPrimitiveType.Lines);
+            MainScene.AddObject(new PolygonNode(axisObject));
 
             var grid = new GridPlane(1, 0.1f, new Vector3(0.8f));
-            var girdObject = SceneNodeFactory.Instance.CreatePolygonNode("GridPlane", grid.Position, grid.Color, grid.Index, KIPrimitiveType.Lines);
-            MainScene.AddObject(girdObject);
+            var girdObject = PolygonUtility.Instance.CreatePolygon("GridPlane", grid.Position, grid.Color, grid.Index, KIPrimitiveType.Lines);
+            MainScene.AddObject(new PolygonNode(girdObject));
         }
 
         protected override void InitializeRenderer()

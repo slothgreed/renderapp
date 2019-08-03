@@ -78,7 +78,8 @@ namespace RenderApp.Tool.Command
             }
 
             Polygon polygon = new Polygon("ConvexHull:" + targetObject.Name, meshs, KIPrimitiveType.Triangles);
-            PolygonNode convex = SceneNodeFactory.Instance.CreatePolygonNode("ConvexHull :" + targetObject.Name, polygon);
+            PolygonUtility.Instance.Setup(polygon);
+            PolygonNode convex = new PolygonNode(polygon);
             convex.ModelMatrix = targetObject.ModelMatrix;
             scene.AddObject(convex);
 

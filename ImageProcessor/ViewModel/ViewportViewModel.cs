@@ -81,23 +81,24 @@ namespace ShaderTraining.ViewModel
             var mainTexture = TextureFactory.Instance.CreateTexture("E:\\cgModel\\Image\\Contact_Cover.jpg");
 
             var rectangle = new Rectangle();
-            var rectangleObject = SceneNodeFactory.Instance.CreatePolygonNode("Rectangle", rectangle);
+            var rectangleObject = PolygonUtility.Instance.CreatePolygon("Rectangle", rectangle);
             var shader = ShaderCreater.Instance.CreateShader(GBufferType.Albedo);
             var textures = new Dictionary<TextureKind, Texture>();
             textures.Add(TextureKind.Albedo, mainTexture);
 
-            rectangleObject.Polygon.Material = new Material(shader, textures);
-            MainScene.AddObject(rectangleObject);
+            rectangleObject.Material = new Material(shader, textures);
+            MainScene.AddObject(new PolygonNode(rectangleObject));
             CameraMode = CameraMode.Ortho;
 
 
             var icosahedron = new Icosahedron(0.5f, 1, Vector3.Zero);
 
-            var sphereObject = SceneNodeFactory.Instance.CreatePolygonNode("Sphere", icosahedron);
-            sphereObject.Visible = false;
+            var sphereObject = PolygonUtility.Instance.CreatePolygon("Sphere", icosahedron);
+            PolygonNode sphereNode = new PolygonNode(sphereObject);
+            sphereNode.Visible = false;
             var sphereShader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
-            sphereObject.Polygon.Material = new Material(sphereShader);
-            MainScene.AddObject(sphereObject);
+            sphereObject.Material = new Material(sphereShader);
+            MainScene.AddObject(new PolygonNode(sphereObject));
 
             cameraController.TargetCamera = MainScene.MainCamera;
         }

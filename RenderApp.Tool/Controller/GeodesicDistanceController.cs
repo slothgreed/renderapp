@@ -50,7 +50,8 @@ namespace RenderApp.Tool.Controller
                     {
                         geodesic = new GeodesicDistanceAlgorithm(analyzePolygonNode.Polygon as HalfEdgeDS);
                         Polygon polygon = new Polygon("Picking", new List<Vertex>() { new Vertex(0, selectVertex.Position, Vector3.UnitY) });
-                        PolygonNode pointObject = SceneNodeFactory.Instance.CreatePolygonNode("Picking", polygon);
+                        PolygonUtility.Instance.Setup(polygon);
+                        PolygonNode pointObject = new PolygonNode(polygon);
                         pointObject.ModelMatrix = analyzePolygonNode.ModelMatrix;
                         Workspace.Instance.RenderSystem.ActiveScene.AddObject(pointObject);
 
@@ -110,7 +111,7 @@ namespace RenderApp.Tool.Controller
                         vertexBuffer.SetupLineBuffer(lineGeometry.Vertexs, lineGeometry.Index, lineGeometry.Lines);
                         var lineAttribute = new PolygonAttribute("geodesicDistance", vertexBuffer, KIPrimitiveType.Lines, analyzePolygonNode.Polygon.Material);
                         analyzePolygonNode.Attributes.Add(lineAttribute);
-                        Workspace.Instance.RenderSystem.ActiveScene.AddObject(lineAttribute, parentNode);
+                        Workspace.Instance.RenderSystem.ActiveScene.AddObject(new PolygonNode(lineGeometry), parentNode);
                     }
                 }
             }

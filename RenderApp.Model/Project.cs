@@ -5,6 +5,7 @@ using KI.Foundation.Tree;
 using KI.Gfx;
 using KI.Gfx.Geometry;
 using KI.Gfx.KITexture;
+using KI.Renderer;
 
 namespace RenderApp.Model
 {
@@ -61,7 +62,7 @@ namespace RenderApp.Model
             if (child is Polygon)
             {
                 polygonRoot.AddChild(child);
-                Workspace.Instance.MainScene.AddObject(child);
+                Workspace.Instance.MainScene.AddObject(new PolygonNode(child as Polygon));
             }
 
             if (child is Texture)

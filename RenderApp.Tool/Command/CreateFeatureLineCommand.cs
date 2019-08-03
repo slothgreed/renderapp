@@ -68,12 +68,14 @@ namespace RenderApp.Tool.Command
             }
 
             Polygon convexModel = new Polygon("Convex:" + targetObject.Name, convexLine);
-            PolygonNode convexObject = SceneNodeFactory.Instance.CreatePolygonNode("Convex :" + targetObject.Name, convexModel);
+            PolygonUtility.Instance.Setup(convexModel);
+            PolygonNode convexObject = new PolygonNode(convexModel);
             convexObject.ModelMatrix = targetObject.ModelMatrix;
             scene.AddObject(convexObject);
 
             Polygon concaveModel = new Polygon("Concave:" + targetObject.Name, concaveLine);
-            PolygonNode concaveObject = SceneNodeFactory.Instance.CreatePolygonNode("Concave :" + targetObject.Name, concaveModel);
+            PolygonUtility.Instance.Setup(concaveModel);
+            PolygonNode concaveObject = new PolygonNode(concaveModel);
             concaveObject.ModelMatrix = targetObject.ModelMatrix;
             scene.AddObject(concaveObject);
 
