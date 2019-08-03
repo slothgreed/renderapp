@@ -50,7 +50,7 @@ namespace RenderApp.Tool.Controller
                     {
                         geodesic = new GeodesicDistanceAlgorithm(analyzePolygonNode.Polygon as HalfEdgeDS);
                         Polygon polygon = new Polygon("Picking", new List<Vertex>() { new Vertex(0, selectVertex.Position, Vector3.UnitY) });
-                        PolygonUtility.Instance.Setup(polygon);
+                        PolygonUtility.Setup(polygon);
                         PolygonNode pointObject = new PolygonNode(polygon);
                         pointObject.ModelMatrix = analyzePolygonNode.ModelMatrix;
                         Workspace.Instance.RenderSystem.ActiveScene.AddObject(pointObject);

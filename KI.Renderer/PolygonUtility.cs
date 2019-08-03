@@ -12,18 +12,13 @@ namespace KI.Renderer
     /// <summary>
     /// ポリオゴン作成のユーティリティ
     /// </summary>
-    public class PolygonUtility
+    public static class PolygonUtility
     {
-        /// <summary>
-        /// シングルトンインスタンス
-        /// </summary>
-        public static PolygonUtility Instance { get; } = new PolygonUtility();
-
         /// <summary>
         /// ポリゴンのセットアップ
         /// </summary>
         /// <returns>描画オブジェクト</returns>
-        public void Setup(Polygon polygon, Material material = null)
+        public static void Setup(Polygon polygon, Material material = null)
         {
             string vert = ShaderCreater.Instance.GetVertexShader(polygon.Type, material);
             string frag = ShaderCreater.Instance.GetFragShaderFilePath(polygon.Type, material);
@@ -46,7 +41,7 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="name">名前</param>
         /// <returns>描画オブジェクト</returns>
-        public Polygon CreatePolygon(string name, PrimitiveBase primitive, Material material = null)
+        public static Polygon CreatePolygon(string name, PrimitiveBase primitive, Material material = null)
         {
             Polygon polygon = new Polygon(name, primitive.Vertexs.ToList(), primitive.Index.ToList(), primitive.Type);
             Setup(polygon, material);
@@ -58,7 +53,7 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="name">名前</param>
         /// <returns>描画オブジェクト</returns>
-        public Polygon CreatePolygon(string name, Vector3[] position, Vector3[] color, int[] index, KIPrimitiveType type)
+        public static Polygon CreatePolygon(string name, Vector3[] position, Vector3[] color, int[] index, KIPrimitiveType type)
         {
             Vertex[] vertex = new Vertex[position.Length];
             for (int i = 0; i < position.Length; i++)

@@ -56,7 +56,7 @@ namespace RenderApp.Tool.Command
             var marching = new MarchingCubesAlgorithm(voxel, 0.8f);
 
             var polygon = new Polygon("MarchingCube :" + targetObject.Name, marching.Meshs, KIPrimitiveType.Triangles);
-            PolygonUtility.Instance.Setup(polygon);
+            PolygonUtility.Setup(polygon);
             PolygonNode marghingObject = new PolygonNode(polygon.Name, polygon);
             marghingObject.ModelMatrix = targetObject.ModelMatrix;
             marchingCommandArgs.Scene.AddObject(marghingObject);

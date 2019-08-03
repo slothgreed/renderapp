@@ -70,7 +70,7 @@ namespace RenderApp.Tool.Command
             var mesh = GetVoxelObject();
 
             Polygon info = new Polygon("Voxel :" + targetObject.Name, mesh, KIPrimitiveType.Quads);
-            PolygonUtility.Instance.Setup(info);
+            PolygonUtility.Setup(info);
             PolygonNode voxelObject = new PolygonNode(info.Name, info);
             voxelObject.Transformation(targetObject.ModelMatrix);
             scene.AddObject(voxelObject);

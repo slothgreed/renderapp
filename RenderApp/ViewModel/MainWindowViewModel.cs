@@ -179,7 +179,7 @@ namespace RenderApp.ViewModel
                         Logger.Log(Logger.LogLevel.Error, "ファイルの読み込みに失敗しました。" + filename);
                         continue;
                     }
-                    PolygonUtility.Instance.Setup(polygons.Model);
+                    PolygonUtility.Setup(polygons.Model);
                     var polygonNode = new PolygonNode(filename, polygons.Model);
                     workspace.MainScene.AddObject(polygonNode);
                 }

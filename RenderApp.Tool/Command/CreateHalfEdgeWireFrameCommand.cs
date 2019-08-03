@@ -69,7 +69,7 @@ namespace RenderApp.Tool.Command
             }
 
             var polygon = new Polygon("HalfEdgeWireFrame :" + targetObject.Name, position, lines, KIPrimitiveType.Lines);
-            PolygonUtility.Instance.Setup(polygon);
+            PolygonUtility.Setup(polygon);
             PolygonNode wireframe = new PolygonNode(polygon);
             wireframe.ModelMatrix = targetObject.ModelMatrix;
             scene.AddObject(wireframe);
