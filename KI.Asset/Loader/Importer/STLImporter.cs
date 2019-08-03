@@ -16,12 +16,18 @@ namespace KI.Asset.Loader.Importer
         private STLLoader stlData;
 
         /// <summary>
+        /// ファイルパス
+        /// </summary>
+        private string filePath;
+
+        /// <summary>
         /// STLのローダ。
         /// </summary>
         /// <param name="filePath">ファイルパス</param>
         public STLImporter(string filePath)
         {
             stlData = new STLLoader(filePath);
+            filePath = this.filePath;
             CreateModel();
         }
 
@@ -54,7 +60,7 @@ namespace KI.Asset.Loader.Importer
 
             ImporterUtility.NormalizeObject(vertex);
 
-            Model = new Polygon(stlData.FileName, vertex, index, KIPrimitiveType.Triangles);
+            Model = new Polygon(filePath, vertex, index, KIPrimitiveType.Triangles);
         }
     }
 }

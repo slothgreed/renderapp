@@ -222,9 +222,10 @@
     </Compile>
     <Compile Include="ViewModel\DockTabVM\DockPaneSelector.cs" />
     <Compile Include="ViewModel\DockTabVM\DockWindowViewModel.cs" />
-    <Compile Include="ViewModel\SceneNodeVM\PolygonNodeViewModel.cs" />
+    <Compile Include="ViewModel\SceneNodeVM\AnalyzePolygonNodeViewModel.cs" />
     <Compile Include="ViewModel\RendererViewModel.cs" />
     <Compile Include="ViewModel\NodeVM\NodeItemViewModel.cs" />
+    <Compile Include="ViewModel\SceneNodeVM\PolygonNodeViewModel.cs" />
     <Compile Include="ViewModel\SceneNodeVM\SceneNodeViewModel.cs" />
     <Compile Include="ViewModel\ViewportViewModel.cs" />
     <Compile Include="ViewModel\WorkspaceViewModel.cs" />
@@ -263,6 +264,9 @@
     <Compile Include="View\PropertyGridView.xaml.cs">
       <DependentUpon>PropertyGridView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\SceneNodeView\PolygonNodeView.xaml.cs">
+      <DependentUpon>PolygonNodeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SceneNodeView\SceneNodeBase.xaml.cs">
       <DependentUpon>SceneNodeBase.xaml</DependentUpon>
     </Compile>
@@ -288,8 +292,8 @@
     <Compile Include="View\CommandView\VoxelCommandView.xaml.cs">
       <DependentUpon>VoxelCommandView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\SceneNodeView\PolygonNodeView.xaml.cs">
-      <DependentUpon>PolygonNodeView.xaml</DependentUpon>
+    <Compile Include="View\SceneNodeView\AnalyzePolygonNodeView.xaml.cs">
+      <DependentUpon>AnalyzePolygonNodeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\RendererView.xaml.cs">
       <DependentUpon>RendererView.xaml</DependentUpon>
@@ -350,6 +354,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\SceneNodeView\PolygonNodeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\SceneNodeView\SceneNodeBase.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -378,7 +386,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\SceneNodeView\PolygonNodeView.xaml">
+    <Page Include="View\SceneNodeView\AnalyzePolygonNodeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

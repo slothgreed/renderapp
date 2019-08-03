@@ -84,6 +84,7 @@ namespace RenderApp.ViewModel
         public DataTemplate ShaderProgramTemplate { get; set; }
         public DataTemplate ViewportTemplate { get; set; }
         public DataTemplate PolygonNodeTemplate { get; set; }
+        public DataTemplate AnalyzePolygonNodeTemplate { get; set; }
         public DataTemplate LightTemplate { get; set; }
         public DataTemplate RendererTemplate { get; set; }
         public DataTemplate PropertyGridTemplate { get; set; }
@@ -99,6 +100,10 @@ namespace RenderApp.ViewModel
                 return ViewportTemplate;
             }
             else if (item is AnalyzePolygonNodeViewModel)
+            {
+                return AnalyzePolygonNodeTemplate;
+            }
+            else if (item is PolygonNodeViewModel)
             {
                 return PolygonNodeTemplate;
             }

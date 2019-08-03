@@ -11,7 +11,7 @@ namespace KI.Asset.Primitive
     /// <summary>
     /// 球
     /// </summary>
-    public class Sphere : ICreateModel
+    public class Sphere : PrimitiveBase
     {
         /// <summary>
         /// 半径
@@ -49,11 +49,6 @@ namespace KI.Asset.Primitive
             this.orient = orient;
             CreateModel();
         }
-
-        /// <summary>
-        /// 形状情報
-        /// </summary>
-        public Polygon Model { get; private set; }
 
         /// <summary>
         /// オブジェクトの設定
@@ -139,8 +134,6 @@ namespace KI.Asset.Primitive
                 if (min.X < texcoord[i].X) { min.X = texcoord[i].X; }
                 if (min.Y < texcoord[i].Y) { min.Y = texcoord[i].Y; }
             }
-            //TODO: きちんと実装
-            //RetouchTexcoord(TexCoord);
 
             if (!orient)
             {
@@ -162,21 +155,18 @@ namespace KI.Asset.Primitive
                 }
             }
 
-            var vertexs = new List<Vertex>();
-            var indexs = new List<int>();
+            Vertexs = new Vertex[position.Count];
+            Index = new int[position.Count];
+            Type = KIPrimitiveType.Triangles;
             for (int i = 0; i < position.Count / 3; i++)
             {
-                vertexs.Add(new Vertex(3 * i, position[3 * i], normal[3 * i], texcoord[3 * i]));
-                vertexs.Add(new Vertex(3 * i + 1, position[3 * i + 1], normal[3 * i + 1], texcoord[3 * i + 1]));
-                vertexs.Add(new Vertex(3 * i + 2, position[3 * i + 2], normal[3 * i + 2], texcoord[3 * i + 2]));
-                indexs.Add(3 * i);
-                indexs.Add(3 * i + 1);
-                indexs.Add(3 * i + 2);
+                Vertexs[3 * i + 0] = new Vertex(3 * i, position[3 * i], normal[3 * i], texcoord[3 * i]);
+                Vertexs[3 * i + 1] = new Vertex(3 * i + 1, position[3 * i + 1], normal[3 * i + 1], texcoord[3 * i + 1]);
+                Vertexs[3 * i + 2] = new Vertex(3 * i + 2, position[3 * i + 2], normal[3 * i + 2], texcoord[3 * i + 2]);
+                Index[3 * i + 0] = 3 * i + 0;
+                Index[3 * i + 1] = 3 * i + 1;
+                Index[3 * i + 2] = 3 * i + 2;
             }
-
-            Model = new Polygon("Sphere", vertexs,indexs, KIPrimitiveType.Triangles);
-
-            //info.ConvertVertexArray();
         }
 
         /// <summary>

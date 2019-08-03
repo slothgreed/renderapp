@@ -124,6 +124,12 @@ namespace RenderApp.ViewModel
                 vm.PropertyChanged += PolygonNodeViewModel_PropertyChanged;
                 workspace.MainScene.SelectNode = node;
             }
+            else if (node is PolygonNode)
+            {
+                vm = new PolygonNodeViewModel(this, node as PolygonNode);
+                vm.PropertyChanged += PolygonNodeViewModel_PropertyChanged;
+                workspace.MainScene.SelectNode = node;
+            }
             else if (node is LightNode)
             {
                 vm = new LightViewModel(this, node as LightNode);
@@ -258,8 +264,7 @@ namespace RenderApp.ViewModel
             string vert = ShaderCreater.Instance.GetVertexShader(model.Model.Type, null);
             string frag = ShaderCreater.Instance.GetFragShaderFilePath(model.Model.Type, null);
             var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
-            Material material = new Material(shader);
-            model.Model.Material = material;
+            model.Model.Material = new Material(shader);
             AnalyzePolygonNode node = new AnalyzePolygonNode(name, model.Model);
             return node;
         }

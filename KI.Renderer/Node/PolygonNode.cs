@@ -51,7 +51,7 @@ namespace KI.Renderer
         }
 
         /// <summary>
-        /// ポリゴンの種類(いずれPolygon.Typeを消して PolygonNode がTypeを持つようにする)
+        /// ポリゴンの種類
         /// </summary>
         public KIPrimitiveType Type
         {

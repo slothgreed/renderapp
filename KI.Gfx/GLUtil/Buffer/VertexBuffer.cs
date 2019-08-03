@@ -377,7 +377,7 @@ namespace KI.Gfx.GLUtil.Buffer
                         normals.Add(meshNormal);
                     }
                 }
-                else
+                else if(type == KIPrimitiveType.Quads)
                 {
                     foreach (var mesh in meshSrc)
                     {

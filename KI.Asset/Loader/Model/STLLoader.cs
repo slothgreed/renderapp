@@ -10,7 +10,7 @@ namespace KI.Asset.Loader
     /// <summary>
     /// STLのローダ現在テキストファイルのみ
     /// </summary>
-    public class STLLoader : KIFile
+    public class STLLoader
     {
         /// <summary>
         /// 頂点
@@ -27,7 +27,6 @@ namespace KI.Asset.Loader
         /// </summary>
         /// <param name="filePath">ファイルパス</param>
         public STLLoader(string filePath)
-            : base(filePath)
         {
             try
             {

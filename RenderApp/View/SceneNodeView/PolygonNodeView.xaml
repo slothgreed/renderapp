@@ -1,33 +1,12 @@
-﻿<UserControl
-    x:Class="RenderApp.View.PolygonNodeView"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:control="clr-namespace:KI.Presenter.Controls;assembly=KI.Presenter"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:geometry="clr-namespace:KI.Gfx.Geometry;assembly=KI.Gfx"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:sys="clr-namespace:System;assembly=mscorlib"
-    xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
-    xmlns:v="clr-namespace:RenderApp.View"
-    xmlns:vm="clr-namespace:RenderApp.ViewModel"
-    d:DesignHeight="300"
-    d:DesignWidth="300"
-    mc:Ignorable="d">
-    <UserControl.Resources>
-        <!--<ObjectDataProvider
-            x:Key="VertexColorEnum"
-            MethodName="GetValues"
-            ObjectType="{x:Type sys:Enum}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="geometry:VertexColor" />
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>-->
-
-        <Style TargetType="{x:Type TextBlock}">
-            <Setter Property="Width" Value="120" />
-        </Style>
-    </UserControl.Resources>
-    <ScrollViewer>
+﻿<UserControl x:Class="RenderApp.View.PolygonNodeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:v="clr-namespace:RenderApp.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
         <StackPanel>
             <Expander
                 Margin="2"
@@ -35,12 +14,7 @@
                 IsExpanded="True">
                 <v:SceneNodeBase />
             </Expander>
-            <Expander
-                Margin="2"
-                Header="Attribute"
-                IsExpanded="True">
-                <v:AttributeViewBase DataContext="{Binding}" />
-            </Expander>
+            <Button Content="Convert HalfEdgeDS" IsEnabled="{Binding CanConvertHalfEdgeDS}" Command="{Binding ConvertHalfEdge}"/>
         </StackPanel>
-    </ScrollViewer>
+    </Grid>
 </UserControl>

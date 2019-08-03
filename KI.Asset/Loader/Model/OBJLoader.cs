@@ -32,6 +32,9 @@ namespace KI.Asset.Loader
         /// </summary>
         private List<Vector2> texcoord = new List<Vector2>();
 
+        /// <summary>
+        /// ファイルパス
+        /// </summary>
         private string filePath = string.Empty;
 
         /// <summary>

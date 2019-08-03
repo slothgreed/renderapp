@@ -55,21 +55,19 @@ namespace KI.Renderer
         #region [public scene method]
 
         /// <summary>
-        /// オブジェクトの追加
+        /// ノードの検索
         /// </summary>
-        /// <param name="filePath">ファイルパス</param>
-        public void AddObject(string filePath)
-        {
-            var model = AssetFactory.Instance.CreateLoad3DModel(filePath);
-            var polygonNode = SceneNodeFactory.Instance.CreatePolygonNode(filePath, model, null);
-            AddObject(polygonNode);
-        }
-
+        /// <param name="obj">ノード</param>
+        /// <returns>ノード</returns>
         public SceneNode FindNode(SceneNode obj)
         {
             return RootNode.FindRecursiveChild(obj.Name) as SceneNode;
         }
 
+        /// <summary>
+        /// Visibilityの設定
+        /// </summary>
+        /// <param name="visible"></param>
         public void SetAllVisible(bool visible)
         {
             foreach (var node in RootNode.AllChildren())
@@ -147,6 +145,11 @@ namespace KI.Renderer
         public void DeleteObject(string key)
         {
             RootNode.RemoveRecursiveChild(key);
+        }
+
+        public void DeleteObject(SceneNode node)
+        {
+            RootNode.RemoveChild(node);
         }
 
         /// <summary>

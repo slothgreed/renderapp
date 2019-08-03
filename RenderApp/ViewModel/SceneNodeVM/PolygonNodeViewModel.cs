@@ -1,66 +1,68 @@
-﻿using System.Collections.ObjectModel;
+﻿using KI.Analyzer;
 using KI.Asset;
-using KI.Asset.Attribute;
+using KI.Asset.Loader.Importer;
+using KI.Gfx;
+using KI.Gfx.KIShader;
 using KI.Presenter.ViewModel;
+using KI.Renderer;
 using RenderApp.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace RenderApp.ViewModel
 {
-    public class AnalyzePolygonNodeViewModel : SceneNodeViewModel
+    class PolygonNodeViewModel : SceneNodeViewModel
     {
-        public AnalyzePolygonNodeViewModel(ViewModelBase parent)
-            : base(parent, null, "No Geometry", Place.RightUp)
+        public PolygonNodeViewModel(ViewModelBase parent, PolygonNode model)
+            : base(parent, model, model.ToString(), Place.RightUp)
         {
+            polygonNode = model;
         }
 
-        public AnalyzePolygonNodeViewModel(ViewModelBase parent, AnalyzePolygonNode model)
-            : base(parent, model, "No Geometry", Place.RightUp)
+        PolygonNode polygonNode;
+
+
+        public bool CanConvertHalfEdgeDS
         {
-            Attributes = new ObservableCollection<ViewModelBase>();
-
-            foreach (var attribute in model.Attributes)
+            get
             {
-                ViewModelBase viewModel = null;
-                if (attribute is VertexParameterAttribute)
-                {
-                    viewModel = new VertexParameterAttributeViewModel(this, attribute as VertexParameterAttribute);
-                }
-                else if (attribute is WireFrameAttribute)
-                {
-                    viewModel = new WireFrameAttributeViewModel(this, attribute as WireFrameAttribute);
-                }
-                else if (attribute is OutlineAttribute)
-                {
-                    viewModel = new OutlineAttributeViewModel(this, attribute as OutlineAttribute);
-                }
-                else if (attribute is SplitAttribute)
-                {
-                    viewModel = new SplitAttributeViewModel(this, attribute as SplitAttribute);
-                }
-                else
-                {
-                    viewModel = new DefaultAttributeViewModel(this, attribute);
-                }
-
-
-                if (viewModel != null)
-                {
-                    viewModel.PropertyChanged += Collection_PropertyChanged;
-                    Attributes.Add(viewModel);
-                }
+                return polygonNode.Type == KI.Gfx.KIPrimitiveType.Triangles;
             }
         }
 
-        public ObservableCollection<ViewModelBase> Attributes
+        private ICommand _ConvertHalfEdge;
+        public ICommand ConvertHalfEdge
         {
-            get;
-            set;
+            get
+            {
+                if (_ConvertHalfEdge == null)
+                {
+                    return _ConvertHalfEdge = CreateCommand(ConvertHalfEdgeCommand);
+                }
+
+                return _ConvertHalfEdge;
+            }
         }
 
-        private void Collection_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void ConvertHalfEdgeCommand()
         {
-            OnPropertyChanged(nameof(Attributes));
-        }
+            PolygonNode node = Model as PolygonNode;
+            var halfEdgeDS = new HalfEdgeDS(Model.Name, 
+                node.Polygon.Vertexs.Select(p => p.Position).ToList(),
+                node.Polygon.Index);
 
+            var importer = new HalfEdgeImporter(halfEdgeDS);
+            string vert = ShaderCreater.Instance.GetVertexShader(importer.Model.Type, null);
+            string frag = ShaderCreater.Instance.GetFragShaderFilePath(importer.Model.Type, null);
+            var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
+            importer.Model.Material = new Material(shader);
+            AnalyzePolygonNode analyze = new AnalyzePolygonNode(importer.Model.Name, importer.Model);
+            Workspace.Instance.MainScene.AddObject(analyze);
+            Workspace.Instance.MainScene.DeleteObject(polygonNode);
+        }
     }
 }
