@@ -104,6 +104,8 @@ namespace KI.Foundation.Command
                 commandStack.Add(command);
             }
 
+            NotifyCommandExecuted();
+
             return CommandResult.Success;
         }
 
