@@ -9,6 +9,7 @@ using KI.Foundation.Controller;
 using OpenTK;
 using RenderApp.Model;
 using RenderApp.Tool.Utility;
+using KI.Gfx.KIMaterial;
 
 namespace RenderApp.Tool.Controller
 {
@@ -121,6 +122,7 @@ namespace RenderApp.Tool.Controller
             dijkstra.CreateDijkstraLine(out vertexs, out indexs);
 
             Polygon polygon = new Polygon("DijkstraLine", vertexs, indexs, KIPrimitiveType.Lines);
+            Material lineMaterial = new LineMaterial(5);
             PolygonUtility.Setup(polygon);
             PolygonNode lineObject = new PolygonNode(polygon);
             lineObject.ModelMatrix = selectObject.ModelMatrix;

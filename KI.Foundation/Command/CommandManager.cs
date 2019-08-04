@@ -1,13 +1,52 @@
 ﻿using System.Collections.Generic;
 using KI.Foundation.Core;
+using System;
 
 namespace KI.Foundation.Command
 {
+
+    /// <summary>
+    /// コマンド実行後イベントハンドラ
+    /// </summary>
+    /// <param name="sender">発生元</param>
+    /// <param name="e">イベント</param>
+    public delegate void NotifyCommandExecutedHandler(object sender, EventArgs e);
+
+    /// <summary>
+    /// コマンドUndo後イベントハンドラ
+    /// </summary>
+    /// <param name="sender">発生元</param>
+    /// <param name="e">イベント</param>
+    public delegate void NotifyCommandUndoPerformedHandler(object sender, EventArgs e);
+
+    /// <summary>
+    /// コマンドRedo後イベントハンドラ
+    /// </summary>
+    /// <param name="sender">発生元</param>
+    /// <param name="e">イベント</param>
+    public delegate void NotifyCommandRedoPerformedHandler(object sender, EventArgs e);
+
+
     /// <summary>
     /// コマンドマネージャ
     /// </summary>
     public class CommandManager
     {
+        /// <summary>
+        /// コマンド実行後イベントハンドラ
+        /// </summary>
+        public event NotifyCommandExecutedHandler OnCommandExecuted;
+
+        /// <summary>
+        /// コマンドUndo後イベントハンドラ
+        /// </summary>
+        public event NotifyCommandUndoPerformedHandler OnCommandUndoPerformed;
+
+        /// <summary>
+        /// コマンドRedo後イベントハンドラ
+        /// </summary>
+        public event NotifyCommandRedoPerformedHandler OnCommandRedoPerformed;
+
         /// <summary>
         /// Listで管理、各ツールでenumで設定できる
         /// </summary>
@@ -84,6 +123,7 @@ namespace KI.Foundation.Command
                 else
                 {
                     undoStack.Add(command);
+                    NotifyCommandUndoPerformed();
                 }
             }
         }
@@ -98,6 +138,7 @@ namespace KI.Foundation.Command
                 var command = undoStack[undoStack.Count - 1];
                 undoStack.RemoveAt(undoStack.Count - 1);
                 Execute(command, true);
+                NotifyCommandRedoPerformed();
             }
         }
 
@@ -108,6 +149,39 @@ namespace KI.Foundation.Command
         {
             commandStack.Remove(command);
             undoStack.Remove(command);
+        }
+
+        /// <summary>
+        /// コマンド実行後イベント
+        /// </summary>
+        public virtual void NotifyCommandExecuted()
+        {
+            if(OnCommandExecuted != null)
+            {
+                OnCommandExecuted(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// コマンドUndo後イベント
+        /// </summary>
+        public virtual void NotifyCommandUndoPerformed()
+        {
+            if(OnCommandUndoPerformed != null)
+            {
+                OnCommandUndoPerformed(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// コマンドRedoイベント
+        /// </summary>
+        public virtual void NotifyCommandRedoPerformed()
+        {
+            if (OnCommandRedoPerformed != null)
+            {
+                OnCommandRedoPerformed(this, EventArgs.Empty);
+            }
         }
     }
 }

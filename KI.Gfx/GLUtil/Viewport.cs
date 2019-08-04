@@ -154,6 +154,7 @@ namespace KI.Gfx.GLUtil
         /// マウスダブルクリックイベント
         /// </summary>
         public event OnMouseClickHandler OnMouseClick;
+
         /// <summary>
         /// マウスダブルクリックイベント
         /// </summary>
