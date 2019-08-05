@@ -27,7 +27,7 @@ namespace KI.Asset.Loader.Importer
         public STLImporter(string filePath)
         {
             stlData = new STLLoader(filePath);
-            filePath = this.filePath;
+            this.filePath = filePath;
             CreateModel();
         }
 

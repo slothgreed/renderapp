@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using KI.Asset.Loader.Loader;
 using KI.Gfx;
 using KI.Gfx.Geometry;
 using OpenTK;

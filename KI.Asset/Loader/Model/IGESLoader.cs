@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace KI.Asset.Loader.Model
 {
-    public class IGESLoader
+    public class IGESLoader : IModelLoader
     {
         /// <summary>
         /// コンストラクタ

@@ -10,7 +10,7 @@ namespace KI.Asset.Loader
     /// <summary>
     /// objファイルのローダ
     /// </summary>
-    public class OBJLoader
+    public class OBJLoader : IModelLoader
     {
         /// <summary>
         /// 頂点・色・テクスチャ座標を保持。

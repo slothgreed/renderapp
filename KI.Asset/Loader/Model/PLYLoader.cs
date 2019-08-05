@@ -4,12 +4,12 @@ using System.IO;
 using System.Linq;
 using KI.Foundation.Core;
 
-namespace KI.Asset.Loader.Loader
+namespace KI.Asset.Loader
 {
     /// <summary>
     /// plyファイルのローダ
     /// </summary>
-    public class PLYLoader
+    public class PLYLoader : IModelLoader
     {
         /// <summary>
         /// プロパティ名

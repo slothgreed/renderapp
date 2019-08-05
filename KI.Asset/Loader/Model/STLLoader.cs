@@ -10,7 +10,7 @@ namespace KI.Asset.Loader
     /// <summary>
     /// STLのローダ現在テキストファイルのみ
     /// </summary>
-    public class STLLoader
+    public class STLLoader : IModelLoader
     {
         /// <summary>
         /// 頂点

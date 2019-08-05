@@ -12,7 +12,7 @@ namespace KI.Asset.Loader.Model
     /// <summary>
     /// OFF ファイルのローダ
     /// </summary>
-    public class OFFLoader : KIFile
+    public class OFFLoader : KIFile, IModelLoader
     {
         /// <summary>
         /// 頂点
