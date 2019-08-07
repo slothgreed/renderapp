@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KI.Asset.Loader.Model
+namespace KI.Asset.Loader
 {
     /// <summary>
     /// OFF ファイルのローダ
