@@ -363,19 +363,35 @@ namespace KI.Gfx.GLUtil.Buffer
 
                 if (type == KIPrimitiveType.Triangles)
                 {
-                    foreach (var mesh in meshSrc)
+                    if (meshSrc != null && meshSrc.Count != 0)
                     {
-                        vertexs.AddRange(mesh.Vertexs);
+                        foreach (var mesh in meshSrc)
+                        {
+                            vertexs.AddRange(mesh.Vertexs);
 
-                        var meshNormal =
-                            Mathmatics.Calculator.Normal(
-                                    mesh.Lines[1].Start.Position - mesh.Lines[0].Start.Position,
-                                    mesh.Lines[2].Start.Position - mesh.Lines[0].Start.Position);
+                            var meshNormal =
+                                Mathmatics.Calculator.Normal(
+                                        mesh.Lines[1].Start.Position - mesh.Lines[0].Start.Position,
+                                        mesh.Lines[2].Start.Position - mesh.Lines[0].Start.Position);
 
-                        normals.Add(meshNormal);
-                        normals.Add(meshNormal);
-                        normals.Add(meshNormal);
+                            normals.Add(meshNormal);
+                            normals.Add(meshNormal);
+                            normals.Add(meshNormal);
+                        }
+
+                        position = vertexs.Select(p => p.Position).ToArray();
+                        normal = normals.ToArray();
+                        color = vertexs.Select(p => p.Color).ToArray();
+                        texCoord = vertexs.Select(p => p.TexCoord).ToArray();
                     }
+                    else
+                    {
+                        position = vertexSrc.Select(p => p.Position).ToArray();
+                        normal = vertexSrc.Select(p => p.Normal).ToArray();
+                        color = vertexSrc.Select(p => p.Color).ToArray();
+                        texCoord = vertexSrc.Select(p => p.TexCoord).ToArray();
+                    }
+
                 }
                 else if(type == KIPrimitiveType.Quads)
                 {
@@ -392,12 +408,13 @@ namespace KI.Gfx.GLUtil.Buffer
                         normals.Add(meshNormal);
                         normals.Add(meshNormal);
                     }
+
+                    position = vertexs.Select(p => p.Position).ToArray();
+                    normal = normals.ToArray();
+                    color = vertexs.Select(p => p.Color).ToArray();
+                    texCoord = vertexs.Select(p => p.TexCoord).ToArray();
                 }
 
-                position = vertexs.Select(p => p.Position).ToArray();
-                normal = normals.ToArray();
-                color = vertexs.Select(p => p.Color).ToArray();
-                texCoord = vertexs.Select(p => p.TexCoord).ToArray();
             }
 
             SetBuffer(position, normal, color, texCoord, indexBuffer);

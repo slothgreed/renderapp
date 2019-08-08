@@ -9,6 +9,7 @@ namespace AssetTest
 {
     public class LoadModelTest : ITestMethodInvoker
     {
+        [TestMethod]
         public TestMethodInvokerResult Invoke(params object[] parameters)
         {
             var filePaths = new string[]

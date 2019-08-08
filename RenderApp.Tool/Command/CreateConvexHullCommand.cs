@@ -47,37 +47,8 @@ namespace RenderApp.Tool.Command
             var scene = convexCommandArgs.Scene;
 
             ConvexHullAlgorithm convexHull = new ConvexHullAlgorithm(targetObject.Polygon.Vertexs);
-            List<Mesh> meshs = new List<Mesh>();
-            foreach (var mesh in convexHull.Meshs)
-            {
-                Vertex ver0 = null;
-                Vertex ver1 = null;
-                Vertex ver2 = null;
-                foreach (var vertex in mesh.AroundVertex)
-                {
-                    if (ver0 == null)
-                    {
-                        ver0 = vertex;
-                        continue;
-                    }
 
-                    if (ver1 == null)
-                    {
-                        ver1 = vertex;
-                        continue;
-                    }
-
-                    if (ver2 == null)
-                    {
-                        ver2 = vertex;
-                        continue;
-                    }
-                }
-
-                meshs.Add(new Mesh(ver0, ver1, ver2));
-            }
-
-            Polygon polygon = new Polygon("ConvexHull:" + targetObject.Name, meshs, KIPrimitiveType.Triangles);
+            Polygon polygon = new Polygon("ConvexHull:" + targetObject.Name, convexHull.ConvexPoint, KIPrimitiveType.Triangles);
             PolygonUtility.Setup(polygon);
             PolygonNode convex = new PolygonNode(polygon);
             convex.ModelMatrix = targetObject.ModelMatrix;

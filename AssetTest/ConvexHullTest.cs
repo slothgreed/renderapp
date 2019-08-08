@@ -14,7 +14,7 @@ namespace AssetTest
             HalfEdgeDS halfEdgeDS = new HalfEdgeDS("Test", stlModel.Position);
 
             var convex = new ConvexHullAlgorithm(halfEdgeDS.Vertexs);
-            if (convex.Points.Count == 0)
+            if (convex.ConvexPoint.Count == 0)
             {
                 Assert.Fail("Failed Create ConvexHull");
             }

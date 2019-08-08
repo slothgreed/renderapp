@@ -1,4 +1,5 @@
 ﻿using KI.Asset.Loader;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace AssetTest
 {
     public static class TestUtility
     {
+        [TestMethod]
         public static IModelLoader Load3DModel(string filePath)
         {
             try
@@ -31,8 +33,6 @@ namespace AssetTest
             {
                 return null;
             }
-
-            return null;
         }
     }
 }

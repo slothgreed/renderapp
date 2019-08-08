@@ -28,6 +28,11 @@ namespace KI.Analyzer.Algorithm
         private int vertexCount = 0;
 
         /// <summary>
+        /// 凸点
+        /// </summary>
+        private List<Vertex> convexPoint;
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="position">座標</param>
@@ -47,22 +52,11 @@ namespace KI.Analyzer.Algorithm
         /// <summary>
         /// メッシュ
         /// </summary>
-        public List<HalfEdgeMesh> Meshs
+        public List<Vertex> ConvexPoint
         {
             get
             {
-                return meshList;
-            }
-        }
-
-        /// <summary>
-        /// 座標
-        /// </summary>
-        public List<Vector3> Points
-        {
-            get
-            {
-                return pointList;
+                return convexPoint;
             }
         }
 
@@ -79,6 +73,12 @@ namespace KI.Analyzer.Algorithm
             CreateInitMesh();
             QuickHullCore();
             DeleteInsideVertex();
+
+            convexPoint = new List<Vertex>();
+            for (int i = 0; i < meshList.Count; i++)
+            {
+                convexPoint.AddRange(meshList[i].AroundVertex);
+            }
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace KI.Analyzer.Algorithm
         {
             while (true)
             {
-                HalfEdgeMesh calcMesh = meshList.FirstOrDefault(p => (bool)p.TmpParameter == false);
+                HalfEdgeMesh calcMesh = meshList.LastOrDefault(p => (bool)p.TmpParameter == false);
 
                 //すべて計算し終わったら終了
                 if (calcMesh == null)
@@ -113,6 +113,11 @@ namespace KI.Analyzer.Algorithm
                 {
                     //最も遠い頂点が見つからない場合は終了
                     calcMesh.TmpParameter = true;
+                }
+
+                if (pointList.Count == 0)
+                {
+                    return;
                 }
             }
         }
