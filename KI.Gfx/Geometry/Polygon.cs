@@ -23,11 +23,6 @@ namespace KI.Gfx.Geometry
         private List<Line> lines = new List<Line>();
 
         /// <summary>
-        /// メッシュリスト
-        /// </summary>
-        private List<Mesh> meshs = new List<Mesh>();
-
-        /// <summary>
         /// 頂点インデックスリスト
         /// </summary>
         private List<int> index = new List<int>();
@@ -68,19 +63,6 @@ namespace KI.Gfx.Geometry
             : base(name)
         {
             lines = line;
-            Type = type;
-        }
-
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        /// <param name="name">名前</param>
-        /// <param name="mesh">メッシュ</param>
-        /// <param name="type">種類</param>
-        public Polygon(string name, List<Mesh> mesh, KIPrimitiveType type)
-            : base(name)
-        {
-            meshs = mesh;
             Type = type;
         }
 
@@ -158,22 +140,6 @@ namespace KI.Gfx.Geometry
         }
 
         /// <summary>
-        /// 面
-        /// </summary>
-        public List<Mesh> Meshs
-        {
-            get
-            {
-                return meshs;
-            }
-
-            protected set
-            {
-                meshs = value;
-            }
-        }
-
-        /// <summary>
         /// 頂点バッファの更新
         /// </summary>
         /// <param name="type">形状タイプ</param>
@@ -205,19 +171,6 @@ namespace KI.Gfx.Geometry
                         Index.Add(line.Start.Index);
                         Index.Add(line.End.Index);
                     }
-                }
-
-                OnUpdate();
-            }
-
-            if (Type == KIPrimitiveType.Triangles &&
-                Index.Count != 0)
-            {
-                Index.Clear();
-
-                foreach (var mesh in Meshs)
-                {
-                    Index.AddRange(mesh.Vertexs.Select(p => p.Index));
                 }
 
                 OnUpdate();

@@ -62,11 +62,11 @@ namespace KI.Analyzer.Algorithm
             //空間内のエッジの計算
             foreach (var isoLineSpace in isoLines)
             {
-                foreach (var mesh in halfEdgeDS.Meshs)
+                foreach (var mesh in halfEdgeDS.HalfEdgeMeshs)
                 {
                     if (isoLineSpace.InSpace(mesh))
                     {
-                        isoLineSpace.Meshs.Add((HalfEdgeMesh)mesh);
+                        isoLineSpace.Meshs.Add(mesh);
                     }
                 }
             }

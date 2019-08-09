@@ -130,7 +130,7 @@ namespace KI.Renderer
             }
             else
             {
-                VertexBuffer.SetupMeshBuffer(polygon.Vertexs, polygon.Index, polygon.Meshs, Type);
+                VertexBuffer.SetupPointBuffer(polygon.Vertexs, polygon.Index);
             }
         }
 
@@ -149,7 +149,7 @@ namespace KI.Renderer
             }
             else
             {
-                VertexBuffer.SetupMeshBuffer(Polygon.Vertexs, Polygon.Index, Polygon.Meshs, Type);
+                VertexBuffer.SetupPointBuffer(Polygon.Vertexs, Polygon.Index);
             }
         }
     }

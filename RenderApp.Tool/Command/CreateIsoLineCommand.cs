@@ -82,6 +82,11 @@ namespace RenderApp.Tool.Command
                 }
             }
 
+            if(vertexs.Count == 0)
+            {
+                return CommandResult.Success;
+            }
+
             Polygon isoLines = new Polygon("IsoLines", vertexs, createLine, KIPrimitiveType.Lines);
             VertexBuffer vertexBuffer = new VertexBuffer();
             vertexBuffer.SetupLineBuffer(isoLines.Vertexs, isoLines.Index, isoLines.Lines);

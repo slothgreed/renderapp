@@ -77,7 +77,7 @@ namespace KI.Asset.Loader.Importer
             foreach (var material in objData.mtlList.Values)
             {
                 Polygon polygon = null;
-                var mesh = new List<Mesh>();
+                var vertexs = new List<Vertex>();
 
                 for (int j = 0; j < material.posIndex.Count / 3; j++)
                 {
@@ -101,15 +101,15 @@ namespace KI.Asset.Loader.Importer
                         texCoord2 = objData.Texcoord[material.texIndex[3 * j + 2]];
                     }
 
-                    mesh.Add(new Mesh(
-                        new Vertex(3 * mesh.Count, pos0, nor0, texCoord0),
-                        new Vertex(3 * mesh.Count + 1, pos1, nor1, texCoord1),
-                        new Vertex(3 * mesh.Count + 2, pos2, nor2, texCoord2)));
+
+                    vertexs.Add(new Vertex(3 * vertexs.Count + 0, pos0, nor0, texCoord0));
+                    vertexs.Add(new Vertex(3 * vertexs.Count + 1, pos1, nor1, texCoord1));
+                    vertexs.Add(new Vertex(3 * vertexs.Count + 2, pos2, nor2, texCoord2));
                 }
 
-                if (mesh.Count != 0)
+                if (vertexs.Count != 0)
                 {
-                    polygon = new Polygon(filePath, mesh, KIPrimitiveType.Triangles);
+                    polygon = new Polygon(filePath, vertexs, KIPrimitiveType.Triangles);
                     SetMaterial(polygon, material);
                     if (polygon != null)
                     {

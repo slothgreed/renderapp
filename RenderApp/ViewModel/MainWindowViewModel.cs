@@ -15,6 +15,7 @@ using RenderApp.Tool;
 using RenderApp.Tool.Command;
 using KI.Foundation.Core;
 using System.Windows.Controls;
+using KI.Analyzer;
 
 namespace RenderApp.ViewModel
 {
@@ -182,8 +183,16 @@ namespace RenderApp.ViewModel
 
                     PolygonUtility.Setup(polygons.Model);
                     var name = Path.GetFileName(filename);
-                    var polygonNode = new PolygonNode(name, polygons.Model);
-                    workspace.MainScene.AddObject(polygonNode);
+                    PolygonNode node = null;
+                    if (polygons.Model is HalfEdgeDS)
+                    {
+                        node = new AnalyzePolygonNode(name, polygons.Model);
+                    }else
+                    {
+                        node = new PolygonNode(name,polygons.Model);
+                    }
+
+                    workspace.MainScene.AddObject(node);
                 }
             }
         }

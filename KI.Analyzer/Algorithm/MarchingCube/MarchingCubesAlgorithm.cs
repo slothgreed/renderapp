@@ -79,7 +79,7 @@ namespace KI.Analyzer.Algorithm
         /// <summary>
         /// MarchingTrianlge情報
         /// </summary>
-        public List<Mesh> Meshs { get; private set; } = new List<Mesh>();
+        public List<Vertex> Vertexs { get; private set; } = new List<Vertex>();
 
         /// <summary>
         /// 頂点の作成位置の取得
@@ -133,41 +133,39 @@ namespace KI.Analyzer.Algorithm
 
             Action<int, int, int> createTriAction = (int i, int j, int k) =>
               {
-                  var vertexList = new Vector3[12];
-                  var marching = marchingSpace[i, j, k];
+              var vertexList = new Vector3[12];
+              var marching = marchingSpace[i, j, k];
 
-                  if ((MarchingTable.EdgeTable[marching.State] & 1) != 0)
-                      vertexList[0] = VertexCreatePosition(i, j, k, 0, 1);
-                  if ((MarchingTable.EdgeTable[marching.State] & 2) != 0)
-                      vertexList[1] = VertexCreatePosition(i, j, k, 1, 2);
-                  if ((MarchingTable.EdgeTable[marching.State] & 4) != 0)
-                      vertexList[2] = VertexCreatePosition(i, j, k, 2, 3);
-                  if ((MarchingTable.EdgeTable[marching.State] & 8) != 0)
-                      vertexList[3] = VertexCreatePosition(i, j, k, 3, 0);
-                  if ((MarchingTable.EdgeTable[marching.State] & 16) != 0)
-                      vertexList[4] = VertexCreatePosition(i, j, k, 4, 5);
-                  if ((MarchingTable.EdgeTable[marching.State] & 32) != 0)
-                      vertexList[5] = VertexCreatePosition(i, j, k, 5, 6);
-                  if ((MarchingTable.EdgeTable[marching.State] & 64) != 0)
-                      vertexList[6] = VertexCreatePosition(i, j, k, 6, 7);
-                  if ((MarchingTable.EdgeTable[marching.State] & 128) != 0)
-                      vertexList[7] = VertexCreatePosition(i, j, k, 7, 4);
-                  if ((MarchingTable.EdgeTable[marching.State] & 256) != 0)
-                      vertexList[8] = VertexCreatePosition(i, j, k, 0, 4);
-                  if ((MarchingTable.EdgeTable[marching.State] & 512) != 0)
-                      vertexList[9] = VertexCreatePosition(i, j, k, 1, 5);
-                  if ((MarchingTable.EdgeTable[marching.State] & 1024) != 0)
-                      vertexList[10] = VertexCreatePosition(i, j, k, 2, 6);
-                  if ((MarchingTable.EdgeTable[marching.State] & 2048) != 0)
-                      vertexList[11] = VertexCreatePosition(i, j, k, 3, 7);
+              if ((MarchingTable.EdgeTable[marching.State] & 1) != 0)
+                  vertexList[0] = VertexCreatePosition(i, j, k, 0, 1);
+              if ((MarchingTable.EdgeTable[marching.State] & 2) != 0)
+                  vertexList[1] = VertexCreatePosition(i, j, k, 1, 2);
+              if ((MarchingTable.EdgeTable[marching.State] & 4) != 0)
+                  vertexList[2] = VertexCreatePosition(i, j, k, 2, 3);
+              if ((MarchingTable.EdgeTable[marching.State] & 8) != 0)
+                  vertexList[3] = VertexCreatePosition(i, j, k, 3, 0);
+              if ((MarchingTable.EdgeTable[marching.State] & 16) != 0)
+                  vertexList[4] = VertexCreatePosition(i, j, k, 4, 5);
+              if ((MarchingTable.EdgeTable[marching.State] & 32) != 0)
+                  vertexList[5] = VertexCreatePosition(i, j, k, 5, 6);
+              if ((MarchingTable.EdgeTable[marching.State] & 64) != 0)
+                  vertexList[6] = VertexCreatePosition(i, j, k, 6, 7);
+              if ((MarchingTable.EdgeTable[marching.State] & 128) != 0)
+                  vertexList[7] = VertexCreatePosition(i, j, k, 7, 4);
+              if ((MarchingTable.EdgeTable[marching.State] & 256) != 0)
+                  vertexList[8] = VertexCreatePosition(i, j, k, 0, 4);
+              if ((MarchingTable.EdgeTable[marching.State] & 512) != 0)
+                  vertexList[9] = VertexCreatePosition(i, j, k, 1, 5);
+              if ((MarchingTable.EdgeTable[marching.State] & 1024) != 0)
+                  vertexList[10] = VertexCreatePosition(i, j, k, 2, 6);
+              if ((MarchingTable.EdgeTable[marching.State] & 2048) != 0)
+                  vertexList[11] = VertexCreatePosition(i, j, k, 3, 7);
 
                   for (int l = 0; MarchingTable.TriIndexTable[marching.State, l] != -1; l += 3)
                   {
-                      Meshs.Add(
-                          new Mesh(
-                              new Vertex(3 * Meshs.Count, vertexList[MarchingTable.TriIndexTable[marching.State, l]], Vector3.UnitY),
-                              new Vertex(3 * Meshs.Count + 1, vertexList[MarchingTable.TriIndexTable[marching.State, l + 2]], Vector3.UnitY),
-                              new Vertex(3 * Meshs.Count + 2, vertexList[MarchingTable.TriIndexTable[marching.State, l + 1]], Vector3.UnitY)));
+                      this.Vertexs.Add(new Vertex(3 * this.Vertexs.Count, vertexList[MarchingTable.TriIndexTable[marching.State, l]], Vector3.UnitY));
+                      this.Vertexs.Add(new Vertex(3 * this.Vertexs.Count + 1, vertexList[MarchingTable.TriIndexTable[marching.State, l + 2]], Vector3.UnitY));
+                      this.Vertexs.Add(new Vertex(3 * this.Vertexs.Count + 2, vertexList[MarchingTable.TriIndexTable[marching.State, l + 1]], Vector3.UnitY));
                   }
               };
 

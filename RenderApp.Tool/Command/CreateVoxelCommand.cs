@@ -67,9 +67,9 @@ namespace RenderApp.Tool.Command
             List<Vector3> voxelNormal = new List<Vector3>();
             Calculator.MinMax(targetObject.Polygon.Vertexs.Select(p => p.Position), out min, out max);
             voxel = new VoxelSpace(targetObject.Polygon.Vertexs.Select(p => p.Position).ToList(), targetObject.Polygon.Index, partition, min, max);
-            var mesh = GetVoxelObject();
+            var vertexs = GetVoxelObject();
 
-            Polygon info = new Polygon("Voxel :" + targetObject.Name, mesh, KIPrimitiveType.Quads);
+            Polygon info = new Polygon("Voxel :" + targetObject.Name, vertexs, KIPrimitiveType.Quads);
             PolygonUtility.Setup(info);
             PolygonNode voxelObject = new PolygonNode(info.Name, info);
             voxelObject.Transformation(targetObject.ModelMatrix);
@@ -82,28 +82,28 @@ namespace RenderApp.Tool.Command
         /// ボクセル形状の取得
         /// </summary>
         /// <returns>メッシュリスト</returns>
-        public List<Mesh> GetVoxelObject()
+        public List<Vertex> GetVoxelObject()
         {
-            var meshs = new List<Mesh>();
+            var vertexs = new List<Vertex>();
             foreach (var voxel in voxel.Voxels)
             {
                 if (voxel.State == VoxelState.Border)
                 {
-                    SetVoxel(meshs, voxel.X, voxel.Y, voxel.Z);
+                    SetVoxel(vertexs, voxel.X, voxel.Y, voxel.Z);
                 }
             }
 
-            return meshs;
+            return vertexs;
         }
 
         /// <summary>
         /// voxelをpositionにセット
         /// </summary>
-        /// <param name="meshs">Meshリスト</param>
+        /// <param name="meshs">頂点リスト</param>
         /// <param name="xIndex">x要素番号</param>
         /// <param name="yIndex">y要素番号</param>
         /// <param name="zIndex">z要素番号</param>
-        private void SetVoxel(List<Mesh> meshs, int xIndex, int yIndex, int zIndex)
+        private void SetVoxel(List<Vertex> vertexs, int xIndex, int yIndex, int zIndex)
         {
             Vector3 minVoxel = voxel.GetVoxelPosition(xIndex, yIndex, zIndex);
             Vector3 maxVoxel = minVoxel + new Vector3(voxel.Interval);
@@ -118,17 +118,17 @@ namespace RenderApp.Tool.Command
             Vector3 v6 = new Vector3(maxVoxel.X, maxVoxel.Y, maxVoxel.Z);
             Vector3 v7 = new Vector3(minVoxel.X, maxVoxel.Y, maxVoxel.Z);
             //手前
-            SetCube(meshs, v0, v3, v2, v1);
+            SetCube(vertexs, v0, v3, v2, v1);
             //右
-            SetCube(meshs, v1, v2, v6, v5);
+            SetCube(vertexs, v1, v2, v6, v5);
             //左
-            SetCube(meshs, v0, v4, v7, v3);
+            SetCube(vertexs, v0, v4, v7, v3);
             //奥
-            SetCube(meshs, v4, v5, v6, v7);
+            SetCube(vertexs, v4, v5, v6, v7);
             //上
-            SetCube(meshs, v2, v3, v7, v6);
+            SetCube(vertexs, v2, v3, v7, v6);
             //下
-            SetCube(meshs, v1, v5, v4, v0);
+            SetCube(vertexs, v1, v5, v4, v0);
         }
 
         /// <summary>
@@ -139,16 +139,15 @@ namespace RenderApp.Tool.Command
         /// <param name="q1">頂点2</param>
         /// <param name="q2">頂点3</param>
         /// <param name="q3">頂点4</param>
-        private void SetCube(List<Mesh> meshs, Vector3 q0, Vector3 q1, Vector3 q2, Vector3 q3)
+        private void SetCube(List<Vertex> vertexs, Vector3 q0, Vector3 q1, Vector3 q2, Vector3 q3)
         {
             Vector3 normal = Calculator.Normal(q1 - q0, q2 - q0);
 
-            meshs.Add(
-                new Mesh(
-                    new Vertex(4 * meshs.Count,     q0, normal, voxelColor),
-                    new Vertex(4 * meshs.Count + 1, q1, normal, voxelColor),
-                    new Vertex(4 * meshs.Count + 2, q2, normal, voxelColor),
-                    new Vertex(4 * meshs.Count + 3, q3, normal, voxelColor)));
+
+            vertexs.Add(new Vertex(4 * vertexs.Count + 0, q0, normal, voxelColor));
+            vertexs.Add(new Vertex(4 * vertexs.Count + 1, q1, normal, voxelColor));
+            vertexs.Add(new Vertex(4 * vertexs.Count + 2, q2, normal, voxelColor));
+            vertexs.Add(new Vertex(4 * vertexs.Count + 3, q3, normal, voxelColor));
         }
 
         /// <summary>

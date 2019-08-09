@@ -185,7 +185,7 @@ namespace KI.Analyzer.Algorithm
         /// <returns>ベクトル場</returns>
         private Vector3[] ComputeVectorField(DenseVector u)
         {
-            var vectorField = new Vector3[halfEdgeDS.Meshs.Count];
+            var vectorField = new Vector3[halfEdgeDS.HalfEdgeMeshs.Count()];
             foreach (var mesh in halfEdgeDS.HalfEdgeMeshs)
             {
                 var grad = new Vector3();

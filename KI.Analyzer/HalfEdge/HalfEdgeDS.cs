@@ -23,6 +23,11 @@ namespace KI.Analyzer
         }
 
         /// <summary>
+        /// メッシュリスト
+        /// </summary>
+        List<HalfEdgeMesh> meshs = new List<HalfEdgeMesh>();
+
+        /// <summary>
         /// メッシュのインデックスと、頂点を受け取る
         /// </summary>
         /// <param name="position">頂点座標リスト</param>
@@ -83,11 +88,11 @@ namespace KI.Analyzer
         /// <summary>
         /// ハーフエッジメッシュの取得
         /// </summary>
-        public IEnumerable<HalfEdgeMesh> HalfEdgeMeshs
+        public List<HalfEdgeMesh> HalfEdgeMeshs
         {
             get
             {
-                return Meshs.OfType<HalfEdgeMesh>();
+                return meshs;
             }
         }
 
@@ -204,14 +209,14 @@ namespace KI.Analyzer
         /// <param name="v3">頂点3</param>
         private void CreateMesh(HalfEdgeVertex v1, HalfEdgeVertex v2, HalfEdgeVertex v3)
         {
-            HalfEdgeMesh mesh = new HalfEdgeMesh(Meshs.Count);
+            HalfEdgeMesh mesh = new HalfEdgeMesh(HalfEdgeMeshs.Count);
             HalfEdge edge1 = new HalfEdge(mesh, v1, v2, Lines.Count);
             HalfEdge edge2 = new HalfEdge(mesh, v2, v3, Lines.Count + 1);
             HalfEdge edge3 = new HalfEdge(mesh, v3, v1, Lines.Count + 2);
 
             //メッシュにエッジを格納
             mesh.SetEdge(edge1, edge2, edge3);
-            Meshs.Add(mesh);
+            HalfEdgeMeshs.Add(mesh);
 
             Lines.Add(edge1);
             Lines.Add(edge2);
@@ -222,7 +227,7 @@ namespace KI.Analyzer
         {
             Vertexs = vertexs.OfType<Vertex>().ToList();
             Lines = edges.OfType<Line>().ToList();
-            Meshs = meshs.OfType<Mesh>().ToList();
+            this.meshs = meshs.ToList();
         }
 
         /// <summary>
