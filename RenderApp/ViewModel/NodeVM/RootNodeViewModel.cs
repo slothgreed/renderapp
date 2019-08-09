@@ -76,6 +76,7 @@ namespace RenderApp.ViewModel
 
         public void SelectionChangedCommand(object sender, EventArgs e)
         {
+            // TODO : ここで選択が2重で走るようになっている。
             var nodeList = sender as MultiSelectTreeView;
             if (nodeList.SelectedItems.Count > 0)
             {

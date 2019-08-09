@@ -77,6 +77,7 @@ namespace RenderApp.ViewModel
             workspace = Workspace.Instance;
             WorkspaceViewModel = new WorkspaceViewModel(this, workspace);
             CommandManager = new CommandManager();
+            CommandManager.OnCommandExecuted += CommandManager_OnCommandExecuted;
             instance = this;
         }
 
@@ -273,7 +274,7 @@ namespace RenderApp.ViewModel
                 case AnalyzeCommand.AdaptiveMesh:
                     command = new AdaptiveMeshCommand(new AdaptiveMeshCommandArgs(targetObject));
                     CommandManager.Execute(command, true);
-                        break;
+                    break;
                 case AnalyzeCommand.QEM:
                     command = new QEMCommand(new QEMCommandArgs(targetObject));
                     CommandManager.Execute(command, true);
@@ -306,8 +307,6 @@ namespace RenderApp.ViewModel
                 default:
                     break;
             }
-
-            WorkspaceViewModel.ViewportViewModel.Invalidate();
         }
 
         private void ShowCommandDialog(UserControl userControl, ViewModelBase viewModel)
@@ -465,6 +464,16 @@ namespace RenderApp.ViewModel
         }
 
         private void TimerEvent(object source, EventArgs e)
+        {
+            WorkspaceViewModel.ViewportViewModel.Invalidate();
+        }
+
+        /// <summary>
+        /// コマンドの実行後イベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CommandManager_OnCommandExecuted(object sender, EventArgs e)
         {
             WorkspaceViewModel.ViewportViewModel.Invalidate();
         }
