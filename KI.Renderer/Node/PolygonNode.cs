@@ -126,7 +126,7 @@ namespace KI.Renderer
             }
             else if (Type == KIPrimitiveType.Lines)
             {
-                VertexBuffer.SetupLineBuffer(polygon.Vertexs, polygon.Index, polygon.Lines);
+                VertexBuffer.SetupPointBuffer(polygon.Vertexs, polygon.Index);
             }
             else
             {
@@ -145,7 +145,7 @@ namespace KI.Renderer
             }
             else if (Type == KIPrimitiveType.Lines)
             {
-                VertexBuffer.SetupLineBuffer(Polygon.Vertexs, Polygon.Index, Polygon.Lines);
+                VertexBuffer.SetupPointBuffer(Polygon.Vertexs, Polygon.Index);
             }
             else
             {

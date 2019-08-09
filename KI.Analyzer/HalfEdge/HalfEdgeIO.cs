@@ -164,7 +164,7 @@ namespace KI.Analyzer
 
             halfEdge.Setup(halfVertexs, halfEdges, halfMeshs);
 
-            int count = halfEdge.Lines.Count;
+            int count = halfEdge.HalfEdges.Count;
 
             //for(int i = 0; i < 3;i++)
             //{

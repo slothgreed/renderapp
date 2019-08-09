@@ -88,7 +88,7 @@ namespace RenderApp.Tool.Command
                 }
             }
 
-            var polygon = new Polygon("perceptron", vertexs);
+            var polygon = new Polygon("perceptron", vertexs, KI.Gfx.KIPrimitiveType.Points);
             PolygonUtility.Setup(polygon);
             PolygonNode render = new PolygonNode(polygon);
             perceptronCommandArgs.Scene.AddObject(render);

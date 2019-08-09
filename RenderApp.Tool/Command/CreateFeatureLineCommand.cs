@@ -49,31 +49,33 @@ namespace RenderApp.Tool.Command
             FeatureLineAlgorithm featureLine = new FeatureLineAlgorithm(targetObject.Polygon as HalfEdgeDS);
             featureLine.Calculate();
 
-            var convexLine = new List<Line>();
+            var convexLine = new List<Vertex>();
             for (int i = 0; i < featureLine.GetConvexLines().Length; i++)
             {
                 foreach (var line in featureLine.GetConvexLines()[i])
                 {
-                    convexLine.Add(new Line(line.Start.Position, line.End.Position, OpenTK.Vector3.UnitX));
+                    convexLine.Add(new Vertex(convexLine.Count, line.Start.Position, OpenTK.Vector3.UnitX));
+                    convexLine.Add(new Vertex(convexLine.Count, line.End.Position, OpenTK.Vector3.UnitX));
                 }
             }
 
-            var concaveLine = new List<Line>();
+            var concaveLine = new List<Vertex>();
             for (int i = 0; i < featureLine.GetConcaveLine().Length; i++)
             {
                 foreach (var line in featureLine.GetConcaveLine()[i])
                 {
-                    concaveLine.Add(new Line(line.Start.Position, line.End.Position, OpenTK.Vector3.UnitY));
+                    concaveLine.Add(new Vertex(convexLine.Count, line.Start.Position, OpenTK.Vector3.UnitX));
+                    concaveLine.Add(new Vertex(convexLine.Count, line.End.Position, OpenTK.Vector3.UnitX));
                 }
             }
 
-            Polygon convexModel = new Polygon("Convex:" + targetObject.Name, convexLine);
+            Polygon convexModel = new Polygon("Convex:" + targetObject.Name, convexLine, KI.Gfx.KIPrimitiveType.Lines);
             PolygonUtility.Setup(convexModel);
             PolygonNode convexObject = new PolygonNode(convexModel);
             convexObject.ModelMatrix = targetObject.ModelMatrix;
             scene.AddObject(convexObject);
 
-            Polygon concaveModel = new Polygon("Concave:" + targetObject.Name, concaveLine);
+            Polygon concaveModel = new Polygon("Concave:" + targetObject.Name, concaveLine, KI.Gfx.KIPrimitiveType.Lines);
             PolygonUtility.Setup(concaveModel);
             PolygonNode concaveObject = new PolygonNode(concaveModel);
             concaveObject.ModelMatrix = targetObject.ModelMatrix;

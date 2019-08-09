@@ -16,7 +16,7 @@ namespace KI.Analyzer
         /// コンストラクタ
         /// </summary>
         public HalfEdgeDS(string name)
-            : base(name)
+            : base(name, KIPrimitiveType.Triangles)
         {
             Editor = new HalfEdgeDSEditor(this);
             Type = KIPrimitiveType.Triangles;
@@ -26,6 +26,11 @@ namespace KI.Analyzer
         /// メッシュリスト
         /// </summary>
         List<HalfEdgeMesh> meshs = new List<HalfEdgeMesh>();
+
+        /// <summary>
+        /// エッジリスト
+        /// </summary>
+        List<HalfEdge> lines = new List<HalfEdge>();
 
         /// <summary>
         /// メッシュのインデックスと、頂点を受け取る
@@ -100,11 +105,11 @@ namespace KI.Analyzer
         /// ハーフエッジの取得
         /// 反対のエッジも入っている。
         /// </summary>
-        public IEnumerable<HalfEdge> HalfEdges
+        public List<HalfEdge> HalfEdges
         {
             get
             {
-                return Lines.OfType<HalfEdge>();
+                return lines;
             }
         }
 
@@ -210,23 +215,23 @@ namespace KI.Analyzer
         private void CreateMesh(HalfEdgeVertex v1, HalfEdgeVertex v2, HalfEdgeVertex v3)
         {
             HalfEdgeMesh mesh = new HalfEdgeMesh(HalfEdgeMeshs.Count);
-            HalfEdge edge1 = new HalfEdge(mesh, v1, v2, Lines.Count);
-            HalfEdge edge2 = new HalfEdge(mesh, v2, v3, Lines.Count + 1);
-            HalfEdge edge3 = new HalfEdge(mesh, v3, v1, Lines.Count + 2);
+            HalfEdge edge1 = new HalfEdge(mesh, v1, v2, HalfEdges.Count);
+            HalfEdge edge2 = new HalfEdge(mesh, v2, v3, HalfEdges.Count + 1);
+            HalfEdge edge3 = new HalfEdge(mesh, v3, v1, HalfEdges.Count + 2);
 
             //メッシュにエッジを格納
             mesh.SetEdge(edge1, edge2, edge3);
             HalfEdgeMeshs.Add(mesh);
 
-            Lines.Add(edge1);
-            Lines.Add(edge2);
-            Lines.Add(edge3);
+            HalfEdges.Add(edge1);
+            HalfEdges.Add(edge2);
+            HalfEdges.Add(edge3);
         }
 
         public void Setup(IEnumerable<HalfEdgeVertex> vertexs, IEnumerable<HalfEdge> edges, IEnumerable<HalfEdgeMesh> meshs)
         {
             Vertexs = vertexs.OfType<Vertex>().ToList();
-            Lines = edges.OfType<Line>().ToList();
+            this.lines = edges.ToList();
             this.meshs = meshs.ToList();
         }
 

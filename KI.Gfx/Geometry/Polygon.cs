@@ -18,11 +18,6 @@ namespace KI.Gfx.Geometry
         private List<Vertex> vertexs = new List<Vertex>();
 
         /// <summary>
-        /// ワイヤフレーム
-        /// </summary>
-        private List<Line> lines = new List<Line>();
-
-        /// <summary>
         /// 頂点インデックスリスト
         /// </summary>
         private List<int> index = new List<int>();
@@ -36,7 +31,7 @@ namespace KI.Gfx.Geometry
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
-        public Polygon(string name, KIPrimitiveType type = KIPrimitiveType.Points)
+        public Polygon(string name, KIPrimitiveType type)
            : base(name)
         {
             Type = type;
@@ -47,22 +42,10 @@ namespace KI.Gfx.Geometry
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="vertex">頂点</param>
-        public Polygon(string name, List<Vertex> vertex, KIPrimitiveType type = KIPrimitiveType.Points)
+        public Polygon(string name, List<Vertex> vertex, KIPrimitiveType type)
             : base(name)
         {
             vertexs = vertex;
-            Type = type;
-        }
-
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        /// <param name="name">名前</param>
-        /// <param name="line">線分リスト</param>
-        public Polygon(string name, List<Line> line, KIPrimitiveType type = KIPrimitiveType.Lines)
-            : base(name)
-        {
-            lines = line;
             Type = type;
         }
 
@@ -124,22 +107,6 @@ namespace KI.Gfx.Geometry
         }
 
         /// <summary>
-        /// 線分
-        /// </summary>
-        public List<Line> Lines
-        {
-            get
-            {
-                return lines;
-            }
-
-            protected set
-            {
-                lines = value;
-            }
-        }
-
-        /// <summary>
         /// 頂点バッファの更新
         /// </summary>
         /// <param name="type">形状タイプ</param>
@@ -157,23 +124,6 @@ namespace KI.Gfx.Geometry
                         Index.Add(vertex.Index);
                     }
                 }
-            }
-
-            if (Type == KIPrimitiveType.Lines &&
-                Index.Count != 0)
-            {
-                Index.Clear();
-
-                if (Lines != null)
-                {
-                    foreach (var line in Lines)
-                    {
-                        Index.Add(line.Start.Index);
-                        Index.Add(line.End.Index);
-                    }
-                }
-
-                OnUpdate();
             }
         }
 

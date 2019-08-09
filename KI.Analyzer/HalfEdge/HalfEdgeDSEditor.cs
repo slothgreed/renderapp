@@ -228,17 +228,17 @@ namespace KI.Analyzer
             var vertex = new HalfEdgeVertex(position, HalfEdge.Vertexs.Count);
 
             // 分割するエッジ
-            var right = new HalfEdge(vertex, edge.End, HalfEdge.Lines.Count);
-            var oppoRight = new HalfEdge(edge.End, vertex, HalfEdge.Lines.Count + 1);
+            var right = new HalfEdge(vertex, edge.End, HalfEdge.HalfEdges.Count);
+            var oppoRight = new HalfEdge(edge.End, vertex, HalfEdge.HalfEdges.Count + 1);
             Analyzer.HalfEdge.SetupOpposite(right, oppoRight);
 
-            var left = new HalfEdge(edge.Start, vertex, HalfEdge.Lines.Count + 2);
-            var oppoLeft = new HalfEdge(vertex, edge.Start, HalfEdge.Lines.Count + 3);
+            var left = new HalfEdge(edge.Start, vertex, HalfEdge.HalfEdges.Count + 2);
+            var oppoLeft = new HalfEdge(vertex, edge.Start, HalfEdge.HalfEdges.Count + 3);
             Analyzer.HalfEdge.SetupOpposite(left, oppoLeft);
 
             // 新規に作成するエッジ
-            var up = new HalfEdge(vertex, edge.Next.End, HalfEdge.Lines.Count + 4);
-            var oppoup = new HalfEdge(edge.Next.End, vertex, HalfEdge.Lines.Count + 5);
+            var up = new HalfEdge(vertex, edge.Next.End, HalfEdge.HalfEdges.Count + 4);
+            var oppoup = new HalfEdge(edge.Next.End, vertex, HalfEdge.HalfEdges.Count + 5);
             Analyzer.HalfEdge.SetupOpposite(up, oppoup);
 
             var down = new HalfEdge(vertex, opposite.Next.End, edge.Index);
@@ -252,10 +252,10 @@ namespace KI.Analyzer
 
             HalfEdge.Vertexs.Add(vertex);
 
-            HalfEdge.Lines.Add(right); HalfEdge.Lines.Add(oppoRight);
-            HalfEdge.Lines.Add(left); HalfEdge.Lines.Add(oppoLeft);
-            HalfEdge.Lines.Add(up); HalfEdge.Lines.Add(oppoup);
-            HalfEdge.Lines.Add(down); HalfEdge.Lines.Add(oppodown);
+            HalfEdge.HalfEdges.Add(right);  HalfEdge.HalfEdges.Add(oppoRight);
+            HalfEdge.HalfEdges.Add(left);   HalfEdge.HalfEdges.Add(oppoLeft);
+            HalfEdge.HalfEdges.Add(up);     HalfEdge.HalfEdges.Add(oppoup);
+            HalfEdge.HalfEdges.Add(down);   HalfEdge.HalfEdges.Add(oppodown);
 
             HalfEdge.HalfEdgeMeshs.Add(rightUp);
             HalfEdge.HalfEdgeMeshs.Add(leftUp);
@@ -306,8 +306,8 @@ namespace KI.Analyzer
 
             HalfEdge.HalfEdgeMeshs.Add(createMesh);
             HalfEdge.HalfEdgeMeshs.Add(createMeshOpposite);
-            HalfEdge.Lines.Add(createEdge);
-            HalfEdge.Lines.Add(createEdgeOpposite);
+            HalfEdge.HalfEdges.Add(createEdge);
+            HalfEdge.HalfEdges.Add(createEdgeOpposite);
 
             edge.Dispose(); opposite.Dispose();
             deleteEdges.Add(edge); deleteEdges.Add(opposite);

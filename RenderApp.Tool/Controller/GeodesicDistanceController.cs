@@ -49,7 +49,7 @@ namespace RenderApp.Tool.Controller
                     if (analyzePolygonNode.Polygon is HalfEdgeDS)
                     {
                         geodesic = new GeodesicDistanceAlgorithm(analyzePolygonNode.Polygon as HalfEdgeDS);
-                        Polygon polygon = new Polygon("Picking", new List<Vertex>() { new Vertex(0, selectVertex.Position, Vector3.UnitY) });
+                        Polygon polygon = new Polygon("Picking", new List<Vertex>() { new Vertex(0, selectVertex.Position, Vector3.UnitY) }, KI.Gfx.KIPrimitiveType.Points);
                         PolygonUtility.Setup(polygon);
                         PolygonNode pointObject = new PolygonNode(polygon);
                         pointObject.ModelMatrix = analyzePolygonNode.ModelMatrix;
@@ -61,7 +61,7 @@ namespace RenderApp.Tool.Controller
                         var max = geodesicDistance.Max();
 
                         var distBetweenLines = max / 20;
-                        List<Line> lines = new List<Line>();
+                        List<Vertex> vertexs = new List<Vertex>();
                         foreach (var mesh in ((HalfEdgeDS)analyzePolygonNode.Polygon).HalfEdgeMeshs)
                         {
                             var segment = new List<Vector3>();
@@ -93,8 +93,8 @@ namespace RenderApp.Tool.Controller
 
                             if (segment.Count == 2)
                             {
-                                Line line = new Line(new Vertex(0, segment[0], Vector3.UnitX), new Vertex(1, segment[1], Vector3.UnitX));
-                                lines.Add(line);
+                                vertexs.Add(new Vertex(0, segment[0], Vector3.UnitX));
+                                vertexs.Add(new Vertex(1, segment[1], Vector3.UnitX));
                             }
                         }
 
@@ -106,9 +106,9 @@ namespace RenderApp.Tool.Controller
                             analyzePolygonNode.Polygon.Material, 
                             geodesicDistance);
 
-                        Polygon lineGeometry = new Polygon("geodesicDistance", lines);
+                        Polygon lineGeometry = new Polygon("geodesicDistance", vertexs, KIPrimitiveType.Lines);
                         var vertexBuffer = new VertexBuffer();
-                        vertexBuffer.SetupLineBuffer(lineGeometry.Vertexs, lineGeometry.Index, lineGeometry.Lines);
+                        vertexBuffer.SetupPointBuffer(lineGeometry.Vertexs, lineGeometry.Index);
                         var lineAttribute = new PolygonAttribute("geodesicDistance", vertexBuffer, KIPrimitiveType.Lines, analyzePolygonNode.Polygon.Material);
                         analyzePolygonNode.Attributes.Add(lineAttribute);
                         Workspace.Instance.RenderSystem.ActiveScene.AddObject(new PolygonNode(lineGeometry), parentNode);

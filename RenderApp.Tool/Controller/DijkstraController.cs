@@ -77,7 +77,7 @@ namespace RenderApp.Tool.Controller
                         }
                     }
 
-                    Polygon polygon = new Polygon("Picking", new List<Vertex>() { new Vertex(0, vertex.Position, Vector3.UnitY) });
+                    Polygon polygon = new Polygon("Picking", new List<Vertex>() { new Vertex(0, vertex.Position, Vector3.UnitY) }, KI.Gfx.KIPrimitiveType.Points);
                     PolygonUtility.Setup(polygon);
                     PolygonNode pointObject = new PolygonNode(polygon);
                     pointObject.ModelMatrix = selectObject.ModelMatrix;
