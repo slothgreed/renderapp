@@ -51,34 +51,37 @@ namespace CADApp.ViewModel
 
         private void ViewportViewModel_Initialized(object sender, EventArgs e)
         {
+            Workspace.Instance.CommandManager.OnCommandExecuted += CommandManager_OnCommandExecuted;
+            Workspace.Instance.CommandManager.OnCommandUndoPerformed += CommandManager_OnCommandUndoPerformed;
+            Workspace.Instance.CommandManager.OnCommandRedoPerformed += CommandManager_OnCommandRedoPerformed;
             RootNode.Add(Workspace.Instance.MainScene.RootNode);
             var loader = new IGESLoader(@"E:\cgModel\model\Chair\Chair_igs\Chair.igs");
-            loader = new IGESLoader(@"E:\cgModel\model\VoronoiRing\VoronoiRing_igs\VoronoiRing.igs");
-            loader = new IGESLoader(@"E:\cgModel\model\ToyLoco\ToyLoco_igs\ToyLoco.igs");
-            loader = new IGESLoader(@"E:\cgModel\model\Table\Table_igs\Table.igs");
-            loader = new IGESLoader(@"E:\cgModel\model\SmartPhone\SmartPhone_igs\SmartPhone.igs");
-            loader = new IGESLoader(@"E:\cgModel\model\Plate\Plate_igs\Plate.igs");
-            loader = new IGESLoader(@"E:\cgModel\model\PencilCase\PencilCase_igs\PencilCase.igs");
-            loader = new IGESLoader(@"E:\cgModel\model\monument\monument_igs\monument.igs");
-            loader = new IGESLoader(@"E:\cgModel\model\Maureen\Maureen_igs\Maureen.igs");
-            loader = new IGESLoader(@"E:\cgModel\model\iPhoneCase\iPhoneCase_igs\iPhoneCase.igs");
-            loader = new IGESLoader(@"E:\cgModel\model\Highheal\Highheal_igs\Highheal.igs");
-            loader = new IGESLoader(@"E:\cgModel\model\Dollhouse\Dollhouse_igs\Dollhouse.igs");
-            loader = new IGESLoader(@"E:\cgModel\model\Chair\Chair_igs\Chair.igs");
+            //loader = new IGESLoader(@"E:\cgModel\model\VoronoiRing\VoronoiRing_igs\VoronoiRing.igs");
+            //loader = new IGESLoader(@"E:\cgModel\model\ToyLoco\ToyLoco_igs\ToyLoco.igs");
+            //loader = new IGESLoader(@"E:\cgModel\model\Table\Table_igs\Table.igs");
+            //loader = new IGESLoader(@"E:\cgModel\model\SmartPhone\SmartPhone_igs\SmartPhone.igs");
+            //loader = new IGESLoader(@"E:\cgModel\model\Plate\Plate_igs\Plate.igs");
+            //loader = new IGESLoader(@"E:\cgModel\model\PencilCase\PencilCase_igs\PencilCase.igs");
+            //loader = new IGESLoader(@"E:\cgModel\model\monument\monument_igs\monument.igs");
+            //loader = new IGESLoader(@"E:\cgModel\model\Maureen\Maureen_igs\Maureen.igs");
+            //loader = new IGESLoader(@"E:\cgModel\model\iPhoneCase\iPhoneCase_igs\iPhoneCase.igs");
+            //loader = new IGESLoader(@"E:\cgModel\model\Highheal\Highheal_igs\Highheal.igs");
+            //loader = new IGESLoader(@"E:\cgModel\model\Dollhouse\Dollhouse_igs\Dollhouse.igs");
+            //loader = new IGESLoader(@"E:\cgModel\model\Chair\Chair_igs\Chair.igs");
 
         }
+
+
 
         private void UndoCommand()
         {
             Workspace.Instance.CommandManager.Undo();
             ViewportViewModel.Controller[ViewportViewModel.CurrentControllerType].Reset();
-            ViewportViewModel.Viewport.GLControl_Paint(null, null);
         }
 
         private void RedoCommand()
         {
             Workspace.Instance.CommandManager.Redo();
-            ViewportViewModel.Viewport.GLControl_Paint(null, null);
         }
 
         private void ControllerCommand(object parameter)
@@ -100,6 +103,21 @@ namespace CADApp.ViewModel
         {
             var commandArgs = new DeleteAssemblyNodeCommandArgs(null);
             Workspace.Instance.CommandManager.Execute(new DeleteAssemblyNodeCommand(commandArgs));
+        }
+
+        private void CommandManager_OnCommandExecuted(object sender, EventArgs e)
+        {
+            ViewportViewModel.Viewport.GLControl_Paint(null, null);
+        }
+
+        private void CommandManager_OnCommandRedoPerformed(object sender, EventArgs e)
+        {
+            ViewportViewModel.Viewport.GLControl_Paint(null, null);
+        }
+
+        private void CommandManager_OnCommandUndoPerformed(object sender, EventArgs e)
+        {
+            ViewportViewModel.Viewport.GLControl_Paint(null, null);
         }
     }
 }
