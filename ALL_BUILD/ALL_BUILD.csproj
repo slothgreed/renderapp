@@ -67,7 +67,7 @@
       <Project>{4b56baf2-a90d-41c8-a87a-b426c3053205}</Project>
       <Name>Graph2D</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ImageProcessor\ShaderTraining.csproj">
+    <ProjectReference Include="..\ShaderTraining\ShaderTraining.csproj">
       <Project>{dbd3b857-d3bd-4bbc-b51a-0c72fe9cff67}</Project>
       <Name>ShaderTraining</Name>
     </ProjectReference>
