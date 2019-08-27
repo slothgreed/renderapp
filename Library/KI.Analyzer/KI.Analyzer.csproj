@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E8959545-0813-4D45-8C9F-1ADE07F3A21F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>KI.Analyzer</RootNamespace>
+    <AssemblyName>KI.Analyzer</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MathNet.Numerics, Version=3.20.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MathNet.Numerics.3.20.0\lib\net40\MathNet.Numerics.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OpenTK">
+      <HintPath>..\..\dll\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Algorithm\FeatureLine\FeatureLineAlgorithm.cs" />
+    <Compile Include="Algorithm\FeatureLine\FeatureLineGraph.cs" />
+    <Compile Include="Algorithm\IsoLineAlgorithm.cs" />
+    <Compile Include="Algorithm\GeodesicDistanceAlgorithm.cs" />
+    <Compile Include="Algorithm\KMeansAlgorithm.cs" />
+    <Compile Include="Algorithm\LoopSubdivisionAlgorithm.cs" />
+    <Compile Include="Algorithm\PerceptronAlgorithm.cs" />
+    <Compile Include="Algorithm\AdaptiveMeshAlgorithm.cs" />
+    <Compile Include="Algorithm\ConvexHullAlgorithm.cs" />
+    <Compile Include="Algorithm\DijkstraAlgorithm.cs" />
+    <Compile Include="Algorithm\MarchingCube\MarchingCubesAlgorithm.cs" />
+    <Compile Include="Algorithm\MarchingCube\MarchingCubeTable.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="Algorithm\QEMAlgorithm.cs" />
+    <Compile Include="Algorithm\LaplaceSmoothingAlgorithm.cs" />
+    <Compile Include="Algorithm\ShapeMatchingAlgorithm.cs" />
+    <Compile Include="Algorithm\VertexCurvatureAlgorithm.cs" />
+    <Compile Include="Algorithm\VertexNormalAlgorithm.cs" />
+    <Compile Include="Algorithm\VertexSaliencyAlgorithm.cs" />
+    <Compile Include="HalfEdge\HalfEdge.cs" />
+    <Compile Include="HalfEdge\HalfEdgeDS.cs" />
+    <Compile Include="HalfEdge\HalfEdgeDSEditor.cs" />
+    <Compile Include="HalfEdge\HalfEdgeIO.cs" />
+    <Compile Include="HalfEdge\HalfEdgeMesh.cs" />
+    <Compile Include="HalfEdge\HalfEdgeVertex.cs" />
+    <Compile Include="Parameter\IVertexColorParameter.cs" />
+    <Compile Include="Parameter\IParameter.cs" />
+    <Compile Include="Parameter\ScalarParameter.cs" />
+    <Compile Include="Parameter\VectorParameter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tree\BDB.cs" />
+    <Compile Include="Tree\DistanceField.cs" />
+    <Compile Include="Tree\Kdtree.cs" />
+    <Compile Include="Tree\Octree.cs" />
+    <Compile Include="Tree\VoxelSpace.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KI.Foundation\KI.Foundation.csproj">
+      <Project>{cfc71ace-112a-467f-96ec-6566d4a6dfc6}</Project>
+      <Name>KI.Foundation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KI.Gfx\KI.Gfx.csproj">
+      <Project>{f5e989a2-028f-4e60-869c-ec57413376c6}</Project>
+      <Name>KI.Gfx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KI.Mathmatics\KI.Mathmatics.csproj">
+      <Project>{5610ebdc-05d3-47ce-b954-bcc8e962d35a}</Project>
+      <Name>KI.Mathmatics</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
