@@ -50,6 +50,80 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Application\CAD\CADApp.Model\CADApp.Model.csproj">
+      <Project>{64a84876-ee83-4042-a5c9-bc467b83591e}</Project>
+      <Name>CADApp.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Application\CAD\CADApp.Tool\CADApp.Tool.csproj">
+      <Project>{63784908-38d4-4ef6-82f9-ea50eec662e2}</Project>
+      <Name>CADApp.Tool</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Application\CAD\CADApp\CADApp.csproj">
+      <Project>{9c5eda2e-270e-4cf0-8d59-479285c074f3}</Project>
+      <Name>CADApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Application\Graph2D\Graph2D.csproj">
+      <Project>{4b56baf2-a90d-41c8-a87a-b426c3053205}</Project>
+      <Name>Graph2D</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Application\Renderer\RenderApp.Model\RenderApp.Model.csproj">
+      <Project>{5e5560a2-6673-49f1-8089-c557c6172738}</Project>
+      <Name>RenderApp.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Application\Renderer\RenderApp.Tool\RenderApp.Tool.csproj">
+      <Project>{c8df6069-e673-4957-a173-2bfca883b102}</Project>
+      <Name>RenderApp.Tool</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Application\Renderer\RenderApp\RenderApp.csproj">
+      <Project>{c3f6bad0-f298-468b-a33b-220d78fd1048}</Project>
+      <Name>RenderApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Application\ShaderTraining\ShaderTraining.csproj">
+      <Project>{dbd3b857-d3bd-4bbc-b51a-0c72fe9cff67}</Project>
+      <Name>ShaderTraining</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Application\STLBrowser\STLBrowser.csproj">
+      <Project>{634a67dc-4ca1-4a0d-8e8f-178dfc1a7cad}</Project>
+      <Name>STLBrowser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Application\ViewerTest\ViewerTest.csproj">
+      <Project>{81ff9e87-f6cd-4095-b284-cfa6e3830753}</Project>
+      <Name>ViewerTest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\KI.Analyzer\KI.Analyzer.csproj">
+      <Project>{e8959545-0813-4d45-8c9f-1ade07f3a21f}</Project>
+      <Name>KI.Analyzer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\KI.Asset\KI.Asset.csproj">
+      <Project>{197a747a-9d2b-4273-bdc6-02941c876cb2}</Project>
+      <Name>KI.Asset</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\KI.Foundation\KI.Foundation.csproj">
+      <Project>{cfc71ace-112a-467f-96ec-6566d4a6dfc6}</Project>
+      <Name>KI.Foundation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\KI.Gfx\KI.Gfx.csproj">
+      <Project>{f5e989a2-028f-4e60-869c-ec57413376c6}</Project>
+      <Name>KI.Gfx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\KI.Mathmatics\KI.Mathmatics.csproj">
+      <Project>{5610ebdc-05d3-47ce-b954-bcc8e962d35a}</Project>
+      <Name>KI.Mathmatics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\KI.Presenter\KI.Presenter.csproj">
+      <Project>{35f238b1-820c-4487-9081-a4af3952219c}</Project>
+      <Name>KI.Presenter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\KI.Renderer\KI.Renderer.csproj">
+      <Project>{8bda5035-5778-4460-8166-e6b2bd477e29}</Project>
+      <Name>KI.Renderer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\Test\AssetTest.csproj">
+      <Project>{abb6b47e-8f5c-480d-a090-2f1aa6519f22}</Project>
+      <Name>AssetTest</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
