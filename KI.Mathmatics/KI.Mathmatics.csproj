@@ -71,13 +71,13 @@
     <Compile Include="Interaction.cs" />
     <Compile Include="Calculator.cs" />
     <Compile Include="LinearAlgebra.cs" />
-    <Compile Include="Matrix3Utility.cs" />
-    <Compile Include="Matrix4Utility.cs" />
+    <Compile Include="OpenTKUtility\Matrix3Utility.cs" />
+    <Compile Include="OpenTKUtility\Matrix4Utility.cs" />
     <Compile Include="Plane.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PseudoColor.cs" />
     <Compile Include="RandamValue.cs" />
-    <Compile Include="Vector3Utility.cs" />
+    <Compile Include="OpenTKUtility\Vector3Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
