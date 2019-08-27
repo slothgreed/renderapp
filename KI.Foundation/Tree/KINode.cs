@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using KI.Foundation.Core;
@@ -20,7 +19,7 @@ namespace KI.Foundation.Tree
             : base(kiobject.Name)
         {
             KIObject = kiobject;
-            Children = new ObservableCollection<KINode>();
+            Children = new List<KINode>();
         }
 
         /// <summary>
@@ -30,7 +29,7 @@ namespace KI.Foundation.Tree
         public KINode(string name)
             : base(name)
         {
-            Children = new ObservableCollection<KINode>();
+            Children = new List<KINode>();
         }
 
         /// <summary>
@@ -51,7 +50,7 @@ namespace KI.Foundation.Tree
         /// <summary>
         /// 子供
         /// </summary>
-        public ObservableCollection<KINode> Children { get; private set; }
+        public List<KINode> Children { get; private set; }
 
         /// <summary>
         /// ノードの中身

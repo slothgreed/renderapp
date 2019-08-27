@@ -104,7 +104,7 @@ namespace KI.Foundation.Command
                 commandStack.Add(command);
             }
 
-            NotifyCommandExecuted();
+            NotifyCommandExecuted(command.NotifyExected());
 
             return CommandResult.Success;
         }
@@ -125,7 +125,7 @@ namespace KI.Foundation.Command
                 else
                 {
                     undoStack.Add(command);
-                    NotifyCommandUndoPerformed();
+                    NotifyCommandUndoPerformed(command.NotifyUndoPerformed());
                 }
             }
         }
@@ -140,7 +140,7 @@ namespace KI.Foundation.Command
                 var command = undoStack[undoStack.Count - 1];
                 undoStack.RemoveAt(undoStack.Count - 1);
                 Execute(command, true);
-                NotifyCommandRedoPerformed();
+                NotifyCommandRedoPerformed(command.NotifyRedoPerformed());
             }
         }
 
@@ -156,33 +156,33 @@ namespace KI.Foundation.Command
         /// <summary>
         /// コマンド実行後イベント
         /// </summary>
-        public virtual void NotifyCommandExecuted()
+        public virtual void NotifyCommandExecuted(EventArgs eventArgs)
         {
             if(OnCommandExecuted != null)
             {
-                OnCommandExecuted(this, EventArgs.Empty);
+                OnCommandExecuted(this, eventArgs);
             }
         }
 
         /// <summary>
         /// コマンドUndo後イベント
         /// </summary>
-        public virtual void NotifyCommandUndoPerformed()
+        public virtual void NotifyCommandUndoPerformed(EventArgs eventArgs)
         {
             if(OnCommandUndoPerformed != null)
             {
-                OnCommandUndoPerformed(this, EventArgs.Empty);
+                OnCommandUndoPerformed(this, eventArgs);
             }
         }
 
         /// <summary>
         /// コマンドRedoイベント
         /// </summary>
-        public virtual void NotifyCommandRedoPerformed()
+        public virtual void NotifyCommandRedoPerformed(EventArgs eventArgs)
         {
             if (OnCommandRedoPerformed != null)
             {
-                OnCommandRedoPerformed(this, EventArgs.Empty);
+                OnCommandRedoPerformed(this, eventArgs);
             }
         }
     }

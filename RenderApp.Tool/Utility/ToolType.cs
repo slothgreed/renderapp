@@ -10,6 +10,7 @@
         SelectPoint,
         EdgeFlips,
         Dijkstra,
+        ShapeMatching,
         Geodesic
     }
 

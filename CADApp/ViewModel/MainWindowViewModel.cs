@@ -6,6 +6,7 @@ using KI.Renderer;
 using KI.Presenter.ViewModel;
 using CADApp.Tool.Command;
 using KI.Asset.Loader.Model;
+using KI.Presenter.KIEvent;
 
 namespace CADApp.ViewModel
 {
@@ -107,17 +108,26 @@ namespace CADApp.ViewModel
 
         private void CommandManager_OnCommandExecuted(object sender, EventArgs e)
         {
+            UpdateViewModel(e);
             ViewportViewModel.Viewport.GLControl_Paint(null, null);
         }
 
         private void CommandManager_OnCommandRedoPerformed(object sender, EventArgs e)
         {
+            UpdateViewModel(e);
             ViewportViewModel.Viewport.GLControl_Paint(null, null);
         }
 
         private void CommandManager_OnCommandUndoPerformed(object sender, EventArgs e)
         {
+            UpdateViewModel(e);
             ViewportViewModel.Viewport.GLControl_Paint(null, null);
+        }
+
+
+        private void UpdateViewModel(EventArgs e)
+        {
+            //ViewportViewModel.UpdateViewModel();
         }
     }
 }

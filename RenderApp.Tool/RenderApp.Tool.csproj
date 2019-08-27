@@ -60,6 +60,7 @@
     <Compile Include="Command\CreateVoxelCommand.cs" />
     <Compile Include="Command\CreateWireFrameCommand.cs" />
     <Compile Include="Command\SmoothingCommand.cs" />
+    <Compile Include="Controller\ShapeMatchingController.cs" />
     <Compile Include="Utility\ToolType.cs" />
     <Compile Include="Controller\GeodesicDistanceController.cs" />
     <Compile Include="Command\KMeansCommand.cs" />

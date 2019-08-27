@@ -16,6 +16,7 @@ using RenderApp.Tool.Command;
 using KI.Foundation.Core;
 using System.Windows.Controls;
 using KI.Analyzer;
+using KI.Presenter.KIEvent;
 
 namespace RenderApp.ViewModel
 {

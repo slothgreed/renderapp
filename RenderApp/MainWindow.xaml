@@ -99,6 +99,10 @@
                     Header="Dijkstra" />
                 <MenuItem
                     Command="{Binding Controller}"
+                    CommandParameter="{x:Static tool:CONTROL_MODE.ShapeMatching}"
+                    Header="ShapeMatching" />
+                <MenuItem
+                    Command="{Binding Controller}"
                     CommandParameter="{x:Static tool:CONTROL_MODE.Geodesic}"
                     Header="Geodesic" />
             </MenuItem>

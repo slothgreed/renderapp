@@ -73,6 +73,7 @@
     </Compile>
     <Compile Include="Algorithm\QEMAlgorithm.cs" />
     <Compile Include="Algorithm\LaplaceSmoothingAlgorithm.cs" />
+    <Compile Include="Algorithm\ShapeMatchingAlgorithm.cs" />
     <Compile Include="Algorithm\VertexCurvatureAlgorithm.cs" />
     <Compile Include="Algorithm\VertexNormalAlgorithm.cs" />
     <Compile Include="Algorithm\VertexSaliencyAlgorithm.cs" />

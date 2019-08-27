@@ -38,15 +38,17 @@ namespace RenderApp.ViewModel
             SelectTriangleController SelectTriangleController = new SelectTriangleController();
             SelectTriangleController.TriangleSelected += SelectPointController_PointSelected;
 
-            DijkstraController DijkstraController = new DijkstraController();
-            GeodesicDistanceController GeodesicDistanceController = new GeodesicDistanceController();
-            EdgeFlipsController EdgeFlipsController = new EdgeFlipsController();
+            var DijkstraController = new DijkstraController();
+            var ShapeMatchingController = new ShapeMatchingController();
+            var GeodesicDistanceController = new GeodesicDistanceController();
+            var EdgeFlipsController = new EdgeFlipsController();
 
             Controllers.Add(CONTROL_MODE.SelectPoint, SelectPointController);
             Controllers.Add(CONTROL_MODE.SelectLine, SelectLineController);
             Controllers.Add(CONTROL_MODE.SelectTriangle, SelectTriangleController);
 
             Controllers.Add(CONTROL_MODE.Dijkstra, DijkstraController);
+            Controllers.Add(CONTROL_MODE.ShapeMatching, ShapeMatchingController);
             Controllers.Add(CONTROL_MODE.Geodesic, GeodesicDistanceController);
             Controllers.Add(CONTROL_MODE.EdgeFlips, EdgeFlipsController);
         }

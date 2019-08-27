@@ -81,7 +81,7 @@ namespace KI.Presenter.ViewModel
         public event PropertyChangingEventHandler PropertyChanging;
 
         /// <summary>
-        /// WPF変更前に使用
+        /// UI変更前に使用
         /// </summary>
         /// <param name="propertyName">プロパティ名</param>
         protected virtual void OnPropertyChanging(string propertyName)

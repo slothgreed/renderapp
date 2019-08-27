@@ -62,6 +62,18 @@ namespace KI.Mathmatics
         }
 
         /// <summary>
+        /// 行列の平方根
+        /// </summary>
+        /// <param name="matrix"></param>
+        /// <returns></returns>
+        public static float[,] SqrtMatrix(float[,] matrix)
+        {
+            Mat cvmat = Convert2dCvMatrix(matrix);
+            cvmat.Sqrt();
+            return Convert2dMatrix(cvmat);
+        }
+
+        /// <summary>
         /// 特異値の後退代入
         /// </summary>
         /// <param name="W">特異値の行列またはベクトル</param>

@@ -112,6 +112,7 @@ namespace KI.Analyzer
 
         /// <summary>
         /// テンポラリ計算用変数
+        /// 不要になったらnullにすること
         /// </summary>
         public object TmpParameter { get; set; }
 
@@ -554,7 +555,7 @@ namespace KI.Analyzer
             }
 
             ellipse.Invert();
-            Vector3 result = Calculator.Multiply(ellipse, kapper);
+            Vector3 result = Matrix3Utility.Multiply(ellipse, kapper);
             float a = result.X;
             float b = result.Y;
             float c = result.Z;

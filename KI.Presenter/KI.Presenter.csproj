@@ -71,6 +71,7 @@
     <Compile Include="Controls\ThumbnailFileView.xaml.cs">
       <DependentUpon>ThumbnailFileView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="KIEvent\KIEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controls\Vector3EditBoxView.xaml.cs">
       <DependentUpon>Vector3EditBoxView.xaml</DependentUpon>

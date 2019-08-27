@@ -1,4 +1,6 @@
-﻿namespace KI.Foundation.Command
+﻿using System;
+
+namespace KI.Foundation.Command
 {
     /// <summary>
     /// コマンドの結果
@@ -43,5 +45,23 @@
         /// <param name="commandArg">コマンド引数</param>
         /// <returns>成功値</returns>
         public abstract CommandResult Undo();
+
+        /// <summary>
+        /// コマンド変更後に発行するイベント
+        /// </summary>
+        /// <returns>変更イベント</returns>
+        public virtual EventArgs NotifyExected() { return EventArgs.Empty; }
+
+        /// <summary>
+        /// コマンドUndo後に発行するイベント
+        /// </summary>
+        /// <returns>変更イベント</returns>
+        public virtual EventArgs NotifyUndoPerformed() { return NotifyExected(); }
+
+        /// <summary>
+        /// コマンドRedo後に発行するイベント
+        /// </summary>
+        /// <returns>変更イベント</returns>
+        public virtual EventArgs NotifyRedoPerformed() { return EventArgs.Empty; }
     }
 }

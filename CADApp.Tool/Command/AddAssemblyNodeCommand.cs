@@ -2,6 +2,9 @@
 using CADApp.Model.Node;
 using KI.Renderer;
 using KI.Foundation.Command;
+using System;
+using System.ComponentModel;
+using KI.Presenter.KIEvent;
 
 namespace CADApp.Tool.Command
 {
@@ -43,6 +46,16 @@ namespace CADApp.Tool.Command
             commandArgs.Node.Dispose();
 
             return CommandResult.Success;
+        }
+
+        public override EventArgs NotifyExected()
+        {
+            return new NodeCollectionChangeEventArgs(CollectionChangeAction.Add, commandArgs.Parent, commandArgs.Node);
+        }
+
+        public override EventArgs NotifyUndoPerformed()
+        {
+            return new NodeCollectionChangeEventArgs(CollectionChangeAction.Remove, commandArgs.Parent, commandArgs.Node);
         }
 
         /// <summary>
