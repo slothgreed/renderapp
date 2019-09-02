@@ -69,6 +69,12 @@ namespace CADApp.Model.Node
 
 
         /// <summary>
+        /// 移動GizmoのVBO
+        /// </summary>
+        VertexBuffer scaleGizmoBuffer;
+
+
+        /// <summary>
         /// 選択中の形状全体のバウンディングボックス
         /// </summary>
         private BDB selectBDB;
@@ -95,7 +101,7 @@ namespace CADApp.Model.Node
             material = new Material(shader);
             lineMaterial = new LineMaterial(shader, 5);
             selectBDB = new BDB();
-            //GenerateGizmo();
+            GenerateGizmo();
             GenerateSelectVertexBuffer();
         }
 
@@ -104,6 +110,11 @@ namespace CADApp.Model.Node
             moveGizmo = new MoveGizmo();
             moveGizmoBuffer = new VertexBuffer();
             moveGizmoBuffer.SetBuffer(moveGizmo.Vertex, null, moveGizmo.Color, null, moveGizmo.Index);
+
+            scaleGizmo = new ScaleGizmo();
+            scaleGizmoBuffer = new VertexBuffer();
+            scaleGizmoBuffer.SetBuffer(scaleGizmo.Vertex, null, scaleGizmo.Color, null, scaleGizmo.Index);
+
         }
 
         private void GenerateSelectVertexBuffer()
@@ -195,6 +206,9 @@ namespace CADApp.Model.Node
             {
                 Draw(scene, KIPrimitiveType.Triangles, selectTriangleBuffer, material);
             }
+
+            //Draw(scene, KIPrimitiveType.Triangles, moveGizmoBuffer, material);
+            Draw(scene, KIPrimitiveType.Triangles, scaleGizmoBuffer, material);
         }
 
         private void Draw(Scene scene, KIPrimitiveType type, VertexBuffer buffer, Material material)

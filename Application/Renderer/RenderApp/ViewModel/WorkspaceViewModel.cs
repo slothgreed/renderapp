@@ -140,12 +140,12 @@ namespace RenderApp.ViewModel
             ReplaceTabWindow(vm);
         }
 
-        public void ReplaceTabWindow(DockWindowViewModel window)
+        public void ReplaceTabWindow(DockWindowViewModel viewModel)
         {
-            if (window is SceneNodeViewModel)
+            if (viewModel is SceneNodeViewModel)
             {
                 var oldItem = AnchorablesSources.FirstOrDefault(p => p is SceneNodeViewModel);
-                AnchorablesSources.Add(window);
+                AnchorablesSources.Add(viewModel);
                 AnchorablesSources.Remove(oldItem);
             }
         }

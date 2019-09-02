@@ -20,5 +20,6 @@ namespace KI.Asset.Primitive
         /// タイプ
         /// </summary>
         public KIPrimitiveType Type { get; protected set; }
+
     }
 }

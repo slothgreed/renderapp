@@ -21,22 +21,35 @@ namespace KI.Asset.Gizmo
             Cube xAxis = new Cube(new Vector3(0, 0, 0), new Vector3(1, 0.1f, 0.1f));
             Cube yAxis = new Cube(new Vector3(0, 0, 0), new Vector3(0.1f, 1f, 0.1f));
             Cube zAxis = new Cube(new Vector3(0, 0, 0), new Vector3(0.1f, 0.1f, 1f));
-            Cube xPoint = new Cube(new Vector3(0.9f, -0.1f, -0.1f), new Vector3(1, 0.1f, 0.1f));
-            Cube yPoint = new Cube(new Vector3(-0.1f, 0.9f, -0.1f), new Vector3(0.1f, 1, 0.1f));
-            Cube zPoint = new Cube(new Vector3(-0.1f, -0.1f, 0.9f), new Vector3(0.1f, 0.1f, 1));
+            Cone xArrow = new Cone(1, 1, 16);
+            Cone yArrow = new Cone(1, 1, 16);
+            Cone zArrow = new Cone(1, 1, 16);
+
+            PrimitiveUtility.Rotate(xArrow, Vector3.UnitZ, -90);
+            PrimitiveUtility.Move(xArrow, Vector3.UnitX);
+
+            PrimitiveUtility.Move(yArrow, Vector3.UnitY);
+
+            PrimitiveUtility.Rotate(zArrow, Vector3.UnitX, 90);
+            PrimitiveUtility.Move(zArrow, Vector3.UnitZ);
+
 
             List<Vertex> vertex = new List<Vertex>();
             vertex.AddRange(xAxis.Vertexs); vertex.AddRange(yAxis.Vertexs); vertex.AddRange(zAxis.Vertexs);
-            vertex.AddRange(xPoint.Vertexs); vertex.AddRange(yPoint.Vertexs); vertex.AddRange(zPoint.Vertexs);
+            vertex.AddRange(xArrow.Vertexs); vertex.AddRange(yArrow.Vertexs); vertex.AddRange(zArrow.Vertexs);
+
+
 
             List<int> index = new List<int>();
-            int perCount = xAxis.Index.Length;
+            int cubePerCount = xAxis.Vertexs.Length;
             index.AddRange(xAxis.Index);
-            index.AddRange(yAxis.Index.Select(x => x + perCount));
-            index.AddRange(zAxis.Index.Select(x => x + perCount * 2));
-            index.AddRange(xPoint.Index.Select(x => x + perCount * 3));
-            index.AddRange(yPoint.Index.Select(x => x + perCount * 4));
-            index.AddRange(zPoint.Index.Select(x => x + perCount * 5));
+            index.AddRange(yAxis.Index.Select(x => x + cubePerCount));
+            index.AddRange(zAxis.Index.Select(x => x + cubePerCount * 2));
+
+            int conePerCount = xArrow.Vertexs.Length;
+            index.AddRange(xArrow.Index.Select(x => x + cubePerCount * 3));
+            index.AddRange(yArrow.Index.Select(x => x + cubePerCount * 3 + conePerCount));
+            index.AddRange(zArrow.Index.Select(x => x + cubePerCount * 3 + conePerCount * 2));
 
             Vertex = vertex.Select(p => p.Position).ToArray();
             Color = vertex.Select(p => p.Normal).ToArray();

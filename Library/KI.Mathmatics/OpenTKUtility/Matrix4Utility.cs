@@ -54,6 +54,21 @@ namespace KI.Mathmatics
             return result;
         }
 
+        /// <summary>
+        /// 行列の掛け算
+        /// </summary>
+        /// <param name="matrix">マトリクス</param>
+        /// <param name="vector">ベクトル</param>
+        /// <returns>ベクトル</returns>
+        public static Vector3 Multiply(Matrix4 matrix, Vector3 vector)
+        {
+            Vector3 result = new Vector3();
+            result.X = matrix.Column0[0] * vector.X + matrix.Column0[1] * vector.Y + matrix.Column0[2] * vector.Z + matrix.Column0[3];
+            result.Y = matrix.Column1[0] * vector.X + matrix.Column1[1] * vector.Y + matrix.Column1[2] * vector.Z + matrix.Column1[3];
+            result.Z = matrix.Column2[0] * vector.X + matrix.Column2[1] * vector.Y + matrix.Column2[2] * vector.Z + matrix.Column2[3];
+
+            return result;
+        }
 
         /// <summary>
         /// Matrix4 に float を掛ける
