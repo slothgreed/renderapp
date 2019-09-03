@@ -55,6 +55,7 @@ namespace KI.Asset.Primitive
             int perRing = 360 / ringSubdiv;
             int perRad = 360 / radialSubdiv;
 
+            // TODO : VertexArrayの並びにする
             List<Vertex> vertexList = new List<Vertex>();
             List<int> indexList = new List<int>();
             for (int i = 0; i < 360; i += perRing)
