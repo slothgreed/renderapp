@@ -175,6 +175,13 @@ namespace RenderApp.ViewModel
             var axisObject = PolygonUtility.CreatePolygon(axis.ToString(), axis.Vertex, axis.Color, axis.Index, KIPrimitiveType.Lines);
             mainScene.AddObject(new PolygonNode(axisObject));
 
+            var torus = new Torus(0.1f, 0.2f, 90, 90);
+            var torusObject = PolygonUtility.CreatePolygon("Sphere", torus);
+            PolygonNode torusNode = new PolygonNode(torusObject);
+            var sphereShader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
+            torusObject.Material = new Material(sphereShader);
+            mainScene.AddObject(new PolygonNode(torusObject));
+
             //var sponzas = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/crytek-sponza/sponza.obj");
             //var sponzaObject = SceneNodeFactory.Instance.CreatePolygonNodes("sponza",sponzas);
             //foreach (var sponza in sponzaObject)
