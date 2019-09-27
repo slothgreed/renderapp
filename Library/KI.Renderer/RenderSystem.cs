@@ -18,6 +18,8 @@ namespace KI.Renderer
             PostProcessMode = true;
             RenderQueue = new RenderQueue();
             PostEffect = new RenderQueue();
+            BackGround = new List<HUDObject>();
+            ForeGround = new List<HUDObject>();
 
             RenderQueue.TechniqueAdded += RenderQueue_TechniqueAdded;
             PostEffect.TechniqueAdded += RenderQueue_TechniqueAdded;
@@ -59,6 +61,16 @@ namespace KI.Renderer
         public List<Texture> ProcessingTexture { get; private set; }
 
         /// <summary>
+        /// 前面に書く HUD
+        /// </summary>
+        public List<HUDObject> ForeGround { get; private set; }
+
+        /// <summary>
+        /// 背景に書く HUD
+        /// </summary>
+        public List<HUDObject> BackGround { get; private set; }
+
+        /// <summary>
         /// サイズ変更
         /// </summary>
         /// <param name="width">横</param>
@@ -93,6 +105,11 @@ namespace KI.Renderer
                 return;
             }
 
+            foreach (var hud in BackGround)
+            {
+                hud.Render();
+            }
+
             RenderQueue.Render(ActiveScene);
 
             if (PostProcessMode)
@@ -102,6 +119,11 @@ namespace KI.Renderer
 
             OutputBuffer.uTarget = OutputTexture;
             OutputBuffer.Render(ActiveScene);
+
+            foreach(var hud in ForeGround)
+            {
+                hud.Render();
+            }
         }
 
         /// <summary>

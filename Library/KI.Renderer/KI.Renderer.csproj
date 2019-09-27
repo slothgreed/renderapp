@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HUD\HUDObject.cs" />
     <Compile Include="Node\EmptyNode.cs" />
     <Compile Include="EnvironmentProbe.cs" />
     <Compile Include="Node\LightNode.cs" />

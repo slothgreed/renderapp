@@ -215,14 +215,7 @@ namespace CADApp.Model.Node
         {
             ShaderHelper.InitializeState(scene, this, buffer, material);
             material.BindToGPU();
-            if (buffer.EnableIndexBuffer)
-            {
-                DeviceContext.Instance.DrawElements(type, buffer.Num, DrawElementsType.UnsignedInt, 0);
-            }
-            else
-            {
-                DeviceContext.Instance.DrawArrays(type, 0, buffer.Num);
-            }
+            buffer.Render(type);
 
             material.UnBindToGPU();
         }

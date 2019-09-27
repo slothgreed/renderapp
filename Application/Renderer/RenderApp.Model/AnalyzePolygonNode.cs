@@ -53,15 +53,7 @@ namespace RenderApp.Model
                 attribute.Binding();
                 ShaderHelper.InitializeState(scene, this, attribute.VertexBuffer, attribute.Material);
                 attribute.Material.BindToGPU();
-                if (attribute.VertexBuffer.EnableIndexBuffer)
-                {
-                    DeviceContext.Instance.DrawElements(attribute.Type, attribute.VertexBuffer.Num, DrawElementsType.UnsignedInt, 0);
-                }
-                else
-                {
-                    DeviceContext.Instance.DrawArrays(attribute.Type, 0, attribute.VertexBuffer.Num);
-                }
-
+                attribute.VertexBuffer.Render(attribute.Type);
                 attribute.Material.UnBindToGPU();
                 attribute.UnBinding();
 

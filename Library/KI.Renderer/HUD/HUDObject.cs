@@ -3,48 +3,42 @@ using KI.Gfx;
 using KI.Gfx.Geometry;
 using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
-using KI.Gfx.KIShader;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace KI.Renderer
 {
-    /// <summary>
-    /// 任意形状(triangle,quad,line,patchのみ対応)
-    /// </summary>
-    public class PolygonNode : SceneNode
+    public abstract class HUDObject : KIObject
     {
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
-        /// <param name="polygon">形状</param>
-        /// <param name="shader">シェーダ</param>
-        public PolygonNode(string name, Polygon polygon)
-            : base(name)
-        {
-            SetPolygon(polygon);
-        }
-
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        /// <param name="name">名前</param>
-        public PolygonNode(Polygon polygon)
+        public HUDObject(Polygon polygon)
             : base(polygon.Name)
         {
             SetPolygon(polygon);
         }
 
         /// <summary>
-        /// コンストラクタ
+        /// 始点座標位置
         /// </summary>
-        /// <param name="name">名前</param>
-        public PolygonNode(string name)
-            : base(name)
-        {
+        public Vector2 Position;
 
-        }
+        /// <summary>
+        /// 表示サイズ
+        /// </summary>
+        public Vector2 Size;
+
+        /// <summary>
+        /// 奥行値
+        /// </summary>
+        int Depth;
+
+        /// <summary>
+        /// 可視不可視
+        /// </summary>
+        public bool Visible;
 
         /// <summary>
         /// 頂点バッファ
@@ -74,8 +68,15 @@ namespace KI.Renderer
         /// <summary>
         /// 描画
         /// </summary>
-        /// <param name="scene">シーン</param>
-        public override void RenderCore(Scene scene)
+        public void Render()
+        {
+            if (Visible == true)
+            {
+                RenderCore();
+            }
+        }
+
+        private void RenderCore()
         {
             if (Polygon.Material.Shader == null)
             {
@@ -89,8 +90,9 @@ namespace KI.Renderer
                 return;
             }
 
-            ShaderHelper.InitializeState(scene, this, VertexBuffer, Polygon.Material);
+            ShaderHelper.InitializeHUD(VertexBuffer, Polygon.Material);
             Polygon.Material.BindToGPU();
+
             VertexBuffer.Render(Type);
 
             Polygon.Material.UnBindToGPU();
@@ -106,7 +108,7 @@ namespace KI.Renderer
         {
             Polygon = polygon;
 
-            if(VertexBuffer != null)
+            if (VertexBuffer != null)
             {
                 VertexBuffer.Dispose();
             }

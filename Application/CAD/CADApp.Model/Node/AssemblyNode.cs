@@ -105,14 +105,7 @@ namespace CADApp.Model.Node
             attribute.Binding();
             ShaderHelper.InitializeState(scene, this, attribute.VertexBuffer, attribute.Material);
             attribute.Material.Shader.BindBuffer();
-            if (attribute.VertexBuffer.EnableIndexBuffer)
-            {
-                DeviceContext.Instance.DrawElements(type, attribute.VertexBuffer.Num, DrawElementsType.UnsignedInt, 0);
-            }
-            else
-            {
-                DeviceContext.Instance.DrawArrays(type, 0, attribute.VertexBuffer.Num);
-            }
+            attribute.VertexBuffer.Render(type);
 
             attribute.Material.Shader.UnBindBuffer();
         }

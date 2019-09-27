@@ -64,6 +64,7 @@
     <Compile Include="Gizmo\MoveGizmo.cs" />
     <Compile Include="Gizmo\RotateGizmo.cs" />
     <Compile Include="Gizmo\ScaleGizmo.cs" />
+    <Compile Include="HUD\BackGround.cs" />
     <Compile Include="Light\DirectionLight.cs" />
     <Compile Include="Light\Light.cs" />
     <Compile Include="Light\PointLight.cs" />

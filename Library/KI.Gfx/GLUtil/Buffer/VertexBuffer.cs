@@ -297,42 +297,18 @@ namespace KI.Gfx.GLUtil.Buffer
         }
 
         /// <summary>
-        /// 頂点バッファの設定（線分）
+        /// 描画
         /// </summary>
-        /// <param name="vertexSrc">頂点バッファ</param>
-        /// <param name="indexSrc">インデックスバッファ</param>
-        /// <param name="lines">線分</param>
-        public void SetupLineBuffer(IEnumerable<Vertex> vertexSrc, List<int> indexSrc, List<Line> lineSrc)
+        public void Render(KIPrimitiveType type)
         {
-            int[] indexBuffer = null;
-            Vector3[] position = null;
-            Vector3[] normal = null;
-            Vector3[] color = null;
-            Vector2[] texCoord = null;
-            if (indexSrc != null && indexSrc.Count != 0)
+            if (EnableIndexBuffer)
             {
-                indexBuffer = indexSrc.ToArray();
-                position = vertexSrc.Select(p => p.Position).ToArray();
-                normal = vertexSrc.Select(p => p.Normal).ToArray();
-                color = vertexSrc.Select(p => p.Color).ToArray();
-                texCoord = vertexSrc.Select(p => p.TexCoord).ToArray();
+                DeviceContext.Instance.DrawElements(type, Num, DrawElementsType.UnsignedInt, 0);
             }
             else
             {
-                var vertexs = new List<Vertex>();
-                foreach (var line in lineSrc)
-                {
-                    vertexs.Add(line.Start);
-                    vertexs.Add(line.End);
-                }
-
-                position = vertexs.Select(p => p.Position).ToArray();
-                normal = vertexs.Select(p => p.Normal).ToArray();
-                color = vertexs.Select(p => p.Color).ToArray();
-                texCoord = vertexs.Select(p => p.TexCoord).ToArray();
+                DeviceContext.Instance.DrawArrays(type, 0, Num);
             }
-
-            SetBuffer(position, normal, color, texCoord, indexBuffer);
         }
     }
 }

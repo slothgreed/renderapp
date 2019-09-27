@@ -20,7 +20,7 @@ namespace KI.Renderer
         /// <param name="sceneNode">形状</param>
         /// <param name="vertexBuffer">頂点バッファ</param>
         /// <param name="Material">マテリアル</param>
-        public static void InitializeState(Scene scene, SceneNode sceneNode, VertexBuffer vertexBuffer,  Material material)
+        public static void InitializeState(Scene scene, SceneNode sceneNode, VertexBuffer vertexBuffer, Material material)
         {
             foreach (ShaderProgramInfo info in material.Shader.GetShaderVariable())
             {
@@ -152,6 +152,41 @@ namespace KI.Renderer
                             info.Variable = material.Textures[TextureKind.Emissive].DeviceID;
                         }
 
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 初期状態の設定
+        /// </summary>
+        /// <param name="scene">シーン</param>
+        /// <param name="sceneNode">形状</param>
+        /// <param name="vertexBuffer">頂点バッファ</param>
+        /// <param name="Material">マテリアル</param>
+        public static void InitializeHUD(VertexBuffer vertexBuffer, Material material)
+        {
+            foreach (ShaderProgramInfo info in material.Shader.GetShaderVariable())
+            {
+                switch (info.Name)
+                {
+                    case "position":
+                        info.Variable = vertexBuffer.PositionBuffer;
+                        break;
+                    case "normal":
+                        info.Variable = vertexBuffer.NormalBuffer;
+                        break;
+                    case "color":
+                        info.Variable = vertexBuffer.ColorBuffer;
+                        break;
+                    case "texcoord":
+                        info.Variable = vertexBuffer.TexCoordBuffer;
+                        break;
+                    case "index":
+                        if (vertexBuffer.EnableIndexBuffer)
+                        {
+                            info.Variable = vertexBuffer.IndexBuffer;
+                        }
                         break;
                 }
             }
