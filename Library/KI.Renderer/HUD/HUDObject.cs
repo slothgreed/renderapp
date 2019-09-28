@@ -8,7 +8,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace KI.Renderer
 {
-    public abstract class HUDObject : KIObject
+    public class HUDObject : KIObject
     {
         /// <summary>
         /// コンストラクタ
@@ -38,7 +38,7 @@ namespace KI.Renderer
         /// <summary>
         /// 可視不可視
         /// </summary>
-        public bool Visible;
+        public bool Visible = true;
 
         /// <summary>
         /// 頂点バッファ

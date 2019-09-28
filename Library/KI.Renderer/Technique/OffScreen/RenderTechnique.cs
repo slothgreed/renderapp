@@ -63,7 +63,7 @@ namespace KI.Renderer.Technique
         /// </summary>
         public enum RenderType
         {
-            Original,
+            Forward,
             OffScreen
         }
 
@@ -101,9 +101,9 @@ namespace KI.Renderer.Technique
         /// <param name="scene">シーン</param>
         public virtual void Render(Scene scene)
         {
-            if (renderType == RenderType.Original)
+            if (renderType == RenderType.Forward)
             {
-                Logger.Log(Logger.LogLevel.Error, "RenderTechnique : Not Defined Original Render");
+                Logger.Log(Logger.LogLevel.Error, "RenderTechnique : Not Defined Forward Render");
                 throw new NotImplementedException();
             }
 

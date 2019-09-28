@@ -21,6 +21,7 @@ namespace KI.Renderer
         GrayScale,
         SSAO,
         SSLIC,
+        HUD,
         Selection,
         Output
     }
@@ -54,6 +55,7 @@ namespace KI.Renderer
 
         public RenderTechniqueFactory()
         {
+            // post effect 用と その他用は分けたほうが良いかもしれない
             var directory = AssetConstants.ShaderDirectory;
             var postEffect = AssetConstants.ShaderDirectory + @"\PostEffect";
             var lighthing = AssetConstants.ShaderDirectory + @"\Lighthing";
@@ -124,6 +126,9 @@ namespace KI.Renderer
                     break;
                 case RenderTechniqueType.SSLIC:
                     technique = new SSLIC(RendererSystem, DefaultShader[RenderTechniqueType.SSLIC].Vertex, DefaultShader[RenderTechniqueType.SSLIC].Frag);
+                    break;
+                case RenderTechniqueType.HUD:
+                    technique = new HUDBuffer(RendererSystem);
                     break;
                 default:
                     break;

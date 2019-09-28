@@ -34,11 +34,40 @@ namespace KI.Renderer.Technique
             }
         }
 
+        private Texture _uBackGround;
+        public Texture uBackGround
+        {
+            get
+            {
+                return _uBackGround;
+            }
+
+            set
+            {
+                SetValue<Texture>(ref _uBackGround, value);
+            }
+        }
+
+        private Texture _uForeGround;
+        public Texture uForeGround
+        {
+            get
+            {
+                return _uForeGround;
+            }
+
+            set
+            {
+                SetValue<Texture>(ref _uForeGround, value);
+            }
+        }
+
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public OutputBuffer(RenderSystem renderer, string vertexShader, string fragShader)
-            : base("OutputBuffer", renderer, vertexShader, fragShader, RenderType.Original)
+            : base("OutputBuffer", renderer, vertexShader, fragShader, RenderType.Forward)
         {
         }
 

@@ -18,8 +18,8 @@ namespace KI.Renderer
             PostProcessMode = true;
             RenderQueue = new RenderQueue();
             PostEffect = new RenderQueue();
-            BackGround = new List<HUDObject>();
-            ForeGround = new List<HUDObject>();
+            BackGroundObject = new List<HUDObject>();
+            ForeGroundObject = new List<HUDObject>();
 
             RenderQueue.TechniqueAdded += RenderQueue_TechniqueAdded;
             PostEffect.TechniqueAdded += RenderQueue_TechniqueAdded;
@@ -63,12 +63,55 @@ namespace KI.Renderer
         /// <summary>
         /// 前面に書く HUD
         /// </summary>
-        public List<HUDObject> ForeGround { get; private set; }
+        public List<HUDObject> ForeGroundObject { get; private set; }
+
+        /// <summary>
+        /// ForeGroundBuffer の バッキングフィールド
+        /// </summary>
+        private HUDBuffer foreGroundBuffer;
+
+        /// <summary>
+        /// 前面に書く HUD
+        /// </summary>
+        public HUDBuffer ForeGroundBuffer
+        {
+            get
+            {
+                return foreGroundBuffer;
+            }
+            set
+            {
+                foreGroundBuffer = value;
+                AddProcessingTexture(foreGroundBuffer);
+            }
+        }
 
         /// <summary>
         /// 背景に書く HUD
         /// </summary>
-        public List<HUDObject> BackGround { get; private set; }
+        public List<HUDObject> BackGroundObject { get; private set; }
+
+        /// <summary>
+        /// BackGroundBuffer の バッキングフィールド
+        /// </summary>
+        private HUDBuffer backGroundBuffer;
+
+        /// <summary>
+        /// 背景に書く HUD
+        /// </summary>
+        public HUDBuffer BackGroundBuffer
+        {
+            get
+            {
+                return backGroundBuffer;
+            }
+            set
+            {
+                backGroundBuffer = value;
+                AddProcessingTexture(backGroundBuffer);
+            }
+        }
+
 
         /// <summary>
         /// サイズ変更
@@ -79,6 +122,8 @@ namespace KI.Renderer
         {
             RenderQueue.SizeChanged(width, height);
             PostEffect.SizeChanged(width, height);
+            BackGroundBuffer.SizeChanged(width, height);
+            ForeGroundBuffer.SizeChanged(width, height);
             //OutputBuffer.SizeChanged(width, height);
         }
 
@@ -105,9 +150,9 @@ namespace KI.Renderer
                 return;
             }
 
-            foreach (var hud in BackGround)
+            if (BackGroundBuffer != null)
             {
-                hud.Render();
+                BackGroundBuffer.Render(BackGroundObject);
             }
 
             RenderQueue.Render(ActiveScene);
@@ -117,13 +162,23 @@ namespace KI.Renderer
                 PostEffect.Render(ActiveScene);
             }
 
+            if (ForeGroundBuffer != null)
+            {
+                ForeGroundBuffer.Render(ForeGroundObject);
+            }
+
             OutputBuffer.uTarget = OutputTexture;
+            if(BackGroundBuffer != null)
+            {
+                OutputBuffer.uBackGround = BackGroundBuffer.RenderTarget.RenderTexture[0];
+            }
+            if(ForeGroundBuffer != null)
+            {
+                OutputBuffer.uForeGround = ForeGroundBuffer.RenderTarget.RenderTexture[0];
+            }
+
             OutputBuffer.Render(ActiveScene);
 
-            foreach(var hud in ForeGround)
-            {
-                hud.Render();
-            }
         }
 
         /// <summary>
@@ -133,7 +188,12 @@ namespace KI.Renderer
         /// <param name="e">レンダーキューイベント</param>
         private void RenderQueue_TechniqueAdded(object sender, RenderQueueEventArgs e)
         {
-            foreach (var texture in e.Technique.RenderTarget.RenderTexture)
+            AddProcessingTexture(e.Technique);
+        }
+
+        private void AddProcessingTexture(RenderTechnique technique)
+        {
+            foreach (var texture in technique.RenderTarget.RenderTexture)
             {
                 ProcessingTexture.Add(texture);
             }

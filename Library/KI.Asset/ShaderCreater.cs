@@ -20,6 +20,7 @@ namespace KI.Asset
         Split,
         VectorField,
         SSLIC,
+        HUD,
         Output
     }
 
@@ -33,7 +34,6 @@ namespace KI.Asset
         AlbedoSpecular,
         AlbedoNormalSpecular
     }
-
 
     /// <summary>
     /// シェーダ生成クラス
@@ -279,6 +279,10 @@ namespace KI.Asset
                     return ShaderFactory.Instance.CreateShaderVF(
                         Directory + @"PostEffect\sslic.vert",
                         Directory + @"PostEffect\sslic.frag");
+                case SHADER_TYPE.HUD:
+                    return ShaderFactory.Instance.CreateShaderVF(
+                        Directory + @"hud.vert",
+                        Directory + @"hud.frag");
                 case SHADER_TYPE.Output:
                     return ShaderFactory.Instance.CreateShaderVF(
                         Directory + @"PostEffect\output.vert",

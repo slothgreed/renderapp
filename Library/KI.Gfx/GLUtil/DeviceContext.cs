@@ -53,7 +53,7 @@ namespace KI.Gfx.GLUtil
         /// <param name="height">縦</param>
         public void Initialize(int width, int height)
         {
-            GL.ClearColor(0, 0, 0, 1);
+            GL.ClearColor(0, 0, 0, 0);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.CullFace);

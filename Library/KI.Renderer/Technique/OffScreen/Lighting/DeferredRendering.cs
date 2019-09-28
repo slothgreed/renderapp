@@ -11,7 +11,7 @@ namespace KI.Renderer.Technique
         /// コンストラクタ
         /// </summary>
         public DeferredRendering(RenderSystem renderer, string vertexShader, string fragShader)
-            : base("Deferred", renderer, vertexShader, fragShader,RenderType.Original)
+            : base("Deferred", renderer, vertexShader, fragShader,RenderType.Forward)
         {
         }
 

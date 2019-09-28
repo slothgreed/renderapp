@@ -12,7 +12,7 @@ namespace KI.Renderer.Technique
         /// コンストラクタ
         /// </summary>
         public ImageBasedLighting(RenderSystem renderer, string vertexShader, string fragShader)
-            : base("IBL", renderer, vertexShader, fragShader,RenderType.Original)
+            : base("IBL", renderer, vertexShader, fragShader,RenderType.Forward)
         {
         }
 

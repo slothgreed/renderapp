@@ -16,6 +16,7 @@ using RenderApp.Model;
 using RenderApp.Tool;
 using RenderApp.Tool.Command;
 using KI.Asset.Primitive;
+using KI.Asset.HUD;
 
 namespace RenderApp.ViewModel
 {
@@ -108,8 +109,6 @@ namespace RenderApp.ViewModel
             ViewportViewModel.Invalidate();
         }
 
-
-
         public void UpdateSelectNode(SceneNode node)
         {
             if (node == null)
@@ -177,10 +176,24 @@ namespace RenderApp.ViewModel
 
             var torus = new Torus(0.1f, 0.2f, 90, 90);
             var torusObject = PolygonUtility.CreatePolygon("Sphere", torus);
-            PolygonNode torusNode = new PolygonNode(torusObject);
-            var sphereShader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
-            torusObject.Material = new Material(sphereShader);
+            var torusShader = ShaderCreater.Instance.CreateShader(GBufferType.PointColor);
+            torusObject.Material = new Material(torusShader);
             mainScene.AddObject(new PolygonNode(torusObject));
+
+            var backGround = new BackGround(Vector3.UnitX);
+            var backGroundObject = PolygonUtility.CreatePolygon("BackGround", backGround.Plane);
+            var hudShader = ShaderCreater.Instance.CreateShader(SHADER_TYPE.HUD);
+            backGroundObject.Material = new Material(hudShader);
+            var hud = new HUDObject(backGroundObject);
+            workspace.RenderSystem.BackGroundObject.Add(hud);
+
+
+            var foreGround = new BackGround(Vector3.UnitX);
+            var foreGroundObject = PolygonUtility.CreatePolygon("ForeGround", foreGround.Sphere);
+            foreGroundObject.Material = new Material(hudShader);
+            var foregroundHUD = new HUDObject(foreGroundObject);
+            workspace.RenderSystem.ForeGroundObject.Add(foregroundHUD);
+
 
             //var sponzas = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/crytek-sponza/sponza.obj");
             //var sponzaObject = SceneNodeFactory.Instance.CreatePolygonNodes("sponza",sponzas);
@@ -358,6 +371,8 @@ namespace RenderApp.ViewModel
             renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Deferred));
             //renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Selection));
 
+            renderer.ForeGroundBuffer = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.HUD) as HUDBuffer;
+            renderer.BackGroundBuffer = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.HUD) as HUDBuffer;
             renderer.OutputBuffer = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output) as OutputBuffer;
             renderer.OutputTexture = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
 
