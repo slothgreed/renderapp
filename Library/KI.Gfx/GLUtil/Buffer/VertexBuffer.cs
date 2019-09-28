@@ -136,9 +136,9 @@ namespace KI.Gfx.GLUtil.Buffer
         /// </summary>
         /// <param name="vertexSrc">頂点リスト</param>
         /// <param name="indexSrc">インデクサ</param>
-        public void SetBuffer(IEnumerable<Vertex> vertexSrc, List<int> indexSrc)
+        public void SetBuffer(IEnumerable<Vertex> vertexSrc, IEnumerable<int> indexSrc)
         {
-            if (indexSrc != null && indexSrc.Count != 0)
+            if (indexSrc != null && indexSrc.Count() != 0)
             {
                 SetPosition(vertexSrc.Select(p => p.Position).ToArray());
                 SetNormal(vertexSrc.Select(p => p.Normal).ToArray());
