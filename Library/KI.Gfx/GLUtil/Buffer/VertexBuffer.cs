@@ -129,7 +129,34 @@ namespace KI.Gfx.GLUtil.Buffer
                 SetIndexArray(indexBuffer);
             }
         }
-        
+
+
+        /// <summary>
+        /// 頂点バッファの設定
+        /// </summary>
+        /// <param name="vertexSrc">頂点リスト</param>
+        /// <param name="indexSrc">インデクサ</param>
+        public void SetBuffer(IEnumerable<Vertex> vertexSrc, List<int> indexSrc)
+        {
+            if (indexSrc != null && indexSrc.Count != 0)
+            {
+                SetPosition(vertexSrc.Select(p => p.Position).ToArray());
+                SetNormal(vertexSrc.Select(p => p.Normal).ToArray());
+                SetColor(vertexSrc.Select(p => p.Color).ToArray());
+                SetTextureCode(vertexSrc.Select(p => p.TexCoord).ToArray());
+                SetIndexArray(indexSrc.ToArray());
+            }
+            else
+            {
+                SetPosition(vertexSrc.Select(p => p.Position).ToArray());
+                SetNormal(vertexSrc.Select(p => p.Normal).ToArray());
+                SetColor(vertexSrc.Select(p => p.Color).ToArray());
+                SetTextureCode(vertexSrc.Select(p => p.TexCoord).ToArray());
+                Num = vertexSrc.Count();
+                EnableIndexBuffer = false;
+            }
+        }
+
         /// <summary>
         /// 位置情報の設定
         /// </summary>
@@ -202,34 +229,6 @@ namespace KI.Gfx.GLUtil.Buffer
             EnableIndexBuffer = true;
         }
 
-
-        /// <summary>
-        /// バッファの設定
-        /// </summary>
-        /// <param name="position">頂点</param>
-        /// <param name="normal">法線</param>
-        /// <param name="color">色</param>
-        /// <param name="texCoord">テクスチャ</param>
-        /// <param name="index">頂点インデックス</param>
-        /// <param name="num">数</param>
-        public void SetBuffer(Vertex[] vertex, int[] indexBuffer)
-        {
-            SetPosition(vertex.Select(p => p.Position).ToArray());
-            SetNormal(vertex.Select(p => p.Normal).ToArray());
-            SetColor(vertex.Select(p => p.Color).ToArray());
-            SetTextureCode(vertex.Select(p => p.TexCoord).ToArray());
-
-            if (indexBuffer == null)
-            {
-                Num = vertex.Length;
-                EnableIndexBuffer = false;
-            }
-            else
-            {
-                SetIndexArray(indexBuffer);
-            }
-        }
-
         /// <summary>
         /// 複製(BufferのID情報のみ・データ自体は複製しない)
         /// ここで生成したものは解放不要
@@ -265,36 +264,7 @@ namespace KI.Gfx.GLUtil.Buffer
             TexCoordBuffer = null;
         }
 
-        /// <summary>
-        /// 頂点バッファの設定（点群）
-        /// </summary>
-        /// <param name="vertexSrc">頂点リスト</param>
-        /// <param name="indexSrc">インデクサ</param>
-        public void SetupPointBuffer(IEnumerable<Vertex> vertexSrc, List<int> indexSrc)
-        {
-            int[] indexBuffer = null;
-            Vector3[] position = null;
-            Vector3[] normal = null;
-            Vector3[] color = null;
-            Vector2[] texCoord = null;
-            if (indexSrc != null && indexSrc.Count != 0)
-            {
-                indexBuffer = indexSrc.ToArray();
-                position = vertexSrc.Select(p => p.Position).ToArray();
-                normal = vertexSrc.Select(p => p.Normal).ToArray();
-                color = vertexSrc.Select(p => p.Color).ToArray();
-                texCoord = vertexSrc.Select(p => p.TexCoord).ToArray();
-            }
-            else
-            {
-                position = vertexSrc.Select(p => p.Position).ToArray();
-                normal = vertexSrc.Select(p => p.Normal).ToArray();
-                color = vertexSrc.Select(p => p.Color).ToArray();
-                texCoord = vertexSrc.Select(p => p.TexCoord).ToArray();
-            }
 
-            SetBuffer(position, normal, color, texCoord, indexBuffer);
-        }
 
         /// <summary>
         /// 描画

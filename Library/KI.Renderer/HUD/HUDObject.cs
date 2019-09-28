@@ -123,7 +123,7 @@ namespace KI.Renderer
         /// </summary>
         public virtual void UpdateVertexBufferObject()
         {
-            VertexBuffer.SetupPointBuffer(Polygon.Vertexs, Polygon.Index);
+            VertexBuffer.SetBuffer(Polygon.Vertexs, Polygon.Index);
         }
     }
 }

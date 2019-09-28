@@ -108,7 +108,7 @@ namespace RenderApp.Tool.Controller
 
                         Polygon lineGeometry = new Polygon("geodesicDistance", vertexs, KIPrimitiveType.Lines);
                         var vertexBuffer = new VertexBuffer();
-                        vertexBuffer.SetupPointBuffer(lineGeometry.Vertexs, lineGeometry.Index);
+                        vertexBuffer.SetBuffer(lineGeometry.Vertexs, lineGeometry.Index);
                         var lineAttribute = new PolygonAttribute("geodesicDistance", vertexBuffer, KIPrimitiveType.Lines, analyzePolygonNode.Polygon.Material);
                         analyzePolygonNode.Attributes.Add(lineAttribute);
                         Workspace.Instance.RenderSystem.ActiveScene.AddObject(new PolygonNode(lineGeometry), parentNode);
