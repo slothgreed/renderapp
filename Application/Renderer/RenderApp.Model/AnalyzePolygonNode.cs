@@ -20,7 +20,7 @@ namespace RenderApp.Model
         public AnalyzePolygonNode(string name, Polygon polygon)
             : base(name, polygon)
         {
-            var polygonAttribute = new PolygonAttribute("Polygon", VertexBuffer, polygon.Type, Polygon.Material);
+            var polygonAttribute = new PolygonAttribute("Polygon", VertexBuffer, Polygon.Material);
             Attributes.Add(polygonAttribute);
         }
 
@@ -53,7 +53,7 @@ namespace RenderApp.Model
                 attribute.Binding();
                 ShaderHelper.InitializeState(scene, this, attribute.VertexBuffer, attribute.Material);
                 attribute.Material.BindToGPU();
-                attribute.VertexBuffer.Render(attribute.Type);
+                attribute.VertexBuffer.Render();
                 attribute.Material.UnBindToGPU();
                 attribute.UnBinding();
 

@@ -122,8 +122,17 @@ namespace KI.Renderer
         {
             RenderQueue.SizeChanged(width, height);
             PostEffect.SizeChanged(width, height);
-            BackGroundBuffer.SizeChanged(width, height);
-            ForeGroundBuffer.SizeChanged(width, height);
+
+            if (BackGroundBuffer != null)
+            {
+                BackGroundBuffer.SizeChanged(width, height);
+            }
+
+            if (ForeGroundBuffer != null)
+            {
+                ForeGroundBuffer.SizeChanged(width, height);
+            }
+
             //OutputBuffer.SizeChanged(width, height);
         }
 

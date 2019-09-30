@@ -109,11 +109,11 @@ namespace CADApp.Model.Node
         {
             moveGizmo = new MoveGizmo();
             moveGizmoBuffer = new VertexBuffer();
-            moveGizmoBuffer.SetBuffer(moveGizmo.Vertex, null, moveGizmo.Color, null, moveGizmo.Index);
+            moveGizmoBuffer.SetBuffer(KIPrimitiveType.Triangles, moveGizmo.Vertex, null, moveGizmo.Color, null, moveGizmo.Index);
 
             scaleGizmo = new ScaleGizmo();
             scaleGizmoBuffer = new VertexBuffer();
-            scaleGizmoBuffer.SetBuffer(scaleGizmo.Vertex, null, scaleGizmo.Color, null, scaleGizmo.Index);
+            scaleGizmoBuffer.SetBuffer(KIPrimitiveType.Triangles, scaleGizmo.Vertex, null, scaleGizmo.Color, null, scaleGizmo.Index);
 
         }
 
@@ -170,21 +170,21 @@ namespace CADApp.Model.Node
 
             if (vertexs.Count > 0)
             {
-                selectVertexBuffer.SetBuffer(vertexs.ToArray(), Enumerable.Range(0, vertexs.Count).ToArray());
+                selectVertexBuffer.SetBuffer(KIPrimitiveType.Points, vertexs.ToArray(), Enumerable.Range(0, vertexs.Count).ToArray());
                 selectBDB.Update(vertexs.Select(p => p.Position).ToList());
                 VisibleSelectVertex = true;
             }
 
             if(lineVertex.Count >0)
             {
-                selectLineBuffer.SetBuffer(lineVertex.ToArray(), Enumerable.Range(0, lineVertex.Count).ToArray());
+                selectLineBuffer.SetBuffer(KIPrimitiveType.Lines, lineVertex.ToArray(), Enumerable.Range(0, lineVertex.Count).ToArray());
                 selectBDB.Update(lineVertex.Select(p => p.Position).ToList());
                 VisibleSelectLine = true;
             }
 
             if (triangleVertex.Count > 0)
             {
-                selectTriangleBuffer.SetBuffer(triangleVertex.ToArray(), Enumerable.Range(0, triangleVertex.Count).ToArray());
+                selectTriangleBuffer.SetBuffer(KIPrimitiveType.Triangles, triangleVertex.ToArray(), Enumerable.Range(0, triangleVertex.Count).ToArray());
                 selectBDB.Update(triangleVertex.Select(p => p.Position).ToList());
                 VisibleSelectTriangle = true;
             }
@@ -194,28 +194,28 @@ namespace CADApp.Model.Node
         {
             if (VisibleSelectVertex == true)
             {
-                Draw(scene, KIPrimitiveType.Points, selectVertexBuffer, material);
+                Draw(scene, selectVertexBuffer, material);
             }
 
             if (VisibleSelectLine)
             {
-                Draw(scene, KIPrimitiveType.Lines, selectLineBuffer, lineMaterial);
+                Draw(scene, selectLineBuffer, lineMaterial);
             }
 
             if (VisibleSelectTriangle)
             {
-                Draw(scene, KIPrimitiveType.Triangles, selectTriangleBuffer, material);
+                Draw(scene, selectTriangleBuffer, material);
             }
 
-            //Draw(scene, KIPrimitiveType.Triangles, moveGizmoBuffer, material);
-            Draw(scene, KIPrimitiveType.Triangles, scaleGizmoBuffer, material);
+            //Draw(scene, moveGizmoBuffer, material);
+            Draw(scene, scaleGizmoBuffer, material);
         }
 
-        private void Draw(Scene scene, KIPrimitiveType type, VertexBuffer buffer, Material material)
+        private void Draw(Scene scene, VertexBuffer buffer, Material material)
         {
             ShaderHelper.InitializeState(scene, this, buffer, material);
             material.BindToGPU();
-            buffer.Render(type);
+            buffer.Render();
 
             material.UnBindToGPU();
         }

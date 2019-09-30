@@ -226,7 +226,6 @@ namespace RenderApp.ViewModel
                 // bunny attribute
                 //var attribute = new KI.Asset.Attribute.OutlineAttribute(renderBunny.Name + "Outline",
                 //renderBunny.VertexBuffer.ShallowCopy(),
-                //renderBunny.Polygon.Type,
                 //ShaderCreater.Instance.CreateShader(ShaderType.Outline));
                 //renderBunny.Attributes.Add(attribute);
                 //mainScene.AddObject(attribute, parentNode);

@@ -24,7 +24,7 @@ namespace KI.Asset.Attribute
         /// <param name="material">マテリアル</param>
         /// <param name="Color">色情報</param>
         public SingleColorAttribute(string name, VertexBuffer vertexBuffer, Vector4 color)
-            : base(name, vertexBuffer, KIPrimitiveType.Lines, new Material())
+            : base(name, vertexBuffer, new Material())
         {
             Color = color;
 

@@ -105,7 +105,7 @@ namespace CADApp.Model.Node
             attribute.Binding();
             ShaderHelper.InitializeState(scene, this, attribute.VertexBuffer, attribute.Material);
             attribute.Material.Shader.BindBuffer();
-            attribute.VertexBuffer.Render(type);
+            attribute.VertexBuffer.Render();
 
             attribute.Material.Shader.UnBindBuffer();
         }
@@ -138,7 +138,7 @@ namespace CADApp.Model.Node
 
             lineAttribute = new SingleColorAttribute("Line", lineBuffer, Vector4.Zero);
             pointAttribute = new SingleColorAttribute("Point", vertexBuffer, Vector4.UnitY + Vector4.UnitZ + Vector4.UnitW);
-            triangleAttribute = new PolygonAttribute("Triangle", triangleBuffer, KIPrimitiveType.Triangles, material);
+            triangleAttribute = new PolygonAttribute("Triangle", triangleBuffer, material);
             controlPointAttribute = new SingleColorAttribute("Point", controlPointBuffer, Vector4.UnitY + Vector4.UnitW);
         }
 
@@ -152,24 +152,24 @@ namespace CADApp.Model.Node
             if (Assembly.Vertex != null &&
                 Assembly.Vertex.Count > 0)
             {
-                pointAttribute.VertexBuffer.SetBuffer(Assembly.Vertex.ToArray(), Enumerable.Range(0, Assembly.Vertex.Count).ToArray());
+                pointAttribute.VertexBuffer.SetBuffer(KIPrimitiveType.Points, Assembly.Vertex.ToArray(), Enumerable.Range(0, Assembly.Vertex.Count).ToArray());
             }
 
             if (Assembly.ControlPoint != null &&
                 Assembly.ControlPoint.Count > 0)
             {
-                controlPointAttribute.VertexBuffer.SetBuffer(Assembly.ControlPoint.ToArray(), Enumerable.Range(0, Assembly.ControlPoint.Count).ToArray());
+                controlPointAttribute.VertexBuffer.SetBuffer(KIPrimitiveType.Points, Assembly.ControlPoint.ToArray(), Enumerable.Range(0, Assembly.ControlPoint.Count).ToArray());
             }
 
             if (Assembly.LineIndex != null &&
                 Assembly.LineIndex.Count > 1)
             {
-                lineAttribute.VertexBuffer.SetIndexArray(Assembly.LineIndex.ToArray());
+                lineAttribute.VertexBuffer.SetIndexArray(KIPrimitiveType.Lines, Assembly.LineIndex.ToArray());
             }
             if (Assembly.TriangleIndex != null &&
                 Assembly.TriangleIndex.Count > 2)
             {
-                triangleAttribute.VertexBuffer.SetIndexArray(Assembly.TriangleIndex.ToArray());
+                triangleAttribute.VertexBuffer.SetIndexArray(KIPrimitiveType.Triangles, Assembly.TriangleIndex.ToArray());
             }
         }
     }

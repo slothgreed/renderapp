@@ -6,7 +6,9 @@ using KI.Gfx.KIShader;
 namespace KI.Asset.Attribute
 {
     /// <summary>
-    /// アトリビュート
+    /// アトリビュート 
+    /// オブジェクトに付随する情報
+    /// マテリアルはオブジェクトがもつ恒久的なパラメータなので別もの
     /// </summary>
     public abstract class AttributeBase : KIObject
     {
@@ -16,11 +18,10 @@ namespace KI.Asset.Attribute
         /// <param name="name">名前</param>
         /// <param name="type">レンダリングタイプ</param>
         /// <param name="material">マテリアル</param>
-        public AttributeBase(string name, KIPrimitiveType type, Material material)
+        public AttributeBase(string name, Material material)
             : base(name)
         {
             Material = material;
-            Type = type;
         }
 
         /// <summary>
@@ -28,12 +29,11 @@ namespace KI.Asset.Attribute
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="material">マテリアル</param>
-        public AttributeBase(string name, VertexBuffer vertexBuffer, KIPrimitiveType type, Material material)
+        public AttributeBase(string name, VertexBuffer vertexBuffer, Material material)
             : base(name)
         {
             VertexBuffer = vertexBuffer;
             Material = material;
-            Type = type;
         }
 
         /// <summary>
@@ -41,10 +41,9 @@ namespace KI.Asset.Attribute
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="material">マテリアル</param>
-        public AttributeBase(string name, KIPrimitiveType type)
+        public AttributeBase(string name)
             : base(name)
         {
-            Type = type;
         }
 
         /// <summary>

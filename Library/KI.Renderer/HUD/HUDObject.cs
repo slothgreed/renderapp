@@ -55,17 +55,6 @@ namespace KI.Renderer
         }
 
         /// <summary>
-        /// ポリゴンの種類
-        /// </summary>
-        public KIPrimitiveType Type
-        {
-            get
-            {
-                return Polygon.Type;
-            }
-        }
-
-        /// <summary>
         /// 描画
         /// </summary>
         public void Render()
@@ -93,7 +82,7 @@ namespace KI.Renderer
             ShaderHelper.InitializeHUD(VertexBuffer, Polygon.Material);
             Polygon.Material.BindToGPU();
 
-            VertexBuffer.Render(Type);
+            VertexBuffer.Render();
 
             Polygon.Material.UnBindToGPU();
 
@@ -123,7 +112,7 @@ namespace KI.Renderer
         /// </summary>
         public virtual void UpdateVertexBufferObject()
         {
-            VertexBuffer.SetBuffer(Polygon.Vertexs, Polygon.Index);
+            VertexBuffer.SetBuffer(Polygon.Type, Polygon.Vertexs, Polygon.Index);
         }
     }
 }

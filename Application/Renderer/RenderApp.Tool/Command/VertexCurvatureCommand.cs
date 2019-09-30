@@ -68,37 +68,31 @@ namespace RenderApp.Tool.Command
 
             VertexParameterAttribute voronoiAttribute = new VertexParameterAttribute(targetObject.Name + " : Voronoi",
                 targetObject.VertexBuffer.ShallowCopy(),
-                targetObject.Type,
                 vertexMaterial,
                 voronoiParam.Values);
 
             VertexParameterAttribute laplaceAttribute = new VertexParameterAttribute(targetObject.Name + " : Laplace",
                 targetObject.VertexBuffer.ShallowCopy(),
-                targetObject.Type,
                 vertexMaterial,
                 laplaceParam.Values);
 
             VertexParameterAttribute meanAttribute = new VertexParameterAttribute(targetObject.Name + " : MeanCurvature",
                 targetObject.VertexBuffer.ShallowCopy(),
-                targetObject.Type,
                 vertexMaterial,
                 meanParam.Values);
 
             VertexParameterAttribute gaussAttribute = new VertexParameterAttribute(targetObject.Name + " : GaussCurvature",
                 targetObject.VertexBuffer.ShallowCopy(),
-                targetObject.Type,
                 vertexMaterial,
                 gaussParam.Values);
 
             VertexParameterAttribute minAttribute = new VertexParameterAttribute(targetObject.Name + " : MinCurvature",
                 targetObject.VertexBuffer.ShallowCopy(),
-                targetObject.Type,
                 vertexMaterial,
                 minParam.Values);
 
             VertexParameterAttribute maxAttribute = new VertexParameterAttribute(targetObject.Name + " : MaxCurvature",
                 targetObject.VertexBuffer.ShallowCopy(),
-                targetObject.Type,
                 vertexMaterial,
                 maxParam.Values);
 

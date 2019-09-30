@@ -9,7 +9,6 @@ namespace KI.Mathmatics
     {
         /// <summary>
         /// マトリクスを2次元配列に変換
-        /// // TODO: Matrix4Extension の実装
         /// </summary>
         /// <param name="matrix">Matrix4</param>
         /// <returns>2次元配列</returns>

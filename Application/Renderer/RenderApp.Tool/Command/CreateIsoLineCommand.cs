@@ -89,8 +89,8 @@ namespace RenderApp.Tool.Command
 
             Polygon isoLines = new Polygon("IsoLines", vertexs, createLine, KIPrimitiveType.Lines);
             VertexBuffer vertexBuffer = new VertexBuffer();
-            vertexBuffer.SetBuffer(isoLines.Vertexs, isoLines.Index);
-            var polyAttriute = new PolygonAttribute("IsoLines", vertexBuffer, KIPrimitiveType.Lines, targetObject.Polygon.Material);
+            vertexBuffer.SetBuffer(KIPrimitiveType.Lines, isoLines.Vertexs, isoLines.Index);
+            var polyAttriute = new PolygonAttribute("IsoLines", vertexBuffer, targetObject.Polygon.Material);
             targetObject.Attributes.Add(polyAttriute);
 
             return CommandResult.Success;

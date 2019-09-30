@@ -50,7 +50,7 @@ namespace KI.Asset.Attribute
         /// <param name="polygon">線分</param>
         /// <param name="material">マテリアル</param>
         public VertexDirectionAttribute(string name, Material material, Vector3[] position, Vector3[] direction, Vector4 color, Vector3[] normal = null, bool displayVector = false)
-            : base(name, KIPrimitiveType.Lines, material)
+            : base(name, material)
         {
             lineColor = color;
             Direction = direction;
@@ -80,6 +80,7 @@ namespace KI.Asset.Attribute
             vertexPositionBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer);
             vertexPositionBuffer.SetData(lines, EArrayType.Vec3Array);
             VertexBuffer.PositionBuffer = vertexPositionBuffer;
+            VertexBuffer.Type = KIPrimitiveType.Lines;
             VertexBuffer.Num = lines.Length;
         }
 

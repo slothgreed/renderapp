@@ -16,8 +16,8 @@ namespace KI.Asset.Attribute
         /// <param name="vertexBuffer">頂点バッファ</param>
         /// <param name="type">ポリゴン種類</param>
         /// <param name="material">マテリアル</param>
-        public PolygonAttribute(string name, VertexBuffer vertexBuffer, KIPrimitiveType type, Material material)
-            : base(name, vertexBuffer, type, material)
+        public PolygonAttribute(string name, VertexBuffer vertexBuffer, Material material)
+            : base(name, vertexBuffer, material)
         {
         }
 
@@ -26,8 +26,8 @@ namespace KI.Asset.Attribute
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="type">ポリゴン種類</param>
-        public PolygonAttribute(string name, KIPrimitiveType type)
-            : base(name, type)
+        public PolygonAttribute(string name)
+            : base(name)
         {
         }
     }

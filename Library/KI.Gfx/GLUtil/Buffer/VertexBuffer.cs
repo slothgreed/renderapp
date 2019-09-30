@@ -20,7 +20,7 @@ namespace KI.Gfx.GLUtil.Buffer
 
         /// <summary>
         /// 法線バッファ
-        /// </summary>
+        /// </summary
         public ArrayBuffer NormalBuffer { get; set; }
         
         /// <summary>
@@ -51,7 +51,12 @@ namespace KI.Gfx.GLUtil.Buffer
         /// <summary>
         /// 浅いコピーのオブジェクトかどうか
         /// </summary>
-        public bool ShallowCopyObject { get; set; } = false;
+        public bool ShallowCopyObject { get; private set; } = false;
+
+        /// <summary>
+        /// レンダリングの種類
+        /// </summary>
+        public KIPrimitiveType Type { get; set; }
 
         /// <summary>
         /// コンストラクタ
@@ -96,14 +101,16 @@ namespace KI.Gfx.GLUtil.Buffer
         /// <summary>
         /// バッファの設定
         /// </summary>
+        /// <param name="type">ポリゴン種類</param>
         /// <param name="position">頂点</param>
         /// <param name="normal">法線</param>
         /// <param name="color">色</param>
         /// <param name="texCoord">テクスチャ</param>
         /// <param name="index">頂点インデックス</param>
         /// <param name="num">数</param>
-        public void SetBuffer(Vector3[] position, Vector3[] normal, Vector3[] color, Vector2[] texCoord, int[] indexBuffer)
+        public void SetBuffer(KIPrimitiveType type, Vector3[] position, Vector3[] normal, Vector3[] color, Vector2[] texCoord, int[] indexBuffer)
         {
+            Type = type;
             SetPosition(position);
             if (normal != null)
             {
@@ -126,7 +133,7 @@ namespace KI.Gfx.GLUtil.Buffer
             }
             else
             {
-                SetIndexArray(indexBuffer);
+                SetIndexArray(type, indexBuffer);
             }
         }
 
@@ -134,9 +141,10 @@ namespace KI.Gfx.GLUtil.Buffer
         /// <summary>
         /// 頂点バッファの設定
         /// </summary>
+        /// <param name="type">ポリゴン種類</param>
         /// <param name="vertexSrc">頂点リスト</param>
         /// <param name="indexSrc">インデクサ</param>
-        public void SetBuffer(IEnumerable<Vertex> vertexSrc, IEnumerable<int> indexSrc)
+        public void SetBuffer(KIPrimitiveType type, IEnumerable<Vertex> vertexSrc, IEnumerable<int> indexSrc)
         {
             if (indexSrc != null && indexSrc.Count() != 0)
             {
@@ -144,7 +152,7 @@ namespace KI.Gfx.GLUtil.Buffer
                 SetNormal(vertexSrc.Select(p => p.Normal).ToArray());
                 SetColor(vertexSrc.Select(p => p.Color).ToArray());
                 SetTextureCode(vertexSrc.Select(p => p.TexCoord).ToArray());
-                SetIndexArray(indexSrc.ToArray());
+                SetIndexArray(type, indexSrc.ToArray());
             }
             else
             {
@@ -155,13 +163,15 @@ namespace KI.Gfx.GLUtil.Buffer
                 Num = vertexSrc.Count();
                 EnableIndexBuffer = false;
             }
+
+            Type = type;
         }
 
         /// <summary>
         /// 位置情報の設定
         /// </summary>
         /// <param name="position">位置データ</param>
-        public void SetPosition(Vector3[] position)
+        private void SetPosition(Vector3[] position)
         {
             if(PositionBuffer == null)
             {
@@ -175,7 +185,7 @@ namespace KI.Gfx.GLUtil.Buffer
         /// カラー情報の設定
         /// </summary>
         /// <param name="color">カラーデータ</param>
-        public void SetColor(Vector3[] color)
+        private void SetColor(Vector3[] color)
         {
             if (ColorBuffer == null)
             {
@@ -189,7 +199,7 @@ namespace KI.Gfx.GLUtil.Buffer
         /// 法線情報の設定
         /// </summary>
         /// <param name="normal">法線データ</param>
-        public void SetNormal(Vector3[] normal)
+        private void SetNormal(Vector3[] normal)
         {
             if (NormalBuffer == null)
             {
@@ -203,7 +213,7 @@ namespace KI.Gfx.GLUtil.Buffer
         /// 法線情報の設定
         /// </summary>
         /// <param name="textureCode">テクスチャ座標データ</param>
-        public void SetTextureCode(Vector2[] texture)
+        private void SetTextureCode(Vector2[] texture)
         {
             if (TexCoordBuffer == null)
             {
@@ -216,15 +226,18 @@ namespace KI.Gfx.GLUtil.Buffer
         /// <summary>
         /// 頂点配列の設定
         /// </summary>
+        /// <param name="type">ポリゴン種類</param>
         /// <param name="indexArray">頂点配列</param>
-        public void SetIndexArray(int[] indexArray)
+        public void SetIndexArray(KIPrimitiveType type, int[] indexArray)
         {
             if (IndexBuffer == null)
             {
                 Logger.Log(Logger.LogLevel.Error, "No Gen Buffer");
             }
 
+
             IndexBuffer.SetData(indexArray, EArrayType.IntArray);
+            Type = type;
             Num = indexArray.Length;
             EnableIndexBuffer = true;
         }
@@ -245,6 +258,7 @@ namespace KI.Gfx.GLUtil.Buffer
             vertexBuffer.EnableIndexBuffer = EnableIndexBuffer;
             vertexBuffer.Num = Num;
             vertexBuffer.ShallowCopyObject = true;
+            vertexBuffer.Type = Type;
 
             return vertexBuffer;
         }
@@ -269,15 +283,15 @@ namespace KI.Gfx.GLUtil.Buffer
         /// <summary>
         /// 描画
         /// </summary>
-        public void Render(KIPrimitiveType type)
+        public void Render()
         {
             if (EnableIndexBuffer)
             {
-                DeviceContext.Instance.DrawElements(type, Num, DrawElementsType.UnsignedInt, 0);
+                DeviceContext.Instance.DrawElements(Type, Num, DrawElementsType.UnsignedInt, 0);
             }
             else
             {
-                DeviceContext.Instance.DrawArrays(type, 0, Num);
+                DeviceContext.Instance.DrawArrays(Type, 0, Num);
             }
         }
     }

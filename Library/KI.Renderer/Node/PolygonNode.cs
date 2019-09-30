@@ -91,7 +91,7 @@ namespace KI.Renderer
 
             ShaderHelper.InitializeState(scene, this, VertexBuffer, Polygon.Material);
             Polygon.Material.BindToGPU();
-            VertexBuffer.Render(Type);
+            VertexBuffer.Render();
 
             Polygon.Material.UnBindToGPU();
 
@@ -121,7 +121,7 @@ namespace KI.Renderer
         /// </summary>
         public virtual void UpdateVertexBufferObject()
         {
-            VertexBuffer.SetBuffer(Polygon.Vertexs, Polygon.Index);
+            VertexBuffer.SetBuffer(Polygon.Type, Polygon.Vertexs, Polygon.Index);
         }
     }
 }
