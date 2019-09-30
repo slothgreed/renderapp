@@ -21,7 +21,7 @@ namespace KI.Renderer
         public static void Setup(Polygon polygon, Material material = null)
         {
             string vert = ShaderCreater.Instance.GetVertexShader(polygon.Type, material);
-            string frag = ShaderCreater.Instance.GetFragShaderFilePath(polygon.Type, material);
+            string frag = ShaderCreater.Instance.GetFragShader(polygon.Type, material);
             var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
 
             if (material == null)

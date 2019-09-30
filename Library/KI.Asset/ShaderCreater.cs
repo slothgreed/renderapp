@@ -77,6 +77,36 @@ namespace KI.Asset
         }
 
         /// <summary>
+        /// フラグシェーダの取得
+        /// </summary>
+        /// <param name="polygonNode">描画オブジェクト</param>
+        /// <returns>ファイルパス</returns>
+        public string GetFragShader(KIPrimitiveType primitiveType, Material material)
+        {
+            string shaderPath = GetTextureFragShaderFilePath(material);
+            if (shaderPath != null)
+            {
+                return shaderPath;
+            }
+
+            if (primitiveType == KIPrimitiveType.Lines ||
+                primitiveType == KIPrimitiveType.Points)
+            {
+                return Directory + @"GBuffer\GeneralPC.frag";
+            }
+
+            if (material != null &&
+                material.Textures.Count != 0)
+            {
+                return Directory + @"GBuffer\GeneralPNT.frag";
+            }
+            else
+            {
+                return Directory + @"GBuffer\GeneralPNC.frag";
+            }
+        }
+
+        /// <summary>
         /// 頂点ファイルパスの取得
         /// </summary>
         /// <param name="type">GBufferに転送する頂点タイプ</param>
@@ -128,36 +158,6 @@ namespace KI.Asset
             }
 
             return null;
-        }
-
-        /// <summary>
-        /// フラグシェーダの取得
-        /// </summary>
-        /// <param name="polygonNode">描画オブジェクト</param>
-        /// <returns>ファイルパス</returns>
-        public string GetFragShaderFilePath(KIPrimitiveType primitiveType, Material material)
-        {
-            string shaderPath = GetTextureFragShaderFilePath(material);
-            if (shaderPath != null)
-            {
-                return shaderPath;
-            }
-
-            if (primitiveType == KIPrimitiveType.Lines ||
-                primitiveType == KIPrimitiveType.Points)
-            {
-                return Directory + @"GBuffer\GeneralPC.frag";
-            }
-
-            if (material != null &&
-                material.Textures.Count != 0)
-            {
-                return Directory + @"GBuffer\GeneralPNT.frag";
-            }
-            else
-            {
-                return Directory + @"GBuffer\GeneralPNC.frag";
-            }
         }
 
         /// <summary>

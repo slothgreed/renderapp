@@ -57,7 +57,7 @@ namespace RenderApp.ViewModel
 
             var importer = new HalfEdgeImporter(halfEdgeDS);
             string vert = ShaderCreater.Instance.GetVertexShader(importer.Model.Type, null);
-            string frag = ShaderCreater.Instance.GetFragShaderFilePath(importer.Model.Type, null);
+            string frag = ShaderCreater.Instance.GetFragShader(importer.Model.Type, null);
             var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
             importer.Model.Material = new Material(shader);
             AnalyzePolygonNode analyze = new AnalyzePolygonNode(importer.Model.Name, importer.Model);

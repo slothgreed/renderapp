@@ -281,11 +281,10 @@ namespace RenderApp.ViewModel
         public AnalyzePolygonNode CreateAnalyzePolygonNode(string name, ICreateModel model)
         {
             string vert = ShaderCreater.Instance.GetVertexShader(model.Model.Type, null);
-            string frag = ShaderCreater.Instance.GetFragShaderFilePath(model.Model.Type, null);
+            string frag = ShaderCreater.Instance.GetFragShader(model.Model.Type, null);
             var shader = ShaderFactory.Instance.CreateShaderVF(vert, frag);
             model.Model.Material = new Material(shader);
-            AnalyzePolygonNode node = new AnalyzePolygonNode(name, model.Model);
-            return node;
+            return new AnalyzePolygonNode(name, model.Model);
         }
 
         private void CreateEnvironmentCube(Vector3 min, Vector3 max)

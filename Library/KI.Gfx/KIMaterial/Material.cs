@@ -24,7 +24,6 @@ namespace KI.Gfx
         /// </summary>
         public Shader Shader;
 
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
