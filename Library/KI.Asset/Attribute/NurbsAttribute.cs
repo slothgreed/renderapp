@@ -35,8 +35,6 @@ namespace KI.Asset.Attribute
             }
         }
 
-        public KIPrimitiveType Type { get; private set;} = KIPrimitiveType.Patches;
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
