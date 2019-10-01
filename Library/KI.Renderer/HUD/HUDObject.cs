@@ -81,9 +81,7 @@ namespace KI.Renderer
 
             ShaderHelper.InitializeHUD(VertexBuffer, Polygon.Material);
             Polygon.Material.BindToGPU();
-
             VertexBuffer.Render();
-
             Polygon.Material.UnBindToGPU();
 
             Logger.GLLog(Logger.LogLevel.Error);

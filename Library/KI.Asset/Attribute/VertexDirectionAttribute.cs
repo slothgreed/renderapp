@@ -54,6 +54,7 @@ namespace KI.Asset.Attribute
         {
             lineColor = color;
             Direction = direction;
+            Material.Shader.SetValue("u_Color", lineColor);
 
             Vector3[] vectors;
 
@@ -149,19 +150,6 @@ namespace KI.Asset.Attribute
             }
 
             return vectors;
-        }
-
-        public override void Binding()
-        {
-            foreach (var info in Material.Shader.GetShaderVariable())
-            {
-                switch (info.Name)
-                {
-                    case "u_Color":
-                        info.Variable = lineColor;
-                        break;
-                }
-            }
         }
 
         public override void Dispose()

@@ -102,8 +102,8 @@ namespace CADApp.Model.Node
 
         private void Draw(Scene scene, KIPrimitiveType type, AttributeBase attribute)
         {
-            attribute.Binding();
             ShaderHelper.InitializeState(scene, this, attribute.VertexBuffer, attribute.Material);
+            attribute.Binding();
             attribute.Material.Shader.BindBuffer();
             attribute.VertexBuffer.Render();
 

@@ -50,12 +50,8 @@ namespace RenderApp.Model
                     return;
                 }
 
-                attribute.Binding();
                 ShaderHelper.InitializeState(scene, this, attribute.VertexBuffer, attribute.Material);
-                attribute.Material.BindToGPU();
-                attribute.VertexBuffer.Render();
-                attribute.Material.UnBindToGPU();
-                attribute.UnBinding();
+                attribute.Render();
 
                 Logger.GLLog(Logger.LogLevel.Error);
             }

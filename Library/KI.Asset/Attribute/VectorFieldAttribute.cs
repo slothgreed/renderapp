@@ -22,19 +22,7 @@ namespace KI.Asset.Attribute
         {
             directionBuffer = BufferFactory.Instance.CreateArrayBuffer(BufferTarget.ArrayBuffer, EArrayType.Vec3Array);
             directionBuffer.SetData(directions, EArrayType.Vec3Array);
-        }
-
-        public override void Binding()
-        {
-            foreach (var info in Material.Shader.GetShaderVariable())
-            {
-                switch (info.Name)
-                {
-                    case "direction":
-                        info.Variable = directionBuffer;
-                        break;
-                }
-            }
+            Material.Shader.SetValue("direction", directionBuffer);
         }
 
         public override void Dispose()

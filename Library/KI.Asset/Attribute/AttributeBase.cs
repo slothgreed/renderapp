@@ -1,4 +1,5 @@
-﻿using KI.Foundation.Core;
+﻿using System;
+using KI.Foundation.Core;
 using KI.Gfx;
 using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
@@ -61,6 +62,7 @@ namespace KI.Asset.Attribute
         /// </summary>
         public VertexBuffer VertexBuffer { get; set; }
 
+
         /// <summary>
         /// 可視不可視
         /// </summary>
@@ -72,6 +74,23 @@ namespace KI.Asset.Attribute
 
         public virtual void UnBinding()
         {
+        }
+
+
+        /// <summary>
+        /// 描画処理
+        /// </summary>
+        public virtual void Render()
+        {
+            Binding();
+
+            Material.BindToGPU();
+
+            VertexBuffer.Render();
+
+            Material.UnBindToGPU();
+
+            UnBinding();
         }
 
         public void UpdateVertexBuffer(VertexBuffer vertexBuffer)

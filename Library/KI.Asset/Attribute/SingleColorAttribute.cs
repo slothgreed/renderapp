@@ -12,9 +12,25 @@ namespace KI.Asset.Attribute
     public class SingleColorAttribute : AttributeBase
     {
         /// <summary>
+        /// 色のバッキングフィールド
+        /// </summary>
+        private Vector4 color;
+
+        /// <summary>
         /// 色
         /// </summary>
-        public Vector4 Color { get; set; }
+        public Vector4 Color
+        {
+            get { return color; }
+            set
+            {
+                if (color != value)
+                {
+                    color = value;
+                    Material.Shader.SetValue("u_Color", color);
+                }
+            }
+        }
 
         /// <summary>
         /// コンストラクタ
@@ -29,17 +45,7 @@ namespace KI.Asset.Attribute
             Color = color;
 
             Material.Shader = ShaderCreater.Instance.CreateShader(SHADER_TYPE.SingleColor);
-        }
-
-        public override void Binding()
-        {
-            foreach (var info in Material.Shader.GetShaderVariable())
-            {
-                if (info.Name == "u_Color")
-                {
-                    info.Variable = Color;
-                }
-            }
+            Material.Shader.SetValue("u_Color", color);
         }
     }
 }
