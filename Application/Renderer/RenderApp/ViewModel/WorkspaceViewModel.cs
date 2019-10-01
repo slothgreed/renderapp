@@ -214,14 +214,14 @@ namespace RenderApp.ViewModel
 
             // bunny
             {
-                var moai = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/cube.half");
-                //var moai = AssetFactory.Instance.CreateLoad3DModel(@"E:\develop\cgal\build\test\Surface_mesh_segmentation\Debug\data\cactus.off");
-                var renderBunny = CreateAnalyzePolygonNode("cube", moai);
+                //var moai = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/cube.half");
+                ////var moai = AssetFactory.Instance.CreateLoad3DModel(@"E:\develop\cgal\build\test\Surface_mesh_segmentation\Debug\data\cactus.off");
+                //var renderBunny = CreateAnalyzePolygonNode("cube", moai);
 
-                renderBunny.Polygon.Material.Shader = ShaderCreater.Instance.CreateShader(GBufferType.PointNormalColor);
-                //renderBunny.RotateX(-90);
-                mainScene.AddObject(renderBunny);
-                var parentNode = mainScene.FindNode(renderBunny);
+                //renderBunny.Polygon.Material.Shader = ShaderCreater.Instance.CreateShader(GBufferType.PointNormalColor);
+                ////renderBunny.RotateX(-90);
+                //mainScene.AddObject(renderBunny);
+                //var parentNode = mainScene.FindNode(renderBunny);
 
                 // bunny attribute
                 //var attribute = new KI.Asset.Attribute.OutlineAttribute(renderBunny.Name + "Outline",
@@ -361,6 +361,7 @@ namespace RenderApp.ViewModel
             var renderer = workspace.RenderSystem;
             RenderTechniqueFactory.Instance.RendererSystem = renderer;
             //renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Shadow));
+
             renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer));
 
             var gBufferTexture = renderer.RenderQueue.OutputTexture<GBuffer>();
@@ -369,8 +370,9 @@ namespace RenderApp.ViewModel
             renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Deferred));
             //renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Selection));
 
-            renderer.ForeGroundBuffer = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.HUD) as HUDBuffer;
-            renderer.BackGroundBuffer = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.HUD) as HUDBuffer;
+            //renderer.ForeGroundTechnique = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.HUD) as HUDTechnique;
+            //renderer.BackGroundTechnique = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.HUD) as HUDTechnique;
+            renderer.ZPrepassTechnique = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.ZPrePass) as ZPrepassRender;
             renderer.OutputBuffer = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output) as OutputBuffer;
             renderer.OutputTexture = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
 

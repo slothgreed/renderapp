@@ -1,4 +1,5 @@
-﻿using OpenTK.Graphics.OpenGL;
+﻿using System;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Gfx.GLUtil
 {
@@ -134,6 +135,36 @@ namespace KI.Gfx.GLUtil
         public void Clear()
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+        }
+
+        /// <summary>
+        /// バッファの書き込み
+        /// </summary>
+        /// <param name="drawMode">モード</param>
+        public void DrawBuffer(DrawBufferMode drawMode)
+        {
+            GL.DrawBuffer(drawMode);
+        }
+
+        /// <summary>
+        /// バッファの読み込み
+        /// </summary>
+        /// <param name="drawMode">モード</param>
+        public void ReadBuffer(DrawBufferMode drawMode)
+        {
+            GL.DrawBuffer(drawMode);
+        }
+
+        /// <summary>
+        /// カラーマスク
+        /// </summary>
+        /// <param name="r">赤</param>
+        /// <param name="g">緑</param>
+        /// <param name="b">青</param>
+        /// <param name="a">α</param>
+        public void ColorMask(bool r, bool g, bool b, bool a)
+        {
+            GL.ColorMask(r, g, b, a);
         }
     }
 }

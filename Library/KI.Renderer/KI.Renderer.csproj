@@ -51,6 +51,7 @@
     <Compile Include="EnvironmentProbe.cs" />
     <Compile Include="Node\LightNode.cs" />
     <Compile Include="RendererUtility.cs" />
+    <Compile Include="RenderInfo.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Node\SceneNode.cs" />
     <Compile Include="Scene\Shader\Bezier.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Scene\Shader\CResult.cs" />
     <Compile Include="Scene\Shader\CShadowMap.cs" />
     <Compile Include="Scene\Shader\SSAO.cs" />
+    <Compile Include="Technique\OffScreen\Geometry\ZPrepassRender.cs" />
     <Compile Include="Technique\OffScreen\HUDBuffer.cs" />
     <Compile Include="Technique\OffScreen\Lighting\DeferredRendering.cs" />
     <Compile Include="Technique\OffScreen\Geometry\GBuffer.cs" />

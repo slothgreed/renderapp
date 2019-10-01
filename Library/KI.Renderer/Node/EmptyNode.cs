@@ -19,7 +19,8 @@
         /// 何もレンダリングしない
         /// </summary>
         /// <param name="scene">シーン</param>
-        public override void RenderCore(Scene scene)
+        /// <param name="renderInfo">レンダリング情報</param>
+        public override void RenderCore(Scene scene, RenderInfo renderInfo)
         {
             return;
         }

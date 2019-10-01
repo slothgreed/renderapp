@@ -5,6 +5,7 @@ using KI.Foundation.Core;
 using KI.Gfx.KIShader;
 using KI.Gfx.Render;
 using KI.Asset.Primitive;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Renderer.Technique
 {
@@ -99,7 +100,8 @@ namespace KI.Renderer.Technique
         /// 描画
         /// </summary>
         /// <param name="scene">シーン</param>
-        public virtual void Render(Scene scene)
+        /// <param name="renderInfo">レンダリング情報</param>
+        public virtual void Render(Scene scene, RenderInfo renderInfo)
         {
             if (renderType == RenderType.Forward)
             {
@@ -111,7 +113,7 @@ namespace KI.Renderer.Technique
             {
                 RenderTarget.ClearBuffer();
                 RenderTarget.BindRenderTarget();
-                Rectanle.Render(scene);
+                Rectanle.Render(scene, renderInfo);
                 RenderTarget.UnBindRenderTarget();
             }
         }
@@ -130,7 +132,7 @@ namespace KI.Renderer.Technique
         /// <param name="height">縦</param>
         protected virtual void CreateRenderTarget(int width, int height)
         {
-            var texture = new RenderTexture[] { TextureFactory.Instance.CreateRenderTexture("Texture:" + Name, width, height) };
+            var texture = new RenderTexture[] { TextureFactory.Instance.CreateRenderTexture("Texture:" + Name, width, height, PixelFormat.Rgba) };
             RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget("RenderTarget:" + Name, width, height, 1);
             RenderTarget.SetRenderTexture(texture);
         }

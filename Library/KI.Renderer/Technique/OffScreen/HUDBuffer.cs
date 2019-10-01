@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace KI.Renderer.Technique
 {
-    public class HUDBuffer : RenderTechnique
+    public class HUDTechnique : RenderTechnique
     {
-        public HUDBuffer( RenderSystem renderer)
-            : base("HUD", renderer, RenderType.Forward)
+        public HUDTechnique( RenderSystem renderer)
+            : base("HUDTechnique", renderer, RenderType.Forward)
         {
 
         }
@@ -21,18 +21,18 @@ namespace KI.Renderer.Technique
         {
         }
 
-        public override void Render(Scene scene)
+        public override void Render(Scene scene, RenderInfo renderInfo)
         {
             throw new NotSupportedException("Use Render(HUDObject hud)");
         }
 
-        public void Render(List<HUDObject> huds)
+        public void Render(List<HUDObject> huds, RenderInfo renderInfo)
         {
             ClearBuffer();
             RenderTarget.BindRenderTarget();
             foreach(HUDObject hud in huds)
             {
-                hud.Render();
+                hud.Render(renderInfo);
             }
             RenderTarget.UnBindRenderTarget();
         }

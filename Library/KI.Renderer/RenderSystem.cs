@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using KI.Gfx.KITexture;
 using KI.Renderer.Technique;
+using KI.Gfx.GLUtil;
 
 namespace KI.Renderer
 {
@@ -20,7 +21,7 @@ namespace KI.Renderer
             PostEffect = new RenderQueue();
             BackGroundObject = new List<HUDObject>();
             ForeGroundObject = new List<HUDObject>();
-
+            renderInfo = new RenderInfo();
             RenderQueue.TechniqueAdded += RenderQueue_TechniqueAdded;
             PostEffect.TechniqueAdded += RenderQueue_TechniqueAdded;
         }
@@ -68,21 +69,21 @@ namespace KI.Renderer
         /// <summary>
         /// ForeGroundBuffer の バッキングフィールド
         /// </summary>
-        private HUDBuffer foreGroundBuffer;
+        private HUDTechnique foreGroundTechnique;
 
         /// <summary>
         /// 前面に書く HUD
         /// </summary>
-        public HUDBuffer ForeGroundBuffer
+        public HUDTechnique ForeGroundTechnique
         {
             get
             {
-                return foreGroundBuffer;
+                return foreGroundTechnique;
             }
             set
             {
-                foreGroundBuffer = value;
-                AddProcessingTexture(foreGroundBuffer);
+                foreGroundTechnique = value;
+                AddProcessingTexture(foreGroundTechnique);
             }
         }
 
@@ -94,24 +95,50 @@ namespace KI.Renderer
         /// <summary>
         /// BackGroundBuffer の バッキングフィールド
         /// </summary>
-        private HUDBuffer backGroundBuffer;
+        private HUDTechnique backGroundTechnique;
 
         /// <summary>
         /// 背景に書く HUD
         /// </summary>
-        public HUDBuffer BackGroundBuffer
+        public HUDTechnique BackGroundTechnique
         {
             get
             {
-                return backGroundBuffer;
+                return backGroundTechnique;
             }
             set
             {
-                backGroundBuffer = value;
-                AddProcessingTexture(backGroundBuffer);
+                backGroundTechnique = value;
+                AddProcessingTexture(backGroundTechnique);
             }
         }
 
+        /// <summary>
+        /// ZPrepassレンダリング の バッキングフィールド
+        /// </summary>
+        private ZPrepassRender zprepassTechnique;
+
+        /// <summary>
+        /// ZPrepassレンダリング
+        /// </summary>
+        public ZPrepassRender ZPrepassTechnique
+        {
+            get
+            {
+                return zprepassTechnique;
+            }
+            set
+            {
+                zprepassTechnique = value;
+                AddProcessingTexture(zprepassTechnique);
+            }
+
+        }
+
+        /// <summary>
+        /// レンダリング情報
+        /// </summary>
+        private RenderInfo renderInfo;
 
         /// <summary>
         /// サイズ変更
@@ -121,16 +148,17 @@ namespace KI.Renderer
         public void SizeChanged(int width, int height)
         {
             RenderQueue.SizeChanged(width, height);
+            ZPrepassTechnique.SizeChanged(width, height);
             PostEffect.SizeChanged(width, height);
 
-            if (BackGroundBuffer != null)
+            if (BackGroundTechnique != null)
             {
-                BackGroundBuffer.SizeChanged(width, height);
+                BackGroundTechnique.SizeChanged(width, height);
             }
 
-            if (ForeGroundBuffer != null)
+            if (ForeGroundTechnique != null)
             {
-                ForeGroundBuffer.SizeChanged(width, height);
+                ForeGroundTechnique.SizeChanged(width, height);
             }
 
             //OutputBuffer.SizeChanged(width, height);
@@ -150,6 +178,76 @@ namespace KI.Renderer
         }
 
         /// <summary>
+        /// 背景レンダリング
+        /// </summary>
+        private void BackGroundRender()
+        {
+            if (BackGroundTechnique != null)
+            {
+                renderInfo.RenderPass = RenderPass.BackGroundPath;
+                BackGroundTechnique.Render(BackGroundObject, renderInfo);
+            }
+        }
+
+        /// <summary>
+        /// ZPrepass レンダリング
+        /// </summary>
+        private void ZPrepassRender()
+        {
+            renderInfo.RenderPass = RenderPass.ZPrepass;
+            DeviceContext.Instance.ColorMask(false,false,false,false);
+            ZPrepassTechnique.Render(ActiveScene, renderInfo);
+            DeviceContext.Instance.ColorMask(true, true, true, true);
+        }
+
+        /// <summary>
+        /// ベースレンダリング
+        /// </summary>
+        private void BaseRender()
+        {
+            renderInfo.RenderPass = RenderPass.BasePass;
+            RenderQueue.Render(ActiveScene, renderInfo);
+        }
+
+        private void PostEffectRender()
+        {
+            if (PostProcessMode)
+            {
+                renderInfo.RenderPass = RenderPass.PostEffectPass;
+                PostEffect.Render(ActiveScene, renderInfo);
+            }
+        }
+
+        /// <summary>
+        /// 前景レンダリング
+        /// </summary>
+        private void ForeGroundRender()
+        {
+            if (ForeGroundTechnique != null)
+            {
+                renderInfo.RenderPass = RenderPass.ForeGroundPass;
+                ForeGroundTechnique.Render(ForeGroundObject, renderInfo);
+            }
+        }
+
+        private void OutputRender()
+        {
+            OutputBuffer.uTarget = OutputTexture;
+            if (BackGroundTechnique != null)
+            {
+                OutputBuffer.uBackGround = BackGroundTechnique.RenderTarget.RenderTexture[0];
+            }
+            if (ForeGroundTechnique != null)
+            {
+                OutputBuffer.uForeGround = ForeGroundTechnique.RenderTarget.RenderTexture[0];
+            }
+
+            renderInfo.RenderPass = RenderPass.OutputPath;
+            OutputBuffer.Render(ActiveScene, renderInfo);
+        }
+
+
+        /// <summary>
         /// 描画
         /// </summary>
         public void Render()
@@ -159,35 +257,12 @@ namespace KI.Renderer
                 return;
             }
 
-            if (BackGroundBuffer != null)
-            {
-                BackGroundBuffer.Render(BackGroundObject);
-            }
-
-            RenderQueue.Render(ActiveScene);
-
-            if (PostProcessMode)
-            {
-                PostEffect.Render(ActiveScene);
-            }
-
-            if (ForeGroundBuffer != null)
-            {
-                ForeGroundBuffer.Render(ForeGroundObject);
-            }
-
-            OutputBuffer.uTarget = OutputTexture;
-            if(BackGroundBuffer != null)
-            {
-                OutputBuffer.uBackGround = BackGroundBuffer.RenderTarget.RenderTexture[0];
-            }
-            if(ForeGroundBuffer != null)
-            {
-                OutputBuffer.uForeGround = ForeGroundBuffer.RenderTarget.RenderTexture[0];
-            }
-
-            OutputBuffer.Render(ActiveScene);
-
+            BackGroundRender();
+            ZPrepassRender();
+            BaseRender();
+            PostEffectRender();
+            ForeGroundRender();
+            OutputRender();
         }
 
         /// <summary>
@@ -205,6 +280,11 @@ namespace KI.Renderer
             foreach (var texture in technique.RenderTarget.RenderTexture)
             {
                 ProcessingTexture.Add(texture);
+            }
+
+            if (technique.RenderTarget.FrameBuffer.DepthTexture != null)
+            {
+                ProcessingTexture.Add(technique.RenderTarget.FrameBuffer.DepthTexture);
             }
         }
     }

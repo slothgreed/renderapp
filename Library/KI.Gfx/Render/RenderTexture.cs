@@ -8,8 +8,8 @@ namespace KI.Gfx.Render
     /// </summary>
     public class RenderTexture : Texture
     {
-        public RenderTexture(string name, int width, int height)
-            : base(name, GLUtil.TextureType.Texture2D, width, height)
+        public RenderTexture(string name, int width, int height, PixelFormat format)
+            : base(name, GLUtil.TextureType.Texture2D, width, height, format)
         {
 
         }

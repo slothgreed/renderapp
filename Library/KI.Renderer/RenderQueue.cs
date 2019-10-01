@@ -129,11 +129,12 @@ namespace KI.Renderer
         /// レンダリング
         /// </summary>
         /// <param name="scene">シーン</param>
-        public void Render(Scene scene)
+        /// <param name="renderInfo">レンダリング情報</param>
+        public void Render(Scene scene, RenderInfo renderInfo)
         {
             foreach (var loop in techniques)
             {
-                loop.Render(scene);
+                loop.Render(scene, renderInfo);
             }
         }
 

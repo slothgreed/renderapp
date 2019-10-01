@@ -28,7 +28,8 @@ namespace KI.Renderer.Technique
         /// 描画
         /// </summary>
         /// <param name="scene">シーン</param>
-        public override void Render(Scene scene)
+        /// <param name="renderInfo">レンダリング情報</param>
+        public override void Render(Scene scene, RenderInfo renderInfo)
         {
             ClearBuffer();
             RenderTarget.BindRenderTarget();
@@ -39,7 +40,7 @@ namespace KI.Renderer.Technique
                     var polygon = node as PolygonNode;
                     var old = polygon.Polygon.Material.Shader;
                     polygon.Polygon.Material.Shader = Rectanle.Polygon.Material.Shader;
-                    polygon.Render(scene);
+                    polygon.Render(scene, renderInfo);
                     polygon.Polygon.Material.Shader = old;
                 }
             }

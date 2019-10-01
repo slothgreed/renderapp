@@ -1,10 +1,7 @@
 ﻿using KI.Foundation.Core;
 using KI.Gfx;
 using KI.Gfx.Geometry;
-using KI.Gfx.GLUtil;
 using KI.Gfx.GLUtil.Buffer;
-using KI.Gfx.KIShader;
-using OpenTK.Graphics.OpenGL;
 
 namespace KI.Renderer
 {
@@ -75,7 +72,7 @@ namespace KI.Renderer
         /// 描画
         /// </summary>
         /// <param name="scene">シーン</param>
-        public override void RenderCore(Scene scene)
+        public override void RenderCore(Scene scene, RenderInfo renderInfo)
         {
             if (Polygon.Material.Shader == null)
             {

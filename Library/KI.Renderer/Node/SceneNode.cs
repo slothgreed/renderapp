@@ -116,17 +116,17 @@ namespace KI.Renderer
         /// レンダリングコア
         /// </summary>
         /// <param name="scene">シーン</param>
-        public abstract void RenderCore(Scene scene);
+        public abstract void RenderCore(Scene scene, RenderInfo renderInfo);
 
         /// <summary>
         /// 描画
         /// </summary>
         /// <param name="scene">シーン</param>
-        public void Render(Scene scene)
+        public void Render(Scene scene, RenderInfo renderInfo)
         {
             if (Visible == true)
             {
-                RenderCore(scene);
+                RenderCore(scene, renderInfo);
             }
         }
 

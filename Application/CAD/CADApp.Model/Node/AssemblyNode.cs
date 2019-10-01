@@ -72,7 +72,7 @@ namespace CADApp.Model.Node
         /// 点・線・ポリゴンのレンダリング
         /// </summary>
         /// <param name="scene">シーン</param>
-        public override void RenderCore(Scene scene)
+        public override void RenderCore(Scene scene, RenderInfo renderInfo)
         {
             if (Assembly.CurrentEdit == true)
             {

@@ -49,7 +49,8 @@ namespace KI.Renderer
         /// 何も描画しない
         /// </summary>
         /// <param name="scene">シーン</param>
-        public override void RenderCore(Scene scene)
+        /// <param name="renderInfo">レンダリング情報</param>
+        public override void RenderCore(Scene scene, RenderInfo renderInfo)
         {
             return;
         }

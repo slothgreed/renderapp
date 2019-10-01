@@ -190,7 +190,7 @@ namespace CADApp.Model.Node
             }
         }
 
-        public override void RenderCore(Scene scene)
+        public override void RenderCore(Scene scene, RenderInfo renderInfo)
         {
             if (VisibleSelectVertex == true)
             {

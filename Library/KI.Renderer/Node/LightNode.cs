@@ -44,11 +44,12 @@ namespace KI.Renderer
         /// ライトモデルがあれば描画
         /// </summary>
         /// <param name="scene">シーン</param>
-        public override void RenderCore(Scene scene)
+        /// <param name="renderInfo">レンダリング情報</param>
+        public override void RenderCore(Scene scene, RenderInfo renderInfo)
         {
             if (Model != null)
             {
-                Model.Render(scene);
+                Model.Render(scene, renderInfo);
             }
         }
     }

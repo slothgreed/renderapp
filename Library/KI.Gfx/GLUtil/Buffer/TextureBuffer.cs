@@ -49,7 +49,7 @@ namespace KI.Gfx.GLUtil
                 SetTextureTargte(TextureType.CubemapNZ);
             }
 
-            Format = PixelInternalFormat.Rgba8;
+            InternalFormat = PixelInternalFormat.Rgba8;
         }
 
         /// <summary>
@@ -68,9 +68,14 @@ namespace KI.Gfx.GLUtil
         public List<TextureTarget> Targets { get; private set; }
 
         /// <summary>
+        /// 内部のテクスチャフォーマット
+        /// </summary>
+        public PixelInternalFormat InternalFormat { get; private set; }
+
+        /// <summary>
         /// テクスチャフォーマット
         /// </summary>
-        public PixelInternalFormat Format { get; private set; }
+        public PixelFormat Format { get; private set; }
 
         /// <summary>
         /// テクスチャの種類
@@ -93,7 +98,7 @@ namespace KI.Gfx.GLUtil
             BindBuffer();
             Width = width;
             Height = height;
-            GL.TexImage2D(Target, 0, Format, width, height, 0, PixelFormat.Rgba, PixelType.Byte, IntPtr.Zero);
+            GL.TexImage2D(Target, 0, InternalFormat, width, height, 0, Format, PixelType.Byte, IntPtr.Zero);
             UnBindBuffer();
         }
 
@@ -102,10 +107,20 @@ namespace KI.Gfx.GLUtil
         /// </summary>
         /// <param name="width">横</param>
         /// <param name="height">縦</param>
-        public void SetEmpty(int width, int height)
+        public void SetEmpty(int width, int height, PixelFormat format = PixelFormat.Rgba)
         {
             BindBuffer();
-            GL.TexImage2D(Target, 0, Format, width, height, 0, PixelFormat.Rgba, PixelType.Byte, IntPtr.Zero);
+            if(format == PixelFormat.DepthComponent)
+            {
+                GL.TexImage2D(Target, 0, PixelInternalFormat.DepthComponent, width, height, 0, format, PixelType.Byte, IntPtr.Zero);
+                InternalFormat = PixelInternalFormat.DepthComponent;
+            }
+            else
+            {
+                GL.TexImage2D(Target, 0, InternalFormat, width, height, 0, format, PixelType.Byte, IntPtr.Zero);
+            }
+
+            Format = format;
             Width = width;
             Height = height;
             UnBindBuffer();

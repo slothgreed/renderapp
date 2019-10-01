@@ -23,7 +23,8 @@ namespace KI.Renderer
         SSLIC,
         HUD,
         Selection,
-        Output
+        Output,
+        ZPrePass
     }
 
     /// <summary>
@@ -128,7 +129,10 @@ namespace KI.Renderer
                     technique = new SSLIC(RendererSystem, DefaultShader[RenderTechniqueType.SSLIC].Vertex, DefaultShader[RenderTechniqueType.SSLIC].Frag);
                     break;
                 case RenderTechniqueType.HUD:
-                    technique = new HUDBuffer(RendererSystem);
+                    technique = new HUDTechnique(RendererSystem);
+                    break;
+                case RenderTechniqueType.ZPrePass:
+                    technique = new ZPrepassRender(RendererSystem);
                     break;
                 default:
                     break;

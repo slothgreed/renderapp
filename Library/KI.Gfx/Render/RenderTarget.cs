@@ -65,7 +65,15 @@ namespace KI.Gfx.Render
             this.Width = width;
             this.Height = height;
             FrameBuffer.GenBuffer();
-            FrameBuffer.SetupRenderBuffer(Width, Height);
+            if (/*useDepthTexture*/ true)
+            {
+
+                FrameBuffer.SetupRenderBufferUseDepthTexture(Width, Height);
+            }
+            else
+            {
+                FrameBuffer.SetupRenderBuffer(Width, Height);
+            }
         }
 
         /// <summary>

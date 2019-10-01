@@ -67,7 +67,8 @@ namespace KI.Renderer.Technique
         /// 描画
         /// </summary>
         /// <param name="scene">シーン</param>
-        public override void Render(Scene scene)
+        /// <param name="renderInfo">レンダリング情報</param>
+        public override void Render(Scene scene, RenderInfo renderInfo)
         {
             var gBuffer = RenderSystem.RenderQueue.Items.OfType<GBuffer>().First();
             gBuffer.RenderTarget.GetPixelData(imageInfo, DeviceContext.Instance.Width, DeviceContext.Instance.Height, (int)GBuffer.OutputTextureType.Light);
@@ -80,7 +81,7 @@ namespace KI.Renderer.Technique
 
                 GL.Enable(EnableCap.Blend);
                 GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-                postRectangle.Render(scene);
+                postRectangle.Render(scene, renderInfo);
                 GL.Disable(EnableCap.Blend);
 
                 RenderTarget.UnBindRenderTarget();

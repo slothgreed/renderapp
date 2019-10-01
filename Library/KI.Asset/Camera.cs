@@ -30,10 +30,6 @@ namespace KI.Asset
             SetProjMatrix(1.0f);
         }
 
-        /// <summary>
-        /// projectionのnear
-        /// </summary>
-        public float Near { get; set; } = 0.0001f;
 
         /// <summary>
         /// 投影行列
@@ -129,6 +125,12 @@ namespace KI.Asset
         }
 
         #endregion
+
+
+        /// <summary>
+        /// projectionのnear
+        /// </summary>
+        public float Near { get; set; } = 0.01f;
 
         /// <summary>
         /// 遠景

@@ -4,6 +4,7 @@ using KI.Foundation.Core;
 using KI.Gfx.GLUtil;
 using KI.Gfx.KITexture;
 using KI.Gfx.Render;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Asset
 {
@@ -129,9 +130,9 @@ namespace KI.Asset
         /// <summary>
         /// レンダリング用のテクスチャバッファ
         /// </summary>
-        public RenderTexture CreateRenderTexture(string name, int width, int height)
+        public RenderTexture CreateRenderTexture(string name, int width, int height, PixelFormat format)
         {
-            var renderTexture = new RenderTexture(name, width, height);
+            var renderTexture = new RenderTexture(name, width, height, format);
             return renderTexture;
         }
 

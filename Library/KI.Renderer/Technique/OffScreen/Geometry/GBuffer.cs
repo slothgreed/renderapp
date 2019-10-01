@@ -2,6 +2,7 @@
 using KI.Asset;
 using KI.Gfx.KITexture;
 using KI.Gfx.Render;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Renderer.Technique
 {
@@ -48,10 +49,10 @@ namespace KI.Renderer.Technique
         {
             var textures = new RenderTexture[4]
             {
-                TextureFactory.Instance.CreateRenderTexture("GPosit", width, height),
-                TextureFactory.Instance.CreateRenderTexture("GNormal", width, height),
-                TextureFactory.Instance.CreateRenderTexture("GColor", width, height),
-                TextureFactory.Instance.CreateRenderTexture("GLight", width, height)
+                TextureFactory.Instance.CreateRenderTexture("GPosit", width, height, PixelFormat.Rgba),
+                TextureFactory.Instance.CreateRenderTexture("GNormal", width, height, PixelFormat.Rgba),
+                TextureFactory.Instance.CreateRenderTexture("GColor", width, height, PixelFormat.Rgba),
+                TextureFactory.Instance.CreateRenderTexture("GLight", width, height, PixelFormat.Rgba)
             };
 
             RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget(Name, width, height, textures.Length);
@@ -69,13 +70,14 @@ namespace KI.Renderer.Technique
         /// 描画
         /// </summary>
         /// <param name="scene">シーン</param>
-        public override void Render(Scene scene)
+        /// <param name="renderInfo">レンダリング情報</param>
+        public override void Render(Scene scene, RenderInfo renderInfo)
         {
             ClearBuffer();
             RenderTarget.BindRenderTarget();
             foreach (SceneNode asset in scene.RootNode.AllChildren().OfType<SceneNode>())
             {
-                asset.Render(scene);
+                asset.Render(scene, renderInfo);
             }
 
             RenderTarget.UnBindRenderTarget();

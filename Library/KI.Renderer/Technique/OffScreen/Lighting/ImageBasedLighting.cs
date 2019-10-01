@@ -20,7 +20,8 @@ namespace KI.Renderer.Technique
         /// 描画
         /// </summary>
         /// <param name="scene">シーン</param>
-        public override void Render(Scene scene)
+        /// <param name="renderInfo">レンダリング情報</param>
+        public override void Render(Scene scene, RenderInfo renderInfo)
         {
             RenderTarget.ClearBuffer();
             RenderTarget.BindRenderTarget();
@@ -30,7 +31,7 @@ namespace KI.Renderer.Technique
                 {
                     EnvironmentProbe env = probe.KIObject as EnvironmentProbe;
                     Rectanle.Polygon.Material.AddTexture(TextureKind.Cubemap, env.Cubemap);
-                    Rectanle.Render(scene);
+                    Rectanle.Render(scene, renderInfo);
                 }
             }
 

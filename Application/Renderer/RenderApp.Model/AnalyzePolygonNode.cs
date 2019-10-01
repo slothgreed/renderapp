@@ -2,13 +2,8 @@
 using System.Linq;
 using KI.Asset.Attribute;
 using KI.Foundation.Core;
-using KI.Gfx;
 using KI.Gfx.Geometry;
-using KI.Gfx.GLUtil;
-using KI.Gfx.GLUtil.Buffer;
-using KI.Gfx.KIShader;
 using KI.Renderer;
-using OpenTK.Graphics.OpenGL;
 
 namespace RenderApp.Model
 {
@@ -34,8 +29,10 @@ namespace RenderApp.Model
         /// 描画
         /// </summary>
         /// <param name="scene">シーン</param>
-        public override void RenderCore(Scene scene)
+        /// <param name="renderInfo">レンダリング情報</param>
+        public override void RenderCore(Scene scene, RenderInfo renderInfo)
         {
+
             foreach (var attribute in Attributes.Where(p => p.Visible))
             {
                 if (attribute.Material.Shader == null)

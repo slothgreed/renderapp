@@ -58,11 +58,11 @@ namespace KI.Gfx.KITexture
         /// <param name="type">テクスチャタイプ</param>
         /// <param name="width">横</param>
         /// <param name="height">縦</param>
-        public Texture(string name, TextureType type, int width, int height)
+        public Texture(string name, TextureType type, int width, int height, PixelFormat format = PixelFormat.Rgba)
             : base(name)
         {
             CreateTextureBuffer(type);
-            TextureBuffer.SetEmpty(width, height);
+            TextureBuffer.SetEmpty(width, height, format);
         }
 
         #endregion

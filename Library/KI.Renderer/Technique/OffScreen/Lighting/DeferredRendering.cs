@@ -19,11 +19,12 @@ namespace KI.Renderer.Technique
         /// 描画
         /// </summary>
         /// <param name="scene">シーン</param>
-        public override void Render(Scene scene)
+        /// <param name="renderInfo">レンダリング情報</param>
+        public override void Render(Scene scene, RenderInfo renderInfo)
         {
             RenderTarget.ClearBuffer();
             RenderTarget.BindRenderTarget();
-            Rectanle.Render(scene);
+            Rectanle.Render(scene, renderInfo);
             RenderTarget.UnBindRenderTarget();
         }
 

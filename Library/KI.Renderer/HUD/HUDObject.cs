@@ -57,15 +57,15 @@ namespace KI.Renderer
         /// <summary>
         /// 描画
         /// </summary>
-        public void Render()
+        public void Render(RenderInfo renderInfo)
         {
             if (Visible == true)
             {
-                RenderCore();
+                RenderCore(renderInfo);
             }
         }
 
-        private void RenderCore()
+        private void RenderCore(RenderInfo renderInfo)
         {
             if (Polygon.Material.Shader == null)
             {

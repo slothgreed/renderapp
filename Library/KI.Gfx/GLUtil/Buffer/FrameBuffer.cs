@@ -1,5 +1,6 @@
 ﻿using KI.Foundation.Core;
 using KI.Gfx.GLUtil.Buffer;
+using KI.Gfx.Render;
 using OpenTK.Graphics.OpenGL;
 
 namespace KI.Gfx.GLUtil
@@ -16,9 +17,16 @@ namespace KI.Gfx.GLUtil
         internal FrameBuffer(string name)
         {
             this.Name = name;
+            DepthTexture = null;
         }
 
         public RenderBuffer RenderBuffer
+        {
+            get;
+            private set;
+        }
+
+        public RenderTexture DepthTexture
         {
             get;
             private set;
@@ -62,7 +70,16 @@ namespace KI.Gfx.GLUtil
         /// </summary>
         protected override void DisposeCore()
         {
-            RenderBuffer.Dispose();
+            if (RenderBuffer != null)
+            {
+                RenderBuffer.Dispose();
+            }
+
+            if(DepthTexture != null)
+            {
+                DepthTexture.Dispose();
+            }
+
             GL.DeleteFramebuffer(DeviceID);
         }
 
@@ -84,13 +101,35 @@ namespace KI.Gfx.GLUtil
         }
 
         /// <summary>
+        /// レンダーバッファの設定(Depthバッファもテクスチャを利用する)
+        /// </summary>
+        /// <param name="width">幅</param>
+        /// <param name="height">高さ</param>
+        public void SetupRenderBufferUseDepthTexture(int width, int height)
+        {
+            BindBuffer();
+            DepthTexture = new RenderTexture("Depth Texture", width, height, PixelFormat.DepthComponent);
+            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, TextureTarget.Texture2D, DepthTexture.DeviceID, 0);
+            UnBindBuffer();
+
+        }
+
+        /// <summary>
         /// サイズ変更
         /// </summary>
         /// <param name="width">幅</param>
         /// <param name="height">高さ</param>
         public void SizeChanged(int width, int height)
         {
-            RenderBuffer.SizeChanged(width, height);
+            if (RenderBuffer != null)
+            {
+                RenderBuffer.SizeChanged(width, height);
+            }
+
+            if (DepthTexture != null)
+            {
+                DepthTexture.TextureBuffer.SizeChanged(width, height);
+            }
         }
     }
 }
