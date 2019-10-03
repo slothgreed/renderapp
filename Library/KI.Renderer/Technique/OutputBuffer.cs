@@ -78,7 +78,7 @@ namespace KI.Renderer.Technique
         {
             uSelectMap = null;
             var textures = RenderSystem.RenderQueue.OutputTexture<GBuffer>();
-            Rectanle.Polygon.Material.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Color]);
+            Rectangle.Polygon.Material.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Color]);
         }
 
         protected override void CreateRenderTarget(int width, int height)
@@ -97,7 +97,7 @@ namespace KI.Renderer.Technique
         public override void Render(Scene scene, RenderInfo renderInfo)
         {
             //最終出力フレームバッファのバインドの必要なし
-            Rectanle.Render(scene, renderInfo);
+            Rectangle.Render(scene, renderInfo);
         }
     }
 }

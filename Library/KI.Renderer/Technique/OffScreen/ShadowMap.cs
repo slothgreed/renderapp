@@ -39,7 +39,7 @@ namespace KI.Renderer.Technique
                 {
                     var polygon = node as PolygonNode;
                     var old = polygon.Polygon.Material.Shader;
-                    polygon.Polygon.Material.Shader = Rectanle.Polygon.Material.Shader;
+                    polygon.Polygon.Material.Shader = Rectangle.Polygon.Material.Shader;
                     polygon.Render(scene, renderInfo);
                     polygon.Polygon.Material.Shader = old;
                 }

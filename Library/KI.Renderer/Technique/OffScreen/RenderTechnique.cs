@@ -76,7 +76,7 @@ namespace KI.Renderer.Technique
         /// <summary>
         /// オフスクリーン用平面
         /// </summary>
-        protected PolygonNode Rectanle { get; set; }
+        protected PolygonNode Rectangle { get; set; }
 
         /// <summary>
         /// バッファのクリア
@@ -113,7 +113,7 @@ namespace KI.Renderer.Technique
             {
                 RenderTarget.ClearBuffer();
                 RenderTarget.BindRenderTarget();
-                Rectanle.Render(scene, renderInfo);
+                Rectangle.Render(scene, renderInfo);
                 RenderTarget.UnBindRenderTarget();
             }
         }
@@ -146,7 +146,7 @@ namespace KI.Renderer.Technique
         /// <param name="memberName">シェーダ変数名</param>
         protected void SetValue<T>(ref T member, T value, [CallerMemberName]string memberName = "")
         {
-            if (Rectanle.Polygon.Material.Shader.SetValue(memberName, value))
+            if (Rectangle.Polygon.Material.Shader.SetValue(memberName, value))
             {
                 member = value;
             }
@@ -164,11 +164,11 @@ namespace KI.Renderer.Technique
         private void Init(string vertexShader = null, string fragShader = null)
         {
             var polygon = PolygonUtility.CreatePolygon(Name, new Rectangle());
-            Rectanle = new PolygonNode(polygon);
+            Rectangle = new PolygonNode(polygon);
             // gbuffer用 以外はシェーダ作成
             if (vertexShader != null && fragShader != null)
             {
-                Rectanle.Polygon.Material.Shader = ShaderFactory.Instance.CreateShaderVF(vertexShader, fragShader);
+                Rectangle.Polygon.Material.Shader = ShaderFactory.Instance.CreateShaderVF(vertexShader, fragShader);
             }
 
             CreateRenderTarget(KI.Gfx.GLUtil.DeviceContext.Instance.Width, KI.Gfx.GLUtil.DeviceContext.Instance.Height);

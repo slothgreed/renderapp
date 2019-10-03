@@ -282,9 +282,9 @@ namespace KI.Renderer
                 ProcessingTexture.Add(texture);
             }
 
-            if (technique.RenderTarget.FrameBuffer.DepthTexture != null)
+            if (technique.RenderTarget.DepthTexture != null)
             {
-                ProcessingTexture.Add(technique.RenderTarget.FrameBuffer.DepthTexture);
+                ProcessingTexture.Add(technique.RenderTarget.DepthTexture);
             }
         }
     }

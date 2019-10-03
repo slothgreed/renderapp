@@ -30,8 +30,8 @@ namespace KI.Renderer.Technique
                 if (probe.KIObject is EnvironmentProbe)
                 {
                     EnvironmentProbe env = probe.KIObject as EnvironmentProbe;
-                    Rectanle.Polygon.Material.AddTexture(TextureKind.Cubemap, env.Cubemap);
-                    Rectanle.Render(scene, renderInfo);
+                    Rectangle.Polygon.Material.AddTexture(TextureKind.Cubemap, env.Cubemap);
+                    Rectangle.Render(scene, renderInfo);
                 }
             }
 
@@ -44,10 +44,10 @@ namespace KI.Renderer.Technique
         public override void Initialize()
         {
             var textures = RenderSystem.RenderQueue.OutputTexture<GBuffer>();
-            Rectanle.Polygon.Material.AddTexture(TextureKind.Albedo, textures[(int)GBuffer.OutputTextureType.Color]);
-            Rectanle.Polygon.Material.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Normal]);
-            Rectanle.Polygon.Material.AddTexture(TextureKind.World, textures[(int)GBuffer.OutputTextureType.Posit]);
-            Rectanle.Polygon.Material.AddTexture(TextureKind.Lighting, textures[(int)GBuffer.OutputTextureType.Light]);
+            Rectangle.Polygon.Material.AddTexture(TextureKind.Albedo, textures[(int)GBuffer.OutputTextureType.Color]);
+            Rectangle.Polygon.Material.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Normal]);
+            Rectangle.Polygon.Material.AddTexture(TextureKind.World, textures[(int)GBuffer.OutputTextureType.Posit]);
+            Rectangle.Polygon.Material.AddTexture(TextureKind.Lighting, textures[(int)GBuffer.OutputTextureType.Light]);
         }
 
         private Texture _uCubeMap;

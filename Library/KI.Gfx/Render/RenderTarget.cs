@@ -30,6 +30,9 @@ namespace KI.Gfx.Render
             private set;
         }
 
+        public bool UseDepthTexture { get; private set; }
+
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -50,6 +53,16 @@ namespace KI.Gfx.Render
         public FrameBuffer FrameBuffer { get; private set; }
 
         /// <summary>
+        /// デプスのレンダリングテクスチャ
+        /// </summary>
+        public RenderBuffer DepthBuffer { get; private set; }
+        
+        /// <summary>
+        /// デプステクスチャ
+        /// </summary>
+        public RenderTexture DepthTexture { get; private set; }
+        
+        /// <summary>
         /// レンダリング用テクスチャ
         /// </summary>
         public RenderTexture[] RenderTexture { get; private set; }
@@ -68,11 +81,11 @@ namespace KI.Gfx.Render
             if (/*useDepthTexture*/ true)
             {
 
-                FrameBuffer.SetupRenderBufferUseDepthTexture(Width, Height);
+                SetupRenderBufferUseDepthTexture(Width, Height);
             }
             else
             {
-                FrameBuffer.SetupRenderBuffer(Width, Height);
+                SetupRenderBuffer(Width, Height);
             }
         }
 
@@ -96,7 +109,16 @@ namespace KI.Gfx.Render
                 texture.TextureBuffer.SizeChanged(width, height);
             }
 
-            FrameBuffer.SizeChanged(width, height);
+            if (DepthBuffer != null)
+            {
+                DepthBuffer.SizeChanged(width, height);
+            }
+
+            if (DepthTexture != null)
+            {
+                DepthTexture.TextureBuffer.SizeChanged(width, height);
+            }
+
         }
 
         /// <summary>
@@ -114,8 +136,52 @@ namespace KI.Gfx.Render
         /// </summary>
         public override void Dispose()
         {
+
+            if (DepthBuffer != null)
+            {
+                DepthBuffer.Dispose();
+            }
+
+            if (DepthTexture != null)
+            {
+                DepthTexture.Dispose();
+            }
+
             BufferFactory.Instance.RemoveByValue(FrameBuffer);
         }
+
+
+        /// <summary>
+        /// レンダーバッファの設定
+        /// </summary>
+        /// <param name="width">幅</param>
+        /// <param name="height">高さ</param>
+        public void SetupRenderBuffer(int width, int height)
+        {
+            FrameBuffer.BindBuffer();
+            DepthBuffer = BufferFactory.Instance.CreateRenderBuffer();
+            DepthBuffer.GenBuffer();
+            DepthBuffer.Storage(RenderbufferStorage.DepthComponent, width, height);
+            GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, DepthBuffer.DeviceID);
+            DepthBuffer.UnBindBuffer();
+            FrameBuffer.UnBindBuffer();
+            Logger.GLLog(Logger.LogLevel.Error);
+        }
+
+        /// <summary>
+        /// レンダーバッファの設定(Depthバッファもテクスチャを利用する)
+        /// </summary>
+        /// <param name="width">幅</param>
+        /// <param name="height">高さ</param>
+        public void SetupRenderBufferUseDepthTexture(int width, int height)
+        {
+            FrameBuffer.BindBuffer();
+            DepthTexture = new RenderTexture("Depth Texture", width, height, PixelFormat.DepthComponent);
+            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, TextureTarget.Texture2D, DepthTexture.DeviceID, 0);
+            FrameBuffer.UnBindBuffer();
+
+        }
+
 
         /// <summary>
         /// 出力バッファのバインド
