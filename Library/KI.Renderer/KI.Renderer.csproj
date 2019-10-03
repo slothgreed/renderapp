@@ -69,20 +69,20 @@
     <Compile Include="Scene\Shader\CResult.cs" />
     <Compile Include="Scene\Shader\CShadowMap.cs" />
     <Compile Include="Scene\Shader\SSAO.cs" />
-    <Compile Include="Technique\OffScreen\Geometry\ZPrepassRender.cs" />
-    <Compile Include="Technique\OffScreen\HUDTechnique.cs" />
-    <Compile Include="Technique\OffScreen\Lighting\DeferredRendering.cs" />
-    <Compile Include="Technique\OffScreen\Geometry\GBuffer.cs" />
-    <Compile Include="Technique\OffScreen\Lighting\ImageBasedLighting.cs" />
-    <Compile Include="Technique\OffScreen\PostEffect\DefferedTechnique.cs" />
-    <Compile Include="Technique\OffScreen\PostEffect\GrayScale.cs" />
-    <Compile Include="Technique\OutputBuffer.cs" />
-    <Compile Include="Technique\OffScreen\PostEffect\Bloom.cs" />
-    <Compile Include="Technique\OffScreen\PostEffect\DOF.cs" />
-    <Compile Include="Technique\OffScreen\RenderTechnique.cs" />
-    <Compile Include="Technique\OffScreen\PostEffect\Selection.cs" />
-    <Compile Include="Technique\OffScreen\PostEffect\Sobel.cs" />
-    <Compile Include="Technique\OffScreen\PostEffect\SSAO.cs" />
+    <Compile Include="Technique\Geometry\ZPrepassRender.cs" />
+    <Compile Include="Technique\Deffered\HUDTechnique.cs" />
+    <Compile Include="Technique\Deffered\Lighting\DeferredRendering.cs" />
+    <Compile Include="Technique\Geometry\GBuffer.cs" />
+    <Compile Include="Technique\Deffered\Lighting\ImageBasedLighting.cs" />
+    <Compile Include="Technique\Deffered\PostEffect\DefferedTechnique.cs" />
+    <Compile Include="Technique\Deffered\PostEffect\GrayScale.cs" />
+    <Compile Include="Technique\Deffered\OutputBuffer.cs" />
+    <Compile Include="Technique\Deffered\PostEffect\Bloom.cs" />
+    <Compile Include="Technique\Deffered\PostEffect\DOF.cs" />
+    <Compile Include="Technique\RenderTechnique.cs" />
+    <Compile Include="Technique\Deffered\PostEffect\Selection.cs" />
+    <Compile Include="Technique\Deffered\PostEffect\Sobel.cs" />
+    <Compile Include="Technique\Deffered\PostEffect\SSAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Node\PolygonNode.cs" />
     <Compile Include="PolygonUtility.cs" />
@@ -90,8 +90,8 @@
     <Compile Include="RenderSystem.cs" />
     <Compile Include="Technique\RenderTechniqueFactory.cs" />
     <Compile Include="Utility\ShaderHelper.cs" />
-    <Compile Include="Technique\OffScreen\ShadowMap.cs" />
-    <Compile Include="Technique\OffScreen\PostEffect\SSLIC.cs" />
+    <Compile Include="Technique\Geometry\ShadowMap.cs" />
+    <Compile Include="Technique\Deffered\PostEffect\SSLIC.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
