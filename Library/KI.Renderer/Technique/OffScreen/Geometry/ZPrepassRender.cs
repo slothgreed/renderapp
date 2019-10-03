@@ -14,7 +14,7 @@ namespace KI.Renderer.Technique
         /// コンストラクタ
         /// </summary>
         public ZPrepassRender(RenderSystem renderer)
-            : base("ZPrepassRender", renderer, RenderType.Forward)
+            : base("ZPrepassRender", renderer)
         {
         }
 

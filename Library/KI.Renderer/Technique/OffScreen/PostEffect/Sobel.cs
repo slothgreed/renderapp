@@ -5,7 +5,7 @@ namespace KI.Renderer.Technique
     /// <summary>
     /// Sobel
     /// </summary>
-    public partial class Sobel : RenderTechnique
+    public partial class Sobel : DefferedTechnique
     {
         private Texture _uTarget;
         public Texture uTarget
@@ -74,7 +74,7 @@ namespace KI.Renderer.Technique
         /// コンストラクタ
         /// </summary>
         public Sobel(RenderSystem renderer, string vertexShader, string fragShader)
-            : base("Sobel", renderer, vertexShader, fragShader, RenderType.OffScreen)
+            : base("Sobel", renderer, vertexShader, fragShader)
         {
         }
 

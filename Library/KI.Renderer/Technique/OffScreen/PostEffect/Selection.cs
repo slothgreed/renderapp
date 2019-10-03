@@ -5,7 +5,7 @@ namespace KI.Renderer.Technique
     /// <summary>
     /// 形状選択ようのレンダリング
     /// </summary>
-    public partial class Selection : RenderTechnique
+    public partial class Selection : DefferedTechnique
     {
         private int _uID;
         public int uID
@@ -25,7 +25,7 @@ namespace KI.Renderer.Technique
         /// コンストラクタ
         /// </summary>
         public Selection(RenderSystem renderer, string vertexShader, string fragShader)
-            : base("SelectionBuffer", renderer, vertexShader, fragShader, RenderType.OffScreen)
+            : base("SelectionBuffer", renderer, vertexShader, fragShader)
         {
             var textures = RenderSystem.RenderQueue.OutputTexture<GBuffer>();
             Rectangle.Polygon.Material.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Color]);

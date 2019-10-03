@@ -6,7 +6,7 @@ namespace KI.Renderer.Technique
     /// <summary>
     /// bloom
     /// </summary>
-    public partial class Bloom : RenderTechnique
+    public partial class Bloom : DefferedTechnique
     {
         /// <summary>
         /// 重み
@@ -85,7 +85,7 @@ namespace KI.Renderer.Technique
         /// コンストラクタ
         /// </summary>
         public Bloom(RenderSystem renderer, string vertexShader, string fragShader)
-            : base("Bloom", renderer, vertexShader, fragShader, RenderType.OffScreen)
+            : base("Bloom", renderer, vertexShader, fragShader)
         {
         }
 

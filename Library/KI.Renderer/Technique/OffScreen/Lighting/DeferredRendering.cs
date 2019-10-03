@@ -5,13 +5,13 @@ namespace KI.Renderer.Technique
     /// <summary>
     /// Deferred Rendering
     /// </summary>
-    public class DeferredRendering : RenderTechnique
+    public class DeferredRendering : DefferedTechnique
     {
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public DeferredRendering(RenderSystem renderer, string vertexShader, string fragShader)
-            : base("Deferred", renderer, vertexShader, fragShader,RenderType.Forward)
+            : base("Deferred", renderer, vertexShader, fragShader)
         {
         }
 

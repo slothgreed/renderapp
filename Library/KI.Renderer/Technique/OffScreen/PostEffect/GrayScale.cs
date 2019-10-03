@@ -5,7 +5,7 @@ namespace KI.Renderer.Technique
     /// <summary>
     /// GlayScale
     /// </summary>
-    public partial class GrayScale : RenderTechnique
+    public partial class GrayScale : DefferedTechnique
     {
         private Texture _uTarget;
         public Texture uTarget
@@ -25,7 +25,7 @@ namespace KI.Renderer.Technique
         /// コンストラクタ
         /// </summary>
         public GrayScale(RenderSystem renderer, string vertexShader, string fragShader)
-            : base("GrayScale", renderer, vertexShader, fragShader, RenderType.OffScreen)
+            : base("GrayScale", renderer, vertexShader, fragShader)
         {
         }
 

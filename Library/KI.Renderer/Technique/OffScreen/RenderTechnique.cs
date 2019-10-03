@@ -15,11 +15,6 @@ namespace KI.Renderer.Technique
     public abstract class RenderTechnique : KIObject
     {
         /// <summary>
-        /// 描画タイプ
-        /// </summary>
-        private RenderType renderType;
-
-        /// <summary>
         /// レンダラ
         /// </summary>
         public RenderSystem RenderSystem
@@ -34,49 +29,18 @@ namespace KI.Renderer.Technique
         /// <param name="name">名前</param>
         /// <param name="renderer">レンダラ</param>
         /// <param name="tech">レンダーテクニックの種類</param>
-        /// <param name="type">レンダリングタイプ</param>
-        public RenderTechnique(string name, RenderSystem renderer, RenderType type)
+        public RenderTechnique(string name, RenderSystem renderer)
             : base(name)
         {
-            renderType = type;
             RenderSystem = renderer;
-            Init();
         }
-
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        /// <param name="name">名前</param>
-        /// <param name="renderer">レンダラ</param>
-        /// <param name="vertexShader">頂点シェーダ</param>
-        /// <param name="fragShader">フラグシェーダ</param>
-        /// <param name="type">レンダリングタイプ</param>
-        public RenderTechnique(string name, RenderSystem renderer, string vertexShader, string fragShader, RenderType type)
-            : base(name)
-        {
-            renderType = type;
-            RenderSystem = renderer;
-            Init(vertexShader, fragShader);
-        }
-
-        /// <summary>
-        /// レンダリングタイプ
-        /// </summary>
-        public enum RenderType
-        {
-            Forward,
-            OffScreen
-        }
+        
 
         /// <summary>
         /// レンダリングターゲット
         /// </summary>
         public RenderTarget RenderTarget { get; set; }
 
-        /// <summary>
-        /// オフスクリーン用平面
-        /// </summary>
-        protected PolygonNode Rectangle { get; set; }
 
         /// <summary>
         /// バッファのクリア
@@ -103,19 +67,7 @@ namespace KI.Renderer.Technique
         /// <param name="renderInfo">レンダリング情報</param>
         public virtual void Render(Scene scene, RenderInfo renderInfo)
         {
-            if (renderType == RenderType.Forward)
-            {
-                Logger.Log(Logger.LogLevel.Error, "RenderTechnique : Not Defined Forward Render");
-                throw new NotImplementedException();
-            }
-
-            if (renderType == RenderType.OffScreen)
-            {
-                RenderTarget.ClearBuffer();
-                RenderTarget.BindRenderTarget();
-                Rectangle.Render(scene, renderInfo);
-                RenderTarget.UnBindRenderTarget();
-            }
+            throw new NotImplementedException();
         }
 
         #region [initalize event]
@@ -137,40 +89,14 @@ namespace KI.Renderer.Technique
             RenderTarget.SetRenderTexture(texture);
         }
 
-        /// <summary>
-        /// シェーダへ値のセット
-        /// </summary>
-        /// <typeparam name="T">型</typeparam>
-        /// <param name="member">変数</param>
-        /// <param name="value">値</param>
-        /// <param name="memberName">シェーダ変数名</param>
-        protected void SetValue<T>(ref T member, T value, [CallerMemberName]string memberName = "")
-        {
-            if (Rectangle.Polygon.Material.Shader.SetValue(memberName, value))
-            {
-                member = value;
-            }
-            else
-            {
-                Logger.Log(Logger.LogLevel.Error, "Set Shader Error " + memberName);
-            }
-        }
 
         /// <summary>
         /// 初期化
         /// </summary>
         /// <param name="vertexShader">頂点シェーダ</param>
         /// <param name="fragShader">フラグシェーダ</param>
-        private void Init(string vertexShader = null, string fragShader = null)
+        public void Init()
         {
-            var polygon = PolygonUtility.CreatePolygon(Name, new Rectangle());
-            Rectangle = new PolygonNode(polygon);
-            // gbuffer用 以外はシェーダ作成
-            if (vertexShader != null && fragShader != null)
-            {
-                Rectangle.Polygon.Material.Shader = ShaderFactory.Instance.CreateShaderVF(vertexShader, fragShader);
-            }
-
             CreateRenderTarget(KI.Gfx.GLUtil.DeviceContext.Instance.Width, KI.Gfx.GLUtil.DeviceContext.Instance.Height);
             Initialize();
         }

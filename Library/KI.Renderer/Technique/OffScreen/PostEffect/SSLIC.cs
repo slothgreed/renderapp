@@ -13,7 +13,7 @@ namespace KI.Renderer.Technique
     /// <summary>
     /// スクリーンスペースLIC
     /// </summary>
-    public partial class SSLIC : RenderTechnique
+    public partial class SSLIC : DefferedTechnique
     {
         private Texture _uNoize;
         public Texture uNoize
@@ -37,7 +37,7 @@ namespace KI.Renderer.Technique
         /// コンストラクタ
         /// </summary>
         public SSLIC(RenderSystem renderer, string vertexShader, string fragShader)
-            : base("SSLIC", renderer, vertexShader, fragShader, RenderType.Forward)
+            : base("SSLIC", renderer, vertexShader, fragShader)
         {
         }
 

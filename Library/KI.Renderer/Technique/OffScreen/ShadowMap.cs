@@ -1,4 +1,5 @@
-﻿using KI.Gfx.Render;
+﻿using KI.Gfx.KIShader;
+using KI.Gfx.Render;
 
 namespace KI.Renderer.Technique
 {
@@ -7,14 +8,17 @@ namespace KI.Renderer.Technique
     /// </summary>
     public class ShadowMap : RenderTechnique
     {
+        private Shader ShadowMapShader;
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="vertexShader">頂点シェーダファイル</param>
         /// <param name="fragShader">フラグメントシェーダファイル</param>
         public ShadowMap(RenderSystem renderer, string vertexShader, string fragShader)
-            : base("ShadowMap", renderer, vertexShader, fragShader,  RenderType.Forward)
+            : base("ShadowMap", renderer)
         {
+            ShadowMapShader = ShaderFactory.Instance.CreateShaderVF(vertexShader, fragShader);
         }
 
         /// <summary>
@@ -39,7 +43,7 @@ namespace KI.Renderer.Technique
                 {
                     var polygon = node as PolygonNode;
                     var old = polygon.Polygon.Material.Shader;
-                    polygon.Polygon.Material.Shader = Rectangle.Polygon.Material.Shader;
+                    polygon.Polygon.Material.Shader = ShadowMapShader;
                     polygon.Render(scene, renderInfo);
                     polygon.Polygon.Material.Shader = old;
                 }

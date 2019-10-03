@@ -6,13 +6,13 @@ namespace KI.Renderer.Technique
     /// <summary>
     /// IBL
     /// </summary>
-    public class ImageBasedLighting : RenderTechnique
+    public class ImageBasedLighting : DefferedTechnique
     {
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public ImageBasedLighting(RenderSystem renderer, string vertexShader, string fragShader)
-            : base("IBL", renderer, vertexShader, fragShader,RenderType.Forward)
+            : base("IBL", renderer, vertexShader, fragShader)
         {
         }
 

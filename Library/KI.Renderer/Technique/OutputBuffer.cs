@@ -5,7 +5,7 @@ namespace KI.Renderer.Technique
     /// <summary>
     /// 最終出力用のバッファ
     /// </summary>
-    public partial class OutputBuffer : RenderTechnique
+    public partial class OutputBuffer : DefferedTechnique
     {
         private Texture _uSelectMap;
         public Texture uSelectMap
@@ -67,7 +67,7 @@ namespace KI.Renderer.Technique
         /// コンストラクタ
         /// </summary>
         public OutputBuffer(RenderSystem renderer, string vertexShader, string fragShader)
-            : base("OutputBuffer", renderer, vertexShader, fragShader, RenderType.Forward)
+            : base("OutputBuffer", renderer, vertexShader, fragShader)
         {
         }
 
@@ -79,14 +79,6 @@ namespace KI.Renderer.Technique
             uSelectMap = null;
             var textures = RenderSystem.RenderQueue.OutputTexture<GBuffer>();
             Rectangle.Polygon.Material.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Color]);
-        }
-
-        protected override void CreateRenderTarget(int width, int height)
-        {
-        }
-
-        public override void SizeChanged(int width, int height)
-        {
         }
 
         /// <summary>

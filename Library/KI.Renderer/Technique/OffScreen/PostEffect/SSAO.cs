@@ -6,7 +6,7 @@ namespace KI.Renderer.Technique
     /// <summary>
     /// SSAO
     /// </summary>
-    public partial class SSAO : RenderTechnique
+    public partial class SSAO : DefferedTechnique
     {
         private Texture _uPosition;
         public Texture uPosition
@@ -52,7 +52,7 @@ namespace KI.Renderer.Technique
         /// コンストラクタ
         /// </summary>
         public SSAO(RenderSystem renderer, string vertexShader, string fragShader)
-            : base("SSAO", renderer, vertexShader, fragShader, RenderType.OffScreen)
+            : base("SSAO", renderer, vertexShader, fragShader)
         {
         }
 

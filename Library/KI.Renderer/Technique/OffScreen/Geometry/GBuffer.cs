@@ -15,7 +15,7 @@ namespace KI.Renderer.Technique
         /// コンストラクタ
         /// </summary>
         public GBuffer(RenderSystem renderer)
-            : base("GBuffer", renderer, RenderType.Forward)
+            : base("GBuffer", renderer)
         {
         }
 
