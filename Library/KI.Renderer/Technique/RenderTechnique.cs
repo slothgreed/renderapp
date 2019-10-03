@@ -85,7 +85,7 @@ namespace KI.Renderer.Technique
         protected virtual void CreateRenderTarget(int width, int height)
         {
             var texture = new RenderTexture[] { TextureFactory.Instance.CreateRenderTexture("Texture:" + Name, width, height, PixelFormat.Rgba) };
-            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget("RenderTarget:" + Name, width, height, 1);
+            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget("RenderTarget:" + Name, width, height);
             RenderTarget.SetRenderTexture(texture);
         }
 
@@ -95,7 +95,7 @@ namespace KI.Renderer.Technique
         /// </summary>
         /// <param name="vertexShader">頂点シェーダ</param>
         /// <param name="fragShader">フラグシェーダ</param>
-        public void Init()
+        public void InitializeTechnique()
         {
             CreateRenderTarget(KI.Gfx.GLUtil.DeviceContext.Instance.Width, KI.Gfx.GLUtil.DeviceContext.Instance.Height);
             Initialize();

@@ -20,9 +20,9 @@ namespace KI.Gfx.Render
         /// <param name="height">縦</param>
         /// <param name="outputNum">出力バッファ数</param>
         /// <returns>レンダーターゲット</returns>
-        public RenderTarget CreateRenderTarget(string name, int width, int height, int outputNum)
+        public RenderTarget CreateRenderTarget(string name, int width, int height)
         {
-            RenderTarget target = new RenderTarget(name, width, height, outputNum);
+            RenderTarget target = new RenderTarget(name, width, height);
             AddItem(target);
             return target;
         }

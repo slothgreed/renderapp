@@ -55,7 +55,7 @@ namespace KI.Renderer.Technique
                 TextureFactory.Instance.CreateRenderTexture("GLight", width, height, PixelFormat.Rgba)
             };
 
-            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget(Name, width, height, textures.Length);
+            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget(Name, width, height);
             RenderTarget.SetRenderTexture(textures);
         }
 

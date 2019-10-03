@@ -40,11 +40,11 @@ namespace KI.Gfx.Render
         /// <param name="width">横</param>
         /// <param name="height">縦</param>
         /// <param name="num">出力バッファ数</param>
-        internal RenderTarget(string name, int width, int height, int num)
+        internal RenderTarget(string name, int width, int height)
             : base(name)
         {
             FrameBuffer = BufferFactory.Instance.CreateFrameBuffer(name);
-            Initialize(width, height, num);
+            Initialize(width, height);
         }
 
         /// <summary>
@@ -72,8 +72,7 @@ namespace KI.Gfx.Render
         /// </summary>
         /// <param name="width">横</param>
         /// <param name="height">縦</param>
-        /// <param name="num">出力バッファ数</param>
-        private void Initialize(int width, int height, int num)
+        private void Initialize(int width, int height)
         {
             this.Width = width;
             this.Height = height;

@@ -140,7 +140,7 @@ namespace KI.Renderer
 
             if (technique != null)
             {
-                technique.Init();
+                technique.InitializeTechnique();
                 AddItem(technique);
             }
 
