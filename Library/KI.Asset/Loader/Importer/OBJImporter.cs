@@ -3,6 +3,7 @@ using KI.Gfx;
 using KI.Gfx.Geometry;
 using KI.Gfx.KITexture;
 using OpenTK;
+using KI.Gfx.GLUtil;
 
 namespace KI.Asset.Loader.Importer
 {
@@ -50,19 +51,19 @@ namespace KI.Asset.Loader.Importer
         {
             if (material.map_Kd != null)
             {
-                Texture albedo = TextureFactory.Instance.CreateTexture(material.map_Kd);
+                TextureBuffer albedo = TextureFactory.Instance.CreateTexture(material.map_Kd);
                 polygon.Material.AddTexture(TextureKind.Albedo, albedo);
             }
 
             if (material.map_bump != null)
             {
-                Texture bump = TextureFactory.Instance.CreateTexture(material.map_bump);
+                TextureBuffer bump = TextureFactory.Instance.CreateTexture(material.map_bump);
                 polygon.Material.AddTexture(TextureKind.Normal, bump);
             }
 
             if (material.map_Ns != null)
             {
-                Texture spec = TextureFactory.Instance.CreateTexture(material.map_Ns);
+                TextureBuffer spec = TextureFactory.Instance.CreateTexture(material.map_Ns);
                 polygon.Material.AddTexture(TextureKind.Specular, spec);
             }
         }

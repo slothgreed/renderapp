@@ -15,8 +15,8 @@ namespace KI.Renderer.Technique
     /// </summary>
     public partial class SSLIC : DefferedTechnique
     {
-        private Texture _uNoize;
-        public Texture uNoize
+        private TextureBuffer _uNoize;
+        public TextureBuffer uNoize
         {
             get
             {
@@ -25,12 +25,12 @@ namespace KI.Renderer.Technique
 
             set
             {
-                SetValue<Texture>(ref _uNoize, value);
+                SetValue<TextureBuffer>(ref _uNoize, value);
             }
         }
 
         PolygonNode postRectangle;
-        Texture ssLicTex;
+        TextureBuffer ssLicTex;
         ImageInfo imageInfo = new ImageInfo("SSLIC : PreRendering");
 
         /// <summary>

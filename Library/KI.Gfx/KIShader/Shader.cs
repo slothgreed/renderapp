@@ -317,9 +317,9 @@ namespace KI.Gfx.KIShader
         {
             if (shaderVariable.ContainsKey(name))
             {
-                if (value is Texture)
+                if (value is TextureBuffer)
                 {
-                    var texture = value as Texture;
+                    var texture = value as TextureBuffer;
                     shaderVariable[name].Variable = texture.DeviceID;
                     return true;
                 }

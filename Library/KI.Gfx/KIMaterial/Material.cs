@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
+using KI.Gfx.GLUtil;
 
 namespace KI.Gfx
 {
@@ -17,7 +18,7 @@ namespace KI.Gfx
         /// <summary>
         /// マテリアル
         /// </summary>
-        public Dictionary<TextureKind, Texture> Textures { get; private set; } = new Dictionary<TextureKind, Texture>();
+        public Dictionary<TextureKind, TextureBuffer> Textures { get; private set; } = new Dictionary<TextureKind, TextureBuffer>();
 
         /// <summary>
         /// シェーダ
@@ -36,7 +37,7 @@ namespace KI.Gfx
         /// </summary>
         /// <param name="material">シェーダ</param>
         /// <param name="shader">テクスチャ</param>
-        public Material(Shader shader, Dictionary<TextureKind, Texture> textures)
+        public Material(Shader shader, Dictionary<TextureKind, TextureBuffer> textures)
         {
             Shader = shader;
             Textures = textures;
@@ -73,7 +74,7 @@ namespace KI.Gfx
         /// </summary>
         /// <param name="kind">種類</param>
         /// <param name="texture">テクスチャ</param>
-        public void AddTexture(TextureKind kind, Texture texture)
+        public void AddTexture(TextureKind kind, TextureBuffer texture)
         {
             Textures[kind] = texture;
         }
@@ -83,7 +84,7 @@ namespace KI.Gfx
         /// </summary>
         /// <param name="kind">種類</param>
         /// <returns>テクスチャ</returns>
-        public Texture GetTexture(TextureKind kind)
+        public TextureBuffer GetTexture(TextureKind kind)
         {
             if (Textures.ContainsKey(kind))
             {

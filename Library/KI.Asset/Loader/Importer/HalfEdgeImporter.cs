@@ -2,6 +2,7 @@
 using System.Linq;
 using KI.Analyzer;
 using KI.Gfx.Geometry;
+using KI.Gfx.GLUtil;
 
 namespace KI.Asset.Loader.Importer
 {
@@ -60,7 +61,7 @@ namespace KI.Asset.Loader.Importer
             }
 
             var uvTexture = TextureFactory.Instance.CreateUVTexture(128);
-            halfEdge.Material.Textures.Add(Gfx.KITexture.TextureKind.Albedo, uvTexture);
+            halfEdge.Material.Textures.Add(TextureKind.Albedo, uvTexture);
             Model = halfEdge;
         }
     }

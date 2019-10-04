@@ -6,6 +6,7 @@ using KI.Gfx;
 using KI.Gfx.Geometry;
 using KI.Gfx.KITexture;
 using KI.Renderer;
+using KI.Gfx.GLUtil;
 
 namespace RenderApp.Model
 {
@@ -65,7 +66,7 @@ namespace RenderApp.Model
                 Workspace.Instance.MainScene.AddObject(new PolygonNode(child as Polygon));
             }
 
-            if (child is Texture)
+            if (child is TextureBuffer)
             {
                 textureRoot.AddChild(child);
             }

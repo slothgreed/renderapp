@@ -1,5 +1,6 @@
 ﻿using System;
 using KI.Gfx.KITexture;
+using KI.Gfx.GLUtil;
 
 namespace KI.Renderer.Technique
 {
@@ -8,8 +9,8 @@ namespace KI.Renderer.Technique
     /// </summary>
     public partial class SSAO : DefferedTechnique
     {
-        private Texture _uPosition;
-        public Texture uPosition
+        private TextureBuffer _uPosition;
+        public TextureBuffer uPosition
         {
             get
             {
@@ -18,11 +19,11 @@ namespace KI.Renderer.Technique
 
             set
             {
-                SetValue<Texture>(ref _uPosition, value);
+                SetValue<TextureBuffer>(ref _uPosition, value);
             }
         }
-        private Texture _uTarget;
-        public Texture uTarget
+        private TextureBuffer _uTarget;
+        public TextureBuffer uTarget
         {
             get
             {
@@ -31,7 +32,7 @@ namespace KI.Renderer.Technique
 
             set
             {
-                SetValue<Texture>(ref _uTarget, value);
+                SetValue<TextureBuffer>(ref _uTarget, value);
             }
         }
         private float[] _uSample;

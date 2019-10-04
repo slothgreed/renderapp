@@ -105,7 +105,7 @@ namespace KI.Gfx.Render
 
             foreach (var texture in RenderTexture)
             {
-                texture.TextureBuffer.SizeChanged(width, height);
+                texture.SizeChanged(width, height);
             }
 
             if (DepthBuffer != null)
@@ -115,7 +115,7 @@ namespace KI.Gfx.Render
 
             if (DepthTexture != null)
             {
-                DepthTexture.TextureBuffer.SizeChanged(width, height);
+                DepthTexture.SizeChanged(width, height);
             }
 
         }

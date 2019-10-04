@@ -81,7 +81,7 @@ namespace ShaderTraining.ViewModel
             var rectangle = new Rectangle();
             var rectangleObject = PolygonUtility.CreatePolygon("Rectangle", rectangle);
             var shader = ShaderCreater.Instance.CreateShader(GBufferType.Albedo);
-            var textures = new Dictionary<TextureKind, Texture>();
+            var textures = new Dictionary<TextureKind, TextureBuffer>();
             textures.Add(TextureKind.Albedo, mainTexture);
 
             rectangleObject.Material = new Material(shader, textures);

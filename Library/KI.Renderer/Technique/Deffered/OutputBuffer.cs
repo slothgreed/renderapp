@@ -1,4 +1,5 @@
-﻿using KI.Gfx.KITexture;
+﻿using KI.Gfx.GLUtil;
+using KI.Gfx.KITexture;
 
 namespace KI.Renderer.Technique
 {
@@ -7,8 +8,8 @@ namespace KI.Renderer.Technique
     /// </summary>
     public partial class OutputBuffer : DefferedTechnique
     {
-        private Texture _uSelectMap;
-        public Texture uSelectMap
+        private TextureBuffer _uSelectMap;
+        public TextureBuffer uSelectMap
         {
             get
             {
@@ -17,11 +18,11 @@ namespace KI.Renderer.Technique
 
             set
             {
-                SetValue<Texture>(ref _uSelectMap, value);
+                SetValue<TextureBuffer>(ref _uSelectMap, value);
             }
         }
-        private Texture _uTarget;
-        public Texture uTarget
+        private TextureBuffer _uTarget;
+        public TextureBuffer uTarget
         {
             get
             {
@@ -30,12 +31,12 @@ namespace KI.Renderer.Technique
 
             set
             {
-                SetValue<Texture>(ref _uTarget, value);
+                SetValue<TextureBuffer>(ref _uTarget, value);
             }
         }
 
-        private Texture _uBackGround;
-        public Texture uBackGround
+        private TextureBuffer _uBackGround;
+        public TextureBuffer uBackGround
         {
             get
             {
@@ -44,12 +45,12 @@ namespace KI.Renderer.Technique
 
             set
             {
-                SetValue<Texture>(ref _uBackGround, value);
+                SetValue<TextureBuffer>(ref _uBackGround, value);
             }
         }
 
-        private Texture _uForeGround;
-        public Texture uForeGround
+        private TextureBuffer _uForeGround;
+        public TextureBuffer uForeGround
         {
             get
             {
@@ -58,7 +59,7 @@ namespace KI.Renderer.Technique
 
             set
             {
-                SetValue<Texture>(ref _uForeGround, value);
+                SetValue<TextureBuffer>(ref _uForeGround, value);
             }
         }
 

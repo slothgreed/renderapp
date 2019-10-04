@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using KI.Gfx.KITexture;
 using KI.Renderer.Technique;
+using KI.Gfx.GLUtil;
 
 namespace KI.Renderer
 {
@@ -143,7 +144,7 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="type">テクニックのタイプ</param>
         /// <returns>出力テクスチャ</returns>
-        public Texture[] OutputTexture<T>() where T : RenderTechnique
+        public TextureBuffer[] OutputTexture<T>() where T : RenderTechnique
         {
             var technique = techniques.OfType<T>().FirstOrDefault();
 
@@ -161,7 +162,7 @@ namespace KI.Renderer
         /// 全ての出力テクスチャの取得
         /// </summary>
         /// <returns>出力テクスチャ</returns>
-        public IEnumerable<Texture> OutputTextures()
+        public IEnumerable<TextureBuffer> OutputTextures()
         {
             foreach (var technique in techniques)
             {

@@ -3,6 +3,7 @@ using KI.Asset;
 using KI.Gfx.KITexture;
 using KI.Gfx.Render;
 using OpenTK.Graphics.OpenGL;
+using KI.Gfx.GLUtil;
 
 namespace KI.Renderer.Technique
 {
@@ -35,7 +36,7 @@ namespace KI.Renderer.Technique
         /// </summary>
         /// <param name="target">GBufferのタイプ</param>
         /// <returns>テクスチャ</returns>
-        public Texture GetOutputTexture(OutputTextureType target)
+        public TextureBuffer GetOutputTexture(OutputTextureType target)
         {
             return RenderTarget.RenderTexture[(int)target];
         }

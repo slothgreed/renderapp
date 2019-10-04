@@ -1,4 +1,5 @@
 ﻿using KI.Foundation.Core;
+using KI.Gfx.GLUtil;
 using KI.Gfx.KITexture;
 using OpenTK;
 
@@ -69,6 +70,6 @@ namespace KI.Asset
         /// <summary>
         /// シャドウマップ
         /// </summary>
-        public Texture ShadowMap { get; private set; }
+        public TextureBuffer ShadowMap { get; private set; }
     }
 }

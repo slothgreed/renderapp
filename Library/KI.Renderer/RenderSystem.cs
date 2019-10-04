@@ -15,7 +15,7 @@ namespace KI.Renderer
         /// </summary>
         public RenderSystem()
         {
-            ProcessingTexture = new List<Texture>();
+            ProcessingTexture = new List<TextureBuffer>();
             PostProcessMode = true;
             RenderQueue = new RenderQueue();
             PostEffect = new RenderQueue();
@@ -49,7 +49,7 @@ namespace KI.Renderer
         /// <summary>
         /// 出力テクスチャ
         /// </summary>
-        public Texture OutputTexture { get; set; }
+        public TextureBuffer OutputTexture { get; set; }
 
         /// <summary>
         /// ポストプロセスモード
@@ -59,7 +59,7 @@ namespace KI.Renderer
         /// <summary>
         /// レンダリング結果のテクスチャすべて
         /// </summary>
-        public List<Texture> ProcessingTexture { get; private set; }
+        public List<TextureBuffer> ProcessingTexture { get; private set; }
 
         /// <summary>
         /// 前面に書く HUD

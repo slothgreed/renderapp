@@ -1,5 +1,6 @@
 ﻿using System;
 using KI.Gfx.KITexture;
+using KI.Gfx.GLUtil;
 
 namespace KI.Renderer.Technique
 {
@@ -54,8 +55,8 @@ namespace KI.Renderer.Technique
                 SetValue(ref _uWeight, value);
             }
         }
-        private Texture _uTarget;
-        public Texture uTarget
+        private TextureBuffer _uTarget;
+        public TextureBuffer uTarget
         {
             get
             {

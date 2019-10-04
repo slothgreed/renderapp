@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using KI.Asset;
 using KI.Gfx.KITexture;
+using KI.Gfx.GLUtil;
 
 namespace KI.Renderer
 {
@@ -27,7 +28,7 @@ namespace KI.Renderer
         /// <summary>
         /// 環境マップ
         /// </summary>
-        public Texture Cubemap { get; private set; }
+        public TextureBuffer Cubemap { get; private set; }
 
         /// <summary>
         /// Cubemapの作成

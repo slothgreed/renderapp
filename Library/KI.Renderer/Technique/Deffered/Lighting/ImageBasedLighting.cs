@@ -1,4 +1,5 @@
 ﻿using KI.Asset;
+using KI.Gfx.GLUtil;
 using KI.Gfx.KITexture;
 
 namespace KI.Renderer.Technique
@@ -50,8 +51,8 @@ namespace KI.Renderer.Technique
             Rectangle.Polygon.Material.AddTexture(TextureKind.Lighting, textures[(int)GBuffer.OutputTextureType.Light]);
         }
 
-        private Texture _uCubeMap;
-        public Texture uCubeMap
+        private TextureBuffer _uCubeMap;
+        public TextureBuffer uCubeMap
         {
             get
             {

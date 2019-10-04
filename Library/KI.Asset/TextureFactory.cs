@@ -11,7 +11,7 @@ namespace KI.Asset
     /// <summary>
     /// テクスチャファクトリ
     /// </summary>
-    public class TextureFactory : KIFactoryBase<Texture>
+    public class TextureFactory : KIFactoryBase<TextureBuffer>
     {
         /// <summary>
         /// シングルトン
@@ -23,7 +23,7 @@ namespace KI.Asset
         /// </summary>
         /// <param name="path">ファイルパス</param>
         /// <returns>テクスチャ</returns>
-        public Texture CreateTexture(string path)
+        public TextureBuffer CreateTexture(string path)
         {
             return CreateTexture(path, GetImageKind(path));
         }
@@ -61,16 +61,16 @@ namespace KI.Asset
         /// <param name="path">ファイルパス</param>
         /// <param name="kind">テクスチャ種類</param>
         /// <returns>テクスチャ</returns>
-        public Texture CreateTexture(string path, ImageKind kind)
+        public TextureBuffer CreateTexture(string path, ImageKind kind)
         {
-            Texture find = FindByName(path);
+            TextureBuffer find = FindByName(path);
             if (find != null)
             {
                 return find;
             }
 
             ImageInfo image = CreateImageInfo(path, kind);
-            Texture texture = new Texture(Path.GetFileName(path), TextureType.Texture2D);
+            TextureBuffer texture = new TextureBuffer(Path.GetFileName(path), TextureType.Texture2D);
             texture.SetTextureFromImage(image);
             image.Dispose();
 
@@ -82,9 +82,9 @@ namespace KI.Asset
         /// </summary>
         /// <param name="size">サイズ</param>
         /// <returns>テクスチャ</returns>
-        public Texture CreateUVTexture(int size)
+        public TextureBuffer CreateUVTexture(int size)
         {
-            Texture texture = new Texture("UV Texture", TextureType.Texture2D);
+            TextureBuffer texture = new TextureBuffer("UV Texture", TextureType.Texture2D);
             float[,,] rgba = new float[size, size, 4];
             float halfSize = size / 2;
 
@@ -121,9 +121,9 @@ namespace KI.Asset
         /// <param name="width">横</param>
         /// <param name="height">縦</param>
         /// <returns>テクスチャ</returns>
-        public Texture CreateTexture(string name, int width, int height)
+        public TextureBuffer CreateTexture(string name, int width, int height)
         {
-            var texture = new Texture(name, TextureType.Texture2D, width, height);
+            var texture = new TextureBuffer(name, TextureType.Texture2D, width, height);
             return texture;
         }
 
@@ -146,7 +146,7 @@ namespace KI.Asset
         /// <param name="ny">NYファイルパス</param>
         /// <param name="nz">NZファイルパス</param>
         /// <returns>テクスチャ</returns>
-        public Texture CreateCubemapTexture(string px, string py, string pz, string nx, string ny, string nz)
+        public TextureBuffer CreateCubemapTexture(string px, string py, string pz, string nx, string ny, string nz)
         {
             List<ImageInfo> images = new List<ImageInfo>();
             images.Add(CreateImageInfo(px, GetImageKind(px)));
@@ -155,7 +155,7 @@ namespace KI.Asset
             images.Add(CreateImageInfo(nx, GetImageKind(nx)));
             images.Add(CreateImageInfo(ny, GetImageKind(ny)));
             images.Add(CreateImageInfo(nz, GetImageKind(nz)));
-            Texture texture = new Texture("Cubemap" + Path.GetFileName(px), TextureType.Cubemap);
+            TextureBuffer texture = new TextureBuffer("Cubemap" + Path.GetFileName(px), TextureType.Cubemap);
             texture.SetCubemapFromImage(images);
 
             return texture;

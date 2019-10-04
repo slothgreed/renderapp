@@ -1,4 +1,5 @@
 ﻿using KI.Asset.Primitive;
+using KI.Gfx.GLUtil;
 using KI.Gfx.KITexture;
 using OpenTK;
 using System;
@@ -27,7 +28,7 @@ namespace KI.Asset.HUD
         /// <summary>
         /// テクスチャ
         /// </summary>
-        public Texture Texture { get; private set; }
+        public TextureBuffer Texture { get; private set; }
 
         /// <summary>
         /// 背景
@@ -52,7 +53,7 @@ namespace KI.Asset.HUD
         /// 背景
         /// </summary>
         /// <param name="texture">テクスチャ</param>
-        public BackGround(Texture texture)
+        public BackGround(TextureBuffer texture)
         {
             Plane = new Rectangle(Vector3.Zero, Vector3.UnitX, Vector3.UnitX + Vector3.UnitY, Vector3.UnitY);
             Texture = texture;

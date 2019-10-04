@@ -26,7 +26,7 @@ namespace KI.Gfx.GLUtil
     /// <summary>
     /// テクスチャバッファ
     /// </summary>
-    public class TextureBuffer : BufferObject
+    public partial class TextureBuffer : BufferObject
     {
         /// <summary>
         /// コンストラクタ

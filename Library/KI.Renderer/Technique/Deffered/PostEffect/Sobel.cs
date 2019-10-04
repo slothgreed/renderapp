@@ -1,4 +1,5 @@
-﻿using KI.Gfx.KITexture;
+﻿using KI.Gfx.GLUtil;
+using KI.Gfx.KITexture;
 
 namespace KI.Renderer.Technique
 {
@@ -7,8 +8,8 @@ namespace KI.Renderer.Technique
     /// </summary>
     public partial class Sobel : DefferedTechnique
     {
-        private Texture _uTarget;
-        public Texture uTarget
+        private TextureBuffer _uTarget;
+        public TextureBuffer uTarget
         {
             get
             {
@@ -17,7 +18,7 @@ namespace KI.Renderer.Technique
 
             set
             {
-                SetValue<Texture>(ref _uTarget, value);
+                SetValue<TextureBuffer>(ref _uTarget, value);
             }
         }
         private int _uWidth;
