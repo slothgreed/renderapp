@@ -1,5 +1,5 @@
 ﻿using KI.Asset;
-using KI.Gfx.GLUtil;
+using KI.Gfx.Buffer;
 using KI.Gfx.Render;
 using System;
 using System.Collections.Generic;

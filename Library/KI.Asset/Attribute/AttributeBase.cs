@@ -1,8 +1,8 @@
 ﻿using System;
 using KI.Foundation.Core;
 using KI.Gfx;
-using KI.Gfx.GLUtil.Buffer;
 using KI.Gfx.KIShader;
+using KI.Gfx.Buffer;
 
 namespace KI.Asset.Attribute
 {

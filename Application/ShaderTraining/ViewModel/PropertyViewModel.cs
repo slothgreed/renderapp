@@ -1,4 +1,4 @@
-﻿using KI.Gfx.GLUtil;
+﻿using KI.Gfx.Buffer;
 using KI.Presenter.ViewModel;
 using KI.Renderer;
 using KI.Renderer.Technique;

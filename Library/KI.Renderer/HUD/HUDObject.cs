@@ -1,8 +1,7 @@
 ﻿using KI.Foundation.Core;
 using KI.Gfx;
 using KI.Gfx.Geometry;
-using KI.Gfx.GLUtil;
-using KI.Gfx.GLUtil.Buffer;
+using KI.Gfx.Buffer;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 

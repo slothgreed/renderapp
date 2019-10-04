@@ -2,11 +2,12 @@
 using KI.Analyzer;
 using KI.Asset;
 using KI.Foundation.Tree;
-using KI.Gfx.GLUtil;
+using KI.Gfx.Buffer;
 using KI.Mathmatics;
 using KI.Renderer;
 using OpenTK;
 using RenderApp.Model;
+using KI.Gfx;
 
 namespace RenderApp.Tool.Utility
 {

@@ -2,7 +2,7 @@
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace KI.Gfx.GLUtil
+namespace KI.Gfx.Buffer
 {
     /// <summary>
     /// 配列バッファ

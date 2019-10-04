@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq;
 using KI.Asset;
-using KI.Gfx.GLUtil;
+using KI.Gfx.Buffer;
 using KI.Gfx.KITexture;
 using KI.Gfx.Render;
 using OpenTK.Graphics.OpenGL;
 using KI.Asset.Primitive;
+using KI.Gfx;
 
 namespace KI.Renderer.Technique
 {

@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 using KI.Foundation.Core;
-using KI.Gfx.GLUtil;
+using KI.Gfx.Buffer;
 using KI.Foundation;
 using KI.Foundation.Controller;
 using KI.Presenter.ViewModel;
 using RenderApp.Tool;
 using RenderApp.Tool.Controller;
+using KI.Gfx;
 
 namespace RenderApp.ViewModel
 {

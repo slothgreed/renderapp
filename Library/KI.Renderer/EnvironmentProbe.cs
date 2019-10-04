@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using KI.Asset;
 using KI.Gfx.KITexture;
-using KI.Gfx.GLUtil;
+using KI.Gfx.Buffer;
 
 namespace KI.Renderer
 {

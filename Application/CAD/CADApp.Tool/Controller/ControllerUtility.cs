@@ -1,8 +1,8 @@
 ﻿using KI.Asset;
-using KI.Gfx.GLUtil;
 using KI.Mathmatics;
 using OpenTK;
 using KI.Foundation.Controller;
+using KI.Gfx;
 
 namespace CADApp.Tool.Controller
 {

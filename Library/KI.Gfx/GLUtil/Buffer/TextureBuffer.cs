@@ -5,7 +5,7 @@ using KI.Foundation.Core;
 using OpenTK.Graphics.OpenGL;
 using KI.Gfx.KITexture;
 
-namespace KI.Gfx.GLUtil
+namespace KI.Gfx.Buffer
 {
     /// <summary>
     /// テクスチャ種類

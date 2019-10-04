@@ -1,7 +1,7 @@
 ﻿using System;
 using OpenTK.Graphics.OpenGL;
 
-namespace KI.Gfx.GLUtil
+namespace KI.Gfx
 {
     /// <summary>
     /// デバイスコンテキスト

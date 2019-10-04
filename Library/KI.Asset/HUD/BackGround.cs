@@ -1,5 +1,5 @@
 ﻿using KI.Asset.Primitive;
-using KI.Gfx.GLUtil;
+using KI.Gfx.Buffer;
 using KI.Gfx.KITexture;
 using OpenTK;
 using System;

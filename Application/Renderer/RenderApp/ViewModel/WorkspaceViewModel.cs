@@ -3,7 +3,7 @@ using System.Linq;
 using KI.Asset;
 using KI.Foundation.Tree;
 using KI.Gfx;
-using KI.Gfx.GLUtil;
+using KI.Gfx.Buffer;
 using KI.Gfx.KIShader;
 using KI.Renderer;
 using KI.Renderer.Technique;

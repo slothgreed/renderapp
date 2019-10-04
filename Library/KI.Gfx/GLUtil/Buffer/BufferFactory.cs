@@ -1,7 +1,7 @@
 ﻿using KI.Foundation.Core;
 using OpenTK.Graphics.OpenGL;
 
-namespace KI.Gfx.GLUtil.Buffer
+namespace KI.Gfx.Buffer
 {
     /// <summary>
     /// バッファファクトリ

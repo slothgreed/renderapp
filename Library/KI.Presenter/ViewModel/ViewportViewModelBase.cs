@@ -1,12 +1,8 @@
-﻿using KI.Gfx.GLUtil;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms.Integration;
 using System.Windows.Forms;
 using KI.Foundation.Controller;
+using KI.Gfx;
 
 namespace KI.Presenter.ViewModel
 {

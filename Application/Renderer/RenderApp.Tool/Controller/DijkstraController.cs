@@ -3,7 +3,7 @@ using KI.Analyzer;
 using KI.Asset;
 using KI.Gfx;
 using KI.Gfx.Geometry;
-using KI.Gfx.GLUtil;
+using KI.Gfx.Buffer;
 using KI.Renderer;
 using KI.Foundation.Controller;
 using OpenTK;

@@ -6,7 +6,7 @@ using OpenTK;
 using OpenTK.Graphics;
 using KI.Foundation.Controller;
 
-namespace KI.Gfx.GLUtil
+namespace KI.Gfx
 {
     /// <summary>
     /// 読み込み後イベント

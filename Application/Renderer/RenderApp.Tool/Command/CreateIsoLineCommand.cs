@@ -6,7 +6,7 @@ using KI.Asset;
 using KI.Asset.Attribute;
 using KI.Gfx;
 using KI.Gfx.Geometry;
-using KI.Gfx.GLUtil.Buffer;
+using KI.Gfx.Buffer;
 using KI.Mathmatics;
 using KI.Renderer;
 using KI.Foundation.Command;

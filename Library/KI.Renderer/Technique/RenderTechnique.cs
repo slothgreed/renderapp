@@ -6,6 +6,7 @@ using KI.Gfx.KIShader;
 using KI.Gfx.Render;
 using KI.Asset.Primitive;
 using OpenTK.Graphics.OpenGL;
+using KI.Gfx;
 
 namespace KI.Renderer.Technique
 {
@@ -97,7 +98,7 @@ namespace KI.Renderer.Technique
         /// <param name="fragShader">フラグシェーダ</param>
         public void InitializeTechnique()
         {
-            CreateRenderTarget(KI.Gfx.GLUtil.DeviceContext.Instance.Width, KI.Gfx.GLUtil.DeviceContext.Instance.Height);
+            CreateRenderTarget(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
             Initialize();
         }
         #endregion

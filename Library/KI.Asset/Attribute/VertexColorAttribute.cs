@@ -1,6 +1,5 @@
 ﻿using KI.Gfx;
-using KI.Gfx.GLUtil;
-using KI.Gfx.GLUtil.Buffer;
+using KI.Gfx.Buffer;
 using KI.Gfx.KIShader;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;

@@ -4,7 +4,7 @@ using CADApp.Model.Node;
 using CADApp.Tool.Command;
 using KI.Asset;
 using KI.Gfx;
-using KI.Gfx.GLUtil;
+using KI.Gfx.Buffer;
 using KI.Mathmatics;
 using KI.Foundation.Controller;
 using OpenTK;

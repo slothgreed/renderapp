@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using KI.Foundation.Core;
-using KI.Gfx.GLUtil;
+using KI.Gfx.Buffer;
 using KI.Gfx.KITexture;
 using KI.Gfx.Render;
 using OpenTK.Graphics.OpenGL;

@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Windows.Forms.Integration;
 using KI.Asset;
-using KI.Gfx.GLUtil;
 using KI.Renderer;
 using KI.Renderer.Technique;
 using KI.Foundation.Controller;
 using KI.Presenter.ViewModel;
 using OpenTK;
 using RenderApp.Tool.Controller;
+using KI.Gfx;
 
 namespace STLBrowser.ViewModel
 {

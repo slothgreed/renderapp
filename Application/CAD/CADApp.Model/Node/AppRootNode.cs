@@ -3,12 +3,12 @@ using System.Linq;
 using KI.Asset;
 using KI.Gfx;
 using KI.Gfx.Geometry;
-using KI.Gfx.GLUtil.Buffer;
 using KI.Renderer;
 using OpenTK;
 using KI.Analyzer;
 using KI.Asset.Gizmo;
 using KI.Gfx.KIMaterial;
+using KI.Gfx.Buffer;
 
 namespace CADApp.Model.Node
 {

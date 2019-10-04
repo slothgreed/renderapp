@@ -1,5 +1,5 @@
 ﻿using KI.Gfx;
-using KI.Gfx.GLUtil;
+using KI.Gfx.Buffer;
 
 namespace KI.Renderer.Technique
 {

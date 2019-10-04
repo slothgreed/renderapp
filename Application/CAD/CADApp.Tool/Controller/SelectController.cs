@@ -1,11 +1,12 @@
 ﻿using CADApp.Model;
 using CADApp.Model.Node;
 using KI.Asset;
-using KI.Gfx.GLUtil;
+using KI.Gfx.Buffer;
 using KI.Mathmatics;
 using KI.Renderer;
 using KI.Foundation.Controller;
 using OpenTK;
+using KI.Gfx;
 
 namespace CADApp.Tool.Controller
 {

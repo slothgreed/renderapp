@@ -1,4 +1,4 @@
-﻿using KI.Gfx.GLUtil;
+﻿using KI.Gfx.Buffer;
 using OpenTK.Graphics.OpenGL;
 
 namespace KI.Gfx.Render
@@ -9,7 +9,7 @@ namespace KI.Gfx.Render
     public class RenderTexture : TextureBuffer
     {
         public RenderTexture(string name, int width, int height, PixelFormat format)
-            : base(name, GLUtil.TextureType.Texture2D, width, height, format)
+            : base(name, Buffer.TextureType.Texture2D, width, height, format)
         {
 
         }

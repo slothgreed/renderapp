@@ -2,7 +2,7 @@
 using KI.Asset;
 using KI.Gfx.Render;
 using OpenTK.Graphics.OpenGL;
-using KI.Gfx.GLUtil;
+using KI.Gfx.Buffer;
 
 namespace KI.Renderer.Technique
 {

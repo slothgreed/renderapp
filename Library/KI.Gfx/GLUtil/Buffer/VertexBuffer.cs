@@ -5,7 +5,7 @@ using KI.Gfx.Geometry;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace KI.Gfx.GLUtil.Buffer
+namespace KI.Gfx.Buffer
 {
     /// <summary>
     /// 頂点バッファ

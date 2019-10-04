@@ -1,7 +1,7 @@
 ﻿using KI.Foundation.Core;
 using KI.Gfx;
 using KI.Gfx.Geometry;
-using KI.Gfx.GLUtil.Buffer;
+using KI.Gfx.Buffer;
 
 namespace KI.Renderer
 {

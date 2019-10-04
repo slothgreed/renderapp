@@ -1,7 +1,7 @@
 ﻿using KI.Asset;
 using KI.Asset.Primitive;
 using KI.Gfx;
-using KI.Gfx.GLUtil;
+using KI.Gfx.Buffer;
 using KI.Renderer;
 using KI.Renderer.Technique;
 using KI.Presenter.ViewModel;

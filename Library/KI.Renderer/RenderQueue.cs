@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using KI.Renderer.Technique;
-using KI.Gfx.GLUtil;
+using KI.Gfx.Buffer;
 
 namespace KI.Renderer
 {

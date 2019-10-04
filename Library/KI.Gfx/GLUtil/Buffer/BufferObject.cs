@@ -1,6 +1,6 @@
 ﻿using KI.Foundation.Core;
 
-namespace KI.Gfx.GLUtil
+namespace KI.Gfx.Buffer
 {
     /// <summary>
     /// 配列の種類

@@ -8,7 +8,7 @@ using CADApp.Tool.Controller;
 using KI.Asset;
 using KI.Gfx;
 using KI.Gfx.Geometry;
-using KI.Gfx.GLUtil;
+using KI.Gfx.Buffer;
 using KI.Renderer;
 using KI.Renderer.Technique;
 using KI.Foundation.Controller;

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using KI.Renderer.Technique;
-using KI.Gfx.GLUtil;
+using KI.Gfx;
+using KI.Gfx.Buffer;
 
 namespace KI.Renderer
 {

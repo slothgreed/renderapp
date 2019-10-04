@@ -1,6 +1,6 @@
 ﻿using System;
 using KI.Gfx.KITexture;
-using KI.Gfx.GLUtil;
+using KI.Gfx.Buffer;
 
 namespace KI.Renderer.Technique
 {

@@ -3,8 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows;
 using KI.Asset;
-using KI.Gfx.GLUtil;
-using KI.Gfx.GLUtil.Buffer;
+using KI.Gfx.Buffer;
 using KI.Gfx.KIShader;
 using KI.Gfx.Render;
 using KI.Renderer;
@@ -17,6 +16,7 @@ using KI.Foundation.Core;
 using System.Windows.Controls;
 using KI.Analyzer;
 using KI.Presenter.KIEvent;
+using KI.Gfx;
 
 namespace RenderApp.ViewModel
 {

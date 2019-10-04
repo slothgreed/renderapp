@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using KI.Gfx;
-using KI.Gfx.GLUtil;
-using KI.Gfx.GLUtil.Buffer;
+using KI.Gfx.Buffer;
 using KI.Gfx.KIShader;
 using KI.Mathmatics;
 using OpenTK.Graphics.OpenGL;

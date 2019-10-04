@@ -1,5 +1,5 @@
 ﻿using KI.Gfx;
-using KI.Gfx.GLUtil.Buffer;
+using KI.Gfx.Buffer;
 using KI.Gfx.KIShader;
 
 namespace KI.Asset.Attribute

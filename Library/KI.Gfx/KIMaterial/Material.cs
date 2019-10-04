@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using KI.Gfx.KIShader;
 using KI.Gfx.KITexture;
-using KI.Gfx.GLUtil;
+using KI.Gfx.Buffer;
 
 namespace KI.Gfx
 {

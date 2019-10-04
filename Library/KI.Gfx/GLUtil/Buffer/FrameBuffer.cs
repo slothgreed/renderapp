@@ -1,6 +1,6 @@
 ﻿using OpenTK.Graphics.OpenGL;
 
-namespace KI.Gfx.GLUtil
+namespace KI.Gfx.Buffer
 {
     /// <summary>
     /// フレームバッファ
