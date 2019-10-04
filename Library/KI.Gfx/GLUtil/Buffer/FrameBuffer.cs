@@ -1,7 +1,4 @@
-﻿using KI.Foundation.Core;
-using KI.Gfx.GLUtil.Buffer;
-using KI.Gfx.Render;
-using OpenTK.Graphics.OpenGL;
+﻿using OpenTK.Graphics.OpenGL;
 
 namespace KI.Gfx.GLUtil
 {

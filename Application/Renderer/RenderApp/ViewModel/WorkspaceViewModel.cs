@@ -1,20 +1,16 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using KI.Asset;
-using KI.Asset.Attribute;
 using KI.Foundation.Tree;
 using KI.Gfx;
 using KI.Gfx.GLUtil;
 using KI.Gfx.KIShader;
-using KI.Gfx.KITexture;
 using KI.Renderer;
 using KI.Renderer.Technique;
-using KI.Foundation.Command;
 using KI.Presenter.ViewModel;
 using OpenTK;
 using RenderApp.Model;
 using RenderApp.Tool;
-using RenderApp.Tool.Command;
 using KI.Asset.Primitive;
 using KI.Asset.HUD;
 

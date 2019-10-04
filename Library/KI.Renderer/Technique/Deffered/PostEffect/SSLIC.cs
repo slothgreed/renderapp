@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using KI.Asset;
-using KI.Gfx;
 using KI.Gfx.GLUtil;
 using KI.Gfx.KITexture;
 using KI.Gfx.Render;

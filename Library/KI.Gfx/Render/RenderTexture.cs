@@ -1,5 +1,4 @@
 ﻿using KI.Gfx.GLUtil;
-using KI.Gfx.KITexture;
 using OpenTK.Graphics.OpenGL;
 
 namespace KI.Gfx.Render

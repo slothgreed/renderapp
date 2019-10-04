@@ -1,6 +1,5 @@
-﻿using KI.Asset;
+﻿using KI.Gfx;
 using KI.Gfx.GLUtil;
-using KI.Gfx.KITexture;
 
 namespace KI.Renderer.Technique
 {
@@ -64,7 +63,5 @@ namespace KI.Renderer.Technique
                 SetValue(ref _uCubeMap, value);
             }
         }
-
-
     }
 }

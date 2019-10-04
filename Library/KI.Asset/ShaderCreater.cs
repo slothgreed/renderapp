@@ -1,8 +1,5 @@
 ﻿using KI.Gfx;
-using KI.Gfx.Geometry;
-using KI.Gfx.GLUtil;
 using KI.Gfx.KIShader;
-using KI.Gfx.KITexture;
 
 namespace KI.Asset
 {

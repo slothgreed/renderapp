@@ -71,7 +71,6 @@
     <Compile Include="KIShader\Shader.cs" />
     <Compile Include="KIShader\ShaderFactory.cs" />
     <Compile Include="Render\RenderTarget.cs" />
-    <Compile Include="KITexture\Texture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Render\RenderTargetFactory.cs" />
     <Compile Include="Shader\ShaderProgram.cs" />

@@ -2,7 +2,7 @@
 using System.Linq;
 using KI.Analyzer;
 using KI.Gfx.Geometry;
-using KI.Gfx.GLUtil;
+using KI.Gfx;
 
 namespace KI.Asset.Loader.Importer
 {

@@ -1,13 +1,9 @@
-﻿using KI.Gfx.KITexture;
+﻿using KI.Gfx.GLUtil;
 using KI.Presenter.ViewModel;
 using KI.Renderer;
 using KI.Renderer.Technique;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShaderTraining.ViewModel
 {
@@ -23,7 +19,7 @@ namespace ShaderTraining.ViewModel
             }
         }
 
-        public List<Texture> Textures
+        public List<TextureBuffer> Textures
         {
             get
             {

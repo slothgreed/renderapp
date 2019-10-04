@@ -1,5 +1,4 @@
-﻿using KI.Gfx.GLUtil;
-using KI.Gfx.KITexture;
+﻿using KI.Gfx;
 
 namespace KI.Renderer.Technique
 {

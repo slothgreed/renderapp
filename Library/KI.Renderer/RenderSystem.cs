@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using KI.Gfx.KITexture;
 using KI.Renderer.Technique;
 using KI.Gfx.GLUtil;
 
