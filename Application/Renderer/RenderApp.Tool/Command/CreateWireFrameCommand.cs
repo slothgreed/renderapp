@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using KI.Asset.Attribute;
+﻿using KI.Asset.Attribute;
 using KI.Renderer;
 using KI.Foundation.Command;
 using OpenTK;
@@ -44,12 +43,12 @@ namespace RenderApp.Tool.Command
             var targetObject = wireCommandArgs.TargetObject;
 
             var parentNode = Workspace.Instance.RenderSystem.ActiveScene.FindNode(targetObject);
-            WireFrameAttribute material = new WireFrameAttribute(
+            WireFrameAttribute attribute = new WireFrameAttribute(
                 targetObject.Name + ": WireFrame",
                 targetObject.VertexBuffer.ShallowCopy(),
                 wireCommandArgs.Color);
 
-            targetObject.Attributes.Add(material);
+            targetObject.Attributes.Add(attribute);
 
             return CommandResult.Success;
         }

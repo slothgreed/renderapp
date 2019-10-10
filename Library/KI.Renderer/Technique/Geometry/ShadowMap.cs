@@ -16,7 +16,7 @@ namespace KI.Renderer.Technique
         /// <param name="vertexShader">頂点シェーダファイル</param>
         /// <param name="fragShader">フラグメントシェーダファイル</param>
         public ShadowMap(RenderSystem renderer, string vertexShader, string fragShader)
-            : base("ShadowMap", renderer)
+            : base("ShadowMap", renderer, false)
         {
             ShadowMapShader = ShaderFactory.Instance.CreateShaderVF(vertexShader, fragShader);
         }

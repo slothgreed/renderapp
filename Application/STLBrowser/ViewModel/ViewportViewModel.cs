@@ -51,7 +51,7 @@ namespace STLBrowser.ViewModel
 
         protected override void InitializeDeviceContext()
         {
-            DeviceContext.Instance.SetClearColor(1, 1, 1, 1);
+            DeviceContext.Instance.SetClearColor(0, 0, 0, 0);
         }
 
         protected override void InitializeScene()

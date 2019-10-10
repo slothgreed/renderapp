@@ -83,7 +83,7 @@ namespace CADApp.ViewModel
 
         protected override void InitializeDeviceContext()
         {
-            DeviceContext.Instance.SetClearColor(1, 1, 1, 1);
+            DeviceContext.Instance.SetClearColor(0, 0, 0, 0);
             MainScene = new Scene("MainScene", new AppRootNode("Root"));
             RenderSystem = new RenderSystem();
             RenderSystem.ActiveScene = MainScene;

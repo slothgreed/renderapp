@@ -38,6 +38,10 @@ namespace KI.Asset
                     return new PLYImporter(filePath);
                 case ".off":
                     return new OFFImporter(filePath);
+                case ".xyz":
+                case ".xyz_b":
+                    return new XYZImporter(filePath);
+
             }
 
             Logger.Log(Logger.LogLevel.Error, "Not Support Extension");

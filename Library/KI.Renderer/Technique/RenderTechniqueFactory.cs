@@ -3,6 +3,7 @@ using KI.Asset;
 using KI.Foundation.Core;
 using KI.Gfx;
 using KI.Renderer.Technique;
+using KI.Gfx.Render;
 
 namespace KI.Renderer
 {
@@ -85,7 +86,7 @@ namespace KI.Renderer
         /// </summary>
         /// <param name="type">テクニックのタイプ</param>
         /// <returns>レンダーテクニック</returns>
-        public RenderTechnique CreateRenderTechnique(RenderTechniqueType type)
+        public RenderTechnique CreateRenderTechnique(RenderTechniqueType type, RenderTarget target = null)
         {
             if (RendererSystem == null)
             {

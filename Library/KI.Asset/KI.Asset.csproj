@@ -69,6 +69,7 @@
     <Compile Include="Light\Light.cs" />
     <Compile Include="Light\PointLight.cs" />
     <Compile Include="Light\SpotLight.cs" />
+    <Compile Include="Loader\Importer\XYZImporter.cs" />
     <Compile Include="Loader\Importer\HalfEdgeImporter.cs" />
     <Compile Include="Loader\Importer\ImporterUtility.cs" />
     <Compile Include="Loader\Importer\OBJImporter.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Loader\Model\STLLoader.cs" />
     <Compile Include="Loader\Image\HDRImage.cs" />
     <Compile Include="Loader\Image\TGAImage.cs" />
+    <Compile Include="Loader\Model\XYZLoader.cs" />
     <Compile Include="Primitive\Axis.cs" />
     <Compile Include="Primitive\Bezier.cs" />
     <Compile Include="Primitive\BSpline.cs" />

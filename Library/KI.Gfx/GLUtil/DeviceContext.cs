@@ -132,9 +132,9 @@ namespace KI.Gfx
         /// <summary>
         /// バッファをクリアします。
         /// </summary>
-        public void Clear()
+        public void Clear(ClearBufferMask mask)
         {
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            GL.Clear(mask);
         }
 
         /// <summary>

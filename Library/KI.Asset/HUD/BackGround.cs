@@ -43,8 +43,8 @@ namespace KI.Asset.HUD
                 new Vector3(-1, 1, 0));
 
             Sphere = new Sphere(0.1f, 10, 10, true);
-            Plane.Vertexs[0].Color = Vector3.Zero;
-            Plane.Vertexs[1].Color = Vector3.Zero;
+            Plane.Vertexs[0].Color = Vector3.One;
+            Plane.Vertexs[1].Color = Vector3.One;
             Plane.Vertexs[2].Color = Vector3.UnitZ;
             Plane.Vertexs[3].Color = Vector3.UnitZ;
         }

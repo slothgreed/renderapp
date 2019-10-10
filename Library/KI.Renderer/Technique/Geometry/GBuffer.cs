@@ -15,7 +15,7 @@ namespace KI.Renderer.Technique
         /// コンストラクタ
         /// </summary>
         public GBuffer(RenderSystem renderer)
-            : base("GBuffer", renderer)
+            : base("GBuffer", renderer, false)
         {
         }
 
@@ -45,7 +45,8 @@ namespace KI.Renderer.Technique
         /// </summary>
         /// <param name="width">横</param>
         /// <param name="height">縦</param>
-        protected override void CreateRenderTarget(int width, int height)
+        /// <param name="useDepthTexture">デプステクスチャを使うかどうか</param>
+        protected override void CreateRenderTarget(int width, int height, bool useDepthTexture)
         {
             var textures = new RenderTexture[4]
             {
@@ -55,7 +56,7 @@ namespace KI.Renderer.Technique
                 TextureFactory.Instance.CreateRenderTexture("GLight", width, height, PixelFormat.Rgba)
             };
 
-            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget(Name, width, height);
+            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget(Name, width, height, useDepthTexture);
             RenderTarget.SetRenderTexture(textures);
         }
 
@@ -73,6 +74,9 @@ namespace KI.Renderer.Technique
         /// <param name="renderInfo">レンダリング情報</param>
         public override void Render(Scene scene, RenderInfo renderInfo)
         {
+            // デプステクスチャはZPrepassで書いたものを利用する。
+            //ClearBuffer(ClearBufferMask.ColorBufferBit);
+            //GL.DepthFunc(DepthFunction.Lequal);
             ClearBuffer();
             RenderTarget.BindRenderTarget();
             foreach (SceneNode asset in scene.RootNode.AllChildren().OfType<SceneNode>())

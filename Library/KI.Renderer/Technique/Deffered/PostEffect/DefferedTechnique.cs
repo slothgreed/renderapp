@@ -13,7 +13,7 @@ namespace KI.Renderer.Technique
         string vertexShader;
         string fragShader;
         public DefferedTechnique(string name, RenderSystem renderSystem, string vertexShader, string fragShader)
-            : base(name, renderSystem)
+            : base(name, renderSystem, false)
         {
             this.vertexShader = vertexShader;
             this.fragShader = fragShader;
@@ -61,11 +61,12 @@ namespace KI.Renderer.Technique
         /// <summary>
         /// 遅延描画用のプレーン作成
         /// </summary>
-        /// <param name="vertexShader">頂点シェーダ</param>
-        /// <param name="fragShader">フラグメントシェーダ</param>
-        protected override void CreateRenderTarget(int width, int height)
+        /// <param name="width">幅</param>
+        /// <param name="height">高さ</param>
+        /// <param name="useDepthTexture">デプステクスチャを使うかどうか</param>
+        protected override void CreateRenderTarget(int width, int height,bool useDepthTexture)
         {
-            base.CreateRenderTarget(width, height);
+            base.CreateRenderTarget(width, height, useDepthTexture);
             var polygon = PolygonUtility.CreatePolygon(Name, new Rectangle());
             Rectangle = new PolygonNode(polygon);
             Rectangle.Polygon.Material.Shader = ShaderFactory.Instance.CreateShaderVF(vertexShader, fragShader);

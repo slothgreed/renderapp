@@ -13,7 +13,7 @@ namespace KI.Renderer.Technique
         /// コンストラクタ
         /// </summary>
         public ZPrepassRender(RenderSystem renderer)
-            : base("ZPrepassRender", renderer)
+            : base("ZPrepassRender", renderer, true)
         {
         }
 
@@ -31,7 +31,6 @@ namespace KI.Renderer.Technique
         /// <param name="renderInfo">レンダリング情報</param>
         public override void Render(Scene scene, RenderInfo renderInfo)
         {
-            DeviceContext.Instance.SetClearColor(1, 0, 0, 1);
             ClearBuffer();
             RenderTarget.BindRenderTarget();
             foreach (SceneNode asset in scene.RootNode.AllChildren().OfType<SceneNode>())
@@ -40,8 +39,6 @@ namespace KI.Renderer.Technique
             }
 
             RenderTarget.UnBindRenderTarget();
-
-            DeviceContext.Instance.SetClearColor(1, 1, 1, 1);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace KI.Renderer.Technique
     public class HUDTechnique : RenderTechnique
     {
         public HUDTechnique( RenderSystem renderer)
-            : base("HUDTechnique", renderer)
+            : base("HUDTechnique", renderer, false)
         {
 
         }

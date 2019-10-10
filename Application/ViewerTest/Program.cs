@@ -219,7 +219,7 @@ namespace ViewerTest
             base.OnRenderFrame(e);
 
             {
-                GL.ClearColor(Color4.White);
+                GL.ClearColor(Color4.Black);
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
                 GL.BindTexture(TextureTarget.Texture2D, frameId);

@@ -55,5 +55,20 @@ namespace KI.Asset.Attribute
             GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
             base.UnBinding();
         }
+
+        public override void Render()
+        {
+            GL.ColorMask(false, false, false, false);
+
+            Material.BindToGPU();
+            VertexBuffer.Render();
+            Material.UnBindToGPU();
+
+            GL.ColorMask(true, true, true, true);
+
+            GL.DepthFunc(DepthFunction.Lequal);
+            base.Render();
+            GL.DepthFunc(DepthFunction.Less);
+        }
     }
 }

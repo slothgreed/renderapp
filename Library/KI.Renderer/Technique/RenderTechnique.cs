@@ -24,16 +24,19 @@ namespace KI.Renderer.Technique
             private set;
         }
 
+        bool useDepthTexture;
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="name">名前</param>
         /// <param name="renderer">レンダラ</param>
-        /// <param name="tech">レンダーテクニックの種類</param>
-        public RenderTechnique(string name, RenderSystem renderer)
+        /// <param name="_useDepthTexture">デプステクスチャを使うかどうか</param>
+        public RenderTechnique(string name, RenderSystem renderer, bool _useDepthTexture)
             : base(name)
         {
             RenderSystem = renderer;
+            useDepthTexture = _useDepthTexture;
         }
         
 
@@ -46,9 +49,9 @@ namespace KI.Renderer.Technique
         /// <summary>
         /// バッファのクリア
         /// </summary>
-        public void ClearBuffer()
+        public void ClearBuffer(ClearBufferMask mask = ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit)
         {
-            RenderTarget.ClearBuffer();
+            RenderTarget.ClearBuffer(mask);
         }
 
         /// <summary>
@@ -83,10 +86,11 @@ namespace KI.Renderer.Technique
         /// </summary>
         /// <param name="width">横</param>
         /// <param name="height">縦</param>
-        protected virtual void CreateRenderTarget(int width, int height)
+        /// <param name="_useDepthTexture">デプステクスチャを使うかどうか</param>
+        protected virtual void CreateRenderTarget(int width, int height, bool useDepthTexture)
         {
             var texture = new RenderTexture[] { TextureFactory.Instance.CreateRenderTexture("Texture:" + Name, width, height, PixelFormat.Rgba) };
-            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget("RenderTarget:" + Name, width, height);
+            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget("RenderTarget:" + Name, width, height, useDepthTexture);
             RenderTarget.SetRenderTexture(texture);
         }
 
@@ -98,7 +102,7 @@ namespace KI.Renderer.Technique
         /// <param name="fragShader">フラグシェーダ</param>
         public void InitializeTechnique()
         {
-            CreateRenderTarget(DeviceContext.Instance.Width, DeviceContext.Instance.Height);
+            CreateRenderTarget(DeviceContext.Instance.Width, DeviceContext.Instance.Height, useDepthTexture);
             Initialize();
         }
         #endregion

@@ -5,6 +5,7 @@ using KI.Foundation.Core;
 using OpenTK;
 using OpenTK.Graphics;
 using KI.Foundation.Controller;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Gfx
 {
@@ -237,7 +238,7 @@ namespace KI.Gfx
             if (nowRender)
                 return;
 
-            DeviceContext.Instance.Clear();
+            DeviceContext.Instance.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             if (OnRender != null)
             {
