@@ -12,7 +12,7 @@ namespace KI.Gfx
         /// <summary>
         /// シェーダ種類
         /// </summary>
-        private ShaderType? shaderType;
+        private ShaderType shaderType;
         
         /// <summary>
         /// コンストラクタ
@@ -24,6 +24,42 @@ namespace KI.Gfx
             StreamReader reader = new StreamReader(FilePath);
             ShaderCode = reader.ReadToEnd();
             reader.Close();
+
+            SetShaderType(FilePath);
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="code">シェーダコード</param>
+        /// <param name="type">種類</param>
+        public ShaderProgram(string code, ShaderType type)
+            : base(type.ToString())
+        {
+
+        }
+
+        public void SetShaderType(string filePath)
+        {
+            string extension = Path.GetExtension(FilePath);
+            switch (extension)
+            {
+                case ".vert":
+                    shaderType = ShaderType.VertexShader;
+                    break;
+                case ".frag":
+                    shaderType = ShaderType.FragmentShader;
+                    break;
+                case ".geom":
+                    shaderType = ShaderType.GeometryShader;
+                    break;
+                case ".tcs":
+                    shaderType = ShaderType.TessControlShader;
+                    break;
+                case ".tes":
+                    shaderType = ShaderType.TessEvaluationShader;
+                    break;
+            }
         }
 
         /// <summary>
@@ -33,30 +69,7 @@ namespace KI.Gfx
         {
             get
             {
-                if (shaderType == null)
-                {
-                    string extension = Path.GetExtension(FilePath);
-                    switch (extension)
-                    {
-                        case ".vert":
-                            shaderType = ShaderType.VertexShader;
-                            break;
-                        case ".frag":
-                            shaderType = ShaderType.FragmentShader;
-                            break;
-                        case ".geom":
-                            shaderType = ShaderType.GeometryShader;
-                            break;
-                        case ".tcs":
-                            shaderType = ShaderType.TessControlShader;
-                            break;
-                        case ".tes":
-                            shaderType = ShaderType.TessEvaluationShader;
-                            break;
-                    }
-                }
-
-                return (ShaderType)shaderType;
+                return shaderType;
             }
         }
 
@@ -71,5 +84,7 @@ namespace KI.Gfx
         public override void Dispose()
         {
         }
+
+
     }
 }

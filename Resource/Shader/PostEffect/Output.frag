@@ -30,7 +30,7 @@ void main(void)
 	vec4 foreGround = texture2D(uForeGround, v_texcoord.xy);
 	if(foreGround.a !=0)
 	{
-		OutputColor = foreGround;
+		//OutputColor = foreGround;
 	}
 }
 

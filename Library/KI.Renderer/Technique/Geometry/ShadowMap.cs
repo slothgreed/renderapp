@@ -1,12 +1,14 @@
-﻿using KI.Gfx.KIShader;
+﻿using KI.Asset;
+using KI.Gfx.KIShader;
 using KI.Gfx.Render;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Renderer.Technique
 {
     /// <summary>
     /// シャドウマップ
     /// </summary>
-    public class ShadowMap : RenderTechnique
+    public class ShadowMap : GBufferTechnique
     {
         private Shader ShadowMapShader;
 
@@ -16,10 +18,11 @@ namespace KI.Renderer.Technique
         /// <param name="vertexShader">頂点シェーダファイル</param>
         /// <param name="fragShader">フラグメントシェーダファイル</param>
         public ShadowMap(RenderSystem renderer, string vertexShader, string fragShader)
-            : base("ShadowMap", renderer, false)
+            : base("ShadowMap", renderer, 1, false)
         {
             ShadowMapShader = ShaderFactory.Instance.CreateShaderVF(vertexShader, fragShader);
         }
+
 
         /// <summary>
         /// 初期化

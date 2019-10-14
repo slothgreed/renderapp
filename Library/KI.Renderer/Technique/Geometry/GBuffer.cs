@@ -9,13 +9,13 @@ namespace KI.Renderer.Technique
     /// <summary>
     /// GBuffer
     /// </summary>
-    public class GBuffer : RenderTechnique
+    public class GBuffer : GBufferTechnique
     {
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public GBuffer(RenderSystem renderer)
-            : base("GBuffer", renderer, false)
+            : base("GBuffer", renderer, 4, false)
         {
         }
 
@@ -40,25 +40,21 @@ namespace KI.Renderer.Technique
             return RenderTarget.RenderTexture[(int)target];
         }
 
-        /// <summary>
         /// レンダーターゲットの生成
         /// </summary>
-        /// <param name="width">横</param>
-        /// <param name="height">縦</param>
-        /// <param name="useDepthTexture">デプステクスチャを使うかどうか</param>
-        protected override void CreateRenderTarget(int width, int height, bool useDepthTexture)
+        protected override void CreateRenderTarget()
         {
             var textures = new RenderTexture[4]
             {
-                TextureFactory.Instance.CreateRenderTexture("GPosit", width, height, PixelFormat.Rgba),
-                TextureFactory.Instance.CreateRenderTexture("GNormal", width, height, PixelFormat.Rgba),
-                TextureFactory.Instance.CreateRenderTexture("GColor", width, height, PixelFormat.Rgba),
-                TextureFactory.Instance.CreateRenderTexture("GLight", width, height, PixelFormat.Rgba)
+                TextureFactory.Instance.CreateRenderTexture("GPosit" ),
+                TextureFactory.Instance.CreateRenderTexture("GNormal"),
+                TextureFactory.Instance.CreateRenderTexture("GColor" ),
+                TextureFactory.Instance.CreateRenderTexture("GLight" )
             };
 
-            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget(Name, width, height, useDepthTexture);
+            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget(Name, 1, 1, true);
             RenderTarget.SetRenderTexture(textures);
-        }
+       }
 
         /// <summary>
         /// 初期化

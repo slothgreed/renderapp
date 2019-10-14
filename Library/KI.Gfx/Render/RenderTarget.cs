@@ -224,10 +224,9 @@ namespace KI.Gfx.Render
         /// <param name="texture">テクスチャ</param>
         public void SetRenderTexture(RenderTexture[] texture)
         {
-            RenderTexture = new RenderTexture[texture.Length];
+            RenderTexture = texture;
             for (int i = 0; i < texture.Length; i++)
             {
-                RenderTexture[i] = texture[i];
                 RenderTexture[i].Attachment = (FramebufferAttachment.ColorAttachment0 + i);
                 RenderTexture[i].DrawBuffers = (DrawBuffersEnum.ColorAttachment0 + i);
             }

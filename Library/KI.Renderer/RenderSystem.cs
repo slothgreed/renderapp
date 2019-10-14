@@ -148,7 +148,11 @@ namespace KI.Renderer
         public void SizeChanged(int width, int height)
         {
             RenderQueue.SizeChanged(width, height);
-            ZPrepassTechnique.SizeChanged(width, height);
+            if(ZPrepassTechnique != null)
+            {
+                ZPrepassTechnique.SizeChanged(width, height);
+            }
+
             PostEffect.SizeChanged(width, height);
 
             if (BackGroundTechnique != null)
@@ -194,10 +198,13 @@ namespace KI.Renderer
         /// </summary>
         private void ZPrepassRender()
         {
-            renderInfo.RenderPass = RenderPass.ZPrepass;
-            DeviceContext.Instance.ColorMask(false,false,false,false);
-            ZPrepassTechnique.Render(ActiveScene, renderInfo);
-            DeviceContext.Instance.ColorMask(true, true, true, true);
+            if (ZPrepassTechnique != null)
+            {
+                renderInfo.RenderPass = RenderPass.ZPrepass;
+                DeviceContext.Instance.ColorMask(false, false, false, false);
+                ZPrepassTechnique.Render(ActiveScene, renderInfo);
+                DeviceContext.Instance.ColorMask(true, true, true, true);
+            }
         }
 
         /// <summary>

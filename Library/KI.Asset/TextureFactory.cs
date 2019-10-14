@@ -123,17 +123,20 @@ namespace KI.Asset
         /// <returns>テクスチャ</returns>
         public TextureBuffer CreateTexture(string name, int width, int height)
         {
-            var texture = new TextureBuffer(name, TextureType.Texture2D, width, height);
-            return texture;
+            return new TextureBuffer(name, TextureType.Texture2D, width, height);
         }
 
         /// <summary>
         /// レンダリング用のテクスチャバッファ
         /// </summary>
-        public RenderTexture CreateRenderTexture(string name, int width, int height, PixelFormat format)
+        /// <param name="name">名前</param>
+        /// <param name="width">横</param>
+        /// <param name="height">縦</param>
+        /// <param name="format">ピクセルフォーマット</param>
+        /// <returns>レンダリング用のテクスチャ</returns>
+        public RenderTexture CreateRenderTexture(string name, int width = 1, int height = 1, PixelFormat format = PixelFormat.Rgba)
         {
-            var renderTexture = new RenderTexture(name, width, height, format);
-            return renderTexture;
+            return new RenderTexture(name, width, height, format);
         }
 
         /// <summary>

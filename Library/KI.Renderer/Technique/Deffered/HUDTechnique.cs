@@ -1,11 +1,8 @@
 ﻿using KI.Asset;
-using KI.Gfx.Buffer;
 using KI.Gfx.Render;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Renderer.Technique
 {
@@ -17,8 +14,21 @@ namespace KI.Renderer.Technique
 
         }
 
+        /// <summary>
+        /// 初期化
+        /// </summary>
         public override void Initialize()
         {
+        }
+
+        /// <summary>
+        /// レンダーターゲットの作成
+        /// </summary>
+        protected override void CreateRenderTarget()
+        {
+            var texture = new RenderTexture[] { TextureFactory.Instance.CreateRenderTexture("Texture:" + Name) };
+            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget("RenderTarget:" + Name, 1, 1, false);
+            RenderTarget.SetRenderTexture(texture);
         }
 
         public override void Render(Scene scene, RenderInfo renderInfo)
@@ -36,5 +46,6 @@ namespace KI.Renderer.Technique
             }
             RenderTarget.UnBindRenderTarget();
         }
+
     }
 }

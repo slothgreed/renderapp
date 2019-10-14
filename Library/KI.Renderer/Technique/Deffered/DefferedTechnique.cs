@@ -58,15 +58,11 @@ namespace KI.Renderer.Technique
             RenderTarget.UnBindRenderTarget();
         }
 
-        /// <summary>
-        /// 遅延描画用のプレーン作成
-        /// </summary>
-        /// <param name="width">幅</param>
-        /// <param name="height">高さ</param>
-        /// <param name="useDepthTexture">デプステクスチャを使うかどうか</param>
-        protected override void CreateRenderTarget(int width, int height,bool useDepthTexture)
+        protected override void CreateRenderTarget()
         {
-            base.CreateRenderTarget(width, height, useDepthTexture);
+            var texture = new RenderTexture[] { TextureFactory.Instance.CreateRenderTexture("Texture:" + Name) };
+            RenderTarget = RenderTargetFactory.Instance.CreateRenderTarget("RenderTarget:" + Name, 1, 1, false);
+            RenderTarget.SetRenderTexture(texture);
             var polygon = PolygonUtility.CreatePolygon(Name, new Rectangle());
             Rectangle = new PolygonNode(polygon);
             Rectangle.Polygon.Material.Shader = ShaderFactory.Instance.CreateShaderVF(vertexShader, fragShader);

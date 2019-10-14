@@ -1,19 +1,20 @@
-﻿using KI.Gfx;
-using KI.Gfx.Render;
+﻿using KI.Gfx.Render;
 using System.Linq;
+using KI.Asset;
+using OpenTK.Graphics.OpenGL;
 
 namespace KI.Renderer.Technique
 {
     /// <summary>
     /// ZPrepassRender
     /// </summary>
-    public class ZPrepassRender : RenderTechnique
+    public class ZPrepassRender : GBufferTechnique
     {
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public ZPrepassRender(RenderSystem renderer)
-            : base("ZPrepassRender", renderer, true)
+            : base("ZPrepassRender", renderer, 1, true)
         {
         }
 
@@ -40,5 +41,6 @@ namespace KI.Renderer.Technique
 
             RenderTarget.UnBindRenderTarget();
         }
+
     }
 }
