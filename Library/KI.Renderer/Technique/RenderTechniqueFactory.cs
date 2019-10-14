@@ -25,7 +25,8 @@ namespace KI.Renderer
         HUD,
         Selection,
         Output,
-        ZPrePass
+        ZPrePass,
+        Composit
     }
 
     /// <summary>
@@ -73,6 +74,7 @@ namespace KI.Renderer
             DefaultShader.Add(RenderTechniqueType.SSLIC,     new ShaderFile() { Vertex = postEffect + @"\sslic.vert",       Frag = postEffect + @"\sslic.frag" });
             DefaultShader.Add(RenderTechniqueType.Selection, new ShaderFile() { Vertex = postEffect + @"\selection.vert",   Frag = postEffect + @"\selection.frag" });
             DefaultShader.Add(RenderTechniqueType.Output,    new ShaderFile() { Vertex = postEffect + @"\output.vert",      Frag = postEffect + @"\output.frag" });
+            DefaultShader.Add(RenderTechniqueType.Composit,  new ShaderFile() { Vertex = postEffect + @"\output.vert",      Frag = postEffect + @"\composit.frag"});
         }
 
         public RenderSystem RendererSystem
@@ -134,6 +136,9 @@ namespace KI.Renderer
                     break;
                 case RenderTechniqueType.ZPrePass:
                     technique = new ZPrepassRender(RendererSystem);
+                    break;
+                case RenderTechniqueType.Composit:
+                    technique = new CompositTextureTechnique(RendererSystem, DefaultShader[RenderTechniqueType.Composit].Vertex, DefaultShader[RenderTechniqueType.Composit].Frag);
                     break;
                 default:
                     break;

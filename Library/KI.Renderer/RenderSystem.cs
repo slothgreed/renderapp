@@ -244,6 +244,7 @@ namespace KI.Renderer
             {
                 OutputBuffer.uBackGround = BackGroundTechnique.RenderTarget.RenderTexture[0];
             }
+
             if (ForeGroundTechnique != null)
             {
                 OutputBuffer.uForeGround = ForeGroundTechnique.RenderTarget.RenderTexture[0];

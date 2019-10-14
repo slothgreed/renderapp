@@ -18,7 +18,7 @@ namespace KI.Renderer.Technique
 
             set
             {
-                SetValue<TextureBuffer>(ref _uSelectMap, value);
+                SetValue(ref _uSelectMap, value);
             }
         }
         private TextureBuffer _uTarget;
@@ -31,7 +31,7 @@ namespace KI.Renderer.Technique
 
             set
             {
-                SetValue<TextureBuffer>(ref _uTarget, value);
+                SetValue(ref _uTarget, value);
             }
         }
 
@@ -45,7 +45,7 @@ namespace KI.Renderer.Technique
 
             set
             {
-                SetValue<TextureBuffer>(ref _uBackGround, value);
+                SetValue(ref _uBackGround, value);
             }
         }
 
@@ -59,7 +59,7 @@ namespace KI.Renderer.Technique
 
             set
             {
-                SetValue<TextureBuffer>(ref _uForeGround, value);
+                SetValue(ref _uForeGround, value);
             }
         }
 
@@ -77,7 +77,6 @@ namespace KI.Renderer.Technique
         /// </summary>
         public override void Initialize()
         {
-            uSelectMap = null;
             var textures = RenderSystem.RenderQueue.OutputTexture<GBuffer>();
             Rectangle.Polygon.Material.AddTexture(TextureKind.Normal, textures[(int)GBuffer.OutputTextureType.Color]);
         }

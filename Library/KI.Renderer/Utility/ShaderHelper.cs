@@ -23,73 +23,73 @@ namespace KI.Renderer
                 switch (info.Name)
                 {
                     case "position":
-                        info.Variable = vertexBuffer.PositionBuffer;
+                        info.Value = vertexBuffer.PositionBuffer;
                         break;
                     case "normal":
-                        info.Variable = vertexBuffer.NormalBuffer;
+                        info.Value = vertexBuffer.NormalBuffer;
                         break;
                     case "color":
-                        info.Variable = vertexBuffer.ColorBuffer;
+                        info.Value = vertexBuffer.ColorBuffer;
                         break;
                     case "texcoord":
-                        info.Variable = vertexBuffer.TexCoordBuffer;
+                        info.Value = vertexBuffer.TexCoordBuffer;
                         break;
                     case "index":
                         if (vertexBuffer.EnableIndexBuffer)
                         {
-                            info.Variable = vertexBuffer.IndexBuffer;
+                            info.Value = vertexBuffer.IndexBuffer;
                         }
                         break;
                     case "uGeometryID":
-                        info.Variable = sceneNode.ID;
+                        info.Value = sceneNode.ID;
                         break;
                     case "uWidth":
-                        info.Variable = DeviceContext.Instance.Width;
+                        info.Value = DeviceContext.Instance.Width;
                         break;
                     case "uHeight":
-                        info.Variable = DeviceContext.Instance.Height;
+                        info.Value = DeviceContext.Instance.Height;
                         break;
                     case "uMVP":
                         Matrix4 vp = scene.MainCamera.CameraProjMatrix;
-                        info.Variable = sceneNode.ModelMatrix * vp;
+                        info.Value = sceneNode.ModelMatrix * vp;
                         break;
                     case "uSMVP":
                         Matrix4 light = scene.MainLight.Matrix;
                         Matrix4 proj = scene.MainCamera.ProjMatrix;
-                        info.Variable = sceneNode.ModelMatrix * light * proj;
+                        info.Value = sceneNode.ModelMatrix * light * proj;
                         break;
                     case "uModelMatrix":
-                        info.Variable = sceneNode.ModelMatrix;
+                        info.Value = sceneNode.ModelMatrix;
                         break;
                     case "uNormalMatrix":
-                        info.Variable = sceneNode.NormalMatrix;
+                        info.Value = sceneNode.NormalMatrix;
                         break;
                     case "uProjectMatrix":
-                        info.Variable = scene.MainCamera.ProjMatrix;
+                        info.Value = scene.MainCamera.ProjMatrix;
                         break;
                     case "uUnProjectMatrix":
-                        info.Variable = scene.MainCamera.UnProject;
+                        info.Value = scene.MainCamera.UnProject;
                         break;
                     case "uCameraPosition":
-                        info.Variable = scene.MainCamera.Position;
+                        info.Value = scene.MainCamera.Position;
                         break;
                     case "uCameraMatrix":
-                        info.Variable = scene.MainCamera.Matrix;
+                        info.Value = scene.MainCamera.Matrix;
                         break;
                     case "uLightPosition":
-                        info.Variable = scene.MainLight.Position;
+                        info.Value = scene.MainLight.Position;
                         break;
                     case "uLightDirection":
-                        info.Variable = scene.MainLight.Direction;
+                        info.Value = scene.MainLight.Direction;
                         break;
                     case "uLightMatrix":
-                        info.Variable = scene.MainLight.Matrix;
+                        info.Value = scene.MainLight.Matrix;
                         break;
                     case "uAlbedoMap":
                         if (material.Textures != null &&
                             material.Textures.ContainsKey(TextureKind.Albedo))
                         {
-                            info.Variable = material.Textures[TextureKind.Albedo].DeviceID;
+                            info.Value = material.Textures[TextureKind.Albedo].DeviceID;
                         }
 
                         break;
@@ -97,7 +97,7 @@ namespace KI.Renderer
                         if (material.Textures != null &&
                             material.Textures.ContainsKey(TextureKind.Cubemap))
                         {
-                            info.Variable = material.Textures[TextureKind.Cubemap].DeviceID;
+                            info.Value = material.Textures[TextureKind.Cubemap].DeviceID;
                         }
 
                         break;
@@ -105,7 +105,7 @@ namespace KI.Renderer
                         if (material.Textures != null &&
                             material.Textures.ContainsKey(TextureKind.Specular))
                         {
-                            info.Variable = material.Textures[TextureKind.Specular].DeviceID;
+                            info.Value = material.Textures[TextureKind.Specular].DeviceID;
                         }
 
                         break;
@@ -113,7 +113,7 @@ namespace KI.Renderer
                         if (material.Textures != null &&
                             material.Textures.ContainsKey(TextureKind.World))
                         {
-                            info.Variable = material.Textures[TextureKind.World].DeviceID;
+                            info.Value = material.Textures[TextureKind.World].DeviceID;
                         }
 
                         break;
@@ -121,7 +121,7 @@ namespace KI.Renderer
                         if (material.Textures != null &&
                             material.Textures.ContainsKey(TextureKind.Lighting))
                         {
-                            info.Variable = material.Textures[TextureKind.Lighting].DeviceID;
+                            info.Value = material.Textures[TextureKind.Lighting].DeviceID;
                         }
 
                         break;
@@ -129,7 +129,7 @@ namespace KI.Renderer
                         if (material.Textures != null &&
                             material.Textures.ContainsKey(TextureKind.Normal))
                         {
-                            info.Variable = material.Textures[TextureKind.Normal].DeviceID;
+                            info.Value = material.Textures[TextureKind.Normal].DeviceID;
                         }
 
                         break;
@@ -137,7 +137,7 @@ namespace KI.Renderer
                         if (material.Textures != null &&
                             material.Textures.ContainsKey(TextureKind.Height))
                         {
-                            info.Variable = material.Textures[TextureKind.Height].DeviceID;
+                            info.Value = material.Textures[TextureKind.Height].DeviceID;
                         }
 
                         break;
@@ -145,7 +145,7 @@ namespace KI.Renderer
                         if (material.Textures != null &&
                             material.Textures.ContainsKey(TextureKind.Emissive))
                         {
-                            info.Variable = material.Textures[TextureKind.Emissive].DeviceID;
+                            info.Value = material.Textures[TextureKind.Emissive].DeviceID;
                         }
 
                         break;
@@ -167,21 +167,21 @@ namespace KI.Renderer
                 switch (info.Name)
                 {
                     case "position":
-                        info.Variable = vertexBuffer.PositionBuffer;
+                        info.Value = vertexBuffer.PositionBuffer;
                         break;
                     case "normal":
-                        info.Variable = vertexBuffer.NormalBuffer;
+                        info.Value = vertexBuffer.NormalBuffer;
                         break;
                     case "color":
-                        info.Variable = vertexBuffer.ColorBuffer;
+                        info.Value = vertexBuffer.ColorBuffer;
                         break;
                     case "texcoord":
-                        info.Variable = vertexBuffer.TexCoordBuffer;
+                        info.Value = vertexBuffer.TexCoordBuffer;
                         break;
                     case "index":
                         if (vertexBuffer.EnableIndexBuffer)
                         {
-                            info.Variable = vertexBuffer.IndexBuffer;
+                            info.Value = vertexBuffer.IndexBuffer;
                         }
                         break;
                 }

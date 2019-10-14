@@ -13,7 +13,12 @@ namespace KI.Gfx
         /// シェーダ種類
         /// </summary>
         private ShaderKind shaderKind;
-        
+
+        /// <summary>
+        /// シェーダバージョン情報
+        /// </summary>
+        public string Version { get; set; }
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -33,10 +38,11 @@ namespace KI.Gfx
         /// </summary>
         /// <param name="code">シェーダコード</param>
         /// <param name="type">種類</param>
-        public ShaderProgram(string code, ShaderType type)
-            : base(type.ToString())
+        public ShaderProgram(string code, ShaderKind kind)
+            : base(kind.ToString())
         {
-
+            ShaderCode = code;
+            shaderKind = kind;
         }
 
         public void SetShaderType(string filePath)
@@ -78,7 +84,12 @@ namespace KI.Gfx
         /// <summary>
         /// シェーダコード
         /// </summary>
-        public string ShaderCode { get; set; }
+        public string ShaderCode { get; private set; }
+
+        /// <summary>
+        /// シェーダのヘッダ
+        /// </summary>
+        public string Header { get; set; }
 
         /// <summary>
         /// 解放処理

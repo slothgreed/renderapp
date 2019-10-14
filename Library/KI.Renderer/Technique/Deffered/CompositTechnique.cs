@@ -1,11 +1,7 @@
 ﻿using KI.Gfx.Buffer;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace KI.Renderer.Technique.Deffered
+namespace KI.Renderer.Technique
 {
     public enum CompositType
     {
@@ -29,7 +25,7 @@ namespace KI.Renderer.Technique.Deffered
     /// <summary>
     /// 画像合成 output = source * target; *はtype
     /// </summary>
-    public class CompositTechnique : DefferedTechnique
+    public class CompositTextureTechnique : DefferedTechnique
     {
 
         private TextureBuffer _uTarget;
@@ -60,7 +56,47 @@ namespace KI.Renderer.Technique.Deffered
             }
         }
 
+        private bool _bAdd;
+        public bool bADD
+        {
+            get
+            {
+                return _bAdd;
+            }
 
+            set
+            {
+                SetDefine(ref _bAdd, value);
+            }
+        }
+
+        private bool _bMultiply;
+        public bool bMultiply
+        {
+            get
+            {
+                return _bMultiply;
+            }
+
+            set
+            {
+                SetDefine(ref _bMultiply, value);
+            }
+        }
+
+        private bool _bOverwirte;
+        public bool bOverwirte
+        {
+            get
+            {
+                return _bOverwirte;
+            }
+
+            set
+            {
+                SetDefine(ref _bOverwirte, value);
+            }
+        }
 
         /// <summary>
         /// コンストラクタ
@@ -69,13 +105,23 @@ namespace KI.Renderer.Technique.Deffered
         /// <param name="renderSystem">レンダリングシステム</param>
         /// <param name="vertexShader">頂点シェーダパス</param>
         /// <param name="fragShader">フラグメントシェーダパス</param>
-        public CompositTechnique(string name, RenderSystem renderSystem, string vertexShader, string fragShader)
-            : base(name, renderSystem, vertexShader, fragShader)
+        public CompositTextureTechnique(RenderSystem renderSystem, string vertexShader, string fragShader)
+            : base("CompositTexture", renderSystem, vertexShader, fragShader)
         {
         }
 
         public override void Initialize()
         {
+            bADD = true;
+        }
+
+        public override void Render(Scene scene, RenderInfo renderInfo)
+        {
+            var gBufferTexture = RenderSystem.RenderQueue.OutputTexture<GBuffer>();
+            uTarget = gBufferTexture[(int)GBuffer.OutputTextureType.Posit];
+            uSource = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
+
+            base.Render(scene, renderInfo);
         }
     }
 }

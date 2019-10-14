@@ -44,6 +44,24 @@ namespace KI.Renderer.Technique
             }
         }
 
+        /// <summary>
+        /// シェーダへデファインのセット
+        /// </summary>
+        /// <typeparam name="T">型</typeparam>
+        /// <param name="member">変数</param>
+        /// <param name="value">値</param>
+        /// <param name="memberName">シェーダ変数名</param>
+        protected void SetDefine<T>(ref T member, T value, [CallerMemberName] string memberName = "")
+        {
+            if (Rectangle.Polygon.Material.Shader.SetDefine(memberName, value))
+            {
+                member = value;
+            }
+            else
+            {
+                Logger.Log(Logger.LogLevel.Error, "Set Shader Error " + memberName);
+            }
+        }
 
         /// <summary>
         /// 描画

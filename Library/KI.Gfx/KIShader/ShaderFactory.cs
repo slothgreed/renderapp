@@ -55,6 +55,7 @@ namespace KI.Gfx.KIShader
             ShaderProgram vert = ShaderProgramFactory.Instance.CreateShaderProgram(vPath, vPath);
             ShaderProgram frag = ShaderProgramFactory.Instance.CreateShaderProgram(fPath, fPath);
             Shader shader = new Shader(vert, frag);
+            shader.Initialize();
             if (Shaders.ContainsKey(vname + fname) == false)
             {
                 Shaders.Add(vname + fname, shader);
@@ -82,6 +83,7 @@ namespace KI.Gfx.KIShader
             ShaderProgram frag = ShaderProgramFactory.Instance.CreateShaderProgram(fPath, fPath);
             ShaderProgram geom = ShaderProgramFactory.Instance.CreateShaderProgram(gPath, gPath);
             Shader shader = new Shader(vert, frag, geom);
+            shader.Initialize();
             if (Shaders.ContainsKey(vname + fname + geom) == false)
             {
                 Shaders.Add(vname + fname + geom, shader);
@@ -114,7 +116,7 @@ namespace KI.Gfx.KIShader
             ShaderProgram tcs = ShaderProgramFactory.Instance.CreateShaderProgram(tcPath, tcPath);
             ShaderProgram tes = ShaderProgramFactory.Instance.CreateShaderProgram(tePath, tePath);
             Shader shader = new Shader(vert, frag, geom, tcs, tes);
-
+            shader.Initialize();
             if (Shaders.ContainsKey(vname + fname + tcs + tes) == false)
             {
                 Shaders.Add(vname + fname + tcs + tes, shader);
