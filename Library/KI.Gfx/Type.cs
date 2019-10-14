@@ -25,4 +25,14 @@
         Lighting,
         Cubemap
     }
+
+    public enum ShaderKind
+    {
+        VertexShader,
+        FragmentShader,
+        GeometryShader,
+        TessEvaluationShader,
+        TessControlShader
+    }
+
 }

@@ -12,7 +12,7 @@ namespace KI.Gfx
         /// <summary>
         /// シェーダ種類
         /// </summary>
-        private ShaderType shaderType;
+        private ShaderKind shaderKind;
         
         /// <summary>
         /// コンストラクタ
@@ -45,31 +45,33 @@ namespace KI.Gfx
             switch (extension)
             {
                 case ".vert":
-                    shaderType = ShaderType.VertexShader;
+                    shaderKind = ShaderKind.VertexShader;
                     break;
                 case ".frag":
-                    shaderType = ShaderType.FragmentShader;
+                    shaderKind = ShaderKind.FragmentShader;
                     break;
                 case ".geom":
-                    shaderType = ShaderType.GeometryShader;
+                    shaderKind = ShaderKind.GeometryShader;
                     break;
                 case ".tcs":
-                    shaderType = ShaderType.TessControlShader;
+                    shaderKind = ShaderKind.TessControlShader;
                     break;
                 case ".tes":
-                    shaderType = ShaderType.TessEvaluationShader;
+                    shaderKind = ShaderKind.TessEvaluationShader;
                     break;
             }
         }
 
+
+
         /// <summary>
         /// シェーダ種類
         /// </summary>
-        public ShaderType ShaderType
+        public ShaderKind ShaderKind
         {
             get
             {
-                return shaderType;
+                return shaderKind;
             }
         }
 

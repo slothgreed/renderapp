@@ -1,11 +1,7 @@
 ﻿using KI.Gfx;
 using KI.Gfx.KIShader;
 using KI.Presenter.ViewModel;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ShaderTraining.ViewModel
@@ -57,7 +53,7 @@ namespace ShaderTraining.ViewModel
                 OnPropertyChanged(nameof(EnableTCS));
                 OnPropertyChanged(nameof(EnableTES));
 
-                SelectShaderProgram = selectShader.VertexShader;
+                SelectShaderProgram = selectShader.GetShaderProgram(ShaderKind.VertexShader);
             }
         }
 
@@ -85,7 +81,7 @@ namespace ShaderTraining.ViewModel
                 }
 
 
-                return selectShader.FragShader != null;
+                return selectShader.GetShaderProgram(ShaderKind.FragmentShader) != null;
             }
         }
 
@@ -99,7 +95,7 @@ namespace ShaderTraining.ViewModel
                 }
 
 
-                return selectShader.GeomShader != null;
+                return selectShader.GetShaderProgram(ShaderKind.GeometryShader) != null;
             }
         }
 
@@ -113,7 +109,7 @@ namespace ShaderTraining.ViewModel
                 }
 
 
-                return selectShader.TcsShader != null;
+                return selectShader.GetShaderProgram(ShaderKind.TessControlShader) != null;
             }
         }
 
@@ -126,7 +122,7 @@ namespace ShaderTraining.ViewModel
                     return false;   
                 }
 
-                return selectShader.TesShader != null;
+                return selectShader.GetShaderProgram(ShaderKind.TessEvaluationShader) != null;
             }
         }
 
@@ -162,23 +158,23 @@ namespace ShaderTraining.ViewModel
             string str = (string)parameter;
             if (str == "Vertex")
             {
-                SelectShaderProgram = selectShader.VertexShader;
+                SelectShaderProgram = selectShader.GetShaderProgram(ShaderKind.VertexShader);
             }
             else if (str == "Frag")
             {
-                SelectShaderProgram = selectShader.FragShader;
+                SelectShaderProgram = selectShader.GetShaderProgram(ShaderKind.FragmentShader);
             }
             else if (str == "Geom")
             {
-                SelectShaderProgram = selectShader.GeomShader;
+                SelectShaderProgram = selectShader.GetShaderProgram(ShaderKind.GeometryShader);
             }
             else if (str == "TCS")
             {
-                SelectShaderProgram = selectShader.TcsShader;
+                SelectShaderProgram = selectShader.GetShaderProgram(ShaderKind.TessControlShader);
             }
             else if (str == "TES")
             {
-                SelectShaderProgram = selectShader.TesShader;
+                SelectShaderProgram = selectShader.GetShaderProgram(ShaderKind.TessEvaluationShader);
             }
             
         }

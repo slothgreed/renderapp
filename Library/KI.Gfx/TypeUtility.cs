@@ -29,5 +29,24 @@ namespace KI.Gfx
             }
 
         }
+
+        public static ShaderType ConvertShaderType(ShaderKind kind)
+        {
+            switch (kind)
+            {
+                case ShaderKind.VertexShader:
+                    return ShaderType.VertexShader;
+                case ShaderKind.FragmentShader:
+                    return ShaderType.FragmentShader;
+                case ShaderKind.GeometryShader:
+                    return ShaderType.GeometryShader;
+                case ShaderKind.TessEvaluationShader:
+                    return ShaderType.TessEvaluationShader;
+                case ShaderKind.TessControlShader:
+                    return ShaderType.TessControlShader;
+                default:
+                    throw new NotSupportedException();
+            }
+        }
     }
 }
