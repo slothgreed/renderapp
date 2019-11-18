@@ -32,7 +32,14 @@ namespace KI.Analyzer
             try
             {
                 string[] fileData = File.ReadAllLines(inputFile, System.Text.Encoding.GetEncoding("Shift_JIS"));
-                ReadHalfEdgeData(fileData, halfEdge);
+                if (fileData[0].Contains("V2"))
+                {
+                    ReadHalfEdgeDataVer2(fileData, halfEdge);
+                }
+                else
+                {
+                    ReadHalfEdgeData(fileData, halfEdge);
+                }
                 return true;
             }
             catch (Exception)
@@ -40,6 +47,72 @@ namespace KI.Analyzer
                 Console.WriteLine("読み込み失敗 : " + inputFile);
                 return false;
             }
+        }
+
+        /// <summary>
+        /// 書き込み
+        /// </summary>
+        /// <param name="outputFile">出力ファイル</param>
+        /// <param name="halfEdge">ハーフエッジインスタンス</param>
+        /// <param name="version">バージョン</param>
+        public static void WriteFile(string outputFile, HalfEdgeDS halfEdge, int version)
+        {
+            if (version == 0)
+            {
+                WriteFile(outputFile, halfEdge);
+            }
+            else
+            {
+                WriteFileVer2(outputFile, halfEdge);
+            }
+        }
+
+        /// <summary>
+        /// 書き込みVersion2
+        /// </summary>
+        /// <param name="outputFile">出力ファイル</param>
+        /// <param name="halfEdge">ハーフエッジインスタンス</param>
+        public static void WriteFileVer2(string outputFile, HalfEdgeDS halfEdge)
+        {
+            StreamWriter write = new StreamWriter(outputFile);
+
+            write.WriteLine("HalfEdge Data Structure V2");
+            write.WriteLine(halfEdge.HalfEdgeVertexs.Count() + " " + halfEdge.HalfEdges.Count() + " " + halfEdge.HalfEdgeMeshs.Count());
+            foreach (var vertex in halfEdge.HalfEdgeVertexs)
+            {
+                write.WriteLine("v" + " " + vertex.Position.X + " " + vertex.Position.Y + " " + vertex.Position.Z);
+            }
+
+            foreach (var edge in halfEdge.HalfEdges)
+            {
+                write.WriteLine("e" + " " + edge.Start.Index + " " + edge.End.Index);
+            }
+
+            foreach (var mesh in halfEdge.HalfEdgeMeshs)
+            {
+                string edgeIdx = string.Empty;
+                foreach (var edge in mesh.AroundEdge)
+                {
+                    if (edge == mesh.AroundEdge.Last())
+                    {
+                        edgeIdx += edge.Index.ToString();
+                    }
+                    else
+                    {
+                        edgeIdx += edge.Index.ToString() + " ";
+                    }
+                }
+
+                write.WriteLine("m" + " " + edgeIdx);
+            }
+
+            foreach (var edge in halfEdge.HalfEdges)
+            {
+                write.WriteLine("ei" + " " + edge.Next.Index + " " + edge.Before.Index + " " + edge.Opposite.Index + " " + edge.Mesh.Index);
+            }
+
+            write.WriteLine("end");
+            write.Close();
         }
 
         /// <summary>
@@ -163,33 +236,72 @@ namespace KI.Analyzer
             }
 
             halfEdge.Setup(halfVertexs, halfEdges, halfMeshs);
+        }
 
-            int count = halfEdge.HalfEdges.Count;
+        /// <summary>
+        /// データの読み込み
+        /// </summary>
+        /// <param name="fileData">ファイルデータ</param>
+        /// <param name="halfEdge">ハーフエッジインスタンス</param>
+        private static void ReadHalfEdgeDataVer2(string[] fileData, HalfEdgeDS halfEdge)
+        {
+            int lineNumber = 1;
+            string line;
+            int edgeInfoCounter = 0;
+            var halfEdges = new List<HalfEdge>();
+            var halfMeshs = new List<HalfEdgeMesh>();
+            var halfVertexs = new List<HalfEdgeVertex>();
 
-            //for(int i = 0; i < 3;i++)
-            //{
-            //    halfEdge.EdgeFlips(halfEdge.m_Edge[i]);
-            //}
+            while (fileData.Length != lineNumber)
+            {
+                line = fileData[lineNumber];
+                lineNumber++;
 
-            //for (int i = 0; i < 1; i++)
-            //{
-            //    halfEdge.VertexDecimation(halfEdge.m_Edge[i]);
-            //}
+                string[] lineInfos = line.Split(' ');
+                lineInfos = lineInfos.Where(p => !(string.IsNullOrWhiteSpace(p) || string.IsNullOrEmpty(p))).ToArray();
 
-            //int counter = 0;
-            //try
-            //{
-            //    for (int i = 0; i < 3; i++)
-            //    {
-            //        halfEdge.EdgeFlips(halfEdge.m_Edge[i]);
-            //        counter++;
-            //    }
-            //}
-            //catch (Exception)
-            //{
-            //    throw;
-            //}
-            //halfEdge.HasError();
+                if (lineInfos[0] == "v")
+                {
+                    var position = new Vector3(float.Parse(lineInfos[1]), float.Parse(lineInfos[2]), float.Parse(lineInfos[3]));
+                    var vertex = new HalfEdgeVertex(position, halfVertexs.Count);
+                    halfVertexs.Add(vertex);
+                }
+
+                if (lineInfos[0] == "e")
+                {
+                    int startIndex = int.Parse(lineInfos[1]);
+                    int endIndex = int.Parse(lineInfos[2]);
+                    var edge = new HalfEdge(halfVertexs[startIndex], halfVertexs[endIndex], halfEdges.Count);
+                    halfEdges.Add(edge);
+                }
+
+                if (lineInfos[0] == "m")
+                {
+                    int edge1 = int.Parse(lineInfos[1]);
+                    int edge2 = int.Parse(lineInfos[2]);
+                    int edge3 = int.Parse(lineInfos[3]);
+                    var mesh = new HalfEdgeMesh(halfMeshs.Count);
+                    mesh.SetEdge(halfEdges[edge1], halfEdges[edge2], halfEdges[edge3]);
+                    halfMeshs.Add(mesh);
+                }
+
+                if (lineInfos[0] == "ei")
+                {
+                    int nextIndex = int.Parse(lineInfos[1]);
+                    int beforeIndex = int.Parse(lineInfos[2]);
+                    int oppositeIndex = int.Parse(lineInfos[3]);
+                    int meshIndex = int.Parse(lineInfos[4]);
+                    var edge = halfEdges[edgeInfoCounter];
+
+                    edge.Next = halfEdges[nextIndex];
+                    edge.Before = halfEdges[beforeIndex];
+                    edge.Opposite = halfEdges[oppositeIndex];
+                    edge.Mesh = halfMeshs[meshIndex];
+                    edgeInfoCounter++;
+                }
+            }
+
+            halfEdge.Setup(halfVertexs, halfEdges, halfMeshs);
         }
     }
 }

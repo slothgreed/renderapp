@@ -210,13 +210,13 @@ namespace RenderApp.ViewModel
 
             // bunny
             {
-                //var moai = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/cube.half");
-                ////var moai = AssetFactory.Instance.CreateLoad3DModel(@"E:\develop\cgal\build\test\Surface_mesh_segmentation\Debug\data\cactus.off");
-                //var renderBunny = CreateAnalyzePolygonNode("cube", moai);
+                var moai = AssetFactory.Instance.CreateLoad3DModel(ProjectInfo.ModelDirectory + @"/bunny.half");
+                //var moai = AssetFactory.Instance.CreateLoad3DModel(@"E:\develop\cgal\build\test\Surface_mesh_segmentation\Debug\data\cactus.off");
+                var renderBunny = CreateAnalyzePolygonNode("cube", moai);
 
-                //renderBunny.Polygon.Material.Shader = ShaderCreater.Instance.CreateShader(GBufferType.PointNormalColor);
-                ////renderBunny.RotateX(-90);
-                //mainScene.AddObject(renderBunny);
+                renderBunny.Polygon.Material.Shader = ShaderCreater.Instance.CreateShader(GBufferType.PointNormalColor);
+                //renderBunny.RotateX(-90);
+                mainScene.AddObject(renderBunny);
                 //var parentNode = mainScene.FindNode(renderBunny);
 
                 // bunny attribute
@@ -359,7 +359,7 @@ namespace RenderApp.ViewModel
             //renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Shadow));
 
             renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.GBuffer));
-
+            renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Composit));
             var gBufferTexture = renderer.RenderQueue.OutputTexture<GBuffer>();
 
             //renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.IBL));
@@ -367,7 +367,7 @@ namespace RenderApp.ViewModel
             //renderer.RenderQueue.AddTechnique(RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Selection));
 
             //renderer.ForeGroundTechnique = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.HUD) as HUDTechnique;
-            //renderer.BackGroundTechnique = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.HUD) as HUDTechnique;
+            renderer.BackGroundTechnique = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.HUD) as HUDTechnique;
             renderer.ZPrepassTechnique = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.ZPrePass) as ZPrepassRender;
             renderer.OutputBuffer = RenderTechniqueFactory.Instance.CreateRenderTechnique(RenderTechniqueType.Output) as OutputBuffer;
             renderer.OutputTexture = gBufferTexture[(int)GBuffer.OutputTextureType.Color];
